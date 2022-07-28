@@ -1,0 +1,54 @@
+PODS:
+  - Alamofire (5.6.2)
+  - IQKeyboardManager (6.5.10)
+  - JTAppleCalendar (7.1.8)
+  - MBProgressHUD (1.2.0)
+  - ReachabilitySwift (4.3.1)
+  - SDWebImage (5.13.1):
+    - SDWebImage/Core (= 5.13.1)
+  - SDWebImage/Core (5.13.1)
+  - SideMenuSwift (2.0.9)
+  - SwiftRangeSlider (2.0.0)
+  - SwiftyJSON (5.0.1)
+  - Toast-Swift (5.0.1)
+
+DEPENDENCIES:
+  - Alamofire
+  - IQKeyboardManager
+  - JTAppleCalendar (~> 7.1.6)
+  - MBProgressHUD
+  - ReachabilitySwift (~> 4.3.0)
+  - SDWebImage
+  - SideMenuSwift (~> 2.0)
+  - SwiftRangeSlider (~> 2.0)
+  - SwiftyJSON
+  - Toast-Swift (~> 5.0.1)
+
+SPEC REPOS:
+  trunk:
+    - Alamofire
+    - IQKeyboardManager
+    - JTAppleCalendar
+    - MBProgressHUD
+    - ReachabilitySwift
+    - SDWebImage
+    - SideMenuSwift
+    - SwiftRangeSlider
+    - SwiftyJSON
+    - Toast-Swift
+
+SPEC CHECKSUMS:
+  Alamofire: d368e1ff8a298e6dde360e35a3e68e6c610e7204
+  IQKeyboardManager: 45a1fa55c1a5b02c61ac0fd7fd5b62bb4ad20d97
+  JTAppleCalendar: b7fb40852f5f319fe55c8ec3861f1de0edc99cc8
+  MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
+  ReachabilitySwift: 4032e2f59586e11e3b0ebe15b167abdd587a388b
+  SDWebImage: fb26a455eeda4c7a55e4dcb6172dbb258af7a4ca
+  SideMenuSwift: 39f1922e225da4aaa8b16591037a929defe960c9
+  SwiftRangeSlider: f86e3b637c961120158fa1a89277c8343845cbe4
+  SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
+  Toast-Swift: 9b6a70f28b3bf0b96c40d46c0c4b9d6639846711
+
+PODFILE CHECKSUM: 4016571043b129f2330c58a579d81320bcd9a379
+
+COCOAPODS: 1.11.2

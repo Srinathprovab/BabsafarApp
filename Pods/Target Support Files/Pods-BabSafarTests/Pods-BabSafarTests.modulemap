@@ -1,0 +1,6 @@
+framework module Pods_BabSafarTests {
+  umbrella header "Pods-BabSafarTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

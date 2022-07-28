@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="ButtonCVCell" customModule="BabSafar" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="229" height="65"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="229" height="65"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h6Z-Yq-zCR">
+                        <rect key="frame" x="0.0" y="0.0" width="229" height="65"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="RWG-Cm-csp">
+                                <rect key="frame" x="0.0" y="0.0" width="229" height="65"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hrt-CB-Nlo">
+                                <rect key="frame" x="93.5" y="22" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3eq-2E-fMq">
+                                <rect key="frame" x="0.0" y="0.0" width="229" height="65"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                                <connections>
+                                    <action selector="didTapOnAddCityBtn:" destination="gTV-IL-0wX" eventType="touchUpInside" id="IJn-pE-1RT"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="3eq-2E-fMq" secondAttribute="trailing" id="BOQ-Dh-vEf"/>
+                            <constraint firstAttribute="bottom" secondItem="3eq-2E-fMq" secondAttribute="bottom" id="HvB-VG-jFe"/>
+                            <constraint firstItem="Hrt-CB-Nlo" firstAttribute="centerY" secondItem="h6Z-Yq-zCR" secondAttribute="centerY" id="LlW-vT-HvN"/>
+                            <constraint firstItem="Hrt-CB-Nlo" firstAttribute="centerX" secondItem="h6Z-Yq-zCR" secondAttribute="centerX" id="LpO-Yc-gNJ"/>
+                            <constraint firstItem="RWG-Cm-csp" firstAttribute="top" secondItem="h6Z-Yq-zCR" secondAttribute="top" id="TYd-HD-NcC"/>
+                            <constraint firstItem="3eq-2E-fMq" firstAttribute="top" secondItem="h6Z-Yq-zCR" secondAttribute="top" id="dgr-cU-EVX"/>
+                            <constraint firstItem="RWG-Cm-csp" firstAttribute="leading" secondItem="h6Z-Yq-zCR" secondAttribute="leading" id="h0S-hi-jFM"/>
+                            <constraint firstAttribute="bottom" secondItem="RWG-Cm-csp" secondAttribute="bottom" id="jXZ-LL-jND"/>
+                            <constraint firstAttribute="trailing" secondItem="RWG-Cm-csp" secondAttribute="trailing" id="mze-DL-Zwa"/>
+                            <constraint firstItem="3eq-2E-fMq" firstAttribute="leading" secondItem="h6Z-Yq-zCR" secondAttribute="leading" id="yIF-wr-LiU"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstItem="h6Z-Yq-zCR" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="NrZ-C4-0Fu"/>
+                <constraint firstAttribute="bottom" secondItem="h6Z-Yq-zCR" secondAttribute="bottom" id="cZp-9T-92W"/>
+                <constraint firstAttribute="trailing" secondItem="h6Z-Yq-zCR" secondAttribute="trailing" id="exw-Gh-8wO"/>
+                <constraint firstItem="h6Z-Yq-zCR" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="oJE-Yv-cuN"/>
+            </constraints>
+            <size key="customSize" width="229" height="65"/>
+            <connections>
+                <outlet property="addCityBtn" destination="3eq-2E-fMq" id="wEF-Wa-KwR"/>
+                <outlet property="btnImg" destination="RWG-Cm-csp" id="ofQ-Si-RmN"/>
+                <outlet property="btnlbl" destination="Hrt-CB-Nlo" id="Ds7-cX-YwQ"/>
+                <outlet property="holderView" destination="h6Z-Yq-zCR" id="8cJ-kG-hhA"/>
+            </connections>
+            <point key="canvasLocation" x="267.39130434782612" y="100.78125"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

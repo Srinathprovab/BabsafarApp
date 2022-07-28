@@ -1,0 +1,26 @@
+{
+  "images" : [
+    {
+      "filename" : "kisspng-dubai-airbus-a380-emirates-airline-logo-dubai-5abd4d51b3abc5 2.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "kisspng-dubai-airbus-a380-emirates-airline-logo-dubai-5abd4d51b3abc5 2 (1).png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "kisspng-dubai-airbus-a380-emirates-airline-logo-dubai-5abd4d51b3abc5 2 (2).png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  },
+  "properties" : {
+    "template-rendering-intent" : "original"
+  }
+}
