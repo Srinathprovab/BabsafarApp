@@ -40,7 +40,7 @@ class ResetPasswordVC: BaseTableVC {
     func setuptv() {
         tablerow.removeAll()
         tablerow.append(TableRow(title:"enter the email associated with your account and we’ll send an email with instructions to reset your password.",key: "cpwd",cellType:.LabelTVCell))
-        tablerow.append(TableRow(title:"Email Address",subTitle: "email",key: "email", text: "1",cellType:.TextfieldTVCell))
+        tablerow.append(TableRow(title:"Email Address",key: "email", text: "1", tempText: "email",cellType:.TextfieldTVCell))
         tablerow.append(TableRow(title:"Send ",cellType:.ButtonTVCell))
         commonTVData = tablerow
         commonTableView.reloadData()

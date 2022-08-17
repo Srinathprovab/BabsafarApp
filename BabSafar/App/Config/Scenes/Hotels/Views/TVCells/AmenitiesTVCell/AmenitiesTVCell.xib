@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="300" id="KGk-i7-Jjw" customClass="AmenitiesTVCell" customModule="BabSafar" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="408" height="300"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="408" height="300"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KlG-TV-D04">
+                        <rect key="frame" x="0.0" y="0.0" width="408" height="300"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="eEd-FQ-FCo">
+                                <rect key="frame" x="0.0" y="0.0" width="408" height="300"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="2Ha-xR-ecl">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemYellowColor"/>
+                        <constraints>
+                            <constraint firstItem="eEd-FQ-FCo" firstAttribute="top" secondItem="KlG-TV-D04" secondAttribute="top" id="3kZ-Dn-VfJ"/>
+                            <constraint firstAttribute="trailing" secondItem="eEd-FQ-FCo" secondAttribute="trailing" id="FpR-jK-R2w"/>
+                            <constraint firstAttribute="bottom" secondItem="eEd-FQ-FCo" secondAttribute="bottom" id="Oy6-pr-5Nv"/>
+                            <constraint firstItem="eEd-FQ-FCo" firstAttribute="leading" secondItem="KlG-TV-D04" secondAttribute="leading" id="T8n-aA-yDi"/>
+                            <constraint firstAttribute="height" constant="300" id="Tqc-Pt-6jh"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="KlG-TV-D04" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="3C5-EX-FYR"/>
+                    <constraint firstAttribute="bottom" secondItem="KlG-TV-D04" secondAttribute="bottom" id="X9D-Pb-ilW"/>
+                    <constraint firstItem="KlG-TV-D04" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="tK0-Fg-fFc"/>
+                    <constraint firstAttribute="trailing" secondItem="KlG-TV-D04" secondAttribute="trailing" id="xht-wE-dnp"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="amenitiesCV" destination="eEd-FQ-FCo" id="Fsz-Ad-hIP"/>
+                <outlet property="holderView" destination="KlG-TV-D04" id="ATN-El-SkB"/>
+            </connections>
+            <point key="canvasLocation" x="201.44927536231884" y="181.47321428571428"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemYellowColor">
+            <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

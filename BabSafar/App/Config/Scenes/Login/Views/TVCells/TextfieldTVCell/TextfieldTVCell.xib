@@ -125,6 +125,7 @@
                 <outlet property="textHolderView" destination="2A5-bb-CZd" id="m3m-cr-vfI"/>
                 <outlet property="titlelbl" destination="ckU-4A-Wqc" id="KZm-jG-K2O"/>
                 <outlet property="txtField" destination="EN1-AC-saY" id="KfW-c7-zig"/>
+                <outlet property="viewheight" destination="6ld-vC-XqL" id="ZEQ-Bo-QjJ"/>
             </connections>
             <point key="canvasLocation" x="263.768115942029" y="131.58482142857142"/>
         </tableViewCell>

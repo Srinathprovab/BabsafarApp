@@ -20,16 +20,16 @@ class ButtonTVCell: TableViewCell {
     @IBOutlet weak var titlelbl: UILabel!
     @IBOutlet weak var btn: UIButton!
     @IBOutlet weak var btnImg: UIImageView!
-    
     @IBOutlet weak var dualBtnsView: UIStackView!
     @IBOutlet weak var dualBtn1View: UIView!
     @IBOutlet weak var dualBtnlbl1: UILabel!
     @IBOutlet weak var dualBtn1: UIButton!
-    
     @IBOutlet weak var dualBtn2View: UIView!
     @IBOutlet weak var dualBtnlbl2: UILabel!
     @IBOutlet weak var dualBtn2: UIButton!
+    @IBOutlet weak var btnLeftConstraint: NSLayoutConstraint!
     
+    var key = String()
     var delegate:ButtonTVCellDelegate?
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -59,6 +59,25 @@ class ButtonTVCell: TableViewCell {
             btnView.isHidden = true
             dualBtnsView.isHidden = false
             break
+            
+        case "visa":
+            btnLeftConstraint.constant = 28
+            break
+            
+        case "filter":
+            btnLeftConstraint.constant = 17
+            titlelbl.textColor = .AppTabSelectColor
+            titlelbl.textAlignment = .left
+            btnView.backgroundColor = .WhiteColor
+            
+            break
+            
+        case "addroom":
+            btnView.backgroundColor = .AppTabSelectColor
+            btnLeftConstraint.constant = 18
+            titlelbl.textColor = .WhiteColor
+            titlelbl.font = UIFont.LatoMedium(size: 18)
+            break
         default:
             break
         }
@@ -86,6 +105,7 @@ class ButtonTVCell: TableViewCell {
         setupLabels(lbl: dualBtnlbl2, text: "Necessary Cookies", textcolor: .AppLabelColor, font: .LatoRegular(size: 18))
         dualBtn1.setTitle("", for: .normal)
         dualBtn2.setTitle("", for: .normal)
+        
         
     }
     

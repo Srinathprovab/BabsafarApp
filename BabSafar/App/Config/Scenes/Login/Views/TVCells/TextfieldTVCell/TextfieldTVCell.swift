@@ -26,6 +26,11 @@ class TextfieldTVCell: TableViewCell {
     @IBOutlet weak var forgetPwdBtn: UIButton!
     @IBOutlet weak var btnHeight: NSLayoutConstraint!
     @IBOutlet weak var showPassBtn: UIButton!
+    
+    @IBOutlet weak var viewheight: NSLayoutConstraint!
+    
+    
+    
     var delegate:TextfieldTVCellDelegate?
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -43,13 +48,14 @@ class TextfieldTVCell: TableViewCell {
     override func updateUI() {
         btnHeight.constant = 0
         titlelbl.text = cellInfo?.title
-        txtField.placeholder = cellInfo?.subTitle
-        
+        txtField.placeholder = cellInfo?.tempText
         txtField.tag = Int(cellInfo?.text ?? "") ?? 0
+        txtField.text = ""
         
         switch cellInfo?.key {
         case "email":
-            showPassView.isHidden = true
+//            showPassView.isHidden = true
+           
             self.txtField.isSecureTextEntry = false
         case "pwd":
             showPassView.isHidden = false
@@ -64,22 +70,27 @@ class TextfieldTVCell: TableViewCell {
             forgetPwdBtn.isHidden = true
             
         case "signup":
-            showPassView.isHidden = true
+//            showPassView.isHidden = true
             self.txtField.isSecureTextEntry = false
             forgetPwdBtn.isHidden = true
             
         case "cpwd":
-            showPassView.isHidden = true
+//            showPassView.isHidden = true
             self.txtField.isSecureTextEntry = true
             forgetPwdBtn.isHidden = true
             textHolderView.layer.borderColor = UIColor.lightGray.cgColor
             
         case "myacc":
-            showPassView.isHidden = true
+//            showPassView.isHidden = true
             self.txtField.isSecureTextEntry = true
             btnHeight.constant = 30
             forgetPwdBtn.isHidden = false
             forgetPwdBtn.setTitle("Change  password", for: .normal)
+            
+        case "visa":
+            self.viewheight.constant = 120
+            
+            break
         default:
             break
         }
@@ -87,10 +98,11 @@ class TextfieldTVCell: TableViewCell {
     
     
     func setupUI() {
+        showPassView.isHidden = true
         showPassBtn.setTitle("", for: .normal)
         holderView.backgroundColor = .WhiteColor
         textHolderView.backgroundColor = .WhiteColor
-        textHolderView.layer.borderColor = UIColor.AppBorderColor.cgColor
+        textHolderView.layer.borderColor = UIColor.lightGray.withAlphaComponent(0.5).cgColor
         textHolderView.layer.borderWidth = 1
         textHolderView.layer.cornerRadius = 4
         textHolderView.clipsToBounds = true

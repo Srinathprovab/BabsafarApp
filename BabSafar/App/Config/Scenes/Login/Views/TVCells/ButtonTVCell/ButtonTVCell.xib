@@ -131,9 +131,9 @@
                             <constraint firstItem="hXL-Us-Dt8" firstAttribute="leading" secondItem="54c-oR-Q55" secondAttribute="leading" constant="50" id="ccM-fi-uO3"/>
                             <constraint firstAttribute="bottom" secondItem="hXL-Us-Dt8" secondAttribute="bottom" constant="8" id="ehX-oS-hdJ"/>
                             <constraint firstItem="tmY-1t-J7N" firstAttribute="leading" secondItem="54c-oR-Q55" secondAttribute="leading" constant="16" id="fe4-pI-DNC"/>
-                            <constraint firstAttribute="trailing" secondItem="hXL-Us-Dt8" secondAttribute="trailing" constant="50" id="gK6-VE-Hrk"/>
                             <constraint firstItem="hXL-Us-Dt8" firstAttribute="top" secondItem="54c-oR-Q55" secondAttribute="top" constant="20" id="iTq-t8-VNR"/>
                             <constraint firstItem="tmY-1t-J7N" firstAttribute="top" secondItem="54c-oR-Q55" secondAttribute="top" constant="14" id="m3i-wk-lI9"/>
+                            <constraint firstItem="hXL-Us-Dt8" firstAttribute="centerX" secondItem="54c-oR-Q55" secondAttribute="centerX" id="sAE-KN-8Cs"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -148,6 +148,7 @@
             <connections>
                 <outlet property="btn" destination="8Fn-bz-FHb" id="Che-h1-wsL"/>
                 <outlet property="btnImg" destination="yIS-wf-KDw" id="r7G-ia-8Gh"/>
+                <outlet property="btnLeftConstraint" destination="ccM-fi-uO3" id="fJv-oH-ceJ"/>
                 <outlet property="btnView" destination="hXL-Us-Dt8" id="bHq-1k-8ra"/>
                 <outlet property="dualBtn1" destination="b8H-yQ-nyS" id="LuM-PR-BnJ"/>
                 <outlet property="dualBtn1View" destination="Geb-dg-IQA" id="lBN-ex-cUW"/>

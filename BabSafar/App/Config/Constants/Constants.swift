@@ -24,7 +24,8 @@ let KAccesstokenValue = ""
 var key = ""
 //var data : Data?
 var dateSelectKey = ""
-
+var adultsArray = [String]()
+var childArray = [String]()
 var BASE_URL = "https://provabdevelopment.com/babsafar/mobile_webservices/mobile/index.php/auth/"
 
 
@@ -35,11 +36,14 @@ struct ApiEndpoints {
     static let login = "mobile_login"
     static let register = "mobile_register_on_light_box"
     static let preflightsearchmobile = "pre_flight_search_mobile"
+    static let getairportcodelist = "get_airport_code_list"
+    
 }
 
 /*App messages*/
 struct Message {
-    static let internetConnectionError = "Please check your connection and try reconnecting to internet"
+   // static let internetConnectionError = "Please check your connection and try reconnecting to internet"
+    static let internetConnectionError = "no internet"
     static let sessionExpired = "Your session has been expired, please login again"
 }
 
@@ -47,22 +51,34 @@ struct Message {
 /*USER ENTERED DETAILS DEFAULTS*/
 
 struct UserDefaultsKeys {
-    static var departon = "depart_on"
-    static var returnon = "return_on"
-    static var adultCount = "Adult_Count"
-    static var childCount = "Child_Count"
-    static var journeyType = "Journey_Type"
-    static var origin = "Origin"
-    static var destination = "Destination"
-    static var cabinClass = "CabinClass"
-    static var departureDate = "Departure_Date"
     
+    static var dashboardTapSelected = "DashboardTapSelected"
     static var userLoggedIn = "userLoggedIn"
     static var loggedInStatus = "loggedInStatus"
     static var userid = "userid"
+    static var journeyType = "Journey_Type"
+    static var locationcity = "location_city"
+    static var fromCity = "fromCity"
+    static var toCity = "toCity"
     static var calDepDate = "calDepDate"
     static var calRetDate = "calRetDate"
+    static var adultCount = "Adult_Count"
+    static var childCount = "Child_Count"
+    static var hadultCount = "HAdult_Count"
+    static var hchildCount = "HChild_Count"
+    static var infantsCount = "Infants_Count"
+    static var selectClass = "select_class"
+    static var fromlocid = "from_loc_id"
+    static var tolocid = "to_loc_id"
+
+    static var select = "select"
+    static var checkin = "check_in"
+    static var checkout = "check _out"
+   
+    static var addTarvellerDetails = "addTarvellerDetails"
     
+    
+
 }
 
 

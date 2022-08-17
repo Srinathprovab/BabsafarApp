@@ -56,6 +56,28 @@ enum TVCellType {
     case BookedTravelDetailsTVCell
     case YourPrivacyTVCell
     case MultiCityTVCell
+    case TextViewTVCell
+    case CommonFromCityTVCell
+    case SearchLocationTFTVCell
+    case HotelsTVCell
+    case PopularFiltersTVCell
+    case HotelImagesTVCell
+    case TitleLabelTVCell
+    case RoomsTVcell
+    case RoomDetailsTVCell
+    case checkOptionsTVCell
+    case HotelDetailsTVCell
+    case AddAdultsOrGuestTVCell
+    case FlightDetailsTVCell
+    case FilterDepartureTVCell
+    case SliderTVCell
+    case ContactTVCell
+    case AboutusTVCell
+    case RoundTripFlightResultTVCell
+    case MultiCityTripFlightResultTVCell
+    
+    
+    
     
     
     

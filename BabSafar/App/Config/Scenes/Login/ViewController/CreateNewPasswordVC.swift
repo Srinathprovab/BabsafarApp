@@ -28,7 +28,6 @@ class CreateNewPasswordVC: BaseTableVC {
         setupUI()
     }
     
-    
     func setupUI() {
         nav.titlelbl.text = "Create New Password"
         nav.backBtn.addTarget(self, action: #selector(didTapOnBackBtn(_:)), for: .touchUpInside)
@@ -36,13 +35,12 @@ class CreateNewPasswordVC: BaseTableVC {
         setuptv()
     }
     
-    
     func setuptv() {
         tablerow.removeAll()
         tablerow.append(TableRow(title:"enter the email associated with your account and we’ll send an email with instructions to reset your password.",key: "cpwd",cellType:.LabelTVCell))
-        tablerow.append(TableRow(title:"Old Password",subTitle: "Old Password",key: "cpwd", text: "1",cellType:.TextfieldTVCell))
-        tablerow.append(TableRow(title:"New password",subTitle: "New password",key: "cpwd",text: "2",cellType:.TextfieldTVCell))
-        tablerow.append(TableRow(title:"Confirm password",subTitle: "Confirm password",key: "cpwd",text: "3",cellType:.TextfieldTVCell))
+        tablerow.append(TableRow(title:"Old Password",key: "cpwd", text: "1", tempText: "Old Password",cellType:.TextfieldTVCell))
+        tablerow.append(TableRow(title:"New password",key: "cpwd", text: "2", tempText: "New password",cellType:.TextfieldTVCell))
+        tablerow.append(TableRow(title:"Confirm password",key: "cpwd", text: "3", tempText: "Confirm password",cellType:.TextfieldTVCell))
         tablerow.append(TableRow(title:"Reset  ",cellType:.ButtonTVCell))
         commonTVData = tablerow
         commonTableView.reloadData()
@@ -87,4 +85,6 @@ class CreateNewPasswordVC: BaseTableVC {
             present(vc, animated: true)
         }
     }
+    
+    
 }

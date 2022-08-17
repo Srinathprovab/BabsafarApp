@@ -12,6 +12,9 @@ import UIKit
 enum Storyboard: String {
     case Main
     case Login
+    case Visa
+    case Insurance
+    case Hotels
     
     var name: String {
         return self.rawValue.capitalizingFirstLetter()

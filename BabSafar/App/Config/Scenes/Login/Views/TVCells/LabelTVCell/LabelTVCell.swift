@@ -9,6 +9,7 @@ import UIKit
 
 protocol LabelTVCellDelegate {
     func didTapOnCloseBtn(cell:LabelTVCell)
+    func didTapOnShowMoreBtn(cell:LabelTVCell)
 }
 
 class LabelTVCell: TableViewCell {
@@ -18,10 +19,13 @@ class LabelTVCell: TableViewCell {
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var menuOptionImage: UIImageView!
     @IBOutlet weak var menuOptionWidthConstaraint: NSLayoutConstraint!
-    
     @IBOutlet weak var lblLeftConstraint: NSLayoutConstraint!
+    @IBOutlet weak var showMoreBtn: UIButton!
+    @IBOutlet weak var viewHeight: NSLayoutConstraint!
     
     var delegate:LabelTVCellDelegate?
+    var showMoreBool = true
+    var titleKey = String()
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -34,15 +38,21 @@ class LabelTVCell: TableViewCell {
         closeButton.isHidden = true
         
         menuOptionWidthConstaraint.constant = 0
-        menuOptionImage.image = UIImage(named: "facebook")
+       // menuOptionImage.image = UIImage(named: "facebook")
         menuOptionImage.contentMode = .scaleToFill
+        
+        showMoreBtn.isHidden = true
+        showMoreBtn.setTitle("+ Show More", for: .normal)
+        showMoreBtn.setTitleColor(.AppTabSelectColor, for: .normal)
+        showMoreBtn.titleLabel?.font = UIFont.LatoMedium(size: 15)
     }
     
     override func updateUI() {
         titlelbl.text = cellInfo?.title
-        
+        self.titleKey = cellInfo?.key1 ?? ""
         
         switch cellInfo?.key {
+            
         case "showbtn":
             closeButton.isHidden = false
             break
@@ -86,6 +96,40 @@ class LabelTVCell: TableViewCell {
             titlelbl.textColor = HexColor("#5B5B5B")
             break
             
+        case "modifyhotel":
+            closeButton.isHidden = false
+            titlelbl.textAlignment = .center
+            break
+            
+            
+        case "filter":
+            if showMoreBool == true {
+                showMoreBtn.isHidden = false
+            }else {
+                showMoreBtn.isHidden = true
+                viewHeight.constant = 0
+            }
+            closeButton.isHidden = true
+            menuOptionImage.isHidden = true
+            titlelbl.isHidden = true
+            break
+            
+            
+        case "reset":
+            closeButton.isHidden = false
+            closeButton.setImage(UIImage(named: ""), for: .normal)
+            closeButton.setTitle("Reset", for: .normal)
+            closeButton.titleLabel?.textColor = .AppTabSelectColor
+            closeButton.titleLabel?.font = UIFont.LatoRegular(size: 16)
+            break
+            
+            
+        case "dropdown":
+            closeButton.isHidden = false
+            closeButton.setImage(UIImage(named: "down"), for: .normal)
+            closeButton.setTitle("", for: .normal)
+            break
+            
         default:
             break
         }
@@ -102,8 +146,26 @@ class LabelTVCell: TableViewCell {
         lbl.textColor = textcolor
         lbl.font = font
     }
+    
+    
+    func addAdultsDetailsSetup() {
+        closeButton.isHidden = true
+        showMoreBtn.isHidden = true
+        lblLeftConstraint.constant = 40
+        menuOptionImage.isHidden = false
+        menuOptionImage.image = UIImage(named: "check")
+    }
+    
+    
     @IBAction func didTapOnCloseBtn(_ sender: Any) {
         delegate?.didTapOnCloseBtn(cell: self)
     }
+    
+    
+    @IBAction func didTapOnShowMoreBtn(_ sender: Any) {
+        delegate?.didTapOnShowMoreBtn(cell: self)
+    }
+    
+    
     
 }

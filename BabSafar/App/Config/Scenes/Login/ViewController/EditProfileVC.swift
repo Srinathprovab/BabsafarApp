@@ -76,11 +76,11 @@ class EditProfileVC: BaseTableVC {
         
         tablerow.append(TableRow(height:10,cellType:.EmptyTVCell))
         tablerow.append(TableRow(key:"gender",cellType:.SelectGenderTVCell))
-        tablerow.append(TableRow(title:"First Name",subTitle: "First Name",key: "signup", text: "1",cellType:.TextfieldTVCell))
-        tablerow.append(TableRow(title:"Last Name",subTitle: "Last Name",key: "signup",text: "2",cellType:.TextfieldTVCell))
-        tablerow.append(TableRow(title:"Mobile Number",subTitle: "+961",key: "signup",text: "3",cellType:.TextfieldTVCell))
-        tablerow.append(TableRow(title:"Email address",subTitle: "Address",key: "signup",text: "4",cellType:.TextfieldTVCell))
-        tablerow.append(TableRow(title:"Password",subTitle: "Password",key: "myacc",text: "5",cellType:.TextfieldTVCell))
+        tablerow.append(TableRow(title:"First Name",key: "signup", text: "1", tempText: "First Name",cellType:.TextfieldTVCell))
+        tablerow.append(TableRow(title:"Last Name",key: "signup", text: "2", tempText: "Last Name",cellType:.TextfieldTVCell))
+        tablerow.append(TableRow(title:"Mobile Number",key: "signup", text: "3", tempText: "+961",cellType:.TextfieldTVCell))
+        tablerow.append(TableRow(title:"Email address",key: "signup", text: "4", tempText: "Address",cellType:.TextfieldTVCell))
+        tablerow.append(TableRow(title:"Password",key: "myacc", text: "5", tempText: "Password",cellType:.TextfieldTVCell))
         tablerow.append(TableRow(title:"Update",cellType:.ButtonTVCell))
         tablerow.append(TableRow(height:30,cellType:.EmptyTVCell))
         commonTVData = tablerow

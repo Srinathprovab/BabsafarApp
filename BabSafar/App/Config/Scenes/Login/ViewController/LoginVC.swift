@@ -6,10 +6,9 @@
 //
 
 import UIKit
+import Alamofire
 
 class LoginVC: BaseTableVC, RegisterViewModelProtocal {
-    
-    
     
     
     @IBOutlet weak var holderView: UIView!
@@ -59,14 +58,15 @@ class LoginVC: BaseTableVC, RegisterViewModelProtocal {
         tablerow.append(TableRow(height:20,cellType:.EmptyTVCell))
         tablerow.append(TableRow(key:"showbtn",cellType:.LabelTVCell))
         tablerow.append(TableRow(cellType:.LoignOrSignupBtnsTVCell))
-        tablerow.append(TableRow(title:"Email address",subTitle: "Address",key: "email",text: "1",cellType:.TextfieldTVCell))
-        tablerow.append(TableRow(title:"Password",subTitle: "Password",key: "pwd",text: "2",cellType:.TextfieldTVCell))
+        tablerow.append(TableRow(title:"Email address",key: "email", text: "1", tempText: "Email ID",cellType:.TextfieldTVCell))
+        tablerow.append(TableRow(title:"Password",key: "pwd", text: "2", tempText: "Password",cellType:.TextfieldTVCell))
         tablerow.append(TableRow(title:"Log In",cellType:.ButtonTVCell))
         tablerow.append(TableRow(cellType:.UnderLineTVCell))
         tablerow.append(TableRow(cellType:.SignUpWithTVCell))
         tablerow.append(TableRow(height:30,cellType:.EmptyTVCell))
         commonTVData = tablerow
         commonTableView.reloadData()
+        
     }
     
     
@@ -76,16 +76,18 @@ class LoginVC: BaseTableVC, RegisterViewModelProtocal {
         tablerow.append(TableRow(height:20,cellType:.EmptyTVCell))
         tablerow.append(TableRow(key:"showbtn",cellType:.LabelTVCell))
         tablerow.append(TableRow(cellType:.LoignOrSignupBtnsTVCell))
-        tablerow.append(TableRow(title:"First Name",subTitle: "First Name",key: "signup",text: "1",cellType:.TextfieldTVCell))
-        tablerow.append(TableRow(title:"Last Name",subTitle: "Last Name",key: "signup",text: "2",cellType:.TextfieldTVCell))
-        tablerow.append(TableRow(title:"Mobile Number",subTitle: "+961",key: "signup",text: "3",cellType:.TextfieldTVCell))
-        tablerow.append(TableRow(title:"Email address",subTitle: "Address",key: "signup",text: "4",cellType:.TextfieldTVCell))
-        tablerow.append(TableRow(title:"Password",subTitle: "Password",key: "signuppwd",text: "5",cellType:.TextfieldTVCell))
-        tablerow.append(TableRow(title:"Conform Password",subTitle: "Password",key: "signuppwd",text: "6",cellType:.TextfieldTVCell))
+        tablerow.append(TableRow(title:"First Name",key: "signup", text: "1", tempText: "First Name",cellType:.TextfieldTVCell))
+        tablerow.append(TableRow(title:"Last Name",key: "signup", text: "2", tempText: "Last Name",cellType:.TextfieldTVCell))
+        tablerow.append(TableRow(title:"Mobile Number",key: "signup", text: "3", tempText: "+961",cellType:.TextfieldTVCell))
+        tablerow.append(TableRow(title:"Email address",key: "signup", text: "4", tempText: "Address",cellType:.TextfieldTVCell))
+        tablerow.append(TableRow(title:"Password",key: "signuppwd", text: "5", tempText: "Password",cellType:.TextfieldTVCell))
+        tablerow.append(TableRow(title:"Conform Password",key: "signuppwd", text: "6", tempText: "Password",cellType:.TextfieldTVCell))
         tablerow.append(TableRow(title:"Sign Up",cellType:.ButtonTVCell))
         tablerow.append(TableRow(height:30,cellType:.EmptyTVCell))
         commonTVData = tablerow
         commonTableView.reloadData()
+        
+        
     }
     
     
@@ -143,6 +145,7 @@ class LoginVC: BaseTableVC, RegisterViewModelProtocal {
                 payload["username"] = uname
                 payload["password"] = password
                 regViewModel?.CallLoginAPI(dictParam: payload)
+                
             }
         }
     }
@@ -203,6 +206,7 @@ class LoginVC: BaseTableVC, RegisterViewModelProtocal {
         
     }
     
+    
     override func didTapOnLoginBtn(cell: LoignOrSignupBtnsTVCell) {
         loginKey = "login"
         cell.loginView.backgroundColor = .AppTabSelectColor
@@ -250,7 +254,6 @@ class LoginVC: BaseTableVC, RegisterViewModelProtocal {
             defaults.set(true, forKey: UserDefaultsKeys.userLoggedIn)
             defaults.set("2260", forKey: UserDefaultsKeys.userid)
             print(response.user_id)
-            
         }
     }
     

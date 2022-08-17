@@ -10,6 +10,7 @@ import Reachability
 import MBProgressHUD
 import Network
 import Alamofire
+import SwiftyJSON
 
 public enum HTTPMethod: String {
     case get = "GET"
@@ -298,18 +299,8 @@ class ServiceManager {
     static func postOrPutApiCall<T: Decodable>(authorization: Bool = false, endPoint: String, urlParams: Dictionary<String,String>? = nil, parameters: NSDictionary? = nil, methodType: HTTPMethod = .post, resultType: T.Type,p:[String:Any], completionHandler:@escaping(Bool, _ result: T?, String?) -> Void) {
         
         
-        do {
-            let data1 =  try JSONSerialization.data(withJSONObject: p, options: JSONSerialization.WritingOptions.prettyPrinted) // first of all convert json to the data
-            let convertedString = String(data: data1, encoding: String.Encoding.utf8) // the data will be converted to the string
-            print("\(convertedString ?? "default value")" )
-        } catch let myJSONError {
-            print(myJSONError)
-        }
-        
-        
         if !isConnection() {
             print("Error: you are offline")
-            
             completionHandler(false, nil, ApiError.networkError.message)
             return
         }
@@ -351,10 +342,12 @@ class ServiceManager {
             
             do {
                 
-                // request.httpBody = p.percentEncoded()
+                //  request.httpBody = p.percentEncoded()
                 request.httpBody = try JSONSerialization.data(withJSONObject: params, options: .prettyPrinted) // pass dictionary to data object and set it as request body
                 
-                
+                let string = String(data: request.httpBody!, encoding: .utf8)
+                let jsonString = JSON(string ?? "")
+                print(jsonString)
                 
             } catch let error {
                 print(error.localizedDescription)
@@ -362,7 +355,7 @@ class ServiceManager {
             }
         }
         
-        print("Request for \(endPoint) :: \(request)")
+        //  print("Request for \(endPoint) :: \(request)")
         
         
         
@@ -435,50 +428,42 @@ class ServiceManager {
         
         
         
+        let serializer = DataResponseSerializer(emptyResponseCodes: Set([200, 204, 205]))
         
         AF.request(
             completeEndpointURL,
             method: .post,
-            parameters: parameters as! Parameters,
+            parameters: (parameters as! Parameters),
             encoding: URLEncoding.default,
-            headers: nil).responseJSON { (responseData) -> Void in
-                if responseData.value != nil {
-                    //do something with data
-                    print(responseData.value as Any)
-                    
-                    //                    do{
-                    //                        let jsonData = try JSONSerialization.data(withJSONObject: responseData.value as Any, options: [])
-                    //
-                    //                        if let jsonResponse = try? JSONDecoder().decode(T.self, from: jsonData) {
-                    //
-                    //                            completionHandler(true, jsonResponse as? T, nil)
-                    //                        }
-                    //                    }catch {
-                    //                        print("JSONSerialization error")
-                    //                    }
-                    
-                    // Parsing the data:
-                    
+            headers: nil).validate(statusCode: [200,500]).responseJSON { (responseData) -> Void in
+                
+                switch responseData.result {
+                case .success:
+                    print("Parsing the data:")
                     do{
                         
-                        let jsonData = try JSONSerialization.data(withJSONObject: responseData.value as Any, options: [])
                         let decoder = JSONDecoder()
                         decoder.keyDecodingStrategy = .convertFromSnakeCase
-                        guard let result = try decoder.decode(T?.self, from: jsonData)else {
+                        guard let result = try decoder.decode(T?.self, from: responseData.data!)else {
                             print("Error: Cannot decode the object")
                             completionHandler(false, nil, "errorrrrrrr")
                             return
                         }
                         
-                        completionHandler(true, result, nil)
                         
+                        completionHandler(true, result, nil)
                     }catch{
                         completionHandler(false, nil, ApiError.unknown.message)
                     }
+                    break
                     
-                    
-                }else {
+                case .failure(let error):
+                    print("error ----- \(error)")
                     completionHandler(false, nil, ApiError.unknown.message)
+                    break
+                    
+                default:
+                    break
                 }
             }
         

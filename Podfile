@@ -16,8 +16,10 @@ target 'BabSafar' do
   pod 'Toast-Swift', '~> 5.0.1'
   pod 'JTAppleCalendar', '~> 7.1.6'
   pod 'Alamofire'
-  pod 'SideMenuSwift', '~> 2.0'
   pod 'SwiftRangeSlider', '~> 2.0'
+  pod 'DropDown'
+  pod 'MARKRangeSlider'
+  pod 'TTRangeSlider'
 
   target 'BabSafarTests' do
     inherit! :search_paths
