@@ -195,7 +195,7 @@
 		9869BE90A4E205295E92E1930E059FC0 /* IQUIView+Hierarchy.h in Headers */ = {isa = PBXBuildFile; fileRef = D431E59ECED7BAB7B1A73DAB1DBA8D99 /* IQUIView+Hierarchy.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9917CEAD8CE1CEB7FEC031255AED8FA8 /* SDWebImageError.h in Headers */ = {isa = PBXBuildFile; fileRef = 2AD5E268B2B07965835A07556FFFD8BA /* SDWebImageError.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		994327308CC7ECE7850C804FA0EA5F21 /* NSImage+Compatibility.m in Sources */ = {isa = PBXBuildFile; fileRef = 1225245285C5785D6D30B8E9ECA9739B /* NSImage+Compatibility.m */; };
-		996F40F26849BA52FA35085D6E3FDC51 /* MARKRangeSlider-MARKRangeSlider in Resources */ = {isa = PBXBuildFile; fileRef = 4E80A1B13E8896061B58150D3096574A /* MARKRangeSlider-MARKRangeSlider */; };
+		996F40F26849BA52FA35085D6E3FDC51 /* MARKRangeSlider.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4E80A1B13E8896061B58150D3096574A /* MARKRangeSlider.bundle */; };
 		99709E1C4991C49EE5601FF9461B2969 /* SDImageHEICCoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 839E753375DD1500241BC9EAE7EEA0DB /* SDImageHEICCoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		99D058E53EFEE3AC4857CDE3DBA5C004 /* ParameterEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259AF1E761BA8FEC4EE48CFBE24ADC8A /* ParameterEncoder.swift */; };
 		9C096C865369C21D252A0F4F90BE21D9 /* SDWeakProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = C3F887A57DBFEB9E2FF10A1F8DF2A156 /* SDWeakProxy.h */; settings = {ATTRIBUTES = (Private, ); }; };
@@ -616,7 +616,7 @@
 		4B9416131931E8C51E587BFF1432ECB7 /* UIImage+Transform.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Transform.m"; path = "SDWebImage/Core/UIImage+Transform.m"; sourceTree = "<group>"; };
 		4BC4A18477F9F951732EB8E0FE8F9CAB /* ReachabilitySwift-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "ReachabilitySwift-dummy.m"; sourceTree = "<group>"; };
 		4CFD7B35FE3CAA95B2988C91DE716688 /* Alamofire-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Alamofire-Info.plist"; sourceTree = "<group>"; };
-		4E80A1B13E8896061B58150D3096574A /* MARKRangeSlider-MARKRangeSlider */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "MARKRangeSlider-MARKRangeSlider"; path = MARKRangeSlider.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		4E80A1B13E8896061B58150D3096574A /* MARKRangeSlider.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MARKRangeSlider.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		4EDC1D28CC6AC77B1F1C3F9314C1044C /* TTRangeSlider-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "TTRangeSlider-prefix.pch"; sourceTree = "<group>"; };
 		4FE6D79CB855B3DDF394FEB92BF8BB54 /* Toast-Swift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Toast-Swift.debug.xcconfig"; sourceTree = "<group>"; };
 		501509DBAB7C7077A3F5DE97A1A5337D /* SDWebImageCacheKeyFilter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SDWebImageCacheKeyFilter.m; path = SDWebImage/Core/SDWebImageCacheKeyFilter.m; sourceTree = "<group>"; };
@@ -737,7 +737,7 @@
 		99B7C2677DE682AC2596A73FAC5BEA8B /* UIImageView+HighlightedWebCache.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIImageView+HighlightedWebCache.h"; path = "SDWebImage/Core/UIImageView+HighlightedWebCache.h"; sourceTree = "<group>"; };
 		9B6725B782188F18CB76A740433F14E4 /* DropDown */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = DropDown; path = DropDown.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C15E16F00EDBAC82674C9B98538CD96 /* UIImage+ExtendedCacheData.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIImage+ExtendedCacheData.m"; path = "SDWebImage/Core/UIImage+ExtendedCacheData.m"; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9D96F3EBC8680F2BF5326D8D23A121C7 /* SDImageIOCoder.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SDImageIOCoder.m; path = SDWebImage/Core/SDImageIOCoder.m; sourceTree = "<group>"; };
 		9DCF6565A7E76B8E7A362CE7B4163B21 /* SDWebImageCacheKeyFilter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDWebImageCacheKeyFilter.h; path = SDWebImage/Core/SDWebImageCacheKeyFilter.h; sourceTree = "<group>"; };
 		9DFCB60968F04AA2317E14874FD9BEC1 /* rangeSliderTrack@3x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "rangeSliderTrack@3x.png"; path = "Resources/rangeSliderTrack@3x.png"; sourceTree = "<group>"; };
@@ -1043,7 +1043,6 @@
 				311C242B63A5DEF8AAB8C29065F7367D /* MBProgressHUD.m */,
 				4F2B7C6F8B8C1844F86402D73F68F8BF /* Support Files */,
 			);
-			name = MBProgressHUD;
 			path = MBProgressHUD;
 			sourceTree = "<group>";
 		};
@@ -1082,7 +1081,6 @@
 				15AD15B888BF6613C187C335C24F9EDC /* Resources */,
 				3D827A723E50DFDC67A5913F8E9337AF /* Support Files */,
 			);
-			name = DropDown;
 			path = DropDown;
 			sourceTree = "<group>";
 		};
@@ -1143,7 +1141,6 @@
 				A65C6C7C3CB65DB60F574973FADD4A0C /* Core */,
 				A3D3CBD08D536211CFDB2DF8E644DFED /* Support Files */,
 			);
-			name = SDWebImage;
 			path = SDWebImage;
 			sourceTree = "<group>";
 		};
@@ -1170,7 +1167,7 @@
 				98527D7196957AAB07B79E2E2AFDE23E /* IQKeyboardManager */,
 				A0C8E428D980D3C9293A3C2BF740F0CD /* JTAppleCalendar */,
 				DED0AAB1584AC92F7B24D2EDA7BF14D6 /* MARKRangeSlider */,
-				4E80A1B13E8896061B58150D3096574A /* MARKRangeSlider-MARKRangeSlider */,
+				4E80A1B13E8896061B58150D3096574A /* MARKRangeSlider.bundle */,
 				8B8FAB0D627B17EDE1366984278705D9 /* MBProgressHUD */,
 				4776117879946FF36D6EB026A177C0D7 /* Pods-BabSafar */,
 				F12B4FE96C4038B20050733A9E1C3729 /* Pods-BabSafar-BabSafarUITests */,
@@ -1233,7 +1230,6 @@
 				D7DF2BFD26DAE84A272C01A44494F0D9 /* IQUIViewController+Additions.m */,
 				EDD57FF0179E1EAF8A681CA162241951 /* Support Files */,
 			);
-			name = IQKeyboardManager;
 			path = IQKeyboardManager;
 			sourceTree = "<group>";
 		};
@@ -1273,7 +1269,6 @@
 				22DD6B42171411B8E3D6DA5FA51B0749 /* Toast.swift */,
 				99224CD790C0532E3DD69D6FA0AC7BB0 /* Support Files */,
 			);
-			name = "Toast-Swift";
 			path = "Toast-Swift";
 			sourceTree = "<group>";
 		};
@@ -1285,7 +1280,6 @@
 				C459FCF73F903B30820E0590CEA27E4A /* RangeSliderTrack.swift */,
 				18FCA9FEDF7E77AF49F3EFD877AABBCF /* Support Files */,
 			);
-			name = SwiftRangeSlider;
 			path = SwiftRangeSlider;
 			sourceTree = "<group>";
 		};
@@ -1295,7 +1289,6 @@
 				D68DDBE8B186B8A5938DE289FD44F701 /* Reachability.swift */,
 				365F5D9493F27804C9FD71602D043A3F /* Support Files */,
 			);
-			name = ReachabilitySwift;
 			path = ReachabilitySwift;
 			sourceTree = "<group>";
 		};
@@ -1387,7 +1380,6 @@
 				67FA0A604FD0E908FD37128CFACDB1C7 /* Validation.swift */,
 				A0AC2357D2226E941A12331E49E0A280 /* Support Files */,
 			);
-			name = Alamofire;
 			path = Alamofire;
 			sourceTree = "<group>";
 		};
@@ -1399,7 +1391,6 @@
 				ACE37069FC917863E3339D296302F920 /* TTRangeSliderDelegate.h */,
 				45B8B81337FFD682F81452F2FFCE08D4 /* Support Files */,
 			);
-			name = TTRangeSlider;
 			path = TTRangeSlider;
 			sourceTree = "<group>";
 		};
@@ -1666,7 +1657,6 @@
 				942D8F6C14F7CA3EE9D7469F9032D3B2 /* UserInteractionFunctions.swift */,
 				84C0AD95E08A71399DBC8AB807941473 /* Support Files */,
 			);
-			name = JTAppleCalendar;
 			path = JTAppleCalendar;
 			sourceTree = "<group>";
 		};
@@ -1676,7 +1666,6 @@
 				62E53E2E61DB0E4684B28F0B9F5D59E5 /* SwiftyJSON.swift */,
 				837EC0A9333ED5D7E16E08F0AD445C38 /* Support Files */,
 			);
-			name = SwiftyJSON;
 			path = SwiftyJSON;
 			sourceTree = "<group>";
 		};
@@ -1732,7 +1721,6 @@
 				92BFA7141C8B207D6DBD3377D4280651 /* Resources */,
 				AEBD2557766200DB0017E96E463B7709 /* Support Files */,
 			);
-			name = MARKRangeSlider;
 			path = MARKRangeSlider;
 			sourceTree = "<group>";
 		};
@@ -2071,7 +2059,7 @@
 			);
 			name = "MARKRangeSlider-MARKRangeSlider";
 			productName = MARKRangeSlider;
-			productReference = 4E80A1B13E8896061B58150D3096574A /* MARKRangeSlider-MARKRangeSlider */;
+			productReference = 4E80A1B13E8896061B58150D3096574A /* MARKRangeSlider.bundle */;
 			productType = "com.apple.product-type.bundle";
 		};
 		421B6ABF460857FE6CA2905EFB5A4F74 /* JTAppleCalendar */ = {
@@ -2314,7 +2302,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				996F40F26849BA52FA35085D6E3FDC51 /* MARKRangeSlider-MARKRangeSlider in Resources */,
+				996F40F26849BA52FA35085D6E3FDC51 /* MARKRangeSlider.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3215,7 +3203,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
 				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				SYMROOT = "${SRCROOT}/../build";
 			};
@@ -3297,6 +3285,7 @@
 			baseConfigurationReference = 50690F430BA346FFBEB2A40164600A20 /* MARKRangeSlider.release.xcconfig */;
 			buildSettings = {
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/MARKRangeSlider";
+				DEVELOPMENT_TEAM = 5TLY5PME9K;
 				IBSC_MODULE = MARKRangeSlider;
 				INFOPLIST_FILE = "Target Support Files/MARKRangeSlider/ResourceBundle-MARKRangeSlider-MARKRangeSlider-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -3872,6 +3861,7 @@
 			baseConfigurationReference = 6AB7C63BF7B970D278FD15307224A99B /* MARKRangeSlider.debug.xcconfig */;
 			buildSettings = {
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/MARKRangeSlider";
+				DEVELOPMENT_TEAM = 5TLY5PME9K;
 				IBSC_MODULE = MARKRangeSlider;
 				INFOPLIST_FILE = "Target Support Files/MARKRangeSlider/ResourceBundle-MARKRangeSlider-MARKRangeSlider-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;

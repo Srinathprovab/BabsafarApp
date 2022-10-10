@@ -28,6 +28,7 @@ class AmenitiesTVCell: UITableViewCell {
     
     
     func setupCV() {
+        
         holderView.backgroundColor = .WhiteColor
         let nib = UINib(nibName: "AmenitiesCVCell", bundle: nil)
         amenitiesCV.register(nib, forCellWithReuseIdentifier: "cell")

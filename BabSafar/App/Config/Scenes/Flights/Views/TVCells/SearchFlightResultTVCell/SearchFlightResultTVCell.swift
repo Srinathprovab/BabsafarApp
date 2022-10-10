@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import SDWebImage
+
 protocol SearchFlightResultTVCellDelegate {
     func didTapOnViewVoucherBtn(cell:SearchFlightResultTVCell)
 }
@@ -42,6 +44,7 @@ class SearchFlightResultTVCell: TableViewCell {
     @IBOutlet weak var holderViewTopConstraint: NSLayoutConstraint!
     
     var delegate:SearchFlightResultTVCellDelegate?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -56,6 +59,21 @@ class SearchFlightResultTVCell: TableViewCell {
     
     
     override func updateUI() {
+        
+        
+        
+        titlelbl.text = cellInfo?.title
+        self.airwaysLogoImg.sd_setImage(with: URL(string: cellInfo?.image ?? ""), placeholderImage:UIImage(contentsOfFile:"placeholder.png"))
+        fromCityTimelbl.text = cellInfo?.text
+        fromCityShortlbl.text = cellInfo?.tempText
+        toCityTimelbl.text = cellInfo?.headerText
+        toCityShortlbl.text = cellInfo?.buttonTitle
+        hourslbl.text = cellInfo?.questionType
+        noStopslbl.text = cellInfo?.questionBase
+        
+        kwdPricelbl.text = cellInfo?.subTitle
+        
+        
         switch cellInfo?.key {
         case "booked":
             shadowView(yourView: holderView)
@@ -152,6 +170,12 @@ class SearchFlightResultTVCell: TableViewCell {
         yourView.layer.shadowOpacity = 0.3
         yourView.layer.shadowOffset = CGSize.zero
         yourView.layer.shadowRadius = 6
+    }
+    
+    
+    func hidePerpersonLbl() {
+        perPersonlbl.isHidden = true
+        setupLabels(lbl: kwdPricelbl, text: "", textcolor: .AppLabelColor, font: .LatoSemibold(size: 12))
     }
     
     @IBAction func didTapOnViewVoucherBtn(_ sender: Any) {

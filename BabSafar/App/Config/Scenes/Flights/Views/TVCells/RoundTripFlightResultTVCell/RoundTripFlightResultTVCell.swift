@@ -17,6 +17,9 @@ class RoundTripFlightResultTVCell: TableViewCell {
     
     var delegate:RoundTripFlightResultTVCellDelegate?
     var arrayCount = Int()
+    
+    var rflight_details : Flight_details?
+    var totalPrice = String()
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -30,8 +33,19 @@ class RoundTripFlightResultTVCell: TableViewCell {
     
     
     override func updateUI() {
-        arrayCount = cellInfo?.characterLimit ?? 2
-        tvHeight.constant = CGFloat(arrayCount * 161)
+        
+        totalPrice = cellInfo?.headerText ?? ""
+        //        selectedResult = cellInfo?.TotalQuestions ?? ""
+        //        taxes = cellInfo?.questionBase ?? ""
+        //        APICurrencyType = cellInfo?.questionType ?? ""
+        //
+        //        kwdPrice = cellInfo?.title ?? ""
+        
+        self.rflight_details = cellInfo?.moreData as? Flight_details
+        arrayCount = rflight_details?.summary?.count ?? 0
+        tvHeight.constant = CGFloat(arrayCount * 155)
+        roundTripTV.reloadData()
+        
     }
     
     func setupUI() {
@@ -61,7 +75,7 @@ class RoundTripFlightResultTVCell: TableViewCell {
 
 extension RoundTripFlightResultTVCell:UITableViewDataSource,UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return arrayCount
+        return rflight_details?.summary?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -72,6 +86,27 @@ extension RoundTripFlightResultTVCell:UITableViewDataSource,UITableViewDelegate 
             cell.holderView.layer.cornerRadius = 0
             cell.holderView.clipsToBounds = true
             cell.holderView.layer.borderColor = UIColor.clear.cgColor
+            
+            let data = rflight_details?.summary
+            cell.kwdPricelbl.text = self.totalPrice
+            cell.titlelbl.text = "\(data?[indexPath.row].operator_name ?? "")(\(data?[indexPath.row].operator_code ?? ""))"
+            cell.airwaysLogoImg.sd_setImage(with: URL(string: "\(data?[indexPath.row].operator_image ?? "")"), placeholderImage:UIImage(contentsOfFile:"placeholder.png"))
+            
+            cell.fromCityShortlbl.text = "\(data?[indexPath.row].origin?.city ?? "")(\(data?[indexPath.row].origin?.loc ?? ""))"
+            cell.fromCityTimelbl.text = data?[indexPath.row].origin?.time
+            cell.toCityShortlbl.text = "\(data?[indexPath.row].destination?.city ?? "")(\(data?[indexPath.row].destination?.loc ?? ""))"
+            cell.toCityTimelbl.text = data?[indexPath.row].destination?.time
+            cell.hourslbl.text = data?[indexPath.row].duration
+            let no_of_stops = String(data?[indexPath.row].no_of_stops ?? 0)
+            cell.noStopslbl.text = "\(no_of_stops) stops"
+            
+            
+            if indexPath.row == 1 {
+                cell.hidePerpersonLbl()
+                cell.kwdPricelbl.text = data?[indexPath.row].destination?.date
+            }
+            
+            
             ccell = cell
         }
         return ccell
@@ -79,6 +114,9 @@ extension RoundTripFlightResultTVCell:UITableViewDataSource,UITableViewDelegate 
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let data = rflight_details?.summary
+        
         gotoRoundTripBaggageIntoVC()
     }
     

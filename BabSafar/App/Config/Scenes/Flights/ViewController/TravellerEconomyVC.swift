@@ -27,13 +27,22 @@ class TravellerEconomyVC: BaseTableVC {
     
     
     override func viewWillAppear(_ animated: Bool) {
-       
+        
         if let selectedTab = defaults.string(forKey: UserDefaultsKeys.dashboardTapSelected){
-            if selectedTab == "flights" {
-                adultsCount = Int(defaults.string(forKey: UserDefaultsKeys.adultCount) ?? "1") ?? 0
-                childCount = Int(defaults.string(forKey: UserDefaultsKeys.childCount) ?? "0") ?? 0
-                infantsCount = Int(defaults.string(forKey: UserDefaultsKeys.adultCount) ?? "0") ?? 0
-                
+            if selectedTab == "Flights" {
+                if let journeyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
+                    if journeyType == "oneway" {
+                        adultsCount = Int(defaults.string(forKey: UserDefaultsKeys.adultCount) ?? "1") ?? 0
+                        childCount = Int(defaults.string(forKey: UserDefaultsKeys.childCount) ?? "0") ?? 0
+                        infantsCount = Int(defaults.string(forKey: UserDefaultsKeys.infantsCount) ?? "0") ?? 0
+                    }else if journeyType == "circle"{
+                        adultsCount = Int(defaults.string(forKey: UserDefaultsKeys.radultCount) ?? "1") ?? 0
+                        childCount = Int(defaults.string(forKey: UserDefaultsKeys.rchildCount) ?? "0") ?? 0
+                        infantsCount = Int(defaults.string(forKey: UserDefaultsKeys.rinfantsCount) ?? "0") ?? 0
+                    }else {
+                        
+                    }
+                }
                 
             }else {
                 adultsCount = Int(defaults.string(forKey: UserDefaultsKeys.hadultCount) ?? "1") ?? 1
@@ -122,10 +131,14 @@ class TravellerEconomyVC: BaseTableVC {
     override func didTapOnIncrementButton(cell: TravellerEconomyTVCell) {
         
         
-        if (adultsCount + childCount) > 8 ||  (adultsCount + childCount + infantsCount) > 8{
+        
+        if (infantsCount) > 8 {
+            showToast(message: "Infants Count not mor than 9 ")
+            showAlertOnWindow(title: "", message: "Infants Count not mor than 9", titles: ["OK"], completionHanlder: nil)
+        }else if (adultsCount + childCount) > 8 {
             showToast(message: "adultsCount not mor than 9 ")
             showAlertOnWindow(title: "", message: "Adults Count Not More Than 9", titles: ["OK"], completionHanlder: nil)
-        }else {
+        }else  {
             if cell.count >= 0 {
                 cell.count += 1
                 cell.countlbl.text = "\(cell.count)"
@@ -138,9 +151,10 @@ class TravellerEconomyVC: BaseTableVC {
             }else {
                 infantsCount = cell.count
             }
-            
-            print("adultsCount :\(adultsCount)")
         }
+        
+        print("Total Count === \(adultsCount + childCount + infantsCount)")
+        //   defaults.set((adultsCount + childCount + infantsCount), forKey: UserDefaultsKeys.totalTravellerCount)
         
     }
     
@@ -155,20 +169,28 @@ class TravellerEconomyVC: BaseTableVC {
         
         if cell.titlelbl.text == "Adults" {
             adultsCount = cell.count
+            //   deleteRecords(title: "Adult", index: cell.count)
         }else if cell.titlelbl.text == "Children"{
             childCount = cell.count
+            // deleteRecords(title: "Children", index: cell.count)
         }else {
             infantsCount = cell.count
+            //   deleteRecords(title: "Infantas", index: cell.count)
         }
         
         
-        if (adultsCount + childCount) > 8 || (adultsCount + childCount + infantsCount) > 8{
+        if (adultsCount + childCount) > 8 {
             showToast(message: "adultsCount not mor than 9 ")
             showAlertOnWindow(title: "", message: "Adults Count Not More Than 9", titles: ["OK"], completionHanlder: nil)
         }else {
             cell.countlbl.text = "\(cell.count)"
-            print("adultsCount :\(adultsCount)")
+            
         }
+        
+        
+        print("Total Count === \(adultsCount + childCount + infantsCount)")
+        //     defaults.set((adultsCount + childCount + infantsCount), forKey: UserDefaultsKeys.totalTravellerCount)
+        
     }
     
     
@@ -180,7 +202,17 @@ class TravellerEconomyVC: BaseTableVC {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath) as? RadioButtonTVCell {
             cell.radioImg.image = UIImage(named: "radioSelected")
-            defaults.set(cell.titlelbl.text ?? "", forKey: UserDefaultsKeys.selectClass)
+            
+            if let journeyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
+                if journeyType == "oneway" {
+                    defaults.set(cell.titlelbl.text ?? "", forKey: UserDefaultsKeys.selectClass)
+                }else if journeyType == "circle"{
+                    defaults.set(cell.titlelbl.text ?? "", forKey: UserDefaultsKeys.rselectClass)
+                }else {
+                    // defaults.set(cell.titlelbl.text ?? "", forKey: UserDefaultsKeys.mselectClass)
+                }
+            }
+            
         }
     }
     
@@ -203,6 +235,15 @@ class TravellerEconomyVC: BaseTableVC {
     }
     
     
+    
+    func gotoBookFlightVC() {
+        
+        guard let vc = SearchFlightsVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .overCurrentContext
+        self.present(vc, animated: false)
+    }
+    
+    
     override func btnAction(cell: ButtonTVCell) {
         print("button tap ...")
         print("adultsCount \(adultsCount)")
@@ -210,26 +251,50 @@ class TravellerEconomyVC: BaseTableVC {
         print("infantsCount \(infantsCount)")
         if cell.titlelbl.text == "Done" {
             if let selectedTab = defaults.string(forKey: UserDefaultsKeys.dashboardTapSelected){
-                if selectedTab == "flights" {
-                    defaults.set(adultsCount, forKey: UserDefaultsKeys.adultCount)
-                    defaults.set(childCount, forKey: UserDefaultsKeys.childCount)
-                    defaults.set(infantsCount, forKey: UserDefaultsKeys.infantsCount)
+                if selectedTab == "Flights" {
                     
-                    gotoSearchFlightsVC()
+                    if let journeyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
+                        if journeyType == "oneway" {
+                            defaults.set(adultsCount, forKey: UserDefaultsKeys.adultCount)
+                            defaults.set(childCount, forKey: UserDefaultsKeys.childCount)
+                            defaults.set(infantsCount, forKey: UserDefaultsKeys.infantsCount)
+                            
+                            let totaltraverlers = "\(defaults.string(forKey: UserDefaultsKeys.adultCount) ?? "") Adults | \(defaults.string(forKey: UserDefaultsKeys.childCount) ?? "") Children | \(defaults.string(forKey: UserDefaultsKeys.infantsCount) ?? "") Infants | \(defaults.string(forKey: UserDefaultsKeys.selectClass) ?? "")"
+                            
+                            defaults.set(totaltraverlers, forKey: UserDefaultsKeys.travellerDetails)
+                        }else if journeyType == "circle" {
+                            defaults.set(adultsCount, forKey: UserDefaultsKeys.radultCount)
+                            defaults.set(childCount, forKey: UserDefaultsKeys.rchildCount)
+                            defaults.set(infantsCount, forKey: UserDefaultsKeys.rinfantsCount)
+                            
+                            let totaltraverlers = "\(defaults.string(forKey: UserDefaultsKeys.radultCount) ?? "") Adults | \(defaults.string(forKey: UserDefaultsKeys.rchildCount) ?? "") Children | \(defaults.string(forKey: UserDefaultsKeys.rinfantsCount) ?? "") Infants | \(defaults.string(forKey: UserDefaultsKeys.rselectClass) ?? "")"
+                            
+                            defaults.set(totaltraverlers, forKey: UserDefaultsKeys.rtravellerDetails)
+                            
+                        }else {
+                            //                            defaults.set(adultsCount, forKey: UserDefaultsKeys.madultCount)
+                            //                            defaults.set(childCount, forKey: UserDefaultsKeys.mchildCount)
+                            //                            defaults.set(infantsCount, forKey: UserDefaultsKeys.minfantsCount)
+                        }
+                    }
+                    
+                    gotoBookFlightVC()
+                    
+                    
                 }else {
                     defaults.set(adultsCount, forKey: UserDefaultsKeys.hadultCount)
                     defaults.set(childCount, forKey: UserDefaultsKeys.hchildCount)
                     
-                    gotoSearchHotelsVC()
+                    NotificationCenter.default.post(name: Notification.Name("reload"), object: nil)
+                    dismiss(animated: false)
                 }
             }
         }else {
             print("Add Room ......")
             count += 1
             roomCountArray.append(count)
-            setupSearchHotelsEconomyTVCells()
+            //  setupSearchHotelsEconomyTVCells()
         }
-        
         
         
     }

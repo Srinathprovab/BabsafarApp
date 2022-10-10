@@ -12,14 +12,16 @@ class BaggageDateCVCell: UICollectionViewCell {
     @IBOutlet weak var holderView: UIView!
     @IBOutlet weak var titlelbl: UILabel!
     @IBOutlet weak var subTitlelbl: UILabel!
-    
     @IBOutlet weak var lineView: UIView!
     
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        
+        setupUI()
+    }
+    
+    func setupUI() {
         holderView.backgroundColor = .WhiteColor
         holderView.layer.cornerRadius = 3
         holderView.clipsToBounds = true
@@ -31,7 +33,11 @@ class BaggageDateCVCell: UICollectionViewCell {
         
         subTitlelbl.textColor = HexColor("#808089")
         subTitlelbl.font = UIFont.LatoRegular(size: 12)
-        
+    }
+    
+    
+    override func prepareForReuse() {
+        setupUI()
     }
     
 }

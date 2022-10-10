@@ -15,10 +15,6 @@
 		<string>Poppins-Medium.ttf</string>
 		<string>Lato-Bold.ttf</string>
 	</array>
-	<key>NSCameraUsageDescription</key>
-	<string>This app will use camera</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>You can select photo</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

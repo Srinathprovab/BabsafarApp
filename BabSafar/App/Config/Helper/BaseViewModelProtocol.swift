@@ -38,13 +38,13 @@ extension UIViewController: BaseViewModelProtocol {
     func showToast(message: String) {
         var style = ToastStyle()
         style.messageAlignment = .center
-        style.backgroundColor = UIColor.black.withAlphaComponent(0.5)
-        style.messageFont = UIFont.LatoSemibold(size: 14)
+        style.backgroundColor = UIColor.black
+        style.messageFont = UIFont.LatoSemibold(size: 16)
         style.messageColor = UIColor.WhiteColor
         
         ToastManager.shared.style = style
         ToastManager.shared.position = .bottom
-        self.view.makeToast(message, duration: 3)
+        self.view.makeToast(message, duration: 4)
     }
     
     func showPositionalToast(message: String, position: ToastPosition) {

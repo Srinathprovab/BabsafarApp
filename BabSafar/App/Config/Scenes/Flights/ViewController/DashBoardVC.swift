@@ -185,7 +185,7 @@ class DashBoardVC: BaseTableVC {
     }
     
     @IBAction func searchFlightBtnAction(_ sender: Any) {
-        defaults.set("flights", forKey: UserDefaultsKeys.dashboardTapSelected)
+        defaults.set("Flights", forKey: UserDefaultsKeys.dashboardTapSelected)
         
         flightHolderView.backgroundColor = .AppTabSelectColor
         flightimage.image = UIImage(named: "flight")?.withRenderingMode(.alwaysOriginal).withTintColor(.WhiteColor)
@@ -204,7 +204,7 @@ class DashBoardVC: BaseTableVC {
     }
     
     @IBAction func searchHotelsBtnAction(_ sender: Any) {
-        defaults.set("hotels", forKey: UserDefaultsKeys.dashboardTapSelected)
+        defaults.set("Hotels", forKey: UserDefaultsKeys.dashboardTapSelected)
         
         flightHolderView.backgroundColor = .WhiteColor
         flightimage.image = UIImage(named: "flight")?.withRenderingMode(.alwaysOriginal).withTintColor(.AppImageDefaultColor)
@@ -222,7 +222,7 @@ class DashBoardVC: BaseTableVC {
     }
     
     @IBAction func searchHInsuranceBtnAction(_ sender: Any) {
-        defaults.set("insurence", forKey: UserDefaultsKeys.dashboardTapSelected)
+        defaults.set("Insurence", forKey: UserDefaultsKeys.dashboardTapSelected)
         
         flightHolderView.backgroundColor = .WhiteColor
         flightimage.image = UIImage(named: "flight")?.withRenderingMode(.alwaysOriginal).withTintColor(.AppImageDefaultColor)

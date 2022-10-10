@@ -86,8 +86,27 @@ class SearchFlightsTVCell: TableViewCell {
     }
     
     override func updateUI() {
-        self.departureDatelbl.text = defaults.string(forKey: UserDefaultsKeys.calDepDate) ?? "+ Add Departure Date"
-        self.returnDatelbl.text = defaults.string(forKey: UserDefaultsKeys.calRetDate) ?? "+ Add Return Date"
+     
+        
+        if let journeyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
+            if journeyType == "oneway" {
+                fromCitylbl.text = defaults.string(forKey: UserDefaultsKeys.fromCity) ?? "Select City"
+                toCitylbl.text = defaults.string(forKey: UserDefaultsKeys.toCity) ?? "Select City"
+                self.departureDatelbl.text = defaults.string(forKey: UserDefaultsKeys.calDepDate) ?? "+ Add Departure Date"
+                economyValuelbl.text = defaults.string(forKey: UserDefaultsKeys.travellerDetails) ?? "Add Traveller Details"
+
+                returnView.isHidden = true
+            }else {
+                fromCitylbl.text = defaults.string(forKey: UserDefaultsKeys.rfromCity) ?? "Select City"
+                toCitylbl.text = defaults.string(forKey: UserDefaultsKeys.rtoCity) ?? "Select City"
+                self.departureDatelbl.text = defaults.string(forKey: UserDefaultsKeys.rcalDepDate) ?? "+ Add Departure Date"
+                self.returnDatelbl.text = defaults.string(forKey: UserDefaultsKeys.rcalRetDate) ?? "+ Add Return Date"
+                economyValuelbl.text = defaults.string(forKey: UserDefaultsKeys.rtravellerDetails) ?? "Add Traveller Details"
+
+                returnView.isHidden = false
+            }
+        }
+        
     }
     
     func setupUI() {
@@ -111,16 +130,15 @@ class SearchFlightsTVCell: TableViewCell {
         moreExpandViewHeight.constant = 0
         
         setupLabels(lbl: fromlbl, text: "From", textcolor: .AppLabelColor, font: .LatoLight(size: 14))
-        setupLabels(lbl: fromCitylbl, text: defaults.string(forKey: UserDefaultsKeys.fromCity) ?? "Select City", textcolor: .AppLabelColor, font: .LatoSemibold(size: 18))
+        setupLabels(lbl: fromCitylbl, text: "", textcolor: .AppLabelColor, font: .LatoSemibold(size: 18))
         setupLabels(lbl: tolbl, text: "To", textcolor: .AppLabelColor, font: .LatoLight(size: 14))
-        setupLabels(lbl: toCitylbl, text: defaults.string(forKey: UserDefaultsKeys.toCity) ?? "Select City", textcolor: .AppLabelColor, font: .LatoSemibold(size: 18))
+        setupLabels(lbl: toCitylbl, text: "", textcolor: .AppLabelColor, font: .LatoSemibold(size: 18))
         setupLabels(lbl: departurelbl, text: "Departure ", textcolor: .AppLabelColor, font: .LatoLight(size: 14))
         setupLabels(lbl: departureDatelbl, text: defaults.string(forKey: UserDefaultsKeys.calDepDate) ?? "+ Add Departur Date", textcolor: .AppLabelColor, font: .LatoSemibold(size: 18))
         setupLabels(lbl: returnlbl, text: "Return ", textcolor: .AppLabelColor, font: .LatoLight(size: 14))
         setupLabels(lbl: returnDatelbl, text: defaults.string(forKey: UserDefaultsKeys.calDepDate) ?? "+ Add Return Date", textcolor: .AppLabelColor, font: .LatoSemibold(size: 18))
         setupLabels(lbl: economylbl, text: "Travellers &  class", textcolor: .AppLabelColor, font: .LatoLight(size: 14))
-        
-        setupLabels(lbl: economyValuelbl, text: "\(defaults.string(forKey: UserDefaultsKeys.adultCount) ?? "+ Add Economy") Adults,\(defaults.string(forKey: UserDefaultsKeys.selectClass) ?? "")", textcolor: .AppLabelColor, font: .LatoSemibold(size: 18))
+        setupLabels(lbl: economyValuelbl, text: "", textcolor: .AppLabelColor, font: .LatoSemibold(size: 18))
         
         
         setupLabels(lbl: timeOutwardJourneylbl, text: "Time Of Outward Journey", textcolor: .AppLabelColor, font: .LatoLight(size: 14))
@@ -147,6 +165,7 @@ class SearchFlightsTVCell: TableViewCell {
         
         
         searchFlightBtn.setTitle("", for: .normal)
+        returnView.isHidden = true
     }
     
     func setupViews(v:UIView,radius:CGFloat,color:UIColor) {
@@ -154,7 +173,7 @@ class SearchFlightsTVCell: TableViewCell {
         v.layer.cornerRadius = radius
         v.clipsToBounds = true
         v.layer.borderWidth = 0.7
-        v.layer.borderColor = UIColor.AppBorderColor.cgColor
+        v.layer.borderColor = UIColor.black.withAlphaComponent(0.5).cgColor
     }
     
     func setupLabels(lbl:UILabel,text:String,textcolor:UIColor,font:UIFont) {

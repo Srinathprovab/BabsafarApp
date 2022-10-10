@@ -301,6 +301,7 @@ class ServiceManager {
         
         if !isConnection() {
             print("Error: you are offline")
+            NotificationCenter.default.post(name: NSNotification.Name("nointernet"), object: nil)
             completionHandler(false, nil, ApiError.networkError.message)
             return
         }
@@ -342,12 +343,10 @@ class ServiceManager {
             
             do {
                 
-                //  request.httpBody = p.percentEncoded()
+                // request.httpBody = p.percentEncoded()
                 request.httpBody = try JSONSerialization.data(withJSONObject: params, options: .prettyPrinted) // pass dictionary to data object and set it as request body
                 
-                let string = String(data: request.httpBody!, encoding: .utf8)
-                let jsonString = JSON(string ?? "")
-                print(jsonString)
+                
                 
             } catch let error {
                 print(error.localizedDescription)
@@ -355,115 +354,61 @@ class ServiceManager {
             }
         }
         
-        //  print("Request for \(endPoint) :: \(request)")
-        
-        
-        
-        // If you are using Basic Authentication uncomment the follow line and add your base64 string
-        //        request.setValue("Basic MY_BASIC_AUTH_STRING", forHTTPHeaderField: "Authorization")
-        //        URLSession.shared.dataTask(with: request) { data, response, error in
-        //            print(response)
-        //            print(data?.toString())
-        //            /*Chick session status*/
-        //            guard let response = response as? HTTPURLResponse else {return}
-        //            if response.statusCode == 403 {
-        //                completionHandler(false, nil, Message.sessionExpired)
-        //                self.sessionExpired(strCode: "\(response.statusCode)")
-        //                return
-        //            }
-        //
-        //            guard error == nil else {
-        //                print("Error: error calling GET")
-        //                print(error!)
-        //
-        //                completionHandler(false, nil, ApiError.responseFailed(error).message)
-        //                return
-        //            }
-        //            guard let data1 = data else {
-        //                print("Error: Did not receive data")
-        //
-        //                completionHandler(false, nil, ApiError.responseFailed(error).message)
-        //                return
-        //            }
-        //            guard let response = response as? HTTPURLResponse, (200 ..< 299) ~= response.statusCode else {
-        //                print("Error: HTTP request failed")
-        //
-        //                completionHandler(false, nil, ApiError.responseFailed(error).message)
-        //                return
-        //            }
-        //
-        //
-        //            do {
-        //
-        //
-        //                // Parsing the data:
-        //                let decoder = JSONDecoder()
-        //                decoder.keyDecodingStrategy = .convertFromSnakeCase
-        //                guard let result = try decoder.decode(T?.self, from: data1)else {
-        //                    print("Error: Cannot decode the object")
-        //
-        //
-        //                    completionHandler(false, nil, ApiError.decodeFailed(error!).message)
-        //                    return
-        //                }
-        //
-        //
-        //                if let authToken =  response.allHeaderFields["Authorization"] as? String {
-        //                    //                    debugPrint("header=====\(authToken)")
-        //                    //                    DataModel.shared.authToken = authToken
-        //                }
-        //
-        //                let json = try? JSONSerialization.jsonObject(with: data1, options: .allowFragments)
-        //
-        //
-        //                completionHandler(true, result, nil)
-        //            } catch {
-        //                print("=== Error: Trying to convert JSON data to string ===")
-        //                print(error)
-        //
-        //                completionHandler(false, nil, ApiError.unknown.message)
-        //                return
-        //            }
-        //        }.resume()
-        
-        
-        
-        let serializer = DataResponseSerializer(emptyResponseCodes: Set([200, 204, 205]))
         
         AF.request(
             completeEndpointURL,
             method: .post,
-            parameters: (parameters as! Parameters),
+            parameters: parameters as? Parameters,
             encoding: URLEncoding.default,
-            headers: nil).validate(statusCode: [200,500]).responseJSON { (responseData) -> Void in
-                
-                switch responseData.result {
-                case .success:
-                    print("Parsing the data:")
-                    do{
+            headers: nil).responseJSON { (responseData) -> Void in
+                if responseData.value != nil {
+                    //do something with data
+                    print(responseData.value as Any)
+                    
+                    switch responseData.result {
+                    case .success(let data):
                         
-                        let decoder = JSONDecoder()
-                        decoder.keyDecodingStrategy = .convertFromSnakeCase
-                        guard let result = try decoder.decode(T?.self, from: responseData.data!)else {
-                            print("Error: Cannot decode the object")
-                            completionHandler(false, nil, "errorrrrrrr")
-                            return
+                        print("Parsing the data:  ")
+                        
+                        do{
+                            
+                            
+                            
+//                            guard let singleQuestionJsonData = try? JSONSerialization.data(withJSONObject: responseData.value as Any, options: []),
+//                                           let singleQuestion = try? JSONDecoder().decode(T.self, from: singleQuestionJsonData) else { return }
+//                            completionHandler(true, singleQuestion, nil)
+                          
+                            let jsonData = try JSONSerialization.data(withJSONObject: responseData.value as Any, options: [])
+
+                            if let jsonResponse = try? JSONDecoder().decode(T.self, from: jsonData) {
+
+                                completionHandler(true, jsonResponse, nil)
+                            }
+                            
+                            //                            else {
+                            //                                completionHandler(false, nil, ApiError.unknown.message)
+                            //                            }
+                            
+                            
+                            
+                        }catch {
+                            
+                            completionHandler(false, nil, ApiError.unknown.message)
+                            print("JSONSerialization error")
                         }
                         
                         
-                        completionHandler(true, result, nil)
-                    }catch{
+                        
+                    case .failure(let error):
+                        print("error ----- \(error)")
                         completionHandler(false, nil, ApiError.unknown.message)
+                        break
+                        
+                    default:
+                        break
                     }
-                    break
                     
-                case .failure(let error):
-                    print("error ----- \(error)")
-                    completionHandler(false, nil, ApiError.unknown.message)
-                    break
                     
-                default:
-                    break
                 }
             }
         

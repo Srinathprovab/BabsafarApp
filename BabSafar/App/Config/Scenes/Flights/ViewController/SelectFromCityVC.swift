@@ -58,6 +58,7 @@ class SelectFromCityVC: BaseTableVC, SelectCityViewModelProtocal {
     
     func CallShowCityListAPI(str:String) {
         BASE_URL = "https://provabdevelopment.com/alghanim_new/mobile_webservices/mobile/index.php/ajax/"
+        
         payload["term"] = str
         cityViewModel?.CallShowCityListAPI(dictParam: payload)
     }
@@ -206,14 +207,41 @@ extension SelectFromCityVC {
         if let cell = tableView.cellForRow(at: indexPath) as? FromCityTVCell {
             
             if let selectedtab = defaults.string(forKey: UserDefaultsKeys.dashboardTapSelected) {
-                if selectedtab == "flights" {
-                    if titleStr == "From" {
-                        defaults.set(cell.titlelbl.text ?? "", forKey: UserDefaultsKeys.fromCity)
-                        defaults.set(cell.id , forKey: UserDefaultsKeys.fromlocid)
-                    }else {
-                        defaults.set(cell.titlelbl.text ?? "", forKey: UserDefaultsKeys.toCity)
-                        defaults.set(cell.id , forKey: UserDefaultsKeys.tolocid)
+                if selectedtab == "Flights" {
+                    
+                    
+                    if let journeyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
+                        if journeyType == "oneway" {
+                            if titleStr == "From" {
+                                defaults.set(cell.titlelbl.text ?? "", forKey: UserDefaultsKeys.fromCity)
+                                defaults.set(cell.id , forKey: UserDefaultsKeys.fromlocid)
+                                defaults.set(cell.cityShortNamelbl.text , forKey: UserDefaultsKeys.fairportCode)
+
+                            }else {
+                                defaults.set(cell.titlelbl.text ?? "", forKey: UserDefaultsKeys.toCity)
+                                defaults.set(cell.id , forKey: UserDefaultsKeys.tolocid)
+                                defaults.set(cell.cityShortNamelbl.text , forKey: UserDefaultsKeys.tairportCode)
+
+                            }
+                        }else if journeyType == "circle"{
+                            if titleStr == "From" {
+                                defaults.set(cell.titlelbl.text ?? "", forKey: UserDefaultsKeys.rfromCity)
+                                defaults.set(cell.id , forKey: UserDefaultsKeys.rfromlocid)
+                                defaults.set(cell.cityShortNamelbl.text , forKey: UserDefaultsKeys.rfairportCode)
+
+                            }else {
+                                defaults.set(cell.titlelbl.text ?? "", forKey: UserDefaultsKeys.rtoCity)
+                                defaults.set(cell.id , forKey: UserDefaultsKeys.rtolocid)
+                                defaults.set(cell.cityShortNamelbl.text , forKey: UserDefaultsKeys.rtairportCode)
+
+                            }
+                        }else {
+                            
+                        }
                     }
+                    
+                    
+                    
                     
                     NotificationCenter.default.post(name: NSNotification.Name("reload"), object: nil)
                     self.gotoSearchFlightsVC()

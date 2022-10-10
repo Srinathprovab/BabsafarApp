@@ -32,6 +32,23 @@ class BaggageInfoVC: BaseTableVC {
     }
     var isVCFrom = String()
     var tablerow = [TableRow]()
+    var flightdetails : Flight_details?
+    
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        print("BaggageInfoVC BaggageInfoVC")
+        flightdetails.map { i in
+            i.summary.map { j in
+                j.map { k in
+                    print(k.no_of_stops)
+                    print(k.origin)
+                }
+            }
+        }
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

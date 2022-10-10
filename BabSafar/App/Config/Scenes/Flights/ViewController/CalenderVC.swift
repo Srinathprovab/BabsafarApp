@@ -65,9 +65,20 @@ class CalenderVC: BaseTableVC {
     override func viewWillAppear(_ animated: Bool) {
         
         if let selectedTab = defaults.string(forKey: UserDefaultsKeys.dashboardTapSelected) {
-            if selectedTab == "flights" {
-                departureDatelbl.text = defaults.string(forKey: UserDefaultsKeys.calDepDate) ?? "Select Date"
-                returnDatelbl.text = defaults.string(forKey: UserDefaultsKeys.calRetDate) ?? "Select Date"
+            if selectedTab == "Flights" {
+                
+                if let journeyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
+                    if journeyType == "oneway" {
+                        departureDatelbl.text = defaults.string(forKey: UserDefaultsKeys.calDepDate) ?? "Select Date"
+                        returnView.isHidden = true
+                    }else if journeyType == "circle"{
+                        departureDatelbl.text = defaults.string(forKey: UserDefaultsKeys.rcalDepDate) ?? "Select Date"
+                        returnDatelbl.text = defaults.string(forKey: UserDefaultsKeys.rcalRetDate) ?? "Select Date"
+                    }else {
+                        
+                    }
+                }
+                
             }else {
                 departureDatelbl.text = defaults.string(forKey: UserDefaultsKeys.checkin) ?? "Select Date"
                 returnDatelbl.text = defaults.string(forKey: UserDefaultsKeys.checkout) ?? "Select Date"
@@ -360,9 +371,20 @@ extension CalenderVC: JTAppleCalendarViewDelegate, JTAppleCalendarViewDataSource
         self.returnDatelbl.text = calendDate
         
         if let selectedTab = defaults.string(forKey: UserDefaultsKeys.dashboardTapSelected) {
-            if selectedTab == "flights" {
-                defaults.set(calstartDate, forKey: UserDefaultsKeys.calDepDate)
-                defaults.set(calendDate, forKey: UserDefaultsKeys.calRetDate)
+            if selectedTab == "Flights" {
+               
+              
+                if let journeyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
+                    if journeyType == "oneway" {
+                        defaults.set(calstartDate, forKey: UserDefaultsKeys.calDepDate)
+                    }else if journeyType == "circle"{
+                        defaults.set(calstartDate, forKey: UserDefaultsKeys.rcalDepDate)
+                        defaults.set(calendDate, forKey: UserDefaultsKeys.rcalRetDate)
+                    }else {
+                        
+                    }
+                }
+                
             }else {
                 defaults.set(calstartDate, forKey: UserDefaultsKeys.checkin)
                 defaults.set(calendDate, forKey: UserDefaultsKeys.checkout)

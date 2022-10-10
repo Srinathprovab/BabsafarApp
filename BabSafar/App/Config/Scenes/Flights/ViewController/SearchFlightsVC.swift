@@ -8,7 +8,8 @@
 import UIKit
 import Alamofire
 
-class SearchFlightsVC: BaseTableVC, FlightListModelProtocal {
+class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
+    
     
     
     @IBOutlet weak var holderView: UIView!
@@ -36,10 +37,10 @@ class SearchFlightsVC: BaseTableVC, FlightListModelProtocal {
         let vc = storyboard.instantiateViewController(withIdentifier: self.className()) as? SearchFlightsVC
         return vc
     }
-    
+    var cellIndex = Int()
     var payload = [String:Any]()
-    var viewModel : FlightListModel?
-    var FlightListArray = [FlightSearchResultModel]()
+    var viewModel : FlightListViewModel?
+    var FlightListArray = [FlightSearchModel]()
     var tablerow = [TableRow]()
     var c1 = String()
     var c2 = String()
@@ -48,7 +49,9 @@ class SearchFlightsVC: BaseTableVC, FlightListModelProtocal {
     var checkBool1 = true
     var selectArray = [String]()
     var selectArray1 = [String]()
-    
+    var FlightList :[[J_flight_list]]?
+    var RTFlightList :[[RTJ_flight_list]]?
+
     override func viewDidAppear(_ animated: Bool) {
         NotificationCenter.default.addObserver(self, selector: #selector(reload(notification:)), name: NSNotification.Name("reload"), object: nil)
     }
@@ -56,7 +59,20 @@ class SearchFlightsVC: BaseTableVC, FlightListModelProtocal {
     
     override func viewWillAppear(_ animated: Bool) {
         
+        
         NotificationCenter.default.addObserver(self, selector: #selector(reload(notification:)), name: NSNotification.Name("reload"), object: nil)
+        
+        
+        if let selectedJType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
+            if selectedJType == "multicity" {
+                setupMulticity()
+            }else if selectedJType == "circle" {
+                setupRoundTrip()
+            }else {
+                setupOneWay()
+            }
+            
+        }
     }
     
     
@@ -70,8 +86,8 @@ class SearchFlightsVC: BaseTableVC, FlightListModelProtocal {
         // Do any additional setup after loading the view.
         setupUI()
         setupTV()
-        defaults.set("oneway", forKey: UserDefaultsKeys.journeyType)
-        viewModel = FlightListModel(self)
+        viewModel = FlightListViewModel(self)
+        
     }
     
     func setupUI() {
@@ -149,7 +165,20 @@ class SearchFlightsVC: BaseTableVC, FlightListModelProtocal {
     
     
     @IBAction func oneWayBtnAction(_ sender: Any) {
-        
+        setupOneWay()
+    }
+    
+    
+    @IBAction func roundTripBtnAction(_ sender: Any) {
+        setupRoundTrip()
+    }
+    
+    @IBAction func multiCityBtnAction(_ sender: Any) {
+        setupMulticity()
+    }
+    
+    
+    func setupOneWay(){
         defaults.set("oneway", forKey: UserDefaultsKeys.journeyType)
         
         oneWayView.backgroundColor = .AppTabSelectColor
@@ -170,9 +199,9 @@ class SearchFlightsVC: BaseTableVC, FlightListModelProtocal {
         setupTV()
     }
     
-    @IBAction func roundTripBtnAction(_ sender: Any) {
-        
-        defaults.set("roundtrip", forKey: UserDefaultsKeys.journeyType)
+    
+    func setupRoundTrip(){
+        defaults.set("circle", forKey: UserDefaultsKeys.journeyType)
         
         oneWayView.backgroundColor = .AppHolderViewColor
         oneWayBtnView.backgroundColor = .WhiteColor
@@ -192,8 +221,7 @@ class SearchFlightsVC: BaseTableVC, FlightListModelProtocal {
         setupTV()
     }
     
-    @IBAction func multiCityBtnAction(_ sender: Any) {
-        
+    func setupMulticity(){
         defaults.set("multicity", forKey: UserDefaultsKeys.journeyType)
         
         oneWayView.backgroundColor = .AppHolderViewColor
@@ -346,49 +374,120 @@ class SearchFlightsVC: BaseTableVC, FlightListModelProtocal {
     }
     
     
-    
-    
-    
     override func didTapOnSearchFlightBtnAction(cell: SearchFlightsTVCell) {
+        payload.removeAll()
         
-        BASE_URL = "https://provabdevelopment.com/babsafar/mobile_webservices/mobile/index.php/general/"
-        payload["trip_type"] = defaults.string(forKey:UserDefaultsKeys.journeyType)
-        payload["adult"] = defaults.string(forKey:UserDefaultsKeys.adultCount)
-        payload["child"] = defaults.string(forKey:UserDefaultsKeys.childCount)
-        payload["infant"] = defaults.string(forKey:UserDefaultsKeys.infantsCount)
-        payload["v_class"] = defaults.string(forKey:UserDefaultsKeys.selectClass)
-        payload["sector_type"] = "international"
-        payload["from"] = defaults.string(forKey:UserDefaultsKeys.fromCity)
-        payload["from_loc_id"] = defaults.string(forKey:UserDefaultsKeys.fromlocid)
-        payload["to"] = defaults.string(forKey:UserDefaultsKeys.toCity)
-        payload["to_loc_id"] = defaults.string(forKey:UserDefaultsKeys.tolocid)
-        payload["depature"] = defaults.string(forKey:UserDefaultsKeys.calDepDate)
-        payload["return"] = defaults.string(forKey:UserDefaultsKeys.calRetDate)
-        payload["out_jrn"] = "All Times"
-        payload["ret_jrn"] = "All Times"
-        payload["carrier"] = ""
-        payload["psscarrier"] = "ALL"
-        payload["search_flight"] = "Search"
-        payload["user_id"] = "0"
-      //    viewModel?.CallSearchFlightAPI(dictParam: payload)
-        
-        gotoSearchFlightResultVC()
+        if let journeyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
+            if journeyType == "oneway" {
+                
+                if defaults.string(forKey:UserDefaultsKeys.fromCity) == nil {
+                    showToast(message: "Please Select From City")
+                }else if defaults.string(forKey:UserDefaultsKeys.toCity) == nil {
+                    showToast(message: "Please Select To City")
+                }else if defaults.string(forKey:UserDefaultsKeys.calDepDate) == nil {
+                    showToast(message: "Please Select Departure Date")
+                }else if defaults.string(forKey:UserDefaultsKeys.travellerDetails) == nil {
+                    showToast(message: "Add Traveller")
+                }else{
+                    
+                    BASE_URL = "https://provabdevelopment.com/babsafar/mobile_webservices/mobile/index.php/general/"
+                    payload["trip_type"] = "oneway"
+                    payload["adult"] = defaults.string(forKey:UserDefaultsKeys.adultCount)
+                    payload["child"] = defaults.string(forKey:UserDefaultsKeys.childCount)
+                    payload["infant"] = defaults.string(forKey:UserDefaultsKeys.infantsCount)
+                    payload["v_class"] = defaults.string(forKey:UserDefaultsKeys.selectClass)
+                    payload["sector_type"] = "international"
+                    payload["from"] = defaults.string(forKey:UserDefaultsKeys.fromCity)
+                    payload["from_loc_id"] = defaults.string(forKey:UserDefaultsKeys.fromlocid)
+                    payload["to"] = defaults.string(forKey:UserDefaultsKeys.toCity)
+                    payload["to_loc_id"] = defaults.string(forKey:UserDefaultsKeys.tolocid)
+                    payload["depature"] = defaults.string(forKey:UserDefaultsKeys.calDepDate)
+                    payload["return"] = ""
+                    payload["out_jrn"] = "All Times"
+                    payload["ret_jrn"] = "All Times"
+                    payload["carrier"] = ""
+                    payload["psscarrier"] = "ALL"
+                    payload["search_flight"] = "Search"
+                    payload["user_id"] = "0"
+                    
+                    viewModel?.CallSearchFlightAPI(dictParam: payload)
+                    
+                }
+                
+            }else if journeyType == "circle"{
+                
+                
+                if defaults.string(forKey:UserDefaultsKeys.rfromCity) == nil {
+                    showToast(message: "Please Select From City")
+                }else if defaults.string(forKey:UserDefaultsKeys.rtoCity) == nil {
+                    showToast(message: "Please Select To City")
+                }else if defaults.string(forKey:UserDefaultsKeys.rcalDepDate) == nil {
+                    showToast(message: "Please Select Departure Date")
+                }else if defaults.string(forKey:UserDefaultsKeys.rcalRetDate) == nil {
+                    showToast(message: "Please Select Return Date")
+                }else if defaults.string(forKey:UserDefaultsKeys.rtravellerDetails) == nil {
+                    showToast(message: "Add Traveller")
+                }else{
+                    
+                    BASE_URL = "https://provabdevelopment.com/babsafar/mobile_webservices/mobile/index.php/general/"
+                    
+                    payload["trip_type"] = "circle"
+                    payload["adult"] = defaults.string(forKey:UserDefaultsKeys.adultCount)
+                    payload["child"] = defaults.string(forKey:UserDefaultsKeys.childCount)
+                    payload["infant"] = defaults.string(forKey:UserDefaultsKeys.infantsCount)
+                    payload["v_class"] = defaults.string(forKey:UserDefaultsKeys.rselectClass)
+                    payload["sector_type"] = "international"
+                    payload["from"] = defaults.string(forKey:UserDefaultsKeys.rfromCity)
+                    payload["from_loc_id"] = defaults.string(forKey:UserDefaultsKeys.rfromlocid)
+                    payload["to"] = defaults.string(forKey:UserDefaultsKeys.rtoCity)
+                    payload["to_loc_id"] = defaults.string(forKey:UserDefaultsKeys.rtolocid)
+                    payload["depature"] = defaults.string(forKey:UserDefaultsKeys.rcalDepDate)
+                    payload["return_date"] = defaults.string(forKey:UserDefaultsKeys.rcalRetDate)
+                    payload["out_jrn"] = "All Times"
+                    payload["ret_jrn"] = "All Times"
+                    payload["carrier"] = ""
+                    payload["psscarrier"] = "ALL"
+                    payload["search_flight"] = "Search"
+                    payload["user_id"] = "0"
+                    
+                    viewModel?.CallRoundTRipSearchFlightAPI(dictParam: payload)
+                    
+                }
+                
+                
+            }else {
+                
+            }
+        }
     }
     
     
-    func flightList(response: FlightSearchResultModel) {
-        print(" ======== response FlightSearchResultModel =======")
-        print(response.search_id)
-        
+    
+    
+    func flightList(response: FlightSearchModel) {
+        if response.status == 1 {
+            FlightList = response.data?.j_flight_list
+            gotoSearchFlightResultVC()
+        }
     }
+    
+    
+    func roundTripflightList(response: RoundTripModel) {
+        if response.status == 1 {
+            RTFlightList = response.data?.j_flight_list
+            gotoSearchFlightResultVC()
+        }
+    }
+    
     
     
     func gotoSearchFlightResultVC() {
         guard let vc = SearchFlightResultVC.newInstance.self else {return}
-        vc.modalPresentationStyle = .overCurrentContext
+        vc.modalPresentationStyle = .fullScreen
+        vc.FlightList = self.FlightList
+        vc.RTFlightList = self.RTFlightList
         self.present(vc, animated: true)
     }
-    
     
     
     override func btnAction(cell: ButtonTVCell) {

@@ -10,6 +10,7 @@ import UIKit
 class SearchFlightResultVC: BaseTableVC {
     
     
+    @IBOutlet weak var navHeight: NSLayoutConstraint!
     @IBOutlet weak var navView: NavBar!
     @IBOutlet weak var cvHolderView: UIView!
     @IBOutlet weak var baggageBtn: UIButton!
@@ -24,6 +25,51 @@ class SearchFlightResultVC: BaseTableVC {
         return vc
     }
     var tablerow = [TableRow]()
+    var FlightList :[[J_flight_list]]?
+    var flightdetails : Flight_details?
+    var kwdPriceArray = [String]()
+    var RTFlightList :[[RTJ_flight_list]]?
+    
+    override func viewWillAppear(_ animated: Bool) {
+        setUpNav()
+        
+        
+        
+        if let selectedJourneyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
+            if selectedJourneyType == "oneway" {
+                //FOR APPENDING operator_image AND totalPrice
+                FlightList.map { i in
+                    i.map { j in
+                        j.map { k in
+                            k.flight_details?.summary.map({ l in
+                                kwdPriceArray.append(k.totalPrice_API ?? "")
+                            })
+                        }
+                    }
+                }
+            }else if selectedJourneyType == "circle" {
+                
+                //FOR APPENDING operator_image AND totalPrice
+                RTFlightList.map { i in
+                    i.map { j in
+                        j.map { k in
+                            k.flight_details?.summary.map({ l in
+                                kwdPriceArray.append(k.totalPrice_API ?? "")
+                            })
+                        }
+                    }
+                }
+            }else {
+                
+            }
+            
+            kwdPriceArray = kwdPriceArray.unique()
+        }
+        
+        
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -33,19 +79,45 @@ class SearchFlightResultVC: BaseTableVC {
     }
     
     
-    
-    func setupTV() {
-        
+    func setUpNav(){
         navView.titlelbl.text = ""
-        navView.backBtn.addTarget(self, action: #selector(didTapOnBackBtn(_:)), for: .touchUpInside)
-        navView.filterBtn.addTarget(self, action: #selector(didTapOnFilterBtn(_:)), for: .touchUpInside)
-        navView.editBtn.addTarget(self, action: #selector(didTapOnEditBtn(_:)), for: .touchUpInside)
-        navView.lbl1.text = "dubai (DXB) - kuwait (kWI)"
-        navView.lbl2.text = "26 jul - 27 jul | 26 jul - 27 jul"
+        
+        if screenHeight > 835 {
+            navHeight.constant = 190
+        }else {
+            navHeight.constant = 160
+        }
+        
+        if let journeyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
+            if journeyType == "oneway" {
+                
+                navView.lbl1.text = "\(defaults.string(forKey: UserDefaultsKeys.fairportCode) ?? "") -> \(defaults.string(forKey: UserDefaultsKeys.tairportCode) ?? "")"
+                navView.lbl2.text = "On \(defaults.string(forKey: UserDefaultsKeys.calDepDate) ?? "")"
+                
+            }else if journeyType == "circle"{
+                
+                navView.lbl1.text = "\(defaults.string(forKey: UserDefaultsKeys.rfairportCode) ?? "") <-> \(defaults.string(forKey: UserDefaultsKeys.rtairportCode) ?? "")"
+                navView.lbl2.text = "On \(defaults.string(forKey: UserDefaultsKeys.rcalDepDate) ?? "") - Return \(defaults.string(forKey: UserDefaultsKeys.rcalRetDate) ?? "")"
+                
+            }else {
+                
+            }
+        }
+        
         navView.editBtnView.isHidden = false
         navView.filterBtnView.isHidden = false
         navView.lbl1.isHidden = false
         navView.lbl2.isHidden = false
+        navView.backBtn.addTarget(self, action: #selector(didTapOnBackBtn(_:)), for: .touchUpInside)
+        navView.filterBtn.addTarget(self, action: #selector(didTapOnFilterBtn(_:)), for: .touchUpInside)
+        navView.editBtn.addTarget(self, action: #selector(didTapOnEditBtn(_:)), for: .touchUpInside)
+    }
+    
+    
+    
+    func setupTV() {
+        
+        
         cvHolderView.addBottomBorderWithColor(color: .AppBorderColor, width: 0.5)
         baggageBtn.setTitle("", for: .normal)
         
@@ -54,7 +126,7 @@ class SearchFlightResultVC: BaseTableVC {
         if let selectedTab = defaults.string(forKey: UserDefaultsKeys.journeyType) {
             if selectedTab == "oneway" {
                 setupOneWayResultTVCells()
-            }else if selectedTab == "roundtrip" {
+            }else if selectedTab == "circle" {
                 setupRoundTripResultTVCells()
             }else {
                 setupMulticityTripResultTVCells()
@@ -67,18 +139,33 @@ class SearchFlightResultVC: BaseTableVC {
     func setupOneWayResultTVCells() {
         tablerow.removeAll()
         
-        tablerow.append(TableRow(height:20,cellType:.EmptyTVCell))
-        tablerow.append(TableRow(cellType:.SearchFlightResultTVCell))
-        tablerow.append(TableRow(cellType:.SearchFlightResultTVCell))
-        tablerow.append(TableRow(cellType:.SearchFlightResultTVCell))
-        tablerow.append(TableRow(cellType:.SearchFlightResultTVCell))
-        tablerow.append(TableRow(cellType:.SearchFlightResultTVCell))
-        tablerow.append(TableRow(cellType:.SearchFlightResultTVCell))
-        tablerow.append(TableRow(cellType:.SearchFlightResultTVCell))
-        tablerow.append(TableRow(cellType:.SearchFlightResultTVCell))
-        tablerow.append(TableRow(cellType:.SearchFlightResultTVCell))
-        tablerow.append(TableRow(cellType:.SearchFlightResultTVCell))
-        tablerow.append(TableRow(height:50,cellType:.EmptyTVCell))
+        
+        FlightList.map { i in
+            i.map { j in
+                j.map { k in
+                    k.flight_details?.summary.map({ l in
+                        l.map { m in
+                            tablerow.append(TableRow(
+                                title:"\(m.operator_name ?? "") (\(m.operator_code ?? ""))",
+                                subTitle: k.totalPrice_API,
+                                text: m.origin?.time,
+                                headerText: m.destination?.time,
+                                buttonTitle: "\(m.destination?.city ?? "") (\(m.destination?.loc ?? ""))",
+                                image: m.operator_image,
+                                tempText:"\(m.origin?.city ?? "") (\(m.origin?.loc ?? ""))",
+                                questionType:m.duration,
+                                cellType:.SearchFlightResultTVCell,
+                                questionBase: "no of stops \(String(m.no_of_stops ?? 0))"
+                                
+                            ))
+                        }
+                    })
+                }
+            }
+        }
+        
+        
+        
         
         commonTVData = tablerow
         commonTableView.reloadData()
@@ -86,15 +173,28 @@ class SearchFlightResultVC: BaseTableVC {
     
     // MARK:- ROUND TRIP
     func setupRoundTripResultTVCells() {
+       
         tablerow.removeAll()
         
-        tablerow.append(TableRow(height:20,cellType:.EmptyTVCell))
-        tablerow.append(TableRow(title:"",characterLimit: 2,cellType:.RoundTripFlightResultTVCell))
-        tablerow.append(TableRow(title:"",characterLimit: 2,cellType:.RoundTripFlightResultTVCell))
-        tablerow.append(TableRow(title:"",characterLimit: 2,cellType:.RoundTripFlightResultTVCell))
-        tablerow.append(TableRow(title:"",characterLimit: 2,cellType:.RoundTripFlightResultTVCell))
-        tablerow.append(TableRow(title:"",characterLimit: 2,cellType:.RoundTripFlightResultTVCell))
+        RTFlightList?.forEach({ i in
+            i.forEach { k in
+                tablerow.append(TableRow(title:k.totalPrice_API,
+                                         headerText:k.totalPrice_API,
+                                         errormsg:String(k.flight_details?.summary?.first?.no_of_stops ?? 0),
+                                        // isOptional: i.refundable ?? false,
+                                         moreData:k.flight_details,
+                                         questionType:k.aPICurrencyType,
+                                         //TotalQuestions: k.selectedResult,
+                                         cellType:.RoundTripFlightResultTVCell,
+                                         questionBase: k.taxes))
+            }
+        })
         
+        
+        
+        
+        
+        tablerow.append(TableRow(height:30,cellType:.EmptyTVCell))
         commonTVData = tablerow
         commonTableView.reloadData()
     }
@@ -149,6 +249,7 @@ class SearchFlightResultVC: BaseTableVC {
     func gotoBaggageInfoVC() {
         guard let vc = BaggageInfoVC.newInstance.self else {return}
         vc.modalPresentationStyle = .overCurrentContext
+        vc.flightdetails = self.flightdetails
         present(vc, animated: true)
     }
     
@@ -175,14 +276,14 @@ class SearchFlightResultVC: BaseTableVC {
 
 extension SearchFlightResultVC:UICollectionViewDelegate,UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 20
+        return kwdPriceArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         var commonCell = UICollectionViewCell()
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? BaggageDateCVCell {
             cell.titlelbl.text = "26 jul"
-            cell.subTitlelbl.text = "kwd: 150.00"
+            cell.subTitlelbl.text = "\(kwdPriceArray[indexPath.row])"
             commonCell = cell
         }
         return commonCell
@@ -211,6 +312,25 @@ extension SearchFlightResultVC:UICollectionViewDelegate,UICollectionViewDataSour
 extension SearchFlightResultVC {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        
+        FlightList.map { i in
+            i.map { j in
+                flightdetails = j[indexPath.row].flight_details
+            }
+        }
+        
         gotoBaggageInfoVC()
+    }
+    
+    
+    
+}
+
+
+extension Sequence where Iterator.Element: Hashable {
+    func unique() -> [Iterator.Element] {
+        var seen: [Iterator.Element: Bool] = [:]
+        return self.filter { seen.updateValue(true, forKey: $0) == nil }
     }
 }
