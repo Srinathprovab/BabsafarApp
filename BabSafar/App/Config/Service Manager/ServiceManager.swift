@@ -363,7 +363,7 @@ class ServiceManager {
             headers: nil).responseJSON { (responseData) -> Void in
                 if responseData.value != nil {
                     //do something with data
-                    print(responseData.value as Any)
+                  //  print(responseData.value as Any)
                     
                     switch responseData.result {
                     case .success(let data):
@@ -373,21 +373,16 @@ class ServiceManager {
                         do{
                             
                             
-                            
-//                            guard let singleQuestionJsonData = try? JSONSerialization.data(withJSONObject: responseData.value as Any, options: []),
-//                                           let singleQuestion = try? JSONDecoder().decode(T.self, from: singleQuestionJsonData) else { return }
-//                            completionHandler(true, singleQuestion, nil)
-                          
                             let jsonData = try JSONSerialization.data(withJSONObject: responseData.value as Any, options: [])
-
+                            
                             if let jsonResponse = try? JSONDecoder().decode(T.self, from: jsonData) {
-
+                                
                                 completionHandler(true, jsonResponse, nil)
                             }
                             
-                            //                            else {
-                            //                                completionHandler(false, nil, ApiError.unknown.message)
-                            //                            }
+                            else {
+                                completionHandler(false, nil, ApiError.unknown.message)
+                            }
                             
                             
                             
@@ -712,5 +707,13 @@ extension String{
     
     var htmlToString: String {
         return htmlToAttributedString?.string ?? ""
+    }
+}
+
+
+extension Sequence where Iterator.Element: Hashable {
+    func unique() -> [Iterator.Element] {
+        var seen: [Iterator.Element: Bool] = [:]
+        return self.filter { seen.updateValue(true, forKey: $0) == nil }
     }
 }

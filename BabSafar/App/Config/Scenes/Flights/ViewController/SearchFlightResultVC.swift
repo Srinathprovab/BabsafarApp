@@ -9,14 +9,11 @@ import UIKit
 
 class SearchFlightResultVC: BaseTableVC {
     
-    
     @IBOutlet weak var navHeight: NSLayoutConstraint!
     @IBOutlet weak var navView: NavBar!
     @IBOutlet weak var cvHolderView: UIView!
     @IBOutlet weak var baggageBtn: UIButton!
     @IBOutlet weak var baggageDateCV: UICollectionView!
-    
-    
     
     static var newInstance: SearchFlightResultVC? {
         let storyboard = UIStoryboard(name: Storyboard.Main.name,
@@ -28,7 +25,10 @@ class SearchFlightResultVC: BaseTableVC {
     var FlightList :[[J_flight_list]]?
     var flightdetails : Flight_details?
     var kwdPriceArray = [String]()
+    var dateArray = [String]()
+    
     var RTFlightList :[[RTJ_flight_list]]?
+    var MCJflightlist :[MCJ_flight_list]?
     
     override func viewWillAppear(_ animated: Bool) {
         setUpNav()
@@ -43,6 +43,18 @@ class SearchFlightResultVC: BaseTableVC {
                         j.map { k in
                             k.flight_details?.summary.map({ l in
                                 kwdPriceArray.append(k.totalPrice_API ?? "")
+                                
+                                l.map { m in
+                                    
+                                    let dateFormatter = DateFormatter()
+                                    dateFormatter.dateFormat = "dd MMM yyyy"
+                                    if let date = dateFormatter.date(from: "\(m.origin?.date ?? "")"){
+                                        dateFormatter.dateFormat = "dd MMM"
+                                        let resultString = dateFormatter.string(from: date)
+                                        dateArray.append(dateFormatter.string(from: date))
+                                    }
+                                    
+                                }
                             })
                         }
                     }
@@ -55,6 +67,19 @@ class SearchFlightResultVC: BaseTableVC {
                         j.map { k in
                             k.flight_details?.summary.map({ l in
                                 kwdPriceArray.append(k.totalPrice_API ?? "")
+                                
+                                l.map { m in
+                                    
+                                    let dateFormatter = DateFormatter()
+                                    dateFormatter.dateFormat = "dd MMM yyyy"
+                                    if let date = dateFormatter.date(from: "\(m.destination?.date ?? "")"){
+                                        dateFormatter.dateFormat = "dd MMM"
+                                        let resultString = dateFormatter.string(from: date)
+                                        dateArray.append(dateFormatter.string(from: date))
+                                        
+                                    }
+                                    
+                                }
                             })
                         }
                     }
@@ -64,6 +89,10 @@ class SearchFlightResultVC: BaseTableVC {
             }
             
             kwdPriceArray = kwdPriceArray.unique()
+            dateArray = dateArray.unique()
+            
+            
+            print(dateArray)
         }
         
         
@@ -101,6 +130,8 @@ class SearchFlightResultVC: BaseTableVC {
                 
             }else {
                 
+                navView.lbl1.text = "\(defaults.string(forKey: UserDefaultsKeys.mfromairportCode) ?? "") <-> \(defaults.string(forKey: UserDefaultsKeys.mtoairportCode) ?? "")"
+                navView.lbl2.text = "On \(defaults.string(forKey: UserDefaultsKeys.mcalDepDate) ?? "")"
             }
         }
         
@@ -148,12 +179,14 @@ class SearchFlightResultVC: BaseTableVC {
                             tablerow.append(TableRow(
                                 title:"\(m.operator_name ?? "") (\(m.operator_code ?? ""))",
                                 subTitle: k.totalPrice_API,
+                                key:"oneway",
                                 text: m.origin?.time,
                                 headerText: m.destination?.time,
                                 buttonTitle: "\(m.destination?.city ?? "") (\(m.destination?.loc ?? ""))",
                                 image: m.operator_image,
                                 tempText:"\(m.origin?.city ?? "") (\(m.origin?.loc ?? ""))",
                                 questionType:m.duration,
+                                TotalQuestions: k.selectedResult,
                                 cellType:.SearchFlightResultTVCell,
                                 questionBase: "no of stops \(String(m.no_of_stops ?? 0))"
                                 
@@ -173,7 +206,7 @@ class SearchFlightResultVC: BaseTableVC {
     
     // MARK:- ROUND TRIP
     func setupRoundTripResultTVCells() {
-       
+        
         tablerow.removeAll()
         
         RTFlightList?.forEach({ i in
@@ -181,10 +214,10 @@ class SearchFlightResultVC: BaseTableVC {
                 tablerow.append(TableRow(title:k.totalPrice_API,
                                          headerText:k.totalPrice_API,
                                          errormsg:String(k.flight_details?.summary?.first?.no_of_stops ?? 0),
-                                        // isOptional: i.refundable ?? false,
+                                         // isOptional: i.refundable ?? false,
                                          moreData:k.flight_details,
                                          questionType:k.aPICurrencyType,
-                                         //TotalQuestions: k.selectedResult,
+                                         TotalQuestions: k.selectedResult,
                                          cellType:.RoundTripFlightResultTVCell,
                                          questionBase: k.taxes))
             }
@@ -203,9 +236,22 @@ class SearchFlightResultVC: BaseTableVC {
     func setupMulticityTripResultTVCells() {
         tablerow.removeAll()
         
-        tablerow.append(TableRow(height:20,cellType:.EmptyTVCell))
-        tablerow.append(TableRow(title:"",characterLimit: 4,cellType:.MultiCityTripFlightResultTVCell))
-        
+//        tablerow.append(TableRow(height:20,cellType:.EmptyTVCell))
+//        tablerow.append(TableRow(title:"",characterLimit: 4,cellType:.MultiCityTripFlightResultTVCell))
+
+   
+            MCJflightlist?.forEach({ k in
+                tablerow.append(TableRow(title:k.totalPrice_API,
+                                         headerText:k.totalPrice,
+                                       //  errormsg:String(k.mc0.?.flight_details?.summary?.first?.seatsRemaining ?? "0"),
+                                        // isOptional: k.refundable ?? "",
+                                         moreData:k.mc0?.flight_details,
+                                         questionType:k.aPICurrencyType,
+                                         TotalQuestions: k.selectedResult,
+                                         cellType:.MultiCityTripFlightResultTVCell,
+                                         questionBase: k.taxes))
+            })
+            
         
         commonTVData = tablerow
         commonTableView.reloadData()
@@ -246,12 +292,7 @@ class SearchFlightResultVC: BaseTableVC {
     }
     
     
-    func gotoBaggageInfoVC() {
-        guard let vc = BaggageInfoVC.newInstance.self else {return}
-        vc.modalPresentationStyle = .overCurrentContext
-        vc.flightdetails = self.flightdetails
-        present(vc, animated: true)
-    }
+    
     
     @IBAction func didTapOnBaggageBtn(_ sender: Any) {
         print("didTapOnBaggageBtn")
@@ -260,7 +301,16 @@ class SearchFlightResultVC: BaseTableVC {
     
     
     override func gotoRoundTripBaggageIntoVC(cell: RoundTripFlightResultTVCell) {
+        defaults.set(cell.selectedResult, forKey: UserDefaultsKeys.selectedResult)
         gotoBaggageInfoVC()
+    }
+    
+    
+    func gotoBaggageInfoVC() {
+        guard let vc = BaggageInfoVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.flightdetails = self.flightdetails
+        present(vc, animated: true)
     }
     
     
@@ -282,7 +332,7 @@ extension SearchFlightResultVC:UICollectionViewDelegate,UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         var commonCell = UICollectionViewCell()
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? BaggageDateCVCell {
-            cell.titlelbl.text = "26 jul"
+            cell.titlelbl.text = "26 july"
             cell.subTitlelbl.text = "\(kwdPriceArray[indexPath.row])"
             commonCell = cell
         }
@@ -313,14 +363,20 @@ extension SearchFlightResultVC {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        
         FlightList.map { i in
             i.map { j in
-                flightdetails = j[indexPath.row].flight_details
+                flightdetails = j[0].flight_details
             }
         }
         
-        gotoBaggageInfoVC()
+        print(flightdetails)
+        
+        if let cell = tableView.cellForRow(at: indexPath) as? SearchFlightResultTVCell {
+            defaults.set(cell.selectedResult, forKey: UserDefaultsKeys.selectedResult)
+            gotoBaggageInfoVC()
+        }
+        
+        
     }
     
     
@@ -328,9 +384,3 @@ extension SearchFlightResultVC {
 }
 
 
-extension Sequence where Iterator.Element: Hashable {
-    func unique() -> [Iterator.Element] {
-        var seen: [Iterator.Element: Bool] = [:]
-        return self.filter { seen.updateValue(true, forKey: $0) == nil }
-    }
-}

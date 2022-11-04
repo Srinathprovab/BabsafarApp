@@ -43,8 +43,16 @@ class SearchFlightResultTVCell: TableViewCell {
     
     @IBOutlet weak var holderViewTopConstraint: NSLayoutConstraint!
     
-    var delegate:SearchFlightResultTVCellDelegate?
     
+    
+    @IBOutlet weak var deplbl: UILabel!
+    @IBOutlet weak var airoplaneImg: UIImageView!
+    
+    @IBOutlet weak var leftConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var rightConstraint: NSLayoutConstraint!
+    var delegate:SearchFlightResultTVCellDelegate?
+    var selectedResult = String()
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -72,9 +80,17 @@ class SearchFlightResultTVCell: TableViewCell {
         noStopslbl.text = cellInfo?.questionBase
         
         kwdPricelbl.text = cellInfo?.subTitle
-        
+        selectedResult = cellInfo?.TotalQuestions ?? ""
         
         switch cellInfo?.key {
+            
+            
+        case "oneway":
+            deplbl.isHidden = true
+            airoplaneImg.isHidden = true
+            leftConstraint.constant = 8
+            rightConstraint.constant = 8
+            break
         case "booked":
             shadowView(yourView: holderView)
             imagesHolderHeight.constant = 0
@@ -123,7 +139,8 @@ class SearchFlightResultTVCell: TableViewCell {
         
         setupLabels(lbl: fromDaylbl, text: "", textcolor: HexColor("#808089"), font: .LatoRegular(size: 12))
         setupLabels(lbl: toDaylbl, text: "", textcolor: HexColor("#808089"), font: .LatoRegular(size: 12))
-        
+        setupLabels(lbl: deplbl, text: "", textcolor: HexColor("#808089"), font: .LatoLight(size: 12))
+
         imagesHolderHeight.constant = 25
         imagesHolderView.isHidden = false
         imagesHolderView.backgroundColor = .AppCalenderDateSelectColor
@@ -146,6 +163,10 @@ class SearchFlightResultTVCell: TableViewCell {
         viewVoucherBtn.setTitleColor(.WhiteColor, for: .normal)
         viewVoucherBtn.titleLabel?.font = UIFont.LatoRegular(size: 16)
         
+        
+        deplbl.text = "Return"
+        airoplaneImg.image = UIImage(named: "airo2")
+
     }
     
     
@@ -174,8 +195,21 @@ class SearchFlightResultTVCell: TableViewCell {
     
     
     func hidePerpersonLbl() {
+        deplbl.text = "Departure"
+        airoplaneImg.image = UIImage(named: "airo1")
         perPersonlbl.isHidden = true
-        setupLabels(lbl: kwdPricelbl, text: "", textcolor: .AppLabelColor, font: .LatoSemibold(size: 12))
+        kwdPricelbl.isHidden = true
+        imagesHolderView.backgroundColor = HexColor("#EBEBEB")
+        
+        wifiImg.image = UIImage(named: "wifi")?.withRenderingMode(.alwaysOriginal).withTintColor(HexColor("#808089"))
+        foodImg.image = UIImage(named: "food")?.withRenderingMode(.alwaysOriginal).withTintColor(HexColor("#808089"))
+        bagImg.image = UIImage(named: "bag")?.withRenderingMode(.alwaysOriginal).withTintColor(HexColor("#808089"))
+        suitCaseImg.image = UIImage(named: "suit")?.withRenderingMode(.alwaysOriginal).withTintColor(HexColor("#808089"))
+        plugImg.image = UIImage(named: "plug")?.withRenderingMode(.alwaysOriginal).withTintColor(HexColor("#808089"))
+        radioImg.image = UIImage(named: "radio")?.withRenderingMode(.alwaysOriginal).withTintColor(HexColor("#808089"))
+        
+        bagWeightlbl.textColor = HexColor("#808089")
+        suitcaseWeightlbl.textColor = HexColor("#808089")
     }
     
     @IBAction func didTapOnViewVoucherBtn(_ sender: Any) {

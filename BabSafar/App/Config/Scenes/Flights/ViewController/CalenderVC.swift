@@ -59,22 +59,28 @@ class CalenderVC: BaseTableVC {
     var btnDoneActionBool = Bool()
     var calstartDate = String()
     var calendDate = String()
-    
+    var celltag = Int()
     
     
     override func viewWillAppear(_ animated: Bool) {
+        self.celltag = Int(defaults.string(forKey: UserDefaultsKeys.cellTag) ?? "0") ?? 0
         
         if let selectedTab = defaults.string(forKey: UserDefaultsKeys.dashboardTapSelected) {
             if selectedTab == "Flights" {
                 
                 if let journeyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
                     if journeyType == "oneway" {
+                        calendarView.allowsMultipleSelection = false
                         departureDatelbl.text = defaults.string(forKey: UserDefaultsKeys.calDepDate) ?? "Select Date"
                         returnView.isHidden = true
                     }else if journeyType == "circle"{
+                        calendarView.allowsMultipleSelection = true
                         departureDatelbl.text = defaults.string(forKey: UserDefaultsKeys.rcalDepDate) ?? "Select Date"
                         returnDatelbl.text = defaults.string(forKey: UserDefaultsKeys.rcalRetDate) ?? "Select Date"
                     }else {
+                        calendarView.allowsMultipleSelection = false
+                        departureView.isHidden = true
+                        returnView.isHidden = true
                         
                     }
                 }
@@ -190,7 +196,6 @@ class CalenderVC: BaseTableVC {
         
         calendarView.register(UINib(nibName: "calendarCVCell", bundle: nil), forCellWithReuseIdentifier: "calendarCVCell")
         //        calendarView.allowsSelection = true
-        calendarView.allowsMultipleSelection = true
         calendarView.isRangeSelectionUsed = true
         
         calendarView.ibCalendarDelegate = self
@@ -372,8 +377,8 @@ extension CalenderVC: JTAppleCalendarViewDelegate, JTAppleCalendarViewDataSource
         
         if let selectedTab = defaults.string(forKey: UserDefaultsKeys.dashboardTapSelected) {
             if selectedTab == "Flights" {
-               
-              
+                
+                
                 if let journeyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
                     if journeyType == "oneway" {
                         defaults.set(calstartDate, forKey: UserDefaultsKeys.calDepDate)
@@ -382,6 +387,8 @@ extension CalenderVC: JTAppleCalendarViewDelegate, JTAppleCalendarViewDataSource
                         defaults.set(calendDate, forKey: UserDefaultsKeys.rcalRetDate)
                     }else {
                         
+                        defaults.set(calstartDate, forKey: UserDefaultsKeys.mcaldate)
+                        depatureDatesArray[self.celltag] = calstartDate
                     }
                 }
                 

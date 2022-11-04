@@ -20,6 +20,7 @@ class RoundTripFlightResultTVCell: TableViewCell {
     
     var rflight_details : Flight_details?
     var totalPrice = String()
+    var selectedResult = String()
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -35,7 +36,7 @@ class RoundTripFlightResultTVCell: TableViewCell {
     override func updateUI() {
         
         totalPrice = cellInfo?.headerText ?? ""
-        //        selectedResult = cellInfo?.TotalQuestions ?? ""
+        selectedResult = cellInfo?.TotalQuestions ?? ""
         //        taxes = cellInfo?.questionBase ?? ""
         //        APICurrencyType = cellInfo?.questionType ?? ""
         //
@@ -43,7 +44,7 @@ class RoundTripFlightResultTVCell: TableViewCell {
         
         self.rflight_details = cellInfo?.moreData as? Flight_details
         arrayCount = rflight_details?.summary?.count ?? 0
-        tvHeight.constant = CGFloat(arrayCount * 155)
+        tvHeight.constant = CGFloat(arrayCount * 136)
         roundTripTV.reloadData()
         
     }
@@ -65,6 +66,7 @@ class RoundTripFlightResultTVCell: TableViewCell {
         roundTripTV.clipsToBounds = true
         roundTripTV.layer.borderWidth = 1
         roundTripTV.layer.borderColor = UIColor.lightGray.withAlphaComponent(0.5).cgColor
+        roundTripTV.separatorStyle = .none
     }
     
     func gotoRoundTripBaggageIntoVC() {
@@ -99,11 +101,10 @@ extension RoundTripFlightResultTVCell:UITableViewDataSource,UITableViewDelegate 
             cell.hourslbl.text = data?[indexPath.row].duration
             let no_of_stops = String(data?[indexPath.row].no_of_stops ?? 0)
             cell.noStopslbl.text = "\(no_of_stops) stops"
+          //  cell.bagWeightlbl.text = data?[indexPath.row].weight_Allowance
             
-            
-            if indexPath.row == 1 {
+            if indexPath.row == 0 {
                 cell.hidePerpersonLbl()
-                cell.kwdPricelbl.text = data?[indexPath.row].destination?.date
             }
             
             
@@ -114,9 +115,6 @@ extension RoundTripFlightResultTVCell:UITableViewDataSource,UITableViewDelegate 
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        let data = rflight_details?.summary
-        
         gotoRoundTripBaggageIntoVC()
     }
     

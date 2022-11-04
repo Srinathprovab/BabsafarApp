@@ -11,7 +11,6 @@ import Alamofire
 class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
     
     
-    
     @IBOutlet weak var holderView: UIView!
     @IBOutlet weak var backBtnView: UIView!
     @IBOutlet weak var leftArrowImg: UIImageView!
@@ -20,14 +19,8 @@ class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
     @IBOutlet weak var oneWayView: UIView!
     @IBOutlet weak var roundTripView: UIView!
     @IBOutlet weak var multiCityView: UIView!
-    @IBOutlet weak var oneWayBtnView: UIView!
-    @IBOutlet weak var oneWayBtnImage: UIImageView!
     @IBOutlet weak var oneWaylbl: UILabel!
-    @IBOutlet weak var roundTripBtnView: UIView!
-    @IBOutlet weak var roundTripBtnImage: UIImageView!
     @IBOutlet weak var roundTriplbl: UILabel!
-    @IBOutlet weak var multiCityBtnView: UIView!
-    @IBOutlet weak var multiCityBtnImage: UIImageView!
     @IBOutlet weak var multiCitylbl: UILabel!
     
     
@@ -39,6 +32,8 @@ class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
     }
     var cellIndex = Int()
     var payload = [String:Any]()
+    var payload1 = [String:Any]()
+    var payload2 = [String:Any]()
     var viewModel : FlightListViewModel?
     var FlightListArray = [FlightSearchModel]()
     var tablerow = [TableRow]()
@@ -51,16 +46,23 @@ class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
     var selectArray1 = [String]()
     var FlightList :[[J_flight_list]]?
     var RTFlightList :[[RTJ_flight_list]]?
+    var MCJflightlist :[MCJ_flight_list]?
 
-    override func viewDidAppear(_ animated: Bool) {
-        NotificationCenter.default.addObserver(self, selector: #selector(reload(notification:)), name: NSNotification.Name("reload"), object: nil)
-    }
+    var moreoptionBool = true
+    
     
     
     override func viewWillAppear(_ animated: Bool) {
         
         
         NotificationCenter.default.addObserver(self, selector: #selector(reload(notification:)), name: NSNotification.Name("reload"), object: nil)
+        
+        
+        if !UserDefaults.standard.bool(forKey: "ExecuteOnce") {
+            defaults.set("oneway", forKey: UserDefaultsKeys.journeyType)
+            setupTV()
+            UserDefaults.standard.set(true, forKey: "ExecuteOnce")
+        }
         
         
         if let selectedJType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
@@ -92,22 +94,16 @@ class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
     
     func setupUI() {
         
+        view.backgroundColor = .white
         holderView.backgroundColor = .clear
-        leftArrowImg.image = UIImage(named: "leftarrow")
-        oneWayBtnImage.image = UIImage(named: "oneway")?.withRenderingMode(.alwaysOriginal).withTintColor(.WhiteColor)
-        roundTripBtnImage.image = UIImage(named: "roundtrip")
-        multiCityBtnImage.image = UIImage(named: "multicity")
+        commonTableView.backgroundColor = .clear
         
+        leftArrowImg.image = UIImage(named: "leftarrow")
         setupViews(v: backBtnView, radius: 20, color: .WhiteColor.withAlphaComponent(0.2))
         setupViews(v: buttonsHolderView, radius: 25, color: .WhiteColor)
         setupViews(v: oneWayView, radius: 18, color: .AppTabSelectColor)
         setupViews(v: roundTripView, radius: 18, color: .AppHolderViewColor)
         setupViews(v: multiCityView, radius: 18, color: .AppHolderViewColor)
-        
-        setupViews(v: oneWayBtnView, radius: 15, color: .WhiteColor.withAlphaComponent(0.5))
-        setupViews(v: roundTripBtnView, radius: 15, color: .WhiteColor)
-        setupViews(v: multiCityBtnView, radius: 15, color: .WhiteColor)
-        
         
         setupLabels(lbl:titlelbl,text: "Search Flights", textcolor: .WhiteColor, font: .LatoMedium(size: 20))
         setupLabels(lbl:oneWaylbl,text: "One Way", textcolor: .WhiteColor, font: .LatoRegular(size: 14))
@@ -130,12 +126,19 @@ class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
     
     func setupMultiCityTV() {
         tablerow.removeAll()
-        tablerow.append(TableRow(height:20,cellType:.EmptyTVCell))
+        
+        commonTableView.layer.borderWidth = 1
+        commonTableView.layer.borderColor = UIColor.AppBorderColor.cgColor
+        commonTableView.layer.cornerRadius = 5
+        commonTableView.clipsToBounds = true
+        
         tablerow.append(TableRow(cellType:.MultiCityTVCell))
         tablerow.append(TableRow(title:"Return Journey From Another Location",key: "multicity",cellType:.checkOptionsTVCell))
         tablerow.append(TableRow(title:"Direct Flights Only",key: "multicity",cellType:.checkOptionsTVCell))
         tablerow.append(TableRow(title:"Search Flights",cellType:.ButtonTVCell))
-        tablerow.append(TableRow(height:50,cellType:.EmptyTVCell))
+        
+        //        tablerow.append(TableRow(title:"Top airlines",cellType:.TopAirlinesTVCell))
+        //        tablerow.append(TableRow(height:50,cellType:.EmptyTVCell))
         
         commonTVData = tablerow
         commonTableView.reloadData()
@@ -179,82 +182,41 @@ class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
     
     
     func setupOneWay(){
+        
         defaults.set("oneway", forKey: UserDefaultsKeys.journeyType)
-        
         oneWayView.backgroundColor = .AppTabSelectColor
-        oneWayBtnView.backgroundColor = .WhiteColor.withAlphaComponent(0.2)
         oneWaylbl.textColor = .WhiteColor
-        oneWayBtnImage.image = UIImage(named: "oneway")?.withRenderingMode(.alwaysOriginal).withTintColor(.WhiteColor)
-        
         roundTripView.backgroundColor = .AppHolderViewColor
-        roundTripBtnView.backgroundColor = .WhiteColor
         roundTriplbl.textColor = .AppLabelColor
-        roundTripBtnImage.image = UIImage(named: "roundtrip")?.withRenderingMode(.alwaysOriginal).withTintColor(.AppLabelColor)
-        
         multiCityView.backgroundColor = .AppHolderViewColor
-        multiCityBtnView.backgroundColor = .WhiteColor
         multiCitylbl.textColor = .AppLabelColor
-        multiCityBtnImage.image = UIImage(named: "multicity")?.withRenderingMode(.alwaysOriginal).withTintColor(.AppLabelColor)
-        
         setupTV()
     }
     
-    
     func setupRoundTrip(){
+        
         defaults.set("circle", forKey: UserDefaultsKeys.journeyType)
-        
         oneWayView.backgroundColor = .AppHolderViewColor
-        oneWayBtnView.backgroundColor = .WhiteColor
         oneWaylbl.textColor = .AppLabelColor
-        oneWayBtnImage.image = UIImage(named: "oneway")?.withRenderingMode(.alwaysOriginal).withTintColor(.AppLabelColor)
-        
         roundTripView.backgroundColor = .AppTabSelectColor
-        roundTripBtnView.backgroundColor = .WhiteColor.withAlphaComponent(0.2)
         roundTriplbl.textColor = .WhiteColor
-        roundTripBtnImage.image = UIImage(named: "roundtrip")?.withRenderingMode(.alwaysOriginal).withTintColor(.WhiteColor)
-        
         multiCityView.backgroundColor = .AppHolderViewColor
-        multiCityBtnView.backgroundColor = .WhiteColor
         multiCitylbl.textColor = .AppLabelColor
-        multiCityBtnImage.image = UIImage(named: "multicity")?.withRenderingMode(.alwaysOriginal).withTintColor(.AppLabelColor)
-        
         setupTV()
     }
     
     func setupMulticity(){
+        
         defaults.set("multicity", forKey: UserDefaultsKeys.journeyType)
-        
         oneWayView.backgroundColor = .AppHolderViewColor
-        oneWayBtnView.backgroundColor = .WhiteColor
         oneWaylbl.textColor = .AppLabelColor
-        oneWayBtnImage.image = UIImage(named: "oneway")?.withRenderingMode(.alwaysOriginal).withTintColor(.AppLabelColor)
-        
         roundTripView.backgroundColor = .AppHolderViewColor
-        roundTripBtnView.backgroundColor = .WhiteColor
         roundTriplbl.textColor = .AppLabelColor
-        roundTripBtnImage.image = UIImage(named: "roundtrip")?.withRenderingMode(.alwaysOriginal).withTintColor(.AppLabelColor)
-        
         multiCityView.backgroundColor = .AppTabSelectColor
-        multiCityBtnView.backgroundColor = .WhiteColor.withAlphaComponent(0.2)
         multiCitylbl.textColor = .WhiteColor
-        multiCityBtnImage.image = UIImage(named: "multicity")?.withRenderingMode(.alwaysOriginal).withTintColor(.WhiteColor)
-        
         setupMultiCityTV()
     }
     
-    override func didTapOnFromCityBtnAction(cell: SearchFlightsTVCell) {
-        guard let vc = SelectFromCityVC.newInstance.self else {return}
-        vc.modalPresentationStyle = .overCurrentContext
-        vc.titleStr = "From"
-        self.present(vc, animated: true)
-    }
-    
-    override func didTapOnToCityBtnAction(cell: SearchFlightsTVCell){
-        guard let vc = SelectFromCityVC.newInstance.self else {return}
-        vc.modalPresentationStyle = .overCurrentContext
-        vc.titleStr = "To"
-        self.present(vc, animated: true)
-    }
     
     override func didTapOnSwipeCityBtnAction(cell: SearchFlightsTVCell) {
         c1 = cell.fromCitylbl.text ?? ""
@@ -267,20 +229,22 @@ class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
     }
     
     override func didTapOnDepartureBtnAction(cell: SearchFlightsTVCell) {
-        dateSelectKey = "dep"
-        guard let vc = CalenderVC.newInstance.self else {return}
-        vc.modalPresentationStyle = .fullScreen
-        vc.titleStr = "Departure Date"
-        self.present(vc, animated: true)
+        gotoCalenderVC(key: "dep", titleStr: "Departure Date")
+        
     }
     
     override func didTapOnReturnBtnAction(cell: SearchFlightsTVCell) {
-        dateSelectKey = "ret"
-        guard let vc = CalenderVC.newInstance.self else {return}
-        vc.modalPresentationStyle = .fullScreen
-        vc.titleStr = "Ruturn Date"
-        self.present(vc, animated: true)
+        gotoCalenderVC(key: "ret", titleStr: "Ruturn Date")
     }
+    
+    override func didTapOnFromCityBtnAction(cell: SearchFlightsTVCell) {
+        gotoSelectFromCityVC(titleStr: "From")
+    }
+    
+    override func didTapOnToCityBtnAction(cell: SearchFlightsTVCell){
+        gotoSelectFromCityVC(titleStr: "To")
+    }
+    
     
     override func addEconomyBtnAction(cell: SearchFlightsTVCell) {
         gotoTravellerEconomyVC()
@@ -290,6 +254,7 @@ class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
         gotoTravellerEconomyVC()
     }
     
+    
     func gotoTravellerEconomyVC() {
         guard let vc = TravellerEconomyVC.newInstance.self else {return}
         vc.modalPresentationStyle = .overCurrentContext
@@ -298,7 +263,22 @@ class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
     }
     
     
-    var moreoptionBool = true
+    func gotoSelectFromCityVC(titleStr:String) {
+        guard let vc = SelectFromCityVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.titleStr = titleStr
+        self.present(vc, animated: true)
+    }
+    
+    
+    func gotoCalenderVC(key:String,titleStr:String) {
+        dateSelectKey = key
+        guard let vc = CalenderVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .fullScreen
+        vc.titleStr = titleStr
+        self.present(vc, animated: true)
+    }
+    
     override func moreOptionBtnAction(cell: SearchFlightsTVCell){
         if moreoptionBool == true {
             cell.moreExpandViewHeight.constant = 200
@@ -313,18 +293,6 @@ class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
         }
         
         commonTableView.reloadData()
-    }
-    
-    override func didTapOnairlineBtnAction(cell: SearchFlightsTVCell) {
-        print("didTapOnairlineBtnAction")
-    }
-    
-    override func didTapOntimeReturnJourneyBtnAction(cell: SearchFlightsTVCell) {
-        print("didTapOntimeReturnJourneyBtnAction")
-    }
-    
-    override func didTapOntimeOutwardJourneyBtnAction(cell: SearchFlightsTVCell) {
-        print("didTapOntimeOutwardJourneyBtnAction")
     }
     
     
@@ -360,6 +328,17 @@ class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
         defaults.set(selectArray.joined(separator:","), forKey: UserDefaultsKeys.select)
     }
     
+    override func didTapOnFromCityBtn(cell: MultiCityTVCell) {
+        gotoSelectFromCityVC(titleStr: "From")
+    }
+    
+    override func didTapOnToCityBtn(cell: MultiCityTVCell) {
+        gotoSelectFromCityVC(titleStr: "To")
+    }
+    
+    override func didTapOnDateBtn(cell: MultiCityTVCell) {
+        gotoCalenderVC(key: "dep", titleStr: "Departure Date")
+    }
     
     override func didTapOnairlineBtnAction(cell: MultiCityTVCell) {
         print("didTapOnairlineBtnAction")
@@ -372,6 +351,21 @@ class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
     override func didTapOntimeOutwardJourneyBtnAction(cell: MultiCityTVCell) {
         print("didTapOntimeOutwardJourneyBtnAction")
     }
+    
+    
+    override func didTapOnairlineBtnAction(cell: SearchFlightsTVCell) {
+        print("didTapOnairlineBtnAction")
+    }
+    
+    override func didTapOntimeReturnJourneyBtnAction(cell: SearchFlightsTVCell) {
+        print("didTapOntimeReturnJourneyBtnAction")
+    }
+    
+    override func didTapOntimeOutwardJourneyBtnAction(cell: SearchFlightsTVCell) {
+        print("didTapOntimeOutwardJourneyBtnAction")
+    }
+    
+    
     
     
     override func didTapOnSearchFlightBtnAction(cell: SearchFlightsTVCell) {
@@ -432,9 +426,9 @@ class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
                     BASE_URL = "https://provabdevelopment.com/babsafar/mobile_webservices/mobile/index.php/general/"
                     
                     payload["trip_type"] = "circle"
-                    payload["adult"] = defaults.string(forKey:UserDefaultsKeys.adultCount)
-                    payload["child"] = defaults.string(forKey:UserDefaultsKeys.childCount)
-                    payload["infant"] = defaults.string(forKey:UserDefaultsKeys.infantsCount)
+                    payload["adult"] = defaults.string(forKey:UserDefaultsKeys.radultCount)
+                    payload["child"] = defaults.string(forKey:UserDefaultsKeys.rchildCount)
+                    payload["infant"] = defaults.string(forKey:UserDefaultsKeys.rinfantsCount)
                     payload["v_class"] = defaults.string(forKey:UserDefaultsKeys.rselectClass)
                     payload["sector_type"] = "international"
                     payload["from"] = defaults.string(forKey:UserDefaultsKeys.rfromCity)
@@ -442,7 +436,7 @@ class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
                     payload["to"] = defaults.string(forKey:UserDefaultsKeys.rtoCity)
                     payload["to_loc_id"] = defaults.string(forKey:UserDefaultsKeys.rtolocid)
                     payload["depature"] = defaults.string(forKey:UserDefaultsKeys.rcalDepDate)
-                    payload["return_date"] = defaults.string(forKey:UserDefaultsKeys.rcalRetDate)
+                    payload["return"] = defaults.string(forKey:UserDefaultsKeys.rcalRetDate)
                     payload["out_jrn"] = "All Times"
                     payload["ret_jrn"] = "All Times"
                     payload["carrier"] = ""
@@ -450,6 +444,8 @@ class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
                     payload["search_flight"] = "Search"
                     payload["user_id"] = "0"
                     
+                    
+
                     viewModel?.CallRoundTRipSearchFlightAPI(dictParam: payload)
                     
                 }
@@ -457,16 +453,16 @@ class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
                 
             }else {
                 
+                
             }
         }
     }
     
     
-    
-    
     func flightList(response: FlightSearchModel) {
         if response.status == 1 {
             FlightList = response.data?.j_flight_list
+            defaults.set(response.data?.search_id, forKey: UserDefaultsKeys.searchid)
             gotoSearchFlightResultVC()
         }
     }
@@ -475,23 +471,76 @@ class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
     func roundTripflightList(response: RoundTripModel) {
         if response.status == 1 {
             RTFlightList = response.data?.j_flight_list
+            defaults.set(response.data?.search_id, forKey: UserDefaultsKeys.searchid)
             gotoSearchFlightResultVC()
         }
     }
-    
-    
     
     func gotoSearchFlightResultVC() {
         guard let vc = SearchFlightResultVC.newInstance.self else {return}
         vc.modalPresentationStyle = .fullScreen
         vc.FlightList = self.FlightList
         vc.RTFlightList = self.RTFlightList
+        vc.MCJflightlist = self.MCJflightlist
         self.present(vc, animated: true)
     }
     
     
     override func btnAction(cell: ButtonTVCell) {
-        gotoSearchFlightResultVC()
+        //   gotoSearchFlightResultVC()
+        
+        payload["sector_type"] = "international"
+        payload["trip_type"] = "multicity"
+        
+        
+        
+        payload["from"] = fromCityArray
+        payload["from_loc_id"] = fromlocidArray
+        payload["to"] = toCityArray
+        payload["to_loc_id"] = tolocidArray
+        payload["depature"] = depatureDatesArray
+        
+        
+        payload["adult"] = defaults.string(forKey: UserDefaultsKeys.madultCount)
+        payload["child"] = defaults.string(forKey: UserDefaultsKeys.mchildCount)
+        payload["infant"] = defaults.string(forKey: UserDefaultsKeys.minfantsCount)
+        payload["checkbox-group"] = "on"
+        payload["search_flight"] = "Search"
+        payload["carrier"] = ""
+        payload["psscarrier"] = "ALL"
+        payload["remngwd"] = defaults.string(forKey: UserDefaultsKeys.mselectClass)
+        payload["v_class"] = defaults.string(forKey: UserDefaultsKeys.mselectClass)
+        payload["user_id"] = "0"
+        
+        do {
+            let arrJson = try JSONSerialization.data(withJSONObject: payload, options: JSONSerialization.WritingOptions.prettyPrinted)
+            let theJSONText = NSString(data: arrJson, encoding: String.Encoding.utf8.rawValue)
+            print(theJSONText ?? "")
+            
+            payload1["search_params"] = theJSONText
+            payload1["user_id"] = "0"
+            
+            
+            BASE_URL = "https://provabdevelopment.com/babsafar/mobile_webservices/mobile/index.php/general/"
+            viewModel?.CallMulticityTripSearchFlightAPI(dictParam: payload1)
+            
+        }catch let error as NSError{
+            print(error.description)
+        }
+        
     }
+    
+    
+    func multiTripflightList(response: MulticityModel) {
+        print("====== MulticityModel response ========")
+        print(response.data?.search_id)
+        
+        if response.status == 1 {
+            self.MCJflightlist = response.data?.j_flight_list
+            defaults.set(response.data?.search_id, forKey: UserDefaultsKeys.searchid)
+            gotoSearchFlightResultVC()
+        }
+    }
+    
     
 }

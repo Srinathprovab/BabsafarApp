@@ -18,6 +18,7 @@ class ButtonCVCell: UICollectionViewCell {
     @IBOutlet weak var btnlbl: UILabel!
     @IBOutlet weak var addCityBtn: UIButton!
     
+    @IBOutlet weak var holderViewHeight: NSLayoutConstraint!
     
     var delegate:ButtonCVCellDelegate?
     override func awakeFromNib() {

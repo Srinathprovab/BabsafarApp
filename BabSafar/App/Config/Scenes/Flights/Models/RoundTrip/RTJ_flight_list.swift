@@ -43,7 +43,7 @@ struct RTJ_flight_list : Codable {
     //    let price : Price?
     //    let fare : [Fare]?
     //    let access_key : String?
-    //    let selectedResult : String?
+       let selectedResult : String?
     
     let rreturn : Return?
     let onward : Onward?
@@ -86,7 +86,7 @@ struct RTJ_flight_list : Codable {
         //        case price = "price"
         //        case fare = "fare"
         //        case access_key = "access_key"
-        //        case selectedResult = "selectedResult"
+                case selectedResult = "selectedResult"
         
         
         case rreturn = "return"
@@ -131,7 +131,7 @@ struct RTJ_flight_list : Codable {
         //        price = try values.decodeIfPresent(Price.self, forKey: .price)
         //        fare = try values.decodeIfPresent([Fare].self, forKey: .fare)
         //        access_key = try values.decodeIfPresent(String.self, forKey: .access_key)
-        //        selectedResult = try values.decodeIfPresent(String.self, forKey: .selectedResult)
+               selectedResult = try values.decodeIfPresent(String.self, forKey: .selectedResult)
         
         rreturn = try values.decodeIfPresent(Return.self, forKey: .rreturn)
         onward = try values.decodeIfPresent(Onward.self, forKey: .onward)

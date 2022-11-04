@@ -46,10 +46,13 @@ class RadioButtonTVCell: TableViewCell {
     }
     
     
+    func show() {
+        radioImg.image = UIImage(named: "radioSelected")
+    }
     
     
-//    @IBAction func didTapOnRadioButton(_ sender: Any) {
-//        delegate?.didTapOnRadioButton(cell: self)
-//    }
-    
+    func hide() {
+        radioImg.image = UIImage(named: "radioUnselected")
+    }
+
 }

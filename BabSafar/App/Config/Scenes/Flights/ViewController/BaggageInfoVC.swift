@@ -7,9 +7,7 @@
 
 import UIKit
 
-class BaggageInfoVC: BaseTableVC {
-    
-    
+class BaggageInfoVC: BaseTableVC, FlightDetailsViewModelProtocal {
     
     @IBOutlet weak var holderView: UIView!
     @IBOutlet weak var buttonsView: UIView!
@@ -33,27 +31,11 @@ class BaggageInfoVC: BaseTableVC {
     var isVCFrom = String()
     var tablerow = [TableRow]()
     var flightdetails : Flight_details?
-    
-    
+    var viewmodel : FlightDetailsViewModel?
+    var payload = [String:Any]()
     
     override func viewWillAppear(_ animated: Bool) {
-        print("BaggageInfoVC BaggageInfoVC")
-        flightdetails.map { i in
-            i.summary.map { j in
-                j.map { k in
-                    print(k.no_of_stops)
-                    print(k.origin)
-                }
-            }
-        }
-    }
-    
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
         
-        // Do any additional setup after loading the view.
-        setupUI()
         if let selectedTab = defaults.string(forKey: UserDefaultsKeys.journeyType) {
             if selectedTab == "oneway" {
                 setupItineraryOneWayTVCell()
@@ -63,6 +45,24 @@ class BaggageInfoVC: BaseTableVC {
                 setupItineraryMultiTripTVCell()
             }
         }
+        
+        
+        
+        print(flightdetails)
+        
+        callGetFlightDetailsAPI()
+        
+    }
+    
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        // Do any additional setup after loading the view.
+        setupUI()
+        viewmodel = FlightDetailsViewModel(self)
+        
     }
     
     
@@ -97,7 +97,7 @@ class BaggageInfoVC: BaseTableVC {
         tablerow.append(TableRow(height:100,cellType:.EmptyTVCell))
         commonTVData = tablerow
         commonTableView.reloadData()
-    
+        
     }
     
     
@@ -279,6 +279,21 @@ class BaggageInfoVC: BaseTableVC {
         vc.modalPresentationStyle = .overCurrentContext
         self.present(vc, animated: true)
     }
+    
+    
+    func callGetFlightDetailsAPI() {
+        BASE_URL = "https://provabdevelopment.com/babsafar/mobile_webservices/mobile/index.php/flight/"
+        payload["search_id"] = defaults.string(forKey: UserDefaultsKeys.searchid)
+        payload["selectedResultindex"] = defaults.string(forKey: UserDefaultsKeys.selectedResult)
+        payload["user_id"] = defaults.string(forKey: UserDefaultsKeys.userid)
+        viewmodel?.getFlightDetails(dictParam: payload)
+    }
+    
+    
+    func flightDetails(response: FlightDetailsModel) {
+        print(response)
+    }
+    
 }
 
 

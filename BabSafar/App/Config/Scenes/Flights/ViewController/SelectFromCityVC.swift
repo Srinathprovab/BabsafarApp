@@ -18,7 +18,6 @@ class SelectFromCityVC: BaseTableVC, SelectCityViewModelProtocal {
     @IBOutlet weak var searchImg: UIImageView!
     @IBOutlet weak var searchTF: UITextField!
     
-    
     var filtered:[SelectCityModel] = []
     var cityList:[SelectCityModel] = []
     var cityViewModel: SelectCityViewModel?
@@ -27,6 +26,9 @@ class SelectFromCityVC: BaseTableVC, SelectCityViewModelProtocal {
     var payload = [String:Any]()
     var isSearchBool = Bool()
     var searchText = String()
+    var celltag = Int()
+    
+    
     static var newInstance: SelectFromCityVC? {
         let storyboard = UIStoryboard(name: Storyboard.Main.name,
                                       bundle: nil)
@@ -36,6 +38,8 @@ class SelectFromCityVC: BaseTableVC, SelectCityViewModelProtocal {
     
     override func viewWillAppear(_ animated: Bool) {
         CallShowCityListAPI(str: "")
+        
+        self.celltag = Int(defaults.string(forKey: UserDefaultsKeys.cellTag) ?? "0") ?? 0
         
         NotificationCenter.default.addObserver(self, selector: #selector(noInterNet(notification:)), name: NSNotification.Name("nointernet"), object: nil)
         
@@ -187,12 +191,14 @@ extension SelectFromCityVC {
             cell.subTitlelbl.text = dict.value
             cell.id = dict.id ?? ""
             cell.cityShortNamelbl.text = dict.airportCode
+            cell.value = dict.value ?? ""
         }else{
             let dict = cityList[indexPath.row]
             cell.titlelbl.text = dict.label
             cell.subTitlelbl.text = dict.value
             cell.id = dict.id ?? ""
             cell.cityShortNamelbl.text = dict.airportCode
+            cell.value = dict.value ?? ""
         }
         return cell
     }
@@ -228,7 +234,7 @@ extension SelectFromCityVC {
                                 defaults.set(cell.titlelbl.text ?? "", forKey: UserDefaultsKeys.rfromCity)
                                 defaults.set(cell.id , forKey: UserDefaultsKeys.rfromlocid)
                                 defaults.set(cell.cityShortNamelbl.text , forKey: UserDefaultsKeys.rfairportCode)
-
+                                
                             }else {
                                 defaults.set(cell.titlelbl.text ?? "", forKey: UserDefaultsKeys.rtoCity)
                                 defaults.set(cell.id , forKey: UserDefaultsKeys.rtolocid)
@@ -236,6 +242,40 @@ extension SelectFromCityVC {
 
                             }
                         }else {
+                            
+                            if titleStr == "From" {
+                                defaults.set(cell.titlelbl.text ?? "", forKey: UserDefaultsKeys.mfromCity)
+                                defaults.set(cell.id , forKey: UserDefaultsKeys.mfromlocid)
+                                defaults.set(cell.cityShortNamelbl.text , forKey: UserDefaultsKeys.mfromairportCode)
+                                defaults.set(cell.value , forKey: UserDefaultsKeys.mfromCityValue)
+
+                                fromCityNameArray[self.celltag] = cell.titlelbl.text ?? ""
+                                fromCityShortNameArray[self.celltag] = cell.cityShortNamelbl.text ?? ""
+                                
+                
+                                fromCityArray[self.celltag] = cell.value
+                                fromlocidArray[self.celltag] = cell.id
+                                
+                             
+                               
+                            
+                                
+                            }else {
+                                defaults.set(cell.titlelbl.text ?? "", forKey: UserDefaultsKeys.mtoCity)
+                                defaults.set(cell.id , forKey: UserDefaultsKeys.mtolocid)
+                                defaults.set(cell.cityShortNamelbl.text , forKey: UserDefaultsKeys.mtoairportCode)
+                                defaults.set(cell.value , forKey: UserDefaultsKeys.mtoCityValue)
+
+                                toCityNameArray[self.celltag] = cell.titlelbl.text ?? ""
+                                toCityShortNameArray[self.celltag] = cell.cityShortNamelbl.text ?? ""
+                                
+                                toCityArray[self.celltag] = cell.value
+                                tolocidArray[self.celltag] = cell.id
+                                
+                                
+                               
+
+                            }
                             
                         }
                     }

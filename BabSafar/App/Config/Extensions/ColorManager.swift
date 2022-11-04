@@ -20,7 +20,8 @@ extension UIColor {
     
     public static var AppBorderColor: UIColor {
         get {
-            return UIColor(named: "AppBorderColor")!
+           // return UIColor(named: "AppBorderColor")!
+            return UIColor.black.withAlphaComponent(0.2)
         }
     }
     

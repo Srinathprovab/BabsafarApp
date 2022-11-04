@@ -8,7 +8,7 @@
 import UIKit
 
 class BaseTableVC: UIViewController, SpecialDealsTVCellDelegate, TopCityTVCellDelegate, SearchFlightsTVCellDelegate, TravellerEconomyTVCellDelegate, RadioButtonTVCellDelegate, LabelTVCellDelegate, SignUpWithTVCellDelegate, ButtonTVCellDelegate, TextfieldTVCellDelegate, LoignOrSignupBtnsTVCellDelegate, BookNowButtonsTVCellDelegate, MenuBGTVCellDelegate, DropDownTVCellDelegate, TDetailsLoginTVCellDelegate, ContactInformationTVCellDelegate, TravelInsuranceTVCellDelegate, PriceSummaryTVCellDelegate, AddTravellerTVCellDelegate, SelectGenderTVCellDelegate, SortbyTVCellDelegate, YourPrivacyTVCellDelegate, SearchFlightResultTVCellDelegate, MultiCityTVCellDelegate, CommonFromCityTVCellDelegate,SearchLocationTFTVCellDelegate, HotelsTVCellelegate, PopularFiltersTVCellDelegate, RoomsTVcellDelegate,RoomDetailsTVCellDelegate, AddAdultsOrGuestTVCellDelegate, FlightDetailsTVCellDelegate, CheckBoxTVCellDelegate, FilterDepartureTVCellDelegate, SliderTVCellDelegate, RoundTripFlightResultTVCellDelegate, MultiCityTripFlightResultTVCellDelegate {
-   
+    
     
     @IBOutlet weak var commonScrollView: UITableView!
     @IBOutlet weak var commonTableView: UITableView!
@@ -184,7 +184,11 @@ class BaseTableVC: UIViewController, SpecialDealsTVCellDelegate, TopCityTVCellDe
     func gotoRoundTripBaggageIntoVC(cell: RoundTripFlightResultTVCell) {}
     func gotoRoundTripBaggageIntoVC(cell: MultiCityTripFlightResultTVCell) {}
     
-   
+    func didTapOnFromCityBtn(cell: MultiCityTVCell) {}
+    func didTapOnToCityBtn(cell: MultiCityTVCell) {}
+    func didTapOnDateBtn(cell: MultiCityTVCell) {}
+    
+    
     
     
     
@@ -597,6 +601,9 @@ extension BaseTableVC: UITableViewDataSource {
                 commonCell = cell
                 
                 
+            case .CommonTVCell:
+                let cell: CommonTVCell = commonTV.dequeTVCell(indexPath: indexPath)
+                commonCell = cell
                 
                 
                 

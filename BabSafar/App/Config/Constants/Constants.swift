@@ -38,6 +38,21 @@ public var screenHeight: CGFloat {
     return UIScreen.main.bounds.size.height
 }
 
+
+//Multicity
+var fromCityNameArray = ["Select","Select"]
+var fromCityShortNameArray = ["City","City"]
+var fromlocidArray = ["",""]
+var toCityNameArray = ["Select","Select"]
+var toCityShortNameArray = ["City","City"]
+var tolocidArray = ["",""]
+var depatureDatesArray = ["Select Date","Select Date"]
+var fromCityArray = ["",""]
+var toCityArray = ["",""]
+
+
+var dfromCityNameArray =  [String:String]()
+
 /* URL endpoints */
 struct ApiEndpoints {
     static let mobilePreFlightSearch = "mobile_pre_flight_search"
@@ -45,12 +60,15 @@ struct ApiEndpoints {
     static let register = "mobile_register_on_light_box"
     static let preflightsearchmobile = "pre_flight_search_mobile"
     static let getairportcodelist = "get_airport_code_list"
+    static let getFlightDetails = "getFlightDetails"
+    
+    
     
 }
 
 /*App messages*/
 struct Message {
-   // static let internetConnectionError = "Please check your connection and try reconnecting to internet"
+    // static let internetConnectionError = "Please check your connection and try reconnecting to internet"
     static let internetConnectionError = "no internet"
     static let sessionExpired = "Your session has been expired, please login again"
 }
@@ -65,9 +83,11 @@ struct UserDefaultsKeys {
     static var loggedInStatus = "loggedInStatus"
     static var userid = "userid"
     static var journeyType = "Journey_Type"
+    static var searchid = "search_id"
+    static var selectedResult = "selectedResult"
     
     
-   // ONE WAY
+    // ONE WAY
     static var locationcity = "location_city"
     static var fromCity = "fromCity"
     static var toCity = "toCity"
@@ -81,11 +101,9 @@ struct UserDefaultsKeys {
     static var tolocid = "to_loc_id"
     static var fairportCode = "fairportCode"
     static var tairportCode = "tairportCode"
-    
     static var travellerDetails = "travellerDetails"
     static var hadultCount = "HAdult_Count"
     static var hchildCount = "HChild_Count"
-    
     
     
     //CIRCLE
@@ -103,16 +121,32 @@ struct UserDefaultsKeys {
     static var rtravellerDetails = "rtravellerDetails"
     static var rfairportCode = "rfairportCode"
     static var rtairportCode = "rtairportCode"
-
-    
-
     static var select = "select"
     static var checkin = "check_in"
     static var checkout = "check _out"
     static var addTarvellerDetails = "addTarvellerDetails"
     
     
-
+    //MULTICITY TRIP
+    static var mfromCity = "mfromCity"
+    static var mtoCity = "mtoCity"
+    static var mcalDepDate = "mcalDepDate"
+    static var madultCount = "mAdult_Count"
+    static var mchildCount = "mChild_Count"
+    static var minfantsCount = "mInfants_Count"
+    static var mselectClass = "mselect_class"
+    static var mfromlocid = "mfrom_loc_id"
+    static var mtolocid = "mto_loc_id"
+    static var mselectAirline = "mselectAirline"
+    static var mtravellerDetails = "mtraveller_Details"
+    static var mfromairportCode = "mfromairportCode"
+    static var mfromCityValue = "mfromCityValue"
+    static var mtoCityValue = "mtoCityValue"
+    static var mtoairportCode = "mtoairportCode"
+    static var mcaldate = "mcaldate"
+    static var cellTag = "cellTag"
+    
+    
 }
 
 
@@ -128,5 +162,35 @@ struct sessionMgrDefaults {
 
 /*LOCAL JSON FILES*/
 struct LocalJsonFiles {
-   
+    
 }
+
+
+
+//"placeDetails":[
+//{
+//"from":"Bangalore, India, Bengaluru International Airport (BLR)",
+//"from_loc_id":"801",
+//"to":"Dubai, UAE, Dubai International Airport (DXB)",
+//"to_loc_id":"1921",
+//"depature":"21-12-2022"
+//}
+
+
+struct MulticityArray : Codable {
+    var placeDetails : [PlaceDetails]?
+}
+
+
+struct PlaceDetails : Codable {
+    
+    var from:String?
+    var from_loc_id:String?
+    var to:String?
+    var to_loc_id:String?
+    var depature:String?
+    
+}
+
+
+

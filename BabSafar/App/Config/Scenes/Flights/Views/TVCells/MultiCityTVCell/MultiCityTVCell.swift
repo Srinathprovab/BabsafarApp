@@ -12,7 +12,12 @@ protocol MultiCityTVCellDelegate {
     func didTapOnairlineBtnAction(cell: MultiCityTVCell)
     func didTapOntimeReturnJourneyBtnAction(cell: MultiCityTVCell)
     func didTapOntimeOutwardJourneyBtnAction(cell: MultiCityTVCell)
+    
+    func didTapOnFromCityBtn(cell: MultiCityTVCell)
+    func didTapOnToCityBtn(cell: MultiCityTVCell)
+    func didTapOnDateBtn(cell: MultiCityTVCell)
 }
+
 
 class MultiCityTVCell: TableViewCell,ButtonCVCellDelegate,MultiCityCVCellDelegate {
     
@@ -34,11 +39,14 @@ class MultiCityTVCell: TableViewCell,ButtonCVCellDelegate,MultiCityCVCellDelegat
     @IBOutlet weak var airlineView: UIView!
     @IBOutlet weak var airlinelbl: UILabel!
     @IBOutlet weak var airlineValuelbl: UILabel!
-    
     @IBOutlet weak var moresearchBtn: UIButton!
     
-    var nameArray = ["1","2"]
     var delegate:MultiCityTVCellDelegate?
+    var moreoptionBool = true
+    var count = 0
+    var city = String()
+    var city1 = String()
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -52,18 +60,23 @@ class MultiCityTVCell: TableViewCell,ButtonCVCellDelegate,MultiCityCVCellDelegat
     }
     
     override func updateUI() {
-        
+        updateheight()
     }
     
     func setupUI() {
         
+        holderView.backgroundColor = .clear
+        //  setupViews(v: holderView, radius: 5, color: .clear)
+        contentView.backgroundColor = .clear
+        
         optionView.backgroundColor = .WhiteColor
         optionView.isHidden = true
         optionViewHeight.constant = 0
-        holderView.backgroundColor = .WhiteColor
+        
+        
         setupViews(v: economyView, radius: 4, color: .AppHolderViewColor)
         setupLabels(lbl: economylbl, text: "Travellers &  class", textcolor: .AppLabelColor, font: .LatoLight(size: 14))
-        setupLabels(lbl: economyValuelbl, text: "1 Adult, Economy", textcolor: .AppLabelColor, font: .LatoSemibold(size: 18))
+        setupLabels(lbl: economyValuelbl, text: "\(defaults.string(forKey: UserDefaultsKeys.mtravellerDetails) ?? "ADD Travellers & Class")", textcolor: .AppLabelColor, font: .LatoSemibold(size: 18))
         dropdownImg.image = UIImage(named: "downarrow")
         setupViews(v: timeOutwardJourneyView, radius: 4, color: .AppHolderViewColor)
         setupViews(v: timeReturnJourneyView, radius: 4, color: .AppHolderViewColor)
@@ -75,6 +88,7 @@ class MultiCityTVCell: TableViewCell,ButtonCVCellDelegate,MultiCityCVCellDelegat
         setupLabels(lbl: timeReturnJourneyValuelbl, text: "All Times", textcolor: .AppLabelColor, font: .LatoSemibold(size: 18))
         setupLabels(lbl: airlinelbl, text: "Airline", textcolor: .AppLabelColor, font: .LatoLight(size: 14))
         setupLabels(lbl: airlineValuelbl, text: "Airline", textcolor: .AppLabelColor, font: .LatoSemibold(size: 18))
+        moresearchBtn.setTitle("+ More search options", for: .normal)
         
         setupCV()
     }
@@ -87,38 +101,55 @@ class MultiCityTVCell: TableViewCell,ButtonCVCellDelegate,MultiCityCVCellDelegat
         multiCityTripCV.delegate = self
         multiCityTripCV.dataSource = self
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 380, height: 60)
+        layout.itemSize = CGSize(width: UIScreen.main.bounds.size.width - 50, height: 60)
         layout.scrollDirection = .vertical
         layout.minimumInteritemSpacing = 10
         layout.minimumLineSpacing = 10
-        // layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         multiCityTripCV.collectionViewLayout = layout
         multiCityTripCV.backgroundColor = .clear
         multiCityTripCV.layer.cornerRadius = 4
         multiCityTripCV.clipsToBounds = true
         multiCityTripCV.showsHorizontalScrollIndicator = false
         
-        updateheight()
-        
     }
     
     func updateheight() {
-        cvHeight.constant = CGFloat(80 * (nameArray.count + 1))
+        cvHeight.constant = CGFloat(80 * (fromCityNameArray.count + 1))
+        if fromCityNameArray.count == 5 {
+            cvHeight.constant = CGFloat(80 * (fromCityNameArray.count))
+        }
+        multiCityTripCV.reloadData()
     }
     
-    
-    var count = 0
     func didTapOnAddCityBtn(cell: ButtonCVCell) {
         count += 1
-        self.nameArray.append(String(count))
-        updateheight()
-        self.multiCityTripCV.reloadData()
-        NotificationCenter.default.post(name: Notification.Name("reload"), object: nil)
+        
+        if fromCityNameArray.count == 5 {
+            multiCityTripCV.deleteItems(at: [IndexPath(item: 5, section: 0)])
+            multiCityTripCV.reloadData()
+            
+        }else {
+            
+            fromCityNameArray.append("Select")
+            fromCityShortNameArray.append("City")
+            toCityNameArray.append("Select")
+            toCityShortNameArray.append("City")
+            depatureDatesArray.append("Select Date")
+            fromlocidArray.append("")
+            tolocidArray.append("")
+            fromCityArray.append("")
+            toCityArray.append("")
+            
+            DispatchQueue.main.async {[self] in
+                updateheight()
+                NotificationCenter.default.post(name: Notification.Name("reload"), object: nil)
+            }
+            
+        }
         
     }
     
-    var city = String()
-    var city1 = String()
+    
     func didtapOnSwapCityBtn(cell: MultiCityCVCell) {
         city = cell.fromCityname.text ?? ""
         city1 = cell.toCityNamelbl.text ?? ""
@@ -127,7 +158,35 @@ class MultiCityTVCell: TableViewCell,ButtonCVCellDelegate,MultiCityCVCellDelegat
     }
     
     func didTapOnDeleteMultiCityTrip(cell: MultiCityCVCell) {
-        print("didTapOnDeleteMultiCityTrip")
+        
+        fromCityNameArray.remove(at: cell.cancelBtn.tag)
+        fromCityShortNameArray.remove(at: cell.cancelBtn.tag)
+        toCityNameArray.remove(at: cell.cancelBtn.tag)
+        toCityShortNameArray.remove(at: cell.cancelBtn.tag)
+        
+        //---------------
+        
+        depatureDatesArray.remove(at: cell.cancelBtn.tag)
+        fromlocidArray.remove(at: cell.cancelBtn.tag)
+        tolocidArray.remove(at: cell.cancelBtn.tag)
+        fromCityArray.remove(at: cell.cancelBtn.tag)
+        toCityArray.remove(at: cell.cancelBtn.tag)
+        
+        //---------------
+        
+        multiCityTripCV.deleteItems(at: [IndexPath(item: cell.cancelBtn.tag, section: 0)])
+        DispatchQueue.main.async {[self] in
+            
+            if fromCityNameArray.count < 5 {
+                if let cell = multiCityTripCV.cellForItem(at: IndexPath(item: (fromCityNameArray.count), section: 0)) as? ButtonCVCell {
+                    cell.isHidden = false
+                    cell.holderViewHeight.constant = 60
+                }
+            }
+        }
+        
+        updateheight()
+        NotificationCenter.default.post(name: Notification.Name("reload"), object: nil)
     }
     
     func setupViews(v:UIView,radius:CGFloat,color:UIColor) {
@@ -150,27 +209,44 @@ class MultiCityTVCell: TableViewCell,ButtonCVCellDelegate,MultiCityCVCellDelegat
     }
     
     
-    var moreoptionBool = true
     @IBAction func didTapOnmoreOptionsBtn(_ sender: Any) {
         
         if moreoptionBool == true {
             optionView.isHidden = false
             optionViewHeight.constant = 200
-            moresearchBtn.setTitle("Advanced Search Options", for: .normal)
-            moresearchBtn.setImage( UIImage(systemName: "minus")?.withRenderingMode(.alwaysOriginal).withTintColor(.AppTabSelectColor), for: .normal)
+            moresearchBtn.setTitle("- Advanced Search Options", for: .normal)
+            // moresearchBtn.setImage( UIImage(systemName: "minus")?.withRenderingMode(.alwaysOriginal).withTintColor(.AppTabSelectColor), for: .normal)
             
             moreoptionBool = false
         }else {
             optionView.isHidden = true
             optionViewHeight.constant = 0
-            moresearchBtn.setTitle("More search options", for: .normal)
-            moresearchBtn.setImage( UIImage(systemName: "plus")?.withRenderingMode(.alwaysOriginal).withTintColor(.AppTabSelectColor), for: .normal)
+            moresearchBtn.setTitle("+ More search options", for: .normal)
+            //moresearchBtn.setImage( UIImage(systemName: "plus")?.withRenderingMode(.alwaysOriginal).withTintColor(.AppTabSelectColor), for: .normal)
             
             moreoptionBool = true
         }
         NotificationCenter.default.post(name: Notification.Name("reload"), object: nil)
     }
     
+    
+    func didTapOnFromCityBtn(cell: MultiCityCVCell) {
+        print(cell.fromCityBtn.tag)
+        defaults.set(cell.fromCityBtn.tag, forKey: UserDefaultsKeys.cellTag)
+        delegate?.didTapOnFromCityBtn(cell: self)
+    }
+    
+    func didTapOnToCityBtn(cell: MultiCityCVCell) {
+        print(cell.toCityBtn.tag)
+        defaults.set(cell.fromCityBtn.tag, forKey: UserDefaultsKeys.cellTag)
+        delegate?.didTapOnToCityBtn(cell: self)
+    }
+    
+    func didTapOnDateBtn(cell: MultiCityCVCell) {
+        print(cell.dateBtn.tag)
+        defaults.set(cell.fromCityBtn.tag, forKey: UserDefaultsKeys.cellTag)
+        delegate?.didTapOnDateBtn(cell: self)
+    }
     
     
     @IBAction func didTapOntimeOutwardJourneyBtnAction(_ sender: Any) {
@@ -186,38 +262,61 @@ class MultiCityTVCell: TableViewCell,ButtonCVCellDelegate,MultiCityCVCellDelegat
         delegate?.didTapOnairlineBtnAction(cell: self)
     }
     
+    
+    
 }
 
 
-extension MultiCityTVCell:UICollectionViewDelegate,UICollectionViewDataSource {
+extension MultiCityTVCell:UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return nameArray.count + 1
+        return fromCityNameArray.count + 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         var commonCell = UICollectionViewCell()
         
-        if indexPath.row == nameArray.count {
+        if indexPath.row == fromCityNameArray.count {
             if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell1", for: indexPath) as? ButtonCVCell {
                 cell.delegate = self
+                if fromCityNameArray.count == 5 {
+                    cell.isHidden = true
+                    cell.holderViewHeight.constant = 0
+                }
                 commonCell = cell
             }
         }else {
             if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? MultiCityCVCell {
+                
                 cell.delegate = self
+                
+                
+                cell.cancelBtn.tag = indexPath.row
+                cell.fromCityBtn.tag = indexPath.row
+                cell.toCityBtn.tag = indexPath.row
+                cell.dateBtn.tag = indexPath.row
+                
+                cell.fromCityname.text = fromCityNameArray[indexPath.row]
+                cell.fromCityCodelbl.text = fromCityShortNameArray[indexPath.row]
+                cell.toCityNamelbl.text = toCityNameArray[indexPath.row]
+                cell.toCityCodelbl.text = toCityShortNameArray[indexPath.row]
+                cell.depratureDatelbl.text = depatureDatesArray[indexPath.row]
+                
+                if indexPath.row == 0 {
+                    cell.cancelBtnView.isHidden = true
+                    cell.fromlbl.isHidden = false
+                    cell.tolbl.isHidden = false
+                    cell.departurelbl.isHidden = false
+                }
+                if indexPath.row != 0 {
+                    cell.cancelBtnView.isHidden = false
+                }
+                
                 commonCell = cell
             }
         }
         
         return commonCell
-    }
-    
-    
-    
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        
-        return CGSize(width: 380, height: 60)
-        
     }
     
 }

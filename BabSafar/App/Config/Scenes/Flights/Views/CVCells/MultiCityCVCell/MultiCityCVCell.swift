@@ -10,6 +10,11 @@ import UIKit
 protocol MultiCityCVCellDelegate {
     func didtapOnSwapCityBtn(cell:MultiCityCVCell)
     func didTapOnDeleteMultiCityTrip(cell:MultiCityCVCell)
+    
+    
+    func didTapOnFromCityBtn(cell:MultiCityCVCell)
+    func didTapOnToCityBtn(cell:MultiCityCVCell)
+    func didTapOnDateBtn(cell:MultiCityCVCell)
 }
 
 class MultiCityCVCell: UICollectionViewCell {
@@ -34,6 +39,11 @@ class MultiCityCVCell: UICollectionViewCell {
     
     
     
+    @IBOutlet weak var fromCityBtn: UIButton!
+    @IBOutlet weak var toCityBtn: UIButton!
+    @IBOutlet weak var dateBtn: UIButton!
+    
+    
     var delegate:MultiCityCVCellDelegate?
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -41,14 +51,12 @@ class MultiCityCVCell: UICollectionViewCell {
         setupUI()
     }
     
-    
-    @objc func didtapOnSwapCityBtn(_ sender:UIButton) {
-        delegate?.didtapOnSwapCityBtn(cell: self)
+    override func prepareForReuse() {
+        cancelBtnView.isHidden = true
+        hideViews()
     }
     
-    @objc func didTapOnDeleteMultiCityTrip(_ sender:UIButton) {
-        delegate?.didTapOnDeleteMultiCityTrip(cell: self)
-    }
+    
     
     
     func setupUI() {
@@ -76,6 +84,24 @@ class MultiCityCVCell: UICollectionViewCell {
         setupLabels(lbl: departurelbl, text: "Departure ", textcolor: .AppLabelColor, font: .LatoLight(size: 12))
         setupLabels(lbl: depratureDatelbl, text: "26-07-2022", textcolor: .AppLabelColor, font: .LatoSemibold(size: 14))
         
+        cancelBtnView.isHidden = true
+        fromCityBtn.setTitle("", for: .normal)
+        toCityBtn.setTitle("", for: .normal)
+        dateBtn.setTitle("", for: .normal)
+        fromCityBtn.addTarget(self, action: #selector(didTapOnFromCityBtn(_:)), for: .touchUpInside)
+        toCityBtn.addTarget(self, action: #selector(didTapOnToCityBtn(_:)), for: .touchUpInside)
+        dateBtn.addTarget(self, action: #selector(didTapOnDateBtn(_:)), for: .touchUpInside)
+        
+        hideViews()
+        cancelBtnView.isHidden = false
+    }
+    
+    
+    
+    func hideViews() {
+        fromlbl.isHidden = true
+        tolbl.isHidden = true
+        departurelbl.isHidden = true
     }
     
     func setupViews(v:UIView,radius:CGFloat,color:UIColor) {
@@ -90,6 +116,29 @@ class MultiCityCVCell: UICollectionViewCell {
         lbl.text = text
         lbl.textColor = textcolor
         lbl.font = font
+    }
+    
+    
+    
+    @objc func didtapOnSwapCityBtn(_ sender:UIButton) {
+        delegate?.didtapOnSwapCityBtn(cell: self)
+    }
+    
+    @objc func didTapOnDeleteMultiCityTrip(_ sender:UIButton) {
+        delegate?.didTapOnDeleteMultiCityTrip(cell: self)
+    }
+    
+    
+    @objc func didTapOnFromCityBtn(_ sender:UIButton){
+        delegate?.didTapOnFromCityBtn(cell: self)
+    }
+    
+    @objc func didTapOnToCityBtn(_ sender:UIButton){
+        delegate?.didTapOnToCityBtn(cell: self)
+    }
+    
+    @objc func didTapOnDateBtn(_ sender:UIButton){
+        delegate?.didTapOnDateBtn(cell: self)
     }
     
 }
