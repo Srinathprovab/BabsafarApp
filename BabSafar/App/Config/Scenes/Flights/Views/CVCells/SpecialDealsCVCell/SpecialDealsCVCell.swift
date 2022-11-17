@@ -6,23 +6,15 @@
 //
 
 import UIKit
-protocol SpecialDealsCVCellDelegate {
-    func didTapOnPromoCodeBtnAction(cell:SpecialDealsCVCell)
-}
 
 class SpecialDealsCVCell: UICollectionViewCell {
     
     @IBOutlet weak var holderView: UIView!
     @IBOutlet weak var offerImage: UIImageView!
     @IBOutlet weak var bookinglbl: UILabel!
-    @IBOutlet weak var underLine: UIView!
-    @IBOutlet weak var promoCodeView: UIView!
-    @IBOutlet weak var promocodelbl: UILabel!
-    @IBOutlet weak var promoCodeImg: UIImageView!
-    @IBOutlet weak var promoCodeBtn: UIButton!
+    @IBOutlet weak var promoCodelbl: UILabel!
     
     
-    var delegate:SpecialDealsCVCellDelegate?
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -31,25 +23,11 @@ class SpecialDealsCVCell: UICollectionViewCell {
     
     
     func setupUI() {
-        
-        offerImage.contentMode = .scaleAspectFill
-        
-        bookinglbl.textColor = .AppLabelColor
-        bookinglbl.font = UIFont.LatoRegular(size: 20)
-        promoCodeImg.image = UIImage(named: "promo")
-        underLine.backgroundColor = HexColor("#A3A3A3")
-        promoCodeView.backgroundColor = .WhiteColor
-        bookinglbl.numberOfLines = 0
+        setuplabels(lbl: bookinglbl, text: "", textcolor: .AppLabelColor, font: .LatoRegular(size: 18), align: .left)
+        setuplabels(lbl: promoCodelbl, text: "PROMO CODE:Flat20", textcolor: .AppLabelColor, font: .LatoRegular(size: 18), align: .left)
         
         
-        promocodelbl.textColor = .AppCalenderDateSelectColor
-        promocodelbl.font = UIFont.LatoRegular(size: 14)
+        
     }
-    
-    
-    @IBAction func didTapOnPromoCodeBtnAction(_ sender: Any) {
-        // delegate?.didTapOnPromoCodeBtnAction(cell: self)
-    }
-    
     
 }

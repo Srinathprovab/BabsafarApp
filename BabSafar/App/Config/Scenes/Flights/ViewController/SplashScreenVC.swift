@@ -7,7 +7,18 @@
 
 import UIKit
 
+
+//MARK: - INITIAL SETUP LABELS
+func setuplabels(lbl:UILabel,text:String,textcolor:UIColor,font:UIFont,align:NSTextAlignment) {
+    lbl.text = text
+    lbl.textColor = textcolor
+    lbl.font = font
+    lbl.numberOfLines = 0
+    lbl.textAlignment = align
+}
+
 class SplashScreenVC: UIViewController {
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -45,7 +45,7 @@ class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
     var selectArray = [String]()
     var selectArray1 = [String]()
     var FlightList :[[J_flight_list]]?
-    var RTFlightList :[[RTJ_flight_list]]?
+ //   var RTFlightList :[[RTJ_flight_list]]?
     var MCJflightlist :[MCJ_flight_list]?
 
     var moreoptionBool = true
@@ -57,14 +57,7 @@ class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
         
         NotificationCenter.default.addObserver(self, selector: #selector(reload(notification:)), name: NSNotification.Name("reload"), object: nil)
         
-        
-        if !UserDefaults.standard.bool(forKey: "ExecuteOnce") {
-            defaults.set("oneway", forKey: UserDefaultsKeys.journeyType)
-            setupTV()
-            UserDefaults.standard.set(true, forKey: "ExecuteOnce")
-        }
-        
-        
+      
         if let selectedJType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
             if selectedJType == "multicity" {
                 setupMulticity()
@@ -184,6 +177,7 @@ class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
     func setupOneWay(){
         
         defaults.set("oneway", forKey: UserDefaultsKeys.journeyType)
+        
         oneWayView.backgroundColor = .AppTabSelectColor
         oneWaylbl.textColor = .WhiteColor
         roundTripView.backgroundColor = .AppHolderViewColor
@@ -385,7 +379,7 @@ class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
                 }else{
                     
                     BASE_URL = "https://provabdevelopment.com/babsafar/mobile_webservices/mobile/index.php/general/"
-                    payload["trip_type"] = "oneway"
+                    payload["trip_type"] = defaults.string(forKey:UserDefaultsKeys.journeyType)
                     payload["adult"] = defaults.string(forKey:UserDefaultsKeys.adultCount)
                     payload["child"] = defaults.string(forKey:UserDefaultsKeys.childCount)
                     payload["infant"] = defaults.string(forKey:UserDefaultsKeys.infantsCount)
@@ -402,7 +396,7 @@ class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
                     payload["carrier"] = ""
                     payload["psscarrier"] = "ALL"
                     payload["search_flight"] = "Search"
-                    payload["user_id"] = "0"
+                    payload["user_id"] = defaults.string(forKey:UserDefaultsKeys.userid) ?? "0"
                     
                     viewModel?.CallSearchFlightAPI(dictParam: payload)
                     
@@ -424,8 +418,7 @@ class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
                 }else{
                     
                     BASE_URL = "https://provabdevelopment.com/babsafar/mobile_webservices/mobile/index.php/general/"
-                    
-                    payload["trip_type"] = "circle"
+                    payload["trip_type"] = defaults.string(forKey:UserDefaultsKeys.journeyType)
                     payload["adult"] = defaults.string(forKey:UserDefaultsKeys.radultCount)
                     payload["child"] = defaults.string(forKey:UserDefaultsKeys.rchildCount)
                     payload["infant"] = defaults.string(forKey:UserDefaultsKeys.rinfantsCount)
@@ -442,11 +435,13 @@ class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
                     payload["carrier"] = ""
                     payload["psscarrier"] = "ALL"
                     payload["search_flight"] = "Search"
-                    payload["user_id"] = "0"
+                    payload["user_id"] = defaults.string(forKey:UserDefaultsKeys.userid) ?? "0"
+        
                     
+                    viewModel?.CallSearchFlightAPI(dictParam: payload)
+                   // viewModel?.CallRoundTRipSearchFlightAPI(dictParam: payload)
+                   
                     
-
-                    viewModel?.CallRoundTRipSearchFlightAPI(dictParam: payload)
                     
                 }
                 
@@ -470,8 +465,8 @@ class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
     
     func roundTripflightList(response: RoundTripModel) {
         if response.status == 1 {
-            RTFlightList = response.data?.j_flight_list
-            defaults.set(response.data?.search_id, forKey: UserDefaultsKeys.searchid)
+//            RTFlightList = response.data?.j_flight_list
+//            defaults.set(response.data?.search_id, forKey: UserDefaultsKeys.searchid)
             gotoSearchFlightResultVC()
         }
     }
@@ -480,7 +475,7 @@ class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
         guard let vc = SearchFlightResultVC.newInstance.self else {return}
         vc.modalPresentationStyle = .fullScreen
         vc.FlightList = self.FlightList
-        vc.RTFlightList = self.RTFlightList
+      //  vc.RTFlightList = self.RTFlightList
         vc.MCJflightlist = self.MCJflightlist
         self.present(vc, animated: true)
     }
@@ -499,8 +494,6 @@ class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
         payload["to"] = toCityArray
         payload["to_loc_id"] = tolocidArray
         payload["depature"] = depatureDatesArray
-        
-        
         payload["adult"] = defaults.string(forKey: UserDefaultsKeys.madultCount)
         payload["child"] = defaults.string(forKey: UserDefaultsKeys.mchildCount)
         payload["infant"] = defaults.string(forKey: UserDefaultsKeys.minfantsCount)

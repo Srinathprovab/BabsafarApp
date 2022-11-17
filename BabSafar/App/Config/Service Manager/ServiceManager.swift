@@ -45,6 +45,7 @@ enum ApiError: Error {
     case unknown
     case endPoint
     case operationFailed
+    case somthingwentwrong
     
     var message: String {
         switch self {
@@ -66,6 +67,8 @@ enum ApiError: Error {
             return "Operation failed"
         case .endPoint:
             return "Error creating endpoint"
+        case .somthingwentwrong:
+            return "Something Went Wrong"
         }
     }
 }
@@ -363,7 +366,7 @@ class ServiceManager {
             headers: nil).responseJSON { (responseData) -> Void in
                 if responseData.value != nil {
                     //do something with data
-                  //  print(responseData.value as Any)
+                    // print(responseData.value as Any)
                     
                     switch responseData.result {
                     case .success(let data):
@@ -381,7 +384,7 @@ class ServiceManager {
                             }
                             
                             else {
-                                completionHandler(false, nil, ApiError.unknown.message)
+                                completionHandler(false, nil, ApiError.somthingwentwrong.message)
                             }
                             
                             

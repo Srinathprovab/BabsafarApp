@@ -58,7 +58,7 @@ class TravellerEconomyTVCell: TableViewCell {
         holderView.layer.cornerRadius = 5
         holderView.clipsToBounds = true
         holderView.layer.borderWidth = 1
-        holderView.layer.borderColor = UIColor.viewBorderColor?.cgColor
+        holderView.layer.borderColor = UIColor.viewBorderColor.cgColor
         
         
         decrementView.backgroundColor = .clear

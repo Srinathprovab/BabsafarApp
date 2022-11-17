@@ -125,14 +125,14 @@ extension UIColor {
     
     //Custom Colors
     
-    public static var holderViewColor: UIColor? {
+    public static var holderViewColor: UIColor {
         get {
             return UIColor.white
         }
     }
     
     
-    public static var titleLabelColor: UIColor? {
+    public static var titleLabelColor: UIColor {
         get {
             return UIColor.black
         }
@@ -140,45 +140,53 @@ extension UIColor {
     
     
     
-    public static var errorLabelColor: UIColor? {
+    public static var errorLabelColor: UIColor {
         get {
             return UIColor.red.withAlphaComponent(0.6)
         }
     }
     
     
-    public static var viewBorderColor: UIColor? {
+    public static var viewBorderColor: UIColor {
         get {
             return UIColor.gray.withAlphaComponent(0.5)
         }
     }
     
-    public static var textFieldColor: UIColor? {
+    public static var textFieldColor: UIColor {
         get {
             return UIColor.black
         }
     }
     
     
-    public static var bottomLineColor: UIColor? {
+    public static var bottomLineColor: UIColor {
         get {
             return UIColor.black.withAlphaComponent(0.3)
         }
     }
     
     
-    public static var buttonBGColor: UIColor? {
+    public static var buttonBGColor: UIColor {
         get {
             return UIColor.blue.withAlphaComponent(0.7)
         }
     }
     
     
-    public static var buttonTitleColor: UIColor? {
+    public static var buttonTitleColor: UIColor {
         get {
             return UIColor.white
         }
     }
+    
+    
+    public static var ImageUnSelectColor : UIColor {
+        get {
+            return UIColor(named: "ImageUnSelectColor")!
+        }
+    }
+    
     
     
     

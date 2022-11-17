@@ -39,6 +39,10 @@ public var screenHeight: CGFloat {
 }
 
 
+//MARK: HOME SCREEN
+var topHotelDetails = [TopHotelDetails]()
+var topFlightDetails = [TopFlightDetails]()
+
 //Multicity
 var fromCityNameArray = ["Select","Select"]
 var fromCityShortNameArray = ["City","City"]
@@ -62,7 +66,7 @@ struct ApiEndpoints {
     static let getairportcodelist = "get_airport_code_list"
     static let getFlightDetails = "getFlightDetails"
     
-    
+    static let getTopFlightHotelDestination = "getTopFlightHotelDestination"
     
 }
 
@@ -79,10 +83,12 @@ struct Message {
 struct UserDefaultsKeys {
     
     static var dashboardTapSelected = "DashboardTapSelected"
+    static var DashboardTapSelectedCellIndex = "DashboardTapSelectedCellIndex"
     static var userLoggedIn = "userLoggedIn"
     static var loggedInStatus = "loggedInStatus"
     static var userid = "userid"
     static var journeyType = "Journey_Type"
+    static var journeyTypeSelectedIndex = "Journey_TypeSelectedIndex"
     static var searchid = "search_id"
     static var selectedResult = "selectedResult"
     

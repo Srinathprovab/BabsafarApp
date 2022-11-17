@@ -7,7 +7,7 @@
 
 import UIKit
 
-class BaseTableVC: UIViewController, SpecialDealsTVCellDelegate, TopCityTVCellDelegate, SearchFlightsTVCellDelegate, TravellerEconomyTVCellDelegate, RadioButtonTVCellDelegate, LabelTVCellDelegate, SignUpWithTVCellDelegate, ButtonTVCellDelegate, TextfieldTVCellDelegate, LoignOrSignupBtnsTVCellDelegate, BookNowButtonsTVCellDelegate, MenuBGTVCellDelegate, DropDownTVCellDelegate, TDetailsLoginTVCellDelegate, ContactInformationTVCellDelegate, TravelInsuranceTVCellDelegate, PriceSummaryTVCellDelegate, AddTravellerTVCellDelegate, SelectGenderTVCellDelegate, SortbyTVCellDelegate, YourPrivacyTVCellDelegate, SearchFlightResultTVCellDelegate, MultiCityTVCellDelegate, CommonFromCityTVCellDelegate,SearchLocationTFTVCellDelegate, HotelsTVCellelegate, PopularFiltersTVCellDelegate, RoomsTVcellDelegate,RoomDetailsTVCellDelegate, AddAdultsOrGuestTVCellDelegate, FlightDetailsTVCellDelegate, CheckBoxTVCellDelegate, FilterDepartureTVCellDelegate, SliderTVCellDelegate, RoundTripFlightResultTVCellDelegate, MultiCityTripFlightResultTVCellDelegate {
+class BaseTableVC: UIViewController, SearchFlightsTVCellDelegate, TravellerEconomyTVCellDelegate, RadioButtonTVCellDelegate, LabelTVCellDelegate, SignUpWithTVCellDelegate, ButtonTVCellDelegate, TextfieldTVCellDelegate, LoignOrSignupBtnsTVCellDelegate, BookNowButtonsTVCellDelegate, MenuBGTVCellDelegate, DropDownTVCellDelegate, TDetailsLoginTVCellDelegate, ContactInformationTVCellDelegate, TravelInsuranceTVCellDelegate, PriceSummaryTVCellDelegate, AddTravellerTVCellDelegate, SelectGenderTVCellDelegate, SortbyTVCellDelegate, YourPrivacyTVCellDelegate, SearchFlightResultTVCellDelegate, MultiCityTVCellDelegate, CommonFromCityTVCellDelegate,SearchLocationTFTVCellDelegate, HotelsTVCellelegate, PopularFiltersTVCellDelegate, RoomsTVcellDelegate,RoomDetailsTVCellDelegate, AddAdultsOrGuestTVCellDelegate, FlightDetailsTVCellDelegate, CheckBoxTVCellDelegate, FilterDepartureTVCellDelegate, SliderTVCellDelegate, RoundTripFlightResultTVCellDelegate, MultiCityTripFlightResultTVCellDelegate {
     
     
     @IBOutlet weak var commonScrollView: UITableView!
@@ -94,11 +94,6 @@ class BaseTableVC: UIViewController, SpecialDealsTVCellDelegate, TopCityTVCellDe
     
     //Delegate Methods
     
-    func didTapFlightsTabBtnAction(cell: SpecialDealsTVCell) {}
-    func didTapHotelsTabBtnAction(cell: SpecialDealsTVCell) {}
-    func viewAllBtnAction(cell: SpecialDealsTVCell) {}
-    func didTapOnPromoCodeBtnAction(cell: SpecialDealsTVCell) {}
-    func viewAllBtnAction(cell: TopCityTVCell) {}
     func didTapOnFromCityBtnAction(cell: SearchFlightsTVCell) {}
     func didTapOnToCityBtnAction(cell: SearchFlightsTVCell){}
     func didTapOnSwipeCityBtnAction(cell: SearchFlightsTVCell) {}
@@ -284,13 +279,11 @@ extension BaseTableVC: UITableViewDataSource {
                 
             case .SpecialDealsTVCell:
                 let cell: SpecialDealsTVCell = commonTV.dequeTVCell(indexPath: indexPath)
-                cell.delegate = self
                 commonCell = cell
                 
                 
             case .TopCityTVCell:
                 let cell: TopCityTVCell = commonTV.dequeTVCell(indexPath: indexPath)
-                cell.delegate = self
                 commonCell = cell
                 
                 

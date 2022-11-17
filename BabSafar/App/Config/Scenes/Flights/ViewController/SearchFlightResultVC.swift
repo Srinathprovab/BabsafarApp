@@ -27,7 +27,7 @@ class SearchFlightResultVC: BaseTableVC {
     var kwdPriceArray = [String]()
     var dateArray = [String]()
     
-    var RTFlightList :[[RTJ_flight_list]]?
+  //  var RTFlightList :[[RTJ_flight_list]]?
     var MCJflightlist :[MCJ_flight_list]?
     
     override func viewWillAppear(_ animated: Bool) {
@@ -62,28 +62,28 @@ class SearchFlightResultVC: BaseTableVC {
             }else if selectedJourneyType == "circle" {
                 
                 //FOR APPENDING operator_image AND totalPrice
-                RTFlightList.map { i in
-                    i.map { j in
-                        j.map { k in
-                            k.flight_details?.summary.map({ l in
-                                kwdPriceArray.append(k.totalPrice_API ?? "")
-                                
-                                l.map { m in
-                                    
-                                    let dateFormatter = DateFormatter()
-                                    dateFormatter.dateFormat = "dd MMM yyyy"
-                                    if let date = dateFormatter.date(from: "\(m.destination?.date ?? "")"){
-                                        dateFormatter.dateFormat = "dd MMM"
-                                        let resultString = dateFormatter.string(from: date)
-                                        dateArray.append(dateFormatter.string(from: date))
-                                        
-                                    }
-                                    
-                                }
-                            })
-                        }
-                    }
-                }
+//                RTFlightList.map { i in
+//                    i.map { j in
+//                        j.map { k in
+//                            k.flight_details?.summary.map({ l in
+//                                kwdPriceArray.append(k.totalPrice_API ?? "")
+//
+//                                l.map { m in
+//
+//                                    let dateFormatter = DateFormatter()
+//                                    dateFormatter.dateFormat = "dd MMM yyyy"
+//                                    if let date = dateFormatter.date(from: "\(m.destination?.date ?? "")"){
+//                                        dateFormatter.dateFormat = "dd MMM"
+//                                        let resultString = dateFormatter.string(from: date)
+//                                        dateArray.append(dateFormatter.string(from: date))
+//
+//                                    }
+//
+//                                }
+//                            })
+//                        }
+//                    }
+//                }
             }else {
                 
             }
@@ -209,21 +209,19 @@ class SearchFlightResultVC: BaseTableVC {
         
         tablerow.removeAll()
         
-        RTFlightList?.forEach({ i in
-            i.forEach { k in
-                tablerow.append(TableRow(title:k.totalPrice_API,
-                                         headerText:k.totalPrice_API,
-                                         errormsg:String(k.flight_details?.summary?.first?.no_of_stops ?? 0),
-                                         // isOptional: i.refundable ?? false,
-                                         moreData:k.flight_details,
-                                         questionType:k.aPICurrencyType,
-                                         TotalQuestions: k.selectedResult,
-                                         cellType:.RoundTripFlightResultTVCell,
-                                         questionBase: k.taxes))
-            }
-        })
-        
-        
+//        RTFlightList?.forEach({ i in
+//            i.forEach { k in
+//                tablerow.append(TableRow(title:k.totalPrice_API,
+//                                         headerText:k.totalPrice_API,
+//                                         errormsg:String(k.flight_details?.summary?.first?.no_of_stops ?? 0),
+//                                         // isOptional: i.refundable ?? false,
+//                                         moreData:k.flight_details,
+//                                         questionType:k.aPICurrencyType,
+//                                         TotalQuestions: k.selectedResult,
+//                                         cellType:.RoundTripFlightResultTVCell,
+//                                         questionBase: k.taxes))
+//            }
+//        })
         
         
         
