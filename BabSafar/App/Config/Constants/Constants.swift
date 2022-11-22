@@ -65,6 +65,7 @@ struct ApiEndpoints {
     static let mobilePreFlightSearch = "mobile_pre_flight_search"
     static let login = "mobile_login"
     static let register = "mobile_register_on_light_box"
+    static let mobileprofile = "mobile_profile"
     static let preflightsearchmobile = "pre_flight_search_mobile"
     static let getairportcodelist = "get_airport_code_list"
     static let getFlightDetails = "getFlightDetails"

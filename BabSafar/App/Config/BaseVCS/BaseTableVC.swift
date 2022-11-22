@@ -114,6 +114,8 @@ class BaseTableVC: UIViewController, SearchFlightsTVCellDelegate, TravellerEcono
     func didTapOnGoogleBtn(cell: SignUpWithTVCell) {}
     func btnAction(cell: ButtonTVCell) {}
     func didTapOnForGetPassword(cell: TextfieldTVCell) {}
+    func donedatePicker(cell:TextfieldTVCell){}
+    func cancelDatePicker(cell:TextfieldTVCell){}
     func editingTextField(tf: UITextField) {}
     func didTapOnLoginBtn(cell: LoignOrSignupBtnsTVCell) {}
     func didTapOnSignUpBtn(cell: LoignOrSignupBtnsTVCell) {}

@@ -47,6 +47,14 @@ class SelectGenderTVCell: TableViewCell {
         if cellInfo?.key == "gender" {
             saveBtnView.isHidden = true
             genderView.isHidden = false
+            if cellInfo?.title == "male" {
+                maleRadioImg.image = UIImage(named: "radioSelected")?.withRenderingMode(.alwaysOriginal)
+                femaleRadioImg.image = UIImage(named: "radioUnselected")?.withRenderingMode(.alwaysOriginal)
+            }else {
+                maleRadioImg.image = UIImage(named: "radioSelected")?.withRenderingMode(.alwaysOriginal)
+                femaleRadioImg.image = UIImage(named: "radioUnselected")?.withRenderingMode(.alwaysOriginal)
+            }
+            
         }else {
             saveBtnView.isHidden = false
             genderView.isHidden = true

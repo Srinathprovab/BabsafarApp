@@ -115,7 +115,7 @@ class ServiceManager {
         //        }
     }
     
-    static func getApiCall<T: Decodable>(endPoint: String, urlParams: Dictionary<String,String>? = nil, resultType: T.Type, completionHandler:@escaping(Bool, _ result: T?, String?) -> Void) {
+    static func getApiCall1<T: Decodable>(endPoint: String,parameters: NSDictionary? = nil, urlParams: Dictionary<String,String>? = nil, resultType: T.Type, completionHandler:@escaping(Bool, _ result: T?, String?) -> Void) {
         
         
         
@@ -161,59 +161,59 @@ class ServiceManager {
         
         // If you are using Basic Authentication uncomment the follow line and add your base64 string
         //        request.setValue("Basic MY_BASIC_AUTH_STRING", forHTTPHeaderField: "Authorization")
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            print("Response for \(String(describing: response?.url?.absoluteURL)) :: \(String(describing: response))")
-            
-            /*Chick session status*/
-            guard let response = response as? HTTPURLResponse else {return}
-            if response.statusCode == 403 {
-                
-                self.sessionExpired(strCode: "\(response.statusCode)")
-                return
-            }
-            
-            guard error == nil else {
-                print("Error: error calling GET")
-                print(error!)
-                
-                completionHandler(false, nil, ApiError.responseFailed(error).message)
-                return
-            }
-            guard let data = data else {
-                print("Error: Did not receive data")
-                
-                completionHandler(false, nil, ApiError.responseFailed(error).message)
-                return
-            }
-            guard let response = response as? HTTPURLResponse, (200 ..< 299) ~= response.statusCode else {
-                print("Error: HTTP request failed")
-                
-                completionHandler(false, nil, ApiError.responseFailed(error).message)
-                return
-            }
-            do {
-                //                print(String(data: data, encoding: .utf8)!)
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
-                guard let result = try decoder.decode(T?.self, from: data)else {
-                    print("Error: Cannot decode the object")
+        
+        
+        AF.request(
+            completeEndpointURL,
+            method: .get,
+            parameters: parameters as? Parameters,
+            encoding: URLEncoding.default,
+            headers: nil).responseJSON { (responseData) -> Void in
+                if responseData.value != nil {
+                    //do something with data
+                    // print(responseData.value as Any)
+                    
+                    switch responseData.result {
+                    case .success(let data):
+                        
+                        print("Parsing the data:  ")
+                        
+                        do{
+                            
+                            
+                            let jsonData = try JSONSerialization.data(withJSONObject: responseData.value as Any, options: [])
+                            
+                            if let jsonResponse = try? JSONDecoder().decode(T.self, from: jsonData) {
+                                
+                                completionHandler(true, jsonResponse, nil)
+                            }
+                            
+                            else {
+                                completionHandler(false, nil, ApiError.somthingwentwrong.message)
+                            }
+                            
+                            
+                            
+                        }catch {
+                            
+                            completionHandler(false, nil, ApiError.unknown.message)
+                            print("JSONSerialization error")
+                        }
+                        
+                        
+                        
+                    case .failure(let error):
+                        print("error ----- \(error)")
+                        completionHandler(false, nil, ApiError.unknown.message)
+                        break
+                        
+                    default:
+                        break
+                    }
                     
                     
-                    completionHandler(false, nil, ApiError.decodeFailed(error!).message)
-                    return
                 }
-                let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments)
-                
-                completionHandler(true, result, nil)
-            } catch {
-                print("Error: Trying to convert JSON data to string")
-                print(error.localizedDescription)
-                print(error)
-                
-                completionHandler(false, nil, ApiError.unknown.message)
-                return
             }
-        }.resume()
     }
     
     
@@ -418,6 +418,125 @@ class ServiceManager {
     
     
     
+    
+    
+    
+    static func getApiCall<T: Decodable>(authorization: Bool = false, endPoint: String, urlParams: Dictionary<String,String>? = nil, parameters: NSDictionary? = nil, methodType: HTTPMethod = .post, resultType: T.Type,p:[String:Any], completionHandler:@escaping(Bool, _ result: T?, String?) -> Void) {
+        
+        
+        if !isConnection() {
+            print("Error: you are offline")
+            NotificationCenter.default.post(name: NSNotification.Name("nointernet"), object: nil)
+            completionHandler(false, nil, ApiError.networkError.message)
+            return
+        }
+        
+        
+        guard var urlComponents = URLComponents(string: "\(BASE_URL)\(endPoint)") else {
+            print("Error: cannot create URL")
+            
+            completionHandler(false, nil, ApiError.invalidRequest.message)
+            return
+        }
+        
+        // Append paramaters to url if present
+        if let urlParams = urlParams, !urlParams.isEmpty {
+            var queryItemsArray:[URLQueryItem] = []
+            for (key,value) in urlParams {
+                queryItemsArray.append(URLQueryItem(name: key, value: value))
+            }
+            urlComponents.queryItems = queryItemsArray
+        }
+        
+        guard let completeEndpointURL = urlComponents.url else {
+            print("Error: cannot create URL")
+            completionHandler(false, nil, ApiError.invalidRequest.message)
+            return
+        }
+        
+        // Create the url request
+        print("URL endpoint :: \(completeEndpointURL)")
+        var request = URLRequest(url: completeEndpointURL)
+        
+        request.httpMethod = methodType.rawValue
+        
+        /* set reqeust header and platform*/
+        self.setHeaderForRequest(req: &request)
+        
+        if let params = parameters // this block run only for post api
+        {
+            
+            do {
+                
+                // request.httpBody = p.percentEncoded()
+                request.httpBody = try JSONSerialization.data(withJSONObject: params, options: .prettyPrinted) // pass dictionary to data object and set it as request body
+                
+                
+                
+            } catch let error {
+                print(error.localizedDescription)
+                completionHandler(false, nil, ApiError.unknown.message)
+            }
+        }
+        
+        
+        
+        
+        
+        AF.request(
+            completeEndpointURL,
+            method: .get,
+            parameters: parameters as? Parameters,
+            encoding: URLEncoding.default,
+            headers: nil).responseJSON { (responseData) -> Void in
+                if responseData.value != nil {
+                    //do something with data
+                    // print(responseData.value as Any)
+                    
+                    switch responseData.result {
+                    case .success(let data):
+                        
+                        print("Parsing the data:  ")
+                        
+                        do{
+                            
+                            
+                            let jsonData = try JSONSerialization.data(withJSONObject: responseData.value as Any, options: [])
+                            
+                            if let jsonResponse = try? JSONDecoder().decode(T.self, from: jsonData) {
+                                
+                                completionHandler(true, jsonResponse, nil)
+                            }
+                            
+                            else {
+                                completionHandler(false, nil, ApiError.somthingwentwrong.message)
+                            }
+                            
+                            
+                            
+                        }catch {
+                            
+                            completionHandler(false, nil, ApiError.unknown.message)
+                            print("JSONSerialization error")
+                        }
+                        
+                        
+                        
+                    case .failure(let error):
+                        print("error ----- \(error)")
+                        completionHandler(false, nil, ApiError.unknown.message)
+                        break
+                        
+                    default:
+                        break
+                    }
+                    
+                    
+                }
+            }
+        
+        
+    }
     
     
     static func uploadFile<T: Decodable>(endPoint: String, urlParams: Dictionary<String,String>? = nil, fileParameterName: String, fileName: String, fileData: Data, fileContentType: String, resultType: T.Type, completionHandler:@escaping(Bool, _ result: T?, String?) -> Void) {

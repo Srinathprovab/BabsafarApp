@@ -26,6 +26,9 @@
 		650FC68228F924D0008C6A49 /* MCAttr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650FC68128F924D0008C6A49 /* MCAttr.swift */; };
 		650FC68428F924EC008C6A49 /* MC1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650FC68328F924EC008C6A49 /* MC1.swift */; };
 		650FC68628F9251E008C6A49 /* MCPrice_breakup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650FC68528F9251E008C6A49 /* MCPrice_breakup.swift */; };
+		651C4230292CD19400762B2C /* ProfileDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651C422F292CD19400762B2C /* ProfileDetailsModel.swift */; };
+		651C4232292CD1C300762B2C /* ProfileDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651C4231292CD1C300762B2C /* ProfileDetails.swift */; };
+		651C4234292CD2FE00762B2C /* ProfileDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651C4233292CD2FE00762B2C /* ProfileDetailsViewModel.swift */; };
 		65206D0C2925F12E00A2B381 /* TabSelectCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65206D0A2925F12E00A2B381 /* TabSelectCVCell.swift */; };
 		65206D0D2925F12E00A2B381 /* TabSelectCVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65206D0B2925F12E00A2B381 /* TabSelectCVCell.xib */; };
 		65260F9129010E73006AD0C6 /* MCTripFlightTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65260F8F29010E73006AD0C6 /* MCTripFlightTVCell.swift */; };
@@ -366,6 +369,9 @@
 		650FC68128F924D0008C6A49 /* MCAttr.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCAttr.swift; sourceTree = "<group>"; };
 		650FC68328F924EC008C6A49 /* MC1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MC1.swift; sourceTree = "<group>"; };
 		650FC68528F9251E008C6A49 /* MCPrice_breakup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCPrice_breakup.swift; sourceTree = "<group>"; };
+		651C422F292CD19400762B2C /* ProfileDetailsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDetailsModel.swift; sourceTree = "<group>"; };
+		651C4231292CD1C300762B2C /* ProfileDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDetails.swift; sourceTree = "<group>"; };
+		651C4233292CD2FE00762B2C /* ProfileDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDetailsViewModel.swift; sourceTree = "<group>"; };
 		65206D0A2925F12E00A2B381 /* TabSelectCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabSelectCVCell.swift; sourceTree = "<group>"; };
 		65206D0B2925F12E00A2B381 /* TabSelectCVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TabSelectCVCell.xib; sourceTree = "<group>"; };
 		65260F8F29010E73006AD0C6 /* MCTripFlightTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTripFlightTVCell.swift; sourceTree = "<group>"; };
@@ -710,6 +716,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		651C422E292CD18000762B2C /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				651C422F292CD19400762B2C /* ProfileDetailsModel.swift */,
+				651C4231292CD1C300762B2C /* ProfileDetails.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
 		65206D032925F0F000A2B381 /* TabSelectCVCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -1677,11 +1692,11 @@
 		BF93D87C2888388E00D5C5F3 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				BF93D881288838E200D5C5F3 /* Login.storyboard */,
-				BF93D880288838CC00D5C5F3 /* ViewController */,
+				BF93D87D288838A500D5C5F3 /* Models */,
 				BF93D87F288838BE00D5C5F3 /* ViewModel */,
 				BF93D87E288838AF00D5C5F3 /* Views */,
-				BF93D87D288838A500D5C5F3 /* Models */,
+				BF93D880288838CC00D5C5F3 /* ViewController */,
+				BF93D881288838E200D5C5F3 /* Login.storyboard */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -1689,6 +1704,7 @@
 		BF93D87D288838A500D5C5F3 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				651C422E292CD18000762B2C /* Profile */,
 				BF87CD0D28914015000B6A1A /* Data.swift */,
 				BF87CD0E28914015000B6A1A /* RegisterModel.swift */,
 				BF87CD1328914CB6000B6A1A /* LoginModel.swift */,
@@ -1713,6 +1729,7 @@
 			isa = PBXGroup;
 			children = (
 				BF87CD11289140B6000B6A1A /* RegisterViewModel.swift */,
+				651C4233292CD2FE00762B2C /* ProfileDetailsViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -2541,6 +2558,7 @@
 				BF8AA94A28992B3100D9DC80 /* SelectCityModel.swift in Sources */,
 				BF45B36F288906CB00DAB201 /* SignUpWithTVCell.swift in Sources */,
 				BF5B4A4F288ACCD0000DF4BF /* DropDownTVCell.swift in Sources */,
+				651C4234292CD2FE00762B2C /* ProfileDetailsViewModel.swift in Sources */,
 				BF94FCA6288690FC00778946 /* StringExtension.swift in Sources */,
 				BF5CFC3028A3E6D90080D883 /* RoundTripFlightResultTVCell.swift in Sources */,
 				BF5C1E85289BE105003639AE /* FilterDepartureTVCell.swift in Sources */,
@@ -2560,6 +2578,7 @@
 				BF87CD1428914CB6000B6A1A /* LoginModel.swift in Sources */,
 				BF87CD1E28916743000B6A1A /* MyBookingVC.swift in Sources */,
 				BF94FCA7288690FC00778946 /* UIKitHelper.swift in Sources */,
+				651C4232292CD1C300762B2C /* ProfileDetails.swift in Sources */,
 				BF566DC5289792680046FB95 /* ModifySearchHotelVC.swift in Sources */,
 				657687572927934800543727 /* FDPriceDetails.swift in Sources */,
 				BF56D0502893E4570092387D /* CommonFromCityTVCell.swift in Sources */,
@@ -2658,6 +2677,7 @@
 				BF5E466E288FCB940056B7BB /* DoubleSliderTVCell.swift in Sources */,
 				BF94FCEC28869B4500778946 /* DashBoaardTabbarVC.swift in Sources */,
 				BF70ACEC288E61D400318CF2 /* ContactInformationTVCell.swift in Sources */,
+				651C4230292CD19400762B2C /* ProfileDetailsModel.swift in Sources */,
 				BF94FC5C2886901000778946 /* SceneDelegate.swift in Sources */,
 				BF94FCAA288690FC00778946 /* TableViewExtensions.swift in Sources */,
 				BF45B3A32889837B00DAB201 /* SideMenuVC.swift in Sources */,
@@ -2853,7 +2873,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = 5TLY5PME9K;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BabSafar/Info.plist;
@@ -2886,7 +2906,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = 5TLY5PME9K;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BabSafar/Info.plist;

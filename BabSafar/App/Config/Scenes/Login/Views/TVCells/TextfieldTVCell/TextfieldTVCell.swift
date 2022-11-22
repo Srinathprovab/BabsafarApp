@@ -12,6 +12,9 @@ protocol TextfieldTVCellDelegate {
     func editingTextField(tf:UITextField)
     func didTapOnShowPasswordBtn(cell:TextfieldTVCell)
     
+    func donedatePicker(cell:TextfieldTVCell)
+    func cancelDatePicker(cell:TextfieldTVCell)
+    
 }
 
 
@@ -26,11 +29,10 @@ class TextfieldTVCell: TableViewCell {
     @IBOutlet weak var forgetPwdBtn: UIButton!
     @IBOutlet weak var btnHeight: NSLayoutConstraint!
     @IBOutlet weak var showPassBtn: UIButton!
-    
     @IBOutlet weak var viewheight: NSLayoutConstraint!
     
     
-    
+    let datePicker = UIDatePicker()
     var delegate:TextfieldTVCellDelegate?
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -54,49 +56,71 @@ class TextfieldTVCell: TableViewCell {
         
         switch cellInfo?.key {
         case "email":
-//            showPassView.isHidden = true
-           
             self.txtField.isSecureTextEntry = false
+            break
         case "pwd":
             showPassView.isHidden = false
             self.txtField.isSecureTextEntry = true
             txtField.textContentType = .oneTimeCode
             btnHeight.constant = 30
             forgetPwdBtn.isHidden = false
-            
+            break
         case "signuppwd":
             showPassView.isHidden = false
             self.txtField.isSecureTextEntry = true
             txtField.textContentType = .oneTimeCode
             btnHeight.constant = 0
             forgetPwdBtn.isHidden = true
-            
+            break
         case "signup":
-//            showPassView.isHidden = true
+            //            showPassView.isHidden = true
             self.txtField.isSecureTextEntry = false
             forgetPwdBtn.isHidden = true
-            
+            break
         case "cpwd":
-//            showPassView.isHidden = true
+            //            showPassView.isHidden = true
             self.txtField.isSecureTextEntry = true
             txtField.textContentType = .oneTimeCode
             forgetPwdBtn.isHidden = true
             textHolderView.layer.borderColor = UIColor.lightGray.cgColor
-            
+            break
         case "myacc":
-//            showPassView.isHidden = true
+            //            showPassView.isHidden = true
             self.txtField.isSecureTextEntry = true
             txtField.textContentType = .oneTimeCode
             btnHeight.constant = 30
             forgetPwdBtn.isHidden = false
             forgetPwdBtn.setTitle("Change  password", for: .normal)
             
+            break
         case "visa":
             self.viewheight.constant = 120
-            
             break
+            
+        case "profile":
+            self.txtField.isSecureTextEntry = false
+            forgetPwdBtn.isHidden = true
+            txtField.text = cellInfo?.subTitle
+            txtField.isUserInteractionEnabled = false
+            break
+            
+            
+        case "profiledit":
+            self.txtField.isSecureTextEntry = false
+            forgetPwdBtn.isHidden = true
+            txtField.text = cellInfo?.subTitle
+            txtField.isUserInteractionEnabled = true
+            break
+            
         default:
             break
+        }
+        
+        
+        
+        if cellInfo?.key1 == "pdob"{
+            datePicker.maximumDate = Date()
+            showDatePicker()
         }
     }
     
@@ -139,6 +163,46 @@ class TextfieldTVCell: TableViewCell {
     
     @IBAction func didTapOnShowPasswordBtn(_ sender: Any) {
         delegate?.didTapOnShowPasswordBtn(cell: self)
+    }
+    
+    
+    
+//MARK: - DATE PICKER
+    func showDatePicker(){
+        //Formate Date
+        datePicker.datePickerMode = .date
+        datePicker.preferredDatePickerStyle = .wheels
+        
+        
+        //ToolBar
+        let toolbar = UIToolbar();
+        toolbar.sizeToFit()
+        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(donedatePicker));
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelDatePicker));
+        
+        toolbar.setItems([doneButton,spaceButton,cancelButton], animated: false)
+        
+        txtField.inputAccessoryView = toolbar
+        txtField.inputView = datePicker
+        
+    }
+    
+    @objc func donedatePicker(){
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        txtField.text = formatter.string(from: datePicker.date)
+        
+        
+        let formatter1 = DateFormatter()
+        formatter1.dateFormat = "yyyy-MM-dd"
+        txtField.text = formatter1.string(from: datePicker.date)
+        
+        delegate?.donedatePicker(cell: self)
+    }
+    
+    @objc func cancelDatePicker(){
+        delegate?.cancelDatePicker(cell: self)
     }
     
     

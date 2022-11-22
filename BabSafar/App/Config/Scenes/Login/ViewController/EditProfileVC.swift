@@ -11,6 +11,8 @@ import MobileCoreServices
 
 class EditProfileVC: BaseTableVC {
     
+   
+    
     @IBOutlet weak var nav: NavBar!
     @IBOutlet weak var profileImgView: UIView!
     @IBOutlet weak var profileImg: UIImageView!
@@ -40,12 +42,31 @@ class EditProfileVC: BaseTableVC {
     var fileData = Data()
     var yourimageView = UIImage()
     var imgUrl = NSURL()
+    var viewmodel:ProfileDetailsViewModel?
+    var payload = [String:Any]()
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        print("====  viewWillAppear EditProfileVC =======")
+        BASE_URL = "https://provabdevelopment.com/babsafar/mobile_webservices/mobile/index.php/user/"
+        payload["user_id"] = "2075"
+        viewmodel?.CallGetProileDetails_API(dictParam: payload)
+    }
+    
+    func getProfileDetails(response: ProfileDetailsModel) {
+        print("==== getProfileDetails =======")
+        print(response)
+    }
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
         setupUI()
         setupTV()
+       // viewmodel = ProfileDetailsViewModel(self)
     }
     
     
