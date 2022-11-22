@@ -60,12 +60,14 @@ class TextfieldTVCell: TableViewCell {
         case "pwd":
             showPassView.isHidden = false
             self.txtField.isSecureTextEntry = true
+            txtField.textContentType = .oneTimeCode
             btnHeight.constant = 30
             forgetPwdBtn.isHidden = false
             
         case "signuppwd":
             showPassView.isHidden = false
             self.txtField.isSecureTextEntry = true
+            txtField.textContentType = .oneTimeCode
             btnHeight.constant = 0
             forgetPwdBtn.isHidden = true
             
@@ -77,12 +79,14 @@ class TextfieldTVCell: TableViewCell {
         case "cpwd":
 //            showPassView.isHidden = true
             self.txtField.isSecureTextEntry = true
+            txtField.textContentType = .oneTimeCode
             forgetPwdBtn.isHidden = true
             textHolderView.layer.borderColor = UIColor.lightGray.cgColor
             
         case "myacc":
 //            showPassView.isHidden = true
             self.txtField.isSecureTextEntry = true
+            txtField.textContentType = .oneTimeCode
             btnHeight.constant = 30
             forgetPwdBtn.isHidden = false
             forgetPwdBtn.setTitle("Change  password", for: .normal)
@@ -142,11 +146,39 @@ class TextfieldTVCell: TableViewCell {
 
 
 extension TextfieldTVCell {
+    
+    
+    
     override func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let maxLength = 50
-        let currentString: NSString = (textField.text ?? "") as NSString
-        let newString: NSString =  currentString.replacingCharacters(in: range, with: string) as NSString
         
-        return newString.length <= maxLength
+        
+        switch textField.tag {
+        case 11://email
+            let maxLength = 30
+            let currentString: NSString = textField.text! as NSString
+            let newString: NSString =  currentString.replacingCharacters(in: range, with: string) as NSString
+            return newString.length <= maxLength
+            
+        case 12://mobile
+            let maxLength = 10
+            let currentString: NSString = textField.text! as NSString
+            let newString: NSString =  currentString.replacingCharacters(in: range, with: string) as NSString
+            
+            let allowedCharacters = CharacterSet(charactersIn:"+0123456789 ")//Here change this characters based on your requirement
+            let characterSet = CharacterSet(charactersIn: string)
+            return allowedCharacters.isSuperset(of: characterSet) && newString.length <= maxLength
+            
+            
+        default:
+            let maxLength = 50
+            let currentString: NSString = textField.text! as NSString
+            let newString: NSString =  currentString.replacingCharacters(in: range, with: string) as NSString
+            return newString.length <= maxLength
+        }
+        
     }
+    
+    
+    
+    
 }

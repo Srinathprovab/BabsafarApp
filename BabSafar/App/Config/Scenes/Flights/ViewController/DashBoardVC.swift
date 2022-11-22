@@ -39,6 +39,7 @@ class DashBoardVC: BaseTableVC, TopFlightDetailsViewModelDelegate {
             case "Flights":
                 DispatchQueue.main.async {[self] in
                     callTopFlightsHotelsDetailsAPI()
+                    
                 }
                 break
                 
@@ -84,10 +85,12 @@ class DashBoardVC: BaseTableVC, TopFlightDetailsViewModelDelegate {
     //MARK: - VIEW SETUP
     func setupUI() {
         
+       
         holderView.backgroundColor = .WhiteColor
         banerImage.image = UIImage(named: "baner")
         banerImage.contentMode = .scaleAspectFill
         selectLangView.backgroundColor = .clear
+        tabSelectionView.addCornerRadiusWithShadow(color: .clear , borderColor: .clear, cornerRadius: 6)
         tabSelectionView.backgroundColor = .WhiteColor.withAlphaComponent(0.5)
         tabSelectCV.backgroundColor = .clear
         langLeftImage.image = UIImage(named: "lang")
@@ -151,8 +154,8 @@ class DashBoardVC: BaseTableVC, TopFlightDetailsViewModelDelegate {
         tabSelectCV.dataSource = self
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        layout.minimumInteritemSpacing = 20
-        layout.minimumLineSpacing = 20
+        layout.minimumInteritemSpacing = 10
+        layout.minimumLineSpacing = 10
         tabSelectCV.collectionViewLayout = layout
         tabSelectCV.isScrollEnabled = false
     }
@@ -235,6 +238,7 @@ extension DashBoardVC:UICollectionViewDelegate,UICollectionViewDataSource,UIColl
             if indexPath.row == defaults.integer(forKey: UserDefaultsKeys.DashboardTapSelectedCellIndex) {
                 cell.imageStr = tabNamesImages[indexPath.row]
                 cell.selected()
+                setupTV()
                 tabSelectCV.selectItem(at: indexPath, animated: true, scrollPosition: .left)
                 
             }
@@ -283,7 +287,7 @@ extension DashBoardVC:UICollectionViewDelegate,UICollectionViewDataSource,UIColl
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        return CGSize(width: 100, height: 100)
+        return CGSize(width: 90, height: 90)
         
     }
     

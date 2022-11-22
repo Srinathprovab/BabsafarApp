@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import DropDown
 
 protocol SearchFlightsTVCellDelegate {
     func didTapOnFromCityBtnAction(cell: SearchFlightsTVCell)
@@ -23,7 +24,8 @@ protocol SearchFlightsTVCellDelegate {
     func didTapOnSearchFlightBtnAction(cell: SearchFlightsTVCell)
     
 }
-class SearchFlightsTVCell: TableViewCell {
+class SearchFlightsTVCell: TableViewCell, SelectCityViewModelProtocal {
+    
     
     @IBOutlet weak var holderView: UIView!
     @IBOutlet weak var fromView: UIView!
@@ -72,11 +74,32 @@ class SearchFlightsTVCell: TableViewCell {
     @IBOutlet weak var searchFlightsBtnlbl: UILabel!
     @IBOutlet weak var searchFlightBtn: UIButton!
     
+    
+    @IBOutlet weak var fromTF: UITextField!
+    @IBOutlet weak var toBtn: UIButton!
+    //    @IBOutlet weak var autocompleteTableView: UITableView!
+    //    @IBOutlet weak var tvHeight: NSLayoutConstraint!
+    
+    @IBOutlet weak var fromBtn: UIButton!
+    
+    @IBOutlet weak var toTF: UITextField!
+    
+    
+    
+    var cityViewModel: SelectCityViewModel?
+    var payload = [String:Any]()
+    let dropDown = DropDown()
+    let dropDown1 = DropDown()
+    var pastUrls = ["Men", "Women", "Cats", "Dogs", "Children"]
+    var autocompleteUrls = [String]()
     var delegate:SearchFlightsTVCellDelegate?
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         setupUI()
+        setupDropDown()
+        setupDropDown1()
+        cityViewModel = SelectCityViewModel(self)
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -85,8 +108,12 @@ class SearchFlightsTVCell: TableViewCell {
         // Configure the view for the selected state
     }
     
+    
+    
+    
     override func updateUI() {
-     
+        CallShowCityListAPI(str: "")
+        
         
         if let journeyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
             if journeyType == "oneway" {
@@ -94,7 +121,7 @@ class SearchFlightsTVCell: TableViewCell {
                 toCitylbl.text = defaults.string(forKey: UserDefaultsKeys.toCity) ?? "Select City"
                 self.departureDatelbl.text = defaults.string(forKey: UserDefaultsKeys.calDepDate) ?? "+ Add Departure Date"
                 economyValuelbl.text = defaults.string(forKey: UserDefaultsKeys.travellerDetails) ?? "Add Traveller Details"
-
+                
                 returnView.isHidden = true
             }else {
                 fromCitylbl.text = defaults.string(forKey: UserDefaultsKeys.rfromCity) ?? "Select City"
@@ -102,7 +129,7 @@ class SearchFlightsTVCell: TableViewCell {
                 self.departureDatelbl.text = defaults.string(forKey: UserDefaultsKeys.rcalDepDate) ?? "+ Add Departure Date"
                 self.returnDatelbl.text = defaults.string(forKey: UserDefaultsKeys.rcalRetDate) ?? "+ Add Return Date"
                 economyValuelbl.text = defaults.string(forKey: UserDefaultsKeys.rtravellerDetails) ?? "Add Traveller Details"
-
+                
                 returnView.isHidden = false
             }
         }
@@ -114,7 +141,7 @@ class SearchFlightsTVCell: TableViewCell {
         swipeImage.image = UIImage(named: "swipe")
         dropdownImg.image = UIImage(named: "downarrow")
         moreOptionImg.image = UIImage(systemName: "plus")?.withRenderingMode(.alwaysOriginal).withTintColor(.AppTabSelectColor)
-
+        
         
         setupViews(v: holderView, radius: 5, color: .WhiteColor)
         setupViews(v: fromView, radius: 4, color: .AppHolderViewColor)
@@ -166,6 +193,22 @@ class SearchFlightsTVCell: TableViewCell {
         
         searchFlightBtn.setTitle("", for: .normal)
         returnView.isHidden = true
+        
+        
+        fromBtn.isUserInteractionEnabled = false
+        fromTF.tag = 1
+        fromTF.textColor = .AppLabelColor
+        fromTF.font = .LatoSemibold(size: 18)
+        fromTF.delegate = self
+        fromTF.addTarget(self, action: #selector(textFiledEditingChanged(_:)), for: .editingChanged)
+        
+        toBtn.isUserInteractionEnabled = false
+        toTF.tag = 2
+        toTF.textColor = .AppLabelColor
+        toTF.font = .LatoSemibold(size: 18)
+        toTF.delegate = self
+        toTF.addTarget(self, action: #selector(textFiledEditingChanged(_:)), for: .editingChanged)
+        
     }
     
     func setupViews(v:UIView,radius:CGFloat,color:UIColor) {
@@ -181,6 +224,8 @@ class SearchFlightsTVCell: TableViewCell {
         lbl.textColor = textcolor
         lbl.font = font
     }
+    
+    
     
     @IBAction func didTapOnFromCityBtnAction(_ sender: Any) {
         delegate?.didTapOnFromCityBtnAction(cell: self)
@@ -245,5 +290,140 @@ class SearchFlightsTVCell: TableViewCell {
         delegate?.didTapOnSearchFlightBtnAction(cell: self)
     }
     
+    
+    
+    
+    //MARK: - Text Filed Editing Changed
+    
+    
+    @objc func textFiledEditingChanged(_ textField:UITextField) {
+        
+        
+        if textField == fromTF {
+            if textField.text?.isEmpty == true {
+                dropDown.hide()
+            }else {
+                self.fromCitylbl.text = ""
+                CallShowCityListAPI(str: textField.text ?? "")
+                dropDown.show()
+            }
+        }else {
+            if textField.text?.isEmpty == true {
+                dropDown1.hide()
+            }else {
+                self.toCitylbl.text = ""
+                CallShowCityListAPI(str: textField.text ?? "")
+                dropDown1.show()
+            }
+        }
+        
+        
+    }
+    
+    
+    func CallShowCityListAPI(str:String) {
+        BASE_URL = "https://provabdevelopment.com/alghanim_new/mobile_webservices/mobile/index.php/ajax/"
+        payload["term"] = str
+        cityViewModel?.CallShowCityListAPI(dictParam: payload)
+    }
+    
+    
+    
+    var cityNameArray = [String]()
+    func ShowCityList(response: [SelectCityModel]) {
+        cityList = response
+        cityNameArray.removeAll()
+        cityList.forEach { i in
+            print(i)
+            cityNameArray.append(i.label ?? "")
+            cityLocId.append(i.id ?? "")
+            
+        }
+        dropDown.dataSource = cityNameArray
+        dropDown1.dataSource = cityNameArray
+    }
+    
+    
+    
+    func setupDropDown() {
+        
+        dropDown.direction = .bottom
+        dropDown.backgroundColor = .WhiteColor
+        dropDown.anchorView = self.fromBtn
+        dropDown.bottomOffset = CGPoint(x: 0, y: fromBtn.frame.size.height + 10)
+        dropDown.selectionAction = { [weak self] (index: Int, item: String) in
+            
+            print(cityList[index].label)
+            print(cityList[index].id)
+            print(index)
+            self?.fromTF.text = ""
+            self?.fromCitylbl.text = item
+            
+            
+            
+            if let selectedJType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
+                 if selectedJType == "circle" {
+                     
+                     defaults.set(cityList[index].label ?? "", forKey: UserDefaultsKeys.rfromCity)
+                     defaults.set(cityList[index].id ?? "", forKey: UserDefaultsKeys.rfromlocid)
+                     defaults.set(cityList[index].airportCode ?? "", forKey: UserDefaultsKeys.rfairportCode)
+                   
+                }else {
+                    defaults.set(cityList[index].label ?? "", forKey: UserDefaultsKeys.fromCity)
+                    defaults.set(cityList[index].id ?? "", forKey: UserDefaultsKeys.fromlocid)
+                    defaults.set(cityList[index].airportCode ?? "", forKey: UserDefaultsKeys.fairportCode)
+                }
+                
+            }
+            
+        }
+    }
+    
+    
+    
+    func setupDropDown1() {
+        
+        dropDown1.direction = .bottom
+        dropDown1.backgroundColor = .WhiteColor
+        dropDown1.anchorView = self.toBtn
+        dropDown1.bottomOffset = CGPoint(x: 0, y: toBtn.frame.size.height + 10)
+        dropDown1.selectionAction = { [weak self] (index: Int, item: String) in
+            
+            print(cityList[index].label)
+            print(cityList[index].id)
+            print(index)
+            self?.toTF.text = ""
+            self?.toCitylbl.text = item
+            
+           
+            
+            if let selectedJType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
+                 if selectedJType == "circle" {
+                     
+                     defaults.set(cityList[index].label ?? "", forKey: UserDefaultsKeys.rtoCity)
+                     defaults.set(cityList[index].id ?? "", forKey: UserDefaultsKeys.rtolocid)
+                     defaults.set(cityList[index].airportCode ?? "", forKey: UserDefaultsKeys.rtairportCode)
+                   
+                }else {
+                    defaults.set(cityList[index].label ?? "", forKey: UserDefaultsKeys.toCity)
+                    defaults.set(cityList[index].id ?? "", forKey: UserDefaultsKeys.tolocid)
+                    defaults.set(cityList[index].airportCode ?? "", forKey: UserDefaultsKeys.mtoairportCode)
+                }
+                
+            }
+            
+        }
+        
+        
+    }
+    
+    
+    
+    
+    
+    
+    
 }
+
+
 

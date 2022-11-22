@@ -30,11 +30,8 @@ class Loader {
             //            loadingMBProgress.bezelView.color = UIColor.black.withAlphaComponent(0.5) // Your backgroundcolor
             //            loadingMBProgress.bezelView.style = .solidColor
             
-         
-            HUD.label.text = "Loading..."
-            HUD.label.textColor = .WhiteColor
-            HUD.bezelView.color = UIColor.black.withAlphaComponent(0.5)
-            HUD.bezelView.style = .solidColor
+            
+          
             
             let imageViewAnimatedGif = UIImageView()
             //The key here is to save the GIF file or URL download directly into a NSData instead of making it a UIImage. Bypassing UIImage will let the GIF file keep the animation.

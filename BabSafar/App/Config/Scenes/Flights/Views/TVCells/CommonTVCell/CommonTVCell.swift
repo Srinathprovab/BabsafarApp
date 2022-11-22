@@ -59,6 +59,9 @@ extension CommonTVCell:UITableViewDataSource,UITableViewDelegate {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as? RadioButtonTVCell {
             cell.selectionStyle = .none
             cell.titlelbl.text = selectClassArray[indexPath.row]
+            
+           
+            
             ccell = cell
         }
         return ccell
@@ -68,13 +71,17 @@ extension CommonTVCell:UITableViewDataSource,UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath) as? RadioButtonTVCell {
             cell.show()
+            
             if let journeyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
                 if journeyType == "oneway" {
                     defaults.set(cell.titlelbl.text ?? "", forKey: UserDefaultsKeys.selectClass)
+                    defaults.set(indexPath.row, forKey: UserDefaultsKeys.select_classIndex)
                 }else if journeyType == "circle"{
                     defaults.set(cell.titlelbl.text ?? "", forKey: UserDefaultsKeys.rselectClass)
+                    defaults.set(indexPath.row, forKey: UserDefaultsKeys.rselect_classIndex)
                 }else {
                     defaults.set(cell.titlelbl.text ?? "", forKey: UserDefaultsKeys.mselectClass)
+                    defaults.set(indexPath.row, forKey: UserDefaultsKeys.mselect_classIndex)
                 }
             }
         }

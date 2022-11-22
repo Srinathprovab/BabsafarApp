@@ -42,6 +42,9 @@ public var screenHeight: CGFloat {
 //MARK: HOME SCREEN
 var topHotelDetails = [TopHotelDetails]()
 var topFlightDetails = [TopFlightDetails]()
+var cityList:[SelectCityModel] = []
+var cityLocId:[String] = []
+var fd = [[FDFlightDetails]]()
 
 //Multicity
 var fromCityNameArray = ["Select","Select"]
@@ -65,8 +68,8 @@ struct ApiEndpoints {
     static let preflightsearchmobile = "pre_flight_search_mobile"
     static let getairportcodelist = "get_airport_code_list"
     static let getFlightDetails = "getFlightDetails"
-    
     static let getTopFlightHotelDestination = "getTopFlightHotelDestination"
+    static let getBaggageFlightDetails = "getFlightDetails"
     
 }
 
@@ -103,6 +106,7 @@ struct UserDefaultsKeys {
     static var childCount = "Child_Count"
     static var infantsCount = "Infants_Count"
     static var selectClass = "select_class"
+    static var select_classIndex = "select_classIndex"
     static var fromlocid = "from_loc_id"
     static var tolocid = "to_loc_id"
     static var fairportCode = "fairportCode"
@@ -122,6 +126,7 @@ struct UserDefaultsKeys {
     static var rchildCount = "rChild_Count"
     static var rinfantsCount = "rInfants_Count"
     static var rselectClass = "rselect_class"
+    static var rselect_classIndex = "rselect_classIndex"
     static var rfromlocid = "rfrom_loc_id"
     static var rtolocid = "rto_loc_id"
     static var rtravellerDetails = "rtravellerDetails"
@@ -141,6 +146,7 @@ struct UserDefaultsKeys {
     static var mchildCount = "mChild_Count"
     static var minfantsCount = "mInfants_Count"
     static var mselectClass = "mselect_class"
+    static var mselect_classIndex = "mselect_classIndex"
     static var mfromlocid = "mfrom_loc_id"
     static var mtolocid = "mto_loc_id"
     static var mselectAirline = "mselectAirline"

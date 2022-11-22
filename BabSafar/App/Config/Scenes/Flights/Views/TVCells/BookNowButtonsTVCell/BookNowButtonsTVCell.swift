@@ -8,7 +8,6 @@
 import UIKit
 
 protocol BookNowButtonsTVCellDelegate {
-    func didTapOnKWDBtn(cell:BookNowButtonsTVCell)
     func didTapOnBookNowBtn(cell:BookNowButtonsTVCell)
 }
 
@@ -16,9 +15,7 @@ class BookNowButtonsTVCell: TableViewCell {
     
     
     @IBOutlet weak var holderView: UIView!
-    @IBOutlet weak var kwdView: UIView!
     @IBOutlet weak var kwdlbl: UILabel!
-    @IBOutlet weak var kwdBtn: UIButton!
     @IBOutlet weak var bookNowView: UIView!
     @IBOutlet weak var bookNowlbl: UILabel!
     @IBOutlet weak var bookNowBtn: UIButton!
@@ -40,12 +37,9 @@ class BookNowButtonsTVCell: TableViewCell {
     func setupUI() {
         
         setupViews(v: holderView, radius: 0, color: .WhiteColor)
-        setupViews(v: kwdView, radius: 0, color: HexColor("#67CDEC"))
         setupViews(v: bookNowView, radius: 0, color: .AppBtnColor)
         setupLabels(lbl: kwdlbl, text: "KWD:150.00", textcolor: .WhiteColor, font: .LatoMedium(size: 18))
         setupLabels(lbl: bookNowlbl, text: "Book Now", textcolor: .WhiteColor, font: .LatoMedium(size: 18))
-        
-        kwdBtn.setTitle("", for: .normal)
         bookNowBtn.setTitle("", for: .normal)
         
     }
@@ -62,11 +56,6 @@ class BookNowButtonsTVCell: TableViewCell {
         lbl.text = text
         lbl.textColor = textcolor
         lbl.font = font
-    }
-    
-    
-    @IBAction func didTapOnKWDBtn(_ sender: Any) {
-        delegate?.didTapOnKWDBtn(cell: self)
     }
     
     

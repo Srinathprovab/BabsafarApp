@@ -7,7 +7,7 @@
 
 import UIKit
 
-class BaggageInfoVC: BaseTableVC, FlightDetailsViewModelProtocal {
+class BaggageInfoVC: BaseTableVC, FlightDetailsViewModelProtocal, FDViewModelDelegate {
     
     @IBOutlet weak var holderView: UIView!
     @IBOutlet weak var buttonsView: UIView!
@@ -32,9 +32,11 @@ class BaggageInfoVC: BaseTableVC, FlightDetailsViewModelProtocal {
     var tablerow = [TableRow]()
     var flightdetails : Flight_details?
     var viewmodel : FlightDetailsViewModel?
+    var viewmodel1 : FDViewModel?
     var payload = [String:Any]()
     
     override func viewWillAppear(_ animated: Bool) {
+        callGetFlightDetailsAPI()
         
         if let selectedTab = defaults.string(forKey: UserDefaultsKeys.journeyType) {
             if selectedTab == "oneway" {
@@ -46,12 +48,6 @@ class BaggageInfoVC: BaseTableVC, FlightDetailsViewModelProtocal {
             }
         }
         
-        
-        
-        print(flightdetails)
-        
-        callGetFlightDetailsAPI()
-        
     }
     
     
@@ -61,7 +57,8 @@ class BaggageInfoVC: BaseTableVC, FlightDetailsViewModelProtocal {
         
         // Do any additional setup after loading the view.
         setupUI()
-        viewmodel = FlightDetailsViewModel(self)
+        // viewmodel = FlightDetailsViewModel(self)
+        viewmodel1 = FDViewModel(self)
         
     }
     
@@ -86,14 +83,18 @@ class BaggageInfoVC: BaseTableVC, FlightDetailsViewModelProtocal {
         fareRulesBtn.setTitle("", for: .normal)
         baggageInfoBtn.setTitle("", for: .normal)
         
-        commonTableView.registerTVCells(["ItineraryTVCell","FareRulesTVCell","BaggageInfoTVCell","BookNowButtonsTVCell","EmptyTVCell"])
+        commonTableView.registerTVCells(["ItineraryTVCell","FareRulesTVCell","BaggageInfoTVCell","BookNowButtonsTVCell","EmptyTVCell","ItineraryAddTVCell"])
     }
     
     //one way ---------------------------------------------
     func setupItineraryOneWayTVCell() {
         
         tablerow.removeAll()
-        tablerow.append(TableRow(title:"Bellary to Bangalore(5 hrs)",cellType:.ItineraryTVCell))
+        
+        fd.forEach { i in
+            tablerow.append(TableRow(moreData:i,cellType:.ItineraryAddTVCell))
+        }
+        
         tablerow.append(TableRow(height:100,cellType:.EmptyTVCell))
         commonTVData = tablerow
         commonTableView.reloadData()
@@ -126,8 +127,8 @@ class BaggageInfoVC: BaseTableVC, FlightDetailsViewModelProtocal {
     func setupItineraryRoundTripTVCell() {
         
         tablerow.removeAll()
-        tablerow.append(TableRow(title:"Bellary to Bangalore(2 hrs)",cellType:.ItineraryTVCell))
-        tablerow.append(TableRow(title:"Bangalore to Delhi (3 25m)",cellType:.ItineraryTVCell))
+        tablerow.append(TableRow(cellType:.ItineraryAddTVCell))
+        //  tablerow.append(TableRow(title:"Bangalore to Delhi (3 25m)",cellType:.ItineraryTVCell))
         tablerow.append(TableRow(height:100,cellType:.EmptyTVCell))
         commonTVData = tablerow
         commonTableView.reloadData()
@@ -270,10 +271,7 @@ class BaggageInfoVC: BaseTableVC, FlightDetailsViewModelProtocal {
         dismiss(animated: true)
     }
     
-    @objc func didTapOnKWDBtn(_ sender: UIButton) {
-        print("didTapOnKWDBtn")
-    }
-    
+  
     @objc func didTapOnBookNowBtn(_ sender: UIButton) {
         guard let vc = BookingDetailsVC.newInstance.self else {return}
         vc.modalPresentationStyle = .overCurrentContext
@@ -285,14 +283,28 @@ class BaggageInfoVC: BaseTableVC, FlightDetailsViewModelProtocal {
         BASE_URL = "https://provabdevelopment.com/babsafar/mobile_webservices/mobile/index.php/flight/"
         payload["search_id"] = defaults.string(forKey: UserDefaultsKeys.searchid)
         payload["selectedResultindex"] = defaults.string(forKey: UserDefaultsKeys.selectedResult)
-        payload["user_id"] = defaults.string(forKey: UserDefaultsKeys.userid)
-        viewmodel?.getFlightDetails(dictParam: payload)
+        payload["user_id"] = defaults.string(forKey: UserDefaultsKeys.userid) ?? "0"
+        
+        viewmodel1?.CALL_GET_FLIGHT_DETAILS_API(dictParam: payload)
+        
+    }
+    
+    
+    func flightDetails(response: FDModel) {
+        print(" ===== flightDetails ===== ")
+        fd = response.flightDetails ?? []
+        
+        DispatchQueue.main.async {[self] in
+            setupItineraryOneWayTVCell()
+        }
     }
     
     
     func flightDetails(response: FlightDetailsModel) {
-        print(response)
+        // print(response)
     }
+    
+    
     
 }
 
@@ -301,7 +313,6 @@ extension BaggageInfoVC {
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let myFooter =  Bundle.main.loadNibNamed("BookNowButtonsTVCell", owner: self, options: nil)?.first as! BookNowButtonsTVCell
-        myFooter.kwdBtn.addTarget(self, action: #selector(didTapOnKWDBtn(_:)), for: .touchUpInside)
         myFooter.bookNowBtn.addTarget(self, action: #selector(didTapOnBookNowBtn(_:)), for: .touchUpInside)
         
         if self.isVCFrom == "BookingDetailsVC" {
@@ -314,3 +325,5 @@ extension BaggageInfoVC {
         return 60
     }
 }
+
+

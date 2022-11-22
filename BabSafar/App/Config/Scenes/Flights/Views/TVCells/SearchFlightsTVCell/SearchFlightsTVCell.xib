@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -44,17 +44,26 @@
                                             <action selector="didTapOnFromCityBtnAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="kdr-Yp-Q7s"/>
                                         </connections>
                                     </button>
+                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hcb-Zs-9jC">
+                                        <rect key="frame" x="16" y="29.5" width="441" height="30.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstItem="8Bc-qf-qAf" firstAttribute="leading" secondItem="IJS-4k-w52" secondAttribute="leading" constant="16" id="AZ5-Dc-tuY"/>
+                                    <constraint firstAttribute="trailing" secondItem="hcb-Zs-9jC" secondAttribute="trailing" constant="16" id="F5W-bW-CqR"/>
+                                    <constraint firstAttribute="bottom" secondItem="hcb-Zs-9jC" secondAttribute="bottom" id="Mon-MP-DmR"/>
+                                    <constraint firstItem="hcb-Zs-9jC" firstAttribute="top" secondItem="sKH-jF-Dii" secondAttribute="bottom" constant="2" id="Qcf-r5-dvM"/>
                                     <constraint firstItem="sKH-jF-Dii" firstAttribute="leading" secondItem="IJS-4k-w52" secondAttribute="leading" constant="16" id="RfW-RR-09X"/>
                                     <constraint firstItem="6dj-PC-Teg" firstAttribute="leading" secondItem="IJS-4k-w52" secondAttribute="leading" id="U9b-qG-3I7"/>
                                     <constraint firstAttribute="trailing" secondItem="6dj-PC-Teg" secondAttribute="trailing" id="V8U-40-9H6"/>
                                     <constraint firstAttribute="trailing" secondItem="sKH-jF-Dii" secondAttribute="trailing" constant="16" id="WA8-hB-XlQ"/>
                                     <constraint firstAttribute="bottom" secondItem="8Bc-qf-qAf" secondAttribute="bottom" constant="7" id="esV-YF-bAL"/>
+                                    <constraint firstItem="hcb-Zs-9jC" firstAttribute="leading" secondItem="IJS-4k-w52" secondAttribute="leading" constant="16" id="gdt-vd-PJT"/>
                                     <constraint firstAttribute="bottom" secondItem="6dj-PC-Teg" secondAttribute="bottom" id="j2L-uI-ddv"/>
-                                    <constraint firstAttribute="height" constant="60" id="jmw-R8-ySt"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="jmw-R8-ySt"/>
                                     <constraint firstItem="6dj-PC-Teg" firstAttribute="top" secondItem="IJS-4k-w52" secondAttribute="top" id="mWn-T1-zdv"/>
                                     <constraint firstItem="8Bc-qf-qAf" firstAttribute="top" secondItem="sKH-jF-Dii" secondAttribute="bottom" constant="5" id="miB-V9-Zjk"/>
                                     <constraint firstItem="sKH-jF-Dii" firstAttribute="top" secondItem="IJS-4k-w52" secondAttribute="top" constant="6" id="mnL-Dq-xVh"/>
@@ -84,6 +93,11 @@
                                             <action selector="didTapOnToCityBtnAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="h4U-1B-oV9"/>
                                         </connections>
                                     </button>
+                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GrZ-or-PFw">
+                                        <rect key="frame" x="16" y="27.5" width="441" height="32.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
@@ -94,10 +108,14 @@
                                     <constraint firstItem="GD5-nc-XFw" firstAttribute="top" secondItem="Ds7-c5-nlZ" secondAttribute="top" id="8oS-OH-Qog"/>
                                     <constraint firstItem="o5p-T5-z2h" firstAttribute="leading" secondItem="Ds7-c5-nlZ" secondAttribute="leading" constant="16" id="BkH-es-L6f"/>
                                     <constraint firstAttribute="bottom" secondItem="fPr-Zj-iLu" secondAttribute="bottom" constant="7" id="Ic2-z1-s58"/>
+                                    <constraint firstItem="GrZ-or-PFw" firstAttribute="leading" secondItem="Ds7-c5-nlZ" secondAttribute="leading" constant="16" id="M64-g6-cFJ"/>
                                     <constraint firstAttribute="trailing" secondItem="fPr-Zj-iLu" secondAttribute="trailing" constant="16" id="MzD-qS-mP8"/>
                                     <constraint firstAttribute="trailing" secondItem="GD5-nc-XFw" secondAttribute="trailing" id="Xzf-Jh-KWq"/>
                                     <constraint firstAttribute="bottom" secondItem="GD5-nc-XFw" secondAttribute="bottom" id="ah5-Yp-LIZ"/>
                                     <constraint firstAttribute="height" constant="60" id="daD-sl-9Vj"/>
+                                    <constraint firstAttribute="trailing" secondItem="GrZ-or-PFw" secondAttribute="trailing" constant="16" id="eXf-Mh-pT2"/>
+                                    <constraint firstItem="GrZ-or-PFw" firstAttribute="top" secondItem="o5p-T5-z2h" secondAttribute="bottom" id="kWj-mo-Csd"/>
+                                    <constraint firstAttribute="bottom" secondItem="GrZ-or-PFw" secondAttribute="bottom" id="klH-eF-jTC"/>
                                     <constraint firstItem="GD5-nc-XFw" firstAttribute="leading" secondItem="Ds7-c5-nlZ" secondAttribute="leading" id="yQA-wh-XYu"/>
                                 </constraints>
                             </view>
@@ -636,7 +654,9 @@
                 <outlet property="economyValuelbl" destination="HIU-Rr-y8T" id="BJk-Bn-C1w"/>
                 <outlet property="economyView" destination="qPo-30-jVV" id="aFD-oV-0Nj"/>
                 <outlet property="economylbl" destination="vE1-Cn-vbP" id="zqv-72-T8Z"/>
+                <outlet property="fromBtn" destination="6dj-PC-Teg" id="T5D-IW-wa5"/>
                 <outlet property="fromCitylbl" destination="8Bc-qf-qAf" id="h4h-Zp-Lg4"/>
+                <outlet property="fromTF" destination="hcb-Zs-9jC" id="eMg-70-UZK"/>
                 <outlet property="fromView" destination="IJS-4k-w52" id="QeX-JO-E2V"/>
                 <outlet property="fromlbl" destination="sKH-jF-Dii" id="ZCH-Qb-0Qq"/>
                 <outlet property="holderView" destination="Of6-l3-gef" id="r31-mH-nn5"/>
@@ -666,7 +686,9 @@
                 <outlet property="timeReturnJourneyValuelbl" destination="c1B-Pu-25g" id="nBw-1M-nLd"/>
                 <outlet property="timeReturnJourneyView" destination="UEF-gD-Ja4" id="TJ6-jo-Q5c"/>
                 <outlet property="timeReturnJourneylbl" destination="uvi-Hz-EkH" id="Fnv-Wu-BUG"/>
+                <outlet property="toBtn" destination="GD5-nc-XFw" id="yvZ-2b-6yZ"/>
                 <outlet property="toCitylbl" destination="fPr-Zj-iLu" id="SJ3-a4-qLL"/>
+                <outlet property="toTF" destination="GrZ-or-PFw" id="96I-Zy-Qoo"/>
                 <outlet property="toView" destination="Ds7-c5-nlZ" id="HOl-Uh-fWI"/>
                 <outlet property="tolbl" destination="o5p-T5-z2h" id="idx-d5-tmJ"/>
             </connections>

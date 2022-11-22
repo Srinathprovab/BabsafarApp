@@ -360,6 +360,11 @@ extension BaseTableVC: UITableViewDataSource {
                 let cell: ItineraryTVCell = commonTV.dequeTVCell(indexPath: indexPath)
                 commonCell = cell
                 
+                
+            case .ItineraryAddTVCell:
+                let cell: ItineraryAddTVCell = commonTV.dequeTVCell(indexPath: indexPath)
+                commonCell = cell
+                
             case .FareRulesTVCell:
                 let cell: FareRulesTVCell = commonTV.dequeTVCell(indexPath: indexPath)
                 commonCell = cell
@@ -633,6 +638,16 @@ extension UITableView {
         let className = String(describing: T.self)
         guard let cell = dequeueReusableCell(withIdentifier: className) as? T  else { fatalError("Couldn’t get cell with identifier \(className)") }
         return cell
+    }
+    
+    
+    
+    func isLast(for indexPath: IndexPath) -> Bool {
+        
+        let indexOfLastSection = numberOfSections > 0 ? numberOfSections - 1 : 0
+        let indexOfLastRowInLastSection = numberOfRows(inSection: indexOfLastSection) - 1
+        
+        return indexPath.section == indexOfLastSection && indexPath.row == indexOfLastRowInLastSection
     }
     
 }

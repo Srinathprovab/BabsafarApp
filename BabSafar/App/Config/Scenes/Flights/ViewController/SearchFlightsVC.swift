@@ -45,15 +45,15 @@ class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
     var selectArray = [String]()
     var selectArray1 = [String]()
     var FlightList :[[J_flight_list]]?
- //   var RTFlightList :[[RTJ_flight_list]]?
+    var RTFlightList :[[RTJ_flight_list]]?
     var MCJflightlist :[MCJ_flight_list]?
-
+   
     var moreoptionBool = true
     
     
     
     override func viewWillAppear(_ animated: Bool) {
-        
+      //  CallShowCityListAPI(str: "")
         
         NotificationCenter.default.addObserver(self, selector: #selector(reload(notification:)), name: NSNotification.Name("reload"), object: nil)
         
@@ -82,7 +82,6 @@ class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
         setupUI()
         setupTV()
         viewModel = FlightListViewModel(self)
-        
     }
     
     func setupUI() {
@@ -436,13 +435,9 @@ class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
                     payload["psscarrier"] = "ALL"
                     payload["search_flight"] = "Search"
                     payload["user_id"] = defaults.string(forKey:UserDefaultsKeys.userid) ?? "0"
-        
-                    
-                    viewModel?.CallSearchFlightAPI(dictParam: payload)
-                   // viewModel?.CallRoundTRipSearchFlightAPI(dictParam: payload)
-                   
-                    
-                    
+    
+                    viewModel?.CallRoundTRipSearchFlightAPI(dictParam: payload)
+                
                 }
                 
                 
@@ -465,8 +460,8 @@ class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
     
     func roundTripflightList(response: RoundTripModel) {
         if response.status == 1 {
-//            RTFlightList = response.data?.j_flight_list
-//            defaults.set(response.data?.search_id, forKey: UserDefaultsKeys.searchid)
+            RTFlightList = response.data?.j_flight_list
+            defaults.set(response.data?.search_id, forKey: UserDefaultsKeys.searchid)
             gotoSearchFlightResultVC()
         }
     }
@@ -475,20 +470,17 @@ class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
         guard let vc = SearchFlightResultVC.newInstance.self else {return}
         vc.modalPresentationStyle = .fullScreen
         vc.FlightList = self.FlightList
-      //  vc.RTFlightList = self.RTFlightList
+        vc.RTFlightList = self.RTFlightList
         vc.MCJflightlist = self.MCJflightlist
         self.present(vc, animated: true)
     }
     
     
     override func btnAction(cell: ButtonTVCell) {
-        //   gotoSearchFlightResultVC()
+      
         
         payload["sector_type"] = "international"
         payload["trip_type"] = "multicity"
-        
-        
-        
         payload["from"] = fromCityArray
         payload["from_loc_id"] = fromlocidArray
         payload["to"] = toCityArray
@@ -536,4 +528,8 @@ class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
     }
     
     
+    
+    
+    
+   
 }

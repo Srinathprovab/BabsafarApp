@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import MobileCoreServices
+
 
 class EditProfileVC: BaseTableVC {
     
@@ -32,6 +34,12 @@ class EditProfileVC: BaseTableVC {
     var mobile = String()
     var email = String()
     var pass = String()
+    
+    var fileName = String()
+    var fileType = String()
+    var fileData = Data()
+    var yourimageView = UIImage()
+    var imgUrl = NSURL()
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -189,9 +197,43 @@ extension EditProfileVC:UIImagePickerControllerDelegate & UINavigationController
         }
     }
     
+    
+    func openCamera() {
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.camera) {
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+            imagePicker.sourceType = UIImagePickerController.SourceType.camera;
+            imagePicker.allowsEditing = false
+            imagePicker.mediaTypes = [(kUTTypePNG as String), (kUTTypeJPEG as String), (kUTTypeImage as String)] // This is an array - you can add other format Strings as well
+            self.present(imagePicker, animated: true, completion: nil)
+        }else {
+            let alert  = UIAlertController(title: "Warning", message: "You don't have camera.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+    
+    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let pickedImage = info[.originalImage] as? UIImage {
-            profileImg.image = pickedImage
+            self.profileImg.image = pickedImage
+        }
+        
+        if let url = info[UIImagePickerController.InfoKey.imageURL] as? URL {
+            fileName = url.lastPathComponent
+            fileType = url.pathExtension
+            imgUrl = url as NSURL
+            
+            defaults.set(fileName, forKey: "fileName")
+            defaults.set(fileType, forKey: "fileType")
+            // defaults.set(imgUrl, forKey: "imgUrl")
+            
+            
+            
+            print(imgUrl)
+            print(fileName)
+            print(fileType)
+            
         }
         picker.dismiss(animated: true, completion: nil)
     }

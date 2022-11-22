@@ -40,10 +40,6 @@ class SpecialDealsTVCell: TableViewCell {
         
         
         bookingHolderView.backgroundColor = .WhiteColor
-        bookingHolderView.layer.cornerRadius = 4
-        bookingHolderView.clipsToBounds = true
-        bookingHolderView.layer.borderWidth = 1
-        bookingHolderView.layer.borderColor = UIColor.black.withAlphaComponent(0.3).cgColor
         setuplabels(lbl: titlelbl, text: "Special Deals For You", textcolor: .AppLabelColor, font: .LatoSemibold(size: 20), align: .left)
         
     }
@@ -55,15 +51,15 @@ class SpecialDealsTVCell: TableViewCell {
         specialDealsCV.delegate = self
         specialDealsCV.dataSource = self
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 360, height: 199)
+        layout.itemSize = CGSize(width: 340, height: 199)
         layout.scrollDirection = .horizontal
         layout.minimumInteritemSpacing = 16
         layout.minimumLineSpacing = 16
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         specialDealsCV.collectionViewLayout = layout
         specialDealsCV.backgroundColor = .clear
-        specialDealsCV.layer.cornerRadius = 4
-        specialDealsCV.clipsToBounds = true
+//        specialDealsCV.layer.cornerRadius = 4
+//        specialDealsCV.clipsToBounds = true
         specialDealsCV.showsHorizontalScrollIndicator = false
     }
     

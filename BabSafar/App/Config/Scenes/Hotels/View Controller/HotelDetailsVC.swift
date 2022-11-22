@@ -65,10 +65,7 @@ class HotelDetailsVC: BaseTableVC {
     
     
     
-    
-    @objc func didTapOnKWDBtn(_ sender: UIButton) {
-        print("didTapOnKWDBtn")
-    }
+  
     
     @objc func didTapOnBookNowBtn(_ sender: UIButton) {
         guard let vc = AddContactAndGuestDetailsVC.newInstance.self else {return}
@@ -98,7 +95,6 @@ extension HotelDetailsVC {
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let myFooter =  Bundle.main.loadNibNamed("BookNowButtonsTVCell", owner: self, options: nil)?.first as! BookNowButtonsTVCell
-        myFooter.kwdBtn.addTarget(self, action: #selector(didTapOnKWDBtn(_:)), for: .touchUpInside)
         myFooter.bookNowBtn.addTarget(self, action: #selector(didTapOnBookNowBtn(_:)), for: .touchUpInside)
         return myFooter
     }

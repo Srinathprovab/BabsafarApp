@@ -58,7 +58,7 @@ class LoginVC: BaseTableVC, RegisterViewModelProtocal {
         tablerow.append(TableRow(height:20,cellType:.EmptyTVCell))
         tablerow.append(TableRow(key:"showbtn",cellType:.LabelTVCell))
         tablerow.append(TableRow(cellType:.LoignOrSignupBtnsTVCell))
-        tablerow.append(TableRow(title:"Email address",key: "email", text: "1", tempText: "Email ID",cellType:.TextfieldTVCell))
+        tablerow.append(TableRow(title:"Email address",key: "email", text: "11", tempText: "Email ID",cellType:.TextfieldTVCell))
         tablerow.append(TableRow(title:"Password",key: "pwd", text: "2", tempText: "Password",cellType:.TextfieldTVCell))
         tablerow.append(TableRow(title:"Log In",cellType:.ButtonTVCell))
         tablerow.append(TableRow(cellType:.UnderLineTVCell))
@@ -78,8 +78,8 @@ class LoginVC: BaseTableVC, RegisterViewModelProtocal {
         tablerow.append(TableRow(cellType:.LoignOrSignupBtnsTVCell))
         tablerow.append(TableRow(title:"First Name",key: "signup", text: "1", tempText: "First Name",cellType:.TextfieldTVCell))
         tablerow.append(TableRow(title:"Last Name",key: "signup", text: "2", tempText: "Last Name",cellType:.TextfieldTVCell))
-        tablerow.append(TableRow(title:"Mobile Number",key: "signup", text: "3", tempText: "+961",cellType:.TextfieldTVCell))
-        tablerow.append(TableRow(title:"Email address",key: "signup", text: "4", tempText: "Address",cellType:.TextfieldTVCell))
+        tablerow.append(TableRow(title:"Mobile Number",key: "signup", text: "12", tempText: "+961",cellType:.TextfieldTVCell))
+        tablerow.append(TableRow(title:"Email address",key: "signup", text: "11", tempText: "Address",cellType:.TextfieldTVCell))
         tablerow.append(TableRow(title:"Password",key: "signuppwd", text: "5", tempText: "Password",cellType:.TextfieldTVCell))
         tablerow.append(TableRow(title:"Conform Password",key: "signuppwd", text: "6", tempText: "Password",cellType:.TextfieldTVCell))
         tablerow.append(TableRow(title:"Sign Up",cellType:.ButtonTVCell))
@@ -93,7 +93,8 @@ class LoginVC: BaseTableVC, RegisterViewModelProtocal {
     
     
     override func didTapOnCloseBtn(cell: LabelTVCell) {
-        dismiss(animated: true)
+        //dismiss(animated: true)
+        self.presentingViewController?.presentingViewController?.dismiss(animated: true)
     }
     override func didTapOnGoogleBtn(cell: SignUpWithTVCell) {
         print("didTapOnGoogleBtn")
@@ -110,9 +111,9 @@ class LoginVC: BaseTableVC, RegisterViewModelProtocal {
             }else if email == "" {
                 showToast(message: "Enter Email")
             }
-            //            else if email.isValidEmail == false {
-            //                showToast(message: "Enter Valid Email ID")
-            //            }
+            else if email.isValidEmail == false {
+                showToast(message: "Enter Valid Email ID")
+            }
             else if pass == "" {
                 showToast(message: "Enter Password")
             }else if cpass == "" {
@@ -122,14 +123,14 @@ class LoginVC: BaseTableVC, RegisterViewModelProtocal {
             }else {
                 print("call register api")
                 
+                BASE_URL = "https://provabdevelopment.com/babsafar/mobile_webservices/mobile/index.php/auth/"
                 payload["first_name"] = fname
                 payload["last_name"] = lname
                 payload["email"] = email
-                payload["phone"] = mobile
                 payload["password"] = pass
-                payload["about_us"] = "Checking"
-                payload["tc"] = "on"
-                payload["register_subscription"] = "on"
+                payload["phone"] = mobile
+                
+
                 regViewModel?.CallRegisterAPI(dictParam: payload)
                 
             }
@@ -142,6 +143,8 @@ class LoginVC: BaseTableVC, RegisterViewModelProtocal {
             }else if password == "" {
                 showToast(message: "Enter Password")
             }else {
+                
+                BASE_URL = "https://provabdevelopment.com/babsafar/mobile_webservices/mobile/index.php/auth/"
                 payload["username"] = uname
                 payload["password"] = password
                 regViewModel?.CallLoginAPI(dictParam: payload)
@@ -171,11 +174,11 @@ class LoginVC: BaseTableVC, RegisterViewModelProtocal {
                 lname = tf.text ?? ""
                 break
                 
-            case 4:
+            case 11:
                 email = tf.text ?? ""
                 break
                 
-            case 3:
+            case 12:
                 mobile = tf.text ?? ""
                 break
                 
@@ -191,7 +194,7 @@ class LoginVC: BaseTableVC, RegisterViewModelProtocal {
             }
         }else {
             switch tf.tag {
-            case 1:
+            case 11:
                 uname = tf.text ?? ""
                 break
                 
@@ -252,14 +255,30 @@ class LoginVC: BaseTableVC, RegisterViewModelProtocal {
         }else {
             
             defaults.set(true, forKey: UserDefaultsKeys.userLoggedIn)
-            defaults.set("2260", forKey: UserDefaultsKeys.userid)
-            print(response.user_id)
+            defaults.set(response.user_id, forKey: UserDefaultsKeys.userid)
+            let seconds = 2.0
+            DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {[self] in
+                self.presentingViewController?.presentingViewController?.dismiss(animated: true)
+            }
         }
     }
     
     func RegisterDetails(response: RegisterModel) {
         print(response)
-        showToast(message: "Register Sucess")
+        
+     
+        if response.status == false {
+            showToast(message: response.msg ?? "")
+        }else {
+            showToast(message: "Register Sucess")
+            defaults.set(response.data?.user_id, forKey: UserDefaultsKeys.userid)
+            let seconds = 2.0
+            DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {[self] in
+                self.presentingViewController?.presentingViewController?.dismiss(animated: true)
+            }
+        }
+     
+       
     }
     
     
