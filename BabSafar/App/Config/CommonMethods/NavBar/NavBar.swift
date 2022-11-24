@@ -150,6 +150,7 @@ class NavBar: UIView {
         setupLabels(lbl: lblVisa, text: "Visa", textcolor: .WhiteColor, font: .LatoRegular(size: 14))
         
         contentView.bringSubviewToFront(mainTabBtnsView)
+        editBtn.addTarget(self, action: #selector(didTapOnEditButton(_:)), for: .touchUpInside)
     }
     
     
@@ -166,6 +167,11 @@ class NavBar: UIView {
         lbl.textColor = textcolor
         lbl.font = font
     }
+    
+    @objc func didTapOnEditButton(_ sender:UIButton){
+        print("didTapOnEditButton ==== ")
+    }
+    
     
     @IBAction func didTapOnBackBtn(_ sender: Any) {
         

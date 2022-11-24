@@ -7,6 +7,9 @@
 
 import UIKit
 import MobileCoreServices
+import Alamofire
+
+
 
 class MyAccountVC: BaseTableVC, ProfileDetailsViewModelDelegate {
     
@@ -225,67 +228,6 @@ class MyAccountVC: BaseTableVC, ProfileDetailsViewModelDelegate {
             break
         }
     }
-    override func btnAction(cell: ButtonTVCell) {
-        if gender == "" {
-            showToast(message: "Enter Gender")
-        }else if fname == "" {
-            showToast(message: "Enter First Name")
-        }else if lname == "" {
-            showToast(message: "Enter Last Name")
-        }else if mobile == "" {
-            showToast(message: "Enter Mobile Number")
-        }else if email == "" {
-            showToast(message: "Enter Email")
-        }else if email.isValidEmail == false {
-            showToast(message: "Enter Valid Email")
-        }else if address.isEmpty == true {
-            showToast(message: "Enter Address")
-        }else if countryname.isEmpty == true {
-            showToast(message: "Enter Country Name")
-        }else if statename.isEmpty == true {
-            showToast(message: "State Name")
-        }else if cityname.isEmpty == true {
-            showToast(message: "City Name")
-        }else if pincode.isEmpty == true {
-            showToast(message: "Enter PinCode")
-        }else if dob.isEmpty == true {
-            showToast(message: "Enter Date Of Birth")
-        }
-       
-        
-        else {
-            
-            BASE_URL = "https://provabdevelopment.com/babsafar/mobile_webservices/mobile/index.php/user/"
-            payload["user_id"] = "2075"
-            payload["first_name"] = fname
-            payload["last_name"] = lname
-            payload["phone"] = mobile
-            payload["email"] = email
-            payload["address"] = address
-            payload["address2"] = address1
-            payload["country_name"] = countryname
-            payload["state_name"] = statename
-            payload["city_name"] = cityname
-            payload["pin_code"] = pincode
-            payload["date_of_birth"] = dob
-            payload["gender"] = gender
-            viewmodel?.UpdateProfileDetails(dictParam: payload)
-            
-        }
-    }
-    
-    func updateProfileDetails(response: ProfileDetailsModel) {
-        pdetails = response.data
-        showToast(message: response.msg ?? "")
-        
-        let seconds = 1.0
-        DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
-            self.showKey = "profile"
-            self.appendProfileTvcells(str: "profile")
-        }
-    }
-    
-    
     
     
     override func didSelectMaleRadioBtn(cell: SelectGenderTVCell) {
@@ -332,6 +274,114 @@ class MyAccountVC: BaseTableVC, ProfileDetailsViewModelDelegate {
         self.view.endEditing(true)
     }
     
+    
+    
+    override func btnAction(cell: ButtonTVCell) {
+        if gender == "" {
+            showToast(message: "Enter Gender")
+        }else if fname == "" {
+            showToast(message: "Enter First Name")
+        }else if lname == "" {
+            showToast(message: "Enter Last Name")
+        }else if mobile == "" {
+            showToast(message: "Enter Mobile Number")
+        }else if email == "" {
+            showToast(message: "Enter Email")
+        }else if email.isValidEmail == false {
+            showToast(message: "Enter Valid Email")
+        }else if address.isEmpty == true {
+            showToast(message: "Enter Address")
+        }else if countryname.isEmpty == true {
+            showToast(message: "Enter Country Name")
+        }else if statename.isEmpty == true {
+            showToast(message: "State Name")
+        }else if cityname.isEmpty == true {
+            showToast(message: "City Name")
+        }else if pincode.isEmpty == true {
+            showToast(message: "Enter PinCode")
+        }else if dob.isEmpty == true {
+            showToast(message: "Enter Date Of Birth")
+        }
+       
+        
+        else {
+            
+            BASE_URL = "https://provabdevelopment.com/babsafar/mobile_webservices/mobile/index.php/user/"
+            payload["user_id"] = "2075"
+            payload["first_name"] = fname
+            payload["last_name"] = lname
+            payload["phone"] = mobile
+            payload["email"] = email
+            payload["address"] = address
+            payload["address2"] = address1
+            payload["country_name"] = countryname
+            payload["state_name"] = statename
+            payload["city_name"] = cityname
+            payload["pin_code"] = pincode
+            payload["date_of_birth"] = dob
+            payload["gender"] = gender
+            
+            viewmodel?.UpdateProfileDetails(dictParam: payload)
+         //   callUpdateProfileAPI()
+        }
+    }
+    
+    
+    func updateProfileDetails(response: ProfileDetailsModel) {
+        pdetails = response.data
+        showToast(message: response.msg ?? "")
+        
+        let seconds = 1.0
+        DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
+            self.showKey = "profile"
+            self.appendProfileTvcells(str: "profile")
+        }
+    }
+    
+    
+    func callUpdateProfileAPI() {
+        
+        
+        
+        self.viewmodel?.view.showLoader()
+        
+        AF.upload(multipartFormData: { MultipartFormData  in
+            
+            
+            
+            MultipartFormData.append((self.profileImg.image ?? UIImage()).jpegData(compressionQuality: 0.1)!, withName: "image" , fileName: self.fileName, mimeType: self.fileType)
+            
+            for(key,value) in self.payload{
+                
+                MultipartFormData.append((value as AnyObject).data(using: String.Encoding.utf8.rawValue)!, withName: key)}
+            
+        }, to: "https://provabdevelopment.com/alghanim_new/mobile_webservices/mobile/index.php/user/\(ApiEndpoints.mobileprofile)").responseDecodable(of: ProfileDetailsModel.self){ resp in
+            
+            switch resp.result{
+            case let .success(data):
+                print("AF.upload ===== >")
+               
+               
+                self.pdetails = data.data
+                self.showToast(message: data.msg ?? "")
+                
+                let seconds = 1.0
+                DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
+                    self.showKey = "profile"
+                    self.appendProfileTvcells(str: "profile")
+                }
+                
+                
+                break
+                
+            case .failure(let encodingError):
+                self.viewmodel?.view.hideLoader()
+                print("ERROR RESPONSE: \(encodingError)")
+                
+            }
+            
+        }
+    }
 }
 
 
