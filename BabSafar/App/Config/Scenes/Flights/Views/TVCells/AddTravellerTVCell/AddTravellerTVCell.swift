@@ -34,8 +34,6 @@ class AddTravellerTVCell: TableViewCell {
     @IBOutlet weak var totalNoOfTravellerlbl: UILabel!
     @IBOutlet weak var addAdultTV: UITableView!
     @IBOutlet weak var adultTVHeight: NSLayoutConstraint!
-    
-    
     @IBOutlet weak var addChildTV: UITableView!
     @IBOutlet weak var addChildTVHeight: NSLayoutConstraint!
     var delegate:AddTravellerTVCellDelegate?
@@ -111,7 +109,7 @@ class AddTravellerTVCell: TableViewCell {
         setupLabels(lbl: childlbl, text: "Child", textcolor: .AppLabelColor, font: .LatoRegular(size: 14))
         setupLabels(lbl: addlbl, text: "+ Add", textcolor: .AppLabelColor, font: .LatoRegular(size: 14))
         setupLabels(lbl: addchildlbl, text: "+ Add", textcolor: .AppLabelColor, font: .LatoRegular(size: 14))
-        setupLabels(lbl: totalNoOfTravellerlbl, text: "Total No Of  Tra : 2", textcolor: .AppCalenderDateSelectColor, font: .LatoRegular(size: 12))
+        setupLabels(lbl: totalNoOfTravellerlbl, text: "Total No Of  Tra : \(defaults.string(forKey: UserDefaultsKeys.totalTravellerCount) ?? "0")", textcolor: .AppCalenderDateSelectColor, font: .LatoRegular(size: 12))
         
         addAdultBtn.setTitle("", for: .normal)
         addChildBtn.setTitle("", for: .normal)

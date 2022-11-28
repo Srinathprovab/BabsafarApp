@@ -67,6 +67,7 @@ class RoundTripFlightResultTVCell: TableViewCell {
         roundTripTV.layer.borderWidth = 1
         roundTripTV.layer.borderColor = UIColor.lightGray.withAlphaComponent(0.5).cgColor
         roundTripTV.separatorStyle = .none
+        roundTripTV.isScrollEnabled = false
     }
     
     func gotoRoundTripBaggageIntoVC() {

@@ -240,6 +240,7 @@ class SearchFlightResultVC: BaseTableVC {
         
         MCJflightlist?.forEach({ k in
             tablerow.append(TableRow(title:k.totalPrice_API,
+                                 //    subTitle:k.booking_source,
                                      headerText:k.totalPrice,
                                      //  errormsg:String(k.mc0.?.flight_details?.summary?.first?.seatsRemaining ?? "0"),
                                      // isOptional: k.refundable ?? "",
@@ -313,6 +314,7 @@ class SearchFlightResultVC: BaseTableVC {
     
     
     override func gotoRoundTripBaggageIntoVC(cell: MultiCityTripFlightResultTVCell) {
+        defaults.set(cell.selectedResult, forKey: UserDefaultsKeys.selectedResult)
         gotoBaggageInfoVC()
     }
     

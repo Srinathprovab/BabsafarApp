@@ -256,7 +256,7 @@ class LoginVC: BaseTableVC, RegisterViewModelProtocal {
             
             defaults.set(true, forKey: UserDefaultsKeys.userLoggedIn)
             defaults.set(response.user_id, forKey: UserDefaultsKeys.userid)
-            let seconds = 2.0
+            let seconds = 0.50
             DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {[self] in
                 self.presentingViewController?.presentingViewController?.dismiss(animated: true)
             }
@@ -272,7 +272,7 @@ class LoginVC: BaseTableVC, RegisterViewModelProtocal {
         }else {
             showToast(message: "Register Sucess")
             defaults.set(response.data?.user_id, forKey: UserDefaultsKeys.userid)
-            let seconds = 2.0
+            let seconds = 0.50
             DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {[self] in
                 self.presentingViewController?.presentingViewController?.dismiss(animated: true)
             }

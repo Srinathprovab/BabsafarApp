@@ -39,7 +39,6 @@ class DashBoardVC: BaseTableVC, TopFlightDetailsViewModelDelegate {
             case "Flights":
                 DispatchQueue.main.async {[self] in
                     callTopFlightsHotelsDetailsAPI()
-                    
                 }
                 break
                 
@@ -62,11 +61,16 @@ class DashBoardVC: BaseTableVC, TopFlightDetailsViewModelDelegate {
             tabSelectCV.selectItem(at: IndexPath(item: 0, section: 0), animated: true, scrollPosition: .left)
             defaults.set("oneway", forKey: UserDefaultsKeys.journeyType)
             defaults.set(0, forKey: UserDefaultsKeys.journeyTypeSelectedIndex)
+            defaults.set("English", forKey: UserDefaultsKeys.APICurrencyType)
+            defaults.set("English", forKey: UserDefaultsKeys.APILanguageType)
+            langLabel.text = "EN"
             
             UserDefaults.standard.set(true, forKey: "ExecuteOnce")
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(reload(notification:)), name: Notification.Name("reload"), object: nil)
+        
+        
     }
     
     
@@ -74,9 +78,9 @@ class DashBoardVC: BaseTableVC, TopFlightDetailsViewModelDelegate {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        setupUI()
+       
         setupCV()
-        
+        setupUI()
         viewmodel = TopFlightDetailsViewModel(self)
     }
     
@@ -95,7 +99,7 @@ class DashBoardVC: BaseTableVC, TopFlightDetailsViewModelDelegate {
         tabSelectCV.backgroundColor = .clear
         langLeftImage.image = UIImage(named: "lang")
         langDropdownImage.image = UIImage(named: "downarrow")?.withRenderingMode(.alwaysOriginal).withTintColor(.WhiteColor)
-        setuplabels(lbl: langLabel, text: "EN", textcolor: .WhiteColor, font: .LatoSemibold(size: 14), align: .center)
+        setuplabels(lbl: langLabel, text: defaults.string(forKey: UserDefaultsKeys.APILanguageType) ?? "", textcolor: .WhiteColor, font: .LatoSemibold(size: 14), align: .center)
         setuplabels(lbl: titleLabel, text: "Search for flights toanywhere.", textcolor: .WhiteColor, font: .LatoRegular(size: 22), align: .left)
         
         

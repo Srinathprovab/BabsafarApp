@@ -29,6 +29,7 @@ class SelectLanguageVC: BaseTableVC {
         return vc
     }
     var tablerow = [TableRow]()
+    var onTap = "lang"
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -86,8 +87,8 @@ class SelectLanguageVC: BaseTableVC {
     
     func setupCurencyTVCell() {
         tablerow.removeAll()
-        tablerow.append(TableRow(title:"English",subTitle: "$",key:"lang1",cellType: .SelectLanguageTVCell))
-        tablerow.append(TableRow(title:"Arabic",subTitle: "KWD",key:"lang1",cellType: .SelectLanguageTVCell))
+        tablerow.append(TableRow(title:"English",subTitle: "$",key:"currency",cellType: .SelectLanguageTVCell))
+        tablerow.append(TableRow(title:"Arabic",subTitle: "KWD",key:"currency",cellType: .SelectLanguageTVCell))
         commonTVData = tablerow
         commonTableView.reloadData()
     }
@@ -99,29 +100,76 @@ class SelectLanguageVC: BaseTableVC {
     
     
     @IBAction func didTapOnLanguageBtn(_ sender: Any) {
+        onTap = "lang"
         langlbl.textColor = .AppTabSelectColor
         langUL.backgroundColor = .AppTabSelectColor
         
         currencylbl.textColor = .AppLabelColor
         currencyUL.backgroundColor = .WhiteColor
         
-        setuplanguageTVCell()
+        
+        DispatchQueue.main.async {
+            self.setuplanguageTVCell()
+        }
     }
     
     
     @IBAction func didTapOncurrencBtn(_ sender: Any) {
+        onTap = "currency"
         langlbl.textColor = .AppLabelColor
         langUL.backgroundColor = .WhiteColor
         
         currencylbl.textColor = .AppTabSelectColor
         currencyUL.backgroundColor = .AppTabSelectColor
-        setupCurencyTVCell()
+       
+        DispatchQueue.main.async {
+            self.setupCurencyTVCell()
+        }
     }
     
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath) as? SelectLanguageTVCell {
             cell.holderView.layer.borderColor = UIColor.AppBtnColor.cgColor
+            
+            if onTap == "currency" {
+                defaults.set(cell.subTitlelbl.text, forKey: UserDefaultsKeys.selectedCurrency)
+                
+                switch cell.titlelbl.text {
+                case "English":
+                    defaults.set("$", forKey: UserDefaultsKeys.APICurrencyType)
+                    break
+                    
+            
+                case "Arabic":
+                    defaults.set("KWD", forKey: UserDefaultsKeys.APICurrencyType)
+                    break
+                    
+                    
+                default:
+                    break
+                }
+            }else {
+                
+                defaults.set(cell.titlelbl.text, forKey: UserDefaultsKeys.selectedLang)
+                
+                switch cell.titlelbl.text {
+                case "English":
+                    defaults.set("EN", forKey: UserDefaultsKeys.APILanguageType)
+                    break
+                    
+            
+                case "Arabic":
+                    defaults.set("AR", forKey: UserDefaultsKeys.APILanguageType)
+                    break
+                    
+                    
+                default:
+                    break
+                }
+            }
+            
+            gotoHome()
         }
     }
     
@@ -133,5 +181,12 @@ class SelectLanguageVC: BaseTableVC {
         }
     }
     
+    
+    func gotoHome(){
+        guard let vc = DashBoaardTabbarVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .fullScreen
+        vc.selectedIndex = 0
+        self.present(vc, animated: false)
+    }
     
 }

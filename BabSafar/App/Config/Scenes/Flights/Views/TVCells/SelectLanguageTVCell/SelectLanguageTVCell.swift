@@ -38,12 +38,28 @@ class SelectLanguageTVCell: TableViewCell {
         langLogoImg.isHidden = true
 
         if cellInfo?.key == "lang" {
+            
             subTitlelbl.isHidden = true
             langLogoImg.isHidden = false
+            
+            if let lang = defaults.string(forKey: UserDefaultsKeys.selectedLang) {
+                if lang == titlelbl.text {
+                    self.holderView.layer.borderColor = UIColor.AppBtnColor.cgColor
+                }
+            }
+            
+            
         }else {
             subTitlelbl.isHidden = false
             langLogoImg.isHidden = true
+            
+            if let currency = defaults.string(forKey: UserDefaultsKeys.selectedCurrency) {
+                if currency == subTitlelbl.text {
+                    self.holderView.layer.borderColor = UIColor.AppBtnColor.cgColor
+                }
+            }
         }
+        
     }
     
     func setupUI() {

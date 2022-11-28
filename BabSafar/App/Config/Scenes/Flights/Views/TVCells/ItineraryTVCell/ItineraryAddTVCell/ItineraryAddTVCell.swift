@@ -14,7 +14,7 @@ class ItineraryAddTVCell: TableViewCell {
     @IBOutlet weak var additneraryTV: UITableView!
     @IBOutlet weak var tvHeight: NSLayoutConstraint!
     
-    
+    var fdetais = [FDFlightDetails]()
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -27,10 +27,10 @@ class ItineraryAddTVCell: TableViewCell {
         // Configure the view for the selected state
     }
     
-    var fdetais = [FDFlightDetails]()
+   
     override func updateUI() {
         fdetais = cellInfo?.moreData as! [FDFlightDetails]
-        tvHeight.constant = CGFloat((fdetais.count * 280))
+        tvHeight.constant = CGFloat((fdetais.count * 295))
         additneraryTV.reloadData()
     }
     
@@ -67,7 +67,6 @@ extension ItineraryAddTVCell:UITableViewDelegate,UITableViewDataSource {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as? ItineraryTVCell {
             
             let data = fdetais[indexPath.row]
-            
             cell.title1lbl.text = "\(data.operator_name ?? "") (\(data.operator_code ?? "") \(data.flight_number ?? ""))"
             cell.cityTolbl.text = "\(data.origin?.city ?? "") to \(data.destination?.city ?? "") (\(data.duration ?? ""))"
             cell.arivalTime.text = "\(data.origin?.time ?? "")"
@@ -84,8 +83,8 @@ extension ItineraryAddTVCell:UITableViewDelegate,UITableViewDataSource {
             if tableView.isLast(for: indexPath) {
                 print(indexPath.row)
                 cell.timeView.isHidden = true
+              
             }
-            
             
             
             c = cell

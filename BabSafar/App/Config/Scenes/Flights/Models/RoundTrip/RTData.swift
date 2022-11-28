@@ -14,8 +14,8 @@ struct RTData : Codable {
     //  let attr : Attr?
     let search_id : Int?
     //    let booking_url : String?
-    //    let booking_source_key : String?
-    //    let booking_source : String?
+    let booking_source_key : String?
+    let booking_source : String?
     let j_flight_list : [[RTJ_flight_list]]?
     //    let journey_id : Int?
     //    let pxtrip_type : String?
@@ -27,8 +27,8 @@ struct RTData : Codable {
         //     case attr = "attr"
         case search_id = "search_id"
         //        case booking_url = "booking_url"
-        //        case booking_source_key = "booking_source_key"
-        //        case booking_source = "booking_source"
+        case booking_source_key = "booking_source_key"
+        case booking_source = "booking_source"
         case j_flight_list = "j_flight_list"
         //        case journey_id = "journey_id"
         //        case pxtrip_type = "pxtrip_type"
@@ -41,8 +41,8 @@ struct RTData : Codable {
         //        attr = try values.decodeIfPresent(Attr.self, forKey: .attr)
         search_id = try values.decodeIfPresent(Int.self, forKey: .search_id)
         //        booking_url = try values.decodeIfPresent(String.self, forKey: .booking_url)
-        //        booking_source_key = try values.decodeIfPresent(String.self, forKey: .booking_source_key)
-        //        booking_source = try values.decodeIfPresent(String.self, forKey: .booking_source)
+        booking_source_key = try values.decodeIfPresent(String.self, forKey: .booking_source_key)
+        booking_source = try values.decodeIfPresent(String.self, forKey: .booking_source)
         j_flight_list = try values.decodeIfPresent([[RTJ_flight_list]].self, forKey: .j_flight_list)
         //        journey_id = try values.decodeIfPresent(Int.self, forKey: .journey_id)
         //        pxtrip_type = try values.decodeIfPresent(String.self, forKey: .pxtrip_type)

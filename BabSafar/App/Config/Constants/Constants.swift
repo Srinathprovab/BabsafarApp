@@ -45,6 +45,7 @@ var topFlightDetails = [TopFlightDetails]()
 var cityList:[SelectCityModel] = []
 var cityLocId:[String] = []
 var fd = [[FDFlightDetails]]()
+var fareRulehtml = String()
 
 //Multicity
 var fromCityNameArray = ["Select","Select"]
@@ -94,7 +95,15 @@ struct UserDefaultsKeys {
     static var journeyType = "Journey_Type"
     static var journeyTypeSelectedIndex = "Journey_TypeSelectedIndex"
     static var searchid = "search_id"
+    static var bookingsource = "booking_source"
     static var selectedResult = "selectedResult"
+    static var selectedCurrency = "selectedCurrency"
+    static var selectedLang = "selectedLang"
+    static var APICurrencyType = "APICurrencyType"
+    static var APILanguageType = "APILanguageType"
+    static var totalTravellerCount = "totalTravellerCount"
+    
+    
     
     
     // ONE WAY

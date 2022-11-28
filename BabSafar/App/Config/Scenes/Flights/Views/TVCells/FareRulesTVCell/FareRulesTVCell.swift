@@ -38,7 +38,7 @@ class FareRulesTVCell: TableViewCell {
         titlelbl.textColor = .AppLabelColor
         titlelbl.font = UIFont.LatoSemibold(size: 16)
         
-        subTitlelbl.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris mauris consectetur etiam ullamcorper netus ultrices integer. Malesuada ac id id aliquet. Duis sed nunc est feugiat neque malesuada a. Sed posuere quisque urna, nam interdum lacus, neque platea elit. Ultrices mauris bibendum faucibus eget eget accumsan fermentum. \n \nLorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris mauris consectetur etiam ullamcorper netus ultrices integer. \n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris mauris consectetur etiam ullamcorper netus ultrices integer. "
+        subTitlelbl.text = fareRulehtml
         subTitlelbl.textColor = .AppLabelColor
         subTitlelbl.font = UIFont.LatoLight(size: 14)
         subTitlelbl.numberOfLines = 0

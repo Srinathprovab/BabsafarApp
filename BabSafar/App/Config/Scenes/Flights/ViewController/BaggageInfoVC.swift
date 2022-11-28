@@ -34,6 +34,7 @@ class BaggageInfoVC: BaseTableVC, FlightDetailsViewModelProtocal, FDViewModelDel
     var viewmodel : FlightDetailsViewModel?
     var viewmodel1 : FDViewModel?
     var payload = [String:Any]()
+    var fdetails = [FDFlightDetails]()
     
     override func viewWillAppear(_ animated: Bool) {
         callGetFlightDetailsAPI()
@@ -127,8 +128,10 @@ class BaggageInfoVC: BaseTableVC, FlightDetailsViewModelProtocal, FDViewModelDel
     func setupItineraryRoundTripTVCell() {
         
         tablerow.removeAll()
-        tablerow.append(TableRow(cellType:.ItineraryAddTVCell))
-        //  tablerow.append(TableRow(title:"Bangalore to Delhi (3 25m)",cellType:.ItineraryTVCell))
+        fd.forEach { i in
+            tablerow.append(TableRow(moreData:i,cellType:.ItineraryAddTVCell))
+        }
+        
         tablerow.append(TableRow(height:100,cellType:.EmptyTVCell))
         commonTVData = tablerow
         commonTableView.reloadData()
@@ -160,7 +163,10 @@ class BaggageInfoVC: BaseTableVC, FlightDetailsViewModelProtocal, FDViewModelDel
     func setupItineraryMultiTripTVCell() {
         
         tablerow.removeAll()
-        tablerow.append(TableRow(title:"Bellary to Bangalore(2 hrs)",cellType:.ItineraryTVCell))
+        fd.forEach { i in
+            tablerow.append(TableRow(moreData:i,cellType:.ItineraryAddTVCell))
+        }
+        
         tablerow.append(TableRow(height:100,cellType:.EmptyTVCell))
         commonTVData = tablerow
         commonTableView.reloadData()
@@ -271,7 +277,7 @@ class BaggageInfoVC: BaseTableVC, FlightDetailsViewModelProtocal, FDViewModelDel
         dismiss(animated: true)
     }
     
-  
+    
     @objc func didTapOnBookNowBtn(_ sender: UIButton) {
         guard let vc = BookingDetailsVC.newInstance.self else {return}
         vc.modalPresentationStyle = .overCurrentContext
@@ -284,6 +290,7 @@ class BaggageInfoVC: BaseTableVC, FlightDetailsViewModelProtocal, FDViewModelDel
         payload["search_id"] = defaults.string(forKey: UserDefaultsKeys.searchid)
         payload["selectedResultindex"] = defaults.string(forKey: UserDefaultsKeys.selectedResult)
         payload["user_id"] = defaults.string(forKey: UserDefaultsKeys.userid) ?? "0"
+        payload["booking_source"] = defaults.string(forKey: UserDefaultsKeys.bookingsource) ?? "0"
         
         viewmodel1?.CALL_GET_FLIGHT_DETAILS_API(dictParam: payload)
         
@@ -293,6 +300,13 @@ class BaggageInfoVC: BaseTableVC, FlightDetailsViewModelProtocal, FDViewModelDel
     func flightDetails(response: FDModel) {
         print(" ===== flightDetails ===== ")
         fd = response.flightDetails ?? []
+        
+       
+        fd.forEach { i in
+            fdetails = i
+        }
+        
+        fareRulehtml = response.fareRulehtml?.htmlToString ?? ""
         
         DispatchQueue.main.async {[self] in
             setupItineraryOneWayTVCell()

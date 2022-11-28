@@ -174,7 +174,7 @@ class TravellerEconomyVC: BaseTableVC {
         }
         
         print("Total Count === \(adultsCount + childCount + infantsCount)")
-        //  defaults.set((adultsCount + childCount + infantsCount), forKey: UserDefaultsKeys.totalTravellerCount)
+        defaults.set((adultsCount + childCount + infantsCount), forKey: UserDefaultsKeys.totalTravellerCount)
         
     }
     
@@ -209,7 +209,7 @@ class TravellerEconomyVC: BaseTableVC {
         
         
         print("Total Count === \(adultsCount + childCount + infantsCount)")
-        //   defaults.set((adultsCount + childCount + infantsCount), forKey: UserDefaultsKeys.totalTravellerCount)
+        defaults.set((adultsCount + childCount + infantsCount), forKey: UserDefaultsKeys.totalTravellerCount)
         
     }
     
