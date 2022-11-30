@@ -51,7 +51,7 @@ class MultiCityTripFlightResultTVCell: TableViewCell {
         kwdPrice = cellInfo?.headerText ?? ""
         
         self.mflight_details = cellInfo?.moreData as? MCFlight_details
-        arrayCount = self.mflight_details?.details?.count ?? 0
+        arrayCount = self.mflight_details?.summary?.count ?? 0
         tvHeight.constant = CGFloat((arrayCount * 70) - 20)
         
         multiCityTripTV.reloadData()
@@ -112,7 +112,6 @@ extension MultiCityTripFlightResultTVCell:UITableViewDataSource,UITableViewDeleg
             cell.selectionStyle = .none
             
             let data = mflight_details?.summary?[indexPath.row]
-            
             
             airlinesNamelbl.text = data?.operator_name
             airlineCodelbl.text = "(\(data?.operator_code ?? ""))"

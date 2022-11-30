@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 
 class TravellerEconomyVC: BaseTableVC {
     
@@ -189,13 +190,13 @@ class TravellerEconomyVC: BaseTableVC {
         
         if cell.titlelbl.text == "Adults" {
             adultsCount = cell.count
-            //   deleteRecords(title: "Adult", index: cell.count)
+            deleteRecords(title: "Adult", index: cell.count)
         }else if cell.titlelbl.text == "Children"{
             childCount = cell.count
-            // deleteRecords(title: "Children", index: cell.count)
+            deleteRecords(title: "Children", index: cell.count)
         }else {
             infantsCount = cell.count
-            //   deleteRecords(title: "Infantas", index: cell.count)
+            deleteRecords(title: "Infantas", index: cell.count)
         }
         
         
@@ -341,10 +342,10 @@ class TravellerEconomyVC: BaseTableVC {
                     defaults.set(cell.titlelbl.text ?? "", forKey: UserDefaultsKeys.mselectClass)
                 }
             }
-
+            
         }
     }
-
+    
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath) as? LabelTVCell {
             cell.menuOptionImage.image = UIImage(named: "radioUnselected")
@@ -352,11 +353,54 @@ class TravellerEconomyVC: BaseTableVC {
     }
     
     
-}
-
-
-extension TravellerEconomyVC {
     
     
-   
+    
+    
+    
+    
+    //MARK: - DELETING COREDATA OBJECT
+    func deleteRecords(title:String,index:Int) {
+        
+        print("DELETING COREDATA OBJECT")
+        
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "PassengerDetails")
+        request.predicate = NSPredicate(format: "title = %@", "\(title)")
+        request.returnsObjectsAsFaults = false
+        
+        do {
+            let objects = try context.fetch(request)
+            
+            if title == "Adult" {
+                if objects.count > 0 && objects.count > adultsCount {
+                    context.delete(objects[index] as! NSManagedObject)
+                }
+            }else if title == "Children" {
+                if objects.count > 0 && objects.count > childCount {
+                    context.delete(objects[index] as! NSManagedObject)
+                }
+            }else {
+                if objects.count > 0 && objects.count > infantsCount {
+                    context.delete(objects[index] as! NSManagedObject)
+                }
+            }
+            
+            
+            
+        } catch {
+            print ("There was an error")
+        }
+        
+        
+        do {
+            try context.save()
+        } catch {
+            print ("There was an error")
+        }
+    }
+    
+    
+    
+    
+    
 }

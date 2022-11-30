@@ -7,6 +7,10 @@
 
 import Foundation
 import UIKit
+import CoreData
+
+
+
 /*SETTING USER DEFAULTS*/
 let defaults = UserDefaults.standard
 
@@ -39,7 +43,7 @@ public var screenHeight: CGFloat {
 }
 
 
-//MARK: HOME SCREEN
+//MARK: - HOME SCREEN
 var topHotelDetails = [TopHotelDetails]()
 var topFlightDetails = [TopFlightDetails]()
 var cityList:[SelectCityModel] = []
@@ -47,7 +51,22 @@ var cityLocId:[String] = []
 var fd = [[FDFlightDetails]]()
 var fareRulehtml = String()
 
-//Multicity
+var FlightList :[[J_flight_list]]?
+var RTFlightList :[[RTJ_flight_list]]?
+var MCJflightlist :[MCJ_flight_list]?
+
+var countrylist = [All_country_code_list]()
+var totalprice = String()
+var Adults_Base_Price = String()
+var Adults_Tax_Price = String()
+var Childs_Base_Price = String()
+var Childs_Tax_Price = String()
+var Infants_Base_Price = String()
+var Infants_Tax_Price = String()
+var TotalPrice_API = String()
+
+
+//MARK: - Multicity
 var fromCityNameArray = ["Select","Select"]
 var fromCityShortNameArray = ["City","City"]
 var fromlocidArray = ["",""]
@@ -57,6 +76,25 @@ var tolocidArray = ["",""]
 var depatureDatesArray = ["Select Date","Select Date"]
 var fromCityArray = ["",""]
 var toCityArray = ["",""]
+
+
+//MARK: - COREDATE SAVE PASSENGER DETAILS
+let appDelegate = UIApplication.shared.delegate as! AppDelegate
+let context = appDelegate.persistentContainer.viewContext
+
+var details  = [NSFetchRequestResult]()
+var fnameArray = [String]()
+var lnameArray = [String]()
+var mnameArray = [String]()
+var dobArray = [String]()
+var passportNoArray = [String]()
+var passportexpirydayArray = [String]()
+var passportexpiryMonthArray = [String]()
+var passportexpiryYearArray = [String]()
+var countryCodeArray = [String]()
+var passportissuingcountryArray = [String]()
+var passportnationalityArray = [String]()
+
 
 
 var dfromCityNameArray =  [String:String]()
@@ -72,7 +110,7 @@ struct ApiEndpoints {
     static let getFlightDetails = "getFlightDetails"
     static let getTopFlightHotelDestination = "getTopFlightHotelDestination"
     static let getBaggageFlightDetails = "getFlightDetails"
-    
+    static let getCountryList = "getCountryList"
 }
 
 /*App messages*/
@@ -97,6 +135,8 @@ struct UserDefaultsKeys {
     static var searchid = "search_id"
     static var bookingsource = "booking_source"
     static var selectedResult = "selectedResult"
+    static var selectdFlightcellIndex = "selectdFlightcellIndex"
+    
     static var selectedCurrency = "selectedCurrency"
     static var selectedLang = "selectedLang"
     static var APICurrencyType = "APICurrencyType"

@@ -56,7 +56,7 @@ class DashBoardVC: BaseTableVC, TopFlightDetailsViewModelDelegate {
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                 self.gotoPrivacyScreen()
             }
-            defaults.set("flights", forKey: UserDefaultsKeys.dashboardTapSelected)
+            defaults.set("Flights", forKey: UserDefaultsKeys.dashboardTapSelected)
             defaults.set(0, forKey: UserDefaultsKeys.DashboardTapSelectedCellIndex)
             tabSelectCV.selectItem(at: IndexPath(item: 0, section: 0), animated: true, scrollPosition: .left)
             defaults.set("oneway", forKey: UserDefaultsKeys.journeyType)

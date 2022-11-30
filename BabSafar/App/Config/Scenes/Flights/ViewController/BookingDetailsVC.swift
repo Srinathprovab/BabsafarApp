@@ -44,7 +44,7 @@ class BookingDetailsVC: BaseTableVC {
        
         commonTableView.backgroundColor = .AppBorderColor
         commonTableView.clipsToBounds = true
-        commonTableView.registerTVCells(["TDetailsLoginTVCell","EmptyTVCell","ContactInformationTVCell","TravelInsuranceTVCell","PriceSummaryTVCell","AddTravellerTVCell","FlightDetailsTVCell"])
+        commonTableView.registerTVCells(["TDetailsLoginTVCell","EmptyTVCell","ContactInformationTVCell","TravelInsuranceTVCell","PriceSummaryTVCell","AddTravellerTVCell","FlightDetailsTVCell","SearchFlightResultTVCell"])
         
     }
     
@@ -56,7 +56,18 @@ class BookingDetailsVC: BaseTableVC {
         if defaults.bool(forKey: UserDefaultsKeys.userLoggedIn) == false {
             tablerow.append(TableRow(cellType:.TDetailsLoginTVCell))
         }
-        tablerow.append(TableRow(cellType:.FlightDetailsTVCell))
+        
+        if let selectedJType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
+            if selectedJType == "oneway" {
+                tablerow.append(TableRow(key:"oneway",cellType:.FlightDetailsTVCell))
+            }else if selectedJType == "circle" {
+                tablerow.append(TableRow(key:"circle",cellType:.FlightDetailsTVCell))
+            }else {
+                tablerow.append(TableRow(key:"multicity",cellType:.FlightDetailsTVCell))
+            }
+            
+        }
+        
         tablerow.append(TableRow(moreData:adultsArray,cellType:.AddTravellerTVCell))
         tablerow.append(TableRow(cellType:.ContactInformationTVCell))
         tablerow.append(TableRow(cellType:.TravelInsuranceTVCell))
@@ -160,24 +171,25 @@ class BookingDetailsVC: BaseTableVC {
     
     
     override func didTapOnAddAdultBtn(cell: AddTravellerTVCell) {
-        gotoAddTravellerOrGuestVC(str: "addadult")
+        gotoAddTravellerOrGuestVC(str: "adult")
     }
     
     override func didTapOnAddChildBtn(cell: AddTravellerTVCell) {
-        gotoAddTravellerOrGuestVC(str: "addchild")
+        gotoAddTravellerOrGuestVC(str: "child")
     }
     
     override func didTapOnEditAdultBtn(cell:AddTravellerTVCell){
-        gotoAddTravellerOrGuestVC(str: "addadult")
+        gotoAddTravellerOrGuestVC(str: "adult")
     }
     
     override func didTapOnEditChildtBtn(cell:AddTravellerTVCell){
-        gotoAddTravellerOrGuestVC(str: "addchild")
+        gotoAddTravellerOrGuestVC(str: "child")
     }
     
     override func didTapOnViewFlightsDetailsBtn(cell: FlightDetailsTVCell) {
-        cell.flightDetailsTVHeight.constant = 10 * 75
-        commonTableView.reloadData()
+//        cell.flightDetailsTVHeight.constant = 10 * 75
+//        commonTableView.reloadData()
+        dismiss(animated: true)
     }
 
     
@@ -195,6 +207,7 @@ extension BookingDetailsVC {
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let myFooter =  Bundle.main.loadNibNamed("BookNowButtonsTVCell", owner: self, options: nil)?.first as! BookNowButtonsTVCell
         myFooter.bookNowBtn.addTarget(self, action: #selector(didTapOnBookNowBtn(_:)), for: .touchUpInside)
+        myFooter.kwdlbl.text = totalprice
         return myFooter
     }
     

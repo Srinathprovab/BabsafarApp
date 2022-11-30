@@ -1,38 +1,39 @@
 //
-//  FDViewModel.swift
+//  AllCountryCodeListViewModel.swift
 //  BabSafar
 //
-//  Created by FCI on 18/11/22.
+//  Created by FCI on 30/11/22.
 //
-
 
 import Foundation
 
-protocol FDViewModelDelegate : BaseViewModelProtocol {
-    func flightDetails(response : FDModel)
+
+
+protocol AllCountryCodeListViewModelDelegate : BaseViewModelProtocol {
+    func getCountryList(response : AllCountryCodeListModel)
 }
 
-class FDViewModel {
+class AllCountryCodeListViewModel {
 
-    var view: FDViewModelDelegate!
-    init(_ view: FDViewModelDelegate) {
+    var view: AllCountryCodeListViewModelDelegate!
+    init(_ view: AllCountryCodeListViewModelDelegate) {
         self.view = view
     }
 
 
-    func CALL_GET_FLIGHT_DETAILS_API(dictParam: [String: Any]){
+    func CALLGETCOUNTRYLIST_API(dictParam: [String: Any]){
         let parms = NSDictionary(dictionary:dictParam)
         print("Parameters = \(parms)")
 
         self.view?.showLoader()
 
-        ServiceManager.postOrPutApiCall(endPoint: ApiEndpoints.getBaggageFlightDetails , parameters: parms, resultType: FDModel.self, p:dictParam) { sucess, result, errorMessage in
+        ServiceManager.postOrPutApiCall(endPoint: ApiEndpoints.getCountryList , parameters: parms, resultType: AllCountryCodeListModel.self, p:dictParam) { sucess, result, errorMessage in
 
             DispatchQueue.main.async {
                 self.view?.hideLoader()
                 if sucess {
                     guard let response = result else {return}
-                    self.view.flightDetails(response: response)
+                    self.view.getCountryList(response: response)
                 } else {
                     // Show alert
                     NotificationCenter.default.post(name: NSNotification.Name("nointernet"), object: errorMessage)

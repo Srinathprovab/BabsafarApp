@@ -30,7 +30,6 @@ class BaggageInfoVC: BaseTableVC, FlightDetailsViewModelProtocal, FDViewModelDel
     }
     var isVCFrom = String()
     var tablerow = [TableRow]()
-    var flightdetails : Flight_details?
     var viewmodel : FlightDetailsViewModel?
     var viewmodel1 : FDViewModel?
     var payload = [String:Any]()
@@ -38,7 +37,12 @@ class BaggageInfoVC: BaseTableVC, FlightDetailsViewModelProtocal, FDViewModelDel
     
     override func viewWillAppear(_ animated: Bool) {
         callGetFlightDetailsAPI()
-        
+        setupTVCells()
+    }
+    
+    
+    
+    func setupTVCells() {
         if let selectedTab = defaults.string(forKey: UserDefaultsKeys.journeyType) {
             if selectedTab == "oneway" {
                 setupItineraryOneWayTVCell()
@@ -48,7 +52,6 @@ class BaggageInfoVC: BaseTableVC, FlightDetailsViewModelProtocal, FDViewModelDel
                 setupItineraryMultiTripTVCell()
             }
         }
-        
     }
     
     
@@ -300,16 +303,11 @@ class BaggageInfoVC: BaseTableVC, FlightDetailsViewModelProtocal, FDViewModelDel
     func flightDetails(response: FDModel) {
         print(" ===== flightDetails ===== ")
         fd = response.flightDetails ?? []
-        
-       
-        fd.forEach { i in
-            fdetails = i
-        }
-        
         fareRulehtml = response.fareRulehtml?.htmlToString ?? ""
+        totalprice = "\(response.priceDetails?.api_currency ?? "") : \(response.priceDetails?.grand_total ?? "")"
         
         DispatchQueue.main.async {[self] in
-            setupItineraryOneWayTVCell()
+            setupTVCells()
         }
     }
     
@@ -328,7 +326,7 @@ extension BaggageInfoVC {
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let myFooter =  Bundle.main.loadNibNamed("BookNowButtonsTVCell", owner: self, options: nil)?.first as! BookNowButtonsTVCell
         myFooter.bookNowBtn.addTarget(self, action: #selector(didTapOnBookNowBtn(_:)), for: .touchUpInside)
-        
+        myFooter.kwdlbl.text = totalprice
         if self.isVCFrom == "BookingDetailsVC" {
             myFooter.holderView.isHidden = true
         }

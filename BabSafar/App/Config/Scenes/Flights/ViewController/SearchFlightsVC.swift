@@ -44,10 +44,6 @@ class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
     var checkBool1 = true
     var selectArray = [String]()
     var selectArray1 = [String]()
-    var FlightList :[[J_flight_list]]?
-    var RTFlightList :[[RTJ_flight_list]]?
-    var MCJflightlist :[MCJ_flight_list]?
-    
     var moreoptionBool = true
     
     
@@ -454,7 +450,6 @@ class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
             FlightList = response.data?.j_flight_list
             defaults.set(response.data?.search_id, forKey: UserDefaultsKeys.searchid)
             defaults.set(response.data?.booking_source, forKey: UserDefaultsKeys.bookingsource)
-            
             gotoSearchFlightResultVC()
         }
     }
@@ -472,9 +467,6 @@ class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
     func gotoSearchFlightResultVC() {
         guard let vc = SearchFlightResultVC.newInstance.self else {return}
         vc.modalPresentationStyle = .fullScreen
-        vc.FlightList = self.FlightList
-        vc.RTFlightList = self.RTFlightList
-        vc.MCJflightlist = self.MCJflightlist
         self.present(vc, animated: true)
     }
     
@@ -524,7 +516,7 @@ class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
         print(response.data?.search_id)
         
         if response.status == 1 {
-            self.MCJflightlist = response.data?.j_flight_list
+            MCJflightlist = response.data?.j_flight_list
             defaults.set(response.data?.search_id, forKey: UserDefaultsKeys.searchid)
             defaults.set(response.data?.booking_source, forKey: UserDefaultsKeys.bookingsource)
             gotoSearchFlightResultVC()

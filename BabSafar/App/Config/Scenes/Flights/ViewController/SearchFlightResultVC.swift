@@ -22,13 +22,10 @@ class SearchFlightResultVC: BaseTableVC {
         return vc
     }
     var tablerow = [TableRow]()
-    var FlightList :[[J_flight_list]]?
-    var flightdetails : Flight_details?
     var kwdPriceArray = [String]()
     var dateArray = [String]()
     
-    var RTFlightList :[[RTJ_flight_list]]?
-    var MCJflightlist :[MCJ_flight_list]?
+    
     
     override func viewWillAppear(_ animated: Bool) {
         setUpNav()
@@ -85,6 +82,20 @@ class SearchFlightResultVC: BaseTableVC {
                     }
                 }
             }else {
+                
+                MCJflightlist?.forEach({ i in
+                    kwdPriceArray.append(i.totalPrice_API ?? "")
+                    i.flight_details?.summary?.forEach({ j in
+                        let dateFormatter = DateFormatter()
+                        dateFormatter.dateFormat = "dd MMM yyyy"
+                        if let date = dateFormatter.date(from: "\(j.destination?.date ?? "")"){
+                            dateFormatter.dateFormat = "dd MMM"
+                            let resultString = dateFormatter.string(from: date)
+                            dateArray.append(dateFormatter.string(from: date))
+                            
+                        }
+                    })
+                })
                 
             }
             
@@ -171,31 +182,27 @@ class SearchFlightResultVC: BaseTableVC {
         tablerow.removeAll()
         
         
-        FlightList.map { i in
-            i.map { j in
-                j.map { k in
-                    k.flight_details?.summary.map({ l in
-                        l.map { m in
-                            tablerow.append(TableRow(
-                                title:"\(m.operator_name ?? "") (\(m.operator_code ?? ""))",
-                                subTitle: k.totalPrice_API,
-                                key:"oneway",
-                                text: m.origin?.time,
-                                headerText: m.destination?.time,
-                                buttonTitle: "\(m.destination?.city ?? "") (\(m.destination?.loc ?? ""))",
-                                image: m.operator_image,
-                                tempText:"\(m.origin?.city ?? "") (\(m.origin?.loc ?? ""))",
-                                questionType:m.duration,
-                                TotalQuestions: k.selectedResult,
-                                cellType:.SearchFlightResultTVCell,
-                                questionBase: "no of stops \(String(m.no_of_stops ?? 0))"
-                                
-                            ))
-                        }
-                    })
-                }
+        FlightList?.forEach({ i in
+            i.forEach { j in
+                j.flight_details?.summary?.forEach({ k in
+                    tablerow.append(TableRow(
+                        title:"\(k.operator_name ?? "") (\(k.operator_code ?? ""))",
+                        subTitle: j.totalPrice_API,
+                        key:"oneway",
+                        text: k.origin?.time,
+                        headerText: k.destination?.time,
+                        buttonTitle: "\(k.destination?.city ?? "") (\(k.destination?.loc ?? ""))",
+                        image: k.operator_image,
+                        tempText:"\(k.origin?.city ?? "") (\(k.origin?.loc ?? ""))",
+                        questionType:k.duration,
+                        TotalQuestions: j.selectedResult,
+                        cellType:.SearchFlightResultTVCell,
+                        questionBase: "no of stops \(String(k.no_of_stops ?? 0))"
+                        
+                    ))
+                })
             }
-        }
+        })
         
         
         
@@ -234,22 +241,22 @@ class SearchFlightResultVC: BaseTableVC {
     func setupMulticityTripResultTVCells() {
         tablerow.removeAll()
         
-        //        tablerow.append(TableRow(height:20,cellType:.EmptyTVCell))
-        //        tablerow.append(TableRow(title:"",characterLimit: 4,cellType:.MultiCityTripFlightResultTVCell))
-        
-        
         MCJflightlist?.forEach({ k in
             tablerow.append(TableRow(title:k.totalPrice_API,
-                                 //    subTitle:k.booking_source,
+                                     //    subTitle:k.booking_source,
                                      headerText:k.totalPrice,
                                      //  errormsg:String(k.mc0.?.flight_details?.summary?.first?.seatsRemaining ?? "0"),
                                      // isOptional: k.refundable ?? "",
-                                     moreData:k.mc0?.flight_details,
+                                     moreData:k.flight_details,
                                      questionType:k.aPICurrencyType,
                                      TotalQuestions: k.selectedResult,
                                      cellType:.MultiCityTripFlightResultTVCell,
                                      questionBase: k.taxes))
         })
+        
+        
+        
+        
         
         
         commonTVData = tablerow
@@ -301,6 +308,14 @@ class SearchFlightResultVC: BaseTableVC {
     
     override func gotoRoundTripBaggageIntoVC(cell: RoundTripFlightResultTVCell) {
         defaults.set(cell.selectedResult, forKey: UserDefaultsKeys.selectedResult)
+        defaults.set(cell.indexPath?.row ?? 0, forKey: UserDefaultsKeys.selectdFlightcellIndex)
+        print("indexindexindexindexindex === \(cell.indexPath?.row)")
+        gotoBaggageInfoVC()
+    }
+    
+    override func gotoRoundTripBaggageIntoVC(cell: MultiCityTripFlightResultTVCell) {
+        defaults.set(cell.selectedResult, forKey: UserDefaultsKeys.selectedResult)
+        defaults.set(cell.indexPath?.row ?? 0, forKey: UserDefaultsKeys.selectdFlightcellIndex)
         gotoBaggageInfoVC()
     }
     
@@ -308,18 +323,8 @@ class SearchFlightResultVC: BaseTableVC {
     func gotoBaggageInfoVC() {
         guard let vc = BaggageInfoVC.newInstance.self else {return}
         vc.modalPresentationStyle = .overCurrentContext
-        vc.flightdetails = self.flightdetails
         present(vc, animated: true)
     }
-    
-    
-    override func gotoRoundTripBaggageIntoVC(cell: MultiCityTripFlightResultTVCell) {
-        defaults.set(cell.selectedResult, forKey: UserDefaultsKeys.selectedResult)
-        gotoBaggageInfoVC()
-    }
-    
-    
-    
     
 }
 
@@ -363,16 +368,21 @@ extension SearchFlightResultVC {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        FlightList.map { i in
-            i.map { j in
-                flightdetails = j[0].flight_details
-            }
-        }
-        
-        print(flightdetails)
-        
         if let cell = tableView.cellForRow(at: indexPath) as? SearchFlightResultTVCell {
             defaults.set(cell.selectedResult, forKey: UserDefaultsKeys.selectedResult)
+            defaults.set(cell.indexPath?.row ?? 0, forKey: UserDefaultsKeys.selectdFlightcellIndex)
+            print("indexindexindexindexindex === \(cell.indexPath?.row)")
+
+            FlightList?[cell.indexPath?.row ?? 0].forEach { i in
+                Adults_Base_Price = i.adults_Base_Price ?? ""
+                Childs_Base_Price = i.childs_Base_Price ?? ""
+                Infants_Base_Price = i.infants_Base_Price ?? ""
+                Adults_Tax_Price = i.adults_Base_Price ?? ""
+                Childs_Tax_Price = i.childs_Tax_Price ?? ""
+                Infants_Tax_Price = i.infants_Tax_Price ?? ""
+                TotalPrice_API = i.totalPrice_API ?? ""
+            }
+            
             gotoBaggageInfoVC()
         }
         

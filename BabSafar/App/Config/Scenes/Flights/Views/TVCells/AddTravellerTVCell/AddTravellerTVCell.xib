@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -83,7 +84,7 @@
                                                 </connections>
                                             </button>
                                         </subviews>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstItem="KmV-5u-fBC" firstAttribute="leading" secondItem="nHJ-kH-5ml" secondAttribute="leading" id="8TV-HK-Jl3"/>
                                             <constraint firstItem="KY5-pH-c46" firstAttribute="centerX" secondItem="nHJ-kH-5ml" secondAttribute="centerX" id="HcR-K7-aKM"/>
@@ -117,6 +118,13 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TP3-mR-Naf">
                                 <rect key="frame" x="0.0" y="101" width="423" height="50"/>
                                 <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MTt-1G-xG8">
+                                        <rect key="frame" x="0.0" y="0.0" width="423" height="1"/>
+                                        <color key="backgroundColor" name="AppBorderColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="ze5-oc-mWm"/>
+                                        </constraints>
+                                    </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="03O-b3-1kd">
                                         <rect key="frame" x="16" y="14.5" width="42" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -156,12 +164,15 @@
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemYellowColor"/>
                                 <constraints>
+                                    <constraint firstItem="MTt-1G-xG8" firstAttribute="leading" secondItem="TP3-mR-Naf" secondAttribute="leading" id="0ht-ry-4oZ"/>
                                     <constraint firstItem="AR8-pg-lDk" firstAttribute="centerY" secondItem="03O-b3-1kd" secondAttribute="centerY" id="1dF-Vb-H59"/>
                                     <constraint firstItem="03O-b3-1kd" firstAttribute="centerY" secondItem="TP3-mR-Naf" secondAttribute="centerY" id="5n7-SJ-Wsr"/>
                                     <constraint firstItem="AR8-pg-lDk" firstAttribute="top" secondItem="TP3-mR-Naf" secondAttribute="top" constant="10" id="82A-ao-QIW"/>
                                     <constraint firstItem="03O-b3-1kd" firstAttribute="leading" secondItem="TP3-mR-Naf" secondAttribute="leading" constant="16" id="NZx-ap-M0k"/>
                                     <constraint firstAttribute="height" constant="50" id="YxP-t4-ddk"/>
                                     <constraint firstAttribute="trailing" secondItem="AR8-pg-lDk" secondAttribute="trailing" constant="16" id="kHd-lf-nQl"/>
+                                    <constraint firstAttribute="trailing" secondItem="MTt-1G-xG8" secondAttribute="trailing" id="qCm-Fq-kMf"/>
+                                    <constraint firstItem="MTt-1G-xG8" firstAttribute="top" secondItem="TP3-mR-Naf" secondAttribute="top" id="v1L-bH-1Zf"/>
                                     <constraint firstItem="03O-b3-1kd" firstAttribute="top" secondItem="TP3-mR-Naf" secondAttribute="top" constant="14.5" id="ws7-2z-LLo"/>
                                 </constraints>
                             </view>
@@ -228,6 +239,9 @@
         </tableViewCell>
     </objects>
     <resources>
+        <namedColor name="AppBorderColor">
+            <color red="0.90200001001358032" green="0.9100000262260437" blue="0.90600001811981201" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

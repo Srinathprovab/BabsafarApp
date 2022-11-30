@@ -19,9 +19,10 @@ struct MCData : Codable {
     let j_flight_list : [MCJ_flight_list]?
     let journey_id : Int?
     let pxtrip_type : String?
-    
+    let traceId : String?
+
     enum CodingKeys: String, CodingKey {
-        
+
         case col_2x_result = "col_2x_result"
         case search_params = "search_params"
         case attr = "attr"
@@ -32,8 +33,9 @@ struct MCData : Codable {
         case j_flight_list = "j_flight_list"
         case journey_id = "journey_id"
         case pxtrip_type = "pxtrip_type"
+        case traceId = "traceId"
     }
-    
+
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         col_2x_result = try values.decodeIfPresent(Bool.self, forKey: .col_2x_result)
@@ -46,6 +48,7 @@ struct MCData : Codable {
         j_flight_list = try values.decodeIfPresent([MCJ_flight_list].self, forKey: .j_flight_list)
         journey_id = try values.decodeIfPresent(Int.self, forKey: .journey_id)
         pxtrip_type = try values.decodeIfPresent(String.self, forKey: .pxtrip_type)
+        traceId = try values.decodeIfPresent(String.self, forKey: .traceId)
     }
-    
+
 }

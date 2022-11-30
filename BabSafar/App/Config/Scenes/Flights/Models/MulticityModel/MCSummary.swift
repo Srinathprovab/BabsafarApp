@@ -9,10 +9,11 @@ import Foundation
 
 struct MCSummary : Codable {
     
-    let origin : MCOrigin?
-    let destination : MCDestination?
+    let origin : Origin?
+    let destination : Destination?
     let operator_code : String?
     let display_operator_code : String?
+    let operator_image : String?
     let operator_name : String?
     let cabin_class : String?
     let mcclass : MCClass?
@@ -31,6 +32,7 @@ struct MCSummary : Codable {
         case destination = "destination"
         case operator_code = "operator_code"
         case display_operator_code = "display_operator_code"
+        case operator_image = "operator_image"
         case operator_name = "operator_name"
         case cabin_class = "cabin_class"
         case mcclass = "class"
@@ -46,10 +48,11 @@ struct MCSummary : Codable {
 
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        origin = try values.decodeIfPresent(MCOrigin.self, forKey: .origin)
-        destination = try values.decodeIfPresent(MCDestination.self, forKey: .destination)
+        origin = try values.decodeIfPresent(Origin.self, forKey: .origin)
+        destination = try values.decodeIfPresent(Destination.self, forKey: .destination)
         operator_code = try values.decodeIfPresent(String.self, forKey: .operator_code)
         display_operator_code = try values.decodeIfPresent(String.self, forKey: .display_operator_code)
+        operator_image = try values.decodeIfPresent(String.self, forKey: .operator_image)
         operator_name = try values.decodeIfPresent(String.self, forKey: .operator_name)
         cabin_class = try values.decodeIfPresent(String.self, forKey: .cabin_class)
         mcclass = try values.decodeIfPresent(MCClass.self, forKey: .mcclass)

@@ -40,17 +40,14 @@ class SearchFlightResultTVCell: TableViewCell {
     @IBOutlet weak var viewVoucherBtn: UIButton!
     @IBOutlet weak var imagesHolder1: UIStackView!
     @IBOutlet weak var imagesHolder2: UIStackView!
-    
     @IBOutlet weak var holderViewTopConstraint: NSLayoutConstraint!
-    
-    
-    
     @IBOutlet weak var deplbl: UILabel!
     @IBOutlet weak var airoplaneImg: UIImageView!
-    
     @IBOutlet weak var leftConstraint: NSLayoutConstraint!
-    
     @IBOutlet weak var rightConstraint: NSLayoutConstraint!
+    
+    
+    
     var delegate:SearchFlightResultTVCellDelegate?
     var selectedResult = String()
     override func awakeFromNib() {
@@ -113,7 +110,19 @@ class SearchFlightResultTVCell: TableViewCell {
             viewVoucherBtn.isHidden = false
             imagesHolder1.isHidden = true
             imagesHolder2.isHidden = true
+            
+            
+            
+        case "bookingdetails":
+            deplbl.isHidden = true
+            airoplaneImg.isHidden = true
+            leftConstraint.constant = 8
+            rightConstraint.constant = 8
+            viewVoucherBtn.isHidden = false
+            imagesHolder1.isHidden = true
+            imagesHolder2.isHidden = true
             break
+            
         default:
             break
         }
@@ -140,7 +149,7 @@ class SearchFlightResultTVCell: TableViewCell {
         setupLabels(lbl: fromDaylbl, text: "", textcolor: HexColor("#808089"), font: .LatoRegular(size: 12))
         setupLabels(lbl: toDaylbl, text: "", textcolor: HexColor("#808089"), font: .LatoRegular(size: 12))
         setupLabels(lbl: deplbl, text: "", textcolor: HexColor("#808089"), font: .LatoLight(size: 12))
-
+        
         imagesHolderHeight.constant = 25
         imagesHolderView.isHidden = false
         imagesHolderView.backgroundColor = .AppCalenderDateSelectColor
@@ -166,7 +175,7 @@ class SearchFlightResultTVCell: TableViewCell {
         
         deplbl.text = "Return"
         airoplaneImg.image = UIImage(named: "airo2")
-
+        
     }
     
     
@@ -210,6 +219,17 @@ class SearchFlightResultTVCell: TableViewCell {
         
         bagWeightlbl.textColor = HexColor("#808089")
         suitcaseWeightlbl.textColor = HexColor("#808089")
+    }
+    
+    
+    func hide() {
+        imagesHolderView.isHidden = true
+        self.airoplaneImg.isHidden = true
+        self.kwdPricelbl.isHidden = true
+        self.deplbl.isHidden = true
+        perPersonlbl.isHidden = true
+        leftConstraint.constant = 8
+        rightConstraint.constant = 8
     }
     
     @IBAction func didTapOnViewVoucherBtn(_ sender: Any) {

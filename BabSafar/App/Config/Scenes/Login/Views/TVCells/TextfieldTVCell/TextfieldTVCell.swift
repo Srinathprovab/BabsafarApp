@@ -30,10 +30,11 @@ class TextfieldTVCell: TableViewCell {
     @IBOutlet weak var btnHeight: NSLayoutConstraint!
     @IBOutlet weak var showPassBtn: UIButton!
     @IBOutlet weak var viewheight: NSLayoutConstraint!
-    
+    @IBOutlet weak var showPassView: UIView!
     
     let datePicker = UIDatePicker()
     var delegate:TextfieldTVCellDelegate?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -46,18 +47,20 @@ class TextfieldTVCell: TableViewCell {
         // Configure the view for the selected state
     }
     
-    @IBOutlet weak var showPassView: UIView!
+    
+    override func prepareForReuse() {
+        txtField.text = cellInfo?.tempText
+    }
+    
     override func updateUI() {
         btnHeight.constant = 0
         titlelbl.text = cellInfo?.title
         txtField.placeholder = cellInfo?.tempText
         txtField.tag = Int(cellInfo?.text ?? "") ?? 0
-        txtField.text = ""
+      //  txtField.text = ""
         
         switch cellInfo?.key {
-        case "email":
-            self.txtField.isSecureTextEntry = false
-            break
+       
         case "pwd":
             showPassView.isHidden = false
             self.txtField.isSecureTextEntry = true
@@ -112,6 +115,15 @@ class TextfieldTVCell: TableViewCell {
             txtField.isUserInteractionEnabled = true
             break
             
+            
+            
+        case "cal":
+            datePicker.maximumDate = Date()
+            showDatePicker()
+            break
+            
+            
+            
         default:
             break
         }
@@ -142,6 +154,7 @@ class TextfieldTVCell: TableViewCell {
         txtField.setLeftPaddingPoints(20)
         txtField.font = UIFont.ManropeMedium(size: 18)
         txtField.addTarget(self, action: #selector(editingText(textField:)), for: .editingChanged)
+        txtField.isSecureTextEntry = false
         
         forgetPwdBtn.setTitle("Forgot Password?", for: .normal)
         forgetPwdBtn.setTitleColor(.AppTabSelectColor, for: .normal)

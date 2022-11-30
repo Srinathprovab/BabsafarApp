@@ -25,6 +25,13 @@ class DropDownTVCell: TableViewCell {
     var delegate:DropDownTVCellDelegate?
     var optionArray = [String]()
     let dropDown = DropDown()
+    var nationality:String?
+    var nationalitycode = String()
+    var issuingCountry:String?
+    var issuingCountrycode = String()
+    
+   
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -39,16 +46,35 @@ class DropDownTVCell: TableViewCell {
     
     override func updateUI() {
         titlelbl.text = cellInfo?.title
-        dropdownlbl.text = cellInfo?.subTitle
+        dropdownlbl.text = cellInfo?.text
         dropdownImg.image = UIImage(named: cellInfo?.image ?? "")
-        dropDown.dataSource = cellInfo?.moreData as? [String] ?? []
+        dropdownBtn.tag = cellInfo?.characterLimit ?? 0
+        var countryNameArray = [String]()
+        countrylist.forEach { i in
+            countryNameArray.append(i.name ?? "")
+        }
+        dropDown.dataSource = countryNameArray
         
         setupDropDown()
+      
+        
+        switch self.titlelbl.text {
+        case "Nationality":
+            self.dropdownlbl.text = self.nationality ?? "Nationality"
+            break
+            
+        case "Issuing Country":
+            self.dropdownlbl.text = self.issuingCountry ?? "Issuing Country"
+            break
+            
+        default:
+            break
+        }
     }
     
     
     func setupDropDown() {
-       
+        
         dropDown.direction = .any
         dropDown.backgroundColor = .WhiteColor
         dropDown.anchorView = self.dropdownBtn
@@ -56,6 +82,22 @@ class DropDownTVCell: TableViewCell {
         dropDown.selectionAction = { [weak self] (index: Int, item: String) in
             self?.dropdownlbl.text = item
             self?.dropdownlbl.textColor = .AppLabelColor
+            
+            switch self?.titlelbl.text {
+            case "Nationality":
+                self?.nationality = self?.dropdownlbl.text ?? ""
+                self?.nationalitycode = countrylist[index].origin ?? ""
+                
+                break
+                
+            case "Issuing Country":
+                self?.issuingCountry = self?.dropdownlbl.text ?? ""
+                self?.nationalitycode = countrylist[index].origin ?? ""
+                break
+                
+            default:
+                break
+            }
             self?.delegate?.didTapOnDropDownBtn(cell: self!)
         }
     }
@@ -85,6 +127,7 @@ class DropDownTVCell: TableViewCell {
             dropDown.show()
         }
         
-      //  delegate?.didTapOnDropDownBtn(cell: self)
+     //   delegate?.didTapOnDropDownBtn(cell: self)
     }
+    
 }

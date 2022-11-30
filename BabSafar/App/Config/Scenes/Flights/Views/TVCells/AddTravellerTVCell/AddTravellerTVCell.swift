@@ -36,7 +36,14 @@ class AddTravellerTVCell: TableViewCell {
     @IBOutlet weak var adultTVHeight: NSLayoutConstraint!
     @IBOutlet weak var addChildTV: UITableView!
     @IBOutlet weak var addChildTVHeight: NSLayoutConstraint!
+    
+    
+    
+    var adultsCount = 1
+    var childCount = 0
+    var infantsCount = 0
     var delegate:AddTravellerTVCellDelegate?
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -52,23 +59,9 @@ class AddTravellerTVCell: TableViewCell {
         // Configure the view for the selected state
     }
     
+    
+    
     override func updateUI() {
-        //         adultsArray = cellInfo?.moreData as? [String] ?? []
-        //        childArray = cellInfo?.moreData as? [String] ?? []
-        
-        print("adultsArray[0] -- > \(adultsArray.count)")
-        //        adultsArray = ["adult1","adult2"]
-        //        childArray = ["child1","child2"]
-        
-        switch cellInfo?.key {
-        case "hotel":
-            travelImg.image = UIImage(named: "travel")
-            titlelbl.text = cellInfo?.title
-            totalNoOfTravellerlbl.text = cellInfo?.subTitle
-        default:
-            break
-        }
-        
         
         if adultsArray.count > 0 {
             let height = adultsArray.count * 50
@@ -81,9 +74,47 @@ class AddTravellerTVCell: TableViewCell {
             addChildTVHeight.constant = CGFloat(height)
         }
         
+        
+        if let journeyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
+            if journeyType == "oneway" {
+                adultsCount = Int(defaults.string(forKey: UserDefaultsKeys.adultCount) ?? "1") ?? 0
+                childCount = Int(defaults.string(forKey: UserDefaultsKeys.childCount) ?? "0") ?? 0
+                infantsCount = Int(defaults.string(forKey: UserDefaultsKeys.infantsCount) ?? "0") ?? 0
+                
+                if childCount == 0 {
+                    addChildHolderView.isHidden = true
+                    addChildTV.isHidden = true
+                    addChildTVHeight.constant = 0
+                }
+                
+                
+            }else if journeyType == "circle"{
+                adultsCount = Int(defaults.string(forKey: UserDefaultsKeys.radultCount) ?? "1") ?? 0
+                childCount = Int(defaults.string(forKey: UserDefaultsKeys.rchildCount) ?? "0") ?? 0
+                infantsCount = Int(defaults.string(forKey: UserDefaultsKeys.rinfantsCount) ?? "0") ?? 0
+            }else {
+                
+                adultsCount = Int(defaults.string(forKey: UserDefaultsKeys.madultCount) ?? "1") ?? 0
+                childCount = Int(defaults.string(forKey: UserDefaultsKeys.mchildCount) ?? "0") ?? 0
+                infantsCount = Int(defaults.string(forKey: UserDefaultsKeys.minfantsCount) ?? "0") ?? 0
+            }
+        }
+        
         self.contentView.layoutIfNeeded()
         self.addAdultTV.reloadData()
         self.addChildTV.reloadData()
+        
+        
+        
+        switch cellInfo?.key {
+        case "hotel":
+            travelImg.image = UIImage(named: "travel")
+            titlelbl.text = cellInfo?.title
+            totalNoOfTravellerlbl.text = cellInfo?.subTitle
+        default:
+            break
+        }
+        
     }
     
     func setupUI() {

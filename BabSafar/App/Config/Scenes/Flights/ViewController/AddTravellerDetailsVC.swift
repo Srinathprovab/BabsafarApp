@@ -6,20 +6,32 @@
 //
 
 import UIKit
+import CoreData
 
-class AddTravellerDetailsVC: BaseTableVC {
+class AddTravellerDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate {
     
     
     @IBOutlet weak var navBar: NavBar!
     
-    var fname = String()
+    var fname:String?
     var lname = String()
-    var nationality = String()
+   
     var documentType = String()
-    var passportNumber = String()
-    var issuingCountry = String()
+    var passportno = String()
     var passportExpiryDate = String()
     var gender = String()
+    var ptitle = String()
+    var issuedCountry = String()
+    var experiesOn = String()
+    var rno = Int()
+    var nationality = String()
+    var issuingCountry = String()
+    var nationalitycode = String()
+    var issuingCountrycode = String()
+    var mobileno = String()
+    var email = String()
+    var viewmodel:AllCountryCodeListViewModel?
+    
     var tablerow = [TableRow]()
     static var newInstance: AddTravellerDetailsVC? {
         let storyboard = UIStoryboard(name: Storyboard.Main.name,
@@ -28,17 +40,24 @@ class AddTravellerDetailsVC: BaseTableVC {
         return vc
     }
     
+    
+    override func viewWillAppear(_ animated: Bool) {
+        callGetCointryListAPI()
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         setupUI()
+        viewmodel = AllCountryCodeListViewModel(self)
     }
     
     
     func setupUI() {
         
         if let selectedTab = defaults.string(forKey: UserDefaultsKeys.dashboardTapSelected) {
-            if selectedTab == "flights" {
+            if selectedTab == "Flights" {
                 navBar.titlelbl.text = "Traveller Details"
                 setupTV()
             }else {
@@ -53,6 +72,23 @@ class AddTravellerDetailsVC: BaseTableVC {
         commonTableView.registerTVCells(["TextfieldTVCell","DropDownTVCell","LabelTVCell","EmptyTVCell","SelectGenderTVCell"])
     }
     
+    
+    
+    func callGetCointryListAPI() {
+        BASE_URL = "https://provabdevelopment.com/babsafar/mobile_webservices/mobile/index.php/general/"
+        viewmodel?.CALLGETCOUNTRYLIST_API(dictParam: [:])
+    }
+    
+    
+   
+    func getCountryList(response: AllCountryCodeListModel) {
+        countrylist = response.all_country_code_list ?? []
+        
+        DispatchQueue.main.async {
+            self.commonTableView.reloadData()
+        }
+    }
+    
     func setupTV() {
         
         tablerow.removeAll()
@@ -60,14 +96,21 @@ class AddTravellerDetailsVC: BaseTableVC {
         tablerow.append(TableRow(key:"gender",cellType:.SelectGenderTVCell))
         tablerow.append(TableRow(title:"Frist Name",key: "email", text: "1",tempText: "Frist Name",cellType:.TextfieldTVCell))
         tablerow.append(TableRow(title:"Last Name",key: "email", text: "2",tempText: "Last Name",cellType:.TextfieldTVCell))
-        tablerow.append(TableRow(title:"Nationality",subTitle: "Nationality",image: "downarrow",moreData: ["1","2"],cellType:.DropDownTVCell))
+        tablerow.append(TableRow(title:"Nationality",text: "Nationality",image: "downarrow",cellType:.DropDownTVCell))
         tablerow.append(TableRow(height:20,cellType:.EmptyTVCell))
         tablerow.append(TableRow(title:"Travel document*",cellType:.LabelTVCell))
         tablerow.append(TableRow(title:"Document Type",key: "email", text: "3",tempText: "XN1247815",cellType:.TextfieldTVCell))
         tablerow.append(TableRow(title:"Passport Number",key: "email", text: "4",tempText: "1458-125-12467",cellType:.TextfieldTVCell))
-        tablerow.append(TableRow(title:"Issuing Country",subTitle: "Country",image: "downarrow",moreData: ["1","2"],cellType:.DropDownTVCell))
-        tablerow.append(TableRow(height:15,cellType:.EmptyTVCell))
-        tablerow.append(TableRow(title:"Passport Expiry Date",subTitle: "12-06-2026",image: "cal",moreData: ["12-06-2026","12-06-2026"],cellType:.DropDownTVCell))
+ 
+        tablerow.append(TableRow(title:"Issuing Country",text: "Country",image: "downarrow",cellType:.DropDownTVCell))
+        tablerow.append(TableRow(title:"Passport Expiry Date",key: "cal", text: "6",tempText: "Passport Expiry Date",cellType:.TextfieldTVCell))
+
+        tablerow.append(TableRow(height:20,cellType:.EmptyTVCell))
+        tablerow.append(TableRow(title:"Contact Details*",cellType:.LabelTVCell))
+        tablerow.append(TableRow(title:"Mobile No",key: "mob", text: "12",tempText: "Mobile No",cellType:.TextfieldTVCell))
+        tablerow.append(TableRow(title:"Email",key: "email", text: "11",tempText: "Email Id",cellType:.TextfieldTVCell))
+
+        
         tablerow.append(TableRow(height:30,cellType:.EmptyTVCell))
         tablerow.append(TableRow(key:"save",cellType:.SelectGenderTVCell))
         tablerow.append(TableRow(height:50,cellType:.EmptyTVCell))
@@ -85,16 +128,15 @@ class AddTravellerDetailsVC: BaseTableVC {
         tablerow.removeAll()
         
         tablerow.append(TableRow(key:"gender",cellType:.SelectGenderTVCell))
-        tablerow.append(TableRow(title:"Frist Name",key: "email", text: "1",tempText: "Frist Name",cellType:.TextfieldTVCell))
+        tablerow.append(TableRow(title:"Frist Name",key: "email", text: "1",buttonTitle: fname ?? "email",tempText: "Frist Name",cellType:.TextfieldTVCell))
         tablerow.append(TableRow(title:"Last Name",key: "email", text: "2",tempText: "Last Name",cellType:.TextfieldTVCell))
         tablerow.append(TableRow(title:"Nationality",subTitle: "Nationality",image: "downarrow",moreData: ["1","2"],cellType:.DropDownTVCell))
         tablerow.append(TableRow(height:20,cellType:.EmptyTVCell))
         tablerow.append(TableRow(title:"Travel document*",cellType:.LabelTVCell))
         tablerow.append(TableRow(title:"Document Type",key: "email", text: "3",tempText: "XN1247815",cellType:.TextfieldTVCell))
         tablerow.append(TableRow(title:"Passport Number",key: "email", text: "4",tempText: "1458-125-12467",cellType:.TextfieldTVCell))
-        tablerow.append(TableRow(title:"Issuing Country",subTitle: "Country",image: "downarrow",moreData: ["1","2"],cellType:.DropDownTVCell))
-        tablerow.append(TableRow(height:15,cellType:.EmptyTVCell))
-        tablerow.append(TableRow(title:"Passport Expiry Date",subTitle: "12-06-2026",image: "cal",moreData: ["12-06-2026","12-06-2026"],cellType:.DropDownTVCell))
+       
+ 
         tablerow.append(TableRow(height:30,cellType:.EmptyTVCell))
         tablerow.append(TableRow(key:"save",cellType:.SelectGenderTVCell))
         tablerow.append(TableRow(height:50,cellType:.EmptyTVCell))
@@ -124,7 +166,21 @@ class AddTravellerDetailsVC: BaseTableVC {
             break
             
         case 4:
-            self.passportNumber = tf.text ?? ""
+            self.passportno = tf.text ?? ""
+            break
+            
+            
+        case 6:
+            self.passportExpiryDate = tf.text ?? ""
+            break
+            
+       
+        case 12:
+            self.mobileno = tf.text ?? ""
+            break
+            
+        case 11:
+            self.email = tf.text ?? ""
             break
             
         default:
@@ -136,16 +192,17 @@ class AddTravellerDetailsVC: BaseTableVC {
     override func didTapOnDropDownBtn(cell:DropDownTVCell){
         switch cell.titlelbl.text {
         case "Nationality":
-            self.nationality = cell.dropdownlbl.text ?? ""
+            self.nationality = cell.nationality ?? ""
+            self.nationalitycode = cell.nationalitycode
+            print(self.nationalitycode)
             break
             
         case "Issuing Country":
-            self.issuingCountry = cell.dropdownlbl.text ?? ""
+            self.issuingCountry = cell.issuingCountry ?? ""
+            self.issuingCountrycode = cell.issuingCountrycode
+            print(self.issuingCountrycode)
             break
             
-        case "Passport Expiry Date":
-            self.passportExpiryDate = cell.dropdownlbl.text ?? ""
-            break
         default:
             break
         }
@@ -166,6 +223,16 @@ class AddTravellerDetailsVC: BaseTableVC {
     }
     
     
+    override func donedatePicker(cell:TextfieldTVCell){
+        experiesOn = cell.txtField.text ?? ""
+        self.view.endEditing(true)
+    }
+    
+    
+    override func cancelDatePicker(cell:TextfieldTVCell){
+        self.view.endEditing(true)
+    }
+    
     override func didTapOnSaveBtn(cell: SelectGenderTVCell) {
         
         
@@ -179,43 +246,65 @@ class AddTravellerDetailsVC: BaseTableVC {
             showToast(message: "Select Nationality")
         }else if documentType == "" {
             showToast(message: "Enter DocumentType")
-        }else if passportNumber == "" {
+        }else if passportno == "" {
             showToast(message: "Enter Passport Number")
         }else if issuingCountry == "" {
             showToast(message: "Select Issuing Country")
         }else if passportExpiryDate == "" {
             showToast(message: "Select Passport Expiry Date")
+        }else if mobileno.isEmpty == true {
+            showToast(message: "Enter Mobile Number")
+        }else if email.isEmpty == true {
+            showToast(message: "Enter Email Id")
+        }else if email.isValidEmail == false {
+            showToast(message: "Enter Valid Email Id")
         }else {
             
             print("Call API====>")
             
-            
-            if let selectedTab = defaults.string(forKey: UserDefaultsKeys.dashboardTapSelected) {
-                if selectedTab == "flights" {
-                    if let addchild = defaults.string(forKey: UserDefaultsKeys.addTarvellerDetails) {
-                        if addchild == "addadult" {
-                            adultsArray.append(fname)
-                        }else {
-                            childArray.append(fname)
-                        }
-                    }
-                }else {
-                    if let addchild = defaults.string(forKey: UserDefaultsKeys.addTarvellerDetails) {
-                        if addchild == "hoteladult" {
-                            adultsArray.append(fname)
-                        }else {
-                            childArray.append(fname)
-                        }
-                    }
-                }
+            DispatchQueue.main.async {
+                self.saveDetailsLocally()
             }
             
-            
-            
-            NotificationCenter.default.post(name: NSNotification.Name("addAdultsDetails"), object: fname)
-            dismiss(animated: false)
         }
     }
+    
+    
+    
+    
+    func saveDetailsLocally() {
+        
+        rno = Int.random(in: 0...500)
+        
+        let entity = NSEntityDescription.entity(forEntityName: "PassengerDetails", in: context)
+        let newUser = NSManagedObject(entity: entity!, insertInto: context)
+        
+        newUser.setValue("\(rno)", forKey: "id")
+        newUser.setValue(ptitle, forKey: "title")
+        newUser.setValue(defaults.string(forKey:UserDefaultsKeys.userid), forKey: "userid")
+        newUser.setValue(gender, forKey: "gender")
+        newUser.setValue(fname, forKey: "fname")
+        newUser.setValue(lname, forKey: "lname")
+        newUser.setValue(nationalitycode, forKey: "nationality")
+        newUser.setValue(passportno, forKey: "passportno")
+        newUser.setValue(experiesOn, forKey: "passportexpirydate")
+        newUser.setValue(issuingCountrycode, forKey: "passportissuingcountry")
+        newUser.setValue(mobileno, forKey: "mobileno")
+        newUser.setValue(email, forKey: "email")
+        
+        
+        do {
+            try context.save()
+        } catch {
+            print("Error saving")
+        }
+        
+        
+        
+        dismiss(animated: true)
+        
+    }
+    
     
     
     
