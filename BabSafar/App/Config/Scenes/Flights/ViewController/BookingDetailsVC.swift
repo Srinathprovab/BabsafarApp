@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 
 class BookingDetailsVC: BaseTableVC {
     
@@ -21,12 +22,21 @@ class BookingDetailsVC: BaseTableVC {
     var tablerow = [TableRow]()
     
     override func viewWillAppear(_ animated: Bool) {
+        fetchCoreDataValues()
+        
         NotificationCenter.default.addObserver(self, selector: #selector(addAdultsDetails(notification:)), name: NSNotification.Name("addAdultsDetails"), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(reload(notification:)), name: NSNotification.Name("reload"), object: nil)
     }
     
     @objc func addAdultsDetails(notification:NSNotification) {
         setupTV()
     }
+    
+    @objc func reload(notification:NSNotification) {
+        commonTableView.reloadData()
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,7 +78,7 @@ class BookingDetailsVC: BaseTableVC {
             
         }
         
-        tablerow.append(TableRow(moreData:adultsArray,cellType:.AddTravellerTVCell))
+        tablerow.append(TableRow(cellType:.AddTravellerTVCell))
         tablerow.append(TableRow(cellType:.ContactInformationTVCell))
         tablerow.append(TableRow(cellType:.TravelInsuranceTVCell))
         tablerow.append(TableRow(cellType:.PriceSummaryTVCell))
@@ -163,7 +173,7 @@ class BookingDetailsVC: BaseTableVC {
     }
     
     func gotoAddTravellerOrGuestVC(str:String) {
-        defaults.set(str, forKey: UserDefaultsKeys.addTarvellerDetails)
+        defaults.set(str, forKey: UserDefaultsKeys.travellerTitle)
         guard let vc = AddTravellerDetailsVC.newInstance.self else {return}
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true)
@@ -171,19 +181,19 @@ class BookingDetailsVC: BaseTableVC {
     
     
     override func didTapOnAddAdultBtn(cell: AddTravellerTVCell) {
-        gotoAddTravellerOrGuestVC(str: "adult")
+        gotoAddTravellerOrGuestVC(str: "Adult")
     }
     
     override func didTapOnAddChildBtn(cell: AddTravellerTVCell) {
-        gotoAddTravellerOrGuestVC(str: "child")
+        gotoAddTravellerOrGuestVC(str: "Children")
     }
     
     override func didTapOnEditAdultBtn(cell:AddTravellerTVCell){
-        gotoAddTravellerOrGuestVC(str: "adult")
+       // gotoAddTravellerOrGuestVC(str: "edit")
     }
     
     override func didTapOnEditChildtBtn(cell:AddTravellerTVCell){
-        gotoAddTravellerOrGuestVC(str: "child")
+      //  gotoAddTravellerOrGuestVC(str: "edit")
     }
     
     override func didTapOnViewFlightsDetailsBtn(cell: FlightDetailsTVCell) {
@@ -199,6 +209,144 @@ class BookingDetailsVC: BaseTableVC {
         vc.modalPresentationStyle = .overCurrentContext
         self.present(vc, animated: true)
     }
+    
+    
+
+    
+    
+    
+    
+    //MARK: - FETCHING COREDATA VALUES
+    func fetchCoreDataValues() {
+        
+        fnameArray.removeAll()
+        mnameArray.removeAll()
+        lnameArray.removeAll()
+        dobArray.removeAll()
+        passportNoArray.removeAll()
+        countryCodeArray.removeAll()
+        passportexpiryYearArray.removeAll()
+        passportexpiryMonthArray.removeAll()
+        passportexpirydayArray.removeAll()
+        passportissuingcountryArray.removeAll()
+        
+        
+        
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "PassengerDetails")
+        //request.predicate = NSPredicate(format: "age = %@", "21")
+        request.returnsObjectsAsFaults = false
+        do {
+            let result = try context.fetch(request)
+            
+            print(result)
+            for data in result as! [NSManagedObject]{
+                print("fname ====== >\((data.value(forKey: "fname") as? String) ?? "")")
+               
+                
+                fnameArray.append(data.value(forKey: "fname") as! String)
+                lnameArray.append(data.value(forKey: "lname") as! String)
+                dobArray.append(data.value(forKey: "dob") as! String)
+                passportNoArray.append(data.value(forKey: "passportno") as! String)
+               // countryCodeArray.append(data.value(forKey: "countryCode") as! String)
+                passportissuingcountryArray.append(data.value(forKey: "passportissuingcountry") as! String)
+                passportnationalityArray.append(data.value(forKey: "nationality") as! String)
+                
+                let dateString = "\(data.value(forKey: "passportexpirydate") as! String)"
+                let formatter = DateFormatter()
+                formatter.dateFormat = "dd-MM-yyyy"
+                guard let date = formatter.date(from: dateString) else {
+                    return
+                }
+                
+                formatter.dateFormat = "yyyy"
+                let year = formatter.string(from: date)
+                passportexpiryYearArray.append(year)
+                formatter.dateFormat = "MM"
+                let month = formatter.string(from: date)
+                passportexpiryMonthArray.append(month)
+                formatter.dateFormat = "dd"
+                let day = formatter.string(from: date)
+                passportexpirydayArray.append(day)
+                print(year, month, day) // 2018 12 24
+                
+            }
+            
+            details = result
+            
+            
+            DispatchQueue.main.async {[self] in
+                commonTableView.reloadData()
+            }
+        } catch {
+            print("Failed")
+        }
+    }
+    
+    
+    //MARK: - DELETING COREDATA OBJECT
+    func deleteRecords(index:Int,id:String) {
+        
+        print("DELETING COREDATA OBJECT")
+        print(index)
+        print(id)
+        
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "PassengerDetails")
+        request.predicate = NSPredicate(format: "id = %@", "\(id)")
+        request.returnsObjectsAsFaults = false
+        
+        
+        if details.count > 0 {
+            
+            
+            do {
+                let objects = try context.fetch(request)
+                for object in details {
+                    context.delete(object as! NSManagedObject)
+                }
+            } catch {
+                print ("There was an error")
+            }
+        }
+        
+        
+        do {
+            try context.save()
+        } catch {
+            print ("There was an error")
+        }
+        
+        
+        DispatchQueue.main.async {[self] in
+            
+            fetchCoreDataValues()
+            commonTableView.reloadData()
+        }
+    }
+    
+    
+    
+    //MARK: - DELETING COREDATA OBJECT
+    func deleteAllRecords() {
+        
+        if details.count > 0 {
+            for object in details as! [NSManagedObject] {
+                context.delete(object )
+            }
+        }
+        
+        
+        do {
+            try context.save()
+        } catch {
+            print ("There was an error")
+        }
+        
+    }
+    
+    
+    
+    
+    
 }
 
 

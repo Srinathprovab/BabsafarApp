@@ -17,6 +17,20 @@ func setuplabels(lbl:UILabel,text:String,textcolor:UIColor,font:UIFont,align:NST
     lbl.textAlignment = align
 }
 
+//MARK: - convert Date Format
+func convertDateFormat(inputDate: String,f1:String,f2:String) -> String {
+    
+    let olDateFormatter = DateFormatter()
+    olDateFormatter.dateFormat = f1
+    
+    guard let oldDate = olDateFormatter.date(from: inputDate) else { return "" }
+    
+    let convertDateFormatter = DateFormatter()
+    convertDateFormatter.dateFormat = f2
+    
+    return convertDateFormatter.string(from: oldDate)
+}
+
 class SplashScreenVC: UIViewController {
     
     

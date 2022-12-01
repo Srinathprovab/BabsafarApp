@@ -131,18 +131,22 @@ class SearchFlightResultVC: BaseTableVC {
         if let journeyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
             if journeyType == "oneway" {
                 
-                navView.lbl1.text = "\(defaults.string(forKey: UserDefaultsKeys.fairportCode) ?? "") -> \(defaults.string(forKey: UserDefaultsKeys.tairportCode) ?? "")"
-                navView.lbl2.text = "On \(defaults.string(forKey: UserDefaultsKeys.calDepDate) ?? "")"
+                navView.lbl1.text = "\(defaults.string(forKey: UserDefaultsKeys.fromairport) ?? "") -> \(defaults.string(forKey: UserDefaultsKeys.toairport) ?? "")"
+                navView.lbl2.text = "On \(defaults.string(forKey: UserDefaultsKeys.calDepDate) ?? "") | \(defaults.string(forKey: UserDefaultsKeys.travellerDetails) ?? "")"
                 
             }else if journeyType == "circle"{
                 
-                navView.lbl1.text = "\(defaults.string(forKey: UserDefaultsKeys.rfairportCode) ?? "") <-> \(defaults.string(forKey: UserDefaultsKeys.rtairportCode) ?? "")"
-                navView.lbl2.text = "On \(defaults.string(forKey: UserDefaultsKeys.rcalDepDate) ?? "") - Return \(defaults.string(forKey: UserDefaultsKeys.rcalRetDate) ?? "")"
+                
+                navView.lbl1.text = "\(defaults.string(forKey: UserDefaultsKeys.rfromairport) ?? "") -> \(defaults.string(forKey: UserDefaultsKeys.rtoairport) ?? "")"
+                navView.lbl2.text = "On \(defaults.string(forKey: UserDefaultsKeys.rcalDepDate) ?? "") & \(defaults.string(forKey: UserDefaultsKeys.rcalRetDate) ?? "") | \(defaults.string(forKey: UserDefaultsKeys.rtravellerDetails) ?? "")"
                 
             }else {
                 
-                navView.lbl1.text = "\(defaults.string(forKey: UserDefaultsKeys.mfromairportCode) ?? "") <-> \(defaults.string(forKey: UserDefaultsKeys.mtoairportCode) ?? "")"
+                navView.lbl1.text = "\(defaults.string(forKey: UserDefaultsKeys.mfromCity) ?? "") <-> \(defaults.string(forKey: UserDefaultsKeys.mtoCity) ?? "")"
                 navView.lbl2.text = "On \(defaults.string(forKey: UserDefaultsKeys.mcalDepDate) ?? "")"
+                
+               
+                
             }
         }
         

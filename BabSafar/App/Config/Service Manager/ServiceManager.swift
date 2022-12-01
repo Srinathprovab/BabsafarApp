@@ -369,7 +369,7 @@ class ServiceManager {
             headers: nil).responseJSON { (responseData) -> Void in
                 if responseData.value != nil {
                     //do something with data
-                    // print(responseData.value as Any)
+                     print(responseData.value as Any)
                     
                     switch responseData.result {
                     case .success(let data):
@@ -833,6 +833,21 @@ extension String{
     var htmlToString: String {
         return htmlToAttributedString?.string ?? ""
     }
+    
+    
+    
+    func isValidPassport() -> Bool {
+            let PASSPORT_REG_EX = "^(?!^0+$)[a-zA-Z0-9]{3,20}$"
+            let passport = NSPredicate(format:"SELF MATCHES %@", PASSPORT_REG_EX)
+
+            if (self.count >= 6) {
+                return passport.evaluate(with: self)
+            } else {
+                return false
+            }
+        }
+    
+    
 }
 
 

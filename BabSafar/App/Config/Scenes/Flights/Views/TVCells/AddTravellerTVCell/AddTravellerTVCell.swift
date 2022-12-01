@@ -6,15 +6,17 @@
 //
 
 import UIKit
+import CoreData
+
+
 protocol AddTravellerTVCellDelegate {
     func didTapOnAddAdultBtn(cell:AddTravellerTVCell)
     func didTapOnAddChildBtn(cell:AddTravellerTVCell)
-    
     func didTapOnEditAdultBtn(cell:AddTravellerTVCell)
     func didTapOnEditChildtBtn(cell:AddTravellerTVCell)
-    
-    
 }
+
+
 class AddTravellerTVCell: TableViewCell {
     
     @IBOutlet weak var holderView: UIView!
@@ -43,7 +45,10 @@ class AddTravellerTVCell: TableViewCell {
     var childCount = 0
     var infantsCount = 0
     var delegate:AddTravellerTVCellDelegate?
-    
+    var details  = [NSFetchRequestResult]()
+    var adetails  = [NSFetchRequestResult]()
+    var cdetails  = [NSFetchRequestResult]()
+    var idetails  = [NSFetchRequestResult]()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -63,16 +68,12 @@ class AddTravellerTVCell: TableViewCell {
     
     override func updateUI() {
         
-        if adultsArray.count > 0 {
-            let height = adultsArray.count * 50
-            adultTVHeight.constant = CGFloat(height)
-        }
         
+        details = (cellInfo?.moreData as? [NSFetchRequestResult] ?? [])
+        fetchAdultCoreDataValues(str: "Adult")
+        fetchAdultCoreDataValues(str: "Children")
+        fetchAdultCoreDataValues(str: "Infantas")
         
-        if childArray.count > 0 {
-            let height = childArray.count * 50
-            addChildTVHeight.constant = CGFloat(height)
-        }
         
         
         if let journeyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
@@ -80,13 +81,6 @@ class AddTravellerTVCell: TableViewCell {
                 adultsCount = Int(defaults.string(forKey: UserDefaultsKeys.adultCount) ?? "1") ?? 0
                 childCount = Int(defaults.string(forKey: UserDefaultsKeys.childCount) ?? "0") ?? 0
                 infantsCount = Int(defaults.string(forKey: UserDefaultsKeys.infantsCount) ?? "0") ?? 0
-                
-                if childCount == 0 {
-                    addChildHolderView.isHidden = true
-                    addChildTV.isHidden = true
-                    addChildTVHeight.constant = 0
-                }
-                
                 
             }else if journeyType == "circle"{
                 adultsCount = Int(defaults.string(forKey: UserDefaultsKeys.radultCount) ?? "1") ?? 0
@@ -99,6 +93,35 @@ class AddTravellerTVCell: TableViewCell {
                 infantsCount = Int(defaults.string(forKey: UserDefaultsKeys.minfantsCount) ?? "0") ?? 0
             }
         }
+        
+        
+        if childCount == 0 {
+            addChildHolderView.isHidden = true
+            addChildTV.isHidden = true
+            addChildTVHeight.constant = 0
+        }
+        
+        
+        
+        if cdetails.count == childCount {
+            addChildBtnView.isHidden = true
+        }
+        
+       
+        
+        if adetails.count > 0 {
+            let height = adetails.count * 50
+            adultTVHeight.constant = CGFloat(height)
+        }
+        
+        
+        if cdetails.count > 0 {
+            let height = cdetails.count * 50
+            addChildTVHeight.constant = CGFloat(height)
+        }
+        
+    
+        
         
         self.contentView.layoutIfNeeded()
         self.addAdultTV.reloadData()
@@ -201,6 +224,35 @@ class AddTravellerTVCell: TableViewCell {
         delegate?.didTapOnAddChildBtn(cell: self)
     }
     
+    
+    
+    
+    
+    
+    //MARK: - FETCHING COREDATA VALUES
+    func fetchAdultCoreDataValues(str:String) {
+        
+        
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "PassengerDetails")
+        
+        request.predicate = NSPredicate(format: "title = %@", "\(str)")
+        request.returnsObjectsAsFaults = false
+        do {
+            if str == "Adult" {
+                adetails = try context.fetch(request)
+            }else if str == "Children" {
+                cdetails = try context.fetch(request)
+            }else {
+                idetails = try context.fetch(request)
+            }
+            
+        } catch {
+            
+            print("Failed")
+        }
+    }
+    
+    
 }
 
 
@@ -208,9 +260,9 @@ extension AddTravellerTVCell:UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if tableView == addAdultTV {
-            return adultsArray.count
+            return adetails.count
         }else {
-            return childArray.count
+            return cdetails.count
         }
         
     }
@@ -220,15 +272,22 @@ extension AddTravellerTVCell:UITableViewDelegate,UITableViewDataSource {
         if tableView == addAdultTV {
             if let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as? AddAdultsOrGuestTVCell {
                 cell.selectionStyle = .none
-                cell.titlelbl.text = adultsArray[indexPath.row]
+                let data = adetails as! [NSManagedObject]
+                cell.titlelbl.text = data[indexPath.row].value(forKey: "fname") as? String
                 cell.editBtn.addTarget(self, action: #selector(didTapOnEditAdultBtn(_:)), for: .touchUpInside)
+                
+                if adetails.count == adultsCount {
+                    addAdultBtnView.isHidden = true
+                }
+                
                 ccell = cell
             }
             
         }else {
             if let cell = tableView.dequeueReusableCell(withIdentifier: "cell1") as? AddAdultsOrGuestTVCell {
                 cell.selectionStyle = .none
-                cell.titlelbl.text = childArray[indexPath.row]
+                let data = cdetails as! [NSManagedObject]
+                cell.titlelbl.text = data[indexPath.row].value(forKey: "fname") as? String
                 cell.editBtn.addTarget(self, action: #selector(didTapOnEditChildtBtn(_:)), for: .touchUpInside)
                 ccell = cell
             }

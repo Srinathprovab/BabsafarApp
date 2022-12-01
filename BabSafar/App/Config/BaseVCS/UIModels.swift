@@ -77,6 +77,9 @@ enum TVCellType {
     case MultiCityTripFlightResultTVCell
     case CommonTVCell
     case ItineraryAddTVCell
+    case EnterTravellerDetailsTVCell
+    case DobTVCell
+    case ExpireOnTVCell
     
     
     

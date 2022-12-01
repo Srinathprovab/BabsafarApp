@@ -15,11 +15,14 @@ protocol TextfieldTVCellDelegate {
     func donedatePicker(cell:TextfieldTVCell)
     func cancelDatePicker(cell:TextfieldTVCell)
     
+    
+    func textFieldText(cell: TextfieldTVCell, text: String)
 }
 
 
 class TextfieldTVCell: TableViewCell {
     
+   
     
     @IBOutlet weak var holderView: UIView!
     @IBOutlet weak var titlelbl: UILabel!
@@ -47,20 +50,20 @@ class TextfieldTVCell: TableViewCell {
         // Configure the view for the selected state
     }
     
-    
     override func prepareForReuse() {
-        txtField.text = cellInfo?.tempText
+        txtField.text = cellInfo?.subTitle
     }
+    
     
     override func updateUI() {
         btnHeight.constant = 0
         titlelbl.text = cellInfo?.title
         txtField.placeholder = cellInfo?.tempText
         txtField.tag = Int(cellInfo?.text ?? "") ?? 0
-      //  txtField.text = ""
+        txtField.text = cellInfo?.subTitle
         
         switch cellInfo?.key {
-       
+            
         case "pwd":
             showPassView.isHidden = false
             self.txtField.isSecureTextEntry = true
@@ -118,7 +121,8 @@ class TextfieldTVCell: TableViewCell {
             
             
         case "cal":
-            datePicker.maximumDate = Date()
+            datePicker.minimumDate = Date()  //set the current date/time as a minimum
+            datePicker.date = Date()
             showDatePicker()
             break
             
@@ -147,6 +151,7 @@ class TextfieldTVCell: TableViewCell {
         textHolderView.layer.cornerRadius = 4
         textHolderView.clipsToBounds = true
         showImage.image = UIImage(named: "eyeslash")
+        
         titlelbl.textColor = .AppLabelColor
         titlelbl.font = UIFont.LatoRegular(size: 14)
         txtField.delegate = self
@@ -180,7 +185,7 @@ class TextfieldTVCell: TableViewCell {
     
     
     
-//MARK: - DATE PICKER
+    //MARK: - DATE PICKER
     func showDatePicker(){
         //Formate Date
         datePicker.datePickerMode = .date
@@ -203,13 +208,8 @@ class TextfieldTVCell: TableViewCell {
     
     @objc func donedatePicker(){
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
+        formatter.dateFormat = "dd-MM-yyyy"
         txtField.text = formatter.string(from: datePicker.date)
-        
-        
-        let formatter1 = DateFormatter()
-        formatter1.dateFormat = "yyyy-MM-dd"
-        txtField.text = formatter1.string(from: datePicker.date)
         
         delegate?.donedatePicker(cell: self)
     }
@@ -227,6 +227,9 @@ extension TextfieldTVCell {
     
     
     override func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        let result = (txtField.text as NSString?)?.replacingCharacters(in: range, with: string) ?? string
+        delegate?.textFieldText(cell: self, text: result)
         
         
         switch textField.tag {
@@ -254,6 +257,7 @@ extension TextfieldTVCell {
         }
         
     }
+    
     
     
     

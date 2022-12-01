@@ -322,7 +322,7 @@ class SearchFlightsTVCell: TableViewCell, SelectCityViewModelProtocal {
     
     
     func CallShowCityListAPI(str:String) {
-        BASE_URL = "https://provabdevelopment.com/alghanim_new/mobile_webservices/mobile/index.php/ajax/"
+        BASE_URL = "https://provabdevelopment.com/babsafar/mobile_webservices/mobile/index.php/ajax/"
         payload["term"] = str
         cityViewModel?.CallShowCityListAPI(dictParam: payload)
     }
@@ -353,8 +353,8 @@ class SearchFlightsTVCell: TableViewCell, SelectCityViewModelProtocal {
         dropDown.bottomOffset = CGPoint(x: 0, y: fromBtn.frame.size.height + 10)
         dropDown.selectionAction = { [weak self] (index: Int, item: String) in
             
-            print(cityList[index].label)
-            print(cityList[index].id)
+            print(cityList[index].city)
+            print(cityList[index].code)
             print(index)
             self?.fromTF.text = ""
             self?.fromCitylbl.text = item
@@ -366,12 +366,12 @@ class SearchFlightsTVCell: TableViewCell, SelectCityViewModelProtocal {
                      
                      defaults.set(cityList[index].label ?? "", forKey: UserDefaultsKeys.rfromCity)
                      defaults.set(cityList[index].id ?? "", forKey: UserDefaultsKeys.rfromlocid)
-                     defaults.set(cityList[index].airportCode ?? "", forKey: UserDefaultsKeys.rfairportCode)
+                     defaults.set("\(cityList[index].city ?? "") (\(cityList[index].code ?? ""))", forKey: UserDefaultsKeys.rfromairport)
                    
                 }else {
                     defaults.set(cityList[index].label ?? "", forKey: UserDefaultsKeys.fromCity)
                     defaults.set(cityList[index].id ?? "", forKey: UserDefaultsKeys.fromlocid)
-                    defaults.set(cityList[index].airportCode ?? "", forKey: UserDefaultsKeys.fairportCode)
+                    defaults.set("\(cityList[index].city ?? "") (\(cityList[index].code ?? ""))", forKey: UserDefaultsKeys.fromairport)
                 }
                 
             }
@@ -389,8 +389,8 @@ class SearchFlightsTVCell: TableViewCell, SelectCityViewModelProtocal {
         dropDown1.bottomOffset = CGPoint(x: 0, y: toBtn.frame.size.height + 10)
         dropDown1.selectionAction = { [weak self] (index: Int, item: String) in
             
-            print(cityList[index].label)
-            print(cityList[index].id)
+            print(cityList[index].city)
+            print(cityList[index].code)
             print(index)
             self?.toTF.text = ""
             self?.toCitylbl.text = item
@@ -402,12 +402,12 @@ class SearchFlightsTVCell: TableViewCell, SelectCityViewModelProtocal {
                      
                      defaults.set(cityList[index].label ?? "", forKey: UserDefaultsKeys.rtoCity)
                      defaults.set(cityList[index].id ?? "", forKey: UserDefaultsKeys.rtolocid)
-                     defaults.set(cityList[index].airportCode ?? "", forKey: UserDefaultsKeys.rtairportCode)
+                     defaults.set("\(cityList[index].city ?? "") (\(cityList[index].code ?? ""))", forKey: UserDefaultsKeys.rtoairport)
                    
                 }else {
                     defaults.set(cityList[index].label ?? "", forKey: UserDefaultsKeys.toCity)
                     defaults.set(cityList[index].id ?? "", forKey: UserDefaultsKeys.tolocid)
-                    defaults.set(cityList[index].airportCode ?? "", forKey: UserDefaultsKeys.mtoairportCode)
+                    defaults.set("\(cityList[index].city ?? "") (\(cityList[index].code ?? ""))", forKey: UserDefaultsKeys.toairport)
                 }
                 
             }

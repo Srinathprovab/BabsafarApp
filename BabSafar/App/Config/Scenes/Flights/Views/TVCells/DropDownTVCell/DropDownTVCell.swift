@@ -92,7 +92,7 @@ class DropDownTVCell: TableViewCell {
                 
             case "Issuing Country":
                 self?.issuingCountry = self?.dropdownlbl.text ?? ""
-                self?.nationalitycode = countrylist[index].origin ?? ""
+                self?.issuingCountrycode = countrylist[index].country_code ?? ""
                 break
                 
             default:

@@ -159,7 +159,7 @@ struct UserDefaultsKeys {
     static var select_classIndex = "select_classIndex"
     static var fromlocid = "from_loc_id"
     static var tolocid = "to_loc_id"
-    static var fairportCode = "fairportCode"
+    static var fromairport = "fromairport"
     static var tairportCode = "tairportCode"
     static var travellerDetails = "travellerDetails"
     static var hadultCount = "HAdult_Count"
@@ -180,12 +180,12 @@ struct UserDefaultsKeys {
     static var rfromlocid = "rfrom_loc_id"
     static var rtolocid = "rto_loc_id"
     static var rtravellerDetails = "rtravellerDetails"
-    static var rfairportCode = "rfairportCode"
-    static var rtairportCode = "rtairportCode"
+    static var rfromairport = "rfromairport"
+    static var rtoairport = "rtoairport"
     static var select = "select"
     static var checkin = "check_in"
     static var checkout = "check _out"
-    static var addTarvellerDetails = "addTarvellerDetails"
+    static var travellerTitle = "travellerTitle"
     
     
     //MULTICITY TRIP
@@ -207,6 +207,7 @@ struct UserDefaultsKeys {
     static var mtoairportCode = "mtoairportCode"
     static var mcaldate = "mcaldate"
     static var cellTag = "cellTag"
+    static var toairport = "toairport"
     
     
 }

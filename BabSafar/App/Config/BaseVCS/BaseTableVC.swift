@@ -7,7 +7,12 @@
 
 import UIKit
 
-class BaseTableVC: UIViewController, SearchFlightsTVCellDelegate, TravellerEconomyTVCellDelegate, RadioButtonTVCellDelegate, LabelTVCellDelegate, SignUpWithTVCellDelegate, ButtonTVCellDelegate, TextfieldTVCellDelegate, LoignOrSignupBtnsTVCellDelegate, BookNowButtonsTVCellDelegate, MenuBGTVCellDelegate, DropDownTVCellDelegate, TDetailsLoginTVCellDelegate, ContactInformationTVCellDelegate, TravelInsuranceTVCellDelegate, PriceSummaryTVCellDelegate, AddTravellerTVCellDelegate, SelectGenderTVCellDelegate, SortbyTVCellDelegate, YourPrivacyTVCellDelegate, SearchFlightResultTVCellDelegate, MultiCityTVCellDelegate, CommonFromCityTVCellDelegate,SearchLocationTFTVCellDelegate, HotelsTVCellelegate, PopularFiltersTVCellDelegate, RoomsTVcellDelegate,RoomDetailsTVCellDelegate, AddAdultsOrGuestTVCellDelegate, FlightDetailsTVCellDelegate, CheckBoxTVCellDelegate, FilterDepartureTVCellDelegate, SliderTVCellDelegate, RoundTripFlightResultTVCellDelegate, MultiCityTripFlightResultTVCellDelegate {
+class BaseTableVC: UIViewController, SearchFlightsTVCellDelegate, TravellerEconomyTVCellDelegate, RadioButtonTVCellDelegate, LabelTVCellDelegate, SignUpWithTVCellDelegate, ButtonTVCellDelegate, TextfieldTVCellDelegate, LoignOrSignupBtnsTVCellDelegate, BookNowButtonsTVCellDelegate, MenuBGTVCellDelegate, DropDownTVCellDelegate, TDetailsLoginTVCellDelegate, ContactInformationTVCellDelegate, TravelInsuranceTVCellDelegate, PriceSummaryTVCellDelegate, AddTravellerTVCellDelegate, SelectGenderTVCellDelegate, SortbyTVCellDelegate, YourPrivacyTVCellDelegate, SearchFlightResultTVCellDelegate, MultiCityTVCellDelegate, CommonFromCityTVCellDelegate,SearchLocationTFTVCellDelegate, HotelsTVCellelegate, PopularFiltersTVCellDelegate, RoomsTVcellDelegate,RoomDetailsTVCellDelegate, AddAdultsOrGuestTVCellDelegate, FlightDetailsTVCellDelegate, CheckBoxTVCellDelegate, FilterDepartureTVCellDelegate, SliderTVCellDelegate, RoundTripFlightResultTVCellDelegate, MultiCityTripFlightResultTVCellDelegate, EnterTravellerDetailsTVCellDelegate, DobTVCellDelegate, ExpireOnTVCellDelegate {
+    
+    
+    
+    
+
     
     
     @IBOutlet weak var commonScrollView: UITableView!
@@ -118,6 +123,7 @@ class BaseTableVC: UIViewController, SearchFlightsTVCellDelegate, TravellerEcono
     func donedatePicker(cell:TextfieldTVCell){}
     func cancelDatePicker(cell:TextfieldTVCell){}
     func editingTextField(tf: UITextField) {}
+    func textFieldText(cell: TextfieldTVCell, text: String){}
     func didTapOnLoginBtn(cell: LoignOrSignupBtnsTVCell) {}
     func didTapOnSignUpBtn(cell: LoignOrSignupBtnsTVCell) {}
     func didTapOnShowPasswordBtn(cell:TextfieldTVCell){}
@@ -185,8 +191,13 @@ class BaseTableVC: UIViewController, SearchFlightsTVCellDelegate, TravellerEcono
     func didTapOnFromCityBtn(cell: MultiCityTVCell) {}
     func didTapOnToCityBtn(cell: MultiCityTVCell) {}
     func didTapOnDateBtn(cell: MultiCityTVCell) {}
-    
-    
+    func editingChanged(tf: UITextField) {}
+    func donedatePicker(cell:EnterTravellerDetailsTVCell){}
+    func cancelDatePicker(cell:EnterTravellerDetailsTVCell){}
+    func donedatePicker(cell: DobTVCell) {}
+    func cancelDatePicker(cell: DobTVCell) {}
+    func donedatePicker(cell: ExpireOnTVCell) {}
+    func cancelDatePicker(cell: ExpireOnTVCell) {}
     
     
     
@@ -607,6 +618,26 @@ extension BaseTableVC: UITableViewDataSource {
                 commonCell = cell
                 
                 
+         
+                
+            case .EnterTravellerDetailsTVCell:
+                let cell: EnterTravellerDetailsTVCell = commonTV.dequeTVCell(indexPath: indexPath)
+                cell.delegate = self
+                commonCell = cell
+                
+                
+                
+            case .DobTVCell:
+                let cell: DobTVCell = commonTV.dequeTVCell(indexPath: indexPath)
+                cell.delegate = self
+                commonCell = cell
+                
+                
+                
+            case .ExpireOnTVCell:
+                let cell: ExpireOnTVCell = commonTV.dequeTVCell(indexPath: indexPath)
+                cell.delegate = self
+                commonCell = cell
                 
                 
             default:

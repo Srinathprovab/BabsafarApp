@@ -110,7 +110,7 @@ class AddContactAndGuestDetailsVC: BaseTableVC {
     }
     
     func gotoAddTravellerOrGuestVC(str:String) {
-        defaults.set(str, forKey: UserDefaultsKeys.addTarvellerDetails)
+        defaults.set(str, forKey: UserDefaultsKeys.travellerTitle)
         guard let vc = AddTravellerDetailsVC.newInstance.self else {return}
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true)

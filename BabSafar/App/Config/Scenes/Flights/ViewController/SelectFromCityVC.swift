@@ -190,14 +190,14 @@ extension SelectFromCityVC {
             cell.titlelbl.text = dict.label
             cell.subTitlelbl.text = dict.value
             cell.id = dict.id ?? ""
-            cell.cityShortNamelbl.text = dict.airportCode
+            cell.cityShortNamelbl.text = dict.code
             cell.value = dict.value ?? ""
         }else{
             let dict = cityList[indexPath.row]
             cell.titlelbl.text = dict.label
             cell.subTitlelbl.text = dict.value
             cell.id = dict.id ?? ""
-            cell.cityShortNamelbl.text = dict.airportCode
+            cell.cityShortNamelbl.text = dict.code
             cell.value = dict.value ?? ""
         }
         return cell
@@ -221,24 +221,24 @@ extension SelectFromCityVC {
                             if titleStr == "From" {
                                 defaults.set(cell.titlelbl.text ?? "", forKey: UserDefaultsKeys.fromCity)
                                 defaults.set(cell.id , forKey: UserDefaultsKeys.fromlocid)
-                                defaults.set(cell.cityShortNamelbl.text , forKey: UserDefaultsKeys.fairportCode)
+                                defaults.set(cell.cityShortNamelbl.text , forKey: UserDefaultsKeys.fromairport)
 
                             }else {
                                 defaults.set(cell.titlelbl.text ?? "", forKey: UserDefaultsKeys.toCity)
                                 defaults.set(cell.id , forKey: UserDefaultsKeys.tolocid)
-                                defaults.set(cell.cityShortNamelbl.text , forKey: UserDefaultsKeys.tairportCode)
+                                defaults.set(cell.cityShortNamelbl.text , forKey: UserDefaultsKeys.toairport)
 
                             }
                         }else if journeyType == "circle"{
                             if titleStr == "From" {
                                 defaults.set(cell.titlelbl.text ?? "", forKey: UserDefaultsKeys.rfromCity)
                                 defaults.set(cell.id , forKey: UserDefaultsKeys.rfromlocid)
-                                defaults.set(cell.cityShortNamelbl.text , forKey: UserDefaultsKeys.rfairportCode)
+                                defaults.set(cell.cityShortNamelbl.text , forKey: UserDefaultsKeys.rfromairport)
                                 
                             }else {
                                 defaults.set(cell.titlelbl.text ?? "", forKey: UserDefaultsKeys.rtoCity)
                                 defaults.set(cell.id , forKey: UserDefaultsKeys.rtolocid)
-                                defaults.set(cell.cityShortNamelbl.text , forKey: UserDefaultsKeys.rtairportCode)
+                                defaults.set(cell.cityShortNamelbl.text , forKey: UserDefaultsKeys.rtoairport)
 
                             }
                         }else {
