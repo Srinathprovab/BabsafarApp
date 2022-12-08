@@ -192,6 +192,7 @@ extension SelectFromCityVC {
             cell.id = dict.id ?? ""
             cell.cityShortNamelbl.text = dict.code
             cell.value = dict.value ?? ""
+            cell.citycode = "\(dict.name ?? "")(\(dict.code ?? ""))"
         }else{
             let dict = cityList[indexPath.row]
             cell.titlelbl.text = dict.label
@@ -199,6 +200,7 @@ extension SelectFromCityVC {
             cell.id = dict.id ?? ""
             cell.cityShortNamelbl.text = dict.code
             cell.value = dict.value ?? ""
+            cell.citycode = "\(dict.name ?? "")(\(dict.code ?? ""))"
         }
         return cell
     }
@@ -257,7 +259,7 @@ extension SelectFromCityVC {
                                 fromlocidArray[self.celltag] = cell.id
                                 
                              
-                               
+                                defaults.set(cell.citycode , forKey: UserDefaultsKeys.mfromCity1)
                             
                                 
                             }else {
@@ -272,7 +274,7 @@ extension SelectFromCityVC {
                                 toCityArray[self.celltag] = cell.value
                                 tolocidArray[self.celltag] = cell.id
                                 
-                                
+                                defaults.set(cell.citycode , forKey: UserDefaultsKeys.mtoCity1)
                                
 
                             }

@@ -334,9 +334,10 @@ class SearchFlightsTVCell: TableViewCell, SelectCityViewModelProtocal {
         cityList = response
         cityNameArray.removeAll()
         cityList.forEach { i in
-            print(i)
-            cityNameArray.append(i.label ?? "")
-            cityLocId.append(i.id ?? "")
+            if cityNameArray.count <= 5 {
+                cityNameArray.append("\(i.label ?? "")\n\(i.label ?? "")")
+                cityLocId.append(i.id ?? "")
+            }
             
         }
         dropDown.dataSource = cityNameArray
@@ -348,6 +349,15 @@ class SearchFlightsTVCell: TableViewCell, SelectCityViewModelProtocal {
     func setupDropDown() {
         
         dropDown.direction = .bottom
+        dropDown.cellHeight = 50
+       // dropDown.cellNib = UINib(nibName: "DropDownCell", bundle: nil)
+//        dropDown.customCellConfiguration = { (index: Index, item: String, cell: DropDownCell) -> Void in
+//            guard let cell = cell as? DropDownCell else { return }
+//            
+//            // can use attrubted string for colored text
+//            cell.textLabel?.text = cityList[index].name
+//            //  cell.logoImageView.image = UIImage(systemName: icons[index])
+//        }
         dropDown.backgroundColor = .WhiteColor
         dropDown.anchorView = self.fromBtn
         dropDown.bottomOffset = CGPoint(x: 0, y: fromBtn.frame.size.height + 10)
@@ -358,16 +368,16 @@ class SearchFlightsTVCell: TableViewCell, SelectCityViewModelProtocal {
             print(index)
             self?.fromTF.text = ""
             self?.fromCitylbl.text = item
-            
+            self?.toTF.becomeFirstResponder()
             
             
             if let selectedJType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
-                 if selectedJType == "circle" {
-                     
-                     defaults.set(cityList[index].label ?? "", forKey: UserDefaultsKeys.rfromCity)
-                     defaults.set(cityList[index].id ?? "", forKey: UserDefaultsKeys.rfromlocid)
-                     defaults.set("\(cityList[index].city ?? "") (\(cityList[index].code ?? ""))", forKey: UserDefaultsKeys.rfromairport)
-                   
+                if selectedJType == "circle" {
+                    
+                    defaults.set(cityList[index].label ?? "", forKey: UserDefaultsKeys.rfromCity)
+                    defaults.set(cityList[index].id ?? "", forKey: UserDefaultsKeys.rfromlocid)
+                    defaults.set("\(cityList[index].city ?? "") (\(cityList[index].code ?? ""))", forKey: UserDefaultsKeys.rfromairport)
+                    
                 }else {
                     defaults.set(cityList[index].label ?? "", forKey: UserDefaultsKeys.fromCity)
                     defaults.set(cityList[index].id ?? "", forKey: UserDefaultsKeys.fromlocid)
@@ -394,16 +404,16 @@ class SearchFlightsTVCell: TableViewCell, SelectCityViewModelProtocal {
             print(index)
             self?.toTF.text = ""
             self?.toCitylbl.text = item
+            self?.toTF.resignFirstResponder()
             
-           
             
             if let selectedJType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
-                 if selectedJType == "circle" {
-                     
-                     defaults.set(cityList[index].label ?? "", forKey: UserDefaultsKeys.rtoCity)
-                     defaults.set(cityList[index].id ?? "", forKey: UserDefaultsKeys.rtolocid)
-                     defaults.set("\(cityList[index].city ?? "") (\(cityList[index].code ?? ""))", forKey: UserDefaultsKeys.rtoairport)
-                   
+                if selectedJType == "circle" {
+                    
+                    defaults.set(cityList[index].label ?? "", forKey: UserDefaultsKeys.rtoCity)
+                    defaults.set(cityList[index].id ?? "", forKey: UserDefaultsKeys.rtolocid)
+                    defaults.set("\(cityList[index].city ?? "") (\(cityList[index].code ?? ""))", forKey: UserDefaultsKeys.rtoairport)
+                    
                 }else {
                     defaults.set(cityList[index].label ?? "", forKey: UserDefaultsKeys.toCity)
                     defaults.set(cityList[index].id ?? "", forKey: UserDefaultsKeys.tolocid)

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="4ue-4F-CrM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="4ue-4F-CrM">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -1227,6 +1227,7 @@
                     <connections>
                         <outlet property="commonTableView" destination="amK-Bc-5ZE" id="tiP-Se-HC6"/>
                         <outlet property="navBar" destination="CNV-if-sVL" id="Mg7-VU-TBM"/>
+                        <outlet property="navheight" destination="Ymt-4o-AX4" id="Eff-xT-WUs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bX1-1I-cAb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1245,14 +1246,14 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qKG-MX-ApS" customClass="NavBar" customModule="BabSafar" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="220"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="160"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="220" id="SuI-5h-PjP"/>
+                                            <constraint firstAttribute="height" constant="160" id="SuI-5h-PjP"/>
                                         </constraints>
                                     </view>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="N7B-FG-oQt">
-                                        <rect key="frame" x="10" y="175" width="394" height="721"/>
+                                        <rect key="frame" x="10" y="130" width="394" height="766"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     </tableView>
                                 </subviews>
@@ -1264,7 +1265,7 @@
                                     <constraint firstItem="N7B-FG-oQt" firstAttribute="leading" secondItem="kW4-Z4-A7m" secondAttribute="leading" constant="10" id="QLM-eI-Ghq"/>
                                     <constraint firstAttribute="trailing" secondItem="qKG-MX-ApS" secondAttribute="trailing" id="XFJ-XI-KGn"/>
                                     <constraint firstAttribute="bottom" secondItem="N7B-FG-oQt" secondAttribute="bottom" id="tiw-Fz-olc"/>
-                                    <constraint firstItem="N7B-FG-oQt" firstAttribute="top" secondItem="kW4-Z4-A7m" secondAttribute="top" constant="175" id="uVB-Sr-4Ng"/>
+                                    <constraint firstItem="N7B-FG-oQt" firstAttribute="top" secondItem="kW4-Z4-A7m" secondAttribute="top" constant="130" id="uVB-Sr-4Ng"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -2224,14 +2225,14 @@
             <objects>
                 <viewController storyboardIdentifier="SideMenuVC" id="LbH-8f-afb" customClass="SideMenuVC" customModule="BabSafar" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ims-Zt-mgW">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="340" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="17v-as-LM2">
-                                <rect key="frame" x="0.0" y="0.0" width="314" height="896"/>
+                                <rect key="frame" x="0.0" y="0.0" width="340" height="896"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="S84-YA-46a">
-                                        <rect key="frame" x="0.0" y="0.0" width="314" height="896"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="340" height="896"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     </tableView>
                                 </subviews>
@@ -2248,11 +2249,12 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="17v-as-LM2" firstAttribute="leading" secondItem="eFQ-uf-ImS" secondAttribute="leading" id="NNF-1F-iCP"/>
-                            <constraint firstItem="eFQ-uf-ImS" firstAttribute="trailing" secondItem="17v-as-LM2" secondAttribute="trailing" constant="100" id="Pt9-4K-37S"/>
+                            <constraint firstItem="eFQ-uf-ImS" firstAttribute="trailing" secondItem="17v-as-LM2" secondAttribute="trailing" id="Pt9-4K-37S"/>
                             <constraint firstItem="17v-as-LM2" firstAttribute="top" secondItem="ims-Zt-mgW" secondAttribute="top" id="RYg-Nr-vKa"/>
                             <constraint firstAttribute="bottom" secondItem="17v-as-LM2" secondAttribute="bottom" id="xyy-oI-5TO"/>
                         </constraints>
                     </view>
+                    <size key="freeformSize" width="340" height="896"/>
                     <connections>
                         <outlet property="commonTableView" destination="S84-YA-46a" id="cP7-qn-S8d"/>
                     </connections>
@@ -2375,7 +2377,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hotels" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YFg-bq-2kw">
-                                                <rect key="frame" x="182.5" y="256" width="49.5" height="21"/>
+                                                <rect key="frame" x="182.5" y="256" width="49" height="21"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>

@@ -12,7 +12,7 @@ class BookingConfirmedVC: BaseTableVC {
     
     @IBOutlet weak var navBar: NavBar!
     
-    
+   
     var tablerow = [TableRow]()
     static var newInstance: BookingConfirmedVC? {
         let storyboard = UIStoryboard(name: Storyboard.Main.name,
@@ -57,7 +57,10 @@ class BookingConfirmedVC: BaseTableVC {
     
     
     @objc func didTapOnBackButton(_ sender:UIButton) {
-        dismiss(animated: true)
+        guard let vc = DashBoaardTabbarVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.selectedIndex = 0
+        present(vc, animated: true)
     }
     
     

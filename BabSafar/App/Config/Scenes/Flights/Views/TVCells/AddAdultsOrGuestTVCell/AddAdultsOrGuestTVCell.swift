@@ -20,6 +20,7 @@ class AddAdultsOrGuestTVCell: TableViewCell {
     @IBOutlet weak var editImg: UIImageView!
     @IBOutlet weak var editBtn: UIButton!
     
+    var travellerId = String()
     var delegate:AddAdultsOrGuestTVCellDelegate?
     override func awakeFromNib() {
         super.awakeFromNib()

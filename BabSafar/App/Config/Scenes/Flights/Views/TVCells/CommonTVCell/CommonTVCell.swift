@@ -13,6 +13,8 @@ class CommonTVCell: TableViewCell {
     @IBOutlet weak var holderView: UIView!
     @IBOutlet weak var tvHeight: NSLayoutConstraint!
     
+    
+    var index = Int()
     var selectClassArray = ["Economy","Premium Economy","First","Business"]
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -28,6 +30,19 @@ class CommonTVCell: TableViewCell {
     
     override func updateUI() {
         //selectClassArray = cellInfo?.data as! [String]
+        
+        
+        if let journeyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
+            if journeyType == "oneway" {
+                index = defaults.integer(forKey: UserDefaultsKeys.select_classIndex)
+            }else if journeyType == "circle"{
+                index = defaults.integer(forKey: UserDefaultsKeys.rselect_classIndex)
+            }else {
+                index = defaults.integer(forKey: UserDefaultsKeys.mselect_classIndex)
+            }
+        }
+        
+       
         tvHeight.constant = CGFloat((selectClassArray.count * 50))
         infoTV.reloadData()
     }
@@ -58,10 +73,13 @@ extension CommonTVCell:UITableViewDataSource,UITableViewDelegate {
         var ccell = UITableViewCell()
         if let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as? RadioButtonTVCell {
             cell.selectionStyle = .none
+            if indexPath.row == index {
+                infoTV.selectRow(at: indexPath, animated: true, scrollPosition: .none)
+                infoTV.delegate?.tableView?(tableView, didSelectRowAt: indexPath)
+                cell.show()
+            }
+            
             cell.titlelbl.text = selectClassArray[indexPath.row]
-            
-           
-            
             ccell = cell
         }
         return ccell

@@ -102,12 +102,12 @@ class AddContactAndGuestDetailsVC: BaseTableVC {
         gotoAddTravellerOrGuestVC(str: "hotelchild")
     }
     
-    override func didTapOnEditAdultBtn(cell:AddTravellerTVCell){
-        gotoAddTravellerOrGuestVC(str: "hoteladultedit")
-    }
-    override func didTapOnEditChildtBtn(cell:AddTravellerTVCell){
-        gotoAddTravellerOrGuestVC(str: "hotelchildedit")
-    }
+//    override func didTapOnEditAdultBtn(cell:AddTravellerTVCell){
+//        gotoAddTravellerOrGuestVC(str: "hoteladultedit")
+//    }
+//    override func didTapOnEditChildtBtn(cell:AddTravellerTVCell){
+//        gotoAddTravellerOrGuestVC(str: "hotelchildedit")
+//    }
     
     func gotoAddTravellerOrGuestVC(str:String) {
         defaults.set(str, forKey: UserDefaultsKeys.travellerTitle)

@@ -96,12 +96,13 @@ class ExpireOnTVCell: TableViewCell {
         txtField.font = .poppinsMedium(size: 15)
         txtField.isSecureTextEntry = false
        
+        
+        tfHolderView.bringSubviewToFront(dropView)
     }
     
     
     
     @objc func editingTextField(_ tf: UITextField){
-        print(tf.text)
         delegate?.editingTextField(tf: tf)
     }
     

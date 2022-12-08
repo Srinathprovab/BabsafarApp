@@ -37,12 +37,12 @@ class BaggageInfoVC: BaseTableVC, FlightDetailsViewModelProtocal, FDViewModelDel
     
     override func viewWillAppear(_ animated: Bool) {
         callGetFlightDetailsAPI()
-        setupTVCells()
     }
     
     
     
     func setupTVCells() {
+        commonTableView.isHidden = false
         if let selectedTab = defaults.string(forKey: UserDefaultsKeys.journeyType) {
             if selectedTab == "oneway" {
                 setupItineraryOneWayTVCell()
@@ -72,12 +72,9 @@ class BaggageInfoVC: BaseTableVC, FlightDetailsViewModelProtocal, FDViewModelDel
         self.view.backgroundColor = .black.withAlphaComponent(0.5)
         setupViews(v: holderView, radius: 8, color: .WhiteColor)
         setupViews(v: buttonsView, radius: 0, color: .WhiteColor)
-        
         setupViews(v: itineraryView, radius: 25, color: .AppTabSelectColor)
         setupViews(v: baggageInfoView, radius: 25, color: .WhiteColor)
         setupViews(v: fareRulesView, radius: 25, color: .WhiteColor)
-        
-        
         setupLabels(lbl: itinerarylbl, text: "Itinerary", textcolor: .WhiteColor, font: .LatoMedium(size: 14))
         setupLabels(lbl: fareRuleslbl, text: "Fare Rules", textcolor: .AppLabelColor, font: .LatoMedium(size: 14))
         setupLabels(lbl: baggageInfolbl, text: "Baggage Info", textcolor: .AppLabelColor, font: .LatoMedium(size: 14))
@@ -87,7 +84,16 @@ class BaggageInfoVC: BaseTableVC, FlightDetailsViewModelProtocal, FDViewModelDel
         fareRulesBtn.setTitle("", for: .normal)
         baggageInfoBtn.setTitle("", for: .normal)
         
-        commonTableView.registerTVCells(["ItineraryTVCell","FareRulesTVCell","BaggageInfoTVCell","BookNowButtonsTVCell","EmptyTVCell","ItineraryAddTVCell"])
+        commonTableView.isHidden = true
+        commonTableView.registerTVCells(["ItineraryTVCell",
+                                         "FareRulesTVCell",
+                                         "BaggageInfoTVCell",
+                                         "BookNowButtonsTVCell",
+                                         "EmptyTVCell",
+                                         "ItineraryAddTVCell",
+                                        "CancellationFeesTVCell",
+                                        "basefareTVCell",
+                                         "NoteTVCell"])
     }
     
     //one way ---------------------------------------------
@@ -109,8 +115,10 @@ class BaggageInfoVC: BaseTableVC, FlightDetailsViewModelProtocal, FDViewModelDel
     func setupFareRulesOneWayTVCell() {
         
         tablerow.removeAll()
-        tablerow.append(TableRow(cellType:.FareRulesTVCell))
-        tablerow.append(TableRow(height:500,cellType:.EmptyTVCell))
+      //  tablerow.append(TableRow(cellType:.FareRulesTVCell))
+        tablerow.append(TableRow(cellType:.CancellationFeesTVCell))
+        tablerow.append(TableRow(cellType:.basefareTVCell))
+        tablerow.append(TableRow(cellType:.NoteTVCell))
         commonTVData = tablerow
         commonTableView.reloadData()
         
@@ -144,8 +152,9 @@ class BaggageInfoVC: BaseTableVC, FlightDetailsViewModelProtocal, FDViewModelDel
     func setupFareRulesRoundTripTVCell() {
         
         tablerow.removeAll()
-        tablerow.append(TableRow(cellType:.FareRulesTVCell))
-        tablerow.append(TableRow(height:500,cellType:.EmptyTVCell))
+        tablerow.append(TableRow(cellType:.CancellationFeesTVCell))
+        tablerow.append(TableRow(cellType:.basefareTVCell))
+        tablerow.append(TableRow(cellType:.NoteTVCell))
         commonTVData = tablerow
         commonTableView.reloadData()
         
@@ -212,6 +221,7 @@ class BaggageInfoVC: BaseTableVC, FlightDetailsViewModelProtocal, FDViewModelDel
     
     
     @IBAction func didTapOnitIneraryBtn(_ sender: Any) {
+        scrollToFirstRow()
         itinerarylbl.textColor = .WhiteColor
         itineraryView.backgroundColor = .AppTabSelectColor
         fareRuleslbl.textColor = .AppLabelColor
@@ -235,7 +245,7 @@ class BaggageInfoVC: BaseTableVC, FlightDetailsViewModelProtocal, FDViewModelDel
     
     
     @IBAction func didTapOnitFareRulesBtn(_ sender: Any) {
-        
+        scrollToFirstRow()
         itinerarylbl.textColor = .AppLabelColor
         itineraryView.backgroundColor = .WhiteColor
         fareRuleslbl.textColor = .WhiteColor
@@ -255,7 +265,7 @@ class BaggageInfoVC: BaseTableVC, FlightDetailsViewModelProtocal, FDViewModelDel
     }
     
     @IBAction func didTapOnitBaggageInfoBtn(_ sender: Any) {
-        
+        scrollToFirstRow()
         itinerarylbl.textColor = .AppLabelColor
         itineraryView.backgroundColor = .WhiteColor
         fareRuleslbl.textColor = .AppLabelColor
@@ -317,6 +327,10 @@ class BaggageInfoVC: BaseTableVC, FlightDetailsViewModelProtocal, FDViewModelDel
     }
     
     
+    func scrollToFirstRow() {
+        let indexPath = IndexPath(row: 0, section: 0)
+        self.commonTableView.scrollToRow(at: indexPath, at: .top, animated: true)
+      }
     
 }
 

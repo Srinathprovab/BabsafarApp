@@ -7,12 +7,9 @@
 
 import UIKit
 
-class BaseTableVC: UIViewController, SearchFlightsTVCellDelegate, TravellerEconomyTVCellDelegate, RadioButtonTVCellDelegate, LabelTVCellDelegate, SignUpWithTVCellDelegate, ButtonTVCellDelegate, TextfieldTVCellDelegate, LoignOrSignupBtnsTVCellDelegate, BookNowButtonsTVCellDelegate, MenuBGTVCellDelegate, DropDownTVCellDelegate, TDetailsLoginTVCellDelegate, ContactInformationTVCellDelegate, TravelInsuranceTVCellDelegate, PriceSummaryTVCellDelegate, AddTravellerTVCellDelegate, SelectGenderTVCellDelegate, SortbyTVCellDelegate, YourPrivacyTVCellDelegate, SearchFlightResultTVCellDelegate, MultiCityTVCellDelegate, CommonFromCityTVCellDelegate,SearchLocationTFTVCellDelegate, HotelsTVCellelegate, PopularFiltersTVCellDelegate, RoomsTVcellDelegate,RoomDetailsTVCellDelegate, AddAdultsOrGuestTVCellDelegate, FlightDetailsTVCellDelegate, CheckBoxTVCellDelegate, FilterDepartureTVCellDelegate, SliderTVCellDelegate, RoundTripFlightResultTVCellDelegate, MultiCityTripFlightResultTVCellDelegate, EnterTravellerDetailsTVCellDelegate, DobTVCellDelegate, ExpireOnTVCellDelegate {
+class BaseTableVC: UIViewController, SearchFlightsTVCellDelegate, TravellerEconomyTVCellDelegate, RadioButtonTVCellDelegate, LabelTVCellDelegate, SignUpWithTVCellDelegate, ButtonTVCellDelegate, TextfieldTVCellDelegate, LoignOrSignupBtnsTVCellDelegate, BookNowButtonsTVCellDelegate, MenuBGTVCellDelegate, DropDownTVCellDelegate, TDetailsLoginTVCellDelegate, ContactInformationTVCellDelegate, TravelInsuranceTVCellDelegate, PriceSummaryTVCellDelegate, AddTravellerTVCellDelegate, SelectGenderTVCellDelegate, SortbyTVCellDelegate, YourPrivacyTVCellDelegate, SearchFlightResultTVCellDelegate, MultiCityTVCellDelegate, CommonFromCityTVCellDelegate,SearchLocationTFTVCellDelegate, HotelsTVCellelegate, PopularFiltersTVCellDelegate, RoomsTVcellDelegate,RoomDetailsTVCellDelegate, AddAdultsOrGuestTVCellDelegate, FlightDetailsTVCellDelegate, CheckBoxTVCellDelegate, FilterDepartureTVCellDelegate, SliderTVCellDelegate, RoundTripFlightResultTVCellDelegate, MultiCityTripFlightResultTVCellDelegate, EnterTravellerDetailsTVCellDelegate, DobTVCellDelegate, ExpireOnTVCellDelegate, ViewFlightDetailsBtnTVCellDelegate {
     
     
-    
-    
-
     
     
     @IBOutlet weak var commonScrollView: UITableView!
@@ -146,6 +143,7 @@ class BaseTableVC: UIViewController, SearchFlightsTVCellDelegate, TravellerEcono
     func didTapOnRemoveTravelInsuranceBtn(cell: PriceSummaryTVCell) {}
     func didTapOnAddAdultBtn(cell: AddTravellerTVCell) {}
     func didTapOnAddChildBtn(cell: AddTravellerTVCell) {}
+    func didTapOnAddInfantaBtn(cell:AddTravellerTVCell) {}
     func didSelectMaleRadioBtn(cell: SelectGenderTVCell) {}
     func didSelectOnFemaleBtn(cell: SelectGenderTVCell) {}
     func didTapOnSaveBtn(cell: SelectGenderTVCell) {}
@@ -177,8 +175,7 @@ class BaseTableVC: UIViewController, SearchFlightsTVCellDelegate, TravellerEcono
     func didTapOnAmenitiesBtn(cell: RoomsTVcell) {}
     func didTapOnRefundableBtn1(cell:RoomDetailsTVCell){}
     func didTapOnEditAdultBtn(cell: AddAdultsOrGuestTVCell) {}
-    func didTapOnEditAdultBtn(cell:AddTravellerTVCell){}
-    func didTapOnEditChildtBtn(cell:AddTravellerTVCell){}
+    func didTapOnEditTraveller(cell:AddAdultsOrGuestTVCell){}
     func didTapOnViewFlightsDetailsBtn(cell: FlightDetailsTVCell) {}
     func didTapOnFlightsDetails(cell:SearchFlightResultTVCell){}
     func didTapOnCheckBoxDropDownBtn(cell: CheckBoxTVCell) {}
@@ -194,10 +191,18 @@ class BaseTableVC: UIViewController, SearchFlightsTVCellDelegate, TravellerEcono
     func editingChanged(tf: UITextField) {}
     func donedatePicker(cell:EnterTravellerDetailsTVCell){}
     func cancelDatePicker(cell:EnterTravellerDetailsTVCell){}
+    func selectedTitle(cell:EnterTravellerDetailsTVCell){}
     func donedatePicker(cell: DobTVCell) {}
     func cancelDatePicker(cell: DobTVCell) {}
     func donedatePicker(cell: ExpireOnTVCell) {}
     func cancelDatePicker(cell: ExpireOnTVCell) {}
+    func didTapOnDropDownBtn(cell: ContactInformationTVCell) {}
+    func didTapOnViewFlightDetailsButton(cell: ViewFlightDetailsBtnTVCell) {}
+    
+    
+    
+    
+    
     
     
     
@@ -618,7 +623,7 @@ extension BaseTableVC: UITableViewDataSource {
                 commonCell = cell
                 
                 
-         
+                
                 
             case .EnterTravellerDetailsTVCell:
                 let cell: EnterTravellerDetailsTVCell = commonTV.dequeTVCell(indexPath: indexPath)
@@ -638,6 +643,37 @@ extension BaseTableVC: UITableViewDataSource {
                 let cell: ExpireOnTVCell = commonTV.dequeTVCell(indexPath: indexPath)
                 cell.delegate = self
                 commonCell = cell
+                
+                
+                
+            case .CancellationFeesTVCell:
+                let cell: CancellationFeesTVCell = commonTV.dequeTVCell(indexPath: indexPath)
+                commonCell = cell
+                
+                
+            case .basefareTVCell:
+                let cell: basefareTVCell = commonTV.dequeTVCell(indexPath: indexPath)
+                commonCell = cell
+                
+                
+                
+            case .NoteTVCell:
+                let cell: NoteTVCell = commonTV.dequeTVCell(indexPath: indexPath)
+                commonCell = cell
+                
+                
+            case .FlightDetailsTitleTVCell:
+                let cell: FlightDetailsTitleTVCell = commonTV.dequeTVCell(indexPath: indexPath)
+                commonCell = cell
+                
+                
+                
+            case .ViewFlightDetailsBtnTVCell:
+                let cell: ViewFlightDetailsBtnTVCell = commonTV.dequeTVCell(indexPath: indexPath)
+                cell.delegate = self
+                commonCell = cell
+                
+                
                 
                 
             default:

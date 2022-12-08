@@ -72,19 +72,30 @@ extension ItineraryAddTVCell:UITableViewDelegate,UITableViewDataSource {
             cell.arivalTime.text = "\(data.origin?.time ?? "")"
             cell.arivalDate.text = "\(data.origin?.date ?? "")"
             cell.airportlbl.text = "\(data.origin?.airport_name ?? "")"
-            cell.terminal1lbl.text = "\(data.origin?.terminal ?? "")"
+            if data.origin?.terminal == "" {
+                cell.terminal1lbl.text = "Terminal: 0"
+            }else {
+                cell.terminal1lbl.text = "Terminal: \(data.origin?.terminal ?? "0")"
+            }
+            
             cell.hourlbl1.text = data.duration
             cell.destTime.text = "\(data.destination?.time ?? "")"
             cell.destDate.text = "\(data.destination?.date ?? "")"
             cell.destlbl.text = "\(data.destination?.airport_name ?? "")"
-            cell.destTerminal1lbl.text = "\(data.destination?.terminal ?? "")"
             
-            cell.timelbl.text = "\(data.duration ?? "") layover time (\(data.destination?.city ?? ""))"
+            if data.destination?.terminal == "" {
+                cell.destTerminal1lbl.text = "Terminal: 0"
+            }else {
+                cell.destTerminal1lbl.text = "Terminal: \(data.destination?.terminal ?? "0")"
+            }
+            
+            cell.timelbl.text = "\(data.layOverDuration ?? "") layover time (\(data.destination?.city ?? ""))"
             if tableView.isLast(for: indexPath) {
                 print(indexPath.row)
                 cell.timeView.isHidden = true
               
             }
+            cell.btnRefund.isHidden = true
             
             
             c = cell

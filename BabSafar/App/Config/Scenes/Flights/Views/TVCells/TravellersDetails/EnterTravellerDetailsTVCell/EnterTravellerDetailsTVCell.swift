@@ -13,6 +13,8 @@ protocol EnterTravellerDetailsTVCellDelegate {
     func editingTextField(tf:UITextField)
     func donedatePicker(cell:EnterTravellerDetailsTVCell)
     func cancelDatePicker(cell:EnterTravellerDetailsTVCell)
+    
+    func selectedTitle(cell:EnterTravellerDetailsTVCell)
 }
 
 class EnterTravellerDetailsTVCell: TableViewCell {
@@ -38,7 +40,7 @@ class EnterTravellerDetailsTVCell: TableViewCell {
     var issuingCountrycode = String()
     var countryNameArray = [String]()
     var delegate:EnterTravellerDetailsTVCellDelegate?
-    
+    var selectedTitle = String()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -73,6 +75,11 @@ class EnterTravellerDetailsTVCell: TableViewCell {
             countrycodeView.isHidden = false
             setupTextFiels(tf: countryCodeTF, placeholder: "Mr")
             
+            if cellInfo?.key1 == "edit" {
+                txtField.text = cellInfo?.text
+                countryCodeTF.text = cellInfo?.headerText
+            }
+            
         }else if cellInfo?.key == "dob" {
             dropView.isHidden = false
             self.tfHolderView.bringSubviewToFront(dropView)
@@ -80,6 +87,9 @@ class EnterTravellerDetailsTVCell: TableViewCell {
         }else {
             
         }
+        
+        
+       
         
         
         
@@ -130,6 +140,7 @@ class EnterTravellerDetailsTVCell: TableViewCell {
         dropDown.anchorView = self.countrycodeView
         dropDown.bottomOffset = CGPoint(x: 0, y: countrycodeView.frame.size.height + 10)
         dropDown.selectionAction = { [weak self] (index: Int, item: String) in
+           
             
             switch self?.cellInfo?.key {
             case "fname":
@@ -137,11 +148,18 @@ class EnterTravellerDetailsTVCell: TableViewCell {
                 self?.countryCodeTF.textColor = .AppLabelColor
                 self?.countryCodeTF.resignFirstResponder()
                 // self?.txtField.becomeFirstResponder()
+                self?.selectedTitle = item
+                
+                self?.delegate?.selectedTitle(cell: self!)
                 break
             default:
                 break
             }
+            
         }
+        
+        
+        
         
     }
     

@@ -61,9 +61,9 @@ class SideMenuVC: BaseTableVC {
         tablerow.append(TableRow(title:"Hotels",key: "menu", image: "hotel",cellType:.LabelTVCell))
         tablerow.append(TableRow(title:"Insurance",key: "menu", image: "insurence",cellType:.LabelTVCell))
         tablerow.append(TableRow(title:"Visa",key: "menu", image: "visa",cellType:.LabelTVCell))
-        tablerow.append(TableRow(height:200,cellType:.EmptyTVCell))
+        tablerow.append(TableRow(height:60,cellType:.EmptyTVCell))
         tablerow.append(TableRow(title:"Logout",key: "menu", image: "logout",cellType:.LabelTVCell))
-        tablerow.append(TableRow(height:30,cellType:.EmptyTVCell))
+        tablerow.append(TableRow(height:100,cellType:.EmptyTVCell))
         commonTVData = tablerow
         commonTableView.reloadData()
     }

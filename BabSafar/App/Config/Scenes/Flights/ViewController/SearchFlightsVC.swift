@@ -208,13 +208,42 @@ class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
     
     
     override func didTapOnSwipeCityBtnAction(cell: SearchFlightsTVCell) {
+        print("didTapOnSwipeCityBtnAction")
         c1 = cell.fromCitylbl.text ?? ""
         c2 = cell.toCitylbl.text ?? ""
         cell.fromCitylbl.text = c2
         cell.toCitylbl.text = c1
         
-        defaults.set(cell.fromCitylbl.text ?? "", forKey: UserDefaultsKeys.fromCity)
-        defaults.set(cell.toCitylbl.text ?? "", forKey: UserDefaultsKeys.toCity)
+       
+        
+        
+        if let selectedJType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
+             if selectedJType == "circle" {
+                 
+                 defaults.set(cell.fromCitylbl.text ?? "", forKey: UserDefaultsKeys.rfromCity)
+                 defaults.set(cell.toCitylbl.text ?? "", forKey: UserDefaultsKeys.rtoCity)
+                 
+                 let fromairport = defaults.string(forKey: UserDefaultsKeys.rfromairport)
+                 let toairport = defaults.string(forKey: UserDefaultsKeys.rtoairport)
+                 
+                 defaults.set(toairport, forKey: UserDefaultsKeys.rfromairport)
+                 defaults.set(fromairport, forKey: UserDefaultsKeys.rtoairport)
+               
+            }else {
+                defaults.set(cell.fromCitylbl.text ?? "", forKey: UserDefaultsKeys.fromCity)
+                defaults.set(cell.toCitylbl.text ?? "", forKey: UserDefaultsKeys.toCity)
+                
+                let fromairport = defaults.string(forKey: UserDefaultsKeys.fromairport)
+                let toairport = defaults.string(forKey: UserDefaultsKeys.toairport)
+                
+                defaults.set(toairport, forKey: UserDefaultsKeys.fromairport)
+                defaults.set(fromairport, forKey: UserDefaultsKeys.toairport)
+            }
+            
+        }
+        
+        
+        
     }
     
     override func didTapOnDepartureBtnAction(cell: SearchFlightsTVCell) {
@@ -450,6 +479,7 @@ class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
             FlightList = response.data?.j_flight_list
             defaults.set(response.data?.search_id, forKey: UserDefaultsKeys.searchid)
             defaults.set(response.data?.booking_source, forKey: UserDefaultsKeys.bookingsource)
+            defaults.set(response.data?.booking_source_key, forKey: UserDefaultsKeys.bookingsourcekey)
             gotoSearchFlightResultVC()
         }
     }
@@ -460,6 +490,7 @@ class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
             RTFlightList = response.data?.j_flight_list
             defaults.set(response.data?.search_id, forKey: UserDefaultsKeys.searchid)
             defaults.set(response.data?.booking_source, forKey: UserDefaultsKeys.bookingsource)
+            defaults.set(response.data?.booking_source_key, forKey: UserDefaultsKeys.bookingsourcekey)
             gotoSearchFlightResultVC()
         }
     }
@@ -475,7 +506,7 @@ class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
         
         
         payload["sector_type"] = "international"
-        payload["trip_type"] = "multicity"
+        payload["trip_type"] = defaults.string(forKey:UserDefaultsKeys.journeyType)
         payload["from"] = fromCityArray
         payload["from_loc_id"] = fromlocidArray
         payload["to"] = toCityArray
@@ -491,6 +522,9 @@ class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
         payload["remngwd"] = defaults.string(forKey: UserDefaultsKeys.mselectClass)
         payload["v_class"] = defaults.string(forKey: UserDefaultsKeys.mselectClass)
         payload["user_id"] = "0"
+        payload["adult"] = defaults.string(forKey:UserDefaultsKeys.madultCount)
+        payload["child"] = defaults.string(forKey:UserDefaultsKeys.mchildCount)
+        payload["infant"] = defaults.string(forKey:UserDefaultsKeys.minfantsCount)
         
         do {
             let arrJson = try JSONSerialization.data(withJSONObject: payload, options: JSONSerialization.WritingOptions.prettyPrinted)
@@ -519,6 +553,7 @@ class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
             MCJflightlist = response.data?.j_flight_list
             defaults.set(response.data?.search_id, forKey: UserDefaultsKeys.searchid)
             defaults.set(response.data?.booking_source, forKey: UserDefaultsKeys.bookingsource)
+            defaults.set(response.data?.booking_source_key, forKey: UserDefaultsKeys.bookingsourcekey)
             gotoSearchFlightResultVC()
         }
     }

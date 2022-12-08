@@ -123,7 +123,7 @@ class SearchFlightResultVC: BaseTableVC {
         navView.titlelbl.text = ""
         
         if screenHeight > 835 {
-            navHeight.constant = 190
+            navHeight.constant = 200
         }else {
             navHeight.constant = 160
         }
@@ -131,21 +131,31 @@ class SearchFlightResultVC: BaseTableVC {
         if let journeyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
             if journeyType == "oneway" {
                 
-                navView.lbl1.text = "\(defaults.string(forKey: UserDefaultsKeys.fromairport) ?? "") -> \(defaults.string(forKey: UserDefaultsKeys.toairport) ?? "")"
-                navView.lbl2.text = "On \(defaults.string(forKey: UserDefaultsKeys.calDepDate) ?? "") | \(defaults.string(forKey: UserDefaultsKeys.travellerDetails) ?? "")"
+                
+                
+                setuplabels(lbl: navView.lbl1, text: "\(defaults.string(forKey: UserDefaultsKeys.fromairport) ?? "") -> \(defaults.string(forKey: UserDefaultsKeys.toairport) ?? "")", textcolor: .WhiteColor, font: .LatoSemibold(size: 18), align: .center)
+                
+                setuplabels(lbl: navView.lbl2, text: "On \(defaults.string(forKey: UserDefaultsKeys.calDepDate) ?? "") | \(defaults.string(forKey: UserDefaultsKeys.travellerDetails) ?? "")", textcolor: .WhiteColor, font: .LatoRegular(size: 12), align: .center)
                 
             }else if journeyType == "circle"{
                 
                 
-                navView.lbl1.text = "\(defaults.string(forKey: UserDefaultsKeys.rfromairport) ?? "") -> \(defaults.string(forKey: UserDefaultsKeys.rtoairport) ?? "")"
-                navView.lbl2.text = "On \(defaults.string(forKey: UserDefaultsKeys.rcalDepDate) ?? "") & \(defaults.string(forKey: UserDefaultsKeys.rcalRetDate) ?? "") | \(defaults.string(forKey: UserDefaultsKeys.rtravellerDetails) ?? "")"
+                
+                
+                
+                setuplabels(lbl: navView.lbl1, text: "\(defaults.string(forKey: UserDefaultsKeys.rfromairport) ?? "") <-> \(defaults.string(forKey: UserDefaultsKeys.rtoairport) ?? "")", textcolor: .WhiteColor, font: .LatoSemibold(size: 18), align: .center)
+                
+                setuplabels(lbl: navView.lbl2, text: "On \(defaults.string(forKey: UserDefaultsKeys.rcalDepDate) ?? "") & \(defaults.string(forKey: UserDefaultsKeys.rcalRetDate) ?? "") | \(defaults.string(forKey: UserDefaultsKeys.rtravellerDetails) ?? "")", textcolor: .WhiteColor, font: .LatoRegular(size: 12), align: .center)
+                
                 
             }else {
                 
-                navView.lbl1.text = "\(defaults.string(forKey: UserDefaultsKeys.mfromCity) ?? "") <-> \(defaults.string(forKey: UserDefaultsKeys.mtoCity) ?? "")"
-                navView.lbl2.text = "On \(defaults.string(forKey: UserDefaultsKeys.mcalDepDate) ?? "")"
                 
-               
+                
+                setuplabels(lbl: navView.lbl1, text: "\(defaults.string(forKey: UserDefaultsKeys.mfromCity) ?? "") <-> \(defaults.string(forKey: UserDefaultsKeys.mtoCity) ?? "")", textcolor: .WhiteColor, font: .LatoSemibold(size: 18), align: .center)
+                setuplabels(lbl: navView.lbl2, text: "On \(defaults.string(forKey: UserDefaultsKeys.mcalDepDate) ?? "")", textcolor: .WhiteColor, font: .LatoRegular(size: 12), align: .center)
+                
+                
                 
             }
         }
@@ -314,12 +324,32 @@ class SearchFlightResultVC: BaseTableVC {
         defaults.set(cell.selectedResult, forKey: UserDefaultsKeys.selectedResult)
         defaults.set(cell.indexPath?.row ?? 0, forKey: UserDefaultsKeys.selectdFlightcellIndex)
         print("indexindexindexindexindex === \(cell.indexPath?.row)")
+        print("cell.selectedResult === \(cell.selectedResult)")
+        RTFlightList?[cell.indexPath?.row ?? 0].forEach { i in
+            Adults_Base_Price = i.adults_Base_Price ?? ""
+            Childs_Base_Price = i.childs_Base_Price ?? ""
+            Infants_Base_Price = i.infants_Base_Price ?? ""
+            Adults_Tax_Price = i.adults_Base_Price ?? ""
+            Childs_Tax_Price = i.childs_Tax_Price ?? ""
+            Infants_Tax_Price = i.infants_Tax_Price ?? ""
+            TotalPrice_API = i.totalPrice_API ?? ""
+        }
+        
         gotoBaggageInfoVC()
     }
     
     override func gotoRoundTripBaggageIntoVC(cell: MultiCityTripFlightResultTVCell) {
         defaults.set(cell.selectedResult, forKey: UserDefaultsKeys.selectedResult)
         defaults.set(cell.indexPath?.row ?? 0, forKey: UserDefaultsKeys.selectdFlightcellIndex)
+        
+        Adults_Base_Price = MCJflightlist?[cell.indexPath?.row ?? 0].adults_Base_Price ?? ""
+        Childs_Base_Price = MCJflightlist?[cell.indexPath?.row ?? 0].childs_Base_Price ?? ""
+        Infants_Base_Price = MCJflightlist?[cell.indexPath?.row ?? 0].infants_Base_Price ?? ""
+        Adults_Tax_Price = MCJflightlist?[cell.indexPath?.row ?? 0].adults_Base_Price ?? ""
+        Childs_Tax_Price = MCJflightlist?[cell.indexPath?.row ?? 0].childs_Tax_Price ?? ""
+        Infants_Tax_Price = MCJflightlist?[cell.indexPath?.row ?? 0].infants_Tax_Price ?? ""
+        TotalPrice_API = MCJflightlist?[cell.indexPath?.row ?? 0].totalPrice_API ?? ""
+        
         gotoBaggageInfoVC()
     }
     
@@ -376,7 +406,7 @@ extension SearchFlightResultVC {
             defaults.set(cell.selectedResult, forKey: UserDefaultsKeys.selectedResult)
             defaults.set(cell.indexPath?.row ?? 0, forKey: UserDefaultsKeys.selectdFlightcellIndex)
             print("indexindexindexindexindex === \(cell.indexPath?.row)")
-
+            
             FlightList?[cell.indexPath?.row ?? 0].forEach { i in
                 Adults_Base_Price = i.adults_Base_Price ?? ""
                 Childs_Base_Price = i.childs_Base_Price ?? ""

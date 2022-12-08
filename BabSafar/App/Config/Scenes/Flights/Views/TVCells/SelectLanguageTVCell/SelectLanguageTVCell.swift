@@ -42,7 +42,7 @@ class SelectLanguageTVCell: TableViewCell {
             subTitlelbl.isHidden = true
             langLogoImg.isHidden = false
             
-            if let lang = defaults.string(forKey: UserDefaultsKeys.selectedLang) {
+            if let lang = defaults.string(forKey: UserDefaultsKeys.APILanguageType) {
                 if lang == titlelbl.text {
                     self.holderView.layer.borderColor = UIColor.AppBtnColor.cgColor
                 }
@@ -53,7 +53,7 @@ class SelectLanguageTVCell: TableViewCell {
             subTitlelbl.isHidden = false
             langLogoImg.isHidden = true
             
-            if let currency = defaults.string(forKey: UserDefaultsKeys.selectedCurrency) {
+            if let currency = defaults.string(forKey: UserDefaultsKeys.APICurrencyType) {
                 if currency == subTitlelbl.text {
                     self.holderView.layer.borderColor = UIColor.AppBtnColor.cgColor
                 }

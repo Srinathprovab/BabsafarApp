@@ -70,6 +70,12 @@ class DropDownTVCell: TableViewCell {
         default:
             break
         }
+        
+        
+        
+        if cellInfo?.key1 == "edit" {
+            dropdownlbl.text = cellInfo?.buttonTitle
+        }
     }
     
     

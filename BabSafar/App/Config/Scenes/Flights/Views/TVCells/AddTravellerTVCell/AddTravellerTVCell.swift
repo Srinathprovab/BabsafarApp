@@ -12,33 +12,49 @@ import CoreData
 protocol AddTravellerTVCellDelegate {
     func didTapOnAddAdultBtn(cell:AddTravellerTVCell)
     func didTapOnAddChildBtn(cell:AddTravellerTVCell)
-    func didTapOnEditAdultBtn(cell:AddTravellerTVCell)
-    func didTapOnEditChildtBtn(cell:AddTravellerTVCell)
+    func didTapOnAddInfantaBtn(cell:AddTravellerTVCell)
+    //    func didTapOnEditAdultBtn(cell:AddTravellerTVCell)
+    //    func didTapOnEditChildtBtn(cell:AddTravellerTVCell)
+    func didTapOnEditTraveller(cell:AddAdultsOrGuestTVCell)
+    
 }
 
 
-class AddTravellerTVCell: TableViewCell {
+class AddTravellerTVCell: TableViewCell,AddAdultsOrGuestTVCellDelegate {
+    
+    
     
     @IBOutlet weak var holderView: UIView!
     @IBOutlet weak var titleHolderView: UIView!
     @IBOutlet weak var travelImg: UIImageView!
     @IBOutlet weak var titlelbl: UILabel!
-    @IBOutlet weak var addAdultHolderView: UIView!
-    @IBOutlet weak var addChildHolderView: UIView!
     @IBOutlet weak var adultlbl: UILabel!
     @IBOutlet weak var childlbl: UILabel!
+    @IBOutlet weak var totalNoOfTravellerlbl: UILabel!
+    
+    @IBOutlet weak var addAdultHolderView: UIView!
     @IBOutlet weak var addAdultBtnView: UIView!
     @IBOutlet weak var addlbl: UILabel!
     @IBOutlet weak var addAdultBtn: UIButton!
+    @IBOutlet weak var addAdultTV: UITableView!
+    @IBOutlet weak var adultTVHeight: NSLayoutConstraint!
+    
+    @IBOutlet weak var addChildHolderView: UIView!
     @IBOutlet weak var addChildBtnView: UIView!
     @IBOutlet weak var addchildlbl: UILabel!
     @IBOutlet weak var addChildBtn: UIButton!
-    @IBOutlet weak var totalNoOfTravellerlbl: UILabel!
-    @IBOutlet weak var addAdultTV: UITableView!
-    @IBOutlet weak var adultTVHeight: NSLayoutConstraint!
     @IBOutlet weak var addChildTV: UITableView!
     @IBOutlet weak var addChildTVHeight: NSLayoutConstraint!
+    @IBOutlet weak var addChildHolderViewHeight: NSLayoutConstraint!
     
+    @IBOutlet weak var addInfantaHolderView: UIView!
+    @IBOutlet weak var infantalbl: UILabel!
+    @IBOutlet weak var addInfantaBtnView: UIView!
+    @IBOutlet weak var addInfantalbl: UILabel!
+    @IBOutlet weak var addInfantaBtn: UIButton!
+    @IBOutlet weak var addInfantaTV: UITableView!
+    @IBOutlet weak var infantaTVHeight: NSLayoutConstraint!
+    @IBOutlet weak var addInfantaHolderViewHeight: NSLayoutConstraint!
     
     
     var adultsCount = 1
@@ -50,12 +66,15 @@ class AddTravellerTVCell: TableViewCell {
     var cdetails  = [NSFetchRequestResult]()
     var idetails  = [NSFetchRequestResult]()
     
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         setupUI()
         setupAdultTV()
         setupChildTV()
+        setupInfantaTV()
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -99,6 +118,14 @@ class AddTravellerTVCell: TableViewCell {
             addChildHolderView.isHidden = true
             addChildTV.isHidden = true
             addChildTVHeight.constant = 0
+            addChildHolderViewHeight.constant = 0
+        }
+        
+        if infantsCount == 0 {
+            addInfantaHolderView.isHidden = true
+            addInfantaTV.isHidden = true
+            infantaTVHeight.constant = 0
+            addInfantaHolderViewHeight.constant = 0
         }
         
         
@@ -107,7 +134,11 @@ class AddTravellerTVCell: TableViewCell {
             addChildBtnView.isHidden = true
         }
         
-       
+        if idetails.count == infantsCount {
+            addInfantaBtnView.isHidden = true
+        }
+        
+        
         
         if adetails.count > 0 {
             let height = adetails.count * 50
@@ -120,12 +151,19 @@ class AddTravellerTVCell: TableViewCell {
             addChildTVHeight.constant = CGFloat(height)
         }
         
-    
+        
+        if idetails.count > 0 {
+            let height = idetails.count * 50
+            infantaTVHeight.constant = CGFloat(height)
+        }
+        
+        
         
         
         self.contentView.layoutIfNeeded()
         self.addAdultTV.reloadData()
         self.addChildTV.reloadData()
+        self.addInfantaTV.reloadData()
         
         
         
@@ -143,6 +181,7 @@ class AddTravellerTVCell: TableViewCell {
     func setupUI() {
         adultTVHeight.constant = 0
         addChildTVHeight.constant = 0
+        infantaTVHeight.constant = 0
         
         contentView.backgroundColor = .AppBorderColor
         setupViews(v: holderView, radius: 4, color: .WhiteColor)
@@ -151,22 +190,34 @@ class AddTravellerTVCell: TableViewCell {
         titleHolderView.addBottomBorderWithColor(color: .AppBorderColor, width: 1)
         addAdultHolderView.addBottomBorderWithColor(color: .AppBorderColor, width: 1)
         addChildHolderView.addBottomBorderWithColor(color: .AppBorderColor, width: 1)
+        addInfantaHolderView.addBottomBorderWithColor(color: .AppBorderColor, width: 1)
+        
+        
         setupViews(v: addAdultHolderView, radius: 0, color: .WhiteColor)
         setupViews(v: addChildHolderView, radius: 0, color: .WhiteColor)
+        setupViews(v: addInfantaHolderView, radius: 0, color: .WhiteColor)
+        
         setupViews(v: addAdultBtnView, radius: 15, color: HexColor("#FCEDFF"))
         setupViews(v: addChildBtnView, radius: 15, color: HexColor("#FCEDFF"))
+        setupViews(v: addInfantaBtnView, radius: 15, color: HexColor("#FCEDFF"))
+        
         // setupViews(v: adultTVView, radius: 0, color: .green)
         
         travelImg.image = UIImage(named: "travel")?.withRenderingMode(.alwaysOriginal)
         setupLabels(lbl: titlelbl, text: "Traveller Details", textcolor: .AppLabelColor, font: .LatoSemibold(size: 16))
         setupLabels(lbl: adultlbl, text: "Adult", textcolor: .AppLabelColor, font: .LatoRegular(size: 14))
         setupLabels(lbl: childlbl, text: "Child", textcolor: .AppLabelColor, font: .LatoRegular(size: 14))
+        setupLabels(lbl: infantalbl, text: "Infanta", textcolor: .AppLabelColor, font: .LatoRegular(size: 14))
+        
         setupLabels(lbl: addlbl, text: "+ Add", textcolor: .AppLabelColor, font: .LatoRegular(size: 14))
         setupLabels(lbl: addchildlbl, text: "+ Add", textcolor: .AppLabelColor, font: .LatoRegular(size: 14))
+        setupLabels(lbl: addInfantalbl, text: "+ Add", textcolor: .AppLabelColor, font: .LatoRegular(size: 14))
+        
         setupLabels(lbl: totalNoOfTravellerlbl, text: "Total No Of  Tra : \(defaults.string(forKey: UserDefaultsKeys.totalTravellerCount) ?? "0")", textcolor: .AppCalenderDateSelectColor, font: .LatoRegular(size: 12))
         
         addAdultBtn.setTitle("", for: .normal)
         addChildBtn.setTitle("", for: .normal)
+        addInfantaBtn.setTitle("", for: .normal)
         
         
     }
@@ -190,6 +241,17 @@ class AddTravellerTVCell: TableViewCell {
         addChildTV.showsHorizontalScrollIndicator = false
     }
     
+    
+    func setupInfantaTV() {
+        addInfantaTV.register(UINib(nibName: "AddAdultsOrGuestTVCell", bundle: nil), forCellReuseIdentifier: "cell2")
+        addInfantaTV.delegate = self
+        addInfantaTV.dataSource = self
+        addInfantaTV.tableFooterView = UIView()
+        addInfantaTV.separatorStyle = .none
+        addInfantaTV.showsHorizontalScrollIndicator = false
+    }
+    
+    
     func setupViews(v:UIView,radius:CGFloat,color:UIColor) {
         v.backgroundColor = color
         v.layer.cornerRadius = radius
@@ -205,14 +267,20 @@ class AddTravellerTVCell: TableViewCell {
     }
     
     
-    @objc func didTapOnEditAdultBtn(_ sender:UIButton) {
-        delegate?.didTapOnEditAdultBtn(cell: self)
-    }
+    //    @objc func didTapOnEditAdultBtn(_ sender:UIButton) {
+    //        delegate?.didTapOnEditAdultBtn(cell: self)
+    //    }
+    //
+    //
+    //    @objc func didTapOnEditChildtBtn(_ sender:UIButton) {
+    //        delegate?.didTapOnEditChildtBtn(cell: self)
+    //    }
     
     
-    @objc func didTapOnEditChildtBtn(_ sender:UIButton) {
-        delegate?.didTapOnEditChildtBtn(cell: self)
+    func didTapOnEditAdultBtn(cell: AddAdultsOrGuestTVCell) {
+        delegate?.didTapOnEditTraveller(cell: cell)
     }
+    
     
     
     @IBAction func didTapOnAddAdultBtn(_ sender: Any) {
@@ -225,7 +293,9 @@ class AddTravellerTVCell: TableViewCell {
     }
     
     
-    
+    @IBAction func didTapOnAddInfantaBtn(_ sender: Any) {
+        delegate?.didTapOnAddInfantaBtn(cell: self)
+    }
     
     
     
@@ -261,8 +331,10 @@ extension AddTravellerTVCell:UITableViewDelegate,UITableViewDataSource {
         
         if tableView == addAdultTV {
             return adetails.count
-        }else {
+        }else if tableView == addChildTV{
             return cdetails.count
+        }else {
+            return idetails.count
         }
         
     }
@@ -272,10 +344,11 @@ extension AddTravellerTVCell:UITableViewDelegate,UITableViewDataSource {
         if tableView == addAdultTV {
             if let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as? AddAdultsOrGuestTVCell {
                 cell.selectionStyle = .none
+                cell.delegate = self
                 let data = adetails as! [NSManagedObject]
                 cell.titlelbl.text = data[indexPath.row].value(forKey: "fname") as? String
-                cell.editBtn.addTarget(self, action: #selector(didTapOnEditAdultBtn(_:)), for: .touchUpInside)
-                
+                //  cell.editBtn.addTarget(self, action: #selector(didTapOnEditAdultBtn(_:)), for: .touchUpInside)
+                cell.travellerId = data[indexPath.row].value(forKey: "id") as? String ?? ""
                 if adetails.count == adultsCount {
                     addAdultBtnView.isHidden = true
                 }
@@ -283,12 +356,24 @@ extension AddTravellerTVCell:UITableViewDelegate,UITableViewDataSource {
                 ccell = cell
             }
             
-        }else {
+        }else if tableView == addChildTV {
             if let cell = tableView.dequeueReusableCell(withIdentifier: "cell1") as? AddAdultsOrGuestTVCell {
                 cell.selectionStyle = .none
+                cell.delegate = self
                 let data = cdetails as! [NSManagedObject]
                 cell.titlelbl.text = data[indexPath.row].value(forKey: "fname") as? String
-                cell.editBtn.addTarget(self, action: #selector(didTapOnEditChildtBtn(_:)), for: .touchUpInside)
+                cell.travellerId = data[indexPath.row].value(forKey: "id") as? String ?? ""
+                //    cell.editBtn.addTarget(self, action: #selector(didTapOnEditChildtBtn(_:)), for: .touchUpInside)
+                ccell = cell
+            }
+        }else {
+            if let cell = tableView.dequeueReusableCell(withIdentifier: "cell2") as? AddAdultsOrGuestTVCell {
+                cell.selectionStyle = .none
+                cell.delegate = self
+                let data = idetails as! [NSManagedObject]
+                cell.titlelbl.text = data[indexPath.row].value(forKey: "fname") as? String
+                cell.travellerId = data[indexPath.row].value(forKey: "id") as? String ?? ""
+                //     cell.editBtn.addTarget(self, action: #selector(didTapOnEditChildtBtn(_:)), for: .touchUpInside)
                 ccell = cell
             }
         }
@@ -299,5 +384,6 @@ extension AddTravellerTVCell:UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
+    
     
 }

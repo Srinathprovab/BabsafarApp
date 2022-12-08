@@ -47,7 +47,7 @@ class TopCityTVCell: TableViewCell {
         citysCV.delegate = self
         citysCV.dataSource = self
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 130, height: 160)
+        layout.itemSize = CGSize(width: 180, height: 230)
         layout.scrollDirection = .horizontal
         layout.minimumInteritemSpacing = 6
         layout.minimumLineSpacing = 6

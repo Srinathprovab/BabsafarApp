@@ -20,6 +20,8 @@ class FromCityTVCell: TableViewCell {
     var id = String()
     var airportCode = String()
     var value = String()
+    var citycode = String()
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

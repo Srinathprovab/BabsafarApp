@@ -28,13 +28,17 @@ struct MCJ_flight_list : Codable {
     let fareType : String?
     let all_Passenger : String?
     let adults : Int?
-    let adults_Base_Price : String?
-    let adults_Tax_Price : String?
     let trip_type : String?
     let travelTime : String?
     let carrier : String?
     let flight_details : MCFlight_details?
     let selectedResult : String?
+    let adults_Base_Price : String?
+    let childs_Base_Price : String?
+    let infants_Base_Price : String?
+    let adults_Tax_Price : String?
+    let childs_Tax_Price : String?
+    let infants_Tax_Price : String?
 
     enum CodingKeys: String, CodingKey {
 
@@ -58,13 +62,17 @@ struct MCJ_flight_list : Codable {
         case fareType = "FareType"
         case all_Passenger = "All_Passenger"
         case adults = "Adults"
-        case adults_Base_Price = "Adults_Base_Price"
-        case adults_Tax_Price = "Adults_Tax_Price"
         case trip_type = "trip_type"
         case travelTime = "TravelTime"
         case carrier = "Carrier"
         case flight_details = "flight_details"
         case selectedResult = "selectedResult"
+        case adults_Base_Price = "Adults_Base_Price"
+        case childs_Base_Price = "Childs_Base_Price"
+        case infants_Base_Price = "Infants_Base_Price"
+        case adults_Tax_Price = "Adults_Tax_Price"
+        case childs_Tax_Price = "Childs_Tax_Price"
+        case infants_Tax_Price = "Infants_Tax_Price"
     }
 
     init(from decoder: Decoder) throws {
@@ -89,13 +97,17 @@ struct MCJ_flight_list : Codable {
         fareType = try values.decodeIfPresent(String.self, forKey: .fareType)
         all_Passenger = try values.decodeIfPresent(String.self, forKey: .all_Passenger)
         adults = try values.decodeIfPresent(Int.self, forKey: .adults)
-        adults_Base_Price = try values.decodeIfPresent(String.self, forKey: .adults_Base_Price)
-        adults_Tax_Price = try values.decodeIfPresent(String.self, forKey: .adults_Tax_Price)
         trip_type = try values.decodeIfPresent(String.self, forKey: .trip_type)
         travelTime = try values.decodeIfPresent(String.self, forKey: .travelTime)
         carrier = try values.decodeIfPresent(String.self, forKey: .carrier)
         flight_details = try values.decodeIfPresent(MCFlight_details.self, forKey: .flight_details)
         selectedResult = try values.decodeIfPresent(String.self, forKey: .selectedResult)
+        adults_Base_Price = try values.decodeIfPresent(String.self, forKey: .adults_Base_Price)
+        childs_Base_Price = try values.decodeIfPresent(String.self, forKey: .childs_Base_Price)
+        infants_Base_Price = try values.decodeIfPresent(String.self, forKey: .infants_Base_Price)
+        adults_Tax_Price = try values.decodeIfPresent(String.self, forKey: .adults_Tax_Price)
+        childs_Tax_Price = try values.decodeIfPresent(String.self, forKey: .childs_Tax_Price)
+        infants_Tax_Price = try values.decodeIfPresent(String.self, forKey: .infants_Tax_Price)
     }
 
 }

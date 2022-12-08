@@ -80,9 +80,11 @@ enum TVCellType {
     case EnterTravellerDetailsTVCell
     case DobTVCell
     case ExpireOnTVCell
-    
-    
-    
+    case CancellationFeesTVCell
+    case basefareTVCell
+    case NoteTVCell
+    case FlightDetailsTitleTVCell
+    case ViewFlightDetailsBtnTVCell
     
     
 }

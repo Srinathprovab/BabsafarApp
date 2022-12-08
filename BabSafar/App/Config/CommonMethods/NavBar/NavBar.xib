@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -55,7 +55,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NoQ-fc-Atf">
-                    <rect key="frame" x="20" y="64" width="40" height="40"/>
+                    <rect key="frame" x="20" y="68" width="40" height="40"/>
                     <subviews>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tQG-Pc-L1W">
                             <rect key="frame" x="12.5" y="12.5" width="15" height="15"/>
@@ -86,13 +86,13 @@
                     </constraints>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search Flights" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hp9-sp-nWP">
-                    <rect key="frame" x="80" y="64" width="413" height="40"/>
+                    <rect key="frame" x="80" y="68" width="413" height="40"/>
                     <fontDescription key="fontDescription" name=".SFNS-Regular" family=".AppleSystemUIFont" pointSize="20"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z0u-eV-a88">
-                    <rect key="frame" x="518" y="64" width="40" height="40"/>
+                    <rect key="frame" x="518" y="68" width="40" height="40"/>
                     <subviews>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="rrQ-82-Imd">
                             <rect key="frame" x="10" y="10" width="20" height="20"/>
@@ -120,19 +120,19 @@
                     </constraints>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3wW-6h-8qT">
-                    <rect key="frame" x="266" y="124" width="41.5" height="20.5"/>
+                    <rect key="frame" x="10" y="128" width="553" height="20.5"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fGQ-Su-zVh">
-                    <rect key="frame" x="266" y="154.5" width="41.5" height="20.5"/>
+                    <rect key="frame" x="10" y="158.5" width="553" height="20.5"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FV2-wT-beq">
-                    <rect key="frame" x="462" y="64" width="40" height="40"/>
+                    <rect key="frame" x="462" y="68" width="40" height="40"/>
                     <subviews>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="m6f-BV-ZPS">
                             <rect key="frame" x="10" y="10" width="20" height="20"/>
@@ -160,7 +160,7 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f51-tv-fjv">
-                    <rect key="frame" x="0.0" y="124" width="573" height="292"/>
+                    <rect key="frame" x="0.0" y="128" width="573" height="288"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="Occ-CN-ZHp">
                             <rect key="frame" x="163.5" y="5" width="246.5" height="40"/>
@@ -248,7 +248,7 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m6B-sb-rtG">
-                    <rect key="frame" x="95.5" y="184" width="382" height="120"/>
+                    <rect key="frame" x="95.5" y="188" width="382" height="120"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hYQ-xK-ReJ">
                             <rect key="frame" x="0.0" y="0.0" width="382" height="80"/>
@@ -451,8 +451,10 @@
                 <constraint firstItem="3wW-6h-8qT" firstAttribute="top" secondItem="hp9-sp-nWP" secondAttribute="bottom" constant="20" id="fGD-bO-Sbn"/>
                 <constraint firstItem="3wW-6h-8qT" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="fn5-uw-OvK"/>
                 <constraint firstItem="fGQ-Su-zVh" firstAttribute="top" secondItem="3wW-6h-8qT" secondAttribute="bottom" constant="10" id="jCm-g2-P2K"/>
+                <constraint firstItem="fGQ-Su-zVh" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="10" id="lgz-96-UPB"/>
                 <constraint firstItem="f51-tv-fjv" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="v7I-RN-E3r"/>
                 <constraint firstItem="fGQ-Su-zVh" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="vGB-B9-uZD"/>
+                <constraint firstItem="3wW-6h-8qT" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="10" id="xPS-ZT-rRg"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="f51-tv-fjv" secondAttribute="trailing" id="ykf-TN-nP9"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

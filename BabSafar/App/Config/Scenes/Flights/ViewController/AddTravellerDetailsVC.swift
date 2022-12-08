@@ -8,11 +8,11 @@
 import UIKit
 import CoreData
 
-class AddTravellerDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate {
+class AddTravellerDetailsVC: BaseTableVC {
     
     
     @IBOutlet weak var navBar: NavBar!
-    
+    // @IBOutlet weak var navheight: NSLayoutConstraint!
     
     //MARK: - variables Decleration
     var fname:String?
@@ -33,10 +33,11 @@ class AddTravellerDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate {
     var issuingCountrycode = String()
     var mobileno = String()
     var email = String()
-    var viewmodel:AllCountryCodeListViewModel?
     var textFieldText = ""
-    
-    
+    var key = String()
+    var id = String()
+    var title1 = String()
+    var title2 = String()
     var tablerow = [TableRow]()
     static var newInstance: AddTravellerDetailsVC? {
         let storyboard = UIStoryboard(name: Storyboard.Main.name,
@@ -48,13 +49,10 @@ class AddTravellerDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate {
     
     //MARK: - Loading Functions
     override func viewWillAppear(_ animated: Bool) {
-        
-        if screenHeight > 835 {
-            
-        }else {
-            
+        if key == "edit" {
+            fetchCoreDataValues()
         }
-        callGetCointryListAPI()
+        
     }
     
     
@@ -62,7 +60,7 @@ class AddTravellerDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         setupUI()
-        viewmodel = AllCountryCodeListViewModel(self)
+        
     }
     
     
@@ -93,41 +91,50 @@ class AddTravellerDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate {
     }
     
     
-    //MARK: - Call Get Cointry List API
-    func callGetCointryListAPI() {
-        BASE_URL = "https://provabdevelopment.com/babsafar/mobile_webservices/mobile/index.php/general/"
-        viewmodel?.CALLGETCOUNTRYLIST_API(dictParam: [:])
-    }
-    
-    
-    //MARK: - GetCountryList Response
-    func getCountryList(response: AllCountryCodeListModel) {
-        countrylist = response.all_country_code_list ?? []
-        
-        DispatchQueue.main.async {
-            self.commonTableView.reloadData()
-        }
-    }
-    
     
     
     //MARK: - setupTV
     func setupTV() {
         
         tablerow.removeAll()
-        tablerow.append(TableRow(key:"gender",cellType:.SelectGenderTVCell))
-        tablerow.append(TableRow(title:"Frist Name",key: "fname",buttonTitle: "Frist Name",characterLimit: 1,cellType:.EnterTravellerDetailsTVCell))
-        tablerow.append(TableRow(title:"Last Name",key: "email",buttonTitle: "Last Name",characterLimit: 2,cellType:.EnterTravellerDetailsTVCell))
-        tablerow.append(TableRow(title:"Date Of Birth",key: "dob",buttonTitle: "Date Of Birth",image: "cal",characterLimit: 3,cellType:.DobTVCell))
-        tablerow.append(TableRow(title:"Nationality",text: "Nationality",image: "downarrow",cellType:.DropDownTVCell))
-        tablerow.append(TableRow(height:20,cellType:.EmptyTVCell))
-        tablerow.append(TableRow(title:"Travel document*",cellType:.LabelTVCell))
         
-        tablerow.append(TableRow(title:"Document Type",key: "email",buttonTitle: "Document Type",characterLimit: 4,cellType:.EnterTravellerDetailsTVCell))
-        tablerow.append(TableRow(title:"Passport Number",key: "email",buttonTitle: "Passport Number",characterLimit: 5,cellType:.EnterTravellerDetailsTVCell))
         
-        tablerow.append(TableRow(title:"Issuing Country",subTitle: "",text: "Country",image: "downarrow",cellType:.DropDownTVCell))
-        tablerow.append(TableRow(title:"Passport Expiry Date",subTitle: experiesOn,key: "dob",buttonTitle: "Passport Expiry Date",image: "cal",characterLimit: 6,cellType:.ExpireOnTVCell))
+        if key == "add" {
+            
+            tablerow.append(TableRow(key:"gender",cellType:.SelectGenderTVCell))
+            tablerow.append(TableRow(title:"Frist Name",key: "fname",text: "",buttonTitle: "Frist Name",key1:"add",characterLimit: 1,cellType:.EnterTravellerDetailsTVCell))
+            tablerow.append(TableRow(title:"Last Name",key: "email",buttonTitle: "Last Name",characterLimit: 2,cellType:.EnterTravellerDetailsTVCell))
+            tablerow.append(TableRow(title:"Date Of Birth",key: "dob",buttonTitle: "Date Of Birth",image: "cal",characterLimit: 3,cellType:.DobTVCell))
+            tablerow.append(TableRow(title:"Nationality",text: "Nationality",image: "downarrow",cellType:.DropDownTVCell))
+            tablerow.append(TableRow(height:20,cellType:.EmptyTVCell))
+            tablerow.append(TableRow(title:"Travel document*",cellType:.LabelTVCell))
+            
+            tablerow.append(TableRow(title:"Document Type",key: "email",buttonTitle: "Document Type",characterLimit: 4,cellType:.EnterTravellerDetailsTVCell))
+            tablerow.append(TableRow(title:"Passport Number",key: "email",buttonTitle: "Passport Number",characterLimit: 5,cellType:.EnterTravellerDetailsTVCell))
+            
+            tablerow.append(TableRow(title:"Issuing Country",subTitle: "",text: "Country",image: "downarrow",cellType:.DropDownTVCell))
+            tablerow.append(TableRow(title:"Passport Expiry Date",subTitle: experiesOn,key: "dob",buttonTitle: "Passport Expiry Date",image: "cal",characterLimit: 6,cellType:.ExpireOnTVCell))
+            
+        }else {
+            
+            
+            
+            tablerow.append(TableRow(key:"gender",cellType:.SelectGenderTVCell))
+            tablerow.append(TableRow(title:"Frist Name",key: "fname",text:fname,headerText: title2, buttonTitle: "Frist Name", key1:"edit",characterLimit: 1,cellType:.EnterTravellerDetailsTVCell))
+            tablerow.append(TableRow(title:"Last Name",key: "email",text:lname,buttonTitle: "Last Name",key1:"edit",characterLimit: 2,cellType:.EnterTravellerDetailsTVCell))
+            tablerow.append(TableRow(title:"Date Of Birth",key: "dob",text:dob,buttonTitle: "Date Of Birth",key1:"edit",image: "cal",characterLimit: 3,cellType:.DobTVCell))
+            tablerow.append(TableRow(title:"Nationality",text: "Nationality",buttonTitle:nationality,key1:"edit", image: "downarrow",cellType:.DropDownTVCell))
+            tablerow.append(TableRow(height:20,cellType:.EmptyTVCell))
+            tablerow.append(TableRow(title:"Travel document*",cellType:.LabelTVCell))
+            
+            tablerow.append(TableRow(title:"Document Type",key: "email",text:"hhhh",buttonTitle: "Document Type",key1:"edit",characterLimit: 4,cellType:.EnterTravellerDetailsTVCell))
+            tablerow.append(TableRow(title:"Passport Number",key: "email",text:passportno,buttonTitle: "Passport Number",key1:"edit",characterLimit: 5,cellType:.EnterTravellerDetailsTVCell))
+            
+            tablerow.append(TableRow(title:"Issuing Country",subTitle: "",text: "Country",buttonTitle:issuedCountry,key1:"edit", image: "downarrow",cellType:.DropDownTVCell))
+            tablerow.append(TableRow(title:"Passport Expiry Date",subTitle: experiesOn,key: "dob",text:experiesOn,buttonTitle: "Passport Expiry Date",key1:"edit",image: "cal",characterLimit: 6,cellType:.ExpireOnTVCell))
+            
+        }
+        
         
         
         tablerow.append(TableRow(height:30,cellType:.EmptyTVCell))
@@ -168,6 +175,13 @@ class AddTravellerDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate {
         dismiss(animated: true)
     }
     
+    
+    
+    //MARK: - selectedTitle EnterTravellerDetailsTVCell
+    override func selectedTitle(cell:EnterTravellerDetailsTVCell) {
+        self.title2 = cell.selectedTitle
+        print(self.title2)
+    }
     
     
     //MARK: - editingTextField UITextField
@@ -288,6 +302,8 @@ class AddTravellerDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate {
         
         if gender == "" {
             showToast(message: "Select Gender")
+        }else if title2.isEmpty == true {
+            showToast(message: "Select Title")
         }else if fname?.isEmpty == true {
             showToast(message: "Enter First Name")
         }else if lname == "" {
@@ -308,10 +324,20 @@ class AddTravellerDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate {
             showToast(message: "Select Passport Expiry Date")
         }else {
             
-            print("Call API====>")
             
-            DispatchQueue.main.async {
-                self.saveDetailsLocally()
+            
+            if key == "edit" {
+                
+                
+                print("edit .....")
+                DispatchQueue.main.async {
+                    // self.updateDetailsLocally()
+                    self.update()
+                }
+            }else {
+                DispatchQueue.main.async {
+                    self.saveDetailsLocally()
+                }
             }
             
         }
@@ -330,6 +356,7 @@ class AddTravellerDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate {
         newUser.setValue("\(rno)", forKey: "id")
         newUser.setValue(defaults.string(forKey: UserDefaultsKeys.travellerTitle), forKey: "title")
         newUser.setValue(defaults.string(forKey:UserDefaultsKeys.userid), forKey: "userid")
+        newUser.setValue(title2, forKey: "title2")
         newUser.setValue(gender, forKey: "gender")
         newUser.setValue(fname, forKey: "fname")
         newUser.setValue(lname, forKey: "lname")
@@ -354,5 +381,93 @@ class AddTravellerDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate {
     
     
     
+    
+    //MARK: - FETCHING COREDATA VALUES
+    func fetchCoreDataValues() {
+        
+        
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "PassengerDetails")
+        request.predicate = NSPredicate(format: "id = %@", id)
+        request.returnsObjectsAsFaults = false
+        do {
+            let result = try context.fetch(request)
+            
+            print(result)
+            details = result
+            
+            for data in result as! [NSManagedObject]{
+                print("fname ====== >\((data.value(forKey: "fname") as? String) ?? "")")
+                
+                self.title2 = (data.value(forKey: "title2") as? String) ?? ""
+                self.title1 = (data.value(forKey: "title") as? String) ?? ""
+                self.fname = (data.value(forKey: "fname") as? String) ?? ""
+                self.lname = (data.value(forKey: "lname") as? String) ?? ""
+                self.gender = (data.value(forKey: "gender") as? String) ?? ""
+                self.dob = (data.value(forKey: "dob") as? String) ?? ""
+                self.nationalitycode = (data.value(forKey: "nationality") as? String) ?? ""
+                self.passportno = (data.value(forKey: "passportno") as? String) ?? ""
+                self.experiesOn = (data.value(forKey: "passportexpirydate") as? String) ?? ""
+                self.issuingCountrycode = (data.value(forKey: "passportissuingcountry") as? String) ?? ""
+                
+                
+            }
+            
+            DispatchQueue.main.async {[self] in
+                setupTV()
+            }
+        } catch {
+            print("Failed")
+        }
+    }
+    
+    
+    
+    
+    
+    
+    //MARK: - FETCHING COREDATA VALUES
+    
+    func update(){
+        
+        let entity = NSEntityDescription.entity(forEntityName: "PassengerDetails", in: context)
+        let request = NSFetchRequest<NSFetchRequestResult>()
+        request.entity = entity
+        let predicate = NSPredicate(format: "(id = %@)", id)
+        request.predicate = predicate
+        do {
+            let results =
+            try context.fetch(request)
+            let newUser = results[0] as! NSManagedObject
+            
+            newUser.setValue(id, forKey: "id")
+            newUser.setValue(self.title1, forKey: "title")
+            newUser.setValue(defaults.string(forKey:UserDefaultsKeys.userid), forKey: "userid")
+            newUser.setValue(gender, forKey: "gender")
+            newUser.setValue(fname, forKey: "fname")
+            newUser.setValue(lname, forKey: "lname")
+            newUser.setValue(convertDateFormat(inputDate: dob, f1: "dd-MM-yyyy", f2: "yyyy-MM-dd"), forKey: "dob")
+            newUser.setValue(nationalitycode, forKey: "nationality")
+            newUser.setValue(passportno, forKey: "passportno")
+            newUser.setValue(convertDateFormat(inputDate: experiesOn, f1: "dd-MM-yyyy", f2: "yyyy-MM-dd"), forKey: "passportexpirydate")
+            newUser.setValue(issuingCountrycode, forKey: "passportissuingcountry")
+            
+            
+            do {
+                try context.save()
+                
+            }catch let error as NSError {
+                print("Failed")
+            }
+        }
+        catch let error as NSError {
+            print("Failed")
+        }
+        
+        
+        
+        NotificationCenter.default.post(name: NSNotification.Name("reload"), object: nil)
+        dismiss(animated: true)
+        
+    }
     
 }

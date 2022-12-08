@@ -54,6 +54,7 @@ var fareRulehtml = String()
 var FlightList :[[J_flight_list]]?
 var RTFlightList :[[RTJ_flight_list]]?
 var MCJflightlist :[MCJ_flight_list]?
+var MBfd :[[MBdetails]]?
 
 var countrylist = [All_country_code_list]()
 var totalprice = String()
@@ -88,13 +89,13 @@ var lnameArray = [String]()
 var mnameArray = [String]()
 var dobArray = [String]()
 var passportNoArray = [String]()
-var passportexpirydayArray = [String]()
-var passportexpiryMonthArray = [String]()
-var passportexpiryYearArray = [String]()
+//var passportexpirydayArray = [String]()
+//var passportexpiryMonthArray = [String]()
+var passportexpiryArray = [String]()
 var countryCodeArray = [String]()
 var passportissuingcountryArray = [String]()
 var passportnationalityArray = [String]()
-
+var title2Array = [String]()
 
 
 var dfromCityNameArray =  [String:String]()
@@ -111,6 +112,13 @@ struct ApiEndpoints {
     static let getTopFlightHotelDestination = "getTopFlightHotelDestination"
     static let getBaggageFlightDetails = "getFlightDetails"
     static let getCountryList = "getCountryList"
+    static let mobilepreprocessbooking = "mobile_pre_process_booking"
+    static let mobileprocesspassengerdetail = "mobile_process_passenger_detail"
+    static let mobileprebooking = "mobile_pre_booking"
+  
+    
+    
+    
 }
 
 /*App messages*/
@@ -133,10 +141,11 @@ struct UserDefaultsKeys {
     static var journeyType = "Journey_Type"
     static var journeyTypeSelectedIndex = "Journey_TypeSelectedIndex"
     static var searchid = "search_id"
+    static var accesskey = "access_key"
     static var bookingsource = "booking_source"
+    static var bookingsourcekey = "booking_source_key"
     static var selectedResult = "selectedResult"
     static var selectdFlightcellIndex = "selectdFlightcellIndex"
-    
     static var selectedCurrency = "selectedCurrency"
     static var selectedLang = "selectedLang"
     static var APICurrencyType = "APICurrencyType"
@@ -191,6 +200,10 @@ struct UserDefaultsKeys {
     //MULTICITY TRIP
     static var mfromCity = "mfromCity"
     static var mtoCity = "mtoCity"
+    
+    static var mfromCity1 = "mfromCity1"
+    static var mtoCity1 = "mtoCity1"
+    
     static var mcalDepDate = "mcalDepDate"
     static var madultCount = "mAdult_Count"
     static var mchildCount = "mChild_Count"

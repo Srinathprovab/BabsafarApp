@@ -43,6 +43,11 @@ class DobTVCell: TableViewCell {
         
         datePicker.maximumDate = Date()
         showDatePicker()
+        
+        
+        if cellInfo?.key1 == "edit" {
+            txtField.text = cellInfo?.text
+        }
     }
     
     

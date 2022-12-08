@@ -130,9 +130,10 @@ class SelectLanguageVC: BaseTableVC {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath) as? SelectLanguageTVCell {
-            cell.holderView.layer.borderColor = UIColor.AppBtnColor.cgColor
+            
             
             if onTap == "currency" {
+                cell.holderView.layer.borderColor = UIColor.AppBorderColor.cgColor
                 defaults.set(cell.subTitlelbl.text, forKey: UserDefaultsKeys.selectedCurrency)
                 
                 switch cell.titlelbl.text {
@@ -152,6 +153,7 @@ class SelectLanguageVC: BaseTableVC {
             }else {
                 
                 defaults.set(cell.titlelbl.text, forKey: UserDefaultsKeys.selectedLang)
+                cell.holderView.layer.borderColor = UIColor.AppBorderColor.cgColor
                 
                 switch cell.titlelbl.text {
                 case "English":
@@ -168,6 +170,8 @@ class SelectLanguageVC: BaseTableVC {
                     break
                 }
             }
+            
+            
             
             gotoHome()
         }
