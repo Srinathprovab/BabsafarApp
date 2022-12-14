@@ -63,6 +63,15 @@ class CalenderVC: BaseTableVC {
     
     
     override func viewWillAppear(_ animated: Bool) {
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("nointernet"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadTV), name: Notification.Name("reloadTV"), object: nil)
+        setupinitialUI()
+    }
+    
+    
+    func setupinitialUI() {
+        
         self.celltag = Int(defaults.string(forKey: UserDefaultsKeys.cellTag) ?? "0") ?? 0
         
         if let selectedTab = defaults.string(forKey: UserDefaultsKeys.dashboardTapSelected) {
@@ -91,6 +100,20 @@ class CalenderVC: BaseTableVC {
             }
         }
     }
+    
+    //MARK: - nointernet
+    @objc func nointernet() {
+        guard let vc = NoInternetConnectionVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .overCurrentContext
+        self.present(vc, animated: true)
+    }
+    
+    
+    @objc func reloadTV() {
+        setupinitialUI()
+    }
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -322,7 +345,7 @@ class CalenderVC: BaseTableVC {
     
     
     @IBAction func selectDateBtnAction(_ sender: Any) {
-        
+        keyStr = "select"
         NotificationCenter.default.post(name: Notification.Name("reload"), object: nil)
         dismiss(animated: false)
     }

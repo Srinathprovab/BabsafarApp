@@ -45,26 +45,53 @@ class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
     var selectArray = [String]()
     var selectArray1 = [String]()
     var moreoptionBool = true
-    
+   
     
     
     override func viewWillAppear(_ animated: Bool) {
         //  CallShowCityListAPI(str: "")
         
+        NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("nointernet"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadTV), name: Notification.Name("reloadTV"), object: nil)
+        
+        
+        setupIntialUI()
+        
+    }
+    
+    
+    func setupIntialUI(){
         NotificationCenter.default.addObserver(self, selector: #selector(reload(notification:)), name: NSNotification.Name("reload"), object: nil)
         
         
-        if let selectedJType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
-            if selectedJType == "multicity" {
-                setupMulticity()
-            }else if selectedJType == "circle" {
-                setupRoundTrip()
-            }else {
-                setupOneWay()
+        if keyStr == "select"  {
+            if let journeyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
+                if journeyType == "oneway" {
+                    setupOneWay()
+                }else if journeyType == "circle"{
+                    setupRoundTrip()
+                }else {
+                    setupMulticity()
+                }
             }
-            
+        }else {
+            setupRoundTrip()
         }
     }
+    
+    
+    //MARK: - nointernet
+    @objc func nointernet() {
+        guard let vc = NoInternetConnectionVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .overCurrentContext
+        self.present(vc, animated: true)
+    }
+    
+    
+    @objc func reloadTV() {
+        setupIntialUI()
+    }
+    
     
     
     @objc func reload(notification: NSNotification){
@@ -214,21 +241,21 @@ class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
         cell.fromCitylbl.text = c2
         cell.toCitylbl.text = c1
         
-       
+        
         
         
         if let selectedJType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
-             if selectedJType == "circle" {
-                 
-                 defaults.set(cell.fromCitylbl.text ?? "", forKey: UserDefaultsKeys.rfromCity)
-                 defaults.set(cell.toCitylbl.text ?? "", forKey: UserDefaultsKeys.rtoCity)
-                 
-                 let fromairport = defaults.string(forKey: UserDefaultsKeys.rfromairport)
-                 let toairport = defaults.string(forKey: UserDefaultsKeys.rtoairport)
-                 
-                 defaults.set(toairport, forKey: UserDefaultsKeys.rfromairport)
-                 defaults.set(fromairport, forKey: UserDefaultsKeys.rtoairport)
-               
+            if selectedJType == "circle" {
+                
+                defaults.set(cell.fromCitylbl.text ?? "", forKey: UserDefaultsKeys.rfromCity)
+                defaults.set(cell.toCitylbl.text ?? "", forKey: UserDefaultsKeys.rtoCity)
+                
+                let fromairport = defaults.string(forKey: UserDefaultsKeys.rfromairport)
+                let toairport = defaults.string(forKey: UserDefaultsKeys.rtoairport)
+                
+                defaults.set(toairport, forKey: UserDefaultsKeys.rfromairport)
+                defaults.set(fromairport, forKey: UserDefaultsKeys.rtoairport)
+                
             }else {
                 defaults.set(cell.fromCitylbl.text ?? "", forKey: UserDefaultsKeys.fromCity)
                 defaults.set(cell.toCitylbl.text ?? "", forKey: UserDefaultsKeys.toCity)
@@ -265,18 +292,18 @@ class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
     
     
     override func addEconomyBtnAction(cell: SearchFlightsTVCell) {
-        gotoTravellerEconomyVC()
+        gotoTravellerEconomyVC(str: "traveller")
     }
     
     override func addEconomyBtnAction(cell: MultiCityTVCell) {
-        gotoTravellerEconomyVC()
+        gotoTravellerEconomyVC(str: "traveller")
     }
     
     
-    func gotoTravellerEconomyVC() {
+    func gotoTravellerEconomyVC(str:String) {
         guard let vc = TravellerEconomyVC.newInstance.self else {return}
         vc.modalPresentationStyle = .overCurrentContext
-        vc.keyString = "flights"
+        vc.keyString = str
         self.present(vc, animated: true)
     }
     
@@ -357,6 +384,27 @@ class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
     override func didTapOnDateBtn(cell: MultiCityTVCell) {
         gotoCalenderVC(key: "dep", titleStr: "Departure Date")
     }
+    
+    
+    
+    override func addTraverllersBtnAction(cell: SearchFlightsTVCell){
+        gotoTravellerEconomyVC(str: "traveller")
+    }
+    
+    
+    override func addClassBtnAction(cell: SearchFlightsTVCell){
+        gotoTravellerEconomyVC(str: "class")
+    }
+    
+    
+    override func addTraverllersBtnAction(cell: MultiCityTVCell){
+        gotoTravellerEconomyVC(str: "traveller")
+    }
+    
+    override func addClassBtnAction(cell: MultiCityTVCell){
+        gotoTravellerEconomyVC(str: "class")
+    }
+    
     
     override func didTapOnairlineBtnAction(cell: MultiCityTVCell) {
         print("didTapOnairlineBtnAction")
@@ -480,6 +528,8 @@ class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
             defaults.set(response.data?.search_id, forKey: UserDefaultsKeys.searchid)
             defaults.set(response.data?.booking_source, forKey: UserDefaultsKeys.bookingsource)
             defaults.set(response.data?.booking_source_key, forKey: UserDefaultsKeys.bookingsourcekey)
+            defaults.set(response.data?.traceId, forKey: UserDefaultsKeys.traceId)
+
             gotoSearchFlightResultVC()
         }
     }
@@ -491,6 +541,8 @@ class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
             defaults.set(response.data?.search_id, forKey: UserDefaultsKeys.searchid)
             defaults.set(response.data?.booking_source, forKey: UserDefaultsKeys.bookingsource)
             defaults.set(response.data?.booking_source_key, forKey: UserDefaultsKeys.bookingsourcekey)
+            defaults.set(response.data?.traceId, forKey: UserDefaultsKeys.traceId)
+
             gotoSearchFlightResultVC()
         }
     }
@@ -548,7 +600,7 @@ class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
     func multiTripflightList(response: MulticityModel) {
         print("====== MulticityModel response ========")
         print(response.data?.search_id)
-        
+        defaults.set(response.data?.traceId, forKey: UserDefaultsKeys.traceId)
         if response.status == 1 {
             MCJflightlist = response.data?.j_flight_list
             defaults.set(response.data?.search_id, forKey: UserDefaultsKeys.searchid)

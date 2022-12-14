@@ -12,10 +12,11 @@ protocol MultiCityTVCellDelegate {
     func didTapOnairlineBtnAction(cell: MultiCityTVCell)
     func didTapOntimeReturnJourneyBtnAction(cell: MultiCityTVCell)
     func didTapOntimeOutwardJourneyBtnAction(cell: MultiCityTVCell)
-    
     func didTapOnFromCityBtn(cell: MultiCityTVCell)
     func didTapOnToCityBtn(cell: MultiCityTVCell)
     func didTapOnDateBtn(cell: MultiCityTVCell)
+    func addTraverllersBtnAction(cell: MultiCityTVCell)
+    func addClassBtnAction(cell: MultiCityTVCell)
 }
 
 
@@ -41,6 +42,21 @@ class MultiCityTVCell: TableViewCell,ButtonCVCellDelegate,MultiCityCVCellDelegat
     @IBOutlet weak var airlineValuelbl: UILabel!
     @IBOutlet weak var moresearchBtn: UIButton!
     
+    
+    
+    @IBOutlet weak var addTraverllersView: UIView!
+    @IBOutlet weak var addTraverllerslbl: UILabel!
+    @IBOutlet weak var addTraverllersValuelbl: UILabel!
+    @IBOutlet weak var addTraverllersBtn: UIButton!
+    
+    
+    @IBOutlet weak var addClassView: UIView!
+    @IBOutlet weak var addClasslbl: UILabel!
+    @IBOutlet weak var addClassValuelbl: UILabel!
+    @IBOutlet weak var addClassBtn: UIButton!
+    
+    
+    
     var delegate:MultiCityTVCellDelegate?
     var moreoptionBool = true
     var count = 0
@@ -60,6 +76,8 @@ class MultiCityTVCell: TableViewCell,ButtonCVCellDelegate,MultiCityCVCellDelegat
     }
     
     override func updateUI() {
+        addTraverllersValuelbl.text = defaults.string(forKey: UserDefaultsKeys.mtravellerDetails) ?? "Add Details"
+        addClassValuelbl.text = defaults.string(forKey: UserDefaultsKeys.mselectClass) ?? "Add Details"
         updateheight()
     }
     
@@ -74,7 +92,7 @@ class MultiCityTVCell: TableViewCell,ButtonCVCellDelegate,MultiCityCVCellDelegat
         optionViewHeight.constant = 0
         
         
-        setupViews(v: economyView, radius: 4, color: .AppHolderViewColor)
+        //  setupViews(v: economyView, radius: 4, color: .AppHolderViewColor)
         setupLabels(lbl: economylbl, text: "Travellers &  class", textcolor: .AppLabelColor, font: .LatoLight(size: 14))
         setupLabels(lbl: economyValuelbl, text: "\(defaults.string(forKey: UserDefaultsKeys.mtravellerDetails) ?? "ADD Travellers & Class")", textcolor: .AppLabelColor, font: .LatoSemibold(size: 18))
         dropdownImg.image = UIImage(named: "downarrow")
@@ -90,6 +108,18 @@ class MultiCityTVCell: TableViewCell,ButtonCVCellDelegate,MultiCityCVCellDelegat
         setupLabels(lbl: airlineValuelbl, text: "Airline", textcolor: .AppLabelColor, font: .LatoSemibold(size: 18))
         moresearchBtn.setTitle("+ More search options", for: .normal)
         
+        setupViews(v: addTraverllersView, radius: 4, color: .AppHolderViewColor)
+        setupViews(v: addClassView, radius: 4, color: .AppHolderViewColor)
+        setuplabels(lbl: addTraverllerslbl, text: "Add Travellers", textcolor: .AppLabelColor, font: .LatoLight(size: 14), align: .left)
+        setuplabels(lbl: addClasslbl, text: "Add Class", textcolor: .AppLabelColor, font: .LatoLight(size: 14), align: .left)
+        
+        setuplabels(lbl: addTraverllersValuelbl, text: "", textcolor: .AppLabelColor, font: .LatoSemibold(size: 16), align: .left)
+        setuplabels(lbl: addClassValuelbl, text: "", textcolor: .AppLabelColor, font: .LatoSemibold(size: 16), align: .left)
+        
+        addTraverllersBtn.setTitle("", for: .normal)
+        addClassBtn.setTitle("", for: .normal)
+        dropdownImg.isHidden = true
+        economyValuelbl.isHidden = true
         setupCV()
     }
     
@@ -263,6 +293,16 @@ class MultiCityTVCell: TableViewCell,ButtonCVCellDelegate,MultiCityCVCellDelegat
     }
     
     
+    
+    @IBAction func addTraverllersBtnAction(_ sender: Any) {
+        delegate?.addTraverllersBtnAction(cell: self)
+    }
+    
+    
+    
+    @IBAction func addClassBtnAction(_ sender: Any) {
+        delegate?.addClassBtnAction(cell: self)
+    }
     
 }
 

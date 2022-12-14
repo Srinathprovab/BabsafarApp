@@ -369,7 +369,7 @@ class ServiceManager {
             headers: nil).responseJSON { (responseData) -> Void in
                 if responseData.value != nil {
                     //do something with data
-                  //   print(responseData.value as Any)
+                     print(responseData.value as Any)
                     
                     switch responseData.result {
                     case .success(let data):

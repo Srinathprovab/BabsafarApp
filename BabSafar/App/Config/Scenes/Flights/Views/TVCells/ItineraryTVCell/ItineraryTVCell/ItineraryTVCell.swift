@@ -77,6 +77,9 @@ class ItineraryTVCell: TableViewCell {
         setuplabels(lbl: destTerminal1lbl, text: "Terminal: 6", textcolor: .AppLabelColor, font: .LatoRegular(size: 12), align: .right)
         setuplabels(lbl: hourlbl1, text: "1h 20m", textcolor: .AppLabelColor, font: .LatoRegular(size: 14), align: .center)
         
+        airportlbl.numberOfLines = 2
+        destlbl.numberOfLines = 2
+        
     }
     
     

@@ -22,6 +22,8 @@ protocol SearchFlightsTVCellDelegate {
     func didTapOnReturnJurneyRadioButton(cell: SearchFlightsTVCell)
     func didTapOnDirectFlightRadioButton(cell: SearchFlightsTVCell)
     func didTapOnSearchFlightBtnAction(cell: SearchFlightsTVCell)
+    func addTraverllersBtnAction(cell: SearchFlightsTVCell)
+    func addClassBtnAction(cell: SearchFlightsTVCell)
     
 }
 class SearchFlightsTVCell: TableViewCell, SelectCityViewModelProtocal {
@@ -48,10 +50,8 @@ class SearchFlightsTVCell: TableViewCell, SelectCityViewModelProtocal {
     @IBOutlet weak var dropdownImg: UIImageView!
     @IBOutlet weak var moreExpandView: UIView!
     @IBOutlet weak var moreExpandViewHeight: NSLayoutConstraint!
-    
     @IBOutlet weak var moreOptionsBtn: UIButton!
     @IBOutlet weak var moreBtnHolderView: UIView!
-    
     @IBOutlet weak var timeOutwardJourneyView: UIView!
     @IBOutlet weak var timeOutwardJourneylbl: UILabel!
     @IBOutlet weak var timeOutJourneyValuelbl: UILabel!
@@ -61,7 +61,6 @@ class SearchFlightsTVCell: TableViewCell, SelectCityViewModelProtocal {
     @IBOutlet weak var airlineView: UIView!
     @IBOutlet weak var airlinelbl: UILabel!
     @IBOutlet weak var airlineValuelbl: UILabel!
-    
     @IBOutlet weak var moreOptionImg: UIImageView!
     @IBOutlet weak var moreOptionlbl: UILabel!
     @IBOutlet weak var radio1View: UIView!
@@ -73,16 +72,23 @@ class SearchFlightsTVCell: TableViewCell, SelectCityViewModelProtocal {
     @IBOutlet weak var searchFlightsBtnView: UIView!
     @IBOutlet weak var searchFlightsBtnlbl: UILabel!
     @IBOutlet weak var searchFlightBtn: UIButton!
-    
-    
     @IBOutlet weak var fromTF: UITextField!
     @IBOutlet weak var toBtn: UIButton!
-    //    @IBOutlet weak var autocompleteTableView: UITableView!
-    //    @IBOutlet weak var tvHeight: NSLayoutConstraint!
-    
     @IBOutlet weak var fromBtn: UIButton!
-    
     @IBOutlet weak var toTF: UITextField!
+    
+    
+    @IBOutlet weak var addTraverllersView: UIView!
+    @IBOutlet weak var addTraverllerslbl: UILabel!
+    @IBOutlet weak var addTraverllersValuelbl: UILabel!
+    @IBOutlet weak var addTraverllersBtn: UIButton!
+    
+    
+    @IBOutlet weak var addClassView: UIView!
+    @IBOutlet weak var addClasslbl: UILabel!
+    @IBOutlet weak var addClassValuelbl: UILabel!
+    @IBOutlet weak var addClassBtn: UIButton!
+    
     
     
     
@@ -122,6 +128,10 @@ class SearchFlightsTVCell: TableViewCell, SelectCityViewModelProtocal {
                 self.departureDatelbl.text = defaults.string(forKey: UserDefaultsKeys.calDepDate) ?? "+ Add Departure Date"
                 economyValuelbl.text = defaults.string(forKey: UserDefaultsKeys.travellerDetails) ?? "Add Traveller Details"
                 
+                addTraverllersValuelbl.text = defaults.string(forKey: UserDefaultsKeys.travellerDetails) ?? "Add Details"
+                addClassValuelbl.text = defaults.string(forKey: UserDefaultsKeys.selectClass) ?? "Add Details"
+
+                
                 returnView.isHidden = true
             }else {
                 fromCitylbl.text = defaults.string(forKey: UserDefaultsKeys.rfromCity) ?? "Select City"
@@ -129,6 +139,10 @@ class SearchFlightsTVCell: TableViewCell, SelectCityViewModelProtocal {
                 self.departureDatelbl.text = defaults.string(forKey: UserDefaultsKeys.rcalDepDate) ?? "+ Add Departure Date"
                 self.returnDatelbl.text = defaults.string(forKey: UserDefaultsKeys.rcalRetDate) ?? "+ Add Return Date"
                 economyValuelbl.text = defaults.string(forKey: UserDefaultsKeys.rtravellerDetails) ?? "Add Traveller Details"
+                
+                
+                addTraverllersValuelbl.text = defaults.string(forKey: UserDefaultsKeys.rtravellerDetails) ?? "Add Details"
+                addClassValuelbl.text = defaults.string(forKey: UserDefaultsKeys.rselectClass) ?? "Add Details"
                 
                 returnView.isHidden = false
             }
@@ -149,7 +163,7 @@ class SearchFlightsTVCell: TableViewCell, SelectCityViewModelProtocal {
         setupViews(v: swipeView, radius: 20, color: .AppHolderViewColor)
         setupViews(v: departureView, radius: 4, color: .AppHolderViewColor)
         setupViews(v: returnView, radius: 4, color: .AppHolderViewColor)
-        setupViews(v: economyView, radius: 4, color: .AppHolderViewColor)
+      //  setupViews(v: economyView, radius: 4, color: .AppHolderViewColor)
         setupViews(v: moreExpandView, radius: 0, color: .WhiteColor)
         setupViews(v: timeOutwardJourneyView, radius: 4, color: .AppHolderViewColor)
         setupViews(v: timeReturnJourneyView, radius: 4, color: .AppHolderViewColor)
@@ -209,6 +223,17 @@ class SearchFlightsTVCell: TableViewCell, SelectCityViewModelProtocal {
         toTF.delegate = self
         toTF.addTarget(self, action: #selector(textFiledEditingChanged(_:)), for: .editingChanged)
         
+        
+        setupViews(v: addTraverllersView, radius: 4, color: .AppHolderViewColor)
+        setupViews(v: addClassView, radius: 4, color: .AppHolderViewColor)
+        setuplabels(lbl: addTraverllerslbl, text: "Add Travellers", textcolor: .AppLabelColor, font: .LatoLight(size: 14), align: .left)
+        setuplabels(lbl: addClasslbl, text: "Add Class", textcolor: .AppLabelColor, font: .LatoLight(size: 14), align: .left)
+        
+        setuplabels(lbl: addTraverllersValuelbl, text: "", textcolor: .AppLabelColor, font: .LatoSemibold(size: 16), align: .left)
+        setuplabels(lbl: addClassValuelbl, text: "", textcolor: .AppLabelColor, font: .LatoSemibold(size: 16), align: .left)
+        
+        addTraverllersBtn.setTitle("", for: .normal)
+        addClassBtn.setTitle("", for: .normal)
     }
     
     func setupViews(v:UIView,radius:CGFloat,color:UIColor) {
@@ -292,6 +317,17 @@ class SearchFlightsTVCell: TableViewCell, SelectCityViewModelProtocal {
     
     
     
+    @IBAction func addTraverllersBtnAction(_ sender: Any) {
+        delegate?.addTraverllersBtnAction(cell: self)
+    }
+    
+    
+    
+    @IBAction func addClassBtnAction(_ sender: Any) {
+        delegate?.addClassBtnAction(cell: self)
+    }
+    
+    
     
     //MARK: - Text Filed Editing Changed
     
@@ -318,6 +354,23 @@ class SearchFlightsTVCell: TableViewCell, SelectCityViewModelProtocal {
         }
         
         
+    }
+    
+    
+    override func textFieldDidBeginEditing(_ textField: UITextField) {
+        if textField == fromTF {
+            
+            self.fromCitylbl.text = ""
+            CallShowCityListAPI(str: textField.text ?? "")
+            dropDown.show()
+            
+        }else {
+            
+            self.toCitylbl.text = ""
+            CallShowCityListAPI(str: textField.text ?? "")
+            dropDown1.show()
+            
+        }
     }
     
     
@@ -350,14 +403,19 @@ class SearchFlightsTVCell: TableViewCell, SelectCityViewModelProtocal {
         
         dropDown.direction = .bottom
         dropDown.cellHeight = 50
-       // dropDown.cellNib = UINib(nibName: "DropDownCell", bundle: nil)
-//        dropDown.customCellConfiguration = { (index: Index, item: String, cell: DropDownCell) -> Void in
-//            guard let cell = cell as? DropDownCell else { return }
-//            
-//            // can use attrubted string for colored text
-//            cell.textLabel?.text = cityList[index].name
-//            //  cell.logoImageView.image = UIImage(systemName: icons[index])
-//        }
+        
+        
+        
+        //      dropDown.cellNib = UINib(nibName: "MyDropDownCell", bundle: nil)
+        //        dropDown.customCellConfiguration = { (index: Index, item: String, cell: DropDownCell) -> Void in
+        //            guard let cell = cell as? MyDropDownCell else { return }
+        //
+        //            // can use attrubted string for colored text
+        //            cell.myText?.text = cityList[index].name
+        //
+        //        }
+        
+        
         dropDown.backgroundColor = .WhiteColor
         dropDown.anchorView = self.fromBtn
         dropDown.bottomOffset = CGPoint(x: 0, y: fromBtn.frame.size.height + 10)

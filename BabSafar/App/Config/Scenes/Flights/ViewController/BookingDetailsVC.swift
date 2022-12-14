@@ -41,7 +41,20 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
     
     
     override func viewWillAppear(_ animated: Bool) {
+        NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("nointernet"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadTV), name: Notification.Name("reloadTV"), object: nil)
+        callAllAPIS()
         
+        NotificationCenter.default.addObserver(self, selector: #selector(addAdultsDetails(notification:)), name: NSNotification.Name("addAdultsDetails"), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(reload(notification:)), name: NSNotification.Name("reload"), object: nil)
+        
+    }
+    
+    
+    
+    func callAllAPIS() {
+       
         let seconds = 0.1
         DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
             self.fetchCoreDataValues()
@@ -52,11 +65,18 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
                 }
             }
         }
-        
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(addAdultsDetails(notification:)), name: NSNotification.Name("addAdultsDetails"), object: nil)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(reload(notification:)), name: NSNotification.Name("reload"), object: nil)
+    }
+    
+    //MARK: - nointernet
+    @objc func nointernet() {
+        guard let vc = NoInternetConnectionVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .overCurrentContext
+        self.present(vc, animated: true)
+    }
+    
+    
+    @objc func reloadTV() {
+        callAllAPIS()
     }
     
     
@@ -69,6 +89,7 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
         payload["selectedResult"] = defaults.string(forKey: UserDefaultsKeys.selectedResult)
         payload["booking_source"] = defaults.string(forKey: UserDefaultsKeys.bookingsourcekey)
         payload["user_id"] = defaults.string(forKey: UserDefaultsKeys.userid) ?? 0
+        payload["traceId"] = defaults.string(forKey: UserDefaultsKeys.traceId) ?? 0
         mbviewmodel?.CALLPREPROCESSINGBOOKINGAPI(dictParam: payload)
     }
     
@@ -136,7 +157,8 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
     
     //MARK: - reload commonTableView
     @objc func reload(notification:NSNotification) {
-        commonTableView.reloadData()
+       // commonTableView.reloadData()
+        setupTV()
     }
     
     
@@ -176,14 +198,12 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
         if defaults.bool(forKey: UserDefaultsKeys.userLoggedIn) == false {
             tablerow.append(TableRow(cellType:.TDetailsLoginTVCell))
         }
-        
-        
         tablerow.append(TableRow(cellType:.FlightDetailsTitleTVCell))
         MBfd?.forEach({ i in
             tablerow.append(TableRow(moreData:i,cellType:.FlightDetailsTVCell))
         })
-        tablerow.append(TableRow(cellType:.ViewFlightDetailsBtnTVCell))
         
+        tablerow.append(TableRow(cellType:.ViewFlightDetailsBtnTVCell))
         tablerow.append(TableRow(cellType:.AddTravellerTVCell))
         tablerow.append(TableRow(cellType:.ContactInformationTVCell))
         tablerow.append(TableRow(cellType:.TravelInsuranceTVCell))
@@ -336,6 +356,13 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
     }
     
     
+    //MARK: - didTapOnEditTraveller
+    override func didTapOndeleteTravellerBtnAction(cell:AddAdultsOrGuestTVCell){
+        print("cell.travellerId \(cell.travellerId)")
+        deleteRecords(index: cell.indexPath?.row ?? 0, id: cell.travellerId)
+    }
+    
+    
     //MARK: - didTapOnViewFlightsDetailsBtn
     override func didTapOnViewFlightDetailsButton(cell: ViewFlightDetailsBtnTVCell) {
         dismiss(animated: true)
@@ -368,6 +395,7 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
         countryCodeArray.removeAll()
         passportexpiryArray.removeAll()
         passportissuingcountryArray.removeAll()
+        passportnationalityArray.removeAll()
         
         
         
@@ -422,9 +450,8 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
             
             do {
                 let objects = try context.fetch(request)
-                for object in details {
-                    context.delete(object as! NSManagedObject)
-                }
+                context.delete(objects[index] as! NSManagedObject)
+                
             } catch {
                 print ("There was an error")
             }
@@ -433,15 +460,13 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
         
         do {
             try context.save()
+            
         } catch {
             print ("There was an error")
         }
         
-        
         DispatchQueue.main.async {[self] in
-            
-            fetchCoreDataValues()
-            commonTableView.reloadData()
+            NotificationCenter.default.post(name: NSNotification.Name("reload"), object: nil)
         }
     }
     
@@ -600,6 +625,7 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
         //        vc.modalPresentationStyle = .overCurrentContext
         //        present(vc, animated: true)
     }
+    
     
     
     

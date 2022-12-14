@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -64,19 +64,53 @@
                                     <constraint firstAttribute="trailing" secondItem="SWY-BA-IAw" secondAttribute="trailing" id="aMj-f1-OCK"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jjN-lm-23t">
+                                <rect key="frame" x="353" y="0.0" width="50" height="50"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="KOb-Su-nWb">
+                                        <rect key="frame" x="15" y="15" width="20" height="20"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="20" id="2zd-zN-oPO"/>
+                                            <constraint firstAttribute="width" constant="20" id="Na5-kZ-svY"/>
+                                        </constraints>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b9O-cE-0a4">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain"/>
+                                        <connections>
+                                            <action selector="didTapOndeleteTravellerBtnAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="yE2-Gw-yIb"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="b9O-cE-0a4" firstAttribute="leading" secondItem="jjN-lm-23t" secondAttribute="leading" id="CmC-VA-HVt"/>
+                                    <constraint firstAttribute="bottom" secondItem="b9O-cE-0a4" secondAttribute="bottom" id="bYJ-Cc-5Uk"/>
+                                    <constraint firstItem="b9O-cE-0a4" firstAttribute="top" secondItem="jjN-lm-23t" secondAttribute="top" id="dXw-rO-BMV"/>
+                                    <constraint firstItem="KOb-Su-nWb" firstAttribute="centerX" secondItem="jjN-lm-23t" secondAttribute="centerX" id="g1L-JP-hoD"/>
+                                    <constraint firstItem="KOb-Su-nWb" firstAttribute="centerY" secondItem="jjN-lm-23t" secondAttribute="centerY" id="gxg-8f-N0E"/>
+                                    <constraint firstAttribute="width" constant="50" id="mBw-6q-3aH"/>
+                                    <constraint firstAttribute="trailing" secondItem="b9O-cE-0a4" secondAttribute="trailing" id="w0L-x2-R9d"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="Bp9-8e-9XH" secondAttribute="trailing" id="3v5-a1-ZyO"/>
                             <constraint firstItem="Bp9-8e-9XH" firstAttribute="top" secondItem="1NN-mH-fn7" secondAttribute="top" id="5As-GX-Y3D"/>
+                            <constraint firstItem="Bp9-8e-9XH" firstAttribute="leading" secondItem="jjN-lm-23t" secondAttribute="trailing" id="9yB-V9-Wti"/>
+                            <constraint firstAttribute="bottom" secondItem="jjN-lm-23t" secondAttribute="bottom" id="B2C-UI-dnz"/>
                             <constraint firstItem="SGd-HO-Skc" firstAttribute="centerY" secondItem="74a-Ur-ejU" secondAttribute="centerY" id="JXE-DE-WCv"/>
                             <constraint firstAttribute="bottom" secondItem="Bp9-8e-9XH" secondAttribute="bottom" id="T4P-An-k8A"/>
                             <constraint firstItem="74a-Ur-ejU" firstAttribute="leading" secondItem="1NN-mH-fn7" secondAttribute="leading" constant="15" id="Z03-uU-fe4"/>
                             <constraint firstItem="Bp9-8e-9XH" firstAttribute="centerY" secondItem="SGd-HO-Skc" secondAttribute="centerY" id="ZJ9-Yb-jW3"/>
                             <constraint firstItem="74a-Ur-ejU" firstAttribute="top" secondItem="1NN-mH-fn7" secondAttribute="top" constant="15" id="aL6-Jv-qVA"/>
+                            <constraint firstItem="jjN-lm-23t" firstAttribute="top" secondItem="1NN-mH-fn7" secondAttribute="top" id="kCe-UI-Z02"/>
                             <constraint firstItem="SGd-HO-Skc" firstAttribute="leading" secondItem="74a-Ur-ejU" secondAttribute="trailing" constant="12" id="ni7-Cj-rMa"/>
                             <constraint firstAttribute="bottom" secondItem="Bp9-8e-9XH" secondAttribute="bottom" id="tEY-5B-WZr"/>
                             <constraint firstAttribute="height" constant="50" id="wVl-mx-AtK"/>
+                            <constraint firstItem="jjN-lm-23t" firstAttribute="centerY" secondItem="Bp9-8e-9XH" secondAttribute="centerY" id="zNL-4K-Ghg"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -89,6 +123,9 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="checkImg" destination="74a-Ur-ejU" id="gg4-MF-z3v"/>
+                <outlet property="deleteBtn" destination="b9O-cE-0a4" id="ipe-IA-2Te"/>
+                <outlet property="deleteBtnView" destination="jjN-lm-23t" id="qhe-rx-caF"/>
+                <outlet property="deleteImg" destination="KOb-Su-nWb" id="CZD-6d-7ua"/>
                 <outlet property="editBtn" destination="SWY-BA-IAw" id="M1O-7y-Kb0"/>
                 <outlet property="editBtnView" destination="Bp9-8e-9XH" id="tYt-he-cAm"/>
                 <outlet property="editImg" destination="kbk-gy-2MQ" id="mdR-OO-adD"/>

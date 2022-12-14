@@ -152,17 +152,19 @@ class SelectLanguageVC: BaseTableVC {
                 }
             }else {
                 
-                defaults.set(cell.titlelbl.text, forKey: UserDefaultsKeys.selectedLang)
+                
                 cell.holderView.layer.borderColor = UIColor.AppBorderColor.cgColor
                 
                 switch cell.titlelbl.text {
                 case "English":
                     defaults.set("EN", forKey: UserDefaultsKeys.APILanguageType)
+                    defaults.set("EN", forKey: UserDefaultsKeys.selectedLang)
                     break
                     
             
                 case "Arabic":
                     defaults.set("AR", forKey: UserDefaultsKeys.APILanguageType)
+                    defaults.set("AR", forKey: UserDefaultsKeys.selectedLang)
                     break
                     
                     

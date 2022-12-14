@@ -36,9 +36,14 @@ class BaggageInfoVC: BaseTableVC, FlightDetailsViewModelProtocal, FDViewModelDel
     var fdetails = [FDFlightDetails]()
     
     override func viewWillAppear(_ animated: Bool) {
-        callGetFlightDetailsAPI()
+        NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("nointernet"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadTV), name: Notification.Name("reloadTV"), object: nil)
+        callApi()
     }
     
+    func callApi() {
+        callGetFlightDetailsAPI()
+    }
     
     
     func setupTVCells() {
@@ -55,6 +60,17 @@ class BaggageInfoVC: BaseTableVC, FlightDetailsViewModelProtocal, FDViewModelDel
     }
     
     
+    //MARK: - nointernet
+    @objc func nointernet() {
+        guard let vc = NoInternetConnectionVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .overCurrentContext
+        self.present(vc, animated: true)
+    }
+    
+    
+    @objc func reloadTV() {
+        callApi()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

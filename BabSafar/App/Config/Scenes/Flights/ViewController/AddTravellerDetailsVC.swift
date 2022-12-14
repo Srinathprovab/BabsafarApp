@@ -30,7 +30,9 @@ class AddTravellerDetailsVC: BaseTableVC {
     var nationality = String()
     var issuingCountry = String()
     var nationalitycode = String()
+    var nationalityCountryName = String()
     var issuingCountrycode = String()
+    var issuingCountryName = String()
     var mobileno = String()
     var email = String()
     var textFieldText = ""
@@ -47,14 +49,32 @@ class AddTravellerDetailsVC: BaseTableVC {
     }
     
     
+    
+    
     //MARK: - Loading Functions
     override func viewWillAppear(_ animated: Bool) {
+        NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("nointernet"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadTV), name: Notification.Name("reloadTV"), object: nil)
+        callApi()
+    }
+    
+    func  callApi(){
         if key == "edit" {
             fetchCoreDataValues()
         }
-        
     }
     
+    //MARK: - nointernet
+    @objc func nointernet() {
+        guard let vc = NoInternetConnectionVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .overCurrentContext
+        self.present(vc, animated: true)
+    }
+    
+    
+    @objc func reloadTV() {
+        callApi()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -120,18 +140,18 @@ class AddTravellerDetailsVC: BaseTableVC {
             
             
             tablerow.append(TableRow(key:"gender",cellType:.SelectGenderTVCell))
-            tablerow.append(TableRow(title:"Frist Name",key: "fname",text:fname,headerText: title2, buttonTitle: "Frist Name", key1:"edit",characterLimit: 1,cellType:.EnterTravellerDetailsTVCell))
-            tablerow.append(TableRow(title:"Last Name",key: "email",text:lname,buttonTitle: "Last Name",key1:"edit",characterLimit: 2,cellType:.EnterTravellerDetailsTVCell))
-            tablerow.append(TableRow(title:"Date Of Birth",key: "dob",text:dob,buttonTitle: "Date Of Birth",key1:"edit",image: "cal",characterLimit: 3,cellType:.DobTVCell))
-            tablerow.append(TableRow(title:"Nationality",text: "Nationality",buttonTitle:nationality,key1:"edit", image: "downarrow",cellType:.DropDownTVCell))
+            tablerow.append(TableRow(title:"Frist Name",key: "fname",text:fname,headerText: title2, buttonTitle: "Frist Name", key1:"editfname",characterLimit: 1,cellType:.EnterTravellerDetailsTVCell))
+            tablerow.append(TableRow(title:"Last Name",key: "email",text:lname,buttonTitle: "Last Name",key1:"editlname",characterLimit: 2,cellType:.EnterTravellerDetailsTVCell))
+            tablerow.append(TableRow(title:"Date Of Birth",key: "dob",text:dob,buttonTitle: "Date Of Birth",key1:"editdob",image: "cal",characterLimit: 3,cellType:.DobTVCell))
+            tablerow.append(TableRow(title:"Nationality",text: "Nationality",buttonTitle:nationality,key1:"editnationality", image: "downarrow",cellType:.DropDownTVCell))
             tablerow.append(TableRow(height:20,cellType:.EmptyTVCell))
             tablerow.append(TableRow(title:"Travel document*",cellType:.LabelTVCell))
             
             tablerow.append(TableRow(title:"Document Type",key: "email",text:"hhhh",buttonTitle: "Document Type",key1:"edit",characterLimit: 4,cellType:.EnterTravellerDetailsTVCell))
-            tablerow.append(TableRow(title:"Passport Number",key: "email",text:passportno,buttonTitle: "Passport Number",key1:"edit",characterLimit: 5,cellType:.EnterTravellerDetailsTVCell))
+            tablerow.append(TableRow(title:"Passport Number",key: "email",text:passportno,buttonTitle: "Passport Number",key1:"editpassportno",characterLimit: 5,cellType:.EnterTravellerDetailsTVCell))
             
-            tablerow.append(TableRow(title:"Issuing Country",subTitle: "",text: "Country",buttonTitle:issuedCountry,key1:"edit", image: "downarrow",cellType:.DropDownTVCell))
-            tablerow.append(TableRow(title:"Passport Expiry Date",subTitle: experiesOn,key: "dob",text:experiesOn,buttonTitle: "Passport Expiry Date",key1:"edit",image: "cal",characterLimit: 6,cellType:.ExpireOnTVCell))
+            tablerow.append(TableRow(title:"Issuing Country",subTitle: "",text: "Country",buttonTitle:issuedCountry,key1:"editissuingcountry", image: "downarrow",cellType:.DropDownTVCell))
+            tablerow.append(TableRow(title:"Passport Expiry Date",subTitle: experiesOn,key: "dob",text:experiesOn,buttonTitle: "Passport Expiry Date",key1:"editpassportexpirydate",image: "cal",characterLimit: 6,cellType:.ExpireOnTVCell))
             
         }
         
@@ -220,6 +240,7 @@ class AddTravellerDetailsVC: BaseTableVC {
             self.nationality = cell.nationality ?? ""
             self.nationalitycode = cell.nationalitycode
             print(self.nationalitycode)
+            print(self.nationality)
             break
             
         case "Issuing Country":
@@ -331,7 +352,6 @@ class AddTravellerDetailsVC: BaseTableVC {
                 
                 print("edit .....")
                 DispatchQueue.main.async {
-                    // self.updateDetailsLocally()
                     self.update()
                 }
             }else {
@@ -365,6 +385,8 @@ class AddTravellerDetailsVC: BaseTableVC {
         newUser.setValue(passportno, forKey: "passportno")
         newUser.setValue(convertDateFormat(inputDate: experiesOn, f1: "dd-MM-yyyy", f2: "yyyy-MM-dd"), forKey: "passportexpirydate")
         newUser.setValue(issuingCountrycode, forKey: "passportissuingcountry")
+        newUser.setValue(nationality, forKey: "nationalityName")
+        newUser.setValue(issuingCountry, forKey: "issuingCountryName")
         
         do {
             try context.save()
@@ -398,17 +420,31 @@ class AddTravellerDetailsVC: BaseTableVC {
             for data in result as! [NSManagedObject]{
                 print("fname ====== >\((data.value(forKey: "fname") as? String) ?? "")")
                 
-                self.title2 = (data.value(forKey: "title2") as? String) ?? ""
-                self.title1 = (data.value(forKey: "title") as? String) ?? ""
-                self.fname = (data.value(forKey: "fname") as? String) ?? ""
-                self.lname = (data.value(forKey: "lname") as? String) ?? ""
-                self.gender = (data.value(forKey: "gender") as? String) ?? ""
-                self.dob = (data.value(forKey: "dob") as? String) ?? ""
-                self.nationalitycode = (data.value(forKey: "nationality") as? String) ?? ""
-                self.passportno = (data.value(forKey: "passportno") as? String) ?? ""
-                self.experiesOn = (data.value(forKey: "passportexpirydate") as? String) ?? ""
-                self.issuingCountrycode = (data.value(forKey: "passportissuingcountry") as? String) ?? ""
+                edit_title2 = (data.value(forKey: "title2") as? String) ?? ""
+                edit_title1 = (data.value(forKey: "title") as? String) ?? ""
+                edit_fname = (data.value(forKey: "fname") as? String) ?? ""
+                edit_lname = (data.value(forKey: "lname") as? String) ?? ""
+                edit_gender = (data.value(forKey: "gender") as? String) ?? ""
+                edit_dob = (data.value(forKey: "dob") as? String) ?? ""
+                edit_nationalitycode = (data.value(forKey: "nationality") as? String) ?? ""
+                edit_passportno = (data.value(forKey: "passportno") as? String) ?? ""
+                edit_experiesOn = (data.value(forKey: "passportexpirydate") as? String) ?? ""
+                edit_issuingCountrycode = (data.value(forKey: "passportissuingcountry") as? String) ?? ""
+                edit_nationalityname = (data.value(forKey: "nationalityName") as? String) ?? ""
+                edit_issuingCountryname = (data.value(forKey: "issuingCountryName") as? String) ?? ""
                 
+                self.title2 = edit_title2
+                self.title1 = edit_title1
+                self.fname = edit_fname
+                self.lname = edit_lname
+                self.gender = edit_gender
+                self.dob = edit_dob
+                self.nationalitycode = edit_nationalitycode
+                self.passportno = edit_passportno
+                self.experiesOn = edit_experiesOn
+                self.issuingCountrycode = edit_issuingCountrycode
+                self.nationality = edit_nationalityname
+                self.issuingCountry = edit_issuingCountryname
                 
             }
             
@@ -437,20 +473,22 @@ class AddTravellerDetailsVC: BaseTableVC {
         do {
             let results =
             try context.fetch(request)
-            let newUser = results[0] as! NSManagedObject
+            let currentUser = results[0] as! NSManagedObject
             
-            newUser.setValue(id, forKey: "id")
-            newUser.setValue(self.title1, forKey: "title")
-            newUser.setValue(defaults.string(forKey:UserDefaultsKeys.userid), forKey: "userid")
-            newUser.setValue(gender, forKey: "gender")
-            newUser.setValue(fname, forKey: "fname")
-            newUser.setValue(lname, forKey: "lname")
-            newUser.setValue(convertDateFormat(inputDate: dob, f1: "dd-MM-yyyy", f2: "yyyy-MM-dd"), forKey: "dob")
-            newUser.setValue(nationalitycode, forKey: "nationality")
-            newUser.setValue(passportno, forKey: "passportno")
-            newUser.setValue(convertDateFormat(inputDate: experiesOn, f1: "dd-MM-yyyy", f2: "yyyy-MM-dd"), forKey: "passportexpirydate")
-            newUser.setValue(issuingCountrycode, forKey: "passportissuingcountry")
+            currentUser.setValue(id, forKey: "id")
+            currentUser.setValue(self.title1, forKey: "title")
+            currentUser.setValue(defaults.string(forKey:UserDefaultsKeys.userid), forKey: "userid")
+            currentUser.setValue(gender, forKey: "gender")
+            currentUser.setValue(fname, forKey: "fname")
+            currentUser.setValue(lname, forKey: "lname")
+            currentUser.setValue(convertDateFormat(inputDate: dob, f1: "dd-MM-yyyy", f2: "yyyy-MM-dd"), forKey: "dob")
+            currentUser.setValue(nationalitycode, forKey: "nationality")
+            currentUser.setValue(passportno, forKey: "passportno")
+            currentUser.setValue(convertDateFormat(inputDate: experiesOn, f1: "dd-MM-yyyy", f2: "yyyy-MM-dd"), forKey: "passportexpirydate")
+            currentUser.setValue(issuingCountrycode, forKey: "passportissuingcountry")
             
+            currentUser.setValue(nationality, forKey: "nationalityName")
+            currentUser.setValue(issuingCountry, forKey: "issuingCountryName")
             
             do {
                 try context.save()

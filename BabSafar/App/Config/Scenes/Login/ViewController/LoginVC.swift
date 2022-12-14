@@ -32,6 +32,29 @@ class LoginVC: BaseTableVC, RegisterViewModelProtocal {
     var regViewModel: RegisterViewModel?
     var uname = String()
     var password = String()
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("nointernet"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadTV), name: Notification.Name("reloadTV"), object: nil)
+        
+    }
+    
+    
+    //MARK: - nointernet
+    @objc func nointernet() {
+        guard let vc = NoInternetConnectionVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .overCurrentContext
+        self.present(vc, animated: true)
+    }
+    
+    
+    @objc func reloadTV() {
+        commonTableView.reloadData()
+    }
+    
+    
+    //MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -130,7 +153,7 @@ class LoginVC: BaseTableVC, RegisterViewModelProtocal {
                 payload["password"] = pass
                 payload["phone"] = mobile
                 
-
+                
                 regViewModel?.CallRegisterAPI(dictParam: payload)
                 
             }
@@ -266,7 +289,7 @@ class LoginVC: BaseTableVC, RegisterViewModelProtocal {
     func RegisterDetails(response: RegisterModel) {
         print(response)
         
-     
+        
         if response.status == false {
             showToast(message: response.msg ?? "")
         }else {
@@ -277,8 +300,8 @@ class LoginVC: BaseTableVC, RegisterViewModelProtocal {
                 self.presentingViewController?.presentingViewController?.dismiss(animated: true)
             }
         }
-     
-       
+        
+        
     }
     
     

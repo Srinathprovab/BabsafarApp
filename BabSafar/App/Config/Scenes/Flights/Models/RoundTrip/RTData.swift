@@ -17,9 +17,9 @@ struct RTData : Codable {
     let booking_source_key : String?
     let booking_source : String?
     let j_flight_list : [[RTJ_flight_list]]?
-    //    let journey_id : Int?
-    //    let pxtrip_type : String?
-    
+    let journey_id : Int?
+    let pxtrip_type : String?
+    let traceId : String?
     enum CodingKeys: String, CodingKey {
         
         case col_2x_result = "col_2x_result"
@@ -30,8 +30,9 @@ struct RTData : Codable {
         case booking_source_key = "booking_source_key"
         case booking_source = "booking_source"
         case j_flight_list = "j_flight_list"
-        //        case journey_id = "journey_id"
-        //        case pxtrip_type = "pxtrip_type"
+        case journey_id = "journey_id"
+        case pxtrip_type = "pxtrip_type"
+        case traceId = "traceId"
     }
     
     init(from decoder: Decoder) throws {
@@ -44,8 +45,9 @@ struct RTData : Codable {
         booking_source_key = try values.decodeIfPresent(String.self, forKey: .booking_source_key)
         booking_source = try values.decodeIfPresent(String.self, forKey: .booking_source)
         j_flight_list = try values.decodeIfPresent([[RTJ_flight_list]].self, forKey: .j_flight_list)
-        //        journey_id = try values.decodeIfPresent(Int.self, forKey: .journey_id)
-        //        pxtrip_type = try values.decodeIfPresent(String.self, forKey: .pxtrip_type)
+        journey_id = try values.decodeIfPresent(Int.self, forKey: .journey_id)
+        pxtrip_type = try values.decodeIfPresent(String.self, forKey: .pxtrip_type)
+        traceId = try values.decodeIfPresent(String.self, forKey: .traceId)
     }
     
 }

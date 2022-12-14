@@ -41,8 +41,6 @@ class MyAccountVC: BaseTableVC, ProfileDetailsViewModelDelegate {
     var cityname = String()
     var pincode = String()
     var dob = String()
-    
-    
     var pass = String()
     var fileName = String()
     var fileType = String()
@@ -52,15 +50,48 @@ class MyAccountVC: BaseTableVC, ProfileDetailsViewModelDelegate {
     var viewmodel:ProfileDetailsViewModel?
     var payload = [String:Any]()
     var showKey = "profile"
+    var pdetails:ProfileDetails?
     
     override func viewWillAppear(_ animated: Bool) {
-        print("====  viewWillAppear MyAccountVC =======")
-        BASE_URL = "https://provabdevelopment.com/babsafar/mobile_webservices/mobile/index.php/user/"
-        payload["user_id"] = "2075"
-        viewmodel?.CallGetProileDetails_API(dictParam: payload)
+        NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("nointernet"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadTV), name: Notification.Name("reloadTV"), object: nil)
+        callApi()
     }
     
-    var pdetails:ProfileDetails?
+    //MARK: - nointernet
+    @objc func nointernet() {
+        guard let vc = NoInternetConnectionVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .overCurrentContext
+        self.present(vc, animated: true)
+    }
+    
+    
+    @objc func reloadTV() {
+        callApi()
+    }
+    
+    
+    //MARK: - callApi
+    func callApi() {
+        BASE_URL = "https://provabdevelopment.com/babsafar/mobile_webservices/mobile/index.php/user/"
+        payload["user_id"] = defaults.string(forKey: UserDefaultsKeys.userid) ?? "0"
+        
+        if defaults.bool(forKey: UserDefaultsKeys.userLoggedIn) == true {
+            TableViewHelper.EmptyMessage(message: "", tableview: commonTableView, vc: self)
+            self.profileImgView.isHidden = false
+            camImg.isHidden = false
+            nav.filterBtnView.isHidden = false
+            viewmodel?.CallGetProileDetails_API(dictParam: payload)
+        }else {
+            self.profileImgView.isHidden = true
+            camImg.isHidden = true
+            nav.filterBtnView.isHidden = true
+            TableViewHelper.EmptyMessage(message: "Please Login To View Your Profile Details", tableview: commonTableView, vc: self)
+        }
+    }
+    
+    //MARK: - getProfileDetails
+   
     func getProfileDetails(response: ProfileDetailsModel) {
         print("==== getProfileDetails =======")
         print(response)
@@ -120,7 +151,6 @@ class MyAccountVC: BaseTableVC, ProfileDetailsViewModelDelegate {
     func setupTV() {
         nav.titlelbl.text = "My Account"
         nav.backBtnView.isHidden = true
-        nav.filterBtnView.isHidden = false
         nav.filterImg.image = UIImage(named: "edit")?.withRenderingMode(.alwaysOriginal)
         nav.filterBtn.addTarget(self, action: #selector(didTapOnEditAccountBtn(_:)), for: .touchUpInside)
         commonTableView.registerTVCells(["TextfieldTVCell","ButtonTVCell","UnderLineTVCell","SignUpWithTVCell","EmptyTVCell","SelectGenderTVCell"])
@@ -307,7 +337,7 @@ class MyAccountVC: BaseTableVC, ProfileDetailsViewModelDelegate {
         else {
             
             BASE_URL = "https://provabdevelopment.com/babsafar/mobile_webservices/mobile/index.php/user/"
-            payload["user_id"] = "2075"
+            payload["user_id"] = defaults.string(forKey: UserDefaultsKeys.userid) ?? "0"
             payload["first_name"] = fname
             payload["last_name"] = lname
             payload["phone"] = mobile

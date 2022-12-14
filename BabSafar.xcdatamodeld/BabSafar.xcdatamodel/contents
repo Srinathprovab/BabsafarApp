@@ -5,8 +5,10 @@
         <attribute name="fname" optional="YES" attributeType="String"/>
         <attribute name="gender" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="issuingCountryName" optional="YES" attributeType="String"/>
         <attribute name="lname" optional="YES" attributeType="String"/>
         <attribute name="nationality" optional="YES" attributeType="String"/>
+        <attribute name="nationalityName" optional="YES" attributeType="String"/>
         <attribute name="passportexpirydate" optional="YES" attributeType="String"/>
         <attribute name="passportissuingcountry" optional="YES" attributeType="String"/>
         <attribute name="passportno" optional="YES" attributeType="String"/>

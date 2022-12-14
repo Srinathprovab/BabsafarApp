@@ -28,10 +28,11 @@ class SearchFlightResultVC: BaseTableVC {
     
     
     override func viewWillAppear(_ animated: Bool) {
+        NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("nointernet"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadTV), name: Notification.Name("reloadTV"), object: nil)
+       
         setUpNav()
-        
-        
-        
+    
         if let selectedJourneyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
             if selectedJourneyType == "oneway" {
                 //FOR APPENDING operator_image AND totalPrice
@@ -109,6 +110,17 @@ class SearchFlightResultVC: BaseTableVC {
         
     }
     
+    //MARK: - nointernet
+    @objc func nointernet() {
+        guard let vc = NoInternetConnectionVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .overCurrentContext
+        self.present(vc, animated: true)
+    }
+    
+    
+    @objc func reloadTV() {
+        commonTableView.reloadData()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -323,33 +335,12 @@ class SearchFlightResultVC: BaseTableVC {
     override func gotoRoundTripBaggageIntoVC(cell: RoundTripFlightResultTVCell) {
         defaults.set(cell.selectedResult, forKey: UserDefaultsKeys.selectedResult)
         defaults.set(cell.indexPath?.row ?? 0, forKey: UserDefaultsKeys.selectdFlightcellIndex)
-        print("indexindexindexindexindex === \(cell.indexPath?.row)")
-        print("cell.selectedResult === \(cell.selectedResult)")
-        RTFlightList?[cell.indexPath?.row ?? 0].forEach { i in
-            Adults_Base_Price = i.adults_Base_Price ?? ""
-            Childs_Base_Price = i.childs_Base_Price ?? ""
-            Infants_Base_Price = i.infants_Base_Price ?? ""
-            Adults_Tax_Price = i.adults_Base_Price ?? ""
-            Childs_Tax_Price = i.childs_Tax_Price ?? ""
-            Infants_Tax_Price = i.infants_Tax_Price ?? ""
-            TotalPrice_API = i.totalPrice_API ?? ""
-        }
-        
         gotoBaggageInfoVC()
     }
     
     override func gotoRoundTripBaggageIntoVC(cell: MultiCityTripFlightResultTVCell) {
         defaults.set(cell.selectedResult, forKey: UserDefaultsKeys.selectedResult)
         defaults.set(cell.indexPath?.row ?? 0, forKey: UserDefaultsKeys.selectdFlightcellIndex)
-        
-        Adults_Base_Price = MCJflightlist?[cell.indexPath?.row ?? 0].adults_Base_Price ?? ""
-        Childs_Base_Price = MCJflightlist?[cell.indexPath?.row ?? 0].childs_Base_Price ?? ""
-        Infants_Base_Price = MCJflightlist?[cell.indexPath?.row ?? 0].infants_Base_Price ?? ""
-        Adults_Tax_Price = MCJflightlist?[cell.indexPath?.row ?? 0].adults_Base_Price ?? ""
-        Childs_Tax_Price = MCJflightlist?[cell.indexPath?.row ?? 0].childs_Tax_Price ?? ""
-        Infants_Tax_Price = MCJflightlist?[cell.indexPath?.row ?? 0].infants_Tax_Price ?? ""
-        TotalPrice_API = MCJflightlist?[cell.indexPath?.row ?? 0].totalPrice_API ?? ""
-        
         gotoBaggageInfoVC()
     }
     
@@ -405,18 +396,6 @@ extension SearchFlightResultVC {
         if let cell = tableView.cellForRow(at: indexPath) as? SearchFlightResultTVCell {
             defaults.set(cell.selectedResult, forKey: UserDefaultsKeys.selectedResult)
             defaults.set(cell.indexPath?.row ?? 0, forKey: UserDefaultsKeys.selectdFlightcellIndex)
-            print("indexindexindexindexindex === \(cell.indexPath?.row)")
-            
-            FlightList?[cell.indexPath?.row ?? 0].forEach { i in
-                Adults_Base_Price = i.adults_Base_Price ?? ""
-                Childs_Base_Price = i.childs_Base_Price ?? ""
-                Infants_Base_Price = i.infants_Base_Price ?? ""
-                Adults_Tax_Price = i.adults_Base_Price ?? ""
-                Childs_Tax_Price = i.childs_Tax_Price ?? ""
-                Infants_Tax_Price = i.infants_Tax_Price ?? ""
-                TotalPrice_API = i.totalPrice_API ?? ""
-            }
-            
             gotoBaggageInfoVC()
         }
         

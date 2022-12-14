@@ -96,9 +96,23 @@ var countryCodeArray = [String]()
 var passportissuingcountryArray = [String]()
 var passportnationalityArray = [String]()
 var title2Array = [String]()
-
-
+var keyStr = String()
 var dfromCityNameArray =  [String:String]()
+
+var edit_title2 = String()
+var edit_title1 = String()
+var edit_fname = String()
+var edit_lname = String()
+var edit_gender = String()
+var edit_dob = String()
+var edit_nationalitycode = String()
+var edit_passportno = String()
+var edit_experiesOn = String()
+var edit_issuingCountrycode = String()
+var edit_issuingCountryname = String()
+var edit_nationalityname = String()
+
+
 
 /* URL endpoints */
 struct ApiEndpoints {
@@ -151,7 +165,7 @@ struct UserDefaultsKeys {
     static var APICurrencyType = "APICurrencyType"
     static var APILanguageType = "APILanguageType"
     static var totalTravellerCount = "totalTravellerCount"
-    
+    static var traceId = "traceId"
     
     
     

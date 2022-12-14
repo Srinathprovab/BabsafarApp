@@ -37,26 +37,28 @@ class SelectFromCityVC: BaseTableVC, SelectCityViewModelProtocal {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        CallShowCityListAPI(str: "")
         
+        NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("nointernet"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadTV), name: Notification.Name("reloadTV"), object: nil)
+        callApi()
+    }
+    
+    
+    func callApi() {
+        CallShowCityListAPI(str: "")
         self.celltag = Int(defaults.string(forKey: UserDefaultsKeys.cellTag) ?? "0") ?? 0
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(noInterNet(notification:)), name: NSNotification.Name("nointernet"), object: nil)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadTV(notification:)), name: NSNotification.Name("reloadTV"), object: nil)
     }
     
-    @objc func noInterNet(notification:NSNotification) {
-        let msg = notification.object as? String
-        if msg == "no internet" {
-            guard let vc = NoInternetConnectionVC.newInstance.self else {return}
-            vc.modalPresentationStyle = .overCurrentContext
-            self.present(vc, animated: false)
-        }
+    //MARK: - nointernet
+    @objc func nointernet() {
+        guard let vc = NoInternetConnectionVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .overCurrentContext
+        self.present(vc, animated: true)
     }
     
-    @objc func reloadTV(notification:NSNotification) {
-        CallShowCityListAPI(str: "")
+    
+    @objc func reloadTV() {
+        callApi()
     }
     
     

@@ -228,8 +228,8 @@ extension TextfieldTVCell {
     
     override func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
-        let result = (txtField.text as NSString?)?.replacingCharacters(in: range, with: string) ?? string
-        delegate?.textFieldText(cell: self, text: result)
+//        let result = (txtField.text as NSString?)?.replacingCharacters(in: range, with: string) ?? string
+//        delegate?.textFieldText(cell: self, text: result)
         
         
         switch textField.tag {

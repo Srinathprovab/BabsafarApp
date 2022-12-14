@@ -58,23 +58,32 @@ class DropDownTVCell: TableViewCell {
         setupDropDown()
       
         
-        switch self.titlelbl.text {
-        case "Nationality":
-            self.dropdownlbl.text = self.nationality ?? "Nationality"
+//        switch self.titlelbl.text {
+//        case "Nationality":
+//            self.dropdownlbl.text = self.nationality ?? "Nationality"
+//            break
+//
+//        case "Issuing Country":
+//            self.dropdownlbl.text = self.issuingCountry ?? "Issuing Country"
+//            break
+//
+//        default:
+//            break
+//        }
+        
+   
+        
+        switch cellInfo?.key1 {
+        case "editnationality":
+            dropdownlbl.text = edit_nationalityname
+            dropdownlbl.textColor = .AppLabelColor
             break
-            
-        case "Issuing Country":
-            self.dropdownlbl.text = self.issuingCountry ?? "Issuing Country"
+        case "editissuingcountry":
+            dropdownlbl.text = edit_issuingCountryname
+            dropdownlbl.textColor = .AppLabelColor
             break
-            
         default:
             break
-        }
-        
-        
-        
-        if cellInfo?.key1 == "edit" {
-            dropdownlbl.text = cellInfo?.buttonTitle
         }
     }
     

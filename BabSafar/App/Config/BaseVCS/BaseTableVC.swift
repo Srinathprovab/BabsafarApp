@@ -96,7 +96,7 @@ class BaseTableVC: UIViewController, SearchFlightsTVCellDelegate, TravellerEcono
     
     //Delegate Methods
     
-    
+   
     func didTapOnFromCityBtnAction(cell: SearchFlightsTVCell) {}
     func didTapOnToCityBtnAction(cell: SearchFlightsTVCell){}
     func didTapOnSwipeCityBtnAction(cell: SearchFlightsTVCell) {}
@@ -110,6 +110,8 @@ class BaseTableVC: UIViewController, SearchFlightsTVCellDelegate, TravellerEcono
     func didTapOnReturnJurneyRadioButton(cell: SearchFlightsTVCell) {}
     func didTapOnDirectFlightRadioButton(cell: SearchFlightsTVCell) {}
     func didTapOnSearchFlightBtnAction(cell: SearchFlightsTVCell) {}
+    func addTraverllersBtnAction(cell: SearchFlightsTVCell){}
+    func addClassBtnAction(cell: SearchFlightsTVCell){}
     func didTapOnDecrementButton(cell: TravellerEconomyTVCell) {}
     func didTapOnIncrementButton(cell: TravellerEconomyTVCell) {}
     func didTapOnRadioButton(cell: RadioButtonTVCell) {}
@@ -155,10 +157,11 @@ class BaseTableVC: UIViewController, SearchFlightsTVCellDelegate, TravellerEcono
     func didTapOnDualBtn2(cell: ButtonTVCell){}
     func didTapOnViewVoucherBtn(cell: SearchFlightResultTVCell) {}
     func addEconomyBtnAction(cell: MultiCityTVCell) {}
-    
     func didTapOnairlineBtnAction(cell: MultiCityTVCell) {}
     func didTapOntimeReturnJourneyBtnAction(cell: MultiCityTVCell) {}
     func didTapOntimeOutwardJourneyBtnAction(cell: MultiCityTVCell) {}
+    func addTraverllersBtnAction(cell: MultiCityTVCell){}
+    func addClassBtnAction(cell: MultiCityTVCell){}
     func viewBtnAction(cell: CommonFromCityTVCell) {}
     func didTapOnDual1Btn(cell:CommonFromCityTVCell){}
     func didTapOnDual2Btn(cell:CommonFromCityTVCell){}
@@ -176,6 +179,7 @@ class BaseTableVC: UIViewController, SearchFlightsTVCellDelegate, TravellerEcono
     func didTapOnRefundableBtn1(cell:RoomDetailsTVCell){}
     func didTapOnEditAdultBtn(cell: AddAdultsOrGuestTVCell) {}
     func didTapOnEditTraveller(cell:AddAdultsOrGuestTVCell){}
+    func didTapOndeleteTravellerBtnAction(cell:AddAdultsOrGuestTVCell){}
     func didTapOnViewFlightsDetailsBtn(cell: FlightDetailsTVCell) {}
     func didTapOnFlightsDetails(cell:SearchFlightResultTVCell){}
     func didTapOnCheckBoxDropDownBtn(cell: CheckBoxTVCell) {}
@@ -204,9 +208,7 @@ class BaseTableVC: UIViewController, SearchFlightsTVCellDelegate, TravellerEcono
     
     
     
-    
-    
-    
+   
     
     
     

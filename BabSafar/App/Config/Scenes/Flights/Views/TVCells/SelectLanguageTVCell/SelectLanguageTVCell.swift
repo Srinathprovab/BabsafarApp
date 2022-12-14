@@ -44,7 +44,7 @@ class SelectLanguageTVCell: TableViewCell {
             
             if let lang = defaults.string(forKey: UserDefaultsKeys.APILanguageType) {
                 if lang == titlelbl.text {
-                    self.holderView.layer.borderColor = UIColor.AppBtnColor.cgColor
+                  //  self.holderView.layer.borderColor = UIColor.AppBtnColor.cgColor
                 }
             }
             
@@ -55,7 +55,7 @@ class SelectLanguageTVCell: TableViewCell {
             
             if let currency = defaults.string(forKey: UserDefaultsKeys.APICurrencyType) {
                 if currency == subTitlelbl.text {
-                    self.holderView.layer.borderColor = UIColor.AppBtnColor.cgColor
+                   // self.holderView.layer.borderColor = UIColor.AppBtnColor.cgColor
                 }
             }
         }

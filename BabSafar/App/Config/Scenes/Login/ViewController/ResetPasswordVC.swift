@@ -21,6 +21,32 @@ class ResetPasswordVC: BaseTableVC {
         let vc = storyboard.instantiateViewController(withIdentifier: self.className()) as? ResetPasswordVC
         return vc
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("nointernet"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadTV), name: Notification.Name("reloadTV"), object: nil)
+        callApi()
+    }
+    
+    //MARK: - nointernet
+    @objc func nointernet() {
+        guard let vc = NoInternetConnectionVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .overCurrentContext
+        self.present(vc, animated: true)
+    }
+    
+    
+    @objc func reloadTV() {
+        callApi()
+    }
+    
+    
+    //MARK: - callApi
+    func callApi() {
+        commonTableView.reloadData()
+    }
+    
+    //MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         

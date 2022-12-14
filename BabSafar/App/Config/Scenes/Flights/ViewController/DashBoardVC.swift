@@ -49,8 +49,14 @@ class DashBoardVC: BaseTableVC, TopFlightDetailsViewModelDelegate {
     
     //MARK: - LOADING FUNCTIONS
     override func viewWillAppear(_ animated: Bool) {
+        NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("nointernet"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadTV), name: Notification.Name("reloadTV"), object: nil)
+        callApi()
         
-        
+    }
+    
+    
+    func callApi() {
         if !UserDefaults.standard.bool(forKey: "ExecuteOnce") {
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
@@ -59,12 +65,11 @@ class DashBoardVC: BaseTableVC, TopFlightDetailsViewModelDelegate {
             defaults.set("Flights", forKey: UserDefaultsKeys.dashboardTapSelected)
             defaults.set(0, forKey: UserDefaultsKeys.DashboardTapSelectedCellIndex)
             tabSelectCV.selectItem(at: IndexPath(item: 0, section: 0), animated: true, scrollPosition: .left)
-            defaults.set("oneway", forKey: UserDefaultsKeys.journeyType)
+            defaults.set("circle", forKey: UserDefaultsKeys.journeyType)
             defaults.set(0, forKey: UserDefaultsKeys.journeyTypeSelectedIndex)
             defaults.set("KWD", forKey: UserDefaultsKeys.selectedCurrency)
-            defaults.set("English", forKey: UserDefaultsKeys.APILanguageType)
+            defaults.set("EN", forKey: UserDefaultsKeys.APILanguageType)
             langLabel.text = "EN"
-            
             UserDefaults.standard.set(true, forKey: "ExecuteOnce")
         }
         
@@ -86,10 +91,23 @@ class DashBoardVC: BaseTableVC, TopFlightDetailsViewModelDelegate {
         
         NotificationCenter.default.addObserver(self, selector: #selector(reload(notification:)), name: Notification.Name("reload"), object: nil)
         
-        
+    }
+    
+    //MARK: - nointernet
+    @objc func nointernet() {
+        guard let vc = NoInternetConnectionVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .overCurrentContext
+        self.present(vc, animated: true)
     }
     
     
+    @objc func reloadTV() {
+        callApi()
+    }
+    
+    
+    
+    //MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -198,6 +216,7 @@ class DashBoardVC: BaseTableVC, TopFlightDetailsViewModelDelegate {
     func gotoSearchFlightScreen() {
         guard let vc = SearchFlightsVC.newInstance.self else {return}
         vc.modalPresentationStyle = .fullScreen
+        keyStr = "search"
         self.present(vc, animated: true)
     }
     

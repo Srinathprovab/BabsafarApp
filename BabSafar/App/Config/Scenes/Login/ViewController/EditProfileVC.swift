@@ -11,7 +11,7 @@ import MobileCoreServices
 
 class EditProfileVC: BaseTableVC {
     
-   
+    
     
     @IBOutlet weak var nav: NavBar!
     @IBOutlet weak var profileImgView: UIView!
@@ -47,12 +47,33 @@ class EditProfileVC: BaseTableVC {
     
     
     override func viewWillAppear(_ animated: Bool) {
-        print("====  viewWillAppear EditProfileVC =======")
+        NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("nointernet"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadTV), name: Notification.Name("reloadTV"), object: nil)
+        callApi()
+    }
+    
+    //MARK: - nointernet
+    @objc func nointernet() {
+        guard let vc = NoInternetConnectionVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .overCurrentContext
+        self.present(vc, animated: true)
+    }
+    
+    
+    @objc func reloadTV() {
+        callApi()
+    }
+    
+    
+    //MARK: - callApi
+    func callApi() {
         BASE_URL = "https://provabdevelopment.com/babsafar/mobile_webservices/mobile/index.php/user/"
         payload["user_id"] = "2075"
         viewmodel?.CallGetProileDetails_API(dictParam: payload)
     }
     
+    
+    //MARK: - getProfileDetails
     func getProfileDetails(response: ProfileDetailsModel) {
         print("==== getProfileDetails =======")
         print(response)
@@ -66,7 +87,7 @@ class EditProfileVC: BaseTableVC {
         // Do any additional setup after loading the view.
         setupUI()
         setupTV()
-       // viewmodel = ProfileDetailsViewModel(self)
+        // viewmodel = ProfileDetailsViewModel(self)
     }
     
     

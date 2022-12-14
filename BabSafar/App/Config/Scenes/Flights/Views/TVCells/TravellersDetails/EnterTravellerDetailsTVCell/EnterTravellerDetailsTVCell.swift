@@ -56,6 +56,7 @@ class EnterTravellerDetailsTVCell: TableViewCell {
     
     
     override func updateUI() {
+        
         titlelbl.text = cellInfo?.title
         dropImage.image = UIImage(named: cellInfo?.image ?? "")
         txtField.tag = cellInfo?.characterLimit ?? 0
@@ -68,7 +69,7 @@ class EnterTravellerDetailsTVCell: TableViewCell {
             countryNameArray.append(i.name ?? "")
         }
         
-      
+        
         
         if cellInfo?.key == "fname" {
             countrycodeViewWidth.constant = 90
@@ -80,18 +81,33 @@ class EnterTravellerDetailsTVCell: TableViewCell {
                 countryCodeTF.text = cellInfo?.headerText
             }
             
-        }else if cellInfo?.key == "dob" {
-            dropView.isHidden = false
-            self.tfHolderView.bringSubviewToFront(dropView)
-            showDatePicker()
-        }else {
+        }
+        
+//        else if cellInfo?.key == "dob" {
+//            dropView.isHidden = false
+//            self.tfHolderView.bringSubviewToFront(dropView)
+//            showDatePicker()
+//        }
+        
+        else {
             
         }
         
         
-       
-        
-        
+        switch cellInfo?.key1 {
+        case "editfname":
+            txtField.text = edit_fname
+            countryCodeTF.text = cellInfo?.headerText
+            break
+        case "editlname":
+            txtField.text = edit_lname 
+            break
+        case "editpassportno":
+            txtField.text = edit_passportno
+            break
+        default:
+            break
+        }
         
     }
     
@@ -127,7 +143,7 @@ class EnterTravellerDetailsTVCell: TableViewCell {
         tf.isSecureTextEntry = false
     }
     
-   
+    
     @objc func editingTextField(_ tf: UITextField){
         delegate?.editingTextField(tf: tf)
     }
@@ -140,7 +156,7 @@ class EnterTravellerDetailsTVCell: TableViewCell {
         dropDown.anchorView = self.countrycodeView
         dropDown.bottomOffset = CGPoint(x: 0, y: countrycodeView.frame.size.height + 10)
         dropDown.selectionAction = { [weak self] (index: Int, item: String) in
-           
+            
             
             switch self?.cellInfo?.key {
             case "fname":
@@ -213,6 +229,15 @@ class EnterTravellerDetailsTVCell: TableViewCell {
     }
     
     
-    
-    
+}
+
+
+extension EnterTravellerDetailsTVCell {
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText string: String) -> Bool {
+        
+        let maxLength = 50
+        let currentString: NSString = txtField.text! as NSString
+        let newString: NSString =  currentString.replacingCharacters(in: range, with: string) as NSString
+        return newString.length <= maxLength
+    }
 }

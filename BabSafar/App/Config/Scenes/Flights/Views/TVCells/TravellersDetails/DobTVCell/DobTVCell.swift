@@ -45,8 +45,8 @@ class DobTVCell: TableViewCell {
         showDatePicker()
         
         
-        if cellInfo?.key1 == "edit" {
-            txtField.text = cellInfo?.text
+        if cellInfo?.key1 == "editdob" {
+            txtField.text = edit_dob
         }
     }
     

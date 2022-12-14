@@ -15,12 +15,15 @@ protocol AddTravellerTVCellDelegate {
     func didTapOnAddInfantaBtn(cell:AddTravellerTVCell)
     //    func didTapOnEditAdultBtn(cell:AddTravellerTVCell)
     //    func didTapOnEditChildtBtn(cell:AddTravellerTVCell)
-    func didTapOnEditTraveller(cell:AddAdultsOrGuestTVCell)
     
+    func didTapOnEditTraveller(cell:AddAdultsOrGuestTVCell)
+    func didTapOndeleteTravellerBtnAction(cell:AddAdultsOrGuestTVCell)
 }
 
 
 class AddTravellerTVCell: TableViewCell,AddAdultsOrGuestTVCellDelegate {
+   
+    
     
     
     
@@ -297,6 +300,10 @@ class AddTravellerTVCell: TableViewCell,AddAdultsOrGuestTVCellDelegate {
         delegate?.didTapOnAddInfantaBtn(cell: self)
     }
     
+    
+    func didTapOndeleteTravellerBtnAction(cell: AddAdultsOrGuestTVCell) {
+        delegate?.didTapOndeleteTravellerBtnAction(cell: cell)
+    }
     
     
     //MARK: - FETCHING COREDATA VALUES

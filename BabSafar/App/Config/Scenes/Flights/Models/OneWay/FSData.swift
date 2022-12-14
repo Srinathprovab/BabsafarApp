@@ -18,6 +18,8 @@ struct FSData : Codable {
     let j_flight_list : [[J_flight_list]]?
     let journey_id : Int?
     let pxtrip_type : String?
+    let traceId : String?
+    
     
     enum CodingKeys: String, CodingKey {
         
@@ -31,6 +33,7 @@ struct FSData : Codable {
         case j_flight_list = "j_flight_list"
         case journey_id = "journey_id"
         case pxtrip_type = "pxtrip_type"
+        case traceId = "traceId"
     }
     
     init(from decoder: Decoder) throws {
@@ -45,6 +48,7 @@ struct FSData : Codable {
         j_flight_list = try values.decodeIfPresent([[J_flight_list]].self, forKey: .j_flight_list)
         journey_id = try values.decodeIfPresent(Int.self, forKey: .journey_id)
         pxtrip_type = try values.decodeIfPresent(String.self, forKey: .pxtrip_type)
+        traceId = try values.decodeIfPresent(String.self, forKey: .traceId)
     }
     
 }

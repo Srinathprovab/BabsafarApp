@@ -95,6 +95,8 @@
 		65A00E6129419FEE009A292F /* City_data_list.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A00E5B29419FEE009A292F /* City_data_list.swift */; };
 		65A00E6229419FEE009A292F /* Customer_details.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A00E5C29419FEE009A292F /* Customer_details.swift */; };
 		65A00E6329419FEE009A292F /* Booking_transaction_details.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A00E5D29419FEE009A292F /* Booking_transaction_details.swift */; };
+		65A00E6F2942204A009A292F /* MyDropDownCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A00E6D2942204A009A292F /* MyDropDownCell.swift */; };
+		65A00E702942204A009A292F /* MyDropDownCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65A00E6E2942204A009A292F /* MyDropDownCell.xib */; };
 		65C8CA82292614EB00091D2B /* TopFlightsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C8CA81292614EB00091D2B /* TopFlightsModel.swift */; };
 		65C8CA842926151B00091D2B /* TopFlightDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C8CA832926151B00091D2B /* TopFlightDetailsViewModel.swift */; };
 		65C8CA86292631FF00091D2B /* loderimg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 65C8CA85292631FF00091D2B /* loderimg.gif */; };
@@ -471,6 +473,8 @@
 		65A00E5B29419FEE009A292F /* City_data_list.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = City_data_list.swift; sourceTree = "<group>"; };
 		65A00E5C29419FEE009A292F /* Customer_details.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Customer_details.swift; sourceTree = "<group>"; };
 		65A00E5D29419FEE009A292F /* Booking_transaction_details.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Booking_transaction_details.swift; sourceTree = "<group>"; };
+		65A00E6D2942204A009A292F /* MyDropDownCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDropDownCell.swift; sourceTree = "<group>"; };
+		65A00E6E2942204A009A292F /* MyDropDownCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyDropDownCell.xib; sourceTree = "<group>"; };
 		65C8CA81292614EB00091D2B /* TopFlightsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopFlightsModel.swift; sourceTree = "<group>"; };
 		65C8CA832926151B00091D2B /* TopFlightDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopFlightDetailsViewModel.swift; sourceTree = "<group>"; };
 		65C8CA85292631FF00091D2B /* loderimg.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loderimg.gif; sourceTree = "<group>"; };
@@ -1024,6 +1028,15 @@
 				65A00E5C29419FEE009A292F /* Customer_details.swift */,
 			);
 			path = VocherModel;
+			sourceTree = "<group>";
+		};
+		65A00E6429421D10009A292F /* MyDropDownCell */ = {
+			isa = PBXGroup;
+			children = (
+				65A00E6D2942204A009A292F /* MyDropDownCell.swift */,
+				65A00E6E2942204A009A292F /* MyDropDownCell.xib */,
+			);
+			path = MyDropDownCell;
 			sourceTree = "<group>";
 		};
 		65C8CA7F292614C000091D2B /* Home */ = {
@@ -2310,6 +2323,7 @@
 		BF94FD262886DBA300778946 /* TVCells */ = {
 			isa = PBXGroup;
 			children = (
+				65A00E6429421D10009A292F /* MyDropDownCell */,
 				651CC807294067F30047D330 /* Booking Deteils Screen */,
 				65EB7D202938CEA000ADE1CC /* TravellersDetails */,
 				65260F9429012623006AD0C6 /* CommonTVCell */,
@@ -2558,6 +2572,7 @@
 				BF5E467D289001830056B7BB /* BookedTravelDetailsTVCell.xib in Resources */,
 				BF94FD142886B81D00778946 /* Lato-Medium.ttf in Resources */,
 				BF94FD122886B81D00778946 /* Lato-BoldItalic.ttf in Resources */,
+				65A00E702942204A009A292F /* MyDropDownCell.xib in Resources */,
 				BF566DE12897DDFB0046FB95 /* TitleLabelTVCell.xib in Resources */,
 				BF45B3662889067400DAB201 /* TextfieldTVCell.xib in Resources */,
 				BF70ACFC288E9F1D00318CF2 /* TravellerAdultTVCell.xib in Resources */,
@@ -2886,6 +2901,7 @@
 				BF8D524328924177001CD1E5 /* ResetPasswordVC.swift in Sources */,
 				BF566DE52897E2670046FB95 /* RoomsTVcell.swift in Sources */,
 				BF5E4676288FE9EB0056B7BB /* BookingConfirmedTVCell.swift in Sources */,
+				65A00E6F2942204A009A292F /* MyDropDownCell.swift in Sources */,
 				BF5E4681289009920056B7BB /* BookedAdultDetailsTVCell.swift in Sources */,
 				BF5E4663288FA86F0056B7BB /* FilterVC.swift in Sources */,
 				BF56D0632893F6970092387D /* SearchHotelsVC.swift in Sources */,
@@ -3165,7 +3181,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 14;
 				DEVELOPMENT_TEAM = 5TLY5PME9K;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BabSafar/Info.plist;
@@ -3197,7 +3213,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 14;
 				DEVELOPMENT_TEAM = 5TLY5PME9K;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BabSafar/Info.plist;

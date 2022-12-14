@@ -42,8 +42,14 @@ class ExpireOnTVCell: TableViewCell {
         txtField.tag = cellInfo?.characterLimit ?? 0
         txtField.placeholder = cellInfo?.buttonTitle
         
+        if cellInfo?.key1 == "editpassportexpirydate" {
+            txtField.text = edit_experiesOn
+        }
+        
         datePicker.minimumDate = Date()
         showDatePicker()
+        
+    
     }
     
     
