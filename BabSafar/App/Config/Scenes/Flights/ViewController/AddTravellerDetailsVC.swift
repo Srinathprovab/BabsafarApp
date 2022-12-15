@@ -471,8 +471,7 @@ class AddTravellerDetailsVC: BaseTableVC {
         let predicate = NSPredicate(format: "(id = %@)", id)
         request.predicate = predicate
         do {
-            let results =
-            try context.fetch(request)
+            let results = try context.fetch(request)
             let currentUser = results[0] as! NSManagedObject
             
             currentUser.setValue(id, forKey: "id")

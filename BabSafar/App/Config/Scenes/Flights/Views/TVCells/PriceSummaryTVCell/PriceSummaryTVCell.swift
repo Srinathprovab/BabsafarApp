@@ -96,7 +96,7 @@ class PriceSummaryTVCell: TableViewCell {
         psImg.image = UIImage(named:"pricesummery")?.withRenderingMode(.alwaysOriginal)
         setupLabels(lbl: titlelbl, text: "Price Summary", textcolor: .AppLabelColor, font: .LatoSemibold(size: 16))
         setupLabels(lbl: totalPaymentlbl, text: "Total Payment", textcolor: .AppLabelColor, font: .LatoBold(size: 14))
-        setupLabels(lbl: totalPaymentValuelbl, text: TotalPrice_API, textcolor: .AppLabelColor, font: .LatoBold(size: 14))
+        setupLabels(lbl: totalPaymentValuelbl, text: grandTotal, textcolor: .AppLabelColor, font: .LatoBold(size: 14))
        
     }
     
@@ -152,18 +152,18 @@ extension PriceSummaryTVCell :UITableViewDataSource,UITableViewDelegate {
             
             if indexPath.row == 0 {
                 cell.adultCountlbl.text = "traveller \(adultsCount)( adult)"
-                cell.adultKWDlbl.text = "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? ""):\(Adults_Base_Price)"
+                cell.adultKWDlbl.text = "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? ""):\(totalprice)"
                 cell.fareKWDlbl.text = "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? ""):\(Adults_Base_Price)"
                 cell.taxesKWDlbl.text = "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? ""):\(Adults_Tax_Price)"
             }else if indexPath.row == 1 {
                 cell.adultCountlbl.text = "traveller \(childCount)( Child)"
-                cell.adultKWDlbl.text = "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? ""):\(Childs_Base_Price)"
+                cell.adultKWDlbl.text = "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? ""):\(totalprice)"
                 cell.fareKWDlbl.text = "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? ""):\(Childs_Base_Price)"
                 cell.taxesKWDlbl.text = "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? ""):\(Childs_Tax_Price)"
                
             }else {
                 cell.adultCountlbl.text = "traveller \(infantsCount)( Infanta)"
-                cell.adultKWDlbl.text = "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? ""):\(Infants_Base_Price)"
+                cell.adultKWDlbl.text = "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? ""):\(totalprice)"
                 cell.fareKWDlbl.text = "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? ""):\(Infants_Base_Price)"
                 cell.taxesKWDlbl.text = "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? ""):\(Infants_Tax_Price)"
             }

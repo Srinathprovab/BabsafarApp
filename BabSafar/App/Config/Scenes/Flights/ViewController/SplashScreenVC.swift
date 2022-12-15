@@ -39,7 +39,7 @@ class SplashScreenVC: UIViewController {
         
         // Do any additional setup after loading the view.
         self.view .backgroundColor = .WhiteColor
-        
+        loderBool = false
         DispatchQueue.main.asyncAfter(deadline: .now() + 3.0, execute: {
             self.gotodashBoardScreen()
         })

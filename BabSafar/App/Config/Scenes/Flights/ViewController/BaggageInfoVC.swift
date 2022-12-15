@@ -331,7 +331,7 @@ class BaggageInfoVC: BaseTableVC, FlightDetailsViewModelProtocal, FDViewModelDel
         fd = response.flightDetails ?? []
         fareRulehtml = response.fareRulehtml?.htmlToString ?? ""
         totalprice = "\(response.priceDetails?.api_currency ?? "") : \(response.priceDetails?.grand_total ?? "")"
-        
+        grandTotal = totalprice
         DispatchQueue.main.async {[self] in
             setupTVCells()
         }

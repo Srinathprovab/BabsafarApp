@@ -65,6 +65,7 @@ var Childs_Tax_Price = String()
 var Infants_Base_Price = String()
 var Infants_Tax_Price = String()
 var TotalPrice_API = String()
+var grandTotal = String()
 
 
 //MARK: - Multicity
@@ -112,7 +113,7 @@ var edit_issuingCountrycode = String()
 var edit_issuingCountryname = String()
 var edit_nationalityname = String()
 
-
+var loderBool = false
 
 /* URL endpoints */
 struct ApiEndpoints {

@@ -30,7 +30,7 @@ class ItineraryAddTVCell: TableViewCell {
    
     override func updateUI() {
         fdetais = cellInfo?.moreData as! [FDFlightDetails]
-        tvHeight.constant = CGFloat((fdetais.count * 295))
+        tvHeight.constant = CGFloat((fdetais.count * 250))
         additneraryTV.reloadData()
     }
     

@@ -117,13 +117,14 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
         
         response.flight_data?.forEach({ i in
             MBfd = i.flight_details?.details
-            
+            totalprice = i.totalPrice ?? "0.0"
             Adults_Base_Price = i.adults_Base_Price ?? ""
             Adults_Tax_Price = i.adults_Tax_Price ?? ""
             Childs_Base_Price = i.childs_Base_Price ?? ""
             Childs_Tax_Price = i.childs_Tax_Price ?? ""
             Infants_Base_Price = i.infants_Base_Price ?? ""
             Infants_Tax_Price = i.infants_Tax_Price ?? ""
+          //  grandTotal = "\(i.aPICurrencyType ?? ""): \(totalprice)"
             
         })
         
@@ -206,7 +207,7 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
         tablerow.append(TableRow(cellType:.ViewFlightDetailsBtnTVCell))
         tablerow.append(TableRow(cellType:.AddTravellerTVCell))
         tablerow.append(TableRow(cellType:.ContactInformationTVCell))
-        tablerow.append(TableRow(cellType:.TravelInsuranceTVCell))
+     //   tablerow.append(TableRow(cellType:.TravelInsuranceTVCell))
         tablerow.append(TableRow(cellType:.PriceSummaryTVCell))
         tablerow.append(TableRow(height:50, bgColor:.AppBorderColor,cellType:.EmptyTVCell))
         
@@ -412,7 +413,7 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
                 title2Array.append(data.value(forKey: "title2") as! String)
                 fnameArray.append(data.value(forKey: "fname") as! String)
                 lnameArray.append(data.value(forKey: "lname") as! String)
-                dobArray.append(data.value(forKey: "dob") as! String)
+                dobArray.append(convertDateFormat(inputDate: data.value(forKey: "dob") as! String, f1: "yyyy-MM-dd", f2: "dd-MM-yyyy"))
                 passportNoArray.append(data.value(forKey: "passportno") as! String)
                 passportissuingcountryArray.append(data.value(forKey: "passportissuingcountry") as! String)
                 passportnationalityArray.append(data.value(forKey: "nationality") as! String)
@@ -513,14 +514,14 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
         payload["promocode_code"] = ""
         payload["mealsAmount"] = "0"
         payload["baggageAmount"] = "0"
-        payload["passenger_type"] = ["adult"]
+        payload["passenger_type"] = ["Adult"]
         payload["lead_passenger"] = ["1"]
         payload["gender"] = ["1"]
         payload["name_title"] = ["1"]
         payload["first_name"] = fnameArray
         payload["middle_name"] = [""]
         payload["last_name"] = lnameArray
-        payload["date_of_birth"] = ["11-12-1990"]
+        payload["date_of_birth"] = dobArray
         payload["passenger_nationality"] = passportnationalityArray
         payload["passenger_passport_number"] = passportNoArray
         payload["passenger_passport_issuing_country"] = passportissuingcountryArray
@@ -544,8 +545,7 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
         payload["user_id"] = defaults.string(forKey: UserDefaultsKeys.userid) ?? "0"
         
         
-//    passenger_request:{"search_id":"4960","tmp_flight_pre_booking_id":"BAS-F-TP-1208-3487","access_key":"47c6730924a4909fb69c4297cda5d0a7*_*1*_*b6xf2SiL4Xdo1grW","access_key_tp":"b0657ccdc3fcabfa49778380dc59d994*_*5*_*Qtr3d17ajys3pWdW","insurance_policy_type":"0","insurance_policy_option":"0","insurance_policy_cover_type":"0","insurance_policy_duration":"0","isInsurance":"0","selectedResult":"0_4_0","redeem_points_post":"1","booking_source":"YToxOntpOjA7czoxNjoiUFRCU0lEMDAwMDAwMDAxNiI7fQ==","promocode_val":"","promocode_code":"","mealsAmount":"0","baggageAmount":"0","passenger_type":["Adult"],"lead_passenger":["1"],"gender":["1"],"passenger_nationality":["92"],"name_title":["1"],"first_name":["Check"],"middle_name":[""],"last_name":["Test"],"date_of_birth":["13-04-1945"],"passenger_passport_number":["POIL7675"],"passenger_passport_issuing_country":["92"],"passenger_passport_expiry":["04-12-2028"],"Frequent":[["Select"]],"ff_no":[[""]],"address2":"ECITY","billing_address_1":"hjfggh","billing_state":"Karnataka","billing_city":"Bangalore","billing_zipcode":"560100","billing_email":"ghfgh@ghhj.hjhj","passenger_contact":"8965231470","billing_country":"IN","country_mobile_code":"+91","insurance":"1","tc":"on","booking_step":"book","payment_method":"PNHB1","selectedCurrency":"AED","user_id":"0"}
-//
+
 
         do{
             
@@ -581,7 +581,7 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
         payload["promocode_val"] = response.data?.post_data?.promocode_val
         payload["selectedCurrency"] = defaults.string(forKey: UserDefaultsKeys.selectedCurrency)
         
-        mbviewmodel?.Call_mobile_pre_booking_API(dictParam: payload, url: response.data?.post_data?.url ?? "")
+       // mbviewmodel?.Call_mobile_pre_booking_API(dictParam: payload, url: response.data?.post_data?.url ?? "")
     }
     
     
@@ -639,7 +639,7 @@ extension BookingDetailsVC {
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let myFooter =  Bundle.main.loadNibNamed("BookNowButtonsTVCell", owner: self, options: nil)?.first as! BookNowButtonsTVCell
         myFooter.bookNowBtn.addTarget(self, action: #selector(didTapOnBookNowBtn(_:)), for: .touchUpInside)
-        myFooter.kwdlbl.text = totalprice
+        myFooter.kwdlbl.text = grandTotal
         return myFooter
     }
     
