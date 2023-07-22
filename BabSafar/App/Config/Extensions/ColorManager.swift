@@ -27,7 +27,14 @@ extension UIColor {
     
     public static var AppBtnColor: UIColor {
         get {
-            return UIColor(named: "AppBtnColor")!
+           // return UIColor(named: "AppBtnColor")!
+            return HexColor("#e82a5e")
+        }
+    }
+    
+    public static var IttenarySelectedColor: UIColor {
+        get {
+            return UIColor(named: "IttenarySelectedColor")!
         }
     }
     
@@ -86,6 +93,18 @@ extension UIColor {
     }
     
     
+    public static var RefundableColor: UIColor {
+        get {
+            return UIColor(named: "RefundableColor")!
+        }
+    }
+    
+    
+    public static var AddAdultBtnColor: UIColor {
+        get {
+            return UIColor(named: "AddAdultBtnColor")!
+        }
+    }
     
     
     

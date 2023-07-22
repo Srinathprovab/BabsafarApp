@@ -44,8 +44,14 @@ class ButtonTVCell: TableViewCell {
     }
     
     
+    override func prepareForReuse() {
+        btnView.backgroundColor = .clear
+    }
+    
+    
     override func updateUI() {
         titlelbl.text = cellInfo?.title
+        key = cellInfo?.key ?? ""
         
         switch cellInfo?.key {
         case "booked":
@@ -61,7 +67,8 @@ class ButtonTVCell: TableViewCell {
             break
             
         case "visa":
-            btnLeftConstraint.constant = 28
+            self.btnView.backgroundColor = .AppBtnColor
+            btnLeftConstraint.constant = 20
             break
             
         case "filter":
@@ -74,10 +81,37 @@ class ButtonTVCell: TableViewCell {
             
         case "addroom":
             btnView.backgroundColor = .AppTabSelectColor
+            self.btnView.addCornerRadiusWithShadow(color: .clear, borderColor: .clear, cornerRadius: 4)
             btnLeftConstraint.constant = 18
             titlelbl.textColor = .WhiteColor
             titlelbl.font = UIFont.LatoMedium(size: 18)
             break
+            
+        case "done":
+            btnLeftConstraint.constant = 32
+            btnView.backgroundColor = cellInfo?.bgColor
+            self.btnView.addCornerRadiusWithShadow(color: .clear, borderColor: .clear, cornerRadius: 4)
+            break
+            
+            
+        case "Search Hotels":
+            self.btnView.backgroundColor = .AppBtnColor
+            break
+            
+        case "filterbtn":
+            self.btnView.backgroundColor = .AppBtnColor
+            break
+        case "btn":
+            self.btnView.backgroundColor = .AppBtnColor
+            break
+            
+            
+        case "pay":
+            self.btnView.backgroundColor = .AppBtnColor
+          //  self.holderView.backgroundColor = HexColor("#F1F1F1")
+            break
+            
+            
         default:
             break
         }
@@ -105,8 +139,10 @@ class ButtonTVCell: TableViewCell {
         setupLabels(lbl: dualBtnlbl2, text: "Necessary Cookies", textcolor: .AppLabelColor, font: .LatoRegular(size: 18))
         dualBtn1.setTitle("", for: .normal)
         dualBtn2.setTitle("", for: .normal)
-        
-        
+        dualBtn1View.layer.borderColor = UIColor.clear.cgColor
+        dualBtn2View.layer.borderColor = UIColor.AppBorderColor.cgColor
+        self.holderView.addCornerRadiusWithShadow(color: .clear, borderColor: .clear, cornerRadius: 4)
+        self.btnView.addCornerRadiusWithShadow(color: .clear, borderColor: .clear, cornerRadius: 4)
     }
     
     
@@ -115,7 +151,7 @@ class ButtonTVCell: TableViewCell {
         v.layer.cornerRadius = radius
         v.clipsToBounds = true
         v.layer.borderWidth = 1
-        v.layer.borderColor = UIColor.AppBorderColor.cgColor
+      //  v.layer.borderColor = UIColor.clear.cgColor
     }
     
     func setupLabels(lbl:UILabel,text:String,textcolor:UIColor,font:UIFont) {
@@ -135,6 +171,8 @@ class ButtonTVCell: TableViewCell {
         dualBtn1View.backgroundColor = .AppBtnColor
         dualBtnlbl2.textColor = .AppLabelColor
         dualBtn2View.backgroundColor = .WhiteColor
+        dualBtn1View.layer.borderColor = UIColor.clear.cgColor
+        dualBtn2View.layer.borderColor = UIColor.AppBorderColor.cgColor
     }
     
     
@@ -144,5 +182,7 @@ class ButtonTVCell: TableViewCell {
         dualBtn1View.backgroundColor = .WhiteColor
         dualBtnlbl2.textColor = .WhiteColor
         dualBtn2View.backgroundColor = .AppBtnColor
+        dualBtn1View.layer.borderColor = UIColor.AppBorderColor.cgColor
+        dualBtn2View.layer.borderColor = UIColor.clear.cgColor
     }
 }

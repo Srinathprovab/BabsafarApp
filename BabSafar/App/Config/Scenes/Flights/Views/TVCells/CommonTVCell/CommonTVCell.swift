@@ -14,7 +14,7 @@ class CommonTVCell: TableViewCell {
     @IBOutlet weak var tvHeight: NSLayoutConstraint!
     
     
-    var index = Int()
+    var index = 0
     var selectClassArray = ["Economy","Premium Economy","First","Business"]
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -76,8 +76,19 @@ extension CommonTVCell:UITableViewDataSource,UITableViewDelegate {
             if indexPath.row == index {
                 infoTV.selectRow(at: indexPath, animated: true, scrollPosition: .none)
                 infoTV.delegate?.tableView?(tableView, didSelectRowAt: indexPath)
+               
+                if let journeyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
+                    if journeyType == "oneway" {
+                        defaults.set("Economy", forKey: UserDefaultsKeys.selectClass)
+                    }else if journeyType == "circle"{
+                        defaults.set("Economy", forKey: UserDefaultsKeys.rselectClass)
+                    }else {
+                        defaults.set("Economy", forKey: UserDefaultsKeys.mselectClass)
+                    }
+                }
                 cell.show()
             }
+            
             
             cell.titlelbl.text = selectClassArray[indexPath.row]
             ccell = cell
@@ -92,13 +103,13 @@ extension CommonTVCell:UITableViewDataSource,UITableViewDelegate {
             
             if let journeyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
                 if journeyType == "oneway" {
-                    defaults.set(cell.titlelbl.text ?? "", forKey: UserDefaultsKeys.selectClass)
+                    defaults.set(cell.titlelbl.text ?? "Economy", forKey: UserDefaultsKeys.selectClass)
                     defaults.set(indexPath.row, forKey: UserDefaultsKeys.select_classIndex)
                 }else if journeyType == "circle"{
-                    defaults.set(cell.titlelbl.text ?? "", forKey: UserDefaultsKeys.rselectClass)
+                    defaults.set(cell.titlelbl.text ?? "Economy", forKey: UserDefaultsKeys.rselectClass)
                     defaults.set(indexPath.row, forKey: UserDefaultsKeys.rselect_classIndex)
                 }else {
-                    defaults.set(cell.titlelbl.text ?? "", forKey: UserDefaultsKeys.mselectClass)
+                    defaults.set(cell.titlelbl.text ?? "Economy", forKey: UserDefaultsKeys.mselectClass)
                     defaults.set(indexPath.row, forKey: UserDefaultsKeys.mselect_classIndex)
                 }
             }

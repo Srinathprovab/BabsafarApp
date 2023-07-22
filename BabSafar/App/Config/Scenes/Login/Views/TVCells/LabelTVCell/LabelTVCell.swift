@@ -22,6 +22,7 @@ class LabelTVCell: TableViewCell {
     @IBOutlet weak var lblLeftConstraint: NSLayoutConstraint!
     @IBOutlet weak var showMoreBtn: UIButton!
     @IBOutlet weak var viewHeight: NSLayoutConstraint!
+    @IBOutlet weak var logoimg: UIImageView!
     
     var delegate:LabelTVCellDelegate?
     var showMoreBool = true
@@ -38,23 +39,36 @@ class LabelTVCell: TableViewCell {
         closeButton.isHidden = true
         
         menuOptionWidthConstaraint.constant = 0
-       // menuOptionImage.image = UIImage(named: "facebook")
+        // menuOptionImage.image = UIImage(named: "facebook")
         menuOptionImage.contentMode = .scaleToFill
         
         showMoreBtn.isHidden = true
         showMoreBtn.setTitle("+ Show More", for: .normal)
         showMoreBtn.setTitleColor(.AppTabSelectColor, for: .normal)
         showMoreBtn.titleLabel?.font = UIFont.LatoMedium(size: 15)
+        
+        logoimg.isHidden = true
+    }
+    
+    override func prepareForReuse() {
+        holderView.backgroundColor = .WhiteColor
     }
     
     override func updateUI() {
         titlelbl.text = cellInfo?.title
         self.titleKey = cellInfo?.key1 ?? ""
+        menuOptionImage.image = UIImage(named: cellInfo?.image ?? "")?.withRenderingMode(.alwaysOriginal).withTintColor(.AppCalenderDateSelectColor)
         
         switch cellInfo?.key {
             
         case "showbtn":
             closeButton.isHidden = false
+            break
+            
+            
+        case "loginshowbtn":
+            closeButton.isHidden = false
+            logoimg.isHidden = false
             break
             
         case "menu":
@@ -74,6 +88,14 @@ class LabelTVCell: TableViewCell {
             
         case "booked":
             titlelbl.font = UIFont.LatoRegular(size: 16)
+            titlelbl.textColor = HexColor("#5B5B5B")
+            titlelbl.numberOfLines = 0
+            titlelbl.textAlignment = .center
+            lblLeftConstraint.constant = 30
+            break
+            
+        case "fdetails":
+            titlelbl.font = UIFont.LatoBold(size: 20)
             titlelbl.textColor = HexColor("#5B5B5B")
             titlelbl.numberOfLines = 0
             titlelbl.textAlignment = .center
@@ -100,6 +122,7 @@ class LabelTVCell: TableViewCell {
             closeButton.isHidden = false
             titlelbl.textAlignment = .center
             break
+            
             
             
         case "filter":

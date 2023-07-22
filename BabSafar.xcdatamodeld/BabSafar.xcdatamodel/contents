@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21512" systemVersion="21G217" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21513" systemVersion="21G419" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="PassengerDetails" representedClassName="PassengerDetails" syncable="YES" codeGenerationType="class">
         <attribute name="dob" optional="YES" attributeType="String"/>
         <attribute name="fname" optional="YES" attributeType="String"/>
@@ -7,13 +7,13 @@
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="issuingCountryName" optional="YES" attributeType="String"/>
         <attribute name="lname" optional="YES" attributeType="String"/>
-        <attribute name="nationality" optional="YES" attributeType="String"/>
-        <attribute name="nationalityName" optional="YES" attributeType="String"/>
+        <attribute name="passengerType" optional="YES" attributeType="String"/>
         <attribute name="passportexpirydate" optional="YES" attributeType="String"/>
         <attribute name="passportissuingcountry" optional="YES" attributeType="String"/>
         <attribute name="passportno" optional="YES" attributeType="String"/>
         <attribute name="title" optional="YES" attributeType="String"/>
         <attribute name="title2" optional="YES" attributeType="String"/>
+        <attribute name="title2Code" optional="YES" attributeType="String"/>
         <attribute name="userid" optional="YES" attributeType="String"/>
     </entity>
 </model>

@@ -24,9 +24,9 @@ struct RTJ_flight_list : Codable {
     //    let taxPrice_Breakdown : String?
     //    let admin_markup_amount : Int?
     //    let agent_markup_amount : Int?
-   // let refundable : Bool?
+    let refundable : Bool?
     //    let platingCarrier : String?
-    //    let fareType : String?
+    let fareType : String?
     //    let all_Passenger : String?
     //    let adults : Int?
     //    let adults_Base_Price : String?
@@ -40,20 +40,20 @@ struct RTJ_flight_list : Codable {
     //    let rreturn : Return?
     //    let onward : Onward?
     let flight_details : Flight_details?
-    //    let price : Price?
+    let price : Price?
     //    let fare : [Fare]?
     let access_key : String?
     let selectedResult : String?
     
-    let adults_Base_Price : String?
-    let childs_Base_Price : String?
-    let infants_Base_Price : String?
-    let adults_Tax_Price : String?
-    let childs_Tax_Price : String?
-    let infants_Tax_Price : String?
+    //    let adults_Base_Price : String?
+    //    let childs_Base_Price : String?
+    //    let infants_Base_Price : String?
+    //    let adults_Tax_Price : String?
+    //    let childs_Tax_Price : String?
+    //    let infants_Tax_Price : String?
     
-    let rreturn : Return?
-    let onward : Onward?
+    //    let rreturn : Return?
+    //    let onward : Onward?
     
     enum CodingKeys: String, CodingKey {
         
@@ -74,9 +74,9 @@ struct RTJ_flight_list : Codable {
         //        case taxPrice_Breakdown = "TaxPrice_Breakdown"
         //        case admin_markup_amount = "admin_markup_amount"
         //        case agent_markup_amount = "agent_markup_amount"
-      //  case refundable = "Refundable"
+        case refundable = "Refundable"
         //        case platingCarrier = "PlatingCarrier"
-        //        case fareType = "FareType"
+        case fareType = "FareType"
         //        case all_Passenger = "All_Passenger"
         //        case adults = "Adults"
         //        case adults_Base_Price = "Adults_Base_Price"
@@ -90,18 +90,18 @@ struct RTJ_flight_list : Codable {
         //        case baggage_allow_data = "Baggage_allow_data"
         //        case rreturn = "return"
         case flight_details = "flight_details"
-        //        case price = "price"
+        case price = "price"
         //        case fare = "fare"
         case access_key = "access_key"
         case selectedResult = "selectedResult"
-        case adults_Base_Price = "Adults_Base_Price"
-        case childs_Base_Price = "Childs_Base_Price"
-        case infants_Base_Price = "Infants_Base_Price"
-        case adults_Tax_Price = "Adults_Tax_Price"
-        case childs_Tax_Price = "Childs_Tax_Price"
-        case infants_Tax_Price = "Infants_Tax_Price"
-        case rreturn = "return"
-        case onward = "onward"
+        //        case adults_Base_Price = "Adults_Base_Price"
+        //        case childs_Base_Price = "Childs_Base_Price"
+        //        case infants_Base_Price = "Infants_Base_Price"
+        //        case adults_Tax_Price = "Adults_Tax_Price"
+        //        case childs_Tax_Price = "Childs_Tax_Price"
+        //        case infants_Tax_Price = "Infants_Tax_Price"
+        //        case rreturn = "return"
+        //        case onward = "onward"
     }
     
     init(from decoder: Decoder) throws {
@@ -123,9 +123,9 @@ struct RTJ_flight_list : Codable {
         //        taxPrice_Breakdown = try values.decodeIfPresent(String.self, forKey: .taxPrice_Breakdown)
         //        admin_markup_amount = try values.decodeIfPresent(Int.self, forKey: .admin_markup_amount)
         //        agent_markup_amount = try values.decodeIfPresent(Int.self, forKey: .agent_markup_amount)
-      //  refundable = try values.decodeIfPresent(Bool.self, forKey: .refundable)
+        refundable = try values.decodeIfPresent(Bool.self, forKey: .refundable)
         //        platingCarrier = try values.decodeIfPresent(String.self, forKey: .platingCarrier)
-        //        fareType = try values.decodeIfPresent(String.self, forKey: .fareType)
+        fareType = try values.decodeIfPresent(String.self, forKey: .fareType)
         //        all_Passenger = try values.decodeIfPresent(String.self, forKey: .all_Passenger)
         //        adults = try values.decodeIfPresent(Int.self, forKey: .adults)
         //        adults_Base_Price = try values.decodeIfPresent(String.self, forKey: .adults_Base_Price)
@@ -139,18 +139,18 @@ struct RTJ_flight_list : Codable {
         //        baggage_allow_data = try values.decodeIfPresent([[Baggage_allow_data]].self, forKey: .baggage_allow_data)
         //        rreturn = try values.decodeIfPresent(Return.self, forKey: .rreturn)
         flight_details = try values.decodeIfPresent(Flight_details.self, forKey: .flight_details)
-        //        price = try values.decodeIfPresent(Price.self, forKey: .price)
+        price = try values.decodeIfPresent(Price.self, forKey: .price)
         //        fare = try values.decodeIfPresent([Fare].self, forKey: .fare)
         access_key = try values.decodeIfPresent(String.self, forKey: .access_key)
         selectedResult = try values.decodeIfPresent(String.self, forKey: .selectedResult)
-        adults_Base_Price = try values.decodeIfPresent(String.self, forKey: .adults_Base_Price)
-        childs_Base_Price = try values.decodeIfPresent(String.self, forKey: .childs_Base_Price)
-        infants_Base_Price = try values.decodeIfPresent(String.self, forKey: .infants_Base_Price)
-        adults_Tax_Price = try values.decodeIfPresent(String.self, forKey: .adults_Tax_Price)
-        childs_Tax_Price = try values.decodeIfPresent(String.self, forKey: .childs_Tax_Price)
-        infants_Tax_Price = try values.decodeIfPresent(String.self, forKey: .infants_Tax_Price)
-        rreturn = try values.decodeIfPresent(Return.self, forKey: .rreturn)
-        onward = try values.decodeIfPresent(Onward.self, forKey: .onward)
+        //        adults_Base_Price = try values.decodeIfPresent(String.self, forKey: .adults_Base_Price)
+        //        childs_Base_Price = try values.decodeIfPresent(String.self, forKey: .childs_Base_Price)
+        //        infants_Base_Price = try values.decodeIfPresent(String.self, forKey: .infants_Base_Price)
+        //        adults_Tax_Price = try values.decodeIfPresent(String.self, forKey: .adults_Tax_Price)
+        //        childs_Tax_Price = try values.decodeIfPresent(String.self, forKey: .childs_Tax_Price)
+        //        infants_Tax_Price = try values.decodeIfPresent(String.self, forKey: .infants_Tax_Price)
+        //        rreturn = try values.decodeIfPresent(Return.self, forKey: .rreturn)
+        //        onward = try values.decodeIfPresent(Onward.self, forKey: .onward)
     }
     
 }

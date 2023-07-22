@@ -8,7 +8,7 @@
 import Foundation
 
 struct MCFlight_details : Codable {
-    let summary : [MCSummary]?
+    let summary : [Summary]?
 
     enum CodingKeys: String, CodingKey {
 
@@ -17,7 +17,7 @@ struct MCFlight_details : Codable {
 
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        summary = try values.decodeIfPresent([MCSummary].self, forKey: .summary)
+        summary = try values.decodeIfPresent([Summary].self, forKey: .summary)
     }
 
 }

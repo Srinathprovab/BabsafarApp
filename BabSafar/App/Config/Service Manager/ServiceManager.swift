@@ -68,7 +68,7 @@ enum ApiError: Error {
         case .endPoint:
             return "Error creating endpoint"
         case .somthingwentwrong:
-            return "Something Went Wrong"
+            return "Something Went Wrong =="
         }
     }
 }
@@ -76,16 +76,7 @@ enum ApiError: Error {
 class ServiceManager {
     
     static func setHeaderForRequest(req: inout URLRequest) {
-        // req.addValue(KAccesstokenValue, forHTTPHeaderField: KAccesstoken)
-        
-        if key == "login" {
-            
-            //  req.addValue(KAcceptValue, forHTTPHeaderField: KContentType)
-        }else {
-            
-            req.addValue(KContentTypeValue, forHTTPHeaderField: KContentType)
-        }
-        
+        req.addValue(KContentTypeValue, forHTTPHeaderField: KContentType)
     }
     
     static func isConnection() -> Bool {
@@ -299,6 +290,7 @@ class ServiceManager {
     
     
     
+    
     static func postOrPutApiCall<T: Decodable>(authorization: Bool = false, endPoint: String, urlParams: Dictionary<String,String>? = nil, parameters: NSDictionary? = nil, methodType: HTTPMethod = .post, resultType: T.Type,p:[String:Any], completionHandler:@escaping(Bool, _ result: T?, String?) -> Void) {
         
         
@@ -346,7 +338,7 @@ class ServiceManager {
             
             do {
                 
-                // request.httpBody = p.percentEncoded()
+                //  request.httpBody = p.percentEncoded()
                 request.httpBody = try JSONSerialization.data(withJSONObject: params, options: .prettyPrinted) // pass dictionary to data object and set it as request body
                 
                 
@@ -359,34 +351,49 @@ class ServiceManager {
         
         
         
-        
-        
         AF.request(
             completeEndpointURL,
             method: .post,
             parameters: parameters as? Parameters,
             encoding: URLEncoding.default,
-            headers: nil).responseJSON { (responseData) -> Void in
-                if responseData.value != nil {
+            headers: nil).validate().responseJSON { resp in
+                
+               // print(resp.value as Any)
+                print(resp.response?.statusCode as Any)
+                
+               
+                if let data = resp.data { // Assuming `response` is the API response object
+                    do {
+                        if let json = try JSONSerialization.jsonObject(with:  resp.data ?? NSData() as Data, options: []) as? [String: Any] {
+
+                            let arrJson = try JSONSerialization.data(withJSONObject: json, options: JSONSerialization.WritingOptions.prettyPrinted)
+                            let theJSONText = NSString(data: arrJson, encoding: String.Encoding.utf8.rawValue)
+                            print(theJSONText ?? "")
+                        }
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+                }
+
+                if resp.value != nil {
                     //do something with data
-                     print(responseData.value as Any)
                     
-                    switch responseData.result {
+                    switch resp.result {
                     case .success(let data):
-                        
-                        print("Parsing the data:  ")
+                       
                         
                         do{
                             
                             
-                            let jsonData = try JSONSerialization.data(withJSONObject: responseData.value as Any, options: [])
-                            
+                            let jsonData = try JSONSerialization.data(withJSONObject: resp.value as Any,options: [])
                             if let jsonResponse = try? JSONDecoder().decode(T.self, from: jsonData) {
-                                
                                 completionHandler(true, jsonResponse, nil)
                             }
                             
                             else {
+                                
+                                
+                                NotificationCenter.default.post(name: NSNotification.Name("somthingwentwrong"), object: nil)
                                 completionHandler(false, nil, ApiError.somthingwentwrong.message)
                             }
                             
@@ -394,22 +401,29 @@ class ServiceManager {
                             
                         }catch {
                             
+                            
                             completionHandler(false, nil, ApiError.unknown.message)
                             print("JSONSerialization error")
                         }
                         
                         
-                        
+                        break
                     case .failure(let error):
+                        
                         print("error ----- \(error)")
                         completionHandler(false, nil, ApiError.unknown.message)
                         break
                         
+                        
                     default:
                         break
+                        
+                        
                     }
                     
                     
+                }else {
+                    completionHandler(false, nil, "Result Nil")
                 }
             }
         
@@ -837,15 +851,15 @@ extension String{
     
     
     func isValidPassport() -> Bool {
-            let PASSPORT_REG_EX = "^(?!^0+$)[a-zA-Z0-9]{3,20}$"
-            let passport = NSPredicate(format:"SELF MATCHES %@", PASSPORT_REG_EX)
-
-            if (self.count >= 6) {
-                return passport.evaluate(with: self)
-            } else {
-                return false
-            }
+        let PASSPORT_REG_EX = "^(?!^0+$)[a-zA-Z0-9]{3,20}$"
+        let passport = NSPredicate(format:"SELF MATCHES %@", PASSPORT_REG_EX)
+        
+        if (self.count >= 6) {
+            return passport.evaluate(with: self)
+        } else {
+            return false
         }
+    }
     
     
 }

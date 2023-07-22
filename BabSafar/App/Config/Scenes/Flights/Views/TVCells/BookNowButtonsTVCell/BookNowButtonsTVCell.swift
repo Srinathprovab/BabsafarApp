@@ -38,8 +38,8 @@ class BookNowButtonsTVCell: TableViewCell {
         
         setupViews(v: holderView, radius: 0, color: .WhiteColor)
         setupViews(v: bookNowView, radius: 0, color: .AppBtnColor)
-        setupLabels(lbl: kwdlbl, text: "KWD:150.00", textcolor: .WhiteColor, font: .LatoMedium(size: 18))
-        setupLabels(lbl: bookNowlbl, text: "Book Now", textcolor: .WhiteColor, font: .LatoMedium(size: 18))
+        setuplabels(lbl: kwdlbl, text: "KWD:150.00", textcolor: .WhiteColor, font: .LatoMedium(size: 18), align: .left)
+        setuplabels(lbl: bookNowlbl, text: "Book Now", textcolor: .WhiteColor, font: .LatoMedium(size: 18), align: .right)
         bookNowBtn.setTitle("", for: .normal)
         
     }
@@ -52,12 +52,7 @@ class BookNowButtonsTVCell: TableViewCell {
         //        v.layer.borderColor = UIColor.AppBorderColor.cgColor
     }
     
-    func setupLabels(lbl:UILabel,text:String,textcolor:UIColor,font:UIFont) {
-        lbl.text = text
-        lbl.textColor = textcolor
-        lbl.font = font
-    }
-    
+ 
     
     @IBAction func didTapOnBookNowBtn(_ sender: Any) {
         delegate?.didTapOnBookNowBtn(cell: self)

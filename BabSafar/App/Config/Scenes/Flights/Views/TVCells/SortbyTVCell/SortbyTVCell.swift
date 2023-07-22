@@ -10,7 +10,7 @@ import UIKit
 protocol SortbyTVCellDelegate {
     func didTapOnLowtoHighBtn(cell:SortbyTVCell)
     func didTapOnHightoLowBtn(cell:SortbyTVCell)
-//    func didTapOnResetSortbyBtn(cell:SortbyTVCell)
+    //    func didTapOnResetSortbyBtn(cell:SortbyTVCell)
 }
 
 class SortbyTVCell: TableViewCell {
@@ -25,9 +25,7 @@ class SortbyTVCell: TableViewCell {
     @IBOutlet weak var hightoLowhlbl: UILabel!
     @IBOutlet weak var hightoLowBtn: UIButton!
     
-    
-    
-    
+    var selectedSortByOption = String()
     var delegate:SortbyTVCellDelegate?
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -43,15 +41,11 @@ class SortbyTVCell: TableViewCell {
     
     override func updateUI() {
         titlelbl.text = cellInfo?.title
-//
-//
-//        if cellInfo?.key == "reset" {
-//            resetBtnHeight.constant = 30
-//            resetBtn.isHidden = false
-//        }else {
-//            resetBtnHeight.constant = 0
-//            resetBtn.isHidden = true
-//        }
+        
+        if cellInfo?.key == "airline" {
+            setuplabels(lbl: lowtoHighlbl, text: "A-Z", textcolor: .AppLabelColor, font: .LatoRegular(size: 14), align: .center)
+            setuplabels(lbl: hightoLowhlbl, text: "Z-A", textcolor: .AppLabelColor, font: .LatoRegular(size: 14), align: .center)
+        }
     }
     
     
@@ -60,16 +54,12 @@ class SortbyTVCell: TableViewCell {
         setupViews(v: buttonsView, radius: 4, color: .WhiteColor)
         setupViews(v: lowtoHighView, radius: 4, color: .WhiteColor)
         setupViews(v: hightoLowView, radius: 4, color: .WhiteColor)
-        setupLabels(lbl: titlelbl, text: "", textcolor: .AppLabelColor, font: .LatoMedium(size: 17))
-        setupLabels(lbl: lowtoHighlbl, text: "Low to High", textcolor: .AppLabelColor, font: .LatoRegular(size: 14))
-        setupLabels(lbl: hightoLowhlbl, text: "High to Low", textcolor: .AppLabelColor, font: .LatoRegular(size: 14))
+        setuplabels(lbl: titlelbl, text: "", textcolor: .AppLabelColor, font: .LatoMedium(size: 17), align: .left)
+        setuplabels(lbl: lowtoHighlbl, text: "Low to High", textcolor: .AppLabelColor, font: .LatoRegular(size: 14), align: .center)
+        setuplabels(lbl: hightoLowhlbl, text: "High to Low", textcolor: .AppLabelColor, font: .LatoRegular(size: 14), align: .center)
         lowtoHighBtn.setTitle("", for: .normal)
         hightoLowBtn.setTitle("", for: .normal)
-//        resetBtn.setTitle("Reset", for: .normal)
-//        resetBtn.titleLabel?.font = UIFont.LatoRegular(size: 16)
-//        resetBtn.setTitleColor(.AppTabSelectColor, for: .normal)
-//
-//        resetBtnHeight.constant = 0
+        
     }
     
     func setupViews(v:UIView,radius:CGFloat,color:UIColor) {
@@ -78,12 +68,6 @@ class SortbyTVCell: TableViewCell {
         v.clipsToBounds = true
         v.layer.borderWidth = 1
         v.layer.borderColor = UIColor.AppBorderColor.cgColor
-    }
-    
-    func setupLabels(lbl:UILabel,text:String,textcolor:UIColor,font:UIFont) {
-        lbl.text = text
-        lbl.textColor = textcolor
-        lbl.font = font
     }
     
     
@@ -95,10 +79,6 @@ class SortbyTVCell: TableViewCell {
         delegate?.didTapOnHightoLowBtn(cell: self)
     }
     
-    
-//    @IBAction func didTapOnResetSortbyBtn(_ sender: Any) {
-//        delegate?.didTapOnResetSortbyBtn(cell: self)
-//    }
     
     
 }

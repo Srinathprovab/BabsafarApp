@@ -7,7 +7,9 @@
 
 import UIKit
 
-class SideMenuVC: BaseTableVC {
+class SideMenuVC: BaseTableVC, ProfileDetailsViewModelDelegate, LogoutViewModelDelegate {
+    
+    
     
     static var newInstance: SideMenuVC? {
         let storyboard = UIStoryboard(name: Storyboard.Main.name,
@@ -16,54 +18,107 @@ class SideMenuVC: BaseTableVC {
         return vc
     }
     var tablerow = [TableRow]()
+    var payload = [String:Any]()
+    var viewmodel1:ProfileDetailsViewModel?
+    var logoutvm :LogoutViewModel?
+    var profilcallAPIBool = false
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        if profilcallAPIBool == true {
+            DispatchQueue.main.async {
+                self.callProfileDetailsAPI()
+            }
+        }
+        
+        
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(callprofileapi), name: Notification.Name("callprofileapi"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("nointernet"), object: nil)
+    }
+    
+    //MARK: - callprofileapi
+    @objc func callprofileapi() {
+        DispatchQueue.main.async {
+            self.callProfileDetailsAPI()
+        }
+    }
+    //MARK: - nointernet
+    @objc func nointernet() {
+        guard let vc = NoInternetConnectionVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .overCurrentContext
+        self.present(vc, animated: true)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
         self.view.backgroundColor = .black.withAlphaComponent(0.5)
-        setupMenuTVCells()
+        viewmodel1 = ProfileDetailsViewModel(self)
+        logoutvm = LogoutViewModel(self)
+        setupUI()
         
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture))
-        swipeRight.direction = .right
-        self.view.addGestureRecognizer(swipeRight)
-        
-        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture))
-        swipeDown.direction = .left
-        self.view.addGestureRecognizer(swipeDown)
     }
     
-    @objc func respondToSwipeGesture(gesture: UIGestureRecognizer) {
+    
+    func setupUI(){
+        setupMenuTVCells()
+        commonTableView.isScrollEnabled = true
+        commonTableView.registerTVCells(["MenuBGTVCell",
+                                         "LabelTVCell",
+                                         "SideMenuTitleTVCell",
+                                         "EmptyTVCell"])
+    }
+    
+    
+    //MARK: - call Profile Details API
+    func callProfileDetailsAPI() {
+      //  BASE_URL = "https://provabdevelopment.com/babsafar/mobile_webservices/mobile/index.php/user/"
+        payload["user_id"] = defaults.string(forKey: UserDefaultsKeys.userid) ?? "0"
+        viewmodel1?.CallGetProileDetails_API(dictParam: payload)
+    }
+    
+    
+    func getProfileDetails(response: ProfileDetailsModel) {
+        print(" =====   getProfileDetails ====== \(response)")
+        pdetails = response.data
         
-        if let swipeGesture = gesture as? UISwipeGestureRecognizer {
-            
-            switch swipeGesture.direction {
-            case .left:
-                dismiss(animated: false)
-            default:
-                break
-            }
+        defaults.set(response.data?.email, forKey: UserDefaultsKeys.useremail)
+        defaults.set(response.data?.phone, forKey: UserDefaultsKeys.usermobile)
+        
+        
+        DispatchQueue.main.async {[self] in
+            setupMenuTVCells()
         }
+    }
+    
+    func updateProfileDetails(response: ProfileDetailsModel) {
+        
     }
     
     
     
     func setupMenuTVCells() {
-        commonTableView.isScrollEnabled = true
-        commonTableView.registerTVCells(["MenuBGTVCell","LabelTVCell","EmptyTVCell"])
+        
         tablerow.removeAll()
         tablerow.append(TableRow(cellType:.MenuBGTVCell))
         tablerow.append(TableRow(height:30,cellType:.EmptyTVCell))
-        tablerow.append(TableRow(title:"My Bookings",key: "menu", image: "bookings",cellType:.LabelTVCell))
-        tablerow.append(TableRow(title:"Free Cancellation",key: "menu", image: "feecancel",cellType:.LabelTVCell))
-        tablerow.append(TableRow(title:"Customer Support",key: "menu", image: "customer",cellType:.LabelTVCell))
-        tablerow.append(TableRow(title:"Our Products",key: "ourproducts", image: "",cellType:.LabelTVCell))
-        tablerow.append(TableRow(title:"Flights",key: "menu", image: "bookings",cellType:.LabelTVCell))
-        tablerow.append(TableRow(title:"Hotels",key: "menu", image: "hotel",cellType:.LabelTVCell))
-        tablerow.append(TableRow(title:"Insurance",key: "menu", image: "insurence",cellType:.LabelTVCell))
-        tablerow.append(TableRow(title:"Visa",key: "menu", image: "visa",cellType:.LabelTVCell))
+        tablerow.append(TableRow(title:"My Bookings",key: "menu", image: "bookings",cellType:.SideMenuTitleTVCell))
+        //   tablerow.append(TableRow(title:"Free Cancellation",key: "menu", image: "feecancel",cellType:.SideMenuTitleTVCell))
+        tablerow.append(TableRow(title:"Customer Support",key: "menu", image: "customer",cellType:.SideMenuTitleTVCell))
+        tablerow.append(TableRow(title:"Services",key: "products", image: "",cellType:.SideMenuTitleTVCell))
+        tablerow.append(TableRow(title:"Flights",key: "menu", image: "bookings",cellType:.SideMenuTitleTVCell))
+        tablerow.append(TableRow(title:"Hotels",key: "menu", image: "hotel",cellType:.SideMenuTitleTVCell))
+        tablerow.append(TableRow(title:"Visa",key: "menu", image: "visa",cellType:.SideMenuTitleTVCell))
         tablerow.append(TableRow(height:60,cellType:.EmptyTVCell))
-        tablerow.append(TableRow(title:"Logout",key: "menu", image: "logout",cellType:.LabelTVCell))
-        tablerow.append(TableRow(height:100,cellType:.EmptyTVCell))
+        
+        if defaults.bool(forKey: UserDefaultsKeys.loggedInStatus) == true {
+            tablerow.append(TableRow(title:"Logout",key: "menu", image: "logout",cellType:.SideMenuTitleTVCell))
+            tablerow.append(TableRow(height:100,cellType:.EmptyTVCell))
+        }
+        
+        
         commonTVData = tablerow
         commonTableView.reloadData()
     }
@@ -72,6 +127,7 @@ class SideMenuVC: BaseTableVC {
     override func didTapOnLoginBtn(cell: MenuBGTVCell) {
         guard let vc = LoginVC.newInstance.self else {return}
         vc.modalPresentationStyle = .overCurrentContext
+        vc.isVcFrom = "SideMenuVC"
         present(vc, animated: true)
         
     }
@@ -79,10 +135,35 @@ class SideMenuVC: BaseTableVC {
     
     override func didTapOnEditProfileBtn(cell: MenuBGTVCell) {
         guard let vc = EditProfileVC.newInstance.self else {return}
-        vc.modalPresentationStyle = .overCurrentContext
+        vc.modalPresentationStyle = .fullScreen
+        vc.showKey = "profiledit"
         present(vc, animated: true)
     }
     
+    
+    func callLogoutAPI() {
+     //   BASE_URL = "https://provabdevelopment.com/babsafar/mobile_webservices/mobile/index.php/auth/"
+        BASE_URL = BASE_URL1
+        payload.removeAll()
+        payload["username"] = defaults.string(forKey: UserDefaultsKeys.useremail) ?? ""
+        logoutvm?.CALL_MOBILE_USER_LOGOUT_API(dictParam: payload)
+    }
+    
+    
+    func logoutSucessDetails(response: LogoutModel) {
+        showToast(message: response.data ?? "")
+        let seconds = 1.5
+        DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
+            defaults.set(false, forKey: UserDefaultsKeys.loggedInStatus)
+            defaults.set("0", forKey: UserDefaultsKeys.userid)
+            defaults.set("", forKey: UserDefaultsKeys.useremail)
+            defaults.set("", forKey: UserDefaultsKeys.usermobile)
+            
+            // Reset Standard User Defaults
+            UserDefaults.resetStandardUserDefaults()
+            self.setupMenuTVCells()
+        }
+    }
     
     
 }
@@ -92,9 +173,9 @@ class SideMenuVC: BaseTableVC {
 extension SideMenuVC {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let cell = tableView.cellForRow(at: indexPath) as? LabelTVCell {
+        if let cell = tableView.cellForRow(at: indexPath) as? SideMenuTitleTVCell {
             
-            switch cell.titlelbl.text {
+            switch cell.menuTitlelbl.text {
             case "My Bookings":
                 guard let vc = DashBoaardTabbarVC.newInstance.self else {return}
                 vc.modalPresentationStyle = .overCurrentContext
@@ -114,16 +195,16 @@ extension SideMenuVC {
                 present(vc, animated: true)
                 break
                 
-            case "Insurance":
-                guard let vc = InsuranceVC.newInstance.self else {return}
-                vc.modalPresentationStyle = .overCurrentContext
-                present(vc, animated: true)
-                break
                 
             case "Visa":
                 guard let vc = VisaEnduiryVC.newInstance.self else {return}
                 vc.modalPresentationStyle = .overCurrentContext
                 present(vc, animated: true)
+                break
+                
+                
+            case "Logout":
+                callLogoutAPI()
                 break
                 
             default:

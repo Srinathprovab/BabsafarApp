@@ -22,7 +22,7 @@ class RegisterViewModel {
         
         self.view?.showLoader()
         
-        ServiceManager.postOrPutApiCall(endPoint: ApiEndpoints.register , parameters: parms as NSDictionary, resultType: RegisterModel.self, p:dictParam) { sucess, result, errorMessage in
+        ServiceManager.postOrPutApiCall(endPoint: "auth/\(ApiEndpoints.register)" , parameters: parms as NSDictionary, resultType: RegisterModel.self, p:dictParam) { sucess, result, errorMessage in
             
             DispatchQueue.main.async {
                 self.view?.hideLoader()
@@ -47,7 +47,7 @@ class RegisterViewModel {
         
         self.view?.showLoader()
         
-        ServiceManager.postOrPutApiCall(endPoint: ApiEndpoints.login , parameters: parms as NSDictionary, resultType: LoginModel.self, p:dictParam) { sucess, result, errorMessage in
+        ServiceManager.postOrPutApiCall(endPoint: "auth/\(ApiEndpoints.login)" , parameters: parms as NSDictionary, resultType: LoginModel.self, p:dictParam) { sucess, result, errorMessage in
             
             DispatchQueue.main.async {
                 self.view?.hideLoader()

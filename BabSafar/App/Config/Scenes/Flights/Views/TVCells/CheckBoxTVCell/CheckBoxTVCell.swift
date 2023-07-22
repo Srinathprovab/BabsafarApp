@@ -6,10 +6,16 @@
 //
 
 import UIKit
+
+
+
+
 protocol CheckBoxTVCellDelegate {
     func didTapOnCheckBoxDropDownBtn(cell:CheckBoxTVCell)
     func didTapOnShowMoreBtn(cell:CheckBoxTVCell)
     
+    func didTapOnCheckBox(cell:checkOptionsTVCell)
+    func didTapOnDeselectCheckBox(cell:checkOptionsTVCell)
 }
 
 class CheckBoxTVCell: TableViewCell {
@@ -21,11 +27,8 @@ class CheckBoxTVCell: TableViewCell {
     @IBOutlet weak var downImg: UIImageView!
     @IBOutlet weak var downBtn: UIButton!
     // @IBOutlet weak var showMoreBtn: UIButton!
-    
     @IBOutlet weak var btnView: UIView!
     @IBOutlet weak var btnViewHeight: NSLayoutConstraint!
-    
-    
     @IBOutlet weak var btnlbl: UILabel!
     @IBOutlet weak var showMoreBtn: UIButton!
     
@@ -33,6 +36,8 @@ class CheckBoxTVCell: TableViewCell {
     var b = true
     var nameArray = [String]()
     var tvheight = CGFloat()
+    var selectedIndices = [IndexPath]()
+    var showbool = true
     var delegate:CheckBoxTVCellDelegate?
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -52,17 +57,23 @@ class CheckBoxTVCell: TableViewCell {
         }
     }
     
+    override func prepareForReuse() {
+        expand()
+    }
+    
     
     override func updateUI() {
         titlelbl.text = cellInfo?.title
         nameArray = cellInfo?.data as? [String] ?? []
         //  showMoreBtn.isHidden = true
         
+        tvHeight.constant = CGFloat(nameArray.count * 50)
+        
         switch titlelbl.text {
         case "Stops":
             downBtn.isHidden = true
             downImg.isHidden = true
-            expand()
+            // expand()
             break
             
         case "Airlines":
@@ -83,10 +94,10 @@ class CheckBoxTVCell: TableViewCell {
     
     func setupUI() {
         
-        showMoreBtn.setTitle("", for: .normal)
+        //     showMoreBtn.setTitle("", for: .normal)
         btnView.isHidden = true
-        btnViewHeight.constant = 0
-        tvHeight.constant = 0
+        //        btnViewHeight.constant = 0
+        //        tvHeight.constant = 0
         downImg.image = UIImage(named: "down")
         holderView.backgroundColor = .WhiteColor
         titlelbl.textColor = .AppLabelColor
@@ -123,6 +134,7 @@ class CheckBoxTVCell: TableViewCell {
         btnView.isHidden = true
         btnViewHeight.constant = 0
     }
+    
     func expand() {
         tvHeight.constant = CGFloat(nameArray.count * 50)
         if nameArray.count > 3 {
@@ -144,36 +156,48 @@ class CheckBoxTVCell: TableViewCell {
 
 extension CheckBoxTVCell:UITableViewDataSource,UITableViewDelegate {
     
+    
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        if nameArray.count > 3 {
-            return 3
-        }else {
-            return nameArray.count
-        }
+        return nameArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var commonCell = UITableViewCell()
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as? checkOptionsTVCell {
-            cell.selectionStyle = .none
-            cell.titlelbl.text = nameArray[indexPath.row]
-            commonCell = cell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! checkOptionsTVCell
+        cell.selectionStyle = .none
+        cell.titlelbl.text = nameArray[indexPath.row]
+        cell.filtertitle = self.titlelbl.text ?? ""
+        
+        if selectedIndices.contains(indexPath) {
+            cell.sele()
+        } else {
+            cell.unselected()
         }
-        return commonCell
+        return cell
     }
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = tableView.cellForRow(at: indexPath) as? checkOptionsTVCell
-        print(cell?.titlelbl.text as Any)
-        cell?.checkImg.image = UIImage(named: "chk")?.withRenderingMode(.alwaysOriginal)
+        if let cell = tableView.cellForRow(at: indexPath) as? checkOptionsTVCell {
+            cell.sele()
+            selectedIndices.append(indexPath)
+            delegate?.didTapOnCheckBox(cell: cell)
+        }
     }
     
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        let cell = tableView.cellForRow(at: indexPath) as? checkOptionsTVCell
-        cell?.checkImg.image = UIImage(named: "uncheck")?.withRenderingMode(.alwaysOriginal)
+        if let cell = tableView.cellForRow(at: indexPath) as? checkOptionsTVCell {
+            cell.unselected()
+            if let index = selectedIndices.firstIndex(of: indexPath) {
+                selectedIndices.remove(at: index)
+            }
+            delegate?.didTapOnDeselectCheckBox(cell: cell)
+        }
     }
+    
+    
+    
+    
     
 }

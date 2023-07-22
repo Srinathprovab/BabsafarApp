@@ -26,7 +26,7 @@ class FDViewModel {
 
         self.view?.showLoader()
 
-        ServiceManager.postOrPutApiCall(endPoint: ApiEndpoints.getBaggageFlightDetails , parameters: parms, resultType: FDModel.self, p:dictParam) { sucess, result, errorMessage in
+        ServiceManager.postOrPutApiCall(endPoint: "flight/\(ApiEndpoints.getBaggageFlightDetails)" , parameters: parms, resultType: FDModel.self, p:dictParam) { sucess, result, errorMessage in
 
             DispatchQueue.main.async {
                 self.view?.hideLoader()
@@ -35,7 +35,6 @@ class FDViewModel {
                     self.view.flightDetails(response: response)
                 } else {
                     // Show alert
-                    NotificationCenter.default.post(name: NSNotification.Name("nointernet"), object: errorMessage)
                     //  print("error === \(errorMessage ?? "")")
                     self.view.showToast(message: errorMessage ?? "")
                 }

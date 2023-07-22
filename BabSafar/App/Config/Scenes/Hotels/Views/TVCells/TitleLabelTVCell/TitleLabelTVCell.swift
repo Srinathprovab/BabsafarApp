@@ -6,6 +6,9 @@
 //
 
 import UIKit
+protocol TitleLabelTVCellDelegate {
+    func didTapOnViewMapBtnAction(cell:TitleLabelTVCell)
+}
 
 class TitleLabelTVCell: TableViewCell {
     
@@ -14,9 +17,13 @@ class TitleLabelTVCell: TableViewCell {
     @IBOutlet weak var locImg: UIImageView!
     @IBOutlet weak var locationlbl: UILabel!
     @IBOutlet weak var imgWidth: NSLayoutConstraint!
+    @IBOutlet weak var viewMapBtnView: UIView!
+    @IBOutlet weak var viewMaplbl: UILabel!
+    @IBOutlet weak var viewMapBtn: UIButton!
     
     
     var key = ""
+    var delegate:TitleLabelTVCellDelegate?
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -32,23 +39,24 @@ class TitleLabelTVCell: TableViewCell {
     override func updateUI() {
         hotelNamelbl.text = cellInfo?.title
         locationlbl.text = cellInfo?.subTitle
-        
+       
+        if cellInfo?.key == "hotel" {
+            viewMapBtnView.isHidden = false
+        }
     }
     
     func setupUI() {
-        contentView.backgroundColor = .AppBorderColor
-        holderView.backgroundColor = .AppBorderColor
-        setupLabels(lbl: hotelNamelbl, text: "", textcolor: .AppLabelColor, font: .LatoRegular(size: 18))
-        setupLabels(lbl: locationlbl, text: "", textcolor: .SubTitleColor, font: .LatoRegular(size: 12))
+        contentView.backgroundColor = HexColor("#E6E8E7")
+        holderView.backgroundColor = HexColor("#E6E8E7")
+        setuplabels(lbl: hotelNamelbl, text: "", textcolor: .AppLabelColor, font: .LatoRegular(size: 18), align: .left)
+        setuplabels(lbl: locationlbl, text: "", textcolor: .SubTitleColor, font: .LatoRegular(size: 14), align: .left)
         locImg.image = UIImage(named: "loc")?.withRenderingMode(.alwaysOriginal).withTintColor(HexColor("#A3A3A3"))
         locationlbl.numberOfLines = 0
         
-    }
-    
-    func setupLabels(lbl:UILabel,text:String,textcolor:UIColor,font:UIFont) {
-        lbl.text = text
-        lbl.textColor = textcolor
-        lbl.font = font
+        viewMapBtnView.backgroundColor = .red
+        viewMapBtnView.addCornerRadiusWithShadow(color: .clear, borderColor: .clear, cornerRadius: 3)
+        setuplabels(lbl: viewMaplbl, text: "VIEW MAP", textcolor: .WhiteColor, font: .LatoSemibold(size: 14), align: .center)
+        viewMapBtnView.isHidden = true
     }
     
     
@@ -59,6 +67,12 @@ class TitleLabelTVCell: TableViewCell {
         hotelNamelbl.font = UIFont.LatoMedium(size: 14)
         locationlbl.textColor = HexColor("#5B5B5B")
         locationlbl.font = UIFont.LatoRegular(size: 14)
+    }
+    
+    
+    
+    @IBAction func didTapOnViewMapBtnAction(_ sender: Any) {
+        delegate?.didTapOnViewMapBtnAction(cell: self)
     }
     
 }

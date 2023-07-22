@@ -6,6 +6,9 @@
 //
 
 import UIKit
+import SDWebImage
+
+
 protocol MenuBGTVCellDelegate {
     func didTapOnLoginBtn(cell:MenuBGTVCell)
     func didTapOnEditProfileBtn(cell:MenuBGTVCell)
@@ -33,11 +36,31 @@ class MenuBGTVCell: TableViewCell {
         // Configure the view for the selected state
     }
     
+    
+    override func updateUI() {
+        if defaults.bool(forKey: UserDefaultsKeys.loggedInStatus) == true {
+            loginBtn.isHidden = false
+            loginBtn.isUserInteractionEnabled = false
+            loginBtn.setTitle("\(pdetails?.first_name ?? "") \(pdetails?.last_name ?? "")", for: .normal)
+            profileImage.sd_setImage(with: URL(string: pdetails?.image ?? "" ), placeholderImage:UIImage(contentsOfFile:"placeholder.png"))
+            editProfileView.isHidden = false
+        }else {
+            profileImage.image = UIImage(named: "profile1")?.withRenderingMode(.alwaysOriginal)
+            editProfileView.isHidden = true
+            loginBtn.setTitle("Login/Signup", for: .normal)
+            loginBtn.isUserInteractionEnabled = true
+        }
+    }
+    
+    
     func setupUI() {
         profileImage.image = UIImage(named: "profile1")?.withRenderingMode(.alwaysOriginal)
         profileImage.layer.cornerRadius = 50
         profileImage.clipsToBounds = true
+        profileImage.layer.borderWidth = 4
+        profileImage.layer.borderColor = UIColor.WhiteColor.cgColor
         
+        editProfileView.isHidden = true
         editProfileBtn.setTitle("", for: .normal)
         loginBtn.setTitle("Login/Signup", for: .normal)
         loginBtn.setTitleColor(.WhiteColor, for: .normal)
@@ -54,7 +77,7 @@ class MenuBGTVCell: TableViewCell {
         editProfilelbl.textColor = .WhiteColor
         editProfilelbl.font = UIFont.LatoRegular(size: 14)
         
-        editProfileViewHeight.constant = 0
+        //editProfileViewHeight.constant = 0
     }
     
     

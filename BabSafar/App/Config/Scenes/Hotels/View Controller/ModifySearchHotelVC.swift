@@ -7,10 +7,12 @@
 
 import UIKit
 
-class ModifySearchHotelVC: BaseTableVC {
+class ModifySearchHotelVC: BaseTableVC, HotelSearchViewModelDelegate {
     
     
-    
+    var payload = [String:Any]()
+    var payload1 = [String:Any]()
+    var viewModel:HotelSearchViewModel?
     var tablerow = [TableRow]()
     static var newInstance: ModifySearchHotelVC? {
         let storyboard = UIStoryboard(name: Storyboard.Hotels.name,
@@ -20,11 +22,24 @@ class ModifySearchHotelVC: BaseTableVC {
     }
     
     
+    override func viewWillAppear(_ animated: Bool) {
+        NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("nointernet"), object: nil)
+    }
+    
+    //MARK: - nointernet
+    @objc func nointernet() {
+        guard let vc = NoInternetConnectionVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .overCurrentContext
+        self.present(vc, animated: true)
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
         setupUI()
+        viewModel = HotelSearchViewModel(self)
     }
     
     
@@ -52,19 +67,29 @@ class ModifySearchHotelVC: BaseTableVC {
         tablerow.append(TableRow(height:50,cellType:.EmptyTVCell))
         tablerow.append(TableRow(title:"Modify",key: "modifyhotel",cellType:.LabelTVCell))
         tablerow.append(TableRow(height:20,cellType:.EmptyTVCell))
-        tablerow.append(TableRow(title:"Location/City",subTitle: "Dubai ",key:"dual1", image: "",cellType:.CommonFromCityTVCell))
-        tablerow.append(TableRow(title:"Check-In",subTitle: "26-07-2022",key:"dual", text:"Check-On", tempText: "28-07-2022",cellType:.CommonFromCityTVCell))
-        tablerow.append(TableRow(title:"Rooms & Guests",subTitle: "1 Adults ",key:"dual1", image: "downarrow",cellType:.CommonFromCityTVCell))
+        
+        
+        tablerow.append(TableRow(title:"Location/City",subTitle: defaults.string(forKey: UserDefaultsKeys.locationcity) ?? "Add City",key:"search", image: "",cellType:.CommonFromCityTVCell))
+        
+        tablerow.append(TableRow(title:"Check-In",subTitle: defaults.string(forKey: UserDefaultsKeys.checkin) ?? "Add Check In Date",key:"dual", text:"Check-On", tempText: defaults.string(forKey: UserDefaultsKeys.checkout) ?? "Add Check Out Date",cellType:.CommonFromCityTVCell))
+        
+        tablerow.append(TableRow(title:"Rooms & Guests",subTitle: "\(defaults.string(forKey: UserDefaultsKeys.roomcount) ?? "Add") Rooms ,\(defaults.string(forKey: UserDefaultsKeys.hoteladultscount) ?? "0") Adults,\(defaults.string(forKey: UserDefaultsKeys.hotelchildcount) ?? "0") Childrens",key:"dual1", image: "downarrow",cellType:.CommonFromCityTVCell))
+        
+        
+        
+        
+        
         tablerow.append(TableRow(height:20,cellType:.EmptyTVCell))
         tablerow.append(TableRow(title:"Search Hotels",cellType:.ButtonTVCell))
         tablerow.append(TableRow(height:50,cellType:.EmptyTVCell))
-
+        
         
         commonTVData = tablerow
         commonTableView.reloadData()
     }
     
     override func didTapOnCloseBtn(cell: LabelTVCell) {
+        callapibool = false
         dismiss(animated: true)
     }
     
@@ -112,12 +137,52 @@ class ModifySearchHotelVC: BaseTableVC {
     
     
     override func btnAction(cell: ButtonTVCell) {
-        print("btnAction")
+        callAPI()
+    }
+    
+    
+    
+    func callAPI() {
+        
+        payload["city"] = defaults.string(forKey: UserDefaultsKeys.locationcity)
+        payload["hotel_destination"] = defaults.string(forKey: UserDefaultsKeys.locationcityid)
+        payload["hotel_checkin"] = defaults.string(forKey: UserDefaultsKeys.checkin)
+        payload["hotel_checkout"] = defaults.string(forKey: UserDefaultsKeys.checkout)
+        payload["rooms"] = "\(defaults.string(forKey: UserDefaultsKeys.roomcount) ?? "1")"
+        payload["adult"] = ["2"]
+        payload["child"] = ["0"]
+        payload["childAge_1"] = ["0","0"]
+        payload["nationality"] = "IN"
+        
+        do {
+            let arrJson = try JSONSerialization.data(withJSONObject: payload, options: JSONSerialization.WritingOptions.prettyPrinted)
+            let theJSONText = NSString(data: arrJson, encoding: String.Encoding.utf8.rawValue)
+            print(theJSONText ?? "")
+            
+     //       BASE_URL = "https://provabdevelopment.com/babsafar/mobile_webservices/mobile/index.php/general/"
+            payload1["search_params"] = theJSONText
+            viewModel?.CallHotelSearchAPI(dictParam: payload1)
+            
+        }catch let error as NSError{
+            print(error.description)
+        }
+        
+    }
+    
+    
+    func hoteSearchResult(response: HotelSearchModel) {
+        response.data?.hotelSearchResult?.forEach({ i in
+            print( i.image)
+        })
+        hotelSearchResult = response.data?.hotelSearchResult ?? []
+        gotoSearchHotelsResultVC()
+    }
+    
+    func gotoSearchHotelsResultVC(){
         guard let vc = SearchHotelsResultVC.newInstance.self else {return}
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }
-    
     
     
 }

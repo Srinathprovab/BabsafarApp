@@ -20,7 +20,7 @@ class TabSelectCVCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        holderView.addCornerRadiusWithShadow(color: .buttonBGColor , borderColor: .clear, cornerRadius: 6)
+        holderView.addCornerRadiusWithShadow(color: .clear , borderColor: .clear, cornerRadius: 6)
         holderView.backgroundColor = .white
         setuplabels(lbl: titlelbl, text: "", textcolor: .AppLabelColor.withAlphaComponent(0.50), font: .LatoBold(size: 14), align: .center)
     }

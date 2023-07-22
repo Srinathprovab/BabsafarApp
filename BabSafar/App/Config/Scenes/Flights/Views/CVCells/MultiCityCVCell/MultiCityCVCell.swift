@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import DropDown
 
 protocol MultiCityCVCellDelegate {
     func didtapOnSwapCityBtn(cell:MultiCityCVCell)
@@ -17,74 +18,74 @@ protocol MultiCityCVCellDelegate {
     func didTapOnDateBtn(cell:MultiCityCVCell)
 }
 
-class MultiCityCVCell: UICollectionViewCell {
+class MultiCityCVCell: UICollectionViewCell, SelectCityViewModelProtocal,UITextFieldDelegate {
+    func ShowCityListMulticity(response: [SelectCityModel]) {
+        
+    }
+    
+    
     
     @IBOutlet weak var holderView: UIView!
     @IBOutlet weak var fromToView: UIView!
-    @IBOutlet weak var departureView: UIView!
-    @IBOutlet weak var swipeView: UIView!
-    @IBOutlet weak var swipeImg: UIImageView!
-    @IBOutlet weak var swipeBtn: UIButton!
+    @IBOutlet weak var toView: UIView!
+    @IBOutlet weak var dateView: UIView!
     @IBOutlet weak var cancelBtnView: UIView!
     @IBOutlet weak var cancelImg: UIImageView!
     @IBOutlet weak var cancelBtn: UIButton!
-    @IBOutlet weak var fromlbl: UILabel!
     @IBOutlet weak var fromCityname: UILabel!
-    @IBOutlet weak var fromCityCodelbl: UILabel!
-    @IBOutlet weak var tolbl: UILabel!
     @IBOutlet weak var toCityNamelbl: UILabel!
-    @IBOutlet weak var toCityCodelbl: UILabel!
-    @IBOutlet weak var departurelbl: UILabel!
-    @IBOutlet weak var depratureDatelbl: UILabel!
-    
-    
-    
+    @IBOutlet weak var datelbl: UILabel!
     @IBOutlet weak var fromCityBtn: UIButton!
     @IBOutlet weak var toCityBtn: UIButton!
     @IBOutlet weak var dateBtn: UIButton!
+    @IBOutlet weak var fromTF: UITextField!
+    @IBOutlet weak var toTF: UITextField!
+    @IBOutlet weak var fromcityTV: UITableView!
+    @IBOutlet weak var fromcityTVHeight: NSLayoutConstraint!
     
-    
+    var cityViewModel: SelectCityViewModel?
+    var payload = [String:Any]()
+    var cityNameArray = [String]()
+    var txtbool = Bool()
     var delegate:MultiCityCVCellDelegate?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         setupUI()
+        cityViewModel = SelectCityViewModel(self)
     }
     
     override func prepareForReuse() {
         cancelBtnView.isHidden = true
-        hideViews()
     }
     
     
     
     
     func setupUI() {
-        swipeBtn.setTitle("", for: .normal)
-        swipeBtn.addTarget(self, action: #selector(didtapOnSwapCityBtn(_:)), for: .touchUpInside)
+        setupTV()
+        fromcityTVHeight.constant = 0
+        CallShowCityListAPI(str: "")
+        
+        
+        
         cancelBtn.setTitle("", for: .normal)
         cancelBtn.addTarget(self, action: #selector(didTapOnDeleteMultiCityTrip(_:)), for: .touchUpInside)
-        
-        swipeImg.image = UIImage(named: "multitrip")
         cancelImg.image = UIImage(named: "close")
         
         holderView.backgroundColor = .WhiteColor
         setupViews(v: fromToView, radius: 5, color: HexColor("#FCFCFC"))
-        setupViews(v: departureView, radius: 5, color: HexColor("#FCFCFC"))
+        setupViews(v: toView, radius: 5, color: HexColor("#FCFCFC"))
+        setupViews(v: dateView, radius: 5, color: HexColor("#FCFCFC"))
         
-        swipeView.backgroundColor = .clear
+        
         cancelBtnView.backgroundColor = .clear
         
         setupLabels(lbl: fromCityname, text: "Dubai", textcolor: .AppLabelColor, font: .LatoSemibold(size: 16))
         setupLabels(lbl: toCityNamelbl, text: "Kuwait", textcolor: .AppLabelColor, font: .LatoSemibold(size: 16))
-        setupLabels(lbl: fromlbl, text: "From", textcolor: .AppLabelColor, font: .LatoLight(size: 12))
-        setupLabels(lbl: fromCityCodelbl, text: "DXB", textcolor: .AppLabelColor, font: .LatoLight(size: 12))
-        setupLabels(lbl: tolbl, text: "To", textcolor: .AppLabelColor, font: .LatoLight(size: 12))
-        setupLabels(lbl: toCityCodelbl, text: "KWI", textcolor: .AppLabelColor, font: .LatoLight(size: 12))
-        setupLabels(lbl: departurelbl, text: "Departure ", textcolor: .AppLabelColor, font: .LatoLight(size: 12))
-        setupLabels(lbl: depratureDatelbl, text: "26-07-2022", textcolor: .AppLabelColor, font: .LatoSemibold(size: 14))
+        setupLabels(lbl: datelbl, text: "26-07-2022", textcolor: .AppLabelColor, font: .LatoSemibold(size: 14))
         
-        cancelBtnView.isHidden = true
         fromCityBtn.setTitle("", for: .normal)
         toCityBtn.setTitle("", for: .normal)
         dateBtn.setTitle("", for: .normal)
@@ -92,16 +93,42 @@ class MultiCityCVCell: UICollectionViewCell {
         toCityBtn.addTarget(self, action: #selector(didTapOnToCityBtn(_:)), for: .touchUpInside)
         dateBtn.addTarget(self, action: #selector(didTapOnDateBtn(_:)), for: .touchUpInside)
         
-        hideViews()
-        cancelBtnView.isHidden = false
+        
+        cancelBtnView.isHidden = true
+        
+        
+        fromTF.tag = 1
+        fromTF.textColor = .AppLabelColor
+        fromTF.font = .LatoSemibold(size: 18)
+        fromTF.delegate = self
+        fromTF.addTarget(self, action: #selector(textFiledEditingChanged(_:)), for: .editingChanged)
+        fromTF.setLeftPaddingPoints(16)
+        fromTF.placeholder = "Origen"
+        
+        toTF.textAlignment = .center
+        toTF.tag = 2
+        toTF.textColor = .AppLabelColor
+        toTF.font = .LatoSemibold(size: 18)
+        toTF.delegate = self
+        toTF.addTarget(self, action: #selector(textFiledEditingChanged(_:)), for: .editingChanged)
+        toTF.setLeftPaddingPoints(16)
+        toTF.placeholder = "Destination"
+        
+        fromTF.isHidden = true
+        toTF.isHidden = true
+        //        fromCityname.isHidden = true
+        //        toCityNamelbl.isHidden = true
+        
+        
+        setupTV()
     }
     
     
-    
-    func hideViews() {
-        fromlbl.isHidden = true
-        tolbl.isHidden = true
-        departurelbl.isHidden = true
+    func setupTV() {
+        fromcityTV.delegate = self
+        fromcityTV.dataSource = self
+        fromcityTV.register(UINib(nibName: "FromCityTVCell", bundle: nil), forCellReuseIdentifier: "cell")
+        
     }
     
     func setupViews(v:UIView,radius:CGFloat,color:UIColor) {
@@ -140,5 +167,147 @@ class MultiCityCVCell: UICollectionViewCell {
     @objc func didTapOnDateBtn(_ sender:UIButton){
         delegate?.didTapOnDateBtn(cell: self)
     }
+    
+    
+    
+    //MARK: - Text Filed Editing Changed
+    
+    
+    @objc func textFiledEditingChanged(_ textField:UITextField) {
+        if textField == fromTF {
+            txtbool = true
+            if textField.text?.isEmpty == true {
+                
+            }else {
+                self.fromCityname.text = ""
+                
+                CallShowCityListAPI(str: textField.text ?? "")
+                
+            }
+        }else {
+            txtbool = false
+            if textField.text?.isEmpty == true {
+            }else {
+                self.toCityNamelbl.text = ""
+                
+                CallShowCityListAPI(str: textField.text ?? "")
+            }
+        }
+        
+        
+    }
+    
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        if textField == fromTF {
+            fromTF.placeholder = "Origen"
+            CallShowCityListAPI(str: textField.text ?? "")
+        }else {
+            toTF.placeholder = "Destination"
+            CallShowCityListAPI(str: textField.text ?? "")
+        }
+    }
+    
+    
+    func CallShowCityListAPI(str:String) {
+        payload["term"] = str
+        cityViewModel?.CallShowCityListAPI(dictParam: payload)
+    }
+    
+    
+    
+    func ShowCityList(response: [SelectCityModel]) {
+        cityList = response
+        print(cityList)
+        if txtbool == true {
+            fromcityTVHeight.constant = CGFloat(cityList.count * 80)
+            DispatchQueue.main.async {[self] in
+                fromcityTV.reloadData()
+            }
+        }else {
+            fromcityTVHeight.constant = CGFloat(cityList.count * 80)
+            DispatchQueue.main.async {[self] in
+                fromcityTV.reloadData()
+            }
+        }
+        
+    }
+    
+    
+    
+    
+}
+
+
+
+extension MultiCityCVCell:UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return cityList.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var ccell = UITableViewCell()
+        
+        if tableView == fromcityTV {
+            if let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as? FromCityTVCell {
+                cell.selectionStyle = .none
+                cell.titlelbl.text = cityList[indexPath.row].label
+                cell.subTitlelbl.text = cityList[indexPath.row].name
+                cell.id = cityList[indexPath.row].id ?? ""
+                cell.cityname = cityList[indexPath.row].name ?? ""
+                cell.citycode = cityList[indexPath.row].code ?? ""
+                ccell = cell
+            }
+        }else {
+            if let cell = tableView.dequeueReusableCell(withIdentifier: "cell1") as? FromCityTVCell {
+                cell.selectionStyle = .none
+                cell.titlelbl.text = cityList[indexPath.row].label
+                cell.subTitlelbl.text = cityList[indexPath.row].name
+                cell.id = cityList[indexPath.row].id ?? ""
+                cell.cityname = cityList[indexPath.row].name ?? ""
+                cell.citycode = cityList[indexPath.row].code ?? ""
+                ccell = cell
+            }
+        }
+        
+        return ccell
+    }
+    
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let cell = tableView.cellForRow(at: indexPath) as? FromCityTVCell {
+            print(cell.id)
+            print(cell.citycode)
+            print(cell.cityname)
+            
+            if txtbool == true {
+                
+                fromTF.text = cityList[indexPath.row].code ?? ""
+                fromTF.resignFirstResponder()
+                toTF.placeholder = "Destination"
+                toTF.becomeFirstResponder()
+                
+                defaults.set(cityList[indexPath.row].label ?? "", forKey: UserDefaultsKeys.mfromCity)
+                defaults.set(cityList[indexPath.row].id ?? "", forKey: UserDefaultsKeys.mfromlocid)
+                
+                
+                
+                fromcityTVHeight.constant = 0
+            }else {
+                
+                toTF.text = cityList[indexPath.row].code ?? ""
+                toTF.resignFirstResponder()
+                
+                defaults.set(cityList[indexPath.row].label ?? "", forKey: UserDefaultsKeys.mtoCity)
+                defaults.set(cityList[indexPath.row].id ?? "", forKey: UserDefaultsKeys.mtolocid)
+                
+                fromcityTVHeight.constant = 0
+            }
+        }
+    }
+    
+    
+    
     
 }

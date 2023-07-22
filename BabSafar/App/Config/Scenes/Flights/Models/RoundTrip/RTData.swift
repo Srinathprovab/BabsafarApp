@@ -10,7 +10,7 @@ import Foundation
 struct RTData : Codable {
     
     let col_2x_result : Bool?
-    //   let search_params : Search_params?
+    let search_params : Search_params?
     //  let attr : Attr?
     let search_id : Int?
     //    let booking_url : String?
@@ -23,7 +23,7 @@ struct RTData : Codable {
     enum CodingKeys: String, CodingKey {
         
         case col_2x_result = "col_2x_result"
-        //     case search_params = "search_params"
+        case search_params = "search_params"
         //     case attr = "attr"
         case search_id = "search_id"
         //        case booking_url = "booking_url"
@@ -38,7 +38,7 @@ struct RTData : Codable {
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         col_2x_result = try values.decodeIfPresent(Bool.self, forKey: .col_2x_result)
-        //        search_params = try values.decodeIfPresent(Search_params.self, forKey: .search_params)
+        search_params = try values.decodeIfPresent(Search_params.self, forKey: .search_params)
         //        attr = try values.decodeIfPresent(Attr.self, forKey: .attr)
         search_id = try values.decodeIfPresent(Int.self, forKey: .search_id)
         //        booking_url = try values.decodeIfPresent(String.self, forKey: .booking_url)

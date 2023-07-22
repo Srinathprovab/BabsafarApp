@@ -28,7 +28,7 @@ class ProfileDetailsViewModel {
         
         self.view?.showLoader()
         
-        ServiceManager.getApiCall(endPoint: ApiEndpoints.mobileprofile,urlParams: parms as? Dictionary<String, String> , parameters: parms as NSDictionary, resultType: ProfileDetailsModel.self, p:dictParam) { sucess, result, errorMessage in
+        ServiceManager.getApiCall(endPoint: "user/\(ApiEndpoints.mobileprofile)",urlParams: parms as? Dictionary<String, String> , parameters: parms as NSDictionary, resultType: ProfileDetailsModel.self, p:dictParam) { sucess, result, errorMessage in
             
             DispatchQueue.main.async {
                 self.view?.hideLoader()

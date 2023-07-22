@@ -14,7 +14,7 @@ class BaggageDateCVCell: UICollectionViewCell {
     @IBOutlet weak var subTitlelbl: UILabel!
     @IBOutlet weak var lineView: UIView!
     
-    
+    var cellSelected = Bool()
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -38,6 +38,19 @@ class BaggageDateCVCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         setupUI()
+    }
+    
+    
+    func selected() {
+        self.holderView.backgroundColor = .AppCalenderDateSelectColor
+        self.titlelbl.textColor = .WhiteColor
+        self.subTitlelbl.textColor = .WhiteColor
+    }
+    
+    func unselected() {
+        self.holderView.backgroundColor = .WhiteColor
+        self.titlelbl.textColor = HexColor("#808089")
+        self.subTitlelbl.textColor = HexColor("#808089")
     }
     
 }

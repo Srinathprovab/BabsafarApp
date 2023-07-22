@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -21,36 +20,24 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cNJ-fL-vBh">
                         <rect key="frame" x="0.0" y="0.0" width="115" height="120"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ee2-GW-6rk">
-                                <rect key="frame" x="0.0" y="0.0" width="115" height="120"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ee2-GW-6rk">
+                                <rect key="frame" x="0.0" y="0.0" width="115" height="75"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jF4-Pc-29J">
-                                <rect key="frame" x="0.0" y="20" width="115" height="100"/>
+                                <rect key="frame" x="0.0" y="75" width="115" height="45"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="HGs-gc-32g">
-                                        <rect key="frame" x="5" y="10" width="105" height="41"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hb5-4e-87Q">
-                                                <rect key="frame" x="32" y="0.0" width="41.5" height="20.5"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eQt-w7-7dC">
-                                                <rect key="frame" x="32" y="20.5" width="41.5" height="20.5"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                    </stackView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hhr-aS-kyY">
+                                        <rect key="frame" x="36.5" y="12" width="42" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="100" id="6vC-Uu-HiU"/>
-                                    <constraint firstItem="HGs-gc-32g" firstAttribute="top" secondItem="jF4-Pc-29J" secondAttribute="top" constant="10" id="WQS-oY-Fbb"/>
-                                    <constraint firstItem="HGs-gc-32g" firstAttribute="leading" secondItem="jF4-Pc-29J" secondAttribute="leading" constant="5" id="XTJ-u7-OaG"/>
-                                    <constraint firstAttribute="trailing" secondItem="HGs-gc-32g" secondAttribute="trailing" constant="5" id="dz1-7b-whj"/>
+                                    <constraint firstAttribute="height" constant="45" id="6vC-Uu-HiU"/>
+                                    <constraint firstItem="Hhr-aS-kyY" firstAttribute="centerY" secondItem="jF4-Pc-29J" secondAttribute="centerY" id="fLw-2y-CxK"/>
+                                    <constraint firstItem="Hhr-aS-kyY" firstAttribute="centerX" secondItem="jF4-Pc-29J" secondAttribute="centerX" id="frz-dX-Hcg"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -58,11 +45,11 @@
                         <constraints>
                             <constraint firstItem="jF4-Pc-29J" firstAttribute="leading" secondItem="cNJ-fL-vBh" secondAttribute="leading" id="8Pw-9o-QqK"/>
                             <constraint firstAttribute="trailing" secondItem="jF4-Pc-29J" secondAttribute="trailing" id="Eno-JJ-wbd"/>
-                            <constraint firstAttribute="bottom" secondItem="ee2-GW-6rk" secondAttribute="bottom" id="FBv-dC-cWp"/>
                             <constraint firstAttribute="bottom" secondItem="jF4-Pc-29J" secondAttribute="bottom" id="Fri-2w-Mgr"/>
-                            <constraint firstItem="ee2-GW-6rk" firstAttribute="leading" secondItem="cNJ-fL-vBh" secondAttribute="leading" id="I7P-wO-Oim"/>
-                            <constraint firstItem="ee2-GW-6rk" firstAttribute="top" secondItem="cNJ-fL-vBh" secondAttribute="top" id="cff-Gw-hVQ"/>
-                            <constraint firstAttribute="trailing" secondItem="ee2-GW-6rk" secondAttribute="trailing" id="gwR-1s-oNg"/>
+                            <constraint firstItem="ee2-GW-6rk" firstAttribute="leading" secondItem="jF4-Pc-29J" secondAttribute="leading" id="K3c-cC-SDW"/>
+                            <constraint firstItem="ee2-GW-6rk" firstAttribute="trailing" secondItem="jF4-Pc-29J" secondAttribute="trailing" id="XJa-b6-PXz"/>
+                            <constraint firstItem="ee2-GW-6rk" firstAttribute="top" secondItem="cNJ-fL-vBh" secondAttribute="top" id="XfN-cz-2Nb"/>
+                            <constraint firstItem="jF4-Pc-29J" firstAttribute="top" secondItem="ee2-GW-6rk" secondAttribute="bottom" id="bmJ-qi-9MC"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -77,10 +64,9 @@
             <size key="customSize" width="115" height="120"/>
             <connections>
                 <outlet property="cityImage" destination="ee2-GW-6rk" id="IsV-hD-4Dh"/>
-                <outlet property="cityNamelbl" destination="hb5-4e-87Q" id="3CH-Bv-adY"/>
+                <outlet property="cityNamelbl" destination="Hhr-aS-kyY" id="2qC-pc-FLw"/>
                 <outlet property="holderView" destination="cNJ-fL-vBh" id="Cpe-Om-fHI"/>
                 <outlet property="labelHolderView" destination="jF4-Pc-29J" id="2e9-XZ-jCF"/>
-                <outlet property="subtitlelbl" destination="eQt-w7-7dC" id="aF1-qE-gSg"/>
             </connections>
             <point key="canvasLocation" x="138.40579710144928" y="93.75"/>
         </collectionViewCell>

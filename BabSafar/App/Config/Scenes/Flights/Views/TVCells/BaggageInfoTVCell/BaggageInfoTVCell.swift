@@ -14,10 +14,14 @@ class BaggageInfoTVCell: TableViewCell {
     @IBOutlet weak var cabinBaglbl: UILabel!
     @IBOutlet weak var checkInImg: UIImageView!
     @IBOutlet weak var checkInlbl: UILabel!
-    
     @IBOutlet weak var kglbl1: UILabel!
     @IBOutlet weak var kglbl2: UILabel!
-
+    @IBOutlet weak var sectorlbl: UILabel!
+    @IBOutlet weak var sectorValuelbl: UILabel!
+    @IBOutlet weak var sectorImg: UIImageView!
+    
+    
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -33,7 +37,9 @@ class BaggageInfoTVCell: TableViewCell {
     
     
     override func updateUI() {
-        
+        sectorValuelbl.text = cellInfo?.title
+        kglbl1.text = cellInfo?.subTitle
+        kglbl2.text = cellInfo?.buttonTitle
     }
     
     func setupUI() {
@@ -45,10 +51,14 @@ class BaggageInfoTVCell: TableViewCell {
         setupLabels(lbl: kglbl1, text: "7 KG", textcolor: .AppLabelColor, font: .LatoRegular(size: 14))
         setupLabels(lbl: kglbl2, text: "25 KG", textcolor: .AppLabelColor, font: .LatoRegular(size: 14))
 
+        setupLabels(lbl: sectorlbl, text: "Sector", textcolor: HexColor("#808089"), font: .LatoRegular(size: 14))
+        setupLabels(lbl: sectorValuelbl, text: "Kwati-Dubai", textcolor: .AppLabelColor, font: .LatoRegular(size: 14))
+
         
         cabinBagImg.image = UIImage(named: "suit")?.withRenderingMode(.alwaysOriginal).withTintColor(.AppTabSelectColor)
         checkInImg.image = UIImage(named: "bag")?.withRenderingMode(.alwaysOriginal).withTintColor(.AppTabSelectColor)
-        
+        sectorImg.image = UIImage(named: "flight")?.withRenderingMode(.alwaysOriginal).withTintColor(.ImageUnSelectColor)
+
     }
     
     func setupViews(v:UIView,radius:CGFloat,color:UIColor) {

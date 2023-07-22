@@ -13,6 +13,8 @@ class checkOptionsTVCell: TableViewCell {
     @IBOutlet weak var checkImg: UIImageView!
     @IBOutlet weak var titlelbl: UILabel!
     
+    
+    var filtertitle = String()
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -23,13 +25,27 @@ class checkOptionsTVCell: TableViewCell {
         super.setSelected(selected, animated: animated)
         
         // Configure the view for the selected state
+        if isSelected == true {
+            sele()
+        }else {
+            unselected()
+        }
     }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        // reset cell UI here
+        unselected()
+    }
+    
+    
     override func updateUI() {
         titlelbl.text = cellInfo?.title
         
         if cellInfo?.key == "book" {
-            contentView.backgroundColor = .AppBorderColor
-            holderView.backgroundColor = .AppBorderColor
+            contentView.backgroundColor = .WhiteColor
+            holderView.backgroundColor = .AppHolderViewColor
             setAttributedString()
         }
     }
@@ -65,6 +81,17 @@ class checkOptionsTVCell: TableViewCell {
         titlelbl.textColor = HexColor("#767676")
         titlelbl.font = UIFont.LatoRegular(size: 16)
         titlelbl.numberOfLines = 0
+    }
+    
+    
+    
+    func sele() {
+        checkImg.image = UIImage(named: "chk")?.withRenderingMode(.alwaysOriginal)
+    }
+    
+    
+    func unselected() {
+        checkImg.image = UIImage(named: "uncheck")?.withRenderingMode(.alwaysOriginal)
     }
     
 }

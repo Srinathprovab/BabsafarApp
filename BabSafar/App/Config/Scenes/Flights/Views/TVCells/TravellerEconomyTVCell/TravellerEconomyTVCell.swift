@@ -40,7 +40,7 @@ class TravellerEconomyTVCell: TableViewCell {
     override func updateUI() {
         titlelbl.text = cellInfo?.title
         subTitlelbl.text = cellInfo?.subTitle
-        countlbl.text = cellInfo?.text
+        
         
         if titlelbl.text == "Adults" {
             count = Int(cellInfo?.text ?? "1") ?? 1
@@ -48,6 +48,7 @@ class TravellerEconomyTVCell: TableViewCell {
             count = Int(cellInfo?.text ?? "0") ?? 0
         }
         
+        countlbl.text = cellInfo?.text
         
     }
     

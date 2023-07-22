@@ -54,13 +54,13 @@ class AmenitiesTVCell: UITableViewCell {
 
 extension AmenitiesTVCell:UICollectionViewDelegate,UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 20
+        return formatAmeArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         var commonCell = UICollectionViewCell()
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? AmenitiesCVCell {
-            cell.titlelbl.text = "MasterCard"
+            cell.titlelbl.text = formatAmeArray[indexPath.row].ame
             commonCell = cell
         }
         return commonCell

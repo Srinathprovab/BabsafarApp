@@ -24,7 +24,7 @@ class FlightListViewModel {
 
         self.view?.showLoader()
 
-        ServiceManager.postOrPutApiCall(endPoint: ApiEndpoints.mobilePreFlightSearch , urlParams: parms as? Dictionary<String, String>, parameters: parms, resultType: FlightSearchModel.self, p:dictParam) { sucess, result, errorMessage in
+        ServiceManager.postOrPutApiCall(endPoint: "general/\(ApiEndpoints.mobilePreFlightSearch)" , urlParams: parms as? Dictionary<String, String>, parameters: parms, resultType: FlightSearchModel.self, p:dictParam) { sucess, result, errorMessage in
 
             DispatchQueue.main.async {
                 self.view?.hideLoader()
@@ -32,9 +32,7 @@ class FlightListViewModel {
                     guard let response = result else {return}
                     self.view.flightList(response: response)
                 } else {
-                    // Show alert
-                    NotificationCenter.default.post(name: NSNotification.Name("nointernet"), object: errorMessage)
-                    //  print("error === \(errorMessage ?? "")")
+                   
                     self.view.showToast(message: errorMessage ?? "")
                 }
             }
@@ -49,7 +47,7 @@ class FlightListViewModel {
 
         self.view?.showLoader()
 
-        ServiceManager.postOrPutApiCall(endPoint: ApiEndpoints.mobilePreFlightSearch , urlParams: parms as? Dictionary<String, String>, parameters: parms, resultType: RoundTripModel.self, p:dictParam) { sucess, result, errorMessage in
+        ServiceManager.postOrPutApiCall(endPoint: "general/\(ApiEndpoints.mobilePreFlightSearch)" , urlParams: parms as? Dictionary<String, String>, parameters: parms, resultType: RoundTripModel.self, p:dictParam) { sucess, result, errorMessage in
 
             DispatchQueue.main.async {
                 self.view?.hideLoader()
@@ -57,9 +55,7 @@ class FlightListViewModel {
                     guard let response = result else {return}
                     self.view.roundTripflightList(response: response)
                 } else {
-                    // Show alert
-                    NotificationCenter.default.post(name: NSNotification.Name("nointernet"), object: errorMessage)
-                    //  print("error === \(errorMessage ?? "")")
+                    
                     self.view.showToast(message: errorMessage ?? "")
                 }
             }
@@ -76,7 +72,7 @@ class FlightListViewModel {
 
         self.view?.showLoader()
 
-        ServiceManager.postOrPutApiCall(endPoint: ApiEndpoints.mobilePreFlightSearch , urlParams: parms as? Dictionary<String, String>, parameters: parms, resultType: MulticityModel.self, p:dictParam) { sucess, result, errorMessage in
+        ServiceManager.postOrPutApiCall(endPoint: "general/\(ApiEndpoints.mobilePreFlightSearch)" , urlParams: parms as? Dictionary<String, String>, parameters: parms, resultType: MulticityModel.self, p:dictParam) { sucess, result, errorMessage in
 
             DispatchQueue.main.async {
                 self.view?.hideLoader()
@@ -84,9 +80,7 @@ class FlightListViewModel {
                     guard let response = result else {return}
                     self.view.multiTripflightList(response: response)
                 } else {
-                    // Show alert
-                    NotificationCenter.default.post(name: NSNotification.Name("nointernet"), object: errorMessage)
-                    //  print("error === \(errorMessage ?? "")")
+                   
                     self.view.showToast(message: errorMessage ?? "")
                 }
             }

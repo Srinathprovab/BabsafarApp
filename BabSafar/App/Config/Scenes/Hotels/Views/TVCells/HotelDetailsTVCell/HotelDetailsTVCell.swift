@@ -43,12 +43,15 @@ class HotelDetailsTVCell: TableViewCell {
         noOfRoomslbl.attributedText = setAttributedText(str1: "No.Of Rooms: ", str2: cellInfo?.tempInfo as? String ?? "")
         adultlbl.attributedText = setAttributedText(str1: "Adult: ", str2: cellInfo?.buttonTitle ?? "")
         
+        self.hotelImg.sd_setImage(with: URL(string: cellInfo?.image ?? ""), placeholderImage:UIImage(contentsOfFile:"placeholder.png"))
+
+        
         if cellInfo?.key == "booksucess" {
             contentView.backgroundColor = .WhiteColor
             ulView.isHidden = true
             holderView.layer.borderColor = UIColor.WhiteColor.cgColor
         }else {
-            contentView.backgroundColor = .AppBorderColor
+            contentView.backgroundColor = .AppHolderViewColor
         }
     }
     

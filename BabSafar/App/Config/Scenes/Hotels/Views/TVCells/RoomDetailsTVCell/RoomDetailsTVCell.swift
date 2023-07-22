@@ -27,6 +27,9 @@ class RoomDetailsTVCell: TableViewCell {
     @IBOutlet weak var freeCancellationlbl: UILabel!
     @IBOutlet weak var perNightlbl: UILabel!
     
+    
+    var ratekey = String()
+    var ratekeyNewArray = [String]()
     var delegate:RoomDetailsTVCell?
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -38,6 +41,18 @@ class RoomDetailsTVCell: TableViewCell {
         super.setSelected(selected, animated: animated)
         
         // Configure the view for the selected state
+        if isSelected == true {
+            self.radioImg.image = UIImage(named: "radioSelected")
+
+        }else {
+            self.radioImg.image = UIImage(named: "radioUnselected")
+
+        }
+    }
+    
+    override func prepareForReuse() {
+        self.radioImg.image = UIImage(named: "radioUnselected")
+        refundableView.isHidden = true
     }
     
     
@@ -66,6 +81,7 @@ class RoomDetailsTVCell: TableViewCell {
         setupLabels(lbl: freeCancellationlbl, text: "Free Cancellation", textcolor: .SubTitleColor, font: .LatoRegular(size: 12))
         
         refundableBtn.setTitle("", for: .normal)
+        refundableView.isHidden = true
         
     }
     

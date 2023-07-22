@@ -36,7 +36,6 @@ class FlightDetailsViewModel {
                     self.view.flightDetails(response: response)
                 } else {
                     // Show alert
-                    NotificationCenter.default.post(name: NSNotification.Name("nointernet"), object: errorMessage)
                     //  print("error === \(errorMessage ?? "")")
                     self.view.showToast(message: errorMessage ?? "")
                 }

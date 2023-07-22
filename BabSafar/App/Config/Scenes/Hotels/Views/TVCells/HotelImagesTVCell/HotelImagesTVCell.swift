@@ -28,13 +28,14 @@ class HotelImagesTVCell: TableViewCell {
     }
     
     override func updateUI() {
-        self.hotelImagesArray = cellInfo?.data as? [String] ?? []
-        self.hotelImg.image = UIImage(named: "city")
+        hotelImg.sd_setImage(with: URL(string: cellInfo?.image ?? ""), placeholderImage:UIImage(contentsOfFile:"placeholder.png"))
+        imagesCV.reloadData()
     }
     
     func setupUI() {
-        contentView.backgroundColor = .AppBorderColor
-        setupViews(v: holderView, radius: 10, color: .WhiteColor)
+        contentView.backgroundColor = HexColor("#E6E8E7")
+        holderView.addCornerRadiusWithShadow(color: .clear, borderColor: UIColor.lightGray.withAlphaComponent(0.4), cornerRadius: 10)
+        
         hotelImg.layer.cornerRadius = 8
         hotelImg.clipsToBounds = true
         hotelImg.contentMode = .scaleToFill
@@ -42,21 +43,7 @@ class HotelImagesTVCell: TableViewCell {
         setupCV()
     }
     
-    
-    func setupViews(v:UIView,radius:CGFloat,color:UIColor) {
-        v.backgroundColor = color
-        v.layer.cornerRadius = radius
-        v.clipsToBounds = true
-        v.layer.borderWidth = 1
-        v.layer.borderColor = UIColor.lightGray.withAlphaComponent(0.4).cgColor
-    }
-    
-    func setupLabels(lbl:UILabel,text:String,textcolor:UIColor,font:UIFont) {
-        lbl.text = text
-        lbl.textColor = textcolor
-        lbl.font = font
-    }
-    
+ 
     
     func setupCV() {
         let nib = UINib(nibName: "HotelImagesCVCell", bundle: nil)
@@ -84,13 +71,15 @@ class HotelImagesTVCell: TableViewCell {
 
 extension HotelImagesTVCell:UICollectionViewDelegate,UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return hotelImagesArray.count
+        return images.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         var commonCell = UICollectionViewCell()
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? HotelImagesCVCell {
-            cell.hotelImg.image = UIImage(named: hotelImagesArray[indexPath.row])
+            
+            cell.hotelImg.sd_setImage(with: URL(string: images[indexPath.row].img ?? ""), placeholderImage:UIImage(contentsOfFile:"placeholder.png"))
+
             commonCell = cell
         }
         return commonCell
@@ -99,7 +88,8 @@ extension HotelImagesTVCell:UICollectionViewDelegate,UICollectionViewDataSource 
     
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.hotelImg.image = UIImage(named: hotelImagesArray[indexPath.row])
+        self.hotelImg.sd_setImage(with: URL(string: images[indexPath.row].img ?? ""), placeholderImage:UIImage(contentsOfFile:"placeholder.png"))
+        
     }
     
 }

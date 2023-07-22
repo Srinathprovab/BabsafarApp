@@ -14,18 +14,20 @@ class calendarCVCell: JTAppleCell {
     
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var selectedView: UIView!
-    
     @IBOutlet weak var holderView: UIView!
-        
-      override func awakeFromNib() {
+    
+    override func awakeFromNib() {
         super.awakeFromNib()
         updateFont()
-      }
-      
-      func updateFont() {
+    }
+    
+    func updateFont() {
         label.font = UIFont.poppinsMedium(size: 12)
         holderView.backgroundColor = UIColor.white
+        
+        selectedView.layer.borderWidth = 0.5
+        selectedView.layer.borderColor = UIColor.AppBorderColor.cgColor
+        
+    }
     
-      }
-
 }

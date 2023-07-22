@@ -9,7 +9,6 @@ import UIKit
 
 class SelectLanguageTVCell: TableViewCell {
     
-    
     @IBOutlet weak var holderView: UIView!
     @IBOutlet weak var titlelbl: UILabel!
     @IBOutlet weak var subTitlelbl: UILabel!
@@ -29,45 +28,44 @@ class SelectLanguageTVCell: TableViewCell {
     }
     
     
+    
+    
+    override func prepareForReuse() {
+        unselected()
+    }
+    
+    
     override func updateUI() {
+        
         titlelbl.text = cellInfo?.title
         subTitlelbl.text = cellInfo?.subTitle
         langLogoImg.image = UIImage(named: cellInfo?.image ?? "")
         
         subTitlelbl.isHidden = true
         langLogoImg.isHidden = true
-
+        
         if cellInfo?.key == "lang" {
-            
             subTitlelbl.isHidden = true
             langLogoImg.isHidden = false
-            
-            if let lang = defaults.string(forKey: UserDefaultsKeys.APILanguageType) {
-                if lang == titlelbl.text {
-                  //  self.holderView.layer.borderColor = UIColor.AppBtnColor.cgColor
-                }
-            }
-            
-            
         }else {
             subTitlelbl.isHidden = false
             langLogoImg.isHidden = true
-            
-            if let currency = defaults.string(forKey: UserDefaultsKeys.APICurrencyType) {
-                if currency == subTitlelbl.text {
-                   // self.holderView.layer.borderColor = UIColor.AppBtnColor.cgColor
-                }
+        }
+        
+        
+        if let currency = defaults.string(forKey: UserDefaultsKeys.selectedCurrency) {
+            if currency == subTitlelbl.text {
+                selected()
             }
         }
+        
         
     }
     
     func setupUI() {
+        
         holderView.backgroundColor = .WhiteColor
-        holderView.layer.cornerRadius = 4
-        holderView.clipsToBounds = true
-        holderView.layer.borderColor = UIColor.AppBorderColor.cgColor
-        holderView.layer.borderWidth = 1
+        holderView.addCornerRadiusWithShadow(color: .clear, borderColor: .AppBorderColor, cornerRadius: 4)
         
         titlelbl.textColor = .AppLabelColor
         titlelbl.font = UIFont.LatoRegular(size: 16)
@@ -75,6 +73,17 @@ class SelectLanguageTVCell: TableViewCell {
         subTitlelbl.textColor = .AppLabelColor
         subTitlelbl.font = UIFont.LatoRegular(size: 16)
         
+    }
+    
+    
+    
+    func selected() {
+        self.holderView.layer.borderColor = UIColor.AppBtnColor.cgColor
+    }
+    
+    
+    func unselected() {
+        self.holderView.layer.borderColor = UIColor.AppBorderColor.cgColor
     }
     
 }

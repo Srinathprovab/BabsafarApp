@@ -8,7 +8,6 @@
 import Foundation
 
 struct ProfileDetails : Codable {
-    
     let gender : String?
     let first_name : String?
     let last_name : String?
@@ -22,9 +21,9 @@ struct ProfileDetails : Codable {
     let pin_code : String?
     let date_of_birth : String?
     let image : String?
-
+    
     enum CodingKeys: String, CodingKey {
-
+        
         case gender = "gender"
         case first_name = "first_name"
         case last_name = "last_name"
@@ -39,7 +38,7 @@ struct ProfileDetails : Codable {
         case date_of_birth = "date_of_birth"
         case image = "image"
     }
-
+    
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         gender = try values.decodeIfPresent(String.self, forKey: .gender)
@@ -56,5 +55,5 @@ struct ProfileDetails : Codable {
         date_of_birth = try values.decodeIfPresent(String.self, forKey: .date_of_birth)
         image = try values.decodeIfPresent(String.self, forKey: .image)
     }
-
+    
 }

@@ -31,15 +31,18 @@ class SpecialDealsTVCell: TableViewCell {
         // Configure the view for the selected state
     }
     
+    override func updateUI() {
+        specialDealsCV.reloadData()
+    }
+    
+    
     func setupUI() {
         
-        contentView.backgroundColor = .AppBorderColor
-        holderView.backgroundColor = .clear
-        titleLblView.backgroundColor = .WhiteColor
-        dealsHolderView.backgroundColor = .WhiteColor
-        
-        
-        bookingHolderView.backgroundColor = .WhiteColor
+        contentView.backgroundColor = .AppHolderViewColor
+        holderView.backgroundColor = .AppHolderViewColor
+        titleLblView.backgroundColor = .AppHolderViewColor
+        dealsHolderView.backgroundColor = .AppHolderViewColor
+        bookingHolderView.backgroundColor = .AppHolderViewColor
         setuplabels(lbl: titlelbl, text: "Special Deals For You", textcolor: .AppLabelColor, font: .LatoSemibold(size: 20), align: .left)
         
     }
@@ -51,15 +54,13 @@ class SpecialDealsTVCell: TableViewCell {
         specialDealsCV.delegate = self
         specialDealsCV.dataSource = self
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 340, height: 199)
+        layout.itemSize = CGSize(width: 180, height: 200)
         layout.scrollDirection = .horizontal
         layout.minimumInteritemSpacing = 16
         layout.minimumLineSpacing = 16
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         specialDealsCV.collectionViewLayout = layout
-        specialDealsCV.backgroundColor = .clear
-//        specialDealsCV.layer.cornerRadius = 4
-//        specialDealsCV.clipsToBounds = true
+        specialDealsCV.backgroundColor = .AppHolderViewColor
         specialDealsCV.showsHorizontalScrollIndicator = false
     }
     
@@ -69,15 +70,20 @@ class SpecialDealsTVCell: TableViewCell {
 
 extension SpecialDealsTVCell:UICollectionViewDelegate,UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 20
+        return deailcodelist.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         var commonCell = UICollectionViewCell()
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? SpecialDealsCVCell {
-            cell.offerImage.image = UIImage(named: "offer")
-            cell.bookinglbl.text = "First booking international flight  25% off"
-            cell.promoCodelbl.text = "PROMOCODE:FLAT20"
+            
+            
+            let data = deailcodelist[indexPath.row]
+            if data.image_path != "" {
+                cell.offerImage.sd_setImage(with: URL(string: data.topDealImg ?? ""), placeholderImage:UIImage(contentsOfFile:"placeholder.png"))
+            }
+            
+            cell.promoValuelbl.text = data.promo_code
             commonCell = cell
         }
         return commonCell

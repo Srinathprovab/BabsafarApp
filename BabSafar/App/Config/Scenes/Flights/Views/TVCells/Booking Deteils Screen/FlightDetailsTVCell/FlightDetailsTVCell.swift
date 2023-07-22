@@ -86,15 +86,15 @@ extension FlightDetailsTVCell :UITableViewDataSource,UITableViewDelegate {
             cell.selectionStyle = .none
             
             
-            let data = mbdetails?[indexPath.row]
-            cell.fromtimelbl.text = data?.origin?.time
-            cell.fromCityShortlbl.text = data?.origin?.city
-            cell.totimelbl.text = data?.destination?.time
-            cell.toCityShortlbl.text = data?.destination?.city
-            cell.hourslbl.text = data?.duration
-            cell.noStopslbl.text = "no of stops \(String(data?.no_of_stops ?? 0))"
-            cell.airwaysLogoImg.sd_setImage(with: URL(string: data?.operator_image ?? ""), placeholderImage:UIImage(contentsOfFile:"placeholder.png"))
-            cell.titlelbl.text = "\(data?.operator_name ?? "")(\(data?.operator_code ?? ""))"
+//            let data = mbdetails?[indexPath.row]
+//            cell.fromtimelbl.text = data?.origin?.time
+//            cell.fromCityShortlbl.text = data?.origin?.city
+//            cell.totimelbl.text = data?.destination?.time
+//            cell.toCityShortlbl.text = data?.destination?.city
+//            cell.hourslbl.text = data?.duration
+//            cell.noStopslbl.text = "no of stops \(String(data?.no_of_stops ?? 0))"
+//            cell.airwaysLogoImg.sd_setImage(with: URL(string: data?.operator_image ?? ""), placeholderImage:UIImage(contentsOfFile:"placeholder.png"))
+//            cell.titlelbl.text = "\(data?.operator_name ?? "")(\(data?.operator_code ?? ""))"
             
             
             ccell = cell

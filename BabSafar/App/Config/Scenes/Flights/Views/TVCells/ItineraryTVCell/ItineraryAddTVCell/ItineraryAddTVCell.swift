@@ -14,6 +14,8 @@ class ItineraryAddTVCell: TableViewCell {
     @IBOutlet weak var additneraryTV: UITableView!
     @IBOutlet weak var tvHeight: NSLayoutConstraint!
     
+    
+    var depFind = Int()
     var fdetais = [FDFlightDetails]()
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -29,6 +31,7 @@ class ItineraryAddTVCell: TableViewCell {
     
    
     override func updateUI() {
+        depFind = Int(cellInfo?.title ?? "") ?? 0
         fdetais = cellInfo?.moreData as! [FDFlightDetails]
         tvHeight.constant = CGFloat((fdetais.count * 250))
         additneraryTV.reloadData()
@@ -68,7 +71,7 @@ extension ItineraryAddTVCell:UITableViewDelegate,UITableViewDataSource {
             
             let data = fdetais[indexPath.row]
             cell.title1lbl.text = "\(data.operator_name ?? "") (\(data.operator_code ?? "") \(data.flight_number ?? ""))"
-            cell.cityTolbl.text = "\(data.origin?.city ?? "") to \(data.destination?.city ?? "") (\(data.duration ?? ""))"
+            cell.cityTolbl.text = "\(data.origin?.city ?? "") to \(data.destination?.city ?? "")"
             cell.arivalTime.text = "\(data.origin?.time ?? "")"
             cell.arivalDate.text = "\(data.origin?.date ?? "")"
             cell.airportlbl.text = "\(data.origin?.airport_name ?? "")"
@@ -95,8 +98,7 @@ extension ItineraryAddTVCell:UITableViewDelegate,UITableViewDataSource {
                 cell.timeView.isHidden = true
               
             }
-            cell.btnRefund.isHidden = true
-            
+            cell.airwaysImg1.sd_setImage(with: URL(string: data.operator_image ?? ""), placeholderImage:UIImage(contentsOfFile:"placeholder.png"))
             
             c = cell
         }

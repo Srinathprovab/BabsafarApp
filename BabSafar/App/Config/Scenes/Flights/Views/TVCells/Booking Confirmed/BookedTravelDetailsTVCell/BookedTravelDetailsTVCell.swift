@@ -18,7 +18,8 @@ class BookedTravelDetailsTVCell: TableViewCell {
     @IBOutlet weak var adultDetailsTV: UITableView!
     @IBOutlet weak var tvHeight: NSLayoutConstraint!
     
-    var adultNamesArray = ["aaa","bbb"]
+    
+    var Customerdetails = [Customer_details]()
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -33,10 +34,14 @@ class BookedTravelDetailsTVCell: TableViewCell {
     }
     
     
+    
     override func updateUI() {
-        if adultNamesArray.count > 3 {
-            tvHeight.constant = CGFloat(adultNamesArray.count * 35)
+        Customerdetails = cellInfo?.moreData as? [Customer_details] ?? []
+        
+        if Customerdetails.count > 0 {
+            tvHeight.constant = CGFloat(Customerdetails.count * 35)
         }
+        
         
         if cellInfo?.key == "hotel" {
             travellerNamelbl.text = "Guest Name"
@@ -58,9 +63,9 @@ class BookedTravelDetailsTVCell: TableViewCell {
         labelsView.layer.borderColor = UIColor.WhiteColor.cgColor
         // labelsView.addBottomBorderWithColor(color: .SubTitleColor, width: 1)
         ulView.backgroundColor = HexColor("#E6E8E7")
-        setupLabels(lbl: travellerNamelbl, text: "Traveller Name", textcolor: HexColor("#5B5B5B"), font: .LatoRegular(size: 14))
-        setupLabels(lbl: typelbl, text: "Type", textcolor: HexColor("#5B5B5B"), font: .LatoRegular(size: 14))
-        setupLabels(lbl: seatlbl, text: "Seat", textcolor: HexColor("#5B5B5B"), font: .LatoRegular(size: 14))
+        setuplabels(lbl: travellerNamelbl, text: "Traveller Name", textcolor: HexColor("#5B5B5B"), font: .LatoRegular(size: 13), align: .center)
+        setuplabels(lbl: typelbl, text: "Ticket No", textcolor: HexColor("#5B5B5B"), font: .LatoRegular(size: 13), align: .center)
+        setuplabels(lbl: seatlbl, text: "Status", textcolor: HexColor("#5B5B5B"), font: .LatoRegular(size: 13), align: .center)
         
     }
     
@@ -80,27 +85,26 @@ class BookedTravelDetailsTVCell: TableViewCell {
         v.layer.borderColor = UIColor.AppBorderColor.cgColor
     }
     
-    func setupLabels(lbl:UILabel,text:String,textcolor:UIColor,font:UIFont) {
-        lbl.text = text
-        lbl.textColor = textcolor
-        lbl.font = font
-    }
     
 }
 
 
 extension BookedTravelDetailsTVCell:UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return adultNamesArray.count
+        return Customerdetails.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var c = UITableViewCell()
         if let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as? BookedAdultDetailsTVCell {
             cell.selectionStyle = .none
-            cell.travellerNamelbl.text = adultNamesArray[indexPath.row]
-            cell.typelbl.text = "1 Adult"
-            cell.seatlbl.text = "m36"
+            
+            let data = Customerdetails[indexPath.row]
+            cell.travellerNamelbl.text = "\(data.first_name ?? "") \(data.last_name ?? "")"
+            cell.typelbl.text = data.ticket_no ?? ""
+            cell.seatlbl.text = data.status ?? ""
+            
+            
             c = cell
         }
         return c

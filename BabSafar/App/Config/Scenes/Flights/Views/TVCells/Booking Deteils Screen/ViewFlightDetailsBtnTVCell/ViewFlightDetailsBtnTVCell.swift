@@ -34,7 +34,7 @@ class ViewFlightDetailsBtnTVCell: TableViewCell {
     
     func setupUI() {
         btnView.addCornerRadiusWithShadow(color: .clear, borderColor: .AppBorderColor, cornerRadius: 15)
-        btnView.backgroundColor = HexColor("#FCEDFF")
+        btnView.backgroundColor = .yellow
         setuplabels(lbl: titlelbl, text: "View Flights Details", textcolor: .AppLabelColor, font: .LatoRegular(size: 12), align: .center)
         viewBtn.setTitle("", for: .normal)
         viewBtn.addTarget(self, action: #selector(didTapOnViewFlightDetailsButton(_:)), for: .touchUpInside)

@@ -9,8 +9,10 @@ import UIKit
 
 class YourPrivacyVC: BaseTableVC {
     
-    @IBOutlet weak var tvheight: NSLayoutConstraint!
-    
+    @IBOutlet weak var closeBtn: UIButton!
+    @IBAction func didTapOnCloseBtn(_ sender: Any) {
+        dismiss(animated: true)
+    }
     var tablerow = [TableRow]()
     var key1 = "privacy"
     var str = "These are used for different purposes. By clicking on 'All cookies' you agree with our Privacy&cookies and we receive the non-functional cookies. Via these non-functional cookies BABsafar  can approach you on another site based on the pages you have visited."
@@ -20,12 +22,29 @@ class YourPrivacyVC: BaseTableVC {
         let vc = storyboard.instantiateViewController(withIdentifier: self.className()) as? YourPrivacyVC
         return vc
     }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("nointernet"), object: nil)
+    }
+    
+    //MARK: - nointernet
+    @objc func nointernet() {
+        guard let vc = NoInternetConnectionVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .overCurrentContext
+        self.present(vc, animated: true)
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
         self.view.backgroundColor = .black.withAlphaComponent(0.7)
-        commonTableView.registerTVCells(["ButtonTVCell","LabelTVCell","EmptyTVCell","YourPrivacyTVCell"])
+        commonTableView.registerTVCells(["ButtonTVCell",
+                                         "LabelTVCell",
+                                         "EmptyTVCell",
+                                         "YourPrivacyTVCell"])
         setupTV()
     }
     

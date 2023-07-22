@@ -36,12 +36,9 @@ class RadioButtonTVCell: TableViewCell {
     }
     
     func setupUI() {
+        
         holderView.backgroundColor = .WhiteColor
-        
-        titlelbl.textColor = .AppLabelColor
-        titlelbl.textAlignment = .left
-        titlelbl.font = UIFont.OpenSansMedium(size: 18)
-        
+        setuplabels(lbl: titlelbl, text: "", textcolor: .AppLabelColor, font: .OpenSansMedium(size: 14), align: .left)
         radioImg.image = UIImage(named: "radioUnselected")
     }
     

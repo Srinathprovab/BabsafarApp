@@ -46,6 +46,11 @@ class RoomsTVcell: TableViewCell {
     }
     
     
+    override func updateUI() {
+        roomDetailsTV.reloadData()
+    }
+    
+    
     func setupUI() {
         
         setupViews(v: holderView, radius: 0, color: .WhiteColor)
@@ -60,9 +65,9 @@ class RoomsTVcell: TableViewCell {
         hotelsDetailsUL.backgroundColor = .WhiteColor
         amenitiesUL.backgroundColor = .WhiteColor
         
-        setupLabels(lbl: roomslbl, text: "Rooms", textcolor: .AppTabSelectColor, font: .LatoRegular(size: 14))
-        setupLabels(lbl: hotelsDetailslbl, text: "Hotels Details", textcolor: .AppLabelColor.withAlphaComponent(0.5), font: .LatoRegular(size: 14))
-        setupLabels(lbl: amenitieslbl, text: "Amenities", textcolor: .AppLabelColor.withAlphaComponent(0.5), font: .LatoRegular(size: 14))
+        setuplabels(lbl: roomslbl, text: "Rooms", textcolor: .AppTabSelectColor, font: .LatoRegular(size: 14), align: .center)
+        setuplabels(lbl: hotelsDetailslbl, text: "Hotels Details", textcolor: .AppLabelColor.withAlphaComponent(0.5), font: .LatoRegular(size: 14), align: .center)
+        setuplabels(lbl: amenitieslbl, text: "Amenities", textcolor: .AppLabelColor.withAlphaComponent(0.5), font: .LatoRegular(size: 14), align: .center)
         
         roomsBtn.setTitle("", for: .normal)
         hotelsDetailsBtn.setTitle("", for: .normal)
@@ -79,11 +84,6 @@ class RoomsTVcell: TableViewCell {
         v.layer.borderColor = UIColor.lightGray.withAlphaComponent(0.4).cgColor
     }
     
-    func setupLabels(lbl:UILabel,text:String,textcolor:UIColor,font:UIFont) {
-        lbl.text = text
-        lbl.textColor = textcolor
-        lbl.font = font
-    }
     
     func setuTV() {
         roomDetailsTV.register(UINib(nibName: "RoomDetailsTVCell", bundle: nil), forCellReuseIdentifier: "rooms")
@@ -91,9 +91,9 @@ class RoomsTVcell: TableViewCell {
         roomDetailsTV.register(UINib(nibName: "TitleLabelTVCell", bundle: nil), forCellReuseIdentifier: "cell2")
         roomDetailsTV.register(UINib(nibName: "TitleLabelTVCell", bundle: nil), forCellReuseIdentifier: "cell3")
         roomDetailsTV.register(UINib(nibName: "AmenitiesTVCell", bundle: nil), forCellReuseIdentifier: "amenities")
-
-
-
+        
+        
+        
         roomDetailsTV.delegate = self
         roomDetailsTV.dataSource = self
         roomDetailsTV.tableFooterView = UIView()
@@ -122,6 +122,7 @@ class RoomsTVcell: TableViewCell {
         roomsUL.backgroundColor = .WhiteColor
         amenitieslbl.textColor = .AppLabelColor.withAlphaComponent(0.5)
         amenitiesUL.backgroundColor = .WhiteColor
+        
         delegate?.didTapOnHotelsDetailsBtn(cell:self)
     }
     
@@ -133,6 +134,7 @@ class RoomsTVcell: TableViewCell {
         roomsUL.backgroundColor = .WhiteColor
         hotelsDetailslbl.textColor = .AppLabelColor.withAlphaComponent(0.5)
         hotelsDetailsUL.backgroundColor = .WhiteColor
+        
         delegate?.didTapOnAmenitiesBtn(cell:self)
     }
     
@@ -140,11 +142,25 @@ class RoomsTVcell: TableViewCell {
 
 
 extension RoomsTVcell: UITableViewDataSource ,UITableViewDelegate {
+    
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        if self.key == "rooms" {
+            return roomsDetails.count
+        }else if self.key == "hotels details"{
+            return formatDesc.count
+        }else {
+            return 1
+        }
+           
+        
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if self.key == "rooms" {
-            return roomArray.count
+            return roomsDetails[section].count
         }else if self.key == "hotels details"{
-            return 3
+            return formatDesc.count
         }else {
             return 1
         }
@@ -157,41 +173,51 @@ extension RoomsTVcell: UITableViewDataSource ,UITableViewDelegate {
         if self.key == "rooms" {
             if let cell = tableView.dequeueReusableCell(withIdentifier: "rooms") as? RoomDetailsTVCell {
                 cell.selectionStyle = .none
-                cell.roomTypelbl.text = roomArray[indexPath.row]
+                
+                
+                if indexPath.section < roomsDetails.count && indexPath.row < roomsDetails[indexPath.section].count {
+                    
+                    let section = indexPath.section
+                    let row = indexPath.row
+                    let data = roomsDetails[section][row]
+                    
+                    cell.roomTypelbl.text = data.name ?? ""
+                    cell.adultslbl.text = "\(data.adults ?? 0) Adults"
+                    cell.noofRoomslbl.text = "No Of Rooms :\(data.rooms ?? 0) "
+                    cell.kwdlbl.text = "\(data.currency ?? ""):\(data.net ?? "")"
+                    cell.roomImg.sd_setImage(with: URL(string: data.image ?? "" ), placeholderImage:UIImage(contentsOfFile:"placeholder.png"))
+                    if data.refund == true {
+                        cell.refundableView.isHidden = false
+                    }
+                    
+                    cell.ratekey = data.rateKey ?? ""
+                    
+                    
+                } else {
+                    print("Index out of range error: indexPath = \(indexPath)")
+                }
+                
+                
                 ccell = cell
             }
         }else if self.key == "hotels details"{
-            if indexPath.row == 0 {
-                if let cell = tableView.dequeueReusableCell(withIdentifier: "cell1") as? TitleLabelTVCell {
-                    cell.selectionStyle = .none
-                    cell.hotelNamelbl.text = "Location"
-                    cell.locationlbl.text = "This urban hotel is located in Dubai, about a quarter mile from the beach. The nearest airport is Dubai (DXB), situated approximately 9 miles away."
-                    cell.holderView.backgroundColor = .WhiteColor
-                    cell.setupHotelDetails()
-                    ccell = cell
-                }
-            }else if indexPath.row == 1 {
-                if let cell = tableView.dequeueReusableCell(withIdentifier: "cell2") as? TitleLabelTVCell {
-                    cell.selectionStyle = .none
-                    cell.hotelNamelbl.text = "Rooms"
-                    cell.locationlbl.text = "Rooms feature a living area and a bathroom. Air conditioning ensures comfortable temperatures. Many units feature a sea view, which creates a particularly lovely ambience. All rooms are carpeted and include a king-size bed. Separate bedrooms are available. Children's beds can be requested for younger guests. A safe, a minibar and a desk are also available. A refrigerator, a mini fridge and a tea/coffee station are standard features. A telephone, s."
-                    cell.setupHotelDetails()
-                    ccell = cell
-                }
-            }else {
-                if let cell = tableView.dequeueReusableCell(withIdentifier: "cell3") as? TitleLabelTVCell {
-                    cell.selectionStyle = .none
-                    cell.hotelNamelbl.text = "Payment"
-                    cell.locationlbl.text = "The hotel accepts the following credit cards: VISA and MasterCard."
-                    cell.setupHotelDetails()
-                    ccell = cell
-                }
+            if let cell = tableView.dequeueReusableCell(withIdentifier: "cell3") as? TitleLabelTVCell {
+                cell.selectionStyle = .none
+                cell.hotelNamelbl.attributedText = formatDesc[indexPath.row].heading?.htmlToAttributedString
+                cell.locationlbl.attributedText = formatDesc[indexPath.row].content?.htmlToAttributedString
+                cell.setupHotelDetails()
+                ccell = cell
             }
             
         }else {
             if let cell = tableView.dequeueReusableCell(withIdentifier: "amenities") as? AmenitiesTVCell {
                 cell.selectionStyle = .none
-                cell.amenitiesCV.reloadData()
+                if formatAmeArray.count == 0 {
+                    cell.amenitiesCV.setEmptyMessage("No Data Found")
+                }else {
+                    cell.amenitiesCV.reloadData()
+                }
+                
                 ccell = cell
             }
         }
@@ -201,9 +227,20 @@ extension RoomsTVcell: UITableViewDataSource ,UITableViewDelegate {
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        rateKeyArray.removeAll()
         if self.key == "rooms" {
             if let cell = tableView.cellForRow(at: indexPath) as? RoomDetailsTVCell {
+                
+                if indexPath.section < roomsDetails.count && indexPath.row < roomsDetails[indexPath.section].count {
+                    rateKeyArray.append(cell.ratekey)
+                } else {
+                    print("Index out of range")
+                }
+                
+                print(rateKeyArray)
                 cell.radioImg.image = UIImage(named: "radioSelected")
+                NotificationCenter.default.post(name: NSNotification.Name("showBookNowBtn"), object: nil)
+                
             }
         }
         

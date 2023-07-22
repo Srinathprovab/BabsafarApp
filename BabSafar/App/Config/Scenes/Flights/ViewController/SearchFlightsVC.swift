@@ -7,8 +7,11 @@
 
 import UIKit
 import Alamofire
+import SwiftyJSON
+import CoreData
 
-class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
+class SearchFlightsVC: BaseTableVC {
+    
     
     
     @IBOutlet weak var holderView: UIView!
@@ -24,6 +27,7 @@ class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
     @IBOutlet weak var multiCitylbl: UILabel!
     
     
+    //  @IBOutlet weak var frontView: UIView!
     static var newInstance: SearchFlightsVC? {
         let storyboard = UIStoryboard(name: Storyboard.Main.name,
                                       bundle: nil)
@@ -41,28 +45,71 @@ class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
     var c2 = String()
     var checkBoxArray = ["Return journey from another location"," Direct flights only"]
     var checkBool = true
-    var checkBool1 = true
+    var directFlightBool = true
     var selectArray = [String]()
     var selectArray1 = [String]()
     var moreoptionBool = true
-   
+    var calDepDate: String!
+    var calRetDate: String!
+    var fromdataArray = [[String:Any]]()
     
     
+    
+    var isfromVc = String()
     override func viewWillAppear(_ animated: Bool) {
-        //  CallShowCityListAPI(str: "")
+        if isfromVc == "dashboard" {
+            //  deselectAllInputs()
+        }
         
+        //  frontView.isHidden = true
         NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("nointernet"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadTV), name: Notification.Name("reloadTV"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reload(notification:)), name: NSNotification.Name("reload"), object: nil)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(fromSelectCityVC), name: NSNotification.Name("fromSelectCityVC"), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(topcity(notification:)), name: Notification.Name("topcity"), object: nil)
         
         setupIntialUI()
         
     }
     
     
-    func setupIntialUI(){
-        NotificationCenter.default.addObserver(self, selector: #selector(reload(notification:)), name: NSNotification.Name("reload"), object: nil)
+    func deselectAllInputs() {
+        defaults.set("Select City", forKey: UserDefaultsKeys.fromCity)
+        defaults.set("Select City", forKey: UserDefaultsKeys.toCity)
+        defaults.set("+ Add Departure Date", forKey: UserDefaultsKeys.calDepDate)
         
+        defaults.set("Select City", forKey: UserDefaultsKeys.rfromCity)
+        defaults.set("Select City", forKey: UserDefaultsKeys.rtoCity)
+        defaults.set("+ Add Departure Date", forKey: UserDefaultsKeys.rcalDepDate)
+        defaults.set("+ Add Return Date", forKey: UserDefaultsKeys.rcalRetDate)
+        
+        defaults.set("Economy", forKey: UserDefaultsKeys.selectClass)
+        defaults.set("1", forKey: UserDefaultsKeys.adultCount)
+        defaults.set("0", forKey: UserDefaultsKeys.childCount)
+        defaults.set("0", forKey: UserDefaultsKeys.infantsCount)
+        let totaltraverlers = "\(defaults.string(forKey: UserDefaultsKeys.adultCount) ?? "1") Adults | \(defaults.string(forKey: UserDefaultsKeys.childCount) ?? "0") Children | \(defaults.string(forKey: UserDefaultsKeys.infantsCount) ?? "") Infants | \(defaults.string(forKey: UserDefaultsKeys.selectClass) ?? "")"
+        defaults.set(totaltraverlers, forKey: UserDefaultsKeys.travellerDetails)
+        
+        defaults.set("Economy", forKey: UserDefaultsKeys.rselectClass)
+        defaults.set("1", forKey: UserDefaultsKeys.radultCount)
+        defaults.set("0", forKey: UserDefaultsKeys.rchildCount)
+        defaults.set("0", forKey: UserDefaultsKeys.rinfantsCount)
+        let totaltraverlers1 = "\(defaults.string(forKey: UserDefaultsKeys.radultCount) ?? "1") Adults | \(defaults.string(forKey: UserDefaultsKeys.rchildCount) ?? "") Children | \(defaults.string(forKey: UserDefaultsKeys.rinfantsCount) ?? "") Infants |\(defaults.string(forKey: UserDefaultsKeys.rselectClass) ?? "")"
+        defaults.set(totaltraverlers1, forKey: UserDefaultsKeys.rtravellerDetails)
+        
+        deleteAllRecords(str: "1")
+        deleteAllRecords(str: "2")
+        deleteAllRecords(str: "3")
+    }
+    
+    @objc func fromSelectCityVC() {
+        keyStr = "select"
+    }
+    
+    
+    func setupIntialUI(){
         
         if keyStr == "select"  {
             if let journeyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
@@ -100,40 +147,44 @@ class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         // Do any additional setup after loading the view.
         setupUI()
         setupTV()
-        viewModel = FlightListViewModel(self)
+        //  viewModel = FlightListViewModel(self)
+        
     }
     
     func setupUI() {
         
+        if screenHeight > 835 {
+            // commonTableView.isScrollEnabled = false
+        }
         view.backgroundColor = .white
-        holderView.backgroundColor = .clear
-        commonTableView.backgroundColor = .clear
-        
+        holderView.backgroundColor = .AppHolderViewColor
         leftArrowImg.image = UIImage(named: "leftarrow")
         setupViews(v: backBtnView, radius: 20, color: .WhiteColor.withAlphaComponent(0.2))
         setupViews(v: buttonsHolderView, radius: 25, color: .WhiteColor)
-        setupViews(v: oneWayView, radius: 18, color: .AppTabSelectColor)
-        setupViews(v: roundTripView, radius: 18, color: .AppHolderViewColor)
-        setupViews(v: multiCityView, radius: 18, color: .AppHolderViewColor)
-        
-        setupLabels(lbl:titlelbl,text: "Search Flights", textcolor: .WhiteColor, font: .LatoMedium(size: 20))
-        setupLabels(lbl:oneWaylbl,text: "One Way", textcolor: .WhiteColor, font: .LatoRegular(size: 14))
-        setupLabels(lbl:roundTriplbl,text: "Round Trip", textcolor: .AppLabelColor, font: .LatoRegular(size: 14))
-        setupLabels(lbl:multiCitylbl,text: "Multi City", textcolor: .AppLabelColor, font: .LatoRegular(size: 14))
-        
-        commonTableView.registerTVCells(["SearchFlightsTVCell","EmptyTVCell","TopAirlinesTVCell","MultiCityTVCell","CheckBoxTVCell","ButtonTVCell","checkOptionsTVCell"])
+        setupViews(v: oneWayView, radius: 18, color: .WhiteColor)
+        setupViews(v: roundTripView, radius: 18, color: .WhiteColor)
+        setupViews(v: multiCityView, radius: 18, color: .WhiteColor)
+        //   multiCityView.isHidden = true
+        setuplabels(lbl:titlelbl,text: "Search Flights", textcolor: .WhiteColor, font: .LatoMedium(size: 20), align: .center)
+        setuplabels(lbl:oneWaylbl,text: "One Way", textcolor: .WhiteColor, font: .LatoRegular(size: 14), align: .center)
+        setuplabels(lbl:roundTriplbl,text: "Round Trip", textcolor: .AppLabelColor, font: .LatoRegular(size: 14), align: .center)
+        setuplabels(lbl:multiCitylbl,text: "Multi City", textcolor: .AppLabelColor, font: .LatoRegular(size: 14), align: .center)
+        commonTableView.addCornerRadiusWithShadow(color: .AppBorderColor, borderColor: .clear, cornerRadius: 0)
+        commonTableView.layer.cornerRadius = 10
+        commonTableView.clipsToBounds = true
+        commonTableView.backgroundColor = .clear
+        commonTableView.registerTVCells(["SearchFlightsTVCell","EmptyTVCell","TopCityTVCell","MultiCityTVCell","CheckBoxTVCell","ButtonTVCell","checkOptionsTVCell"])
         
     }
     
     func setupTV() {
         tablerow.removeAll()
         tablerow.append(TableRow(cellType:.SearchFlightsTVCell))
-        tablerow.append(TableRow(title:"Top airlines",cellType:.TopAirlinesTVCell))
-        tablerow.append(TableRow(height:50,cellType:.EmptyTVCell))
+        tablerow.append(TableRow(title:"Top International Destinations",key: "flights",cellType:.TopCityTVCell))
+        tablerow.append(TableRow(height:80,bgColor: .AppHolderViewColor,cellType:.EmptyTVCell))
         commonTVData = tablerow
         commonTableView.reloadData()
     }
@@ -142,18 +193,13 @@ class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
     func setupMultiCityTV() {
         tablerow.removeAll()
         
-        commonTableView.layer.borderWidth = 1
-        commonTableView.layer.borderColor = UIColor.AppBorderColor.cgColor
-        commonTableView.layer.cornerRadius = 5
-        commonTableView.clipsToBounds = true
-        
         tablerow.append(TableRow(cellType:.MultiCityTVCell))
         tablerow.append(TableRow(title:"Return Journey From Another Location",key: "multicity",cellType:.checkOptionsTVCell))
         tablerow.append(TableRow(title:"Direct Flights Only",key: "multicity",cellType:.checkOptionsTVCell))
-        tablerow.append(TableRow(title:"Search Flights",cellType:.ButtonTVCell))
+        tablerow.append(TableRow(title:"Search Flights",key: "btn",bgColor:.AppBtnColor,cellType:.ButtonTVCell))
+        tablerow.append(TableRow(height:20,cellType:.EmptyTVCell))
+        //  tablerow.append(TableRow(title:"Top International Destinations",key: "flights",cellType:.TopCityTVCell))
         
-        //        tablerow.append(TableRow(title:"Top airlines",cellType:.TopAirlinesTVCell))
-        //        tablerow.append(TableRow(height:50,cellType:.EmptyTVCell))
         
         commonTVData = tablerow
         commonTableView.reloadData()
@@ -167,14 +213,10 @@ class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
         v.layer.borderColor = UIColor.AppBorderColor.cgColor
     }
     
-    func setupLabels(lbl:UILabel,text:String,textcolor:UIColor,font:UIFont) {
-        lbl.text = text
-        lbl.textColor = textcolor
-        lbl.font = font
-    }
     
     
     @IBAction func backBtnAction(_ sender: Any) {
+        callapibool = true
         guard let vc = DashBoaardTabbarVC.newInstance.self else {return}
         vc.selectedIndex = 0
         vc.modalPresentationStyle = .fullScreen
@@ -197,36 +239,32 @@ class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
     
     
     func setupOneWay(){
-        
         defaults.set("oneway", forKey: UserDefaultsKeys.journeyType)
-        
         oneWayView.backgroundColor = .AppTabSelectColor
         oneWaylbl.textColor = .WhiteColor
-        roundTripView.backgroundColor = .AppHolderViewColor
+        roundTripView.backgroundColor = .WhiteColor
         roundTriplbl.textColor = .AppLabelColor
-        multiCityView.backgroundColor = .AppHolderViewColor
+        multiCityView.backgroundColor = .WhiteColor
         multiCitylbl.textColor = .AppLabelColor
         setupTV()
     }
     
     func setupRoundTrip(){
-        
         defaults.set("circle", forKey: UserDefaultsKeys.journeyType)
-        oneWayView.backgroundColor = .AppHolderViewColor
+        oneWayView.backgroundColor = .WhiteColor
         oneWaylbl.textColor = .AppLabelColor
         roundTripView.backgroundColor = .AppTabSelectColor
         roundTriplbl.textColor = .WhiteColor
-        multiCityView.backgroundColor = .AppHolderViewColor
+        multiCityView.backgroundColor = .WhiteColor
         multiCitylbl.textColor = .AppLabelColor
         setupTV()
     }
     
     func setupMulticity(){
-        
         defaults.set("multicity", forKey: UserDefaultsKeys.journeyType)
-        oneWayView.backgroundColor = .AppHolderViewColor
+        oneWayView.backgroundColor = .WhiteColor
         oneWaylbl.textColor = .AppLabelColor
-        roundTripView.backgroundColor = .AppHolderViewColor
+        roundTripView.backgroundColor = .WhiteColor
         roundTriplbl.textColor = .AppLabelColor
         multiCityView.backgroundColor = .AppTabSelectColor
         multiCitylbl.textColor = .WhiteColor
@@ -234,48 +272,16 @@ class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
     }
     
     
-    override func didTapOnSwipeCityBtnAction(cell: SearchFlightsTVCell) {
-        print("didTapOnSwipeCityBtnAction")
-        c1 = cell.fromCitylbl.text ?? ""
-        c2 = cell.toCitylbl.text ?? ""
-        cell.fromCitylbl.text = c2
-        cell.toCitylbl.text = c1
-        
-        
-        
-        
-        if let selectedJType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
-            if selectedJType == "circle" {
-                
-                defaults.set(cell.fromCitylbl.text ?? "", forKey: UserDefaultsKeys.rfromCity)
-                defaults.set(cell.toCitylbl.text ?? "", forKey: UserDefaultsKeys.rtoCity)
-                
-                let fromairport = defaults.string(forKey: UserDefaultsKeys.rfromairport)
-                let toairport = defaults.string(forKey: UserDefaultsKeys.rtoairport)
-                
-                defaults.set(toairport, forKey: UserDefaultsKeys.rfromairport)
-                defaults.set(fromairport, forKey: UserDefaultsKeys.rtoairport)
-                
-            }else {
-                defaults.set(cell.fromCitylbl.text ?? "", forKey: UserDefaultsKeys.fromCity)
-                defaults.set(cell.toCitylbl.text ?? "", forKey: UserDefaultsKeys.toCity)
-                
-                let fromairport = defaults.string(forKey: UserDefaultsKeys.fromairport)
-                let toairport = defaults.string(forKey: UserDefaultsKeys.toairport)
-                
-                defaults.set(toairport, forKey: UserDefaultsKeys.fromairport)
-                defaults.set(fromairport, forKey: UserDefaultsKeys.toairport)
-            }
-            
-        }
-        
-        
-        
+    override func didTapOnReturnToOnewayBtnAction(cell: SearchFlightsTVCell){
+        setupRoundTrip()
+    }
+    
+    override func didTapOnCloseReturnView(cell: SearchFlightsTVCell){
+        setupOneWay()
     }
     
     override func didTapOnDepartureBtnAction(cell: SearchFlightsTVCell) {
         gotoCalenderVC(key: "dep", titleStr: "Departure Date")
-        
     }
     
     override func didTapOnReturnBtnAction(cell: SearchFlightsTVCell) {
@@ -283,13 +289,12 @@ class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
     }
     
     override func didTapOnFromCityBtnAction(cell: SearchFlightsTVCell) {
-        gotoSelectFromCityVC(titleStr: "From")
+        gotoSelectCityVC(str: "From", tokey: "Tooo")
     }
     
     override func didTapOnToCityBtnAction(cell: SearchFlightsTVCell){
-        gotoSelectFromCityVC(titleStr: "To")
+        gotoSelectCityVC(str: "To", tokey: "frommm")
     }
-    
     
     override func addEconomyBtnAction(cell: SearchFlightsTVCell) {
         gotoTravellerEconomyVC(str: "traveller")
@@ -308,20 +313,24 @@ class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
     }
     
     
-    func gotoSelectFromCityVC(titleStr:String) {
+    
+    func gotoSelectCityVC(str:String,tokey:String) {
         guard let vc = SelectFromCityVC.newInstance.self else {return}
-        vc.modalPresentationStyle = .overCurrentContext
-        vc.titleStr = titleStr
+        vc.modalPresentationStyle = .fullScreen
+        vc.titleStr = str
+        vc.keyStr = "flight"
+        vc.tokey = tokey
         self.present(vc, animated: true)
     }
     
     
     func gotoCalenderVC(key:String,titleStr:String) {
         dateSelectKey = key
-        guard let vc = CalenderVC.newInstance.self else {return}
-        vc.modalPresentationStyle = .fullScreen
+        guard let vc = Calvc.newInstance.self else {return}
+        vc.modalPresentationStyle = .overCurrentContext
         vc.titleStr = titleStr
-        self.present(vc, animated: true)
+        callapibool = true
+        self.present(vc, animated: false)
     }
     
     override func moreOptionBtnAction(cell: SearchFlightsTVCell){
@@ -342,7 +351,6 @@ class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
     
     
     override func didTapOnReturnJurneyRadioButton(cell: SearchFlightsTVCell) {
-        
         if checkBool == true {
             selectArray.append("Return journey from another location")
             cell.radioImg1.image = UIImage(named: "check")
@@ -354,38 +362,34 @@ class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
         }
         
         defaults.set(selectArray.joined(separator:","), forKey: UserDefaultsKeys.select)
-        
     }
     
     
     override func didTapOnDirectFlightRadioButton(cell: SearchFlightsTVCell) {
-        
-        if checkBool1 == true {
+        if directFlightBool == true {
             selectArray.append("Direct flights only")
             cell.radioImg2.image = UIImage(named: "check")
-            checkBool1 = false
+            directFlightBool = false
         }else {
             selectArray.remove(at: selectArray.firstIndex(of: "Direct flights only") as Any as! Int)
             cell.radioImg2.image = UIImage(named: "uncheck")
-            checkBool1 = true
+            directFlightBool = true
         }
         
         defaults.set(selectArray.joined(separator:","), forKey: UserDefaultsKeys.select)
     }
     
     override func didTapOnFromCityBtn(cell: MultiCityTVCell) {
-        gotoSelectFromCityVC(titleStr: "From")
+        gotoSelectCityVC(str: "From", tokey: "Tooo")
     }
     
     override func didTapOnToCityBtn(cell: MultiCityTVCell) {
-        gotoSelectFromCityVC(titleStr: "To")
+        gotoSelectCityVC(str: "To", tokey: "frommm")
     }
     
     override func didTapOnDateBtn(cell: MultiCityTVCell) {
         gotoCalenderVC(key: "dep", titleStr: "Departure Date")
     }
-    
-    
     
     override func addTraverllersBtnAction(cell: SearchFlightsTVCell){
         gotoTravellerEconomyVC(str: "traveller")
@@ -432,187 +436,341 @@ class SearchFlightsVC: BaseTableVC,FlightListModelProtocal {
     }
     
     
-    
-    
     override func didTapOnSearchFlightBtnAction(cell: SearchFlightsTVCell) {
         payload.removeAll()
+        loderBool = true
+        
         
         if let journeyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
             if journeyType == "oneway" {
                 
-                if defaults.string(forKey:UserDefaultsKeys.fromCity) == nil {
-                    showToast(message: "Please Select From City")
-                }else if defaults.string(forKey:UserDefaultsKeys.toCity) == nil {
-                    showToast(message: "Please Select To City")
-                }else if defaults.string(forKey:UserDefaultsKeys.calDepDate) == nil {
-                    showToast(message: "Please Select Departure Date")
-                }else if defaults.string(forKey:UserDefaultsKeys.travellerDetails) == nil {
-                    showToast(message: "Add Traveller")
-                }else{
-                    
-                    BASE_URL = "https://provabdevelopment.com/babsafar/mobile_webservices/mobile/index.php/general/"
-                    payload["trip_type"] = defaults.string(forKey:UserDefaultsKeys.journeyType)
-                    payload["adult"] = defaults.string(forKey:UserDefaultsKeys.adultCount)
-                    payload["child"] = defaults.string(forKey:UserDefaultsKeys.childCount)
-                    payload["infant"] = defaults.string(forKey:UserDefaultsKeys.infantsCount)
-                    payload["v_class"] = defaults.string(forKey:UserDefaultsKeys.selectClass)
-                    payload["sector_type"] = "international"
-                    payload["from"] = defaults.string(forKey:UserDefaultsKeys.fromCity)
-                    payload["from_loc_id"] = defaults.string(forKey:UserDefaultsKeys.fromlocid)
-                    payload["to"] = defaults.string(forKey:UserDefaultsKeys.toCity)
-                    payload["to_loc_id"] = defaults.string(forKey:UserDefaultsKeys.tolocid)
-                    payload["depature"] = defaults.string(forKey:UserDefaultsKeys.calDepDate)
-                    payload["return"] = ""
-                    payload["out_jrn"] = "All Times"
-                    payload["ret_jrn"] = "All Times"
-                    payload["carrier"] = ""
-                    payload["psscarrier"] = "ALL"
-                    payload["search_flight"] = "Search"
-                    payload["user_id"] = defaults.string(forKey:UserDefaultsKeys.userid) ?? "0"
-                    
-                    viewModel?.CallSearchFlightAPI(dictParam: payload)
-                    
+                payload["trip_type"] = defaults.string(forKey:UserDefaultsKeys.journeyType)
+                payload["adult"] = defaults.string(forKey:UserDefaultsKeys.adultCount)
+                payload["child"] = defaults.string(forKey:UserDefaultsKeys.childCount)
+                payload["infant"] = defaults.string(forKey:UserDefaultsKeys.infantsCount)
+                payload["v_class"] = defaults.string(forKey:UserDefaultsKeys.selectClass)
+                payload["sector_type"] = "international"
+                payload["from"] = defaults.string(forKey:UserDefaultsKeys.fromCity)
+                payload["from_loc_id"] = defaults.string(forKey:UserDefaultsKeys.fromlocid)
+                payload["to"] = defaults.string(forKey:UserDefaultsKeys.toCity)
+                payload["to_loc_id"] = defaults.string(forKey:UserDefaultsKeys.tolocid)
+                payload["depature"] = defaults.string(forKey:UserDefaultsKeys.calDepDate)
+                payload["return"] = ""
+                payload["out_jrn"] = "All Times"
+                payload["ret_jrn"] = "All Times"
+                payload["carrier"] = ""
+                payload["psscarrier"] = "ALL"
+                payload["search_flight"] = "Search"
+                payload["user_id"] = defaults.string(forKey:UserDefaultsKeys.userid) ?? "0"
+                payload["currency"] = defaults.string(forKey:UserDefaultsKeys.selectedCurrency) ?? "KWD"
+                
+                if directFlightBool == false {
+                    payload["direct_flight"] = "on"
                 }
                 
-            }else if journeyType == "circle"{
                 
-                
-                if defaults.string(forKey:UserDefaultsKeys.rfromCity) == nil {
+                if defaults.string(forKey:UserDefaultsKeys.fromCity) == "Select City" || defaults.string(forKey:UserDefaultsKeys.fromCity) == nil{
                     showToast(message: "Please Select From City")
-                }else if defaults.string(forKey:UserDefaultsKeys.rtoCity) == nil {
+                }else if defaults.string(forKey:UserDefaultsKeys.toCity) == "Select City" || defaults.string(forKey:UserDefaultsKeys.toCity) == nil{
                     showToast(message: "Please Select To City")
-                }else if defaults.string(forKey:UserDefaultsKeys.rcalDepDate) == nil {
+                }else if defaults.string(forKey:UserDefaultsKeys.toCity) == defaults.string(forKey:UserDefaultsKeys.fromCity) {
+                    showToast(message: "Please Select Different Citys")
+                }else if defaults.string(forKey:UserDefaultsKeys.calDepDate) == "+ Add Departure Date" || defaults.string(forKey:UserDefaultsKeys.calDepDate) == nil{
                     showToast(message: "Please Select Departure Date")
-                }else if defaults.string(forKey:UserDefaultsKeys.rcalRetDate) == nil {
-                    showToast(message: "Please Select Return Date")
-                }else if defaults.string(forKey:UserDefaultsKeys.rtravellerDetails) == nil {
-                    showToast(message: "Add Traveller")
-                }else{
-                    
-                    BASE_URL = "https://provabdevelopment.com/babsafar/mobile_webservices/mobile/index.php/general/"
-                    payload["trip_type"] = defaults.string(forKey:UserDefaultsKeys.journeyType)
-                    payload["adult"] = defaults.string(forKey:UserDefaultsKeys.radultCount)
-                    payload["child"] = defaults.string(forKey:UserDefaultsKeys.rchildCount)
-                    payload["infant"] = defaults.string(forKey:UserDefaultsKeys.rinfantsCount)
-                    payload["v_class"] = defaults.string(forKey:UserDefaultsKeys.rselectClass)
-                    payload["sector_type"] = "international"
-                    payload["from"] = defaults.string(forKey:UserDefaultsKeys.rfromCity)
-                    payload["from_loc_id"] = defaults.string(forKey:UserDefaultsKeys.rfromlocid)
-                    payload["to"] = defaults.string(forKey:UserDefaultsKeys.rtoCity)
-                    payload["to_loc_id"] = defaults.string(forKey:UserDefaultsKeys.rtolocid)
-                    payload["depature"] = defaults.string(forKey:UserDefaultsKeys.rcalDepDate)
-                    payload["return"] = defaults.string(forKey:UserDefaultsKeys.rcalRetDate)
-                    payload["out_jrn"] = "All Times"
-                    payload["ret_jrn"] = "All Times"
-                    payload["carrier"] = ""
-                    payload["psscarrier"] = "ALL"
-                    payload["search_flight"] = "Search"
-                    payload["user_id"] = defaults.string(forKey:UserDefaultsKeys.userid) ?? "0"
-                    
-                    viewModel?.CallRoundTRipSearchFlightAPI(dictParam: payload)
-                    
                 }
-                
+                else if defaults.string(forKey:UserDefaultsKeys.travellerDetails) == "Add Details" {
+                    showToast(message: "Add Traveller")
+                }else if defaults.string(forKey:UserDefaultsKeys.selectClass) == "Add Details" {
+                    showToast(message: "Add Class")
+                }else if checkDepartureAndReturnDates1(payload, p1: "depature") == false {
+                    showToast(message: "Invalid Date")
+                }else{
+                    gotoSearchFlightResultVC(payload33: payload)
+                }
                 
             }else {
                 
                 
+                payload["trip_type"] = defaults.string(forKey:UserDefaultsKeys.journeyType)
+                payload["adult"] = defaults.string(forKey:UserDefaultsKeys.radultCount)
+                payload["child"] = defaults.string(forKey:UserDefaultsKeys.rchildCount)
+                payload["infant"] = defaults.string(forKey:UserDefaultsKeys.rinfantsCount)
+                payload["v_class"] = defaults.string(forKey:UserDefaultsKeys.rselectClass)
+                payload["sector_type"] = "international"
+                payload["from"] = defaults.string(forKey:UserDefaultsKeys.rfromCity)
+                payload["from_loc_id"] = defaults.string(forKey:UserDefaultsKeys.rfromlocid)
+                payload["to"] = defaults.string(forKey:UserDefaultsKeys.rtoCity)
+                payload["to_loc_id"] = defaults.string(forKey:UserDefaultsKeys.rtolocid)
+                payload["depature"] = defaults.string(forKey:UserDefaultsKeys.rcalDepDate)
+                payload["return"] = defaults.string(forKey:UserDefaultsKeys.rcalRetDate)
+                payload["out_jrn"] = "All Times"
+                payload["ret_jrn"] = "All Times"
+                payload["carrier"] = ""
+                payload["psscarrier"] = "ALL"
+                payload["search_flight"] = "Search"
+                payload["user_id"] = defaults.string(forKey:UserDefaultsKeys.userid) ?? "0"
+                payload["currency"] = defaults.string(forKey:UserDefaultsKeys.selectedCurrency) ?? "KWD"
+                
+                if directFlightBool == false {
+                    payload["direct_flight"] = "on"
+                }
+                
+                if defaults.string(forKey:UserDefaultsKeys.rfromCity) == "Select City" || defaults.string(forKey:UserDefaultsKeys.rfromCity) == nil{
+                    showToast(message: "Please Select From City")
+                }else if defaults.string(forKey:UserDefaultsKeys.rtoCity) == "Select City" || defaults.string(forKey:UserDefaultsKeys.rtoCity) == nil{
+                    showToast(message: "Please Select To City")
+                }else if defaults.string(forKey:UserDefaultsKeys.rtoCity) == defaults.string(forKey:UserDefaultsKeys.rfromCity) {
+                    showToast(message: "Please Select Different Citys")
+                }else if defaults.string(forKey:UserDefaultsKeys.rcalDepDate) == "+ Add Departure Date" || defaults.string(forKey:UserDefaultsKeys.rcalDepDate) == nil{
+                    showToast(message: "Please Select Departure Date")
+                }else if defaults.string(forKey:UserDefaultsKeys.rcalRetDate) == "+ Add Departure Date" || defaults.string(forKey:UserDefaultsKeys.rcalRetDate) == nil{
+                    showToast(message: "Please Select Return Date")
+                }else if defaults.string(forKey:UserDefaultsKeys.rcalDepDate) == defaults.string(forKey:UserDefaultsKeys.rcalRetDate) {
+                    showToast(message: "Please Select Different Dates")
+                }
+                else if defaults.string(forKey:UserDefaultsKeys.rtravellerDetails) == nil {
+                    showToast(message: "Add Traveller")
+                }else if defaults.string(forKey:UserDefaultsKeys.rselectClass) == nil {
+                    showToast(message: "Add Class")
+                }else if defaults.string(forKey:UserDefaultsKeys.rfromCity) == defaults.string(forKey:UserDefaultsKeys.rtoCity) {
+                    showToast(message: "Please Select Different Citys")
+                }else if checkDepartureAndReturnDates(payload, p1: "depature", p2: "return") == false {
+                    showToast(message: "Invalid Date")
+                }else{
+                    gotoSearchFlightResultVC(payload33: payload)
+                }
+                
             }
         }
+        
+        
     }
     
     
-    func flightList(response: FlightSearchModel) {
-        if response.status == 1 {
-            FlightList = response.data?.j_flight_list
-            defaults.set(response.data?.search_id, forKey: UserDefaultsKeys.searchid)
-            defaults.set(response.data?.booking_source, forKey: UserDefaultsKeys.bookingsource)
-            defaults.set(response.data?.booking_source_key, forKey: UserDefaultsKeys.bookingsourcekey)
-            defaults.set(response.data?.traceId, forKey: UserDefaultsKeys.traceId)
-
-            gotoSearchFlightResultVC()
-        }
-    }
     
-    
-    func roundTripflightList(response: RoundTripModel) {
-        if response.status == 1 {
-            RTFlightList = response.data?.j_flight_list
-            defaults.set(response.data?.search_id, forKey: UserDefaultsKeys.searchid)
-            defaults.set(response.data?.booking_source, forKey: UserDefaultsKeys.bookingsource)
-            defaults.set(response.data?.booking_source_key, forKey: UserDefaultsKeys.bookingsourcekey)
-            defaults.set(response.data?.traceId, forKey: UserDefaultsKeys.traceId)
-
-            gotoSearchFlightResultVC()
-        }
-    }
-    
-    func gotoSearchFlightResultVC() {
+    func gotoSearchFlightResultVC(payload33:[String:Any]) {
         guard let vc = SearchFlightResultVC.newInstance.self else {return}
         vc.modalPresentationStyle = .fullScreen
+        vc.isFromVc = "searchvc"
+        callapibool = true
+        vc.payload = payload33
         self.present(vc, animated: true)
     }
     
     
+    
     override func btnAction(cell: ButtonTVCell) {
+        loderBool = true
+        payload.removeAll()
+        payload1.removeAll()
+        payload2.removeAll()
+        fromdataArray.removeAll()
+        
+        for (index,_) in fromCityArray.enumerated() {
+            
+            payload2["from"] = fromCityArray[index]
+            payload2["from_loc_id"] = fromlocidArray[index]
+            payload2["to"] = toCityArray[index]
+            payload2["to_loc_id"] = tolocidArray[index]
+            payload2["depature"] = depatureDatesArray[index]
+            
+            fromdataArray.append(payload2)
+        }
         
         
-        payload["sector_type"] = "international"
-        payload["trip_type"] = defaults.string(forKey:UserDefaultsKeys.journeyType)
-        payload["from"] = fromCityArray
-        payload["from_loc_id"] = fromlocidArray
-        payload["to"] = toCityArray
-        payload["to_loc_id"] = tolocidArray
-        payload["depature"] = depatureDatesArray
-        payload["adult"] = defaults.string(forKey: UserDefaultsKeys.madultCount)
-        payload["child"] = defaults.string(forKey: UserDefaultsKeys.mchildCount)
-        payload["infant"] = defaults.string(forKey: UserDefaultsKeys.minfantsCount)
+        
+        payload["trip_type"] = "multicity"
+        payload["adult"] = defaults.string(forKey: UserDefaultsKeys.madultCount) ?? "1"
+        payload["child"] = defaults.string(forKey: UserDefaultsKeys.mchildCount) ?? "0"
+        payload["infant"] = defaults.string(forKey: UserDefaultsKeys.minfantsCount) ?? "0"
         payload["checkbox-group"] = "on"
         payload["search_flight"] = "Search"
-        payload["carrier"] = ""
+        payload["direct_flight"] = "1"
         payload["psscarrier"] = "ALL"
         payload["remngwd"] = defaults.string(forKey: UserDefaultsKeys.mselectClass)
         payload["v_class"] = defaults.string(forKey: UserDefaultsKeys.mselectClass)
-        payload["user_id"] = "0"
-        payload["adult"] = defaults.string(forKey:UserDefaultsKeys.madultCount)
-        payload["child"] = defaults.string(forKey:UserDefaultsKeys.mchildCount)
-        payload["infant"] = defaults.string(forKey:UserDefaultsKeys.minfantsCount)
+        payload["user_id"] = defaults.string(forKey: UserDefaultsKeys.userid) ?? "0"
+        payload["currency"] = defaults.string(forKey:UserDefaultsKeys.selectedCurrency) ?? "KWD"
+        payload["search_source"] = "Postman"
+        payload["placeDetails"] = fromdataArray
         
-        do {
-            let arrJson = try JSONSerialization.data(withJSONObject: payload, options: JSONSerialization.WritingOptions.prettyPrinted)
-            let theJSONText = NSString(data: arrJson, encoding: String.Encoding.utf8.rawValue)
-            print(theJSONText ?? "")
+        
+        
+        
+        var showToastMessage: String? = nil
+        
+        for cityName in fromCityArray {
+            if cityName == "" {
+                showToastMessage = "Please Select Origin"
+                break
+            }
+        }
+        
+        if showToastMessage == nil {
+            for cityName in toCityArray {
+                if cityName == "" {
+                    showToastMessage = "Please Select Destination"
+                    break
+                }
+            }
+        }
+        
+        if showToastMessage == nil {
+            for date in depatureDatesArray {
+                if date == "Date" {
+                    showToastMessage = "Please Select Date"
+                    break
+                }
+            }
+        }
+        
+        
+        
+        if showToastMessage == nil {
+            if depatureDatesArray != depatureDatesArray.sorted() {
+                showToastMessage = "Please Select Dates in Ascending Order"
+            } else if depatureDatesArray.count == 2 && depatureDatesArray[0] == depatureDatesArray[1] {
+                showToastMessage = "Please Select Different Dates"
+            }
+        }
+        
+        
+        
+        if let message = showToastMessage {
+            showToast(message: message)
+        } else {
+            do {
+                let arrJson = try JSONSerialization.data(withJSONObject: payload, options: JSONSerialization.WritingOptions.prettyPrinted)
+                let theJSONText = NSString(data: arrJson, encoding: String.Encoding.utf8.rawValue)
+                print(theJSONText ?? "")
+                
+                payload1["search_params"] = theJSONText
+                payload1["user_id"] = "0"
+                
+                gotoSearchFlightResultVC(payload33: payload1)
+                
+            }catch let error as NSError{
+                print(error.description)
+            }
             
-            payload1["search_params"] = theJSONText
-            payload1["user_id"] = "0"
+            
+        }
+        
+        
+        
+    }
+    
+    
+    
+    //MARK: - DELETING COREDATA OBJECT
+    func deleteAllRecords(str:String) {
+        
+        if str == "1" {
+            
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "PassengerDetails")
+            do {
+                let records = try context.fetch(fetchRequest)
+                if records.count > 1 {
+                    for i in 1..<records.count {
+                        context.delete(records[i] as! NSManagedObject)
+                    }
+                    try context.save()
+                }
+            } catch {
+                print("Error deleting records: \(error)")
+            }
+            
+        }else {
+            
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "PassengerDetails")
+            fetchRequest.predicate = NSPredicate(format: "passengerType = %@", "\(str)")
+            let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
             
             
-            BASE_URL = "https://provabdevelopment.com/babsafar/mobile_webservices/mobile/index.php/general/"
-            viewModel?.CallMulticityTripSearchFlightAPI(dictParam: payload1)
+            do {
+                let result = try context.execute(deleteRequest) as? NSBatchDeleteResult
+                let deletedObjectIDs = result?.result as? [NSManagedObjectID] ?? []
+                NSManagedObjectContext.mergeChanges(fromRemoteContextSave: [NSDeletedObjectsKey: deletedObjectIDs], into: [context])
+            } catch let error as NSError {
+                print(error)
+            }
             
-        }catch let error as NSError{
-            print(error.description)
+            do {
+                try context.save()
+            } catch {
+                print ("There was an error")
+            }
         }
         
     }
     
     
-    func multiTripflightList(response: MulticityModel) {
-        print("====== MulticityModel response ========")
-        print(response.data?.search_id)
-        defaults.set(response.data?.traceId, forKey: UserDefaultsKeys.traceId)
-        if response.status == 1 {
-            MCJflightlist = response.data?.j_flight_list
-            defaults.set(response.data?.search_id, forKey: UserDefaultsKeys.searchid)
-            defaults.set(response.data?.booking_source, forKey: UserDefaultsKeys.bookingsource)
-            defaults.set(response.data?.booking_source_key, forKey: UserDefaultsKeys.bookingsourcekey)
-            gotoSearchFlightResultVC()
+}
+
+
+extension SearchFlightsVC {
+    
+    
+    //MARK: - topcity Search
+    @objc func topcity(notification: Notification) {
+        payload.removeAll()
+        self.tabBarController?.tabBar.isHidden = true
+        loderBool = true
+        defaults.set("Flights", forKey: UserDefaultsKeys.dashboardTapSelected)
+        if let userinfo = notification.userInfo {
+            
+            payload["trip_type"] = (userinfo["trip_type"] as? String) ?? ""
+            payload["adult"] = "1"
+            payload["child"] = "0"
+            payload["infant"] = "0"
+            payload["v_class"] = (userinfo["airline_class"] as? String) ?? ""
+            payload["sector_type"] = "international"
+            payload["from"] = (userinfo["fromFlight"] as? String) ?? ""
+            payload["from_loc_id"] = (userinfo["from_city"] as? String) ?? ""
+            payload["to"] = (userinfo["toFlight"] as? String) ?? ""
+            payload["to_loc_id"] = (userinfo["to_city"] as? String) ?? ""
+            payload["depature"] = convertDateFormat(inputDate: userinfo["travel_date"] as? String ?? "", f1: "yyyy-MM-dd", f2: "dd-MM-yyyy")
+            payload["return"] = convertDateFormat(inputDate: userinfo["return_date"] as? String ?? "", f1: "yyyy-MM-dd", f2: "dd-MM-yyyy")
+            payload["out_jrn"] = "All Times"
+            payload["ret_jrn"] = "All Times"
+            payload["carrier"] = ""
+            payload["psscarrier"] = "ALL"
+            payload["search_flight"] = "Search"
+            payload["user_id"] = defaults.string(forKey:UserDefaultsKeys.userid) ?? "0"
+            payload["currency"] = defaults.string(forKey:UserDefaultsKeys.selectedCurrency) ?? "KWD"
+            
+            
+            defaults.set((userinfo["trip_type"] as? String) ?? "", forKey: UserDefaultsKeys.journeyType)
+            
+            
+            if (userinfo["trip_type"] as? String ?? "") == "oneway" {
+                
+                defaults.set((userinfo["from_city_name"] as? String) ?? "" , forKey: UserDefaultsKeys.fromcityname)
+                defaults.set((userinfo["to_city_name"] as? String) ?? "" , forKey: UserDefaultsKeys.tocityname)
+                defaults.set((userinfo["from_city_loc"] as? String) ?? "" , forKey: UserDefaultsKeys.fromairport)
+                defaults.set((userinfo["to_city_name"] as? String) ?? "" , forKey: UserDefaultsKeys.toairport)
+                //  viewModel1?.CallSearchFlightAPI(dictParam: payload)
+                
+                defaults.set((userinfo["fromFlight"] as? String) ?? "" , forKey: UserDefaultsKeys.fromCity)
+                defaults.set((userinfo["toFlight"] as? String) ?? "" , forKey: UserDefaultsKeys.toCity)
+                
+                
+                
+            }else {
+                defaults.set((userinfo["from_city_name"] as? String) ?? "" , forKey: UserDefaultsKeys.rfromcityname)
+                defaults.set((userinfo["to_city_name"] as? String) ?? "" , forKey: UserDefaultsKeys.rtocityname)
+                defaults.set((userinfo["from_city_loc"] as? String) ?? "" , forKey: UserDefaultsKeys.rfromairport)
+                defaults.set((userinfo["to_city_loc"] as? String) ?? "" , forKey: UserDefaultsKeys.rtoairport)
+                //   viewModel1?.CallRoundTRipSearchFlightAPI(dictParam: payload)
+                
+                defaults.set((userinfo["fromFlight"] as? String) ?? "" , forKey: UserDefaultsKeys.rfromCity)
+                defaults.set((userinfo["toFlight"] as? String) ?? "" , forKey: UserDefaultsKeys.rtoCity)
+                
+            }
+            
+            
+            gotoSearchFlightResultVC(payload33: payload)
         }
+        
     }
-    
-    
-    
-    
-    
-    
 }

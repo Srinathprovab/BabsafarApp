@@ -15,8 +15,8 @@ class MCTripFlightTVCell: UITableViewCell {
     @IBOutlet weak var noStopslbl: UILabel!
     @IBOutlet weak var toCityTimelbl: UILabel!
     @IBOutlet weak var toCityShortlbl: UILabel!
-    @IBOutlet weak var kwdPricelbl: UILabel!
-    @IBOutlet weak var perPersonlbl: UILabel!
+    @IBOutlet weak var airlinelogo: UIImageView!
+    @IBOutlet weak var airlineNamelbl: UILabel!
     
     
     override func awakeFromNib() {
@@ -33,15 +33,13 @@ class MCTripFlightTVCell: UITableViewCell {
     
     
     func setupUI() {
-        kwdPricelbl.isHidden = true
-        setupLabels(lbl: fromCityTimelbl, text: "05:50", textcolor: .AppLabelColor, font: .LatoSemibold(size: 18))
+        
+        setupLabels(lbl: fromCityTimelbl, text: "05:50", textcolor: .AppLabelColor, font: .LatoSemibold(size: 16))
         setupLabels(lbl: fromCityShortlbl, text: "dubai (dXB)", textcolor: .AppLabelColor, font: .LatoRegular(size: 12))
-        setupLabels(lbl: toCityTimelbl, text: "07:50", textcolor: .AppLabelColor, font: .LatoSemibold(size: 18))
+        setupLabels(lbl: toCityTimelbl, text: "07:50", textcolor: .AppLabelColor, font: .LatoSemibold(size: 16))
         setupLabels(lbl: toCityShortlbl, text: "kuwait (KWI)", textcolor: .AppLabelColor, font: .LatoRegular(size: 12))
         setupLabels(lbl: hourslbl, text: "1h 40mis", textcolor: .AppLabelColor, font: .LatoRegular(size: 12))
         setupLabels(lbl: noStopslbl, text: "No Stops", textcolor: .AppLabelColor, font: .LatoRegular(size: 12))
-        setupLabels(lbl: kwdPricelbl, text: "KWD:150.00", textcolor: .AppTabSelectColor, font: .LatoSemibold(size: 13))
-        setupLabels(lbl: perPersonlbl, text: "Per Person", textcolor: .AppLabelColor, font: .LatoRegular(size: 12))
     }
     
     

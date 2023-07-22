@@ -9,15 +9,18 @@ import Foundation
 
 struct MBFlightDetails : Codable {
   
-    let details : [[MBdetails]]?
+   
+    let summery : [Summary]?
 
     enum CodingKeys: String, CodingKey {
-        case details = "details"
+       
+        case summery = "summary"
     }
 
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        details = try values.decodeIfPresent([[MBdetails]].self, forKey: .details)
+        
+        summery = try values.decodeIfPresent([Summary].self, forKey: .summery)
     }
 
 }

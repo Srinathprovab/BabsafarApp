@@ -12,6 +12,7 @@ class HotelBookingConfirmedVC: BaseTableVC {
     @IBOutlet weak var holderView: UIView!
     @IBOutlet weak var nav: NavBar!
     
+    @IBOutlet weak var navHeight: NSLayoutConstraint!
     
     var tablerow = [TableRow]()
     static var newInstance: HotelBookingConfirmedVC? {
@@ -21,6 +22,20 @@ class HotelBookingConfirmedVC: BaseTableVC {
         return vc
     }
     
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if screenHeight < 835 {
+            navHeight.constant = 90
+        }
+        NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("nointernet"), object: nil)
+    }
+    
+    //MARK: - nointernet
+    @objc func nointernet() {
+        guard let vc = NoInternetConnectionVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .overCurrentContext
+        self.present(vc, animated: true)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,6 +77,7 @@ class HotelBookingConfirmedVC: BaseTableVC {
     }
     
     @objc func didTapOnBackBtn(_ sender:UIButton) {
+        callapibool = false
         dismiss(animated: true)
     }
     

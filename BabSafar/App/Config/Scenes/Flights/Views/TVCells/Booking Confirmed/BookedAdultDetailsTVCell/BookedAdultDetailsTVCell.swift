@@ -10,7 +10,6 @@ import UIKit
 class BookedAdultDetailsTVCell: UITableViewCell {
     
     @IBOutlet weak var holderView: UIView!
-    
     @IBOutlet weak var travellerNamelbl: UILabel!
     @IBOutlet weak var typelbl: UILabel!
     @IBOutlet weak var seatlbl: UILabel!
@@ -30,9 +29,9 @@ class BookedAdultDetailsTVCell: UITableViewCell {
     func setupUI() {
         
         holderView.backgroundColor = .WhiteColor
-        setupLabels(lbl: travellerNamelbl, text: "", textcolor: HexColor("#5B5B5B"), font: .LatoRegular(size: 14))
-        setupLabels(lbl: typelbl, text: "", textcolor: HexColor("#5B5B5B"), font: .LatoRegular(size: 14))
-        setupLabels(lbl: seatlbl, text: "", textcolor: HexColor("#5B5B5B"), font: .LatoRegular(size: 14))
+        setuplabels(lbl: travellerNamelbl, text: "", textcolor: HexColor("#5B5B5B"), font: .LatoRegular(size: 14), align: .left)
+        setuplabels(lbl: typelbl, text: "", textcolor: HexColor("#5B5B5B"), font: .LatoRegular(size: 14), align: .center)
+        setuplabels(lbl: seatlbl, text: "", textcolor: HexColor("#5B5B5B"), font: .LatoRegular(size: 14), align: .right)
         
     }
     
@@ -44,10 +43,6 @@ class BookedAdultDetailsTVCell: UITableViewCell {
         v.layer.borderColor = UIColor.AppBorderColor.cgColor
     }
     
-    func setupLabels(lbl:UILabel,text:String,textcolor:UIColor,font:UIFont) {
-        lbl.text = text
-        lbl.textColor = textcolor
-        lbl.font = font
-    }
+   
     
 }

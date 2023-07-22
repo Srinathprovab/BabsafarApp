@@ -8,6 +8,11 @@
 import UIKit
 protocol RoundTripFlightResultTVCellDelegate {
     func gotoRoundTripBaggageIntoVC(cell:RoundTripFlightResultTVCell)
+    func didTapOnFlightDetailsBtn(cell:RoundTripFlightResultTVCell)
+    func didTapOnBookNowBtn(cell:RoundTripFlightResultTVCell)
+    
+    func didTapOnSimilarFlightsBtnAction(cell:RoundTripFlightResultTVCell)
+    
 }
 
 class RoundTripFlightResultTVCell: TableViewCell {
@@ -15,9 +20,11 @@ class RoundTripFlightResultTVCell: TableViewCell {
     @IBOutlet weak var roundTripTV: UITableView!
     @IBOutlet weak var tvHeight: NSLayoutConstraint!
     
+    
+    var displayPrice = String()
     var delegate:RoundTripFlightResultTVCellDelegate?
     var arrayCount = Int()
-    
+    var refundable:Bool?
     var rflight_details : Flight_details?
     var totalPrice = String()
     var selectedResult = String()
@@ -35,22 +42,23 @@ class RoundTripFlightResultTVCell: TableViewCell {
     
     override func updateUI() {
         
-        totalPrice = cellInfo?.headerText ?? ""
-        selectedResult = cellInfo?.TotalQuestions ?? ""
-        //        taxes = cellInfo?.questionBase ?? ""
-        //        APICurrencyType = cellInfo?.questionType ?? ""
-        //
-        //        kwdPrice = cellInfo?.title ?? ""
         
+        
+        totalPrice = cellInfo?.headerText ?? ""
+        displayPrice = cellInfo?.title ?? ""
+        selectedResult = cellInfo?.TotalQuestions ?? ""
         self.rflight_details = cellInfo?.moreData as? Flight_details
         arrayCount = rflight_details?.summary?.count ?? 0
-        tvHeight.constant = CGFloat(arrayCount * 136)
+        
+        
+        
+        tvHeight.constant = CGFloat(arrayCount * 162)
         roundTripTV.reloadData()
         
     }
     
     func setupUI() {
-        holderView.backgroundColor = .white
+        holderView.backgroundColor = .clear
         holderView.layer.cornerRadius = 10
         holderView.clipsToBounds = true
         setupTV()
@@ -65,7 +73,7 @@ class RoundTripFlightResultTVCell: TableViewCell {
         roundTripTV.layer.cornerRadius = 10
         roundTripTV.clipsToBounds = true
         roundTripTV.layer.borderWidth = 1
-        roundTripTV.layer.borderColor = UIColor.lightGray.withAlphaComponent(0.5).cgColor
+        roundTripTV.layer.borderColor = UIColor.AppBorderColor.cgColor
         roundTripTV.separatorStyle = .none
         roundTripTV.isScrollEnabled = false
     }
@@ -73,6 +81,21 @@ class RoundTripFlightResultTVCell: TableViewCell {
     func gotoRoundTripBaggageIntoVC() {
         delegate?.gotoRoundTripBaggageIntoVC(cell: self)
     }
+    
+    
+    @objc func didTapOnFlightDetailsBtn(_ sender:UIButton) {
+        delegate?.didTapOnFlightDetailsBtn(cell: self)
+    }
+    
+    
+    @objc func didTapOnBookNowBtn(_ sender:UIButton) {
+        delegate?.didTapOnBookNowBtn(cell: self)
+    }
+    
+    @objc func didTapOnSimilarFlightsBtnAction(_ sender:UIButton) {
+        delegate?.didTapOnSimilarFlightsBtnAction(cell: self)
+    }
+    
 }
 
 
@@ -85,14 +108,16 @@ extension RoundTripFlightResultTVCell:UITableViewDataSource,UITableViewDelegate 
         var ccell = UITableViewCell()
         if let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as? SearchFlightResultTVCell {
             cell.selectionStyle = .none
+            
+           
             cell.holderViewTopConstraint.constant = 0
             cell.holderView.layer.cornerRadius = 0
             cell.holderView.clipsToBounds = true
-            cell.holderView.layer.borderColor = UIColor.clear.cgColor
+            cell.imagesHolderView.layer.cornerRadius = 0
+            cell.imagesHolderView.clipsToBounds = true
             
             let data = rflight_details?.summary
-            cell.kwdPricelbl.text = self.totalPrice
-            cell.titlelbl.text = "\(data?[indexPath.row].operator_name ?? "")(\(data?[indexPath.row].operator_code ?? ""))"
+            cell.titlelbl.text = "\(data?[indexPath.row].operator_name ?? "")(\(data?[indexPath.row].operator_code ?? "") \(data?[indexPath.row].flight_number ?? ""))"
             cell.airwaysLogoImg.sd_setImage(with: URL(string: "\(data?[indexPath.row].operator_image ?? "")"), placeholderImage:UIImage(contentsOfFile:"placeholder.png"))
             
             cell.fromCityShortlbl.text = "\(data?[indexPath.row].origin?.city ?? "")(\(data?[indexPath.row].origin?.loc ?? ""))"
@@ -102,11 +127,49 @@ extension RoundTripFlightResultTVCell:UITableViewDataSource,UITableViewDelegate 
             cell.hourslbl.text = data?[indexPath.row].duration
             let no_of_stops = String(data?[indexPath.row].no_of_stops ?? 0)
             cell.noStopslbl.text = "\(no_of_stops) stops"
-          //  cell.bagWeightlbl.text = data?[indexPath.row].weight_Allowance
+            cell.setAttributedString(str1:cellInfo?.price ?? "" , str2: cellInfo?.title ?? "")
+            
+            cell.bagWeightlbl.text = cell.convertToDesiredFormat(data?[indexPath.row].weight_Allowance ?? "")
+            cell.airoplaneImg.image = UIImage(named: "airo1")?.withRenderingMode(.alwaysOriginal).withTintColor(.AppBtnColor)
+            cell.setAttributedString1(str1: cellInfo?.price ?? "", str2: cellInfo?.headerText ?? "")
+
+            if let similatFlights = cellInfo?.data as? [[RTJ_flight_list]], (similatFlights.count - 1) != 0 {
+                setuplabels(lbl: cell.moreSimlarOptionlbl, text: "More similar options(\(similatFlights.count))", textcolor: .WhiteColor, font: .LatoRegular(size: 10), align: .right)
+                cell.showSimilarlbl()
+            }
             
             if indexPath.row == 0 {
-                cell.hidePerpersonLbl()
+               
+                if cellInfo?.key1 == "Refundable" {
+                    setuplabels(lbl: cell.kwdPricelbl, text: cellInfo?.key1 ?? "", textcolor: HexColor("#2FA804"), font: .LatoRegular(size: 13), align: .center)
+                }else {
+                    setuplabels(lbl: cell.kwdPricelbl, text: cellInfo?.key1 ?? "", textcolor: .AppBtnColor, font: .LatoRegular(size: 13), align: .center)
+                }
+                
+                cell.markuppricelbl.textColor = .WhiteColor
+                cell.flightsDetailsBtnView.isHidden = true
+                cell.bookNowView.backgroundColor = HexColor("#FFCC33")
+                setuplabels(lbl: cell.bookNowlbl, text: "Flight Details", textcolor: .AppLabelColor, font: .LatoRegular(size: 12), align: .center)
+
+                cell.bookNowBtn.addTarget(self, action: #selector(didTapOnFlightDetailsBtn(_:)), for: .touchUpInside)
+                cell.airoplaneImg.image = UIImage(named: "airo2")?.withRenderingMode(.alwaysOriginal).withTintColor(HexColor("#00A898"))
+
+                cell.moreSimlarOptionlbl.isHidden = true
+                cell.similarimg.isHidden = true
+                cell.hideSimilarlbl()
             }
+            
+
+            cell.refundablelbl.isHidden = true
+            cell.viewVoucherBtn.isHidden = true
+            cell.flightsDetailsBtnView.isHidden = true
+            cell.bookNowBtn.addTarget(self, action: #selector(didTapOnBookNowBtn(_:)), for: .touchUpInside)
+            cell.similarBtn.addTarget(self, action: #selector(didTapOnSimilarFlightsBtnAction(_:)), for: .touchUpInside)
+
+            
+          
+            
+            
             
             
             ccell = cell
@@ -116,7 +179,7 @@ extension RoundTripFlightResultTVCell:UITableViewDataSource,UITableViewDelegate 
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        gotoRoundTripBaggageIntoVC()
+        //  gotoRoundTripBaggageIntoVC()
     }
     
 }

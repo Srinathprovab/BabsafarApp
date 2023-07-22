@@ -13,8 +13,8 @@ protocol EnterTravellerDetailsTVCellDelegate {
     func editingTextField(tf:UITextField)
     func donedatePicker(cell:EnterTravellerDetailsTVCell)
     func cancelDatePicker(cell:EnterTravellerDetailsTVCell)
-    
     func selectedTitle(cell:EnterTravellerDetailsTVCell)
+    
 }
 
 class EnterTravellerDetailsTVCell: TableViewCell {
@@ -28,10 +28,11 @@ class EnterTravellerDetailsTVCell: TableViewCell {
     @IBOutlet weak var countrycodeView: UIView!
     @IBOutlet weak var countrycodeViewWidth: NSLayoutConstraint!
     @IBOutlet weak var countryCodeTF: UITextField!
-    
+    @IBOutlet weak var selectTitleBtn: UIButton!
     
     let dropDown = DropDown()
     let dropDown1 = DropDown()
+    let selectTitleDropDown = DropDown()
     var mrArray = ["Mr","Mrs","Miss","M"]
     let datePicker = UIDatePicker()
     var nationality:String?
@@ -63,9 +64,10 @@ class EnterTravellerDetailsTVCell: TableViewCell {
         txtField.placeholder = cellInfo?.buttonTitle
         countrycodeViewWidth.constant = 0
         countrycodeView.isHidden = true
+        selectTitleDropDown.dataSource = mrArray
+        setupselectTitleDropDown()
         
         countrylist.forEach { i in
-            print(i.name)
             countryNameArray.append(i.name ?? "")
         }
         
@@ -81,15 +83,7 @@ class EnterTravellerDetailsTVCell: TableViewCell {
                 countryCodeTF.text = cellInfo?.headerText
             }
             
-        }
-        
-//        else if cellInfo?.key == "dob" {
-//            dropView.isHidden = false
-//            self.tfHolderView.bringSubviewToFront(dropView)
-//            showDatePicker()
-//        }
-        
-        else {
+        }else {
             
         }
         
@@ -97,7 +91,24 @@ class EnterTravellerDetailsTVCell: TableViewCell {
         switch cellInfo?.key1 {
         case "editfname":
             txtField.text = edit_fname
-            countryCodeTF.text = cellInfo?.headerText
+            countryCodeTF.textColor = .AppLabelColor
+            switch cellInfo?.headerText {
+                
+            case "0":
+                countryCodeTF.text = mrArray[0]
+                break
+            case "1":
+                countryCodeTF.text = mrArray[1]
+                break
+            case "2":
+                countryCodeTF.text = mrArray[2]
+                break
+            case "3":
+                countryCodeTF.text = mrArray[3]
+                break
+            default:
+                break
+            }
             break
         case "editlname":
             txtField.text = edit_lname 
@@ -124,7 +135,7 @@ class EnterTravellerDetailsTVCell: TableViewCell {
         countrycodeViewWidth.constant = 0
         countrycodeView.backgroundColor = .WhiteColor
         countrycodeView.isHidden = true
-        
+        selectTitleBtn.setTitle("", for: .normal)
         setupTextFiels(tf: txtField, placeholder: cellInfo?.buttonTitle ?? "")
         setupTextFiels(tf: countryCodeTF, placeholder: "+91")
         txtField.addTarget(self, action: #selector(editingTextField(_:)), for: .editingChanged)
@@ -173,10 +184,21 @@ class EnterTravellerDetailsTVCell: TableViewCell {
             }
             
         }
-        
-        
-        
-        
+    }
+    
+    
+    
+    func setupselectTitleDropDown() {
+        selectTitleDropDown.direction = .bottom
+        selectTitleDropDown.backgroundColor = .WhiteColor
+        selectTitleDropDown.anchorView = self.selectTitleBtn
+        selectTitleDropDown.bottomOffset = CGPoint(x: 0, y: selectTitleBtn.frame.size.height + 10)
+        selectTitleDropDown.selectionAction = { [weak self] (index: Int, item: String) in
+            self?.countryCodeTF.text = item
+            self?.countryCodeTF.resignFirstResponder()
+            self?.selectedTitle = item
+            self?.delegate?.selectedTitle(cell: self!)
+        }
     }
     
     
@@ -206,7 +228,6 @@ class EnterTravellerDetailsTVCell: TableViewCell {
         let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(donedatePicker));
         let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
         let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelDatePicker));
-        
         toolbar.setItems([doneButton,spaceButton,cancelButton], animated: false)
         
         
@@ -229,15 +250,25 @@ class EnterTravellerDetailsTVCell: TableViewCell {
     }
     
     
+    
+    @IBAction func didTapOnSelectTitleBtnAction(_ sender: Any) {
+        selectTitleDropDown.show()
+    }
+    
+    
+    
 }
 
 
 extension EnterTravellerDetailsTVCell {
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText string: String) -> Bool {
+    
+    override func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
         let maxLength = 50
-        let currentString: NSString = txtField.text! as NSString
+        let currentString: NSString = textField.text! as NSString
         let newString: NSString =  currentString.replacingCharacters(in: range, with: string) as NSString
         return newString.length <= maxLength
+        
     }
+    
 }

@@ -1,76 +1,198 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="Lato-Bold.ttf">
+            <string>Lato-Bold</string>
+        </array>
+        <array key="Lato-Regular.ttf">
+            <string>Lato-Regular</string>
+        </array>
+        <array key="Lato-Semibold.ttf">
+            <string>Lato-Semibold</string>
+        </array>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="198" id="KGk-i7-Jjw" customClass="MultiCityTripFlightResultTVCell" customModule="BabSafar" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="463" height="80"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="208" id="KGk-i7-Jjw" customClass="MultiCityTripFlightResultTVCell" customModule="BabSafar" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="463" height="90"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="463" height="80"/>
+                <rect key="frame" x="0.0" y="0.0" width="463" height="90"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jxh-RO-XCd">
-                        <rect key="frame" x="10" y="5" width="443" height="70"/>
+                        <rect key="frame" x="10" y="5" width="443" height="80"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8fx-9x-hpj">
-                                <rect key="frame" x="15" y="10" width="30" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="NBs-Id-75O"/>
-                                    <constraint firstAttribute="width" constant="30" id="UMB-6I-tQC"/>
-                                </constraints>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AE2-8H-5Vf">
-                                <rect key="frame" x="55" y="14.5" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zua-9O-Xey">
-                                <rect key="frame" x="103" y="14.5" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="68b-Q2-Gh5">
-                                <rect key="frame" x="151" y="14.5" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="UEJ-Po-ddD">
-                                <rect key="frame" x="0.0" y="53.5" width="443" height="2"/>
+                                <rect key="frame" x="0.0" y="15" width="313" height="2"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="2" id="Wmt-gO-zBu"/>
                                 </constraints>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1F6-Rf-SIT">
+                                <rect key="frame" x="0.0" y="27" width="120" height="30"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Book Now" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kZ6-E0-JjG">
+                                        <rect key="frame" x="24.5" y="6" width="71" height="18"/>
+                                        <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="15"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WxZ-nb-mDm">
+                                        <rect key="frame" x="0.0" y="0.0" width="120" height="30"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain"/>
+                                        <connections>
+                                            <action selector="didTapOnBookNowBtnAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="MlW-Oz-nR4"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" name="AppBtnColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="WxZ-nb-mDm" secondAttribute="bottom" id="4Xo-5x-PXT"/>
+                                    <constraint firstAttribute="width" constant="120" id="Bdf-Vx-jIF"/>
+                                    <constraint firstItem="WxZ-nb-mDm" firstAttribute="leading" secondItem="1F6-Rf-SIT" secondAttribute="leading" id="KjU-P8-6yL"/>
+                                    <constraint firstItem="WxZ-nb-mDm" firstAttribute="top" secondItem="1F6-Rf-SIT" secondAttribute="top" id="da2-K6-dPM"/>
+                                    <constraint firstAttribute="height" constant="30" id="j3K-PG-MV3"/>
+                                    <constraint firstItem="kZ6-E0-JjG" firstAttribute="centerX" secondItem="1F6-Rf-SIT" secondAttribute="centerX" id="jGP-r0-PxS"/>
+                                    <constraint firstAttribute="trailing" secondItem="WxZ-nb-mDm" secondAttribute="trailing" id="xa0-3D-xcJ"/>
+                                    <constraint firstItem="kZ6-E0-JjG" firstAttribute="centerY" secondItem="1F6-Rf-SIT" secondAttribute="centerY" id="xdA-5Q-zah"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="3"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EOc-Ei-j7P">
+                                <rect key="frame" x="313" y="27" width="130" height="30"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Flight Details" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nAp-yf-Nm7">
+                                        <rect key="frame" x="21" y="6" width="88" height="18"/>
+                                        <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="15"/>
+                                        <color key="textColor" name="AppLabelColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4jF-gW-Pih">
+                                        <rect key="frame" x="0.0" y="0.0" width="130" height="30"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain"/>
+                                        <connections>
+                                            <action selector="didTapOnFlightDetailsBtnAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="b7I-GS-Q3v"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="nAp-yf-Nm7" firstAttribute="centerY" secondItem="EOc-Ei-j7P" secondAttribute="centerY" id="1Rk-fb-sAd"/>
+                                    <constraint firstAttribute="height" constant="30" id="831-HA-KhK"/>
+                                    <constraint firstAttribute="bottom" secondItem="4jF-gW-Pih" secondAttribute="bottom" id="GB8-2X-Jca"/>
+                                    <constraint firstItem="4jF-gW-Pih" firstAttribute="leading" secondItem="EOc-Ei-j7P" secondAttribute="leading" id="RZY-qs-BoI"/>
+                                    <constraint firstAttribute="trailing" secondItem="4jF-gW-Pih" secondAttribute="trailing" id="UKF-U8-gcL"/>
+                                    <constraint firstItem="4jF-gW-Pih" firstAttribute="top" secondItem="EOc-Ei-j7P" secondAttribute="top" id="ZmU-E8-WwQ"/>
+                                    <constraint firstAttribute="width" constant="130" id="tMd-4K-peV"/>
+                                    <constraint firstItem="nAp-yf-Nm7" firstAttribute="centerX" secondItem="EOc-Ei-j7P" secondAttribute="centerX" id="uio-ON-Ugz"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="3"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ee3-58-gZO">
+                                <rect key="frame" x="205" y="33.5" width="33" height="17"/>
+                                <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="120.00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fda-i6-tSV">
+                                <rect key="frame" x="382.5" y="30" width="50.5" height="20"/>
+                                <fontDescription key="fontDescription" name="Lato-Semibold" family="Lato" pointSize="16"/>
+                                <color key="textColor" name="AppTabSelectColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GYR-fw-3I9">
+                                <rect key="frame" x="0.0" y="57" width="443" height="23"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="similar" translatesAutoresizingMaskIntoConstraints="NO" id="UFr-1n-Br5">
+                                        <rect key="frame" x="423" y="4" width="10" height="15"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="15" id="W5z-cJ-I0s"/>
+                                            <constraint firstAttribute="width" constant="10" id="rzq-wB-hoR"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="More Similar Option" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DHv-L3-ccH">
+                                        <rect key="frame" x="329" y="5.5" width="89" height="12"/>
+                                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="10"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BlV-vb-Hqd">
+                                        <rect key="frame" x="318" y="0.0" width="125" height="23"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="125" id="FgF-3t-43f"/>
+                                        </constraints>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain"/>
+                                        <connections>
+                                            <action selector="didTapOnSimilarOptionBtnAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="7yQ-qn-w9D"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" name="AppCalenderDateSelectColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="23" id="7jH-A4-wU4"/>
+                                    <constraint firstAttribute="bottom" secondItem="BlV-vb-Hqd" secondAttribute="bottom" id="Ati-kt-dcf"/>
+                                    <constraint firstItem="UFr-1n-Br5" firstAttribute="leading" secondItem="DHv-L3-ccH" secondAttribute="trailing" constant="5" id="PVl-7g-4bK"/>
+                                    <constraint firstAttribute="trailing" secondItem="BlV-vb-Hqd" secondAttribute="trailing" id="UCB-LG-wJr"/>
+                                    <constraint firstAttribute="trailing" secondItem="UFr-1n-Br5" secondAttribute="trailing" constant="10" id="bIV-dr-i3C"/>
+                                    <constraint firstItem="UFr-1n-Br5" firstAttribute="centerY" secondItem="DHv-L3-ccH" secondAttribute="centerY" id="hPX-z9-yQb"/>
+                                    <constraint firstItem="BlV-vb-Hqd" firstAttribute="top" secondItem="GYR-fw-3I9" secondAttribute="top" id="obX-v3-iMH"/>
+                                    <constraint firstItem="DHv-L3-ccH" firstAttribute="centerY" secondItem="GYR-fw-3I9" secondAttribute="centerY" id="qpW-Ut-N6M"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="120.00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fLX-Ab-fzc">
+                                <rect key="frame" x="382.5" y="9" width="50.5" height="20"/>
+                                <fontDescription key="fontDescription" name="Lato-Semibold" family="Lato" pointSize="16"/>
+                                <color key="textColor" name="AppTabSelectColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="68b-Q2-Gh5" firstAttribute="centerY" secondItem="Zua-9O-Xey" secondAttribute="centerY" id="02a-b1-Vkw"/>
-                            <constraint firstItem="AE2-8H-5Vf" firstAttribute="leading" secondItem="8fx-9x-hpj" secondAttribute="trailing" constant="10" id="399-7o-7tN"/>
+                            <constraint firstItem="Fda-i6-tSV" firstAttribute="top" secondItem="fLX-Ab-fzc" secondAttribute="bottom" constant="1" id="3Ts-ZX-PoH"/>
+                            <constraint firstItem="EOc-Ei-j7P" firstAttribute="top" secondItem="UEJ-Po-ddD" secondAttribute="bottom" constant="10" id="4ka-sD-6Mk"/>
+                            <constraint firstItem="Fda-i6-tSV" firstAttribute="centerY" secondItem="jxh-RO-XCd" secondAttribute="centerY" id="5E1-Pd-Fco"/>
                             <constraint firstItem="UEJ-Po-ddD" firstAttribute="leading" secondItem="jxh-RO-XCd" secondAttribute="leading" id="8DL-yx-lOZ"/>
-                            <constraint firstItem="8fx-9x-hpj" firstAttribute="leading" secondItem="jxh-RO-XCd" secondAttribute="leading" constant="15" id="8nY-sG-0Qo"/>
-                            <constraint firstItem="AE2-8H-5Vf" firstAttribute="centerY" secondItem="8fx-9x-hpj" secondAttribute="centerY" id="EVA-Ip-zp4"/>
-                            <constraint firstItem="UEJ-Po-ddD" firstAttribute="top" secondItem="AE2-8H-5Vf" secondAttribute="bottom" constant="18" id="GHp-tc-dLL"/>
-                            <constraint firstItem="8fx-9x-hpj" firstAttribute="top" secondItem="jxh-RO-XCd" secondAttribute="top" constant="10" id="O7G-S0-cdj"/>
-                            <constraint firstItem="68b-Q2-Gh5" firstAttribute="leading" secondItem="Zua-9O-Xey" secondAttribute="trailing" constant="6" id="PXO-C1-LXu"/>
-                            <constraint firstAttribute="bottom" secondItem="UEJ-Po-ddD" secondAttribute="bottom" constant="14.5" id="PiF-Xh-KDQ"/>
-                            <constraint firstAttribute="trailing" secondItem="UEJ-Po-ddD" secondAttribute="trailing" id="hbE-Ry-KKx"/>
-                            <constraint firstItem="Zua-9O-Xey" firstAttribute="leading" secondItem="AE2-8H-5Vf" secondAttribute="trailing" constant="6" id="n19-aV-os9"/>
-                            <constraint firstItem="Zua-9O-Xey" firstAttribute="centerY" secondItem="AE2-8H-5Vf" secondAttribute="centerY" id="xDb-ty-G75"/>
+                            <constraint firstItem="GYR-fw-3I9" firstAttribute="leading" secondItem="jxh-RO-XCd" secondAttribute="leading" id="Ejr-Se-nMG"/>
+                            <constraint firstAttribute="trailing" secondItem="EOc-Ei-j7P" secondAttribute="trailing" id="Jpe-q6-kH9"/>
+                            <constraint firstAttribute="trailing" secondItem="Fda-i6-tSV" secondAttribute="trailing" constant="10" id="O90-gN-gOC"/>
+                            <constraint firstItem="UEJ-Po-ddD" firstAttribute="top" secondItem="jxh-RO-XCd" secondAttribute="top" constant="15" id="S8B-GU-be9"/>
+                            <constraint firstItem="1F6-Rf-SIT" firstAttribute="top" secondItem="UEJ-Po-ddD" secondAttribute="bottom" constant="10" id="SR1-87-TJl"/>
+                            <constraint firstAttribute="trailing" secondItem="fLX-Ab-fzc" secondAttribute="trailing" constant="10" id="Zge-As-fP2"/>
+                            <constraint firstItem="1F6-Rf-SIT" firstAttribute="leading" secondItem="jxh-RO-XCd" secondAttribute="leading" id="fic-uI-EiU"/>
+                            <constraint firstAttribute="trailing" secondItem="UEJ-Po-ddD" secondAttribute="trailing" constant="130" id="hbE-Ry-KKx"/>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="80" id="mUD-iT-ElR"/>
+                            <constraint firstItem="Ee3-58-gZO" firstAttribute="centerX" secondItem="jxh-RO-XCd" secondAttribute="centerX" id="q0z-z8-oDq"/>
+                            <constraint firstAttribute="bottom" secondItem="GYR-fw-3I9" secondAttribute="bottom" id="quX-Fs-GTN"/>
+                            <constraint firstItem="Ee3-58-gZO" firstAttribute="centerY" secondItem="WxZ-nb-mDm" secondAttribute="centerY" id="rfN-ZF-Hwm"/>
+                            <constraint firstItem="GYR-fw-3I9" firstAttribute="top" secondItem="1F6-Rf-SIT" secondAttribute="bottom" id="s8Y-Ka-VRU"/>
+                            <constraint firstAttribute="trailing" secondItem="GYR-fw-3I9" secondAttribute="trailing" id="vLy-D7-c7c"/>
                         </constraints>
                     </view>
                 </subviews>
+                <color key="backgroundColor" name="AppHolderViewColor"/>
                 <constraints>
                     <constraint firstItem="jxh-RO-XCd" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="1bH-pq-VQ2"/>
                     <constraint firstAttribute="bottom" secondItem="jxh-RO-XCd" secondAttribute="bottom" constant="5" id="7GV-pR-jLH"/>
@@ -80,18 +202,36 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="airlineCodelbl" destination="Zua-9O-Xey" id="APB-Hl-EP4"/>
-                <outlet property="airlinesLogoImg" destination="8fx-9x-hpj" id="iC3-Zt-BPb"/>
-                <outlet property="airlinesNamelbl" destination="AE2-8H-5Vf" id="BeZ-lZ-rbw"/>
-                <outlet property="datelbl" destination="68b-Q2-Gh5" id="Zk8-YG-VZC"/>
                 <outlet property="holderView" destination="jxh-RO-XCd" id="mfk-40-XB5"/>
+                <outlet property="markupkwdlbl" destination="fLX-Ab-fzc" id="QiT-al-wIG"/>
                 <outlet property="multiCityTripTV" destination="UEJ-Po-ddD" id="X9G-4n-lAI"/>
+                <outlet property="pricelbl" destination="Fda-i6-tSV" id="VDW-Mm-Xk9"/>
+                <outlet property="refundableTypelbl" destination="Ee3-58-gZO" id="9fa-b9-vDD"/>
+                <outlet property="similarbtn" destination="BlV-vb-Hqd" id="wAS-M8-RXW"/>
+                <outlet property="similarimg" destination="UFr-1n-Br5" id="ik8-aI-rDc"/>
+                <outlet property="similarlbl" destination="DHv-L3-ccH" id="Vp5-Co-Jl1"/>
                 <outlet property="tvHeight" destination="Wmt-gO-zBu" id="AzX-Jq-FEv"/>
             </connections>
-            <point key="canvasLocation" x="270.28985507246381" y="107.8125"/>
+            <point key="canvasLocation" x="270.28985507246381" y="117.1875"/>
         </tableViewCell>
     </objects>
     <resources>
+        <image name="similar" width="14" height="14"/>
+        <namedColor name="AppBtnColor">
+            <color red="0.92500001192092896" green="0.2669999897480011" blue="0.11800000071525574" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="AppCalenderDateSelectColor">
+            <color red="0.0" green="0.6589999794960022" blue="0.59600001573562622" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="AppHolderViewColor">
+            <color red="0.94499999284744263" green="0.95300000905990601" blue="0.94900000095367432" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="AppLabelColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="AppTabSelectColor">
+            <color red="0.3919999897480011" green="0.15299999713897705" blue="0.43500000238418579" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

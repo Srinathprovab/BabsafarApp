@@ -28,12 +28,28 @@ class ContactInformationTVCell: TableViewCell {
     @IBOutlet weak var codeView: UIView!
     @IBOutlet weak var countryCodeLbl: UILabel!
     @IBOutlet weak var countryCodeBtn: UIButton!
+    @IBOutlet weak var countrycodeTF: UITextField!
+
     
+    var isSearchBool = Bool()
+    var searchText = String()
+    var filterdcountrylist = [All_country_code_list]()
+    var countryNames = [String]()
+    var countrycodesArray = [String]()
+    var originArray = [String]()
+    var isocountrycodeArray = [String]()
+    
+    var nationalityCode = String()
     let dropDown = DropDown()
     var countryNameArray = [String]()
+    var billingCountryCode = String()
+    var billingCountryName = String()
     var delegate:ContactInformationTVCellDelegate?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        
         // Initialization code
         setupUI()
     }
@@ -45,16 +61,14 @@ class ContactInformationTVCell: TableViewCell {
     }
     
     override func updateUI() {
-        countrylist.forEach { i in
-            countryNameArray.append(i.name ?? "")
-        }
-        dropDown.dataSource = countryNameArray
-        setupDropDown()
+        filterdcountrylist = countrylist
+        loadCountryNamesAndCode()
     }
     
+  
     
     func setupUI() {
-        contentView.backgroundColor = .AppBorderColor
+        contentView.backgroundColor = .AppHolderViewColor
         
         contactImg.image = UIImage(named: "contact")?.withRenderingMode(.alwaysOriginal)
         
@@ -66,31 +80,35 @@ class ContactInformationTVCell: TableViewCell {
         
         setupLabels(lbl: titlelbl, text: "Contact Information", textcolor: .AppLabelColor, font: .LatoSemibold(size: 16))
         setupLabels(lbl: subTitlelbl, text: "E-Ticket will be sent to the registered email address", textcolor: .SubTitleColor, font: .LatoRegular(size: 12))
-        setupLabels(lbl: countryCodeLbl, text: "+965", textcolor: .SubTitleColor, font: .LatoRegular(size: 14))
+        setupLabels(lbl: countryCodeLbl, text: "", textcolor: .SubTitleColor, font: .LatoRegular(size: 16))
         
-        
-        emailTF.placeholder = "Email Address"
-        mobileTF.placeholder = "Enter Mobile Number"
         
         emailTfView.layer.borderWidth = 1
         mobileNoView.layer.borderWidth = 1
         
         countryCodeBtn.setTitle("", for: .normal)
         
-        emailTF.backgroundColor = .clear
-        emailTF.setLeftPaddingPoints(20)
-        emailTF.font = UIFont.LatoRegular(size: 14)
-        emailTF.tag = 1
-        emailTF.delegate = self
-        emailTF.addTarget(self, action: #selector(editingText(textField:)), for: .editingChanged)
+        setuptf(tf: emailTF, tag1: 1, leftpadding: 20, font: .LatoRegular(size: 16), placeholder: "Email Address")
+        setuptf(tf: mobileTF, tag1: 2, leftpadding: 20, font: .LatoRegular(size: 16), placeholder: "Enter Mobile Number")
+        setuptf(tf: countrycodeTF, tag1: 3, leftpadding: 20, font: .LatoRegular(size: 16), placeholder: "+355")
         
-        
-        mobileTF.backgroundColor = .clear
-        mobileTF.setLeftPaddingPoints(20)
-        mobileTF.font = UIFont.LatoRegular(size: 14)
-        mobileTF.tag = 2
-        mobileTF.delegate = self
-        mobileTF.addTarget(self, action: #selector(editingText(textField:)), for: .editingChanged)
+
+        setupDropDown()
+        countryCodeBtn.isHidden = true
+        countrycodeTF.addTarget(self, action: #selector(searchTextChanged(textField:)), for: .editingChanged)
+        countrycodeTF.addTarget(self, action: #selector(searchTextBegin(textField:)), for: .editingDidBegin)
+        countrycodeTF.text = defaults.string(forKey: UserDefaultsKeys.mobilecountrycode)
+
+    }
+    
+    func setuptf(tf:UITextField,tag1:Int,leftpadding:Int,font:UIFont,placeholder:String){
+        tf.backgroundColor = .clear
+        tf.placeholder = placeholder
+        tf.setLeftPaddingPoints(CGFloat(leftpadding))
+        tf.font = font
+        tf.tag = tag1
+        tf.delegate = self
+        tf.addTarget(self, action: #selector(editingText(textField:)), for: .editingChanged)
     }
     
     
@@ -114,23 +132,92 @@ class ContactInformationTVCell: TableViewCell {
     
     @IBAction func didTapOnCountryCodeBtn(_ sender: Any) {
         dropDown.show()
-        delegate?.didTapOnCountryCodeBtn(cell: self)
+       // delegate?.didTapOnCountryCodeBtn(cell: self)
     }
-    
     
     func setupDropDown() {
         
-        dropDown.direction = .any
+        dropDown.direction = .bottom
         dropDown.backgroundColor = .WhiteColor
         dropDown.anchorView = self.countryCodeBtn
         dropDown.bottomOffset = CGPoint(x: 0, y: countryCodeBtn.frame.size.height + 10)
         dropDown.selectionAction = { [weak self] (index: Int, item: String) in
-            self?.countryCodeLbl.text = countrylist[index].country_code
+            
+            self?.countryCodeLbl.text = ""
+            self?.countrycodeTF.text = self?.countrycodesArray[index]
+            self?.billingCountryCode = self?.isocountrycodeArray[index] ?? ""
+            self?.billingCountryName = self?.countryNames[index] ?? ""
+            self?.nationalityCode = self?.originArray[index] ?? ""
             self?.countryCodeLbl.textColor = .AppLabelColor
+            
+            
+            
+            self?.countrycodeTF.text = self?.countrycodesArray[index] ?? ""
+            self?.countrycodeTF.resignFirstResponder()
+            self?.mobileTF.text = ""
+            self?.mobileTF.becomeFirstResponder()
+            
             self?.delegate?.didTapOnDropDownBtn(cell: self!)
+            
         }
     }
     
+    
+    
+    
+    
+    @objc func searchTextBegin(textField: UITextField) {
+        textField.text = ""
+        filterdcountrylist.removeAll()
+        filterdcountrylist = countrylist
+        loadCountryNamesAndCode()
+        dropDown.show()
+    }
+    
+    
+    @objc func searchTextChanged(textField: UITextField) {
+        searchText = textField.text ?? ""
+        if searchText == "" {
+            isSearchBool = false
+            filterContentForSearchText(searchText)
+        }else {
+            isSearchBool = true
+            filterContentForSearchText(searchText)
+        }
+        
+        
+    }
+    
+    func filterContentForSearchText(_ searchText: String) {
+        print("Filterin with:", searchText)
+        
+        filterdcountrylist.removeAll()
+        filterdcountrylist = countrylist.filter { thing in
+            return "\(thing.name?.lowercased() ?? "")".contains(searchText.lowercased())
+        }
+        
+        loadCountryNamesAndCode()
+        dropDown.show()
+        
+    }
+    
+    func loadCountryNamesAndCode(){
+        countryNames.removeAll()
+        countrycodesArray.removeAll()
+        isocountrycodeArray.removeAll()
+        originArray.removeAll()
+        
+        filterdcountrylist.forEach { i in
+            countryNames.append(i.name ?? "")
+            countrycodesArray.append(i.country_code ?? "")
+            isocountrycodeArray.append(i.iso_country_code ?? "")
+            originArray.append(i.origin ?? "")
+        }
+        
+        DispatchQueue.main.async {[self] in
+            dropDown.dataSource = countryNames
+        }
+    }
     
 }
 
@@ -141,7 +228,7 @@ extension ContactInformationTVCell {
     override func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         //For mobile numer validation
         if textField == mobileTF {
-            let maxLength = 10
+            let maxLength = self.billingCountryName.getMobileNumberMaxLength() ?? 8
             let currentString: NSString = textField.text! as NSString
             let newString: NSString =  currentString.replacingCharacters(in: range, with: string) as NSString
             
@@ -156,4 +243,6 @@ extension ContactInformationTVCell {
         }
       //  return true
     }
+    
+    
 }

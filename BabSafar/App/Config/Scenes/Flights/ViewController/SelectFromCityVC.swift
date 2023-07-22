@@ -9,7 +9,9 @@ import UIKit
 import Alamofire
 
 
-class SelectFromCityVC: BaseTableVC, SelectCityViewModelProtocal {
+class SelectFromCityVC: BaseTableVC, SelectCityViewModelProtocal, HotelCitySearchViewModelDelegate {
+    
+    
     
     @IBOutlet weak var searchTextfieldHolderView: UIView!
     @IBOutlet weak var backBtnView: UIView!
@@ -18,15 +20,21 @@ class SelectFromCityVC: BaseTableVC, SelectCityViewModelProtocal {
     @IBOutlet weak var searchImg: UIImageView!
     @IBOutlet weak var searchTF: UITextField!
     
+    
+    var tokey = String()
     var filtered:[SelectCityModel] = []
     var cityList:[SelectCityModel] = []
+    var hotelfiltered:[HotelCityListModel] = []
+    var hotelList = [HotelCityListModel]()
     var cityViewModel: SelectCityViewModel?
+    var cityViewModel1: HotelCitySearchViewModel?
     var tablerow = [TableRow]()
     var titleStr = String()
     var payload = [String:Any]()
     var isSearchBool = Bool()
     var searchText = String()
     var celltag = Int()
+    var keyStr = String()
     
     
     static var newInstance: SelectFromCityVC? {
@@ -36,17 +44,30 @@ class SelectFromCityVC: BaseTableVC, SelectCityViewModelProtocal {
         return vc
     }
     
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        callapibool = false
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         
+        self.celltag = Int(defaults.string(forKey: UserDefaultsKeys.cellTag) ?? "0") ?? 0
+        
+        searchTF.becomeFirstResponder()
         NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("nointernet"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadTV), name: Notification.Name("reloadTV"), object: nil)
-        callApi()
+        if let selectedtab = defaults.string(forKey: UserDefaultsKeys.dashboardTapSelected) {
+            if selectedtab == "Flights" {
+                callApi()
+            }else {
+                CALL_CITY_OR_HOTEL_SEARCH_API(str: "")
+            }
+        }
     }
     
     
     func callApi() {
         CallShowCityListAPI(str: "")
-        self.celltag = Int(defaults.string(forKey: UserDefaultsKeys.cellTag) ?? "0") ?? 0
     }
     
     //MARK: - nointernet
@@ -62,11 +83,46 @@ class SelectFromCityVC: BaseTableVC, SelectCityViewModelProtocal {
     }
     
     
+    //MARK: - CITY SEARCH API
     func CallShowCityListAPI(str:String) {
-        BASE_URL = "https://provabdevelopment.com/alghanim_new/mobile_webservices/mobile/index.php/ajax/"
+        payload["term"] = str
+        // cityViewModel?.CallShowCityListAPI(dictParam: payload)
+        cityViewModel?.CallShowCityList_multicity_API(dictParam: payload)
+    }
+    
+    func ShowCityList(response: [SelectCityModel]) {
+        self.cityList = response
+        print(cityList)
+        
+        DispatchQueue.main.async {[self] in
+            commonTableView.reloadData()
+        }
+    }
+    
+    
+    func ShowCityListMulticity(response: [SelectCityModel]) {
+        self.cityList = response
+        print(cityList)
+        
+        DispatchQueue.main.async {[self] in
+            commonTableView.reloadData()
+        }
+    }
+    
+    
+    //MARK: - CITY OR HOTEL LIST API
+    
+    func CALL_CITY_OR_HOTEL_SEARCH_API(str:String) {
         
         payload["term"] = str
-        cityViewModel?.CallShowCityListAPI(dictParam: payload)
+        cityViewModel1?.CallHotelCitySearchAPI(dictParam: payload)
+    }
+    
+    func hotelCitySearchResult(response: [HotelCityListModel]) {
+        hotelList = response
+        DispatchQueue.main.async {[self] in
+            commonTableView.reloadData()
+        }
     }
     
     override func viewDidLoad() {
@@ -75,23 +131,26 @@ class SelectFromCityVC: BaseTableVC, SelectCityViewModelProtocal {
         // Do any additional setup after loading the view.
         setupUI()
         cityViewModel = SelectCityViewModel(self)
-        searchTF.addTarget(self, action: #selector(searchTextChanged(_:)), for: .editingChanged)
+        cityViewModel1 = HotelCitySearchViewModel(self)
         
     }
     
     func setupUI() {
-        setupViews(v: searchTextfieldHolderView, radius: 25, color: .WhiteColor.withAlphaComponent(0.5))
-        
+        // setupViews(v: searchTextfieldHolderView, radius: 25, color: .WhiteColor.withAlphaComponent(0.5))
+        searchTextfieldHolderView.addCornerRadiusWithShadow(color: .clear, borderColor: .AppBorderColor, cornerRadius: 25)
+        searchTextfieldHolderView.backgroundColor = .AppHolderViewColor
         leftArrowImg.image = UIImage(named: "leftarrow")
-        searchImg.image = UIImage(named: "search")?.withRenderingMode(.alwaysOriginal).withTintColor(.WhiteColor)
+        searchImg.image = UIImage(named: "search")?.withRenderingMode(.alwaysOriginal).withTintColor(.gray)
         
         setupViews(v: backBtnView, radius: 20, color: .WhiteColor.withAlphaComponent(0.2))
         setupLabels(lbl:titlelbl,text: titleStr , textcolor: .WhiteColor, font: .LatoMedium(size: 20))
         
         searchTF.backgroundColor = .clear
-        searchTF.placeholder = "search airport /city"
+        searchTF.placeholder = "Search airport /City"
         searchTF.setLeftPaddingPoints(20)
         searchTF.font = UIFont.LatoRegular(size: 16)
+        searchTF.addTarget(self, action: #selector(searchTextChanged(_:)), for: .editingChanged)
+        
         
         //  commonTableView.registerTVCells(["FromCityTVCell","EmptyTVCell"])
         commonTableView.register(UINib(nibName: "FromCityTVCell", bundle: nil), forCellReuseIdentifier: "cell")
@@ -128,14 +187,32 @@ class SelectFromCityVC: BaseTableVC, SelectCityViewModelProtocal {
             
         }
         
-        CallShowCityListAPI(str: searchText)
+        if let selectedtab = defaults.string(forKey: UserDefaultsKeys.dashboardTapSelected) {
+            if selectedtab == "Flights" {
+                CallShowCityListAPI(str: searchText)
+            }else {
+                CALL_CITY_OR_HOTEL_SEARCH_API(str: searchText)
+            }
+        }
+        
+        
     }
     
     func filterContentForSearchText(_ searchText: String) {
         print("Filterin with:", searchText)
         filtered.removeAll()
-        filtered = self.cityList.filter { thing in
-            return "\(thing.label?.lowercased() ?? "")".contains(searchText.lowercased())
+        hotelfiltered.removeAll()
+        
+        if let selectedtab = defaults.string(forKey: UserDefaultsKeys.dashboardTapSelected) {
+            if selectedtab == "Flights" {
+                filtered = self.cityList.filter { thing in
+                    return "\(thing.label?.lowercased() ?? "")".contains(searchText.lowercased())
+                }
+            }else {
+                hotelfiltered = self.hotelList.filter { thing in
+                    return "\(thing.label?.lowercased() ?? "")".contains(searchText.lowercased())
+                }
+            }
         }
         
         commonTableView.reloadData()
@@ -143,20 +220,13 @@ class SelectFromCityVC: BaseTableVC, SelectCityViewModelProtocal {
     
     
     
-    func ShowCityList(response: [SelectCityModel]) {
-        
-        print(response.first)
-        self.cityList = response
-        
-        DispatchQueue.main.async {[self] in
-            commonTableView.reloadData()
-        }
-    }
     
     
     func gotoSearchFlightsVC() {
         guard let vc = SearchFlightsVC.newInstance.self else {return}
-        vc.modalPresentationStyle = .overCurrentContext
+        vc.modalPresentationStyle = .fullScreen
+        keyStr = "select"
+        vc.isfromVc = "city"
         self.present(vc, animated: false)
     }
     
@@ -176,34 +246,82 @@ class SelectFromCityVC: BaseTableVC, SelectCityViewModelProtocal {
 extension SelectFromCityVC {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //check search text & original text
-        if( isSearchBool == true){
-            return filtered.count
-        }else{
-            return cityList.count
+        
+        
+        if let selectedtab = defaults.string(forKey: UserDefaultsKeys.dashboardTapSelected) {
+            if selectedtab == "Flights" {
+                //check search text & original text
+                if( isSearchBool == true){
+                    return filtered.count
+                }else{
+                    return cityList.count
+                }
+            }else {
+                //check search text & original text
+                if( isSearchBool == true){
+                    return hotelfiltered.count
+                }else{
+                    return hotelList.count
+                }
+            }
         }
+        
+        return 0
     }
     
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! FromCityTVCell
-        if( isSearchBool == true){
-            let dict = filtered[indexPath.row]
-            cell.titlelbl.text = dict.label
-            cell.subTitlelbl.text = dict.value
-            cell.id = dict.id ?? ""
-            cell.cityShortNamelbl.text = dict.code
-            cell.value = dict.value ?? ""
-            cell.citycode = "\(dict.name ?? "")(\(dict.code ?? ""))"
-        }else{
-            let dict = cityList[indexPath.row]
-            cell.titlelbl.text = dict.label
-            cell.subTitlelbl.text = dict.value
-            cell.id = dict.id ?? ""
-            cell.cityShortNamelbl.text = dict.code
-            cell.value = dict.value ?? ""
-            cell.citycode = "\(dict.name ?? "")(\(dict.code ?? ""))"
+        
+        if let selectedtab = defaults.string(forKey: UserDefaultsKeys.dashboardTapSelected) {
+            if selectedtab == "Flights" {
+                if( isSearchBool == true){
+                    let dict = filtered[indexPath.row]
+                    cell.titlelbl.text = dict.label
+                    cell.subTitlelbl.text = dict.value
+                    cell.id = dict.id ?? ""
+                    cell.cityShortNamelbl.text = dict.code
+                    cell.value = dict.value ?? ""
+                    cell.citycode = "\(dict.name ?? "")"
+                    cell.cityname = dict.city ?? ""
+                }else{
+                    let dict = cityList[indexPath.row]
+                    cell.titlelbl.text = dict.label
+                    cell.subTitlelbl.text = dict.value
+                    cell.id = dict.id ?? ""
+                    cell.cityShortNamelbl.text = dict.code
+                    cell.value = dict.value ?? ""
+                    cell.citycode = "\(dict.name ?? "")"
+                    cell.cityname = dict.city  ?? ""
+                }
+                
+            }else {
+                if( isSearchBool == true){
+                    let dict = hotelfiltered[indexPath.row]
+                    cell.titlelbl.text = dict.label
+                    cell.subTitlelbl.text = dict.value
+                    cell.id = dict.id ?? ""
+                    cell.cityShortNamelbl.text = dict.id
+                    cell.value = dict.value ?? ""
+                    cell.citycode = "\(dict.label ?? "")"
+                    cell.cityname = dict.label ?? ""
+                }else{
+                    let dict = hotelList[indexPath.row]
+                    cell.titlelbl.text = dict.label
+                    cell.subTitlelbl.text = dict.value
+                    cell.id = dict.id ?? ""
+                    cell.cityShortNamelbl.text = dict.id
+                    cell.value = dict.value ?? ""
+                    cell.citycode = "\(dict.label ?? "")"
+                    cell.cityname = dict.label  ?? ""
+                }
+                
+            }
         }
+        
+        
+        
+        
         return cell
     }
     
@@ -226,50 +344,57 @@ extension SelectFromCityVC {
                                 defaults.set(cell.titlelbl.text ?? "", forKey: UserDefaultsKeys.fromCity)
                                 defaults.set(cell.id , forKey: UserDefaultsKeys.fromlocid)
                                 defaults.set(cell.cityShortNamelbl.text , forKey: UserDefaultsKeys.fromairport)
-
+                                defaults.set(cell.cityname , forKey: UserDefaultsKeys.fromcityname)
+                                
                             }else {
                                 defaults.set(cell.titlelbl.text ?? "", forKey: UserDefaultsKeys.toCity)
                                 defaults.set(cell.id , forKey: UserDefaultsKeys.tolocid)
                                 defaults.set(cell.cityShortNamelbl.text , forKey: UserDefaultsKeys.toairport)
-
+                                defaults.set(cell.cityname , forKey: UserDefaultsKeys.tocityname)
+                                
                             }
                         }else if journeyType == "circle"{
                             if titleStr == "From" {
                                 defaults.set(cell.titlelbl.text ?? "", forKey: UserDefaultsKeys.rfromCity)
                                 defaults.set(cell.id , forKey: UserDefaultsKeys.rfromlocid)
                                 defaults.set(cell.cityShortNamelbl.text , forKey: UserDefaultsKeys.rfromairport)
+                                defaults.set(cell.cityname , forKey: UserDefaultsKeys.rfromcityname)
                                 
                             }else {
                                 defaults.set(cell.titlelbl.text ?? "", forKey: UserDefaultsKeys.rtoCity)
                                 defaults.set(cell.id , forKey: UserDefaultsKeys.rtolocid)
                                 defaults.set(cell.cityShortNamelbl.text , forKey: UserDefaultsKeys.rtoairport)
-
+                                defaults.set(cell.cityname , forKey: UserDefaultsKeys.rtocityname)
+                                
                             }
                         }else {
                             
+        
+                            
                             if titleStr == "From" {
+                                
+                                
+                                addmulticityCount += 1
                                 defaults.set(cell.titlelbl.text ?? "", forKey: UserDefaultsKeys.mfromCity)
                                 defaults.set(cell.id , forKey: UserDefaultsKeys.mfromlocid)
                                 defaults.set(cell.cityShortNamelbl.text , forKey: UserDefaultsKeys.mfromairportCode)
                                 defaults.set(cell.value , forKey: UserDefaultsKeys.mfromCityValue)
-
+                                
                                 fromCityNameArray[self.celltag] = cell.titlelbl.text ?? ""
                                 fromCityShortNameArray[self.celltag] = cell.cityShortNamelbl.text ?? ""
                                 
-                
                                 fromCityArray[self.celltag] = cell.value
                                 fromlocidArray[self.celltag] = cell.id
-                                
-                             
                                 defaults.set(cell.citycode , forKey: UserDefaultsKeys.mfromCity1)
-                            
+                                
+                               
                                 
                             }else {
                                 defaults.set(cell.titlelbl.text ?? "", forKey: UserDefaultsKeys.mtoCity)
                                 defaults.set(cell.id , forKey: UserDefaultsKeys.mtolocid)
                                 defaults.set(cell.cityShortNamelbl.text , forKey: UserDefaultsKeys.mtoairportCode)
                                 defaults.set(cell.value , forKey: UserDefaultsKeys.mtoCityValue)
-
+                                
                                 toCityNameArray[self.celltag] = cell.titlelbl.text ?? ""
                                 toCityShortNameArray[self.celltag] = cell.cityShortNamelbl.text ?? ""
                                 
@@ -277,20 +402,58 @@ extension SelectFromCityVC {
                                 tolocidArray[self.celltag] = cell.id
                                 
                                 defaults.set(cell.citycode , forKey: UserDefaultsKeys.mtoCity1)
-                               
-
+                                
+                                
+                                
+                                
+                                if addmulticityCount < fromCityNameArray.count {
+                                    addmulticityCount += 1
+                                    defaults.set(cell.titlelbl.text ?? "", forKey: UserDefaultsKeys.mfromCity)
+                                    defaults.set(cell.id , forKey: UserDefaultsKeys.mfromlocid)
+                                    defaults.set(cell.cityShortNamelbl.text , forKey: UserDefaultsKeys.mfromairportCode)
+                                    defaults.set(cell.value , forKey: UserDefaultsKeys.mfromCityValue)
+                                    
+                                    fromCityNameArray[self.celltag + 1] = cell.titlelbl.text ?? ""
+                                    fromCityShortNameArray[self.celltag + 1] = cell.cityShortNamelbl.text ?? ""
+                                    
+                                    fromCityArray[self.celltag + 1] = cell.value
+                                    fromlocidArray[self.celltag + 1] = cell.id
+                                    defaults.set(cell.citycode , forKey: UserDefaultsKeys.mfromCity1)
+                                }
+                                
+                                
                             }
                             
                         }
                     }
                     
-                    
-                    
-                    
                     NotificationCenter.default.post(name: NSNotification.Name("reload"), object: nil)
-                    self.gotoSearchFlightsVC()
+                    NotificationCenter.default.post(name: NSNotification.Name("fromSelectCityVC"), object: nil)
+                    
+                    
+                    if titleStr == "From" {
+                        guard let vc = SelectFromCityVC.newInstance.self else {return}
+                        vc.modalPresentationStyle = .fullScreen
+                        callapibool = true
+                        vc.titleStr = "To"
+                        vc.tokey = "toooo"
+                        present(vc, animated: false)
+                    }else {
+                        
+                        
+                        if tokey == "frommm" {
+                            dismiss(animated: true, completion: nil)
+                        }else {
+                            // presentingViewController?.presentingViewController?.dismiss(animated: true)
+                            gotoCalenderVC(key: "dep", titleStr: "Departure Date")
+                        }
+                    }
                 }else {
                     defaults.set(cell.titlelbl.text ?? "", forKey: UserDefaultsKeys.locationcity)
+                    defaults.set(cell.id, forKey: UserDefaultsKeys.locationcityid)
+                    defaults.set(cell.cityname, forKey: UserDefaultsKeys.locationcityname)
+                    
+                    
                     NotificationCenter.default.post(name: NSNotification.Name("reload"), object: nil)
                     self.gotoSearchHotelsVC()
                 }
@@ -298,5 +461,15 @@ extension SelectFromCityVC {
         }
         
         
+    }
+    
+    
+    func gotoCalenderVC(key:String,titleStr:String) {
+        dateSelectKey = key
+        guard let vc = Calvc.newInstance.self else {return}
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.titleStr = titleStr
+        callapibool = true
+        self.present(vc, animated: false)
     }
 }

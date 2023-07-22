@@ -21,6 +21,7 @@ class FromCityTVCell: TableViewCell {
     var airportCode = String()
     var value = String()
     var citycode = String()
+    var cityname = String()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -39,7 +40,7 @@ class FromCityTVCell: TableViewCell {
     }
     
     func setupUI() {
-        holderView.backgroundColor = .WhiteColor
+        holderView.backgroundColor = .AppHolderViewColor
         plainImg.image = UIImage(named: "flight")?.withRenderingMode(.alwaysOriginal).withTintColor(HexColor("#A3A3A3"))
         lblHolderView.layer.cornerRadius = 4
         lblHolderView.backgroundColor = HexColor("#E6E8E7")
@@ -50,7 +51,7 @@ class FromCityTVCell: TableViewCell {
         
         titlelbl.numberOfLines = 0
         subTitlelbl.numberOfLines = 0
-        lblHolderView.isHidden = false
+        lblHolderView.isHidden = true
         
         
     }

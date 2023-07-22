@@ -33,7 +33,12 @@ class BookingConfirmedTVCell: TableViewCell {
     
     override func updateUI() {
         
-        bclbl.text = cellInfo?.title
+        
+        bookingIDlbl.text = "Booking id: \(cellInfo?.subTitle ?? "")"
+        bookingReflbl.text = "Booking Reference: \(cellInfo?.buttonTitle ?? "")"
+        bookingDatelbl.text = "Booking Date: \(cellInfo?.text ?? "")"
+        pnrNolbl.text = "PNR No: \(cellInfo?.tempText ?? "")"
+        
         switch cellInfo?.key {
         case "visa":
             bookingIDlbl.text = ""
@@ -54,12 +59,12 @@ class BookingConfirmedTVCell: TableViewCell {
         setupViews(v: holderView, radius: 10, color: HexColor("#EDF7ED"))
         checkImg.image = UIImage(named: "bc")?.withRenderingMode(.alwaysOriginal)
         
-        setupLabels(lbl: bclbl, text: "Booking Confirmed", textcolor: HexColor("#4AA449"), font: .LatoSemibold(size: 22))
-        setupLabels(lbl: congratulationslbl, text: "Congratulations! your e-tickets  are successfuly booked.", textcolor: .AppLabelColor, font: .LatoRegular(size: 14))
-        setupLabels(lbl: bookingIDlbl, text: "Booking id: 2548791", textcolor: HexColor("#5B5B5B"), font: .LatoRegular(size: 14))
-        setupLabels(lbl: bookingDatelbl, text: "Booking Reference: HB14-25474-4975487", textcolor: HexColor("#5B5B5B"), font: .LatoRegular(size: 14))
-        setupLabels(lbl: bookingReflbl, text: "Booking Date: 26-07-2022", textcolor: HexColor("#5B5B5B"), font: .LatoRegular(size: 14))
-        setupLabels(lbl: pnrNolbl, text: "PNR No: MSD589", textcolor: .AppLabelColor, font: .LatoRegular(size: 14))
+        setuplabels(lbl: bclbl, text: "Booking Confirmed", textcolor: HexColor("#4AA449"), font: .LatoSemibold(size: 22), align: .left)
+        setuplabels(lbl: congratulationslbl, text: "Congratulations! your e-tickets  are successfuly booked.", textcolor: .AppLabelColor, font: .LatoRegular(size: 14), align: .left)
+        setuplabels(lbl: bookingIDlbl, text: "", textcolor: HexColor("#5B5B5B"), font: .LatoRegular(size: 14), align: .left)
+        setuplabels(lbl: bookingReflbl, text: " ", textcolor: HexColor("#5B5B5B"), font: .LatoRegular(size: 14), align: .left)
+        setuplabels(lbl: bookingDatelbl, text: "", textcolor: HexColor("#5B5B5B"), font: .LatoRegular(size: 14), align: .left)
+        setuplabels(lbl: pnrNolbl, text: "", textcolor: .AppLabelColor, font: .LatoRegular(size: 14), align: .center)
         
     }
     
@@ -69,12 +74,6 @@ class BookingConfirmedTVCell: TableViewCell {
         v.clipsToBounds = true
         v.layer.borderWidth = 0.4
         v.layer.borderColor = UIColor.AppBorderColor.cgColor
-    }
-    
-    func setupLabels(lbl:UILabel,text:String,textcolor:UIColor,font:UIFont) {
-        lbl.text = text
-        lbl.textColor = textcolor
-        lbl.font = font
     }
     
 }

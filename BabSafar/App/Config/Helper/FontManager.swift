@@ -22,7 +22,7 @@ extension UIFont {
       return UIFont(name: "Poppins-Medium", size: size)!
     }
     public static func poppinsRegular(size: CGFloat) -> UIFont {
-      return UIFont(name: "Poppins-Regular", size: size)!
+      return UIFont(name: "Poppins-Medium", size: size)!
     }
     
     public static func poppinsBoldItalic(size: CGFloat) -> UIFont {

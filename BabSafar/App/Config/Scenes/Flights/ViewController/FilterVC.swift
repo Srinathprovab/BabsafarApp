@@ -7,6 +7,36 @@
 
 import UIKit
 
+enum SortParameter {
+    case PriceHigh
+    case PriceLow
+    case DurationHigh
+    case DurationLow
+    case DepartureHigh
+    case DepartureLow
+    case ArrivalHigh
+    case ArrivalLow
+    case starLow
+    case starHeigh
+    case nothing
+    case airlinessortatoz
+    case airlinessortztoa
+}
+
+protocol AppliedFilters:AnyObject {
+    func filtersSortByApplied(sortBy: SortParameter)
+    func filtersByApplied(minpricerange:Double,
+                          maxpricerange:Double,
+                          noofStopsArray:[String],
+                          refundableTypeArray:[String],
+                          departureTime:String,arrivalTime:String,
+                          noOvernightFlight:String,
+                          airlinesFilterArray:[String],
+                          connectingFlightsFilterArray:[String],
+                          ConnectingAirportsFilterArray:[String])
+}
+
+
 class FilterVC: BaseTableVC{
     
     @IBOutlet weak var holderView: UIView!
@@ -23,14 +53,17 @@ class FilterVC: BaseTableVC{
     @IBOutlet weak var resetBtn: UIButton!
     
     
+    weak var delegate: AppliedFilters?
+    var sortBy: SortParameter = .nothing
+    var minpricerangefilter = Double()
+    var maxpricerangefilter = Double()
+    
     var stopsArray = ["0 Stop","1 Stop","1+ Stop"]
-    var refundableTypeArray = ["Refundable ","Non Refundable"]
-    var luggageArray = ["Cabin Baggage ","Checked Baggage "]
-    var airlinesArray = ["Egypt Air (MS)","Emirates Airlines (EK)","Gulf Air (GF)","Emirates Airlines (EK)"]
+    var refundableTypeArray = ["Refundable","Non Refundable"]
+    var luggageArray = ["Cabin Baggage","Checked Baggage"]
     var classArray = ["Economy","Permium Economy","Bussiness","First Class"]
     var tablerow = [TableRow]()
     var filterKey = String()
-    
     var free_airport_shuttleArray = ["Free Ariport Shuttle","All Inclusive","Facilities"]
     var guestRating = ["Wonderful 4.5+","Very good 4+","Good 3.5+","Average 3+","Poor 4.5+"]
     var guestRating1 = ["Fully Refundable","Reserve Now , Pay Later"]
@@ -40,15 +73,24 @@ class FilterVC: BaseTableVC{
     var accessibilityFeatures = ["Accessibility Equipment","Accessible Bathroom","Accessible Path Of Travel"]
     var distance_from_center = [String]()
     var noOverNightFlightArray = ["No"]
-    var connectingflights = ["Saudi Arabian Airlines(SV)","Qatar Airways(QR)","Gulf Air Company(GF)","Etlhad Airways(EY)"]
-    var connectingAirports = ["Riyadh(RUH)","Jeddah(JED)","Doha(DOH)","Bahrain(bAH)"]
-    
-    
     var paymentTypeArray = ["Refundable","Non Refundable"]
     var badPreferenceArray = ["Twin Beds","Double Bed"]
     var amenitiesArray = ["24 Hour Front Desk","Adults Only","Air Conditioned"]
     var neighbourhoodArray = ["Deira","Dubai","Jebel ali","Jumeirah"]
     var accommodationArray = ["Hotel"]
+    
+    
+    var noOvernightFlightFilterStr = String()
+    var noOfStopsFilterArray = [String]()
+    var refundablerTypeFilteArray = [String]()
+    var departureTimeFilter = String()
+    var arrivalTimeFilter = String()
+    var airlinesFilterArray = [String]()
+    var connectingFlightsFilterArray = [String]()
+    var ConnectingAirportsFilterArray = [String]()
+    
+    var pricetitle = String()
+    var pricefilterValue = String()
     static var newInstance: FilterVC? {
         let storyboard = UIStoryboard(name: Storyboard.Main.name,
                                       bundle: nil)
@@ -56,18 +98,29 @@ class FilterVC: BaseTableVC{
         return vc
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        callapibool = false
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        print("  viewWillAppear ")
+        print(AirlinesArray.joined(separator: ","))
+        NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("nointernet"), object: nil)
+    }
+    
+    //MARK: - nointernet
+    @objc func nointernet() {
+        guard let vc = NoInternetConnectionVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .overCurrentContext
+        self.present(vc, animated: true)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
         setupUI()
-        if let tabSelected = defaults.string(forKey: UserDefaultsKeys.dashboardTapSelected) {
-            if tabSelected == "flights" {
-                setupSortByTVCells()
-            }else {
-                setupHotelsSortByTVCells()
-            }
-        }
     }
     
     
@@ -82,16 +135,53 @@ class FilterVC: BaseTableVC{
         setupViews(v: filtersBtnView, radius: 0, color: .WhiteColor)
         setupViews(v: sortbyUL, radius: 0, color: .AppTabSelectColor)
         setupViews(v: filterUL, radius: 0, color: .WhiteColor)
-        setupLabels(lbl: sortBylbl, text: "Sort By", textcolor: .AppLabelColor, font: .LatoRegular(size: 18))
-        setupLabels(lbl: filterslbl, text: "Filters", textcolor: .SubTitleColor, font: .LatoRegular(size: 18))
+        setuplabels(lbl: sortBylbl, text: "Sort By", textcolor: .AppLabelColor, font: .LatoRegular(size: 18), align: .center)
+        setuplabels(lbl: filterslbl, text: "Filters", textcolor: .SubTitleColor, font: .LatoRegular(size: 18), align: .center)
         closeBtn.setTitle("", for: .normal)
         sortbyBtn.setTitle("", for: .normal)
         filtersBtn.setTitle("", for: .normal)
-        filterKey = "sort"
+        //  filterKey = "sort"
+        
+        filtersBtnView.isHidden = true
+        filtersBtn.isUserInteractionEnabled = false
+        sortbyBtn.isUserInteractionEnabled = false
+        
+        switch filterKey {
+        case "filter":
+            sortBylbl.text = "Filter"
+            setupFilterTVCells()
+            break
+            
+        case "sort":
+            sortBylbl.text = "Sort"
+            setupSortByTVCells()
+            break
+            
+        case "hotelfilter":
+            sortBylbl.text = "Filter"
+            setupHotelsFilterTVCells()
+            break
+            
+        case "hotelsort":
+            sortBylbl.text = "Sort"
+            setupHotelsSortByTVCells()
+            break
+            
+            
+        default:
+            break
+        }
+        
+      
         resetBtn.setTitle("Reset", for: .normal)
         resetBtn.titleLabel?.textColor = .AppTabSelectColor
         resetBtn.titleLabel?.font = UIFont.LatoRegular(size: 16)
-        commonTableView.registerTVCells(["CheckBoxTVCell","EmptyTVCell","SortbyTVCell","ButtonTVCell","DoubleSliderTVCell","PopularFiltersTVCell","LabelTVCell","SliderTVCell","FilterDepartureTVCell"])
+        commonTableView.registerTVCells(["CheckBoxTVCell",
+                                         "EmptyTVCell",
+                                         "SortbyTVCell",
+                                         "ButtonTVCell",
+                                         "DoubleSliderTVCell","PopularFiltersTVCell","LabelTVCell","SliderTVCell","FilterDepartureTVCell"])
+        
     }
     
     
@@ -103,33 +193,24 @@ class FilterVC: BaseTableVC{
         v.layer.borderColor = UIColor.WhiteColor.cgColor
     }
     
-    func setupLabels(lbl:UILabel,text:String,textcolor:UIColor,font:UIFont) {
-        lbl.text = text
-        lbl.textColor = textcolor
-        lbl.font = font
-    }
+    
     
     func setupFilterTVCells() {
         commonTableView.isScrollEnabled = true
         tablerow.removeAll()
-        
         tablerow.append(TableRow(title:"Price",cellType:.SliderTVCell))
         tablerow.append(TableRow(title:"Stops",data: stopsArray,cellType:.CheckBoxTVCell))
         tablerow.append(TableRow(title:"Refundable Type",data: refundableTypeArray,cellType:.CheckBoxTVCell))
         tablerow.append(TableRow(title:"Luggage",data: luggageArray,cellType:.CheckBoxTVCell))
-        
-        tablerow.append(TableRow(title:"Duration",cellType:.SliderTVCell))
-        tablerow.append(TableRow(title:"Transit Time",cellType:.SliderTVCell))
-        
         tablerow.append(TableRow(title:"Departure Time",cellType:.FilterDepartureTVCell))
         tablerow.append(TableRow(title:"Arrival Time",cellType:.FilterDepartureTVCell))
         tablerow.append(TableRow(title:"No Overnight Flight",data: noOverNightFlightArray,cellType:.CheckBoxTVCell))
-        tablerow.append(TableRow(title:"Airlines",data: airlinesArray,cellType:.CheckBoxTVCell))
-        tablerow.append(TableRow(title:"Connecting Flights",data: connectingflights,cellType:.CheckBoxTVCell))
-        tablerow.append(TableRow(title:"Connecting Airports",data: connectingAirports,cellType:.CheckBoxTVCell))
+        tablerow.append(TableRow(title:"Airlines",data: AirlinesArray,cellType:.CheckBoxTVCell))
+        tablerow.append(TableRow(title:"Connecting Flights",data: ConnectingFlightsArray,cellType:.CheckBoxTVCell))
+        tablerow.append(TableRow(title:"Connecting Airports",data: ConnectingAirportsArray,cellType:.CheckBoxTVCell))
         
         tablerow.append(TableRow(height:50,cellType:.EmptyTVCell))
-        tablerow.append(TableRow(title:"Apply",cellType:.ButtonTVCell))
+        tablerow.append(TableRow(title:"Apply",key: "filterbtn",bgColor: .AppBtnColor,cellType:.ButtonTVCell))
         tablerow.append(TableRow(height:50,cellType:.EmptyTVCell))
         
         commonTVData = tablerow
@@ -141,11 +222,14 @@ class FilterVC: BaseTableVC{
         tablerow.removeAll()
         
         tablerow.append(TableRow(title:"Price",key: "reset",cellType:.SortbyTVCell))
-        tablerow.append(TableRow(title:"Star",key: "no",cellType:.SortbyTVCell))
+        tablerow.append(TableRow(title:"Departure",key: "no",cellType:.SortbyTVCell))
         tablerow.append(TableRow(title:"Arrival Time",key: "no",cellType:.SortbyTVCell))
         tablerow.append(TableRow(title:"Duration",key: "no",cellType:.SortbyTVCell))
-        tablerow.append(TableRow(height:100,cellType:.EmptyTVCell))
-        tablerow.append(TableRow(title:"Done",cellType:.ButtonTVCell))
+        tablerow.append(TableRow(title:"Airlines",key: "airline",cellType:.SortbyTVCell))
+        
+        
+        tablerow.append(TableRow(height:50,cellType:.EmptyTVCell))
+        tablerow.append(TableRow(title:"Done",key: "filterbtn",bgColor: .AppBtnColor,cellType:.ButtonTVCell))
         tablerow.append(TableRow(height:50,cellType:.EmptyTVCell))
         
         commonTVData = tablerow
@@ -156,12 +240,10 @@ class FilterVC: BaseTableVC{
     
     func setupHotelsFilterTVCells() {
         
-        
         commonTableView.isScrollEnabled = true
         tablerow.removeAll()
         
         tablerow.append(TableRow(title:"Free Airport Shuttle",data: free_airport_shuttleArray,cellType:.CheckBoxTVCell))
-        tablerow.append(TableRow(title:"Price",cellType:.SliderTVCell))
         tablerow.append(TableRow(cellType:.PopularFiltersTVCell))
         tablerow.append(TableRow(title:"Guest Rating",data: guestRating,cellType:.CheckBoxTVCell))
         tablerow.append(TableRow(title:"Payment Type",data: paymentTypeArray,cellType:.CheckBoxTVCell))
@@ -172,7 +254,7 @@ class FilterVC: BaseTableVC{
         tablerow.append(TableRow(title:"Accommodation",data: accommodationArray,cellType:.CheckBoxTVCell))
         
         tablerow.append(TableRow(height:100,cellType:.EmptyTVCell))
-        tablerow.append(TableRow(title:"Apply",cellType:.ButtonTVCell))
+        tablerow.append(TableRow(title:"Apply",key: "btn",cellType:.ButtonTVCell))
         tablerow.append(TableRow(height:50,cellType:.EmptyTVCell))
         
         commonTVData = tablerow
@@ -186,8 +268,8 @@ class FilterVC: BaseTableVC{
         tablerow.append(TableRow(title:"Price",key: "",cellType:.SortbyTVCell))
         tablerow.append(TableRow(title:"Star",key: "no",cellType:.SortbyTVCell))
         
-        tablerow.append(TableRow(height:380,cellType:.EmptyTVCell))
-        tablerow.append(TableRow(title:"Done",cellType:.ButtonTVCell))
+        tablerow.append(TableRow(height:200,cellType:.EmptyTVCell))
+        tablerow.append(TableRow(title:"Done",key: "btn",cellType:.ButtonTVCell))
         tablerow.append(TableRow(height:50,cellType:.EmptyTVCell))
         
         commonTVData = tablerow
@@ -197,22 +279,12 @@ class FilterVC: BaseTableVC{
     
     
     
-    override func btnAction(cell: ButtonTVCell) {
-        if filterKey == "filter" {
-            print(filterKey)
-        }else {
-            print(filterKey)
-        }
-    }
-    
-    
     override func didTapOnShowMoreBtn(cell:CheckBoxTVCell){
         
         
         switch cell.titlelbl.text {
         case "Airlines":
-            airlinesArray = ["Egypt Air (MS)","Emirates Airlines (EK)","Gulf Air (GF)","Egypt Air (MS)","Emirates Airlines (EK)","Gulf Air (GF)"]
-            cell.nameArray = airlinesArray
+            cell.nameArray = AirlinesArray
             break
             
         default:
@@ -221,6 +293,7 @@ class FilterVC: BaseTableVC{
         cell.btnView.isHidden = true
         cell.btnViewHeight.constant = 0
         cell.checkOptionsTV.reloadData()
+        
         commonTableView.beginUpdates()
         commonTableView.endUpdates()
         
@@ -248,6 +321,94 @@ class FilterVC: BaseTableVC{
         cell.lowtoHighView.backgroundColor = .AppCalenderDateSelectColor
         cell.hightoLowhlbl.textColor = .AppLabelColor
         cell.hightoLowView.backgroundColor = .WhiteColor
+        
+        if cell.titlelbl.text == "Price" {
+            sortBy = .PriceLow
+            
+            if let cell2 = commonTableView.cellForRow(at: IndexPath(item: 1, section: 0)) as? SortbyTVCell {
+                resetSortBy(cell: cell2)
+            }
+            
+            if let cell3 = commonTableView.cellForRow(at: IndexPath(item: 2, section: 0)) as? SortbyTVCell {
+                resetSortBy(cell: cell3)
+            }
+            if let cell4 = commonTableView.cellForRow(at: IndexPath(item: 3, section: 0)) as? SortbyTVCell {
+                resetSortBy(cell: cell4)
+            }
+            
+            if let cell5 = commonTableView.cellForRow(at: IndexPath(item: 4, section: 0)) as? SortbyTVCell {
+                resetSortBy(cell: cell5)
+            }
+        }else if cell.titlelbl.text == "Departure" {
+            sortBy = .DepartureLow
+            if let cell1 = commonTableView.cellForRow(at: IndexPath(item: 0, section: 0)) as? SortbyTVCell {
+                resetSortBy(cell: cell1)
+            }
+            if let cell3 = commonTableView.cellForRow(at: IndexPath(item: 2, section: 0)) as? SortbyTVCell {
+                resetSortBy(cell: cell3)
+            }
+            if let cell4 = commonTableView.cellForRow(at: IndexPath(item: 3, section: 0)) as? SortbyTVCell {
+                resetSortBy(cell: cell4)
+            }
+            
+            if let cell5 = commonTableView.cellForRow(at: IndexPath(item: 4, section: 0)) as? SortbyTVCell {
+                resetSortBy(cell: cell5)
+            }
+        }else if cell.titlelbl.text == "Arrival Time" {
+            sortBy = .ArrivalLow
+            if let cell1 = commonTableView.cellForRow(at: IndexPath(item: 0, section: 0)) as? SortbyTVCell {
+                resetSortBy(cell: cell1)
+            }
+            if let cell2 = commonTableView.cellForRow(at: IndexPath(item: 1, section: 0)) as? SortbyTVCell {
+                resetSortBy(cell: cell2)
+            }
+            if let cell4 = commonTableView.cellForRow(at: IndexPath(item: 3, section: 0)) as? SortbyTVCell {
+                resetSortBy(cell: cell4)
+            }
+            if let cell5 = commonTableView.cellForRow(at: IndexPath(item: 4, section: 0)) as? SortbyTVCell {
+                resetSortBy(cell: cell5)
+            }
+        }else if cell.titlelbl.text == "Star" {
+            sortBy = .starLow
+            if let cell1 = commonTableView.cellForRow(at: IndexPath(item: 0, section: 0)) as? SortbyTVCell {
+                resetSortBy(cell: cell1)
+            }
+            
+        }else if cell.titlelbl.text == "Duration"{
+            sortBy = .DurationLow
+            if let cell1 = commonTableView.cellForRow(at: IndexPath(item: 0, section: 0)) as? SortbyTVCell {
+                resetSortBy(cell: cell1)
+            }
+            if let cell2 = commonTableView.cellForRow(at: IndexPath(item: 1, section: 0)) as? SortbyTVCell {
+                resetSortBy(cell: cell2)
+            }
+            
+            if let cell3 = commonTableView.cellForRow(at: IndexPath(item: 2, section: 0)) as? SortbyTVCell {
+                resetSortBy(cell: cell3)
+            }
+            
+            if let cell5 = commonTableView.cellForRow(at: IndexPath(item: 4, section: 0)) as? SortbyTVCell {
+                resetSortBy(cell: cell5)
+            }
+        }else {
+            sortBy = .airlinessortatoz
+            if let cell1 = commonTableView.cellForRow(at: IndexPath(item: 0, section: 0)) as? SortbyTVCell {
+                resetSortBy(cell: cell1)
+            }
+            if let cell2 = commonTableView.cellForRow(at: IndexPath(item: 1, section: 0)) as? SortbyTVCell {
+                resetSortBy(cell: cell2)
+            }
+            
+            if let cell3 = commonTableView.cellForRow(at: IndexPath(item: 2, section: 0)) as? SortbyTVCell {
+                resetSortBy(cell: cell3)
+            }
+            
+            if let cell4 = commonTableView.cellForRow(at: IndexPath(item: 3, section: 0)) as? SortbyTVCell {
+                resetSortBy(cell: cell4)
+            }
+        }
+        
+        
     }
     
     override func didTapOnHightoLowBtn(cell: SortbyTVCell) {
@@ -255,6 +416,95 @@ class FilterVC: BaseTableVC{
         cell.lowtoHighView.backgroundColor = .WhiteColor
         cell.hightoLowhlbl.textColor = .WhiteColor
         cell.hightoLowView.backgroundColor = .AppCalenderDateSelectColor
+        
+        if cell.titlelbl.text == "Price" {
+            sortBy = .PriceHigh
+            
+            if let cell2 = commonTableView.cellForRow(at: IndexPath(item: 1, section: 0)) as? SortbyTVCell {
+                resetSortBy(cell: cell2)
+            }
+            
+            if let cell3 = commonTableView.cellForRow(at: IndexPath(item: 2, section: 0)) as? SortbyTVCell {
+                resetSortBy(cell: cell3)
+            }
+            if let cell4 = commonTableView.cellForRow(at: IndexPath(item: 3, section: 0)) as? SortbyTVCell {
+                resetSortBy(cell: cell4)
+            }
+            
+            if let cell5 = commonTableView.cellForRow(at: IndexPath(item: 4, section: 0)) as? SortbyTVCell {
+                resetSortBy(cell: cell5)
+            }
+        }else if cell.titlelbl.text == "Departure" {
+            sortBy = .DepartureHigh
+            if let cell1 = commonTableView.cellForRow(at: IndexPath(item: 0, section: 0)) as? SortbyTVCell {
+                resetSortBy(cell: cell1)
+            }
+            if let cell3 = commonTableView.cellForRow(at: IndexPath(item: 2, section: 0)) as? SortbyTVCell {
+                resetSortBy(cell: cell3)
+            }
+            if let cell4 = commonTableView.cellForRow(at: IndexPath(item: 3, section: 0)) as? SortbyTVCell {
+                resetSortBy(cell: cell4)
+            }
+            
+            if let cell5 = commonTableView.cellForRow(at: IndexPath(item: 4, section: 0)) as? SortbyTVCell {
+                resetSortBy(cell: cell5)
+            }
+        }else if cell.titlelbl.text == "Arrival Time" {
+            sortBy = .ArrivalHigh
+            if let cell1 = commonTableView.cellForRow(at: IndexPath(item: 0, section: 0)) as? SortbyTVCell {
+                resetSortBy(cell: cell1)
+            }
+            if let cell2 = commonTableView.cellForRow(at: IndexPath(item: 1, section: 0)) as? SortbyTVCell {
+                resetSortBy(cell: cell2)
+            }
+            if let cell4 = commonTableView.cellForRow(at: IndexPath(item: 3, section: 0)) as? SortbyTVCell {
+                resetSortBy(cell: cell4)
+            }
+            if let cell5 = commonTableView.cellForRow(at: IndexPath(item: 4, section: 0)) as? SortbyTVCell {
+                resetSortBy(cell: cell5)
+            }
+        }else if cell.titlelbl.text == "Star" {
+            sortBy = .starHeigh
+            
+            if let cell1 = commonTableView.cellForRow(at: IndexPath(item: 0, section: 0)) as? SortbyTVCell {
+                resetSortBy(cell: cell1)
+            }
+            
+        }else if cell.titlelbl.text == "Duration"{
+            sortBy = .DurationHigh
+            if let cell1 = commonTableView.cellForRow(at: IndexPath(item: 0, section: 0)) as? SortbyTVCell {
+                resetSortBy(cell: cell1)
+            }
+            if let cell2 = commonTableView.cellForRow(at: IndexPath(item: 1, section: 0)) as? SortbyTVCell {
+                resetSortBy(cell: cell2)
+            }
+            
+            if let cell3 = commonTableView.cellForRow(at: IndexPath(item: 2, section: 0)) as? SortbyTVCell {
+                resetSortBy(cell: cell3)
+            }
+            
+            if let cell5 = commonTableView.cellForRow(at: IndexPath(item: 4, section: 0)) as? SortbyTVCell {
+                resetSortBy(cell: cell5)
+            }
+        }else {
+            sortBy = .airlinessortztoa
+            if let cell1 = commonTableView.cellForRow(at: IndexPath(item: 0, section: 0)) as? SortbyTVCell {
+                resetSortBy(cell: cell1)
+            }
+            if let cell2 = commonTableView.cellForRow(at: IndexPath(item: 1, section: 0)) as? SortbyTVCell {
+                resetSortBy(cell: cell2)
+            }
+            
+            if let cell3 = commonTableView.cellForRow(at: IndexPath(item: 2, section: 0)) as? SortbyTVCell {
+                resetSortBy(cell: cell3)
+            }
+            
+            if let cell4 = commonTableView.cellForRow(at: IndexPath(item: 3, section: 0)) as? SortbyTVCell {
+                resetSortBy(cell: cell4)
+            }
+        }
+        
+        
     }
     
     
@@ -267,9 +517,10 @@ class FilterVC: BaseTableVC{
     }
     
     @IBAction func didTapOnResetBtn(_ sender: Any) {
+        sortBy = .nothing
         if filterKey == "filter" {
             if let tabSelected = defaults.string(forKey: UserDefaultsKeys.dashboardTapSelected) {
-                if tabSelected == "flights" {
+                if tabSelected == "Flights" {
                     
                 }else {
                     
@@ -277,7 +528,7 @@ class FilterVC: BaseTableVC{
             }
         }else {
             if let tabSelected = defaults.string(forKey: UserDefaultsKeys.dashboardTapSelected) {
-                if tabSelected == "flights" {
+                if tabSelected == "Flights" {
                     if let cell1 = commonTableView.cellForRow(at: IndexPath(item: 0, section: 0)) as? SortbyTVCell {
                         resetSortBy(cell: cell1)
                     }
@@ -311,22 +562,9 @@ class FilterVC: BaseTableVC{
         dismiss(animated: true)
     }
     
-   // var sliderBool = true
-//    override func didTapOnShowSliderBtn(cell: SliderTVCell) {
-//
-//        if sliderBool == true {
-//            cell.sliderViewHeight.constant = 112
-//            cell.rangeSlider.isHidden = false
-//            sliderBool = false
-//        }else {
-//            cell.sliderViewHeight.constant = 0
-//            cell.rangeSlider.isHidden = true
-//            sliderBool = true
-//        }
-//        commonTableView.reloadRows(at: [IndexPath(item: cell.indexPath?.row ?? 0, section: 0)], with: .automatic)
-//    }
     
     @IBAction func didTapOnSortByBtn(_ sender: Any) {
+        commonTableView.scrollToRow(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
         sortbyTap()
     }
     
@@ -339,7 +577,7 @@ class FilterVC: BaseTableVC{
         
         
         if let tabSelected = defaults.string(forKey: UserDefaultsKeys.dashboardTapSelected) {
-            if tabSelected == "flights" {
+            if tabSelected == "Flights" {
                 setupSortByTVCells()
             }else {
                 setupHotelsSortByTVCells()
@@ -348,6 +586,160 @@ class FilterVC: BaseTableVC{
     }
     
     
+    
+    override func didTapOnCheckBox(cell:checkOptionsTVCell){
+        
+        switch cell.filtertitle {
+        case "Stops":
+            if cell.titlelbl.text == "0 Stop" {
+                noOfStopsFilterArray.append("0")
+            }else if cell.titlelbl.text == "1 Stop" {
+                noOfStopsFilterArray.append("1")
+            }else {
+                noOfStopsFilterArray.append("2")
+            }
+            
+            print(noOfStopsFilterArray.joined(separator: "---"))
+            break
+            
+        case "Refundable Type":
+            
+            if cell.titlelbl.text == "Refundable" {
+                refundablerTypeFilteArray.append("Refundable")
+            }else {
+                refundablerTypeFilteArray.append("Non Refundable")
+            }
+            
+            print(refundablerTypeFilteArray)
+            break
+            
+        case "Airlines":
+            airlinesFilterArray.append(cell.titlelbl.text ?? "")
+            print(airlinesFilterArray.joined(separator: "---"))
+            break
+            
+            
+        case "No Overnight Flight":
+            noOvernightFlightFilterStr = "12AM - 4AM"
+            break
+            
+            
+        case "Connecting Flights":
+            connectingFlightsFilterArray.append(cell.titlelbl.text ?? "")
+            print(connectingFlightsFilterArray.joined(separator: "---"))
+            break
+            
+            
+        case "Connecting Airports":
+            ConnectingAirportsFilterArray.append(cell.titlelbl.text ?? "")
+            print(ConnectingAirportsFilterArray.joined(separator: "---"))
+            break
+            
+            
+            
+        default:
+            break
+        }
+        
+    }
+    
+    
+    override func didTapOnDeselectCheckBox(cell: checkOptionsTVCell) {
+        switch cell.filtertitle {
+        case "Stops":
+            
+            if cell.titlelbl.text == "0 Stop" {
+                if let index = noOfStopsFilterArray.firstIndex(of: "0") {
+                    noOfStopsFilterArray.remove(at: index)
+                }
+            }else if cell.titlelbl.text == "1 Stop" {
+                if let index = noOfStopsFilterArray.firstIndex(of: "1") {
+                    noOfStopsFilterArray.remove(at: index)
+                }
+            }else {
+                if let index = noOfStopsFilterArray.firstIndex(of: "2") {
+                    noOfStopsFilterArray.remove(at: index)
+                }
+            }
+            print(noOfStopsFilterArray.joined(separator: "---"))
+            break
+            
+        case "Refundable Type":
+            
+            if cell.titlelbl.text == "Refundable" {
+                if let index = refundablerTypeFilteArray.firstIndex(of: "Refundable") {
+                    refundablerTypeFilteArray.remove(at: index)
+                }
+            }else {
+                if let index = refundablerTypeFilteArray.firstIndex(of: "Non Refundable") {
+                    refundablerTypeFilteArray.remove(at: index)
+                }
+            }
+            print(refundablerTypeFilteArray)
+            break
+            
+            
+        case "Airlines":
+            if let index = airlinesFilterArray.firstIndex(of: cell.titlelbl.text ?? "") {
+                airlinesFilterArray.remove(at: index)
+            }
+            print(airlinesFilterArray.joined(separator: "---"))
+            break
+            
+        case "No Overnight Flight":
+            noOvernightFlightFilterStr = ""
+            break
+            
+        case "Connecting Flights":
+            if let index = connectingFlightsFilterArray.firstIndex(of: cell.titlelbl.text ?? "") {
+                connectingFlightsFilterArray.remove(at: index)
+            }
+            print(connectingFlightsFilterArray.joined(separator: "---"))
+            break
+            
+            
+        case "Connecting Airports":
+            if let index = ConnectingAirportsFilterArray.firstIndex(of: cell.titlelbl.text ?? "") {
+                ConnectingAirportsFilterArray.remove(at: index)
+            }
+            print(ConnectingAirportsFilterArray.joined(separator: "---"))
+            break
+            
+            
+            
+        default:
+            break
+        }
+    }
+    
+    
+    override func didTapOnTimeBtn(cell:FilterDepartureTVCell){
+        switch cell.titlelbl.text {
+        case "Departure Time":
+            departureTimeFilter = cell.timeString
+            break
+            
+        case "Arrival Time":
+            arrivalTimeFilter = cell.timeString
+            break
+        default:
+            break
+        }
+    }
+    
+    
+    
+    override func didTapOnShowSliderBtn(cell: SliderTVCell) {
+        
+        
+        print("Selected minimum value: \(cell.minValue1)")
+        print("Selected maximum value: \(cell.maxValue1)")
+        
+        minpricerangefilter = cell.minValue1
+        maxpricerangefilter = cell.maxValue1
+        
+        
+    }
     
     
     @IBAction func didTapOnFiltersBtn(_ sender: Any) {
@@ -363,29 +755,72 @@ class FilterVC: BaseTableVC{
         filterUL.backgroundColor = .AppTabSelectColor
         
         if let tabSelected = defaults.string(forKey: UserDefaultsKeys.dashboardTapSelected) {
-            if tabSelected == "flights" {
+            if tabSelected == "Flights" {
                 setupFilterTVCells()
             }else {
                 setupHotelsFilterTVCells()
             }
         }
     }
+
+    
+    override func btnAction(cell: ButtonTVCell) {
+        if filterKey == "filter" {
+            
+            if minpricerangefilter.isZero == true && maxpricerangefilter.isZero == true{
+                let pricesFloat = prices.compactMap { Float($0) }
+                minpricerangefilter = Double(pricesFloat.min() ?? 0.0)
+                maxpricerangefilter = Double(pricesFloat.max() ?? 0.0)
+            }
+            
+            delegate?.filtersByApplied(minpricerange:minpricerangefilter,maxpricerange: maxpricerangefilter,noofStopsArray: noOfStopsFilterArray, refundableTypeArray: refundablerTypeFilteArray, departureTime: departureTimeFilter,arrivalTime: arrivalTimeFilter, noOvernightFlight: noOvernightFlightFilterStr,airlinesFilterArray: airlinesFilterArray,connectingFlightsFilterArray: connectingFlightsFilterArray,ConnectingAirportsFilterArray: ConnectingAirportsFilterArray)
+        }else {
+            delegate?.filtersSortByApplied(sortBy: sortBy)
+        }
+        
+        dismiss(animated: true)
+    }
+    
+}
+
+
+
+
+extension FilterVC {
     
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if let cell = tableView.cellForRow(at: indexPath) as? CheckBoxTVCell {
+            
+            if cell.showbool == true {
+                cell.expand()
+                cell.showbool = false
+            }else {
+                cell.hide()
+                cell.showbool = true
+            }
+            
+        }else if let cell = tableView.cellForRow(at: indexPath) as? SliderTVCell {
+            if cell.showbool == true {
+                cell.expand()
+                cell.showbool = false
+            }else {
+                cell.hide()
+                cell.showbool = true
+            }
+        }else if let cell = tableView.cellForRow(at: indexPath) as? FilterDepartureTVCell {
+            if cell.showbool == true {
+                cell.expand()
+                cell.showbool = false
+            }else {
+                cell.hide()
+                cell.showbool = true
+            }
+        }
+        
         UIView.animate(withDuration: 0.3) {
             tableView.performBatchUpdates(nil)
-        }
-    }
-    
-    
-    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        if let cell = tableView.cellForRow(at: indexPath) as? CheckBoxTVCell {
-            cell.hide()
-        }else if let cell = tableView.cellForRow(at: indexPath) as? FilterDepartureTVCell {
-            cell.hide()
-        }else if let cell = tableView.cellForRow(at: indexPath) as? SliderTVCell {
-            cell.hide()
         }
     }
     

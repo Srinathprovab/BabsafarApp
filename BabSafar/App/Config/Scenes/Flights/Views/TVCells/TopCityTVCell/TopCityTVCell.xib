@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -11,28 +10,25 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="187" id="KGk-i7-Jjw" customClass="TopCityTVCell" customModule="BabSafar" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="438" height="187"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="272" id="KGk-i7-Jjw" customClass="TopCityTVCell" customModule="BabSafar" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="440" height="272"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="438" height="187"/>
+                <rect key="frame" x="0.0" y="0.0" width="440" height="272"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r6e-56-ow9">
-                        <rect key="frame" x="0.0" y="0.0" width="438" height="187"/>
+                        <rect key="frame" x="0.0" y="0.0" width="440" height="272"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GKE-8q-9Sh">
-                                <rect key="frame" x="16" y="20" width="42" height="21"/>
+                                <rect key="frame" x="16" y="20" width="408" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="qAT-Tj-s20">
-                                <rect key="frame" x="15" y="57" width="423" height="125"/>
+                                <rect key="frame" x="15" y="46" width="420" height="221"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="125" id="vaT-1K-dDb"/>
-                                </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ulo-t0-34h">
                                     <size key="itemSize" width="128" height="128"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -43,13 +39,14 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="qAT-Tj-s20" secondAttribute="bottom" constant="5" id="191-5q-wCC"/>
-                            <constraint firstAttribute="height" constant="187" id="It6-L9-tT9"/>
-                            <constraint firstItem="qAT-Tj-s20" firstAttribute="leading" secondItem="r6e-56-ow9" secondAttribute="leading" constant="15" id="YQG-da-Tv4"/>
+                            <constraint firstAttribute="height" constant="272" id="0f1-ls-T5v"/>
+                            <constraint firstItem="qAT-Tj-s20" firstAttribute="leading" secondItem="r6e-56-ow9" secondAttribute="leading" constant="15" id="MRH-Ub-xeF"/>
+                            <constraint firstAttribute="trailing" secondItem="GKE-8q-9Sh" secondAttribute="trailing" constant="16" id="PMs-ox-cIK"/>
+                            <constraint firstAttribute="bottom" secondItem="qAT-Tj-s20" secondAttribute="bottom" constant="5" id="aM1-fB-0Bl"/>
                             <constraint firstItem="GKE-8q-9Sh" firstAttribute="leading" secondItem="r6e-56-ow9" secondAttribute="leading" constant="16" id="aWk-h0-bSw"/>
                             <constraint firstItem="GKE-8q-9Sh" firstAttribute="top" secondItem="r6e-56-ow9" secondAttribute="top" constant="20" id="hWY-ET-B40"/>
-                            <constraint firstAttribute="trailing" secondItem="qAT-Tj-s20" secondAttribute="trailing" id="m1Y-WV-yIS"/>
-                            <constraint firstItem="qAT-Tj-s20" firstAttribute="top" secondItem="GKE-8q-9Sh" secondAttribute="bottom" constant="16" id="pXY-yX-F5V"/>
+                            <constraint firstAttribute="trailing" secondItem="qAT-Tj-s20" secondAttribute="trailing" constant="5" id="wK0-L3-2Fp"/>
+                            <constraint firstItem="qAT-Tj-s20" firstAttribute="top" secondItem="GKE-8q-9Sh" secondAttribute="bottom" constant="5" id="zhp-2M-SbG"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -66,7 +63,7 @@
                 <outlet property="holderView" destination="r6e-56-ow9" id="037-iw-ygk"/>
                 <outlet property="titlelbl" destination="GKE-8q-9Sh" id="bvb-Db-uhP"/>
             </connections>
-            <point key="canvasLocation" x="223.18840579710147" y="143.63839285714286"/>
+            <point key="canvasLocation" x="224.63768115942031" y="200.89285714285714"/>
         </tableViewCell>
     </objects>
     <resources>

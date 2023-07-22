@@ -25,7 +25,6 @@ class NavBar: UIView {
     @IBOutlet weak var editBtn: UIButton!
     @IBOutlet weak var lbl1: UILabel!
     @IBOutlet weak var lbl2: UILabel!
-    
     @IBOutlet weak var view: UIView!
     @IBOutlet weak var airwaysLogoImg: UIImageView!
     @IBOutlet weak var airwaysTitlelbl: UILabel!
@@ -35,25 +34,23 @@ class NavBar: UIView {
     @IBOutlet weak var destCitylbl: UILabel!
     @IBOutlet weak var hourslbl: UILabel!
     @IBOutlet weak var noOfStopslbl: UILabel!
-    
     @IBOutlet weak var mainTabBtnsView: UIView!
     @IBOutlet weak var tabSelectionView: UIView!
     @IBOutlet weak var flightHolderView: UIView!
     @IBOutlet weak var flightimage: UIImageView!
+    @IBOutlet weak var flightBtn: UIButton!
     @IBOutlet weak var hotelHolderView: UIView!
     @IBOutlet weak var hotelimage: UIImageView!
-    @IBOutlet weak var insuranceHolderView: UIView!
-    @IBOutlet weak var insuranceImage: UIImageView!
+    @IBOutlet weak var hotelBtn: UIButton!
     @IBOutlet weak var visaHolderView: UIView!
     @IBOutlet weak var visatimag: UIImageView!
+    @IBOutlet weak var visaBtn: UIButton!
     @IBOutlet weak var lblFlight: UILabel!
     @IBOutlet weak var lblHotel: UILabel!
-    @IBOutlet weak var lblInsurance: UILabel!
     @IBOutlet weak var lblVisa: UILabel!
     
     
-    
-    
+    @IBOutlet weak var btnsHolderView: UIView!
     var image = UIImageView()
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -75,6 +72,8 @@ class NavBar: UIView {
     
     
     func setupuiview(){
+        
+        btnsHolderView.addCornerRadiusWithShadow(color: .clear, borderColor: .clear, cornerRadius: 6)
         contentView.backgroundColor = .AppHeadderBackColor
         image = UIImageView(frame: CGRect(x: 0, y: 0, width: self.contentView.frame.width + 15, height: self.contentView.frame.height))
         image.image = UIImage(named: "baner")
@@ -135,22 +134,21 @@ class NavBar: UIView {
         mainTabBtnsView.isHidden = true
         flightimage.image = UIImage(named: "flight")
         hotelimage.image = UIImage(named: "hotel")
-        insuranceImage.image = UIImage(named: "insurence")
         visatimag.image = UIImage(named: "visa")
         
         setupViews(v: tabSelectionView, radius: 0, color: .WhiteColor.withAlphaComponent(0.5))
         setupViews(v: flightHolderView, radius: 6, color: .AppTabSelectColor)
         setupViews(v: hotelHolderView, radius: 6, color: .WhiteColor)
-        setupViews(v: insuranceHolderView, radius: 6, color: .WhiteColor)
         setupViews(v: visaHolderView, radius: 6, color: .WhiteColor)
         
         setupLabels(lbl: lblFlight, text: "Flights", textcolor: .WhiteColor, font: .LatoRegular(size: 14))
         setupLabels(lbl: lblHotel, text: "Hotels", textcolor: .WhiteColor, font: .LatoRegular(size: 14))
-        setupLabels(lbl: lblInsurance, text: "Insurence", textcolor: .WhiteColor, font: .LatoRegular(size: 14))
         setupLabels(lbl: lblVisa, text: "Visa", textcolor: .WhiteColor, font: .LatoRegular(size: 14))
         
         contentView.bringSubviewToFront(mainTabBtnsView)
         editBtn.addTarget(self, action: #selector(didTapOnEditButton(_:)), for: .touchUpInside)
+        
+       
     }
     
     
@@ -185,15 +183,10 @@ class NavBar: UIView {
         hotelHolderView.backgroundColor = .WhiteColor
         hotelimage.image = UIImage(named: "hotel")
         
-        insuranceHolderView.backgroundColor = .WhiteColor
-        insuranceImage.image = UIImage(named: "insurence")
+      
         
         visaHolderView.backgroundColor = .WhiteColor
         visatimag.image = UIImage(named: "visa")
-        
-        //        guard let vc = SearchFlightsVC.newInstance.self else {return}
-        //        vc.modalPresentationStyle = .fullScreen
-        //        self.present(vc, animated: true)
         
     }
     
@@ -206,24 +199,7 @@ class NavBar: UIView {
         hotelHolderView.backgroundColor = .AppTabSelectColor
         hotelimage.image = UIImage(named: "hotel")?.withRenderingMode(.alwaysOriginal).withTintColor(.WhiteColor)
         
-        insuranceHolderView.backgroundColor = .WhiteColor
-        insuranceImage.image = UIImage(named: "insurence")
-        
-        visaHolderView.backgroundColor = .WhiteColor
-        visatimag.image = UIImage(named: "visa")
-    }
     
-    @IBAction func searchHInsuranceBtnAction(_ sender: Any) {
-        print("searchHInsuranceBtnAction")
-        
-        flightHolderView.backgroundColor = .WhiteColor
-        flightimage.image = UIImage(named: "flight")?.withRenderingMode(.alwaysOriginal).withTintColor(.AppImageDefaultColor)
-        
-        hotelHolderView.backgroundColor = .WhiteColor
-        hotelimage.image = UIImage(named: "hotel")
-        
-        insuranceHolderView.backgroundColor = .AppTabSelectColor
-        insuranceImage.image = UIImage(named: "insurence")?.withRenderingMode(.alwaysOriginal).withTintColor(.WhiteColor)
         
         visaHolderView.backgroundColor = .WhiteColor
         visatimag.image = UIImage(named: "visa")
@@ -239,9 +215,7 @@ class NavBar: UIView {
         hotelHolderView.backgroundColor = .WhiteColor
         hotelimage.image = UIImage(named: "hotel")
         
-        insuranceHolderView.backgroundColor = .WhiteColor
-        insuranceImage.image = UIImage(named: "insurence")
-        
+             
         visaHolderView.backgroundColor = .AppTabSelectColor
         visatimag.image = UIImage(named: "visa")?.withRenderingMode(.alwaysOriginal).withTintColor(.WhiteColor)
     }

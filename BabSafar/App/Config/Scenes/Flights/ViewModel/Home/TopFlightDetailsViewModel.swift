@@ -20,12 +20,13 @@ class TopFlightDetailsViewModel {
 
 
     func callTopFlightsHotelsDetailsAPI(dictParam: [String: Any]){
+        
         let parms = NSDictionary(dictionary:dictParam)
         print("Parameters = \(parms)")
 
         self.view?.showLoader()
 
-        ServiceManager.postOrPutApiCall(endPoint: ApiEndpoints.getTopFlightHotelDestination , parameters: parms, resultType: TopFlightDetailsModel.self, p:dictParam) { sucess, result, errorMessage in
+        ServiceManager.postOrPutApiCall(endPoint: "general/\(ApiEndpoints.getTopFlightHotelDestination)" , parameters: parms, resultType: TopFlightDetailsModel.self, p:dictParam) { sucess, result, errorMessage in
 
             DispatchQueue.main.async {
                 self.view?.hideLoader()
@@ -34,8 +35,6 @@ class TopFlightDetailsViewModel {
                     self.view.topFlightDetailsImages(response: response)
                 } else {
                     // Show alert
-                    NotificationCenter.default.post(name: NSNotification.Name("nointernet"), object: errorMessage)
-                    //  print("error === \(errorMessage ?? "")")
                     self.view.showToast(message: errorMessage ?? "")
                 }
             }

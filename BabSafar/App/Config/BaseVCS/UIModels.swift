@@ -51,7 +51,6 @@ enum TVCellType {
     case SelectGenderTVCell
     case CheckBoxTVCell
     case SortbyTVCell
-    case DoubleSliderTVCell
     case BookingConfirmedTVCell
     case BookedTravelDetailsTVCell
     case YourPrivacyTVCell
@@ -70,7 +69,6 @@ enum TVCellType {
     case AddAdultsOrGuestTVCell
     case FlightDetailsTVCell
     case FilterDepartureTVCell
-    case SliderTVCell
     case ContactTVCell
     case AboutusTVCell
     case RoundTripFlightResultTVCell
@@ -85,7 +83,33 @@ enum TVCellType {
     case NoteTVCell
     case FlightDetailsTitleTVCell
     case ViewFlightDetailsBtnTVCell
+    case AddRoomsGuestsTVCell
+    case VocherFlightDetailsTVCell
+    case UsePromoCodesTVCell
+    case FareBreakdownTVCell
+    case FareBreakdownTitleTVCell
+    case TitleLblTVCell
+    case AcceptTermsAndConditionTVCell
+    case VisaEnduiryTVCell
+    case MapViewTVCell
+    case ContactUsLabelTVCell
+    case SendUsMessageTVCell
+    case SideMenuTitleTVCell
+    case PaymentOptionTVCell
+    case SelectModuleTabTVCell
+    case FrequentFlyerTVCell
+    case BookFlightDetailsTVCell
+    case SessionTimeTVCell
+    case AddInfantaTravellerTVCell
+    case AddChildTravellerTVCell
+    case AddAdultTravellerTVCell
+    case SliderTVCell
+    case AddDeatilsOfTravellerTVCell
+    case TotalNoofTravellerTVCell
     
+    //Hotels
+    case SearchHotelTVCell
+    case HotelPriceSummaryTVCell
     
 }
 
@@ -170,11 +194,45 @@ class TableRow {
     var data1: Any?
     var data2: Any?
     
+    var fromTime: String?
+    var fromCity: String?
+    var fromDate: String?
+    var toTime: String?
+    var toCity: String?
+    var toDate: String?
+    var noosStops: String?
+    var airlineslogo :String?
+    var airlinesname: String?
+    var airlinesCode: String?
+    var seatsLeft: String?
+    var baggage: String?
+    var price:String?
+    var travelTime:String?
+    var Weight_Allowance:String?
+    
     
     
     init() {}
     
-    init(title: String? = nil, subTitle: String? = nil, key: String? = nil, text: String? = nil, headerText: String? = nil, buttonTitle: String? = nil, keyboardType: UIKeyboardType = .default, data: Any? = nil, errormsg: String? = nil, key1: String? = nil, signInType: socialSignUpType? = nil , itemType: CVCellType? = nil, isSecure: Bool = false, isSelected: Bool = false,  needsBorder: Bool? = nil, needDoneButton: Bool? = nil, canGotoNextPage: Bool? = nil, image: String? = nil, imageSize: String? = nil, height: CGFloat? = nil, isOptional: Bool = true, moreData: Any? = nil, noInput: Bool = false, tempText: String? = nil, characterLimit: Int? = nil,characterLimit2: Int? = nil, hasHyperLink: Bool? = nil, disabled: Bool? = nil, disableLeftPortion: Bool? = nil, isEditable: Bool? = nil, lineSpace: CGFloat? = nil, shouldDoDualFieldValidations: Bool? = nil, cellUIUpdateCallback: ((_ cell: Any) -> Void)? = nil, cellActions: ((_ cell: Any, _ actionType: String, _ moreData: Any) -> Void)? = nil, autoCapitalization: UITextAutocapitalizationType? = nil, fontSize: CGFloat? = nil, borderSeq: BorderSeq? = nil, keyboardDistance: CGFloat? = nil, itemSize: CGSize? = nil,
+    init(title: String? = nil, subTitle: String? = nil,
+         fromTime: String? = nil ,
+         toTime: String? = nil,
+         fromCity: String? = nil ,
+         fromDate: String? = nil ,
+         toCity: String? = nil ,
+         toDate: String? = nil ,
+         noosStops: String? = nil ,
+         airlineslogo: String? = nil ,
+         airlinesname: String? = nil ,
+         airlinesCode: String? = nil,
+         seatsLeft: String? = nil ,
+         baggage: String? = nil ,
+         price: String? = nil ,
+         travelTime: String? = nil ,
+         Weight_Allowance: String? = nil ,
+         
+         
+         key: String? = nil, text: String? = nil, headerText: String? = nil, buttonTitle: String? = nil, keyboardType: UIKeyboardType = .default, data: Any? = nil, errormsg: String? = nil, key1: String? = nil, signInType: socialSignUpType? = nil , itemType: CVCellType? = nil, isSecure: Bool = false, isSelected: Bool = false,  needsBorder: Bool? = nil, needDoneButton: Bool? = nil, canGotoNextPage: Bool? = nil, image: String? = nil, imageSize: String? = nil, height: CGFloat? = nil, isOptional: Bool = true, moreData: Any? = nil, noInput: Bool = false, tempText: String? = nil, characterLimit: Int? = nil,characterLimit2: Int? = nil, hasHyperLink: Bool? = nil, disabled: Bool? = nil, disableLeftPortion: Bool? = nil, isEditable: Bool? = nil, lineSpace: CGFloat? = nil, shouldDoDualFieldValidations: Bool? = nil, cellUIUpdateCallback: ((_ cell: Any) -> Void)? = nil, cellActions: ((_ cell: Any, _ actionType: String, _ moreData: Any) -> Void)? = nil, autoCapitalization: UITextAutocapitalizationType? = nil, fontSize: CGFloat? = nil, borderSeq: BorderSeq? = nil, keyboardDistance: CGFloat? = nil, itemSize: CGSize? = nil,
          isError: Bool? = nil,tempInfo: Any? = nil, bgColor: UIColor? = nil,separatorColor: UIColor? = nil,titleColor: UIColor? = nil, titleFont: UIFont? = nil,questionType: String? = nil,TotalQuestions: String? = nil,questionNumber: String? = nil,questionHeading: String? = nil,questionDescription: String? = nil,cellType: TVCellType? = nil, percentValue: Float? = nil,cellbordercolor:CGColor? = nil, userCatdetails: Any? = nil,data1: Any? = nil,data2: Any? = nil, shareLink: String? = nil,shareImg: String? = nil,questionBase: String? = nil ) {
         
         self.title = title
@@ -234,6 +292,22 @@ class TableRow {
         
         self.data1 = data1
         self.data2 = data2
+        
+        self.fromTime = fromTime
+        self.toTime = toTime
+        self.fromCity = fromCity
+        self.fromDate = fromDate
+        self.toCity = toCity
+        self.toDate = toDate
+        self.noosStops = noosStops
+        self.airlinesname = airlinesname
+        self.airlineslogo = airlineslogo
+        self.airlinesCode = airlinesCode
+        self.seatsLeft = seatsLeft
+        self.baggage = baggage
+        self.price = price
+        self.travelTime = travelTime
+        self.Weight_Allowance = Weight_Allowance
     }
     
 }

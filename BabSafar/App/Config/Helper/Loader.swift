@@ -16,17 +16,23 @@ class Loader {
             
             
             if loderBool == false {
+                //                DispatchQueue.main.async {
+                //
+                //                    let loadingMBProgress = MBProgressHUD.showAdded(to: view, animated: true)
+                //                    loadingMBProgress.mode = MBProgressHUDMode.indeterminate
+                //                    loadingMBProgress.contentColor = HexColor("#EC441E")
+                //                    loadingMBProgress.bezelView.style = .solidColor
+                //                    loadingMBProgress.bezelView.color = UIColor.clear
+                //                    loadingMBProgress.bezelView.tintColor = UIColor.clear
+                //                    loadingMBProgress.bezelView.blurEffectStyle = .dark
+                //                    loadingMBProgress.show(animated: true)
+                //                }
                 DispatchQueue.main.async {
-                    
-                    let loadingMBProgress = MBProgressHUD.showAdded(to: view, animated: true)
-                    loadingMBProgress.mode = MBProgressHUDMode.indeterminate
-                    loadingMBProgress.contentColor = HexColor("#EC441E")
-                    loadingMBProgress.bezelView.style = .solidColor
-                    loadingMBProgress.bezelView.color = UIColor.clear
-                    loadingMBProgress.bezelView.tintColor = UIColor.clear
-                    loadingMBProgress.bezelView.blurEffectStyle = .dark
-                    loadingMBProgress.show(animated: true)
+                    ProgressHUD.animationType = .lineSpinFade
+                    ProgressHUD.colorAnimation = .AppBtnColor
+                    ProgressHUD.show()
                 }
+                
             }else {
                 
                 let HUD = MBProgressHUD.showAdded(to: view, animated: true)
@@ -60,7 +66,8 @@ class Loader {
     
     static func hide(for view: UIView, animated: Bool) {
         DispatchQueue.main.async {
-           MBProgressHUD.hide(for: view, animated: true)
+            MBProgressHUD.hide(for: view, animated: true)
+            ProgressHUD.dismiss()
         }
     }
     

@@ -24,7 +24,7 @@ struct Search_params : Codable {
 	let out_jrn : String?
 	let ret_jrn : String?
 	let access_key : String?
-
+    let freturn : String?
 	enum CodingKeys: String, CodingKey {
 
 		case trip_type = "trip_type"
@@ -50,6 +50,7 @@ struct Search_params : Codable {
 		case out_jrn = "out_jrn"
 		case ret_jrn = "ret_jrn"
 		case access_key = "access_key"
+        case freturn = "return"
 	}
 
 	init(from decoder: Decoder) throws {
@@ -77,6 +78,8 @@ struct Search_params : Codable {
 		out_jrn = try values.decodeIfPresent(String.self, forKey: .out_jrn)
 		ret_jrn = try values.decodeIfPresent(String.self, forKey: .ret_jrn)
 		access_key = try values.decodeIfPresent(String.self, forKey: .access_key)
+        freturn = try values.decodeIfPresent(String.self, forKey: .freturn)
+
 	}
 
 }

@@ -14,21 +14,23 @@ class TopCityCVCell: UICollectionViewCell {
     @IBOutlet weak var cityImage: UIImageView!
     @IBOutlet weak var labelHolderView: UIView!
     @IBOutlet weak var cityNamelbl: UILabel!
-    @IBOutlet weak var subtitlelbl: UILabel!
     
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         
-        holderView.layer.cornerRadius = 4
-        holderView.clipsToBounds = true
-        cityImage.contentMode = .scaleAspectFill
         
-        labelHolderView.backgroundColor = .AppLabelColor.withAlphaComponent(0.3)
-        setuplabels(lbl: cityNamelbl, text: "", textcolor: .WhiteColor, font: .LatoRegular(size: 16), align: .center)
-        setuplabels(lbl: subtitlelbl, text: "", textcolor: .WhiteColor, font: .LatoRegular(size: 12), align: .center)
-        subtitlelbl.isHidden = true
+        holderView.addCornerRadiusWithShadow(color: .lightGray, borderColor: .clear, cornerRadius: 8)
+        holderView.layer.cornerRadius = 8
+        holderView.clipsToBounds = true
+        
+        
+        cityImage.contentMode = .scaleToFill
+        
+        labelHolderView.backgroundColor = .WhiteColor
+        setuplabels(lbl: cityNamelbl, text: "", textcolor: .AppLabelColor, font: .LatoRegular(size: 16), align: .center)
+        
         
     }
     

@@ -7,7 +7,9 @@
 
 import UIKit
 
-class ResetPasswordVC: BaseTableVC {
+class ResetPasswordVC: BaseTableVC, ForgetPasswordViewModelDelegate {
+    
+    
     
     @IBOutlet weak var nav: NavBar!
     @IBOutlet weak var holderView: UIView!
@@ -15,6 +17,7 @@ class ResetPasswordVC: BaseTableVC {
     
     var tablerow = [TableRow]()
     var email = String()
+    var mobile = String()
     static var newInstance: ResetPasswordVC? {
         let storyboard = UIStoryboard(name: Storyboard.Login.name,
                                       bundle: nil)
@@ -52,6 +55,7 @@ class ResetPasswordVC: BaseTableVC {
         
         // Do any additional setup after loading the view.
         setupUI()
+        viewmodel = ForgetPasswordViewModel(self)
     }
     
     
@@ -67,6 +71,8 @@ class ResetPasswordVC: BaseTableVC {
         tablerow.removeAll()
         tablerow.append(TableRow(title:"enter the email associated with your account and we’ll send an email with instructions to reset your password.",key: "cpwd",cellType:.LabelTVCell))
         tablerow.append(TableRow(title:"Email Address",key: "email", text: "1", tempText: "email",cellType:.TextfieldTVCell))
+        tablerow.append(TableRow(title:"Mobile No",key: "email", text: "12", tempText: "Mobile No",cellType:.TextfieldTVCell))
+        
         tablerow.append(TableRow(title:"Send ",cellType:.ButtonTVCell))
         commonTVData = tablerow
         commonTableView.reloadData()
@@ -81,7 +87,12 @@ class ResetPasswordVC: BaseTableVC {
         case 1:
             email = tf.text ?? ""
             break
-        
+            
+        case 12:
+            mobile = tf.text ?? ""
+            break
+            
+            
         default:
             break
         }
@@ -91,15 +102,48 @@ class ResetPasswordVC: BaseTableVC {
         
         if self.email == "" {
             showToast(message: "Enter Email")
-        }else if self.email.isValidEmail == false {
+        }else if self.email.isValidEmail() == false {
             showToast(message: "Enter Valid Email ID")
-        }else {
-            print("Call API...")
-            guard let vc = CreateNewPasswordVC.newInstance.self else {return}
-            vc.modalPresentationStyle = .fullScreen
-            present(vc, animated: true)
+        }else if self.mobile == "" {
+            showToast(message: "Enter Mobile Number")
+        }else if self.mobile.isValidMobileNumber() == false {
+            showToast(message: "Enter Valid Mobile Number")
+        } else {
+            callResetPasswordAPI()
         }
     }
+    
+    var payload = [String:Any]()
+    var viewmodel:ForgetPasswordViewModel?
+    func callResetPasswordAPI() {
+   //     BASE_URL = "https://provabdevelopment.com/babsafar/mobile_webservices/mobile/index.php/auth/"
+        payload["email"] = email
+        payload["phone"] = mobile
+        viewmodel?.CallForgetPasswordAPI(dictParam: payload)
+    }
+    
+    
+    func forgetPasswordSucessDetails(response: ForgetPasswordModel) {
+        
+        let seconds = 2.0
+        if response.status == false {
+            showToast(message: response.data ?? "")
+        }else {
+            showToast(message: response.data ?? "")
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {[self] in
+            gotoCreateNewPasswordVC()
+        }
+    }
+    
+    func gotoCreateNewPasswordVC() {
+        guard let vc = CreateNewPasswordVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+    }
+    
+    
     
     
 }

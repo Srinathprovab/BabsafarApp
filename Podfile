@@ -20,6 +20,13 @@ target 'BabSafar' do
   pod 'DropDown'
   pod 'MARKRangeSlider'
   pod 'TTRangeSlider'
+  pod 'UIView-Shimmer', '~> 1.0'
+  pod 'SideMenuSwift'
+  pod 'FreshchatSDK'
+  pod 'Firebase/Core'
+  pod 'MyFatoorah'
+
+
 
   target 'BabSafarTests' do
     inherit! :search_paths

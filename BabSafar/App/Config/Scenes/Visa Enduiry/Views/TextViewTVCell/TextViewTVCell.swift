@@ -32,7 +32,7 @@ class TextViewTVCell: TableViewCell, UITextViewDelegate {
         
         switch cellInfo?.key {
         case "visa":
-            leftConstraint.constant = 28
+            leftConstraint.constant = 20
             break
         default:
             break
@@ -56,6 +56,8 @@ class TextViewTVCell: TableViewCell, UITextViewDelegate {
     }
     
 }
+
+
 extension UITextView{
     
     func setPlaceholder(ph:String) {

@@ -20,6 +20,7 @@ class LoignOrSignupBtnsTVCell: TableViewCell {
     @IBOutlet weak var signUpView: UIView!
     @IBOutlet weak var signuplbl: UILabel!
     
+    @IBOutlet weak var stackView: UIStackView!
     
     var delegate:LoignOrSignupBtnsTVCellDelegate?
     override func awakeFromNib() {
@@ -38,21 +39,13 @@ class LoignOrSignupBtnsTVCell: TableViewCell {
     func setupUI() {
         holderView.backgroundColor = .WhiteColor
         loginView.backgroundColor = .AppTabSelectColor
-        loginView.layer.cornerRadius = 4
-        loginView.layer.borderWidth = 1
-        loginView.layer.borderColor = UIColor.AppBorderColor.cgColor
         signUpView.backgroundColor = .WhiteColor
-        signUpView.layer.cornerRadius = 4
-        signUpView.layer.borderWidth = 1
-        signUpView.layer.borderColor = UIColor.AppBorderColor.cgColor
+        stackView.addCornerRadiusWithShadow(color: .clear, borderColor: .AppBorderColor, cornerRadius: 4)
         
-        loginlbl.text = "Login"
-        loginlbl.textColor = .WhiteColor
-        loginlbl.font = UIFont.LatoMedium(size: 18)
+        setuplabels(lbl: loginlbl, text: "Login", textcolor: .WhiteColor, font: UIFont.LatoMedium(size: 18), align: .center)
+        setuplabels(lbl: signuplbl, text: "Sign Up", textcolor: .AppLabelColor, font: UIFont.LatoMedium(size: 18), align: .center)
         
-        signuplbl.text = "Sign Up"
-        signuplbl.textColor = .AppLabelColor
-        signuplbl.font = UIFont.LatoMedium(size: 18)
+        
     }
     
     

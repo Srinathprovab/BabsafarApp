@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -48,14 +48,25 @@
                                     <action selector="viewBtnAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Fvq-xP-Aec"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4r3-gI-Shw">
+                                <rect key="frame" x="16" y="25" width="411" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="j6r-pT-EFt"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemGray3Color"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="4r3-gI-Shw" secondAttribute="trailing" id="26P-1h-iCm"/>
                             <constraint firstAttribute="trailing" secondItem="czI-e8-bKv" secondAttribute="trailing" constant="16" id="ER2-BE-zTQ"/>
                             <constraint firstItem="6ze-ei-5dB" firstAttribute="leading" secondItem="n41-HV-KHQ" secondAttribute="leading" id="IQU-ps-ph6"/>
                             <constraint firstItem="6ze-ei-5dB" firstAttribute="top" secondItem="n41-HV-KHQ" secondAttribute="top" id="TC1-78-lK8"/>
                             <constraint firstItem="czI-e8-bKv" firstAttribute="leading" secondItem="n41-HV-KHQ" secondAttribute="leading" constant="16" id="U8F-nB-pdr"/>
+                            <constraint firstAttribute="bottom" secondItem="4r3-gI-Shw" secondAttribute="bottom" constant="5" id="Yof-rV-ppq"/>
                             <constraint firstAttribute="bottom" secondItem="rSD-Wn-LQz" secondAttribute="bottom" constant="9" id="ZVL-j9-ugn"/>
+                            <constraint firstItem="4r3-gI-Shw" firstAttribute="leading" secondItem="n41-HV-KHQ" secondAttribute="leading" constant="16" id="cOs-8f-ZL6"/>
                             <constraint firstAttribute="trailing" secondItem="PQn-Fu-v7G" secondAttribute="trailing" constant="20" id="diM-Oj-bDl"/>
                             <constraint firstItem="PQn-Fu-v7G" firstAttribute="centerY" secondItem="n41-HV-KHQ" secondAttribute="centerY" id="iVi-cs-Ead"/>
                             <constraint firstAttribute="bottom" secondItem="6ze-ei-5dB" secondAttribute="bottom" id="ibE-3S-EUg"/>
@@ -167,6 +178,7 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="btn" destination="6ze-ei-5dB" id="vPa-aq-7Hu"/>
+                <outlet property="cityTF" destination="4r3-gI-Shw" id="XVz-in-J6f"/>
                 <outlet property="dropImg" destination="PQn-Fu-v7G" id="Bob-sB-lep"/>
                 <outlet property="dual1Btn" destination="sNa-1v-GB5" id="Rvx-2m-Bgm"/>
                 <outlet property="dual1lbl1" destination="COU-hV-hyy" id="3Nw-3X-8Hl"/>

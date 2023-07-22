@@ -12,7 +12,6 @@ class ItineraryTVCell: TableViewCell {
     
     @IBOutlet weak var holderView: UIView!
     @IBOutlet weak var airwaysImg1: UIImageView!
-    @IBOutlet weak var btnRefund: UIButton!
     @IBOutlet weak var title1lbl: UILabel!
     @IBOutlet weak var cityToView: UIView!
     @IBOutlet weak var cityTolbl: UILabel!
@@ -31,6 +30,8 @@ class ItineraryTVCell: TableViewCell {
     @IBOutlet weak var hourImg3: UIImageView!
     
     
+    @IBOutlet weak var deplbl: UILabel!
+    @IBOutlet weak var flightImg: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -56,9 +57,7 @@ class ItineraryTVCell: TableViewCell {
         airwaysImg1.image = UIImage(named: "airways")
         hourImg1.image = UIImage(named: "hour")
         hourImg3.image = UIImage(named: "hour")?.withRenderingMode(.alwaysOriginal).withTintColor(.WhiteColor)
-        btnRefund.setTitle("", for: .normal)
-        btnRefund.setTitleColor(.AppCalenderDateSelectColor, for: .normal)
-        btnRefund.titleLabel?.font = UIFont.LatoMedium(size: 14)
+     
         
         setuplabels(lbl: title1lbl, text: "qatar airways (QR10003)", textcolor: .AppLabelColor, font: .LatoRegular(size: 14), align: .left)
         setupViews(v: cityToView, radius: 0, color: .AppBorderColor)
@@ -77,9 +76,12 @@ class ItineraryTVCell: TableViewCell {
         setuplabels(lbl: destTerminal1lbl, text: "Terminal: 6", textcolor: .AppLabelColor, font: .LatoRegular(size: 12), align: .right)
         setuplabels(lbl: hourlbl1, text: "1h 20m", textcolor: .AppLabelColor, font: .LatoRegular(size: 14), align: .center)
         
+        setuplabels(lbl: deplbl, text: "", textcolor: .AppLabelColor, font: .LatoRegular(size: 14), align: .left)
+
         airportlbl.numberOfLines = 2
         destlbl.numberOfLines = 2
-        
+        cityToView.backgroundColor = .clear
+        cityToView.addCornerRadiusWithShadow(color: .clear, borderColor: .clear, cornerRadius: 0)
     }
     
     

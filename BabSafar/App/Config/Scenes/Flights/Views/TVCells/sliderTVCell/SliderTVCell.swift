@@ -13,7 +13,7 @@ protocol SliderTVCellDelegate {
     func didTapOnShowSliderBtn(cell:SliderTVCell)
 }
 
-class SliderTVCell: TableViewCell {
+class SliderTVCell: TableViewCell, TTRangeSliderDelegate {
     
     @IBOutlet weak var holderView: UIView!
     @IBOutlet weak var lblHolderView: UIView!
@@ -22,13 +22,15 @@ class SliderTVCell: TableViewCell {
     @IBOutlet weak var downBtn: UIButton!
     @IBOutlet weak var sliderHolderView: UIView!
     @IBOutlet weak var sliderViewHeight: NSLayoutConstraint!
-    // @IBOutlet weak var rangeSlider: RangeSlider!
     @IBOutlet weak var rangeSlider: TTRangeSlider!
+    @IBOutlet weak var minlbl: UILabel!
+    @IBOutlet weak var maxlbl: UILabel!
     
-    var minimumValue = 10.0
-    var maximumValue = 100.0
-    var lowerValue = 10.0
-    var upperValue = 100.0
+    
+    var key = String()
+    var minValue1 = Double()
+    var maxValue1 = Double()
+    var showbool = true
     var delegate:SliderTVCellDelegate?
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -38,42 +40,65 @@ class SliderTVCell: TableViewCell {
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        // Configure the view for the selected state
-        if selected == true {
-            expand()
-        }else {
-            hide()
-        }
+        
+        
     }
     
     override func updateUI() {
         titlelbl.text = cellInfo?.title
+        self.key = cellInfo?.key ?? ""
+        expand()
+        if self.key == "hotel" {
+            downImg.isHidden = true
+            expand()
+        }
     }
     
     func setupUI() {
         holderView.backgroundColor = .WhiteColor
         lblHolderView.backgroundColor = .WhiteColor
         sliderHolderView.backgroundColor = .WhiteColor
-        downImg.image = UIImage(named: "down")
+        downImg.image = UIImage(named: "downarrow")
         downBtn.setTitle("", for: .normal)
-        setupLabels(lbl: titlelbl, text: "", textcolor: .AppLabelColor, font: .LatoMedium(size: 17))
-        sliderViewHeight.constant = 0
+        setupLabels(lbl: titlelbl, text: "", textcolor: .AppLabelColor, font: .LatoSemibold(size: 16))
+        setuplabels(lbl: minlbl, text: "", textcolor: .AppLabelColor, font: .LatoSemibold(size: 16), align: .center)
+        setuplabels(lbl: maxlbl, text: "", textcolor: .AppLabelColor, font: .LatoSemibold(size: 16), align: .center)
         rangeSlider.isHidden = true
         rangeSlider.backgroundColor = .WhiteColor
-        rangeSlider.minValue = Float(minimumValue)
-        rangeSlider.maxValue = Float(maximumValue - 10)
+        
+        let pricesFloat = prices.compactMap { Float($0) }
+        let minValue = pricesFloat.min() ?? 0.0
+        let maxValue = pricesFloat.max() ?? 0.0
+        rangeSlider.minValue = minValue
+        rangeSlider.maxValue = maxValue
+        minValue1 = Double(minValue)
+        maxValue1 = Double(maxValue)
+        minlbl.text = "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? "")\(minValue)"
+        maxlbl.text = "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? "")\(maxValue)"
+        
+        
+        // Set the thumbs to the minimum and maximum values
+        rangeSlider.selectedMinimum = minValue
+        rangeSlider.selectedMaximum = maxValue
+        
         // rangeSlider.step = 10
         rangeSlider.handleType = .rectangle
         rangeSlider.lineHeight = 5
-        rangeSlider.tintColorBetweenHandles = .AppCalenderDateSelectColor
-        rangeSlider.lineBorderColor = .AppCalenderDateSelectColor
+        rangeSlider.tintColor = .AppBtnColor
+        rangeSlider.tintColorBetweenHandles = HexColor("#00A898")
+        rangeSlider.lineBorderColor = HexColor("#00A898")
         rangeSlider.handleDiameter = 40.0
-        rangeSlider.hideLabels = false
-        
-        
-        rangeSlider.addTarget(self, action: #selector(self.rangeSliderValueChanged(slider:)), for: UIControl.Event.valueChanged)
+        rangeSlider.hideLabels = true
+        rangeSlider.handleColor = HexColor("#00A898")
+        rangeSlider.maxLabelColour = .black
+        rangeSlider.minLabelColour = .black
+        rangeSlider.delegate = self
         downBtn.isHidden = true
     }
+    
+    
+    
+    
     
     func setupViews(v:UIView,radius:CGFloat,color:UIColor) {
         v.backgroundColor = color
@@ -96,7 +121,7 @@ class SliderTVCell: TableViewCell {
     
     
     func expand() {
-        sliderViewHeight.constant = 112
+        sliderViewHeight.constant = 120
         rangeSlider.isHidden = false
     }
     
@@ -104,6 +129,21 @@ class SliderTVCell: TableViewCell {
         sliderViewHeight.constant = 0
         rangeSlider.isHidden = true
     }
+    
+    
+    func rangeSlider(_ sender: TTRangeSlider!, didChangeSelectedMinimumValue selectedMinimum: Float, andMaximumValue selectedMaximum: Float) {
+        let minLabelText = String(format: "%.1f", selectedMinimum)
+        let maxLabelText = String(format: "%.1f", selectedMaximum)
+        
+        minValue1 = Double(minLabelText) ?? 0.0
+        maxValue1 = Double(maxLabelText) ?? 0.0
+        
+        minlbl.text = "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? "")\(minLabelText)"
+        maxlbl.text = "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? "")\(maxLabelText)"
+        
+        delegate?.didTapOnShowSliderBtn(cell: self)
+    }
+    
     
     @IBAction func didTapOnShowSliderBtn(_ sender: Any) {
         delegate?.didTapOnShowSliderBtn(cell: self)

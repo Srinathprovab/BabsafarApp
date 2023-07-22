@@ -18,7 +18,7 @@ struct FDFlightDetails : Codable {
     let fdclass : FDClass?
     let flight_number : String?
     let no_of_stops : Int?
-    let duration_seconds : Double?
+   // let duration_seconds : Double?
     let duration : String?
     let meal : String?
     let meal_description : String?
@@ -39,7 +39,7 @@ struct FDFlightDetails : Codable {
         case fdclass = "class"
         case flight_number = "flight_number"
         case no_of_stops = "no_of_stops"
-        case duration_seconds = "duration_seconds"
+     //   case duration_seconds = "duration_seconds"
         case duration = "duration"
         case meal = "Meal"
         case meal_description = "Meal_description"
@@ -61,7 +61,7 @@ struct FDFlightDetails : Codable {
         fdclass = try values.decodeIfPresent(FDClass.self, forKey: .fdclass)
         flight_number = try values.decodeIfPresent(String.self, forKey: .flight_number)
         no_of_stops = try values.decodeIfPresent(Int.self, forKey: .no_of_stops)
-        duration_seconds = try values.decodeIfPresent(Double.self, forKey: .duration_seconds)
+  //     duration_seconds = try values.decodeIfPresent(Double.self, forKey: .duration_seconds)
         duration = try values.decodeIfPresent(String.self, forKey: .duration)
         meal = try values.decodeIfPresent(String.self, forKey: .meal)
         meal_description = try values.decodeIfPresent(String.self, forKey: .meal_description)

@@ -9,7 +9,7 @@ import Foundation
 
 
 struct VocherModel : Codable {
-    let data : Data?
+    let data : VocherModelDetails?
     let cancelltion_policy : String?
     let city_data_list : [City_data_list]?
     let item : String?
@@ -24,7 +24,7 @@ struct VocherModel : Codable {
 
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        data = try values.decodeIfPresent(Data.self, forKey: .data)
+        data = try values.decodeIfPresent(VocherModelDetails.self, forKey: .data)
         cancelltion_policy = try values.decodeIfPresent(String.self, forKey: .cancelltion_policy)
         city_data_list = try values.decodeIfPresent([City_data_list].self, forKey: .city_data_list)
         item = try values.decodeIfPresent(String.self, forKey: .item)
