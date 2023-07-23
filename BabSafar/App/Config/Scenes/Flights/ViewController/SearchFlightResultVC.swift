@@ -38,6 +38,9 @@ class SearchFlightResultVC: BaseTableVC, UITextFieldDelegate {
     @IBOutlet weak var moveUpBtn: UIButton!
     @IBOutlet weak var hiddenView: UIView!
     @IBOutlet weak var chatBtnView: UIView!
+    @IBOutlet weak var returnDatalbl: UILabel!
+    
+    
     
     var lastContentOffset: CGFloat = 0
     static var newInstance: SearchFlightResultVC? {
@@ -70,7 +73,7 @@ class SearchFlightResultVC: BaseTableVC, UITextFieldDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("nointernet"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadTV), name: Notification.Name("reloadTV"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(somthingwentwrong), name: Notification.Name("somthingwentwrong"), object: nil)
-
+        
         if callapibool == true {
             
             holderView.isHidden = true
@@ -165,9 +168,9 @@ class SearchFlightResultVC: BaseTableVC, UITextFieldDelegate {
         
         
         if screenHeight > 835 {
-            navHeight.constant = 230
+            navHeight.constant = 170
         }else {
-            navHeight.constant = 190
+            navHeight.constant = 140
         }
         
         
@@ -355,7 +358,7 @@ class SearchFlightResultVC: BaseTableVC, UITextFieldDelegate {
     //MARK: - didTapOnPreviousDateBtnAction
     @IBAction func didTapOnPreviousDateBtnAction(_ sender: Any) {
         
-        self.holderView.isHidden = true
+        // self.holderView.isHidden = true
         loderBool = true
         if let journeyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
             if journeyType == "oneway" {
@@ -375,7 +378,11 @@ class SearchFlightResultVC: BaseTableVC, UITextFieldDelegate {
                 payload["depature"] = defaults.string(forKey:UserDefaultsKeys.calDepDate)
                 self.datelbl.text = previousDayString
                 
+                callAPI()
+                
             }else {
+                
+                
                 // Convert the date string to a Date object
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "dd-MM-yyyy"
@@ -387,21 +394,30 @@ class SearchFlightResultVC: BaseTableVC, UITextFieldDelegate {
                 
                 // Convert the next and previous day's dates back to a string format
                 let nextDayString = dateFormatter.string(from: nextDay!)
-                print("nextDayString ==== > \(nextDayString)")
-                defaults.set(nextDayString, forKey: UserDefaultsKeys.rcalDepDate)
-                payload["depature"] = defaults.string(forKey:UserDefaultsKeys.rcalDepDate)
-                self.datelbl.text = nextDayString
+                
+                if returnDatalbl.text == nextDayString {
+                    showToast(message: "Journey Dates Should Not Same")
+                }else {
+                    
+                   
+                    print("nextDayString ==== > \(nextDayString)")
+                    defaults.set(nextDayString, forKey: UserDefaultsKeys.rcalDepDate)
+                    payload["depature"] = defaults.string(forKey:UserDefaultsKeys.rcalDepDate)
+                    self.datelbl.text = nextDayString
+                    
+                    callAPI()
+                }
             }
             
         }
-        callAPI()
+        
         
     }
     
     //MARK: - didTapOnNextDateBtnTapAction
     @IBAction func didTapOnNextDateBtnTapAction(_ sender: Any) {
         
-        self.holderView.isHidden = true
+        // self.holderView.isHidden = true
         loderBool = true
         
         if let journeyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
@@ -423,7 +439,11 @@ class SearchFlightResultVC: BaseTableVC, UITextFieldDelegate {
                 payload["depature"] = defaults.string(forKey:UserDefaultsKeys.calDepDate)
                 self.datelbl.text = nextDayString
                 
+                callAPI()
+                
             }else {
+                
+                
                 // Convert the date string to a Date object
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "dd-MM-yyyy"
@@ -436,13 +456,25 @@ class SearchFlightResultVC: BaseTableVC, UITextFieldDelegate {
                 // Convert the next and previous day's dates back to a string format
                 let nextDayString = dateFormatter.string(from: nextDay!)
                 print("nextDayString ==== > \(nextDayString)")
-                defaults.set(nextDayString, forKey: UserDefaultsKeys.rcalDepDate)
-                payload["depature"] = defaults.string(forKey:UserDefaultsKeys.rcalDepDate)
-                self.datelbl.text = nextDayString
+                
+                if returnDatalbl.text == nextDayString {
+                    showToast(message: "Journey Dates Should Not Same")
+                }else {
+                    
+                   
+                    defaults.set(nextDayString, forKey: UserDefaultsKeys.rcalDepDate)
+                    payload["depature"] = defaults.string(forKey:UserDefaultsKeys.rcalDepDate)
+                    self.datelbl.text = nextDayString
+                    
+                    callAPI()
+                }
             }
             
         }
-        callAPI()
+        
+        
+        
+        
         
     }
     
@@ -561,21 +593,21 @@ class SearchFlightResultVC: BaseTableVC, UITextFieldDelegate {
         var similarFlightsDictionary: [Double: [MCJ_flight_list]] = [:]
         
         // Iterate through the FlightList
-       
+        
         MCJflightlist?.forEach { j in
-                if let fare = j.price?.api_total_display_fare?.rounded() {
-                    // Check if the fare is already present in the dictionary
-                    if let existingFlights = similarFlightsDictionary[fare] {
-                        // If it exists, append the current flight to the existing array
-                        var updatedFlights = existingFlights
-                        updatedFlights.append(j)
-                        similarFlightsDictionary[fare] = updatedFlights
-                    } else {
-                        // If it doesn't exist, create a new array with the current flight
-                        similarFlightsDictionary[fare] = [j]
-                    }
+            if let fare = j.price?.api_total_display_fare?.rounded() {
+                // Check if the fare is already present in the dictionary
+                if let existingFlights = similarFlightsDictionary[fare] {
+                    // If it exists, append the current flight to the existing array
+                    var updatedFlights = existingFlights
+                    updatedFlights.append(j)
+                    similarFlightsDictionary[fare] = updatedFlights
+                } else {
+                    // If it doesn't exist, create a new array with the current flight
+                    similarFlightsDictionary[fare] = [j]
                 }
             }
+        }
         
         
         
@@ -1329,7 +1361,6 @@ extension SearchFlightResultVC: AppliedFilters{
                                              questionType:k.aPICurrencyType,
                                              TotalQuestions: k.selectedResult,
                                              cellType:.RoundTripFlightResultTVCell,
-//                                             shareLink: "similar",
                                              questionBase: k.taxes))
                 }
             })
@@ -1371,7 +1402,6 @@ extension SearchFlightResultVC: AppliedFilters{
                                      questionType:k.aPICurrencyType,
                                      TotalQuestions: k.selectedResult,
                                      cellType:.RoundTripFlightResultTVCell,
-//                                     shareLink: "similar",
                                      questionBase: k.taxes))
         }
         
@@ -1548,6 +1578,7 @@ extension SearchFlightResultVC: AppliedFilters{
 extension SearchFlightResultVC {
     
     func callAPI() {
+        holderView.isHidden = true
         if let journeyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
             if journeyType == "oneway" {
                 viewModel?.CallSearchFlightAPI(dictParam: payload)
@@ -1582,10 +1613,10 @@ extension SearchFlightResultVC:FlightListModelProtocal{
             setuplabels(lbl: navView.lbl1, text: "\(defaults.string(forKey: UserDefaultsKeys.fromcityname) ?? "") - \(defaults.string(forKey: UserDefaultsKeys.tocityname) ?? "")", textcolor: .WhiteColor, font: .LatoSemibold(size: 18), align: .center)
             
             
-            setuplabels(lbl: datelbl, text: response.data?.search_params?.depature ?? "", textcolor: .AppLabelColor, font: .LatoRegular(size: 14), align: .center)
+            setuplabels(lbl: datelbl, text: response.data?.search_params?.depature ?? "", textcolor: .AppLabelColor, font: .LatoRegular(size: 12), align: .center)
             
             
-            setuplabels(lbl: cityCodelbl, text: "\(response.data?.search_params?.from_loc ?? "")-\(response.data?.search_params?.to_loc ?? "")", textcolor: .AppLabelColor, font: .LatoRegular(size: 14), align: .center)
+            setuplabels(lbl: cityCodelbl, text: "\(response.data?.search_params?.from_loc ?? "")-\(response.data?.search_params?.to_loc ?? "")", textcolor: .AppLabelColor, font: .LatoRegular(size: 12), align: .center)
             
             setuplabels(lbl: navView.lbl2, text: "On \(convertDateFormat(inputDate: "\(response.data?.search_params?.depature ?? "")", f1: "dd-MM-yyyy", f2: "dd MMM")) \n \(defaults.string(forKey: UserDefaultsKeys.travellerDetails) ?? "")", textcolor: .WhiteColor, font: .LatoRegular(size: 14), align: .center)
             
@@ -1622,11 +1653,13 @@ extension SearchFlightResultVC:FlightListModelProtocal{
             
             setuplabels(lbl: navView.lbl1, text: "\(defaults.string(forKey: UserDefaultsKeys.rfromcityname) ?? "") - \(defaults.string(forKey: UserDefaultsKeys.rtocityname) ?? "")", textcolor: .WhiteColor, font: .LatoSemibold(size: 18), align: .center)
             
-            setuplabels(lbl: datelbl, text: response.data?.search_params?.depature ?? "", textcolor: .AppLabelColor, font: .LatoRegular(size: 14), align: .center)
+            setuplabels(lbl: datelbl, text: response.data?.search_params?.depature ?? "", textcolor: .AppLabelColor, font: .LatoRegular(size: 12), align: .center)
+            
+            returnDatalbl.isHidden = false
+            setuplabels(lbl: returnDatalbl, text: response.data?.search_params?.freturn ?? "", textcolor: .AppLabelColor, font: .LatoRegular(size: 12), align: .center)
             
             
-            
-            setuplabels(lbl: cityCodelbl, text: "\(response.data?.search_params?.from_loc ?? "")-\(response.data?.search_params?.to_loc ?? "")", textcolor: .AppLabelColor, font: .LatoRegular(size: 14), align: .center)
+            setuplabels(lbl: cityCodelbl, text: "\(response.data?.search_params?.from_loc ?? "")-\(response.data?.search_params?.to_loc ?? "")", textcolor: .AppLabelColor, font: .LatoRegular(size: 12), align: .center)
             
             
             setuplabels(lbl: navView.lbl2, text: "On \(convertDateFormat(inputDate: "\(response.data?.search_params?.depature ?? "")", f1: "dd-MM-yyyy", f2: "dd MMM")) & Return on \(convertDateFormat(inputDate: "\(response.data?.search_params?.freturn ?? "")", f1: "dd-MM-yyyy", f2: "dd MMM")) \n  \(defaults.string(forKey: UserDefaultsKeys.rtravellerDetails) ?? "")", textcolor: .WhiteColor, font: .LatoRegular(size: 14), align: .center)

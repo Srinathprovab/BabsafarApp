@@ -129,7 +129,7 @@ class BaggageInfoVC: BaseTableVC, FlightDetailsViewModelProtocal, FDViewModelDel
         setupViews(v: holderView, radius: 8, color: .WhiteColor)
         setupViews(v: buttonsView, radius: 0, color: .WhiteColor)
         closeBtn.setTitle("", for: .normal)
-        chatBtnView.isHidden = true
+        
         setupViews(v: BookNowBtnView, radius: 0, color: .AppBtnColor)
         setuplabels(lbl: bookNowlbl, text: "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? ""):", textcolor: .WhiteColor, font: .LatoBold(size: 18), align: .left)
         setuplabels(lbl: kwdlbl, text: "Book Now", textcolor: .WhiteColor, font: .LatoBold(size: 18), align: .right)
@@ -393,28 +393,7 @@ class BaggageInfoVC: BaseTableVC, FlightDetailsViewModelProtocal, FDViewModelDel
     }
     
     
-    //MARK: - scrollViewDidScroll
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView.contentOffset.y > self.lastContentOffset {
-            // scrolling down
-            if self.hiddenView.alpha == 1 {
-                UIView.animate(withDuration: 0.3) {
-                    self.hiddenView.alpha = 0
-                    self.hiddenView.isHidden = true
-                }
-            }
-        } else if scrollView.contentOffset.y < self.lastContentOffset {
-            // scrolling up
-            if self.hiddenView.alpha == 0 {
-                UIView.animate(withDuration: 0.3) {
-                    self.hiddenView.alpha = 1
-                    self.hiddenView.isHidden = false
-                }
-            }
-        }
-        self.lastContentOffset = scrollView.contentOffset.y
-    }
-    
+   
 }
 
 

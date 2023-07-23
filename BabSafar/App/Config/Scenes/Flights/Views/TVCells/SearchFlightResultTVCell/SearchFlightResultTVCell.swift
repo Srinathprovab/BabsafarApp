@@ -119,8 +119,6 @@ class SearchFlightResultTVCell: TableViewCell {
         setAttributedString(str1: cellInfo?.price ?? "", str2: cellInfo?.subTitle ?? "")
         
         
-        
-        
         if let similarList1 = cellInfo?.moreData as? [[J_flight_list]], (similarList1.count - 1) != 0 {
             setuplabels(lbl: moreSimlarOptionlbl, text: "More similar options(\(similarList1.count))", textcolor: .WhiteColor, font: .LatoRegular(size: 10), align: .right)
             showSimilarlbl()
@@ -188,8 +186,6 @@ class SearchFlightResultTVCell: TableViewCell {
         //        }else {
         //            markuppricelbl.textColor = .WhiteColor
         //        }
-        
-        
         
         
         if cellInfo?.shareLink == "similar" {
