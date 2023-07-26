@@ -157,7 +157,7 @@ extension TopCityTVCell:UICollectionViewDelegate,UICollectionViewDataSource {
                 
                 let data = topHotelDetails[indexPath.row]
                 cell.cityImage.sd_setImage(with: URL(string: data.topHotelImg ?? ""), placeholderImage:UIImage(contentsOfFile:"placeholder.png"))
-                cell.cityNamelbl.text = "\(data.city_name ?? "") (\(data.city ?? ""))"
+                cell.cityNamelbl.text = "\(data.country ?? "")"
                 
                 
             }
@@ -189,7 +189,7 @@ extension TopCityTVCell:UICollectionViewDelegate,UICollectionViewDataSource {
                 NotificationCenter.default.post(name: NSNotification.Name("topcity"), object: nil,userInfo: userinfo)
             }else {
                 userinfo.removeAll()
-                userinfo["city"] = topHotelDetails[indexPath.row].city_name ?? ""
+                userinfo["city"] = topHotelDetails[indexPath.row].country ?? ""
                 userinfo["hotel_code"] = topHotelDetails[indexPath.row].city ?? ""
                 userinfo["check_in"] = topHotelDetails[indexPath.row].check_in ?? ""
                 userinfo["check_out"] = topHotelDetails[indexPath.row].check_out ?? ""

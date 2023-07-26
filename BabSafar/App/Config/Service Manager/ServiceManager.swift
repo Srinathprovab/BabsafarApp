@@ -68,7 +68,7 @@ enum ApiError: Error {
         case .endPoint:
             return "Error creating endpoint"
         case .somthingwentwrong:
-            return "Something Went Wrong =="
+            return "Model Not Parsing"
         }
     }
 }

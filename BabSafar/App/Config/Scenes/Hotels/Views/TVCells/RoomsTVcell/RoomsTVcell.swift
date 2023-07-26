@@ -227,17 +227,17 @@ extension RoomsTVcell: UITableViewDataSource ,UITableViewDelegate {
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        rateKeyArray.removeAll()
+       
         if self.key == "rooms" {
             if let cell = tableView.cellForRow(at: indexPath) as? RoomDetailsTVCell {
                 
                 if indexPath.section < roomsDetails.count && indexPath.row < roomsDetails[indexPath.section].count {
-                    rateKeyArray.append(cell.ratekey)
+                    selectedrRateKeyArray = cell.ratekey
                 } else {
                     print("Index out of range")
                 }
                 
-                print(rateKeyArray)
+                print(selectedrRateKeyArray)
                 cell.radioImg.image = UIImage(named: "radioSelected")
                 NotificationCenter.default.post(name: NSNotification.Name("showBookNowBtn"), object: nil)
                 

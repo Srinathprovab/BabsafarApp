@@ -29,19 +29,19 @@ struct Hotel_details : Codable {
     let currency : String?
     let refund : String?
     let rooms : [[Rooms]]?
-    let minRate : String?
-    let maxRate : String?
+    let minRate : Double?
+    let maxRate : Double?
     let checkIn : String?
     let checkOut : String?
-    let price : String?
+    let price : Double?
     let format_rm_comb_list : [[Format_rm_comb_list]]?
     let token : String?
     let tokenKey : String?
     let format_ame : [Format_ame]?
     let format_desc : [Format_desc]?
-
+    
     enum CodingKeys: String, CodingKey {
-
+        
         case booking_source = "booking_source"
         case hotel_code = "hotel_code"
         case city_code = "city_code"
@@ -80,7 +80,7 @@ struct Hotel_details : Codable {
         case format_ame = "format_ame"
         case format_desc = "format_desc"
     }
-
+    
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         booking_source = try values.decodeIfPresent(String.self, forKey: .booking_source)
@@ -110,34 +110,34 @@ struct Hotel_details : Codable {
         currency = try values.decodeIfPresent(String.self, forKey: .currency)
         refund = try values.decodeIfPresent(String.self, forKey: .refund)
         rooms = try values.decodeIfPresent([[Rooms]].self, forKey: .rooms)
-        minRate = try values.decodeIfPresent(String.self, forKey: .minRate)
-        maxRate = try values.decodeIfPresent(String.self, forKey: .maxRate)
+        minRate = try values.decodeIfPresent(Double.self, forKey: .minRate)
+        maxRate = try values.decodeIfPresent(Double.self, forKey: .maxRate)
         checkIn = try values.decodeIfPresent(String.self, forKey: .checkIn)
         checkOut = try values.decodeIfPresent(String.self, forKey: .checkOut)
-        price = try values.decodeIfPresent(String.self, forKey: .price)
+        price = try values.decodeIfPresent(Double.self, forKey: .price)
         format_rm_comb_list = try values.decodeIfPresent([[Format_rm_comb_list]].self, forKey: .format_rm_comb_list)
         token = try values.decodeIfPresent(String.self, forKey: .token)
         tokenKey = try values.decodeIfPresent(String.self, forKey: .tokenKey)
         format_ame = try values.decodeIfPresent([Format_ame].self, forKey: .format_ame)
         format_desc = try values.decodeIfPresent([Format_desc].self, forKey: .format_desc)
     }
-
+    
 }
 
 
 
 struct Format_ame : Codable {
     let ame : String?
-   
-
+    
+    
     enum CodingKeys: String, CodingKey {
         case ame = "ame"
     }
-
+    
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         ame = try values.decodeIfPresent(String.self, forKey: .ame)
     }
-
+    
 }
 

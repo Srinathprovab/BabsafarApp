@@ -140,7 +140,7 @@ class SearchHotelsVC: BaseTableVC, TopFlightDetailsViewModelDelegate {
         payload["rooms"] = "\(defaults.string(forKey: UserDefaultsKeys.roomcount) ?? "1")"
         payload["adult"] = adtArray
         payload["child"] = chArray
-        payload["childAge_1"] = ["0","0"]
+        payload["childAge_1"] = ["0"]
         payload["nationality"] = countrycode
         
         if defaults.string(forKey: UserDefaultsKeys.locationcity) == "Add City" || defaults.string(forKey: UserDefaultsKeys.locationcity) == nil{
@@ -160,6 +160,15 @@ class SearchHotelsVC: BaseTableVC, TopFlightDetailsViewModelDelegate {
         }else {
             gotoSearchHotelsResultVC()
         }
+    }
+    
+    func gotoSearchHotelsResultVC(){
+        guard let vc = SearchHotelsResultVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .fullScreen
+        vc.countrycode = self.countrycode
+        callapibool = true
+        vc.payload = self.payload
+        present(vc, animated: true)
     }
     
     
@@ -191,13 +200,5 @@ class SearchHotelsVC: BaseTableVC, TopFlightDetailsViewModelDelegate {
         // gotoSearchHotelsResultVC()
     }
     
-    func gotoSearchHotelsResultVC(){
-        
-        guard let vc = SearchHotelsResultVC.newInstance.self else {return}
-        vc.modalPresentationStyle = .fullScreen
-        vc.countrycode = self.countrycode
-        callapibool = true
-        vc.payload = self.payload
-        present(vc, animated: true)
-    }
+    
 }

@@ -81,7 +81,7 @@ var hsearchid = String()
 var hbookingsource = String()
 var htoken = String()
 var htokenkey = String()
-var rateKeyArray = [String]()
+var selectedrRateKeyArray = String()
 
 var adtArray = [String]()
 var chArray = [String]()

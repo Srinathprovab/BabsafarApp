@@ -44,12 +44,22 @@ class PopupVC: UIViewController {
     
     
     @objc func didTapOnSearchFlightAgainBtn(_ sender:UIButton) {
-        gotoDashboardVC()
+        if let tabselect = defaults.string(forKey: UserDefaultsKeys.dashboardTapSelected),tabselect == "Flights" {
+            gotoSearchFlightsVC()
+        }else {
+            gotoSearchHotelsVC()
+        }
     }
     
     
-    func gotoDashboardVC() {
+    func gotoSearchFlightsVC() {
         guard let vc = SearchFlightsVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: false)
+    }
+    
+    func gotoSearchHotelsVC() {
+        guard let vc = SearchHotelsVC.newInstance.self else {return}
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: false)
     }

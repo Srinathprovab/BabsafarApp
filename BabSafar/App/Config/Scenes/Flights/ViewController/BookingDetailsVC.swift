@@ -163,7 +163,7 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
     
     
     @objc func stopTimer() {
-       gotoPopupScreen()
+        gotoPopupScreen()
     }
     
     @objc func updatetimer(notificatio:UNNotification) {
@@ -174,7 +174,7 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
         let formattedTime = String(format: "%02d:%02d", minutes, seconds)
         
         setuplabels(lbl: sessonlbl, text: "Your Session Expires In : \(formattedTime)", textcolor: .AppLabelColor, font: .LatoRegular(size: 16), align: .left)
-
+        
     }
     
     
@@ -229,10 +229,10 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
     func callAllAPIS() {
         MBfd?.removeAll()
         TimerManager.shared.sessionStop()
-        DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
-            details.removeAll()
-            self.fetchCoreDataValues()
-        }
+        //        DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
+        //            details.removeAll()
+        //            self.fetchCoreDataValues()
+        //        }
         
         DispatchQueue.main.async {
             self.callMobilePreProcessingBookingAPI()
@@ -339,7 +339,7 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
     
     //MARK: - reload commonTableView
     @objc func reload(notification:NSNotification) {
-        fetchCoreDataValues()
+        //  fetchCoreDataValues()
         //  setupTV()
     }
     
@@ -394,7 +394,7 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
             tablerow.append(TableRow(cellType:.TDetailsLoginTVCell))
         }
         tablerow.append(TableRow(title:self.mbRefundable,subTitle: "",moreData: mbSummery,cellType:.BookFlightDetailsTVCell))
-     
+        
         
         passengertypeArray.removeAll()
         tablerow.append(TableRow(height:20, bgColor:.AppHolderViewColor,cellType:.EmptyTVCell))
@@ -451,7 +451,7 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
         callapibool = false
         dismiss(animated: true)
     }
-   
+    
     func gotoPopupScreen() {
         guard let vc = PopupVC.newInstance.self else {return}
         vc.modalPresentationStyle = .overCurrentContext
@@ -643,54 +643,54 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
     
     
     //MARK: - FETCHING COREDATA VALUES
-    func fetchCoreDataValues() {
-        
-        fnameA.removeAll()
-        passengertypeA.removeAll()
-        title2A.removeAll()
-        dobA.removeAll()
-        passportNoA.removeAll()
-        genderA.removeAll()
-        lnameA.removeAll()
-        passportexpiryA.removeAll()
-        passportissuingcountryA.removeAll()
-        middleNameA.removeAll()
-        leadPassengerA.removeAll()
-        
-        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "PassengerDetails")
-        //request.predicate = NSPredicate(format: "age = %@", "21")
-        request.returnsObjectsAsFaults = false
-        do {
-            let result = try context.fetch(request)
-            
-            
-            details = result
-            print(details)
-            
-            for data in result as! [NSManagedObject]{
-                
-                fnameA.append((data.value(forKey: "fname") as? String) ?? "")
-                passengertypeA.append((data.value(forKey: "passengerType") as? String) ?? "")
-                title2A.append((data.value(forKey: "title2") as? String) ?? "")
-                dobA.append((data.value(forKey: "dob") as? String) ?? "")
-                passportNoA.append((data.value(forKey: "passportno") as? String) ?? "")
-                genderA.append((data.value(forKey: "gender") as? String) ?? "")
-                lnameA.append((data.value(forKey: "lname") as? String) ?? "")
-                passportexpiryA.append((data.value(forKey: "passportexpirydate") as? String) ?? "")
-                passportissuingcountryA.append((data.value(forKey: "passportissuingcountry") as? String) ?? "")
-                middleNameA.append("")
-                leadPassengerA.append("1")
-                
-                
-            }
-            
-            DispatchQueue.main.async {[self] in
-                setupTV()
-            }
-        } catch {
-            print("Failed")
-        }
-    }
+    //    func fetchCoreDataValues() {
+    //
+    //        fnameA.removeAll()
+    //        passengertypeA.removeAll()
+    //        title2A.removeAll()
+    //        dobA.removeAll()
+    //        passportNoA.removeAll()
+    //        genderA.removeAll()
+    //        lnameA.removeAll()
+    //        passportexpiryA.removeAll()
+    //        passportissuingcountryA.removeAll()
+    //        middleNameA.removeAll()
+    //        leadPassengerA.removeAll()
+    //
+    //        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "PassengerDetails")
+    //        //request.predicate = NSPredicate(format: "age = %@", "21")
+    //        request.returnsObjectsAsFaults = false
+    //        do {
+    //            let result = try context.fetch(request)
+    //
+    //
+    //            details = result
+    //            print(details)
+    //
+    //            for data in result as! [NSManagedObject]{
+    //
+    //                fnameA.append((data.value(forKey: "fname") as? String) ?? "")
+    //                passengertypeA.append((data.value(forKey: "passengerType") as? String) ?? "")
+    //                title2A.append((data.value(forKey: "title2") as? String) ?? "")
+    //                dobA.append((data.value(forKey: "dob") as? String) ?? "")
+    //                passportNoA.append((data.value(forKey: "passportno") as? String) ?? "")
+    //                genderA.append((data.value(forKey: "gender") as? String) ?? "")
+    //                lnameA.append((data.value(forKey: "lname") as? String) ?? "")
+    //                passportexpiryA.append((data.value(forKey: "passportexpirydate") as? String) ?? "")
+    //                passportissuingcountryA.append((data.value(forKey: "passportissuingcountry") as? String) ?? "")
+    //                middleNameA.append("")
+    //                leadPassengerA.append("1")
+    //
+    //
+    //            }
+    //
+    //            DispatchQueue.main.async {[self] in
+    //                setupTV()
+    //            }
+    //        } catch {
+    //            print("Failed")
+    //        }
+    //    }
     
     
     
@@ -872,12 +872,6 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
         let nationalityArray = travelerArray.compactMap({$0.nationality})
         let passportIssuingCountryArray = travelerArray.compactMap({$0.passportIssuingCountry})
         let passportExpireDateArray = travelerArray.compactMap({$0.passportExpireDate})
-        //        let frequentFlyrNoArray = travelerArray.compactMap({$0.frequentFlyrNo})
-        //        let mealNameArray = travelerArray.compactMap({$0.meal})
-        //        let specialAssicintenceArray = travelerArray.compactMap({$0.specialAssicintence})
-        //        let laedpassengerArray = travelerArray.compactMap({$0.laedpassenger})
-        //        let middlenameArray = travelerArray.compactMap({$0.middlename})
-        
         
         
         
@@ -1066,7 +1060,6 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
     
     func mobilesecurebookingDetails(response: MobilePrePaymentModel) {
         loderBool = false
-        print(response.status)
         if response.status == false {
             showToast(message: response.message ?? "")
         }else {
@@ -1095,7 +1088,7 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
         Freshchat.sharedInstance().showConversations(self)
     }
     
-   
+    
     
     //MARK: - AddDeatilsOfTravellerTVCell Delegate Methods
     

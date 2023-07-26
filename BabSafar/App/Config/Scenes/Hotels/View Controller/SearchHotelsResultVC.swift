@@ -66,45 +66,6 @@ class SearchHotelsResultVC: BaseTableVC, UITextFieldDelegate, HotelSearchViewMod
     }
     
     
-    //MARK: - topcity Search
-    @objc func tophotel(notification: Notification) {
-        loderBool = true
-        if let userinfo = notification.userInfo {
-            
-            defaults.set((userinfo["city"] as? String) ?? "", forKey: UserDefaultsKeys.locationcity)
-            defaults.set((userinfo["hotel_code"] as? String) ?? "", forKey: UserDefaultsKeys.locationcityid)
-            defaults.set(convertDateFormat(inputDate: userinfo["check_in"] as? String ?? "", f1: "yyyy-MM-dd", f2: "dd-MM-yyyy") , forKey: UserDefaultsKeys.checkin)
-            defaults.set(convertDateFormat(inputDate: userinfo["check_out"] as? String ?? "", f1: "yyyy-MM-dd", f2: "dd-MM-yyyy") , forKey: UserDefaultsKeys.checkout)
-            
-            
-            payload.removeAll()
-            
-            payload["city"] = (userinfo["city"] as? String) ?? ""
-            payload["hotel_destination"] = (userinfo["hotel_code"] as? String) ?? ""
-            payload["hotel_checkin"] = convertDateFormat(inputDate: userinfo["check_in"] as? String ?? "", f1: "yyyy-MM-dd", f2: "dd-MM-yyyy")
-            payload["hotel_checkout"] = convertDateFormat(inputDate: userinfo["check_out"] as? String ?? "", f1: "yyyy-MM-dd", f2: "dd-MM-yyyy")
-            payload["rooms"] = "1"
-            payload["adult"] = ["1"]
-            payload["child"] = ["0"]
-            payload["childAge_1"] = ["0","0"]
-            payload["nationality"] = "IN"
-            
-            
-            do {
-                let arrJson = try JSONSerialization.data(withJSONObject: payload, options: JSONSerialization.WritingOptions.prettyPrinted)
-                let theJSONText = NSString(data: arrJson, encoding: String.Encoding.utf8.rawValue)
-                print(theJSONText ?? "")
-                
-                payload1["search_params"] = theJSONText
-                viewModel?.CallHotelSearchAPI(dictParam: payload1)
-                
-            }catch let error as NSError{
-                print(error.description)
-            }
-            
-            
-        }
-    }
     
     
     
@@ -155,7 +116,6 @@ class SearchHotelsResultVC: BaseTableVC, UITextFieldDelegate, HotelSearchViewMod
         filtered = hotelSearchResult
         
         NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("nointernet"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(tophotel(notification:)), name: Notification.Name("tophotel"), object: nil)
     }
     
     

@@ -10,9 +10,6 @@ import CoreData
 
 class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, AboutusViewModelDelegate {
     
-    
-    
-    
     @IBOutlet weak var holderView: UIView!
     @IBOutlet weak var nav: NavBar!
     @IBOutlet weak var kwdlbl: UILabel!
@@ -21,7 +18,7 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
     @IBOutlet weak var bookNowBtn: UIButton!
     @IBOutlet weak var navHeight: NSLayoutConstraint!
     @IBOutlet weak var sessionTimerView: UIView!
-    @IBOutlet weak var titlelbl: UILabel!
+    @IBOutlet weak var sessonlbl: UILabel!
     @IBOutlet weak var subtitlelbl: UILabel!
     
     
@@ -33,21 +30,6 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
     var nationalityCode = String()
     var billingCountryCode = String()
     
-    var fnameA = [String]()
-    var passengertypeA = [String]()
-    var title2A = [String]()
-    var mnameA = [String]()
-    var lnameA = [String]()
-    var dobA = [String]()
-    var passportNoA = [String]()
-    var countryCodeA = [String]()
-    var genderA = [String]()
-    var passportexpiryA = [String]()
-    var passportissuingcountryA = [String]()
-    var middleNameA = [String]()
-    var leadPassengerA = [String]()
-    
-    var childCount = Int()
     var timer: Timer?
     var totalTime = 1
     var tablerow = [TableRow]()
@@ -59,6 +41,20 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
     var token = String()
     var vm:HotelMBViewModel?
     var moreDeatilsViewModel:AboutusViewModel?
+    
+    var adultsCount = Int()
+    var childCount = Int()
+    
+    var fnameA = [String]()
+    var passengertypeA = [String]()
+    var title2A = [String]()
+    var mnameA = [String]()
+    var lnameA = [String]()
+    
+    var passengerType = String()
+    var positionsCount = 0
+    var passengertypeArray = [String]()
+    var searchTextArray = [String]()
     
     
     static var newInstance: AddContactAndGuestDetailsVC? {
@@ -85,10 +81,31 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
         
         NotificationCenter.default.addObserver(self, selector: #selector(reload(notification:)), name: NSNotification.Name("reload"), object: nil)
         
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(updatetimer), name: NSNotification.Name("updatetimer"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(stopTimer), name: NSNotification.Name("sessionStop"), object: nil)
+        
         if callapibool == true {
             holderView.isHidden = true
             callAPI()
         }
+        
+    }
+    
+    
+    @objc func stopTimer() {
+        gotoPopupScreen()
+    }
+    
+    @objc func updatetimer(notificatio:UNNotification) {
+        
+        let totalTime = TimerManager.shared.totalTime
+        let minutes =  totalTime / 60
+        let seconds = totalTime % 60
+        let formattedTime = String(format: "%02d:%02d", minutes, seconds)
+        
+        setuplabels(lbl: sessonlbl, text: "Your Session Expires In : \(formattedTime)", textcolor: .AppLabelColor, font: .LatoRegular(size: 16), align: .left)
+        
     }
     
     //MARK: - reload commonTableView
@@ -101,8 +118,9 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
     func callAPI() {
         
         payload.removeAll()
+        TimerManager.shared.sessionStop()
         
-        payload["rateKey"] = rateKeyArray
+        payload["rateKey"] = selectedrRateKeyArray
         payload["search_id"] = hsearchid
         payload["booking_source"] = hbookingsource
         payload["token"] = htoken
@@ -114,7 +132,6 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
     }
     
     func hotelMobileBookingDetails(response: HotelMBModel) {
-        print(" ====== hotelMobileBookingDetails ==== \(response)")
         
         childCount = Int(defaults.string(forKey: UserDefaultsKeys.hotelchildcount) ?? "0") ?? 0
         holderView.isHidden = false
@@ -124,15 +141,14 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
         bookingsource = response.data?.booking_source ?? ""
         token = response.data?.token ?? ""
         
-        
+        //   let totalSeconds = abs(response.session_expiry_details?.session_start_time ?? 0)
+        TimerManager.shared.totalTime = 900
+        TimerManager.shared.startTimer()
         
         DispatchQueue.main.async {[self] in
             setuptv()
         }
-        
-        DispatchQueue.main.async {[self] in
-            fetchCoreDataValues()
-        }
+     
     }
     
     
@@ -168,7 +184,6 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
         bookNowBtn.addTarget(self, action: #selector(didTapOnBookNowBtn(_:)), for: .touchUpInside)
         sessionTimerView.isHidden = true
         sessionTimerView.addCornerRadiusWithShadow(color: .AppBorderColor, borderColor: .clear, cornerRadius: 5)
-        setuplabels(lbl: titlelbl, text: "Your Session Expires In : ", textcolor: .AppLabelColor, font: .LatoRegular(size: 16), align: .left)
         setuplabels(lbl: subtitlelbl, text: "", textcolor: .AppLabelColor, font: .LatoRegular(size: 16), align: .left)
         
         
@@ -187,6 +202,8 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
                                          "HotelDetailsTVCell"])
         
         
+        adultsCount = Int(defaults.string(forKey: UserDefaultsKeys.hadultCount) ?? "1") ?? 0
+        childCount = Int(defaults.string(forKey: UserDefaultsKeys.hchildCount) ?? "0") ?? 0
     }
     
     
@@ -194,7 +211,7 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
     func setuptv() {
         
         sessionTimerView.isHidden = false
-        startTimer()
+       
         tablerow.removeAll()
         
         if defaults.bool(forKey: UserDefaultsKeys.userLoggedIn) == false {
@@ -212,9 +229,26 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
         
         
         
-        tablerow.append(TableRow(cellType:.AddAdultTravellerTVCell))
+        passengertypeArray.removeAll()
+        tablerow.append(TableRow(height:20, bgColor:.AppHolderViewColor,cellType:.EmptyTVCell))
+        tablerow.append(TableRow(cellType:.TotalNoofTravellerTVCell))
+        for i in 1...adultsCount {
+            positionsCount += 1
+            passengertypeArray.append("Adult")
+            let travellerCell = TableRow(title: "Adult \(i)", key: "adult", characterLimit: positionsCount, cellType: .AddDeatilsOfTravellerTVCell)
+            searchTextArray.append("Adult \(i)")
+            tablerow.append(travellerCell)
+            
+        }
+        
+        
         if childCount != 0 {
-            tablerow.append(TableRow(cellType:.AddChildTravellerTVCell))
+            for i in 1...childCount {
+                positionsCount += 1
+                passengertypeArray.append("Child")
+                tablerow.append(TableRow(title:"Child \(i)",key:"child",characterLimit: positionsCount,cellType:.AddDeatilsOfTravellerTVCell))
+                searchTextArray.append("Child \(i)")
+            }
         }
         
         tablerow.append(TableRow(cellType:.ContactInformationTVCell))
@@ -261,12 +295,6 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
         gotoAddTravellerOrGuestVC(str: "hotelchild")
     }
     
-    //    override func didTapOnEditAdultBtn(cell:AddTravellerTVCell){
-    //        gotoAddTravellerOrGuestVC(str: "hoteladultedit")
-    //    }
-    //    override func didTapOnEditChildtBtn(cell:AddTravellerTVCell){
-    //        gotoAddTravellerOrGuestVC(str: "hotelchildedit")
-    //    }
     
     func gotoAddTravellerOrGuestVC(str:String) {
         defaults.set(str, forKey: UserDefaultsKeys.travellerTitle)
@@ -275,41 +303,9 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
         self.present(vc, animated: true)
     }
     
-    //MARK: - Timer functions
+   
     
-    func sessionStop() {
-        if let timer = self.timer {
-            timer.invalidate()
-            self.timer = nil
-        }
-    }
-    
-    func startTimer() {
-        self.totalTime = 1400
-        self.timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
-    }
-    
-    @objc func updateTimer() {
-        self.subtitlelbl.text = self.timeFormatted(self.totalTime) // will show timer
-        if totalTime != 0 {
-            totalTime -= 1  // decrease counter timer
-        } else {
-            if let timer = self.timer {
-                timer.invalidate()
-                self.timer = nil
-                sessionStop()
-                gotoPopupScreen()
-            }
-        }
-    }
-    
-    func timeFormatted(_ totalSeconds: Int) -> String {
-        let seconds: Int = totalSeconds % 60
-        let minutes: Int = (totalSeconds / 60) % 60
-        return String(format: "%02d:%02d", minutes, seconds)
-    }
-    
-    
+  
     func gotoPopupScreen() {
         guard let vc = PopupVC.newInstance.self else {return}
         vc.modalPresentationStyle = .overCurrentContext
@@ -425,35 +421,53 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
     
     @objc func didTapOnBookNowBtn(_ sender: UIButton) {
         
-        //        fnameA.removeAll()
-        //        passengertypeA.removeAll()
-        //        title2A.removeAll()
-        //        mnameA.removeAll()
-        //        dobA.removeAll()
-        //        passportNoA.removeAll()
-        //        countryCodeA.removeAll()
-        //        genderA.removeAll()
-        //        lnameA.removeAll()
-        //        passportexpiryA.removeAll()
-        //        passportissuingcountryA.removeAll()
-        //        middleNameA.removeAll()
-        //        leadPassengerA.removeAll()
-        //
-        //        passengerA.forEach { i in
-        //            fnameA.append(i.firstName)
-        //            passengertypeA.append(i.passengerType)
-        //            title2A.append(i.title2Code)
-        //            mnameA.append(i.middleName)
-        //            dobA.append(i.dateOfBirth)
-        //            passportNoA.append(i.passportNumber)
-        //            countryCodeA.append(i.countryCode)
-        //            genderA.append(i.gender)
-        //            passportexpiryA.append(i.passportExpiryDate)
-        //            passportissuingcountryA.append(i.passportIssuingCountry)
-        //            middleNameA.append(i.middleName)
-        //            lnameA.append(i.lastName)
-        //            leadPassengerA.append(i.isLeadPassenger)
-        //        }
+        payload.removeAll()
+        
+        var callpaymenthotelbool = true
+        var matchingCells: [AddDeatilsOfGuestTVCell] = []
+        // Replace with the desired search texts
+        
+        for case let cell as AddDeatilsOfGuestTVCell in commonTableView.visibleCells {
+            if let cellText = cell.titlelbl.text, searchTextArray.contains(cellText) {
+                matchingCells.append(cell)
+            }
+        }
+        
+        for cell in matchingCells {
+            
+            if cell.titleTF.text?.isEmpty == true {
+                // Textfield is empty
+                cell.titleView.layer.borderColor = UIColor.red.cgColor
+                callpaymenthotelbool = false
+                
+            } else {
+                // Textfield is not empty
+            }
+            
+            if cell.fnameTF.text?.isEmpty == true {
+                // Textfield is empty
+                cell.fnameView.layer.borderColor = UIColor.red.cgColor
+                callpaymenthotelbool = false
+            } else {
+                // Textfield is not empty
+            }
+            
+            if cell.lnameTF.text?.isEmpty == true {
+                // Textfield is empty
+                cell.lnameView.layer.borderColor = UIColor.red.cgColor
+                callpaymenthotelbool = false
+            } else {
+                // Textfield is not empty
+            }
+            
+        }
+        
+        
+        let mrtitleArray = travelerArray.compactMap({$0.mrtitle})
+        let passengertypeArray = travelerArray.compactMap({$0.passengertype})
+        let firstnameArray = travelerArray.compactMap({$0.firstName})
+        let lastNameArray = travelerArray.compactMap({$0.lastName})
+        
         
         
         payload.removeAll()
@@ -466,29 +480,20 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
         payload["reward_earned"] = "0"
         payload["billing_email"] = self.email
         payload["passenger_contact"] = self.mobile
-        payload["first_name"] = fnameA
-        payload["last_name"] = lnameA
-        payload["name_title"] = title2A
+        payload["first_name"] = firstnameArray
+        payload["last_name"] = lastNameArray
+        payload["name_title"] = mrtitleArray
         payload["billing_country"] = billingCountryCode
         payload["country_code"] = self.countryCode
-        payload["passenger_type"] = "AD"
+        payload["passenger_type"] = passengertypeArray
         payload["user_id"] = "0"
         
         
         
-        if fnameA.count != Int(defaults.string(forKey: UserDefaultsKeys.hoteladultscount) ?? "1"){
-            showToast(message: "Select Guest Details")
-            
-        }else if self.email == "" {
-            showToast(message: "Enter Email Address")
-        }else if self.email.isValidEmail() == false {
-            showToast(message: "Enter Valid Email Addreess")
-        }else if self.mobile == "" {
-            showToast(message: "Enter Mobile No")
-        }else if self.mobile.isValidMobileNumber() == false {
-            showToast(message: "Enter Valid Mobile No")
-        }else if self.countryCode == "" {
+        if billingCountryCode == "" {
             showToast(message: "Enter Country Code")
+        }else if callpaymenthotelbool == false{
+            showToast(message: "Add Details")
         }else if checkTermsAndCondationStatus == false {
             showToast(message: "Please Accept T&C and Privacy Policy")
         }else {
@@ -514,56 +519,22 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
     
     
     
-    
-    //MARK: - FETCHING COREDATA VALUES
-    func fetchCoreDataValues() {
-        
-        fnameA.removeAll()
-        passengertypeA.removeAll()
-        title2A.removeAll()
-        dobA.removeAll()
-        passportNoA.removeAll()
-        genderA.removeAll()
-        lnameA.removeAll()
-        passportexpiryA.removeAll()
-        passportissuingcountryA.removeAll()
-        middleNameA.removeAll()
-        leadPassengerA.removeAll()
-        
-        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "PassengerDetails")
-        //request.predicate = NSPredicate(format: "age = %@", "21")
-        request.returnsObjectsAsFaults = false
-        do {
-            let result = try context.fetch(request)
+    override func didTapOnExpandAdultViewbtnAction(cell: AddDeatilsOfGuestTVCell){
+        if cell.expandViewBool == true {
             
+            cell.expandView()
+            cell.expandViewBool = false
+        }else {
             
-            details = result
-            print(details)
-            
-            for data in result as! [NSManagedObject]{
-                
-                fnameA.append((data.value(forKey: "fname") as? String) ?? "")
-                passengertypeA.append((data.value(forKey: "passengerType") as? String) ?? "")
-                title2A.append((data.value(forKey: "title2") as? String) ?? "")
-                dobA.append((data.value(forKey: "dob") as? String) ?? "")
-                passportNoA.append((data.value(forKey: "passportno") as? String) ?? "")
-                genderA.append((data.value(forKey: "gender") as? String) ?? "")
-                lnameA.append((data.value(forKey: "lname") as? String) ?? "")
-                passportexpiryA.append((data.value(forKey: "passportexpirydate") as? String) ?? "")
-                passportissuingcountryA.append((data.value(forKey: "passportissuingcountry") as? String) ?? "")
-                middleNameA.append("")
-                leadPassengerA.append("1")
-                
-                
-            }
-            
-            DispatchQueue.main.async {[self] in
-                setuptv()
-            }
-        } catch {
-            print("Failed")
+            cell.collapsView()
+            cell.expandViewBool = true
         }
+        
+        commonTableView.beginUpdates()
+        commonTableView.endUpdates()
     }
+    
+    
     
 }
 

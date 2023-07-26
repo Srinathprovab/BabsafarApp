@@ -208,6 +208,8 @@
 		65D6A3C229F4D61200AFAF44 /* SliderTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D6A3C029F4D61100AFAF44 /* SliderTVCell.swift */; };
 		65D6A3C629F4E33E00AFAF44 /* RoomsCountTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65D6A3C429F4E33E00AFAF44 /* RoomsCountTVCell.xib */; };
 		65D6A3C729F4E33E00AFAF44 /* RoomsCountTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D6A3C529F4E33E00AFAF44 /* RoomsCountTVCell.swift */; };
+		65D891B82A712CE600211761 /* AddDeatilsOfGuestTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D891B62A712CE600211761 /* AddDeatilsOfGuestTVCell.swift */; };
+		65D891B92A712CE600211761 /* AddDeatilsOfGuestTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65D891B72A712CE600211761 /* AddDeatilsOfGuestTVCell.xib */; };
 		65DB8C5D29A720AE003BDEE5 /* PaymentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DB8C5C29A720AE003BDEE5 /* PaymentVC.swift */; };
 		65DB8C6129A7226E003BDEE5 /* PaymentOptionTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DB8C5F29A7226E003BDEE5 /* PaymentOptionTVCell.swift */; };
 		65DB8C6229A7226E003BDEE5 /* PaymentOptionTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65DB8C6029A7226E003BDEE5 /* PaymentOptionTVCell.xib */; };
@@ -732,6 +734,8 @@
 		65D6A3C529F4E33E00AFAF44 /* RoomsCountTVCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomsCountTVCell.swift; sourceTree = "<group>"; };
 		65D6A3C929F4FB2A00AFAF44 /* FreshchatSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FreshchatSDK.xcframework; path = Pods/FreshchatSDK/FreshchatSDK.xcframework; sourceTree = "<group>"; };
 		65D7B4032A373DAB00FC58E4 /* MFSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = MFSDK.xcframework; path = Pods/MyFatoorah/SDK/v2/MFSDK.xcframework; sourceTree = "<group>"; };
+		65D891B62A712CE600211761 /* AddDeatilsOfGuestTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDeatilsOfGuestTVCell.swift; sourceTree = "<group>"; };
+		65D891B72A712CE600211761 /* AddDeatilsOfGuestTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddDeatilsOfGuestTVCell.xib; sourceTree = "<group>"; };
 		65DB8C5C29A720AE003BDEE5 /* PaymentVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentVC.swift; sourceTree = "<group>"; };
 		65DB8C5F29A7226E003BDEE5 /* PaymentOptionTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentOptionTVCell.swift; sourceTree = "<group>"; };
 		65DB8C6029A7226E003BDEE5 /* PaymentOptionTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PaymentOptionTVCell.xib; sourceTree = "<group>"; };
@@ -1769,6 +1773,15 @@
 			path = RoomsCountTVCell;
 			sourceTree = "<group>";
 		};
+		65D891B52A712CD400211761 /* AddDeatilsOfGuestTVCell */ = {
+			isa = PBXGroup;
+			children = (
+				65D891B62A712CE600211761 /* AddDeatilsOfGuestTVCell.swift */,
+				65D891B72A712CE600211761 /* AddDeatilsOfGuestTVCell.xib */,
+			);
+			path = AddDeatilsOfGuestTVCell;
+			sourceTree = "<group>";
+		};
 		65DB8C5E29A72241003BDEE5 /* PaymentScreen */ = {
 			isa = PBXGroup;
 			children = (
@@ -2143,6 +2156,7 @@
 		BF566DD22897D77D0046FB95 /* TVCells */ = {
 			isa = PBXGroup;
 			children = (
+				65D891B52A712CD400211761 /* AddDeatilsOfGuestTVCell */,
 				650214FC2A0A590E003A59C6 /* HotelPriceSummaryTVCell */,
 				65D6A3C329F4E33E00AFAF44 /* RoomsCountTVCell */,
 				6573050029811319007C1C5B /* SearchHotelTVCell */,
@@ -3432,6 +3446,7 @@
 				6557158129AE1DE30000A911 /* loderimg2.gif in Resources */,
 				65EB7D252938CF0500ADE1CC /* ExpireOnTVCell.xib in Resources */,
 				BF94FCCD2886913B00778946 /* Poppins-Black.ttf in Resources */,
+				65D891B92A712CE600211761 /* AddDeatilsOfGuestTVCell.xib in Resources */,
 				BF5CFC3128A3E6D90080D883 /* RoundTripFlightResultTVCell.xib in Resources */,
 				65C8CA86292631FF00091D2B /* loderimg.gif in Resources */,
 				BF45B36B2889069300DAB201 /* ButtonTVCell.xib in Resources */,
@@ -3987,6 +4002,7 @@
 				65328DA429C0B105002E236C /* Images.swift in Sources */,
 				65DEEF77294C7F2800EC5E16 /* HotelSearchViewModel.swift in Sources */,
 				BF94FCBA2886911300778946 /* BaseViewModelProtocol.swift in Sources */,
+				65D891B82A712CE600211761 /* AddDeatilsOfGuestTVCell.swift in Sources */,
 				BF98BCBD28A1458D0011A52A /* AboutusTVCell.swift in Sources */,
 				BF94FD1A2886C0F800778946 /* SpecialDealsTVCell.swift in Sources */,
 				65597F222977D25C007056B3 /* UsePromoCodesTVCell.swift in Sources */,
@@ -4232,7 +4248,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = BabSafar/BabSafar.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = 5TLY5PME9K;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BabSafar/Info.plist;
@@ -4274,7 +4290,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = BabSafar/BabSafar.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = 5TLY5PME9K;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BabSafar/Info.plist;
