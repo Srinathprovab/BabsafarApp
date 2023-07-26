@@ -83,7 +83,6 @@ class EditProfileVC: BaseTableVC, ProfileDetailsViewModelDelegate {
             camImg.isHidden = false
             
             
-     //       BASE_URL = "https://provabdevelopment.com/babsafar/mobile_webservices/mobile/index.php/user/"
             payload["user_id"] = defaults.string(forKey: UserDefaultsKeys.userid) ?? "0"
             viewmodel?.CallGetProileDetails_API(dictParam: payload)
             
@@ -100,8 +99,6 @@ class EditProfileVC: BaseTableVC, ProfileDetailsViewModelDelegate {
     
     func getProfileDetails(response: ProfileDetailsModel) {
         
-        print("==== getProfileDetails =======")
-        print(response)
         pdetails = response.data
         fname = pdetails?.first_name ?? ""
         lname = pdetails?.last_name ?? ""
@@ -113,7 +110,7 @@ class EditProfileVC: BaseTableVC, ProfileDetailsViewModelDelegate {
         statename = pdetails?.state_name ?? ""
         cityname = pdetails?.city_name ?? ""
         pincode = pdetails?.pin_code ?? ""
-        dob = pdetails?.date_of_birth ?? ""
+        dob = convertDateFormat(inputDate: pdetails?.date_of_birth ?? "", f1: "yyyy-MM-dd", f2: "dd-MM-yyyy")
         gender = pdetails?.gender ?? ""
         
         if pdetails?.image?.isEmpty == false {
@@ -163,7 +160,12 @@ class EditProfileVC: BaseTableVC, ProfileDetailsViewModelDelegate {
         nav.filterImg.image = UIImage(named: "edit")?.withRenderingMode(.alwaysOriginal)
         nav.filterBtn.addTarget(self, action: #selector(didTapOnEditAccountBtn(_:)), for: .touchUpInside)
         nav.backBtn.addTarget(self, action: #selector(didTapOnBackBtn(_:)), for: .touchUpInside)
-        commonTableView.registerTVCells(["TextfieldTVCell","ButtonTVCell","UnderLineTVCell","SignUpWithTVCell","EmptyTVCell","SelectGenderTVCell"])
+        commonTableView.registerTVCells(["TextfieldTVCell",
+                                         "ButtonTVCell",
+                                         "UnderLineTVCell",
+                                         "SignUpWithTVCell",
+                                         "EmptyTVCell",
+                                         "SelectGenderTVCell"])
         
         
     }
@@ -357,7 +359,7 @@ class EditProfileVC: BaseTableVC, ProfileDetailsViewModelDelegate {
             payload["state_name"] = statename
             payload["city_name"] = cityname
             payload["pin_code"] = pincode
-            payload["date_of_birth"] = dob
+            payload["date_of_birth"] = convertDateFormat(inputDate: dob, f1: "dd-MM-yyyy", f2: "yyyy-MM-dd")
             payload["gender"] = gender
      
             

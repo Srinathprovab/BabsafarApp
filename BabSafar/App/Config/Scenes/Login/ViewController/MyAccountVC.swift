@@ -87,7 +87,6 @@ class MyAccountVC: BaseTableVC, ProfileDetailsViewModelDelegate {
             camImg.isHidden = false
             nav.filterBtnView.isHidden = false
             
-            //     BASE_URL = "https://provabdevelopment.com/babsafar/mobile_webservices/mobile/index.php/user/"
             payload["user_id"] = defaults.string(forKey: UserDefaultsKeys.userid) ?? "0"
             viewmodel?.CallGetProileDetails_API(dictParam: payload)
             
@@ -127,7 +126,7 @@ class MyAccountVC: BaseTableVC, ProfileDetailsViewModelDelegate {
         statename = pdetails?.state_name ?? ""
         cityname = pdetails?.city_name ?? ""
         pincode = pdetails?.pin_code ?? ""
-        dob = pdetails?.date_of_birth ?? ""
+        dob = convertDateFormat(inputDate: pdetails?.date_of_birth ?? "", f1: "yyyy-MM-dd", f2: "dd-MM-yyyy")
         gender = pdetails?.gender ?? ""
         
         if pdetails?.image?.isEmpty == false {
@@ -210,7 +209,7 @@ class MyAccountVC: BaseTableVC, ProfileDetailsViewModelDelegate {
         //
         //        tablerow.append(TableRow(title:"Pincode",subTitle: pdetails?.pin_code ?? "",key: str, text: "10", tempText: "City Name",cellType:.TextfieldTVCell))
         
-        tablerow.append(TableRow(title:"Date Of Birth",subTitle: pdetails?.date_of_birth ?? "",key: str, text: "11",key1: "pdob", tempText: "Date Of Birth",cellType:.TextfieldTVCell))
+        tablerow.append(TableRow(title:"Date Of Birth",subTitle: dob,key: str, text: "11",key1: "pdob", tempText: "Date Of Birth",cellType:.TextfieldTVCell))
         
         
         
@@ -379,7 +378,7 @@ class MyAccountVC: BaseTableVC, ProfileDetailsViewModelDelegate {
             payload["state_name"] = statename
             payload["city_name"] = cityname
             payload["pin_code"] = pincode
-            payload["date_of_birth"] = convertDateFormat(inputDate: dob, f1: dob, f2: "yyyy-MM-dd")
+            payload["date_of_birth"] = convertDateFormat(inputDate: dob, f1: "dd-MM-yyyy", f2: "yyyy-MM-dd")
             payload["gender"] = gender
             
             callUpdateProfileAPI()

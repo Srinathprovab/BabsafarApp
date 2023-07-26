@@ -12,7 +12,6 @@ import FreshchatSDK
 class SearchFlightResultVC: BaseTableVC, UITextFieldDelegate {
     
     
-    
     @IBOutlet weak var holderView: UIView!
     @IBOutlet weak var navHeight: NSLayoutConstraint!
     @IBOutlet weak var navView: NavBar!
@@ -39,7 +38,6 @@ class SearchFlightResultVC: BaseTableVC, UITextFieldDelegate {
     @IBOutlet weak var hiddenView: UIView!
     @IBOutlet weak var chatBtnView: UIView!
     @IBOutlet weak var returnDatalbl: UILabel!
-    
     
     
     var lastContentOffset: CGFloat = 0
@@ -195,7 +193,6 @@ class SearchFlightResultVC: BaseTableVC, UITextFieldDelegate {
         leftTapBtn.setTitle("", for: .normal)
         rightTapBtn.setTitle("", for: .normal)
         
-        
         leftTapView.backgroundColor = .WhiteColor
         rightTapView.backgroundColor = .WhiteColor
         commonTableView.backgroundColor = .WhiteColor
@@ -219,8 +216,6 @@ class SearchFlightResultVC: BaseTableVC, UITextFieldDelegate {
     }
     
     
-    
-    
     @objc func didTapOnBackBtn(_ sender:UIButton){
         callapibool = false
         guard let vc = SearchFlightsVC.newInstance.self else {return}
@@ -228,7 +223,6 @@ class SearchFlightResultVC: BaseTableVC, UITextFieldDelegate {
         present(vc, animated: false)
         
     }
-    
     
     
     @objc func didTapOnEditBtn(_ sender:UIButton){
@@ -245,8 +239,6 @@ class SearchFlightResultVC: BaseTableVC, UITextFieldDelegate {
         defaults.set(cell.indexPath?.row ?? 0, forKey: UserDefaultsKeys.selectdFlightcellIndex)
         gotoBaggageInfoVC()
     }
-    
-    
     
     
     // MARK: - gotoBaggageInfoVC
@@ -399,7 +391,7 @@ class SearchFlightResultVC: BaseTableVC, UITextFieldDelegate {
                     showToast(message: "Journey Dates Should Not Same")
                 }else {
                     
-                   
+                    
                     print("nextDayString ==== > \(nextDayString)")
                     defaults.set(nextDayString, forKey: UserDefaultsKeys.rcalDepDate)
                     payload["depature"] = defaults.string(forKey:UserDefaultsKeys.rcalDepDate)
@@ -461,7 +453,7 @@ class SearchFlightResultVC: BaseTableVC, UITextFieldDelegate {
                     showToast(message: "Journey Dates Should Not Same")
                 }else {
                     
-                   
+                    
                     defaults.set(nextDayString, forKey: UserDefaultsKeys.rcalDepDate)
                     payload["depature"] = defaults.string(forKey:UserDefaultsKeys.rcalDepDate)
                     self.datelbl.text = nextDayString
