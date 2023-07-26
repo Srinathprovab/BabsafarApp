@@ -194,7 +194,7 @@ class BookingConfirmedVC: BaseTableVC, VocherDetailsViewModelDelegate {
         }
         
         
-   
+        
         tablerow.append(TableRow(title:"Traveller Details",cellType:.LabelTVCell))
         tablerow.append(TableRow(moreData:Customerdetails,cellType:.BookedTravelDetailsTVCell))
         tablerow.append(TableRow(height:35,cellType:.EmptyTVCell))
@@ -222,36 +222,13 @@ class BookingConfirmedVC: BaseTableVC, VocherDetailsViewModelDelegate {
         let vocherpdf = "https://provabdevelopment.com/babsafar/mobile_webservices/mobile/index.php/voucher/flight/\(bookingRefrence)/\(bookingsource)/\(bookingStatus)/show_pdf"
         
         
-        DispatchQueue.main.async {
-            if let url = URL(string: vocherpdf) {
-                UIImageWriteToSavedPhotosAlbum(self.drawPDFfromURL(url: url) ?? UIImage(), nil, nil, nil)
-            }
-            
-            DispatchQueue.main.async {
-                self.gotoAboutUsVC(title: "Vocher Details", url: vocherpdf)
-            }
+        downloadAndSavePDF(showpdfurl: vocherpdf)
+        
+        let seconds = 1.0
+        DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
+            self.gotoAboutUsVC(title: "Vocher Details", url: vocherpdf)
         }
         
-    }
-    
-    
-    func drawPDFfromURL(url: URL) -> UIImage? {
-        guard let document = CGPDFDocument(url as CFURL) else { return nil }
-        guard let page = document.page(at: 1) else { return nil }
-        
-        let pageRect = page.getBoxRect(.mediaBox)
-        let renderer = UIGraphicsImageRenderer(size: pageRect.size)
-        let img = renderer.image { ctx in
-            UIColor.white.set()
-            ctx.fill(pageRect)
-            
-            ctx.cgContext.translateBy(x: 0.0, y: pageRect.size.height)
-            ctx.cgContext.scaleBy(x: 1.0, y: -1.0)
-            
-            ctx.cgContext.drawPDFPage(page)
-        }
-        
-        return img
     }
     
     
@@ -266,40 +243,61 @@ class BookingConfirmedVC: BaseTableVC, VocherDetailsViewModelDelegate {
     
     
     @IBAction func didTapOnShowChatWindow(_ sender: Any) {
-        Freshchat.sharedInstance().showConversations(self)
+        // Freshchat.sharedInstance().showConversations(self)
     }
     
     @IBAction func didTapOnMoveScrrenToTopBtn(_ sender: Any) {
-        commonTableView.scrollToRow(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
-        self.hiddenView.isHidden = true
+        //        commonTableView.scrollToRow(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
+        //        self.hiddenView.isHidden = true
     }
     
+}
+
+
+extension BookingConfirmedVC {
     
     
-   
-    
-    
-    //MARK: - scrollViewDidScroll
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-            if scrollView.contentOffset.y > self.lastContentOffset {
-                // scrolling down
-                if self.hiddenView.alpha == 1 {
-                    UIView.animate(withDuration: 0.3) {
-                        self.hiddenView.alpha = 0
-                        self.hiddenView.isHidden = true
-                    }
+    // Function to download and save the PDF
+    func downloadAndSavePDF(showpdfurl:String) {
+        let urlString = showpdfurl
+        
+        if let url = URL(string: urlString) {
+            let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+                if let error = error {
+                    print("Download Error: \(error.localizedDescription)")
+                    return
                 }
-            } else if scrollView.contentOffset.y < self.lastContentOffset {
-                // scrolling up
-                if self.hiddenView.alpha == 0 {
-                    UIView.animate(withDuration: 0.3) {
-                        self.hiddenView.alpha = 1
-                        self.hiddenView.isHidden = false
-                    }
+                
+                guard let httpResponse = response as? HTTPURLResponse,
+                      (200...299).contains(httpResponse.statusCode) else {
+                    print("Invalid Response: \(response.debugDescription)")
+                    return
+                }
+                
+                if let pdfData = data {
+                    self.savePdfToDocumentDirectory(pdfData: pdfData, fileName: "\(Date())")
                 }
             }
-            self.lastContentOffset = scrollView.contentOffset.y
+            task.resume()
+        } else {
+            print("Invalid URL: \(urlString)")
         }
+    }
+    
+    // Function to save PDF data to the app's document directory
+    func savePdfToDocumentDirectory(pdfData: Data, fileName: String) {
+        do {
+            let resourceDocPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last!
+            let pdfName = "Babsafar-\(fileName).pdf"
+            let destinationURL = resourceDocPath.appendingPathComponent(pdfName)
+            try pdfData.write(to: destinationURL)
+            
+            
+        } catch {
+            print("Error saving PDF to Document Directory: \(error)")
+        }
+    }
+    
     
     
 }
