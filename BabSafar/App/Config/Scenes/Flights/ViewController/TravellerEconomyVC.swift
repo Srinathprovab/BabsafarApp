@@ -153,18 +153,18 @@ class TravellerEconomyVC: BaseTableVC {
             if let journeyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
                 if journeyType == "oneway" {
                     tableRow.append(TableRow(title:"Adults",subTitle: "(12+)",text: defaults.string(forKey: UserDefaultsKeys.adultCount) ?? "1",cellType:.TravellerEconomyTVCell))
-                    tableRow.append(TableRow(title:"Children",subTitle: "(2-11)",text: defaults.string(forKey: UserDefaultsKeys.childCount) ?? "0",cellType:.TravellerEconomyTVCell))
+                    tableRow.append(TableRow(title:"Child",subTitle: "(2-11)",text: defaults.string(forKey: UserDefaultsKeys.childCount) ?? "0",cellType:.TravellerEconomyTVCell))
                     tableRow.append(TableRow(title:"Infants",subTitle: "(0-2)",text: defaults.string(forKey: UserDefaultsKeys.infantsCount) ?? "0",cellType:.TravellerEconomyTVCell))
                     
                     
                 }else if journeyType == "circle"{
                     tableRow.append(TableRow(title:"Adults",subTitle: "(12+)",text: defaults.string(forKey: UserDefaultsKeys.radultCount) ?? "1",cellType:.TravellerEconomyTVCell))
-                    tableRow.append(TableRow(title:"Children",subTitle: "(2-11)",text: defaults.string(forKey: UserDefaultsKeys.rchildCount) ?? "0",cellType:.TravellerEconomyTVCell))
+                    tableRow.append(TableRow(title:"Child",subTitle: "(2-11)",text: defaults.string(forKey: UserDefaultsKeys.rchildCount) ?? "0",cellType:.TravellerEconomyTVCell))
                     tableRow.append(TableRow(title:"Infants",subTitle: "(0-2)",text: defaults.string(forKey: UserDefaultsKeys.rinfantsCount) ?? "0",cellType:.TravellerEconomyTVCell))
                 }else {
                     
                     tableRow.append(TableRow(title:"Adults",subTitle: "(12+)",text: defaults.string(forKey: UserDefaultsKeys.madultCount) ?? "1",cellType:.TravellerEconomyTVCell))
-                    tableRow.append(TableRow(title:"Children",subTitle: "(2-11)",text: defaults.string(forKey: UserDefaultsKeys.mchildCount) ?? "0",cellType:.TravellerEconomyTVCell))
+                    tableRow.append(TableRow(title:"Child",subTitle: "(2-11)",text: defaults.string(forKey: UserDefaultsKeys.mchildCount) ?? "0",cellType:.TravellerEconomyTVCell))
                     tableRow.append(TableRow(title:"Infants",subTitle: "(0-2)",text: defaults.string(forKey: UserDefaultsKeys.minfantsCount) ?? "0",cellType:.TravellerEconomyTVCell))
                 }
             }
@@ -173,7 +173,7 @@ class TravellerEconomyVC: BaseTableVC {
             
         }else if keyString == "visa"{
             tableRow.append(TableRow(title:"Adults",subTitle: "(12+)",text: defaults.string(forKey: UserDefaultsKeys.visaadultCount) ?? "1",cellType:.TravellerEconomyTVCell))
-            tableRow.append(TableRow(title:"Children",subTitle: "(2-11)",text: defaults.string(forKey: UserDefaultsKeys.visachildCount) ?? "0",cellType:.TravellerEconomyTVCell))
+            tableRow.append(TableRow(title:"Child",subTitle: "(2-11)",text: defaults.string(forKey: UserDefaultsKeys.visachildCount) ?? "0",cellType:.TravellerEconomyTVCell))
             tableRow.append(TableRow(title:"Infants",subTitle: "(0-2)",text: defaults.string(forKey: UserDefaultsKeys.visainfantsCount) ?? "0",cellType:.TravellerEconomyTVCell))
         }else {
             
@@ -204,7 +204,7 @@ class TravellerEconomyVC: BaseTableVC {
         roomCountArray.forEach { i in
             tableRow.append(TableRow(title:"Room \(i)",cellType:.LabelTVCell))
             tableRow.append(TableRow(title:"Adults",subTitle: "(12+)",text: "\(defaults.string(forKey: UserDefaultsKeys.hadultCount) ?? "1")",cellType:.TravellerEconomyTVCell))
-            tableRow.append(TableRow(title:"Children",subTitle: "(2-11)",text: "\(defaults.string(forKey: UserDefaultsKeys.hchildCount) ?? "0")",cellType:.TravellerEconomyTVCell))
+            tableRow.append(TableRow(title:"Child",subTitle: "(2-11)",text: "\(defaults.string(forKey: UserDefaultsKeys.hchildCount) ?? "0")",cellType:.TravellerEconomyTVCell))
         }
         
         
@@ -237,7 +237,7 @@ class TravellerEconomyVC: BaseTableVC {
             
             if cell.titlelbl.text == "Adults" {
                 adultsCount = cell.count
-            }else if cell.titlelbl.text == "Children"{
+            }else if cell.titlelbl.text == "Child"{
                 childCount = cell.count
             }else {
                 infantsCount = cell.count
@@ -263,9 +263,9 @@ class TravellerEconomyVC: BaseTableVC {
             }
             adultsCount = cell.count
             deleteRecords(title: "Adult", index: cell.count)
-        }else if cell.titlelbl.text == "Children"{
+        }else if cell.titlelbl.text == "Child"{
             childCount = cell.count
-            deleteRecords(title: "Children", index: cell.count)
+            deleteRecords(title: "Child", index: cell.count)
         }else {
             infantsCount = cell.count
             deleteRecords(title: "Infantas", index: cell.count)
@@ -314,7 +314,7 @@ class TravellerEconomyVC: BaseTableVC {
         
         if let journeyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
             if journeyType == "oneway" {
-                let totaltraverlers = "\(defaults.string(forKey: UserDefaultsKeys.adultCount) ?? "") Adults | \(defaults.string(forKey: UserDefaultsKeys.childCount) ?? "") Children | \(defaults.string(forKey: UserDefaultsKeys.infantsCount) ?? "") Infants | \(defaults.string(forKey: UserDefaultsKeys.selectClass) ?? "")"
+                let totaltraverlers = "\(defaults.string(forKey: UserDefaultsKeys.adultCount) ?? "") Adults | \(defaults.string(forKey: UserDefaultsKeys.childCount) ?? "") Child | \(defaults.string(forKey: UserDefaultsKeys.infantsCount) ?? "") Infants | \(defaults.string(forKey: UserDefaultsKeys.selectClass) ?? "")"
                 defaults.set(totaltraverlers, forKey: UserDefaultsKeys.travellerDetails)
             }else if journeyType == "circle" {
                 let totaltraverlers = "\(defaults.string(forKey: UserDefaultsKeys.radultCount) ?? "") Adults | \(defaults.string(forKey: UserDefaultsKeys.rchildCount) ?? "") Children | \(defaults.string(forKey: UserDefaultsKeys.rinfantsCount) ?? "") Infants |\(defaults.string(forKey: UserDefaultsKeys.rselectClass) ?? "")"
@@ -457,7 +457,7 @@ class TravellerEconomyVC: BaseTableVC {
                 if objects.count > 0 && objects.count > adultsCount {
                     context.delete(objects[index] as! NSManagedObject)
                 }
-            }else if title == "Children" {
+            }else if title == "Child" {
                 if objects.count > 0 && objects.count > childCount {
                     context.delete(objects[index] as! NSManagedObject)
                 }

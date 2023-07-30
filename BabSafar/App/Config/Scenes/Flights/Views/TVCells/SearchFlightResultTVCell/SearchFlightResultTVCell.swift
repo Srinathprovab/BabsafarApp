@@ -75,7 +75,7 @@ class SearchFlightResultTVCell: TableViewCell {
     
     
     override func prepareForReuse() {
-        //  setuplabels(lbl: refundlbl, text: "", textcolor: HexColor("#288419"), font: .LatoRegular(size: 10), align: .center)
+        hideSimilarlbl()
     }
     
     

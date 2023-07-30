@@ -464,10 +464,6 @@ class SearchFlightResultVC: BaseTableVC, UITextFieldDelegate {
             
         }
         
-        
-        
-        
-        
     }
     
     
@@ -698,10 +694,10 @@ extension SearchFlightResultVC: AppliedFilters{
                     flight.filter { j in
                         
                         guard let summary = j.first?.flight_details?.summary else { return false }
-                        guard let price = j.first?.totalPrice else { return false }
+                        guard let price = j.first?.price?.api_total_display_fare else { return false }
                         
                         
-                        let priceRangeMatch = ((Double(price) ?? 0.0) >= minpricerange && (Double(price) ?? 0.0) <= maxpricerange)
+                        let priceRangeMatch = ((Double(price) ) >= minpricerange && (Double(price) ) <= maxpricerange)
                         
                         let noOfStopsMatch = noofStopsArray.isEmpty || summary.contains(where: { noofStopsArray.contains("\($0.no_of_stops ?? 0)") }) == true
                         let refundableMatch = refundableTypeArray.isEmpty || refundableTypeArray.contains(j.first?.fareType ?? "")
@@ -722,16 +718,20 @@ extension SearchFlightResultVC: AppliedFilters{
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "h:mm a"
                 
-                let sortedArray = RTFlightList.flatMap { $0.filter { j in
-                    guard let summary = j.first?.flight_details?.summary else { return false }
-                    let noOfStopsMatch = noofStopsArray.isEmpty || summary.contains(where: { noofStopsArray.contains("\($0.no_of_stops ?? 0)") })
-                    let refundableMatch = refundableTypeArray.isEmpty || refundableTypeArray.contains(j.first?.fareType ?? "")
-                    let airlinesMatch = airlinesFilterArray.isEmpty || summary.contains(where: { airlinesFilterArray.contains($0.operator_name ?? "") })
-                    let connectingFlightsMatch = connectingFlightsFilterArray.isEmpty || summary.contains(where: { connectingFlightsFilterArray.contains($0.operator_name ?? "") }) == true
-                    let ConnectingAirportsMatch = connectingFlightsFilterArray.isEmpty || summary.contains(where: { connectingFlightsFilterArray.contains($0.destination?.airport_name ?? "") }) == true
-                    
-                    return noOfStopsMatch && refundableMatch && airlinesMatch && connectingFlightsMatch && ConnectingAirportsMatch
-                }
+                let sortedArray = RTFlightList.flatMap {
+                    $0.filter { j in
+                        guard let summary = j.first?.flight_details?.summary else { return false }
+                        guard let price = j.first?.price?.api_total_display_fare else { return false }
+                        
+                        let priceRangeMatch = ((Double(price) ) >= minpricerange && (Double(price) ) <= maxpricerange)
+                        let noOfStopsMatch = noofStopsArray.isEmpty || summary.contains(where: { noofStopsArray.contains("\($0.no_of_stops ?? 0)") })
+                        let refundableMatch = refundableTypeArray.isEmpty || refundableTypeArray.contains(j.first?.fareType ?? "")
+                        let airlinesMatch = airlinesFilterArray.isEmpty || summary.contains(where: { airlinesFilterArray.contains($0.operator_name ?? "") })
+                        let connectingFlightsMatch = connectingFlightsFilterArray.isEmpty || summary.contains(where: { connectingFlightsFilterArray.contains($0.operator_name ?? "") }) == true
+                        let ConnectingAirportsMatch = connectingFlightsFilterArray.isEmpty || summary.contains(where: { connectingFlightsFilterArray.contains($0.destination?.airport_name ?? "") }) == true
+                        
+                        return priceRangeMatch && noOfStopsMatch && refundableMatch && airlinesMatch && connectingFlightsMatch && ConnectingAirportsMatch
+                    }
                     
                     
                 }
@@ -1179,7 +1179,8 @@ extension SearchFlightResultVC: AppliedFilters{
                         buttonTitle: "\(k.destination?.city ?? "") (\(k.destination?.loc ?? ""))",
                         errormsg: "\(j.price?.api_total_display_fare_withoutmarkup?.rounded() ?? 0.0)",
                         key1:j.fareType,
-                        image: k.operator_image, moreData: similarFlights1,
+                        image: k.operator_image,
+                        moreData: similarFlights1,
                         tempText:"\(k.origin?.city ?? "") (\(k.origin?.loc ?? ""))",
                         questionType:(k.duration),
                         TotalQuestions: j.selectedResult,

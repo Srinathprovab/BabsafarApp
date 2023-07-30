@@ -12,7 +12,9 @@ import MFSDK
 
 
 
-class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBViewModelDelegate, MobileSecureBookingViewModelDelegate, AboutusViewModelDelegate, ProfileDetailsViewModelDelegate, TravellerDeleteViewModelDelegate {
+class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBViewModelDelegate, MobileSecureBookingViewModelDelegate, AboutusViewModelDelegate, ProfileDetailsViewModelDelegate, TravellerDeleteViewModelDelegate, TimerManagerDelegate {
+   
+    
     func travellerDeletedSucess(response: AddTravellerModel) {
         
     }
@@ -157,26 +159,23 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
         }
         
         
-        NotificationCenter.default.addObserver(self, selector: #selector(updatetimer), name: NSNotification.Name("updatetimer"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(stopTimer), name: NSNotification.Name("sessionStop"), object: nil)
+       
     }
     
     
-    @objc func stopTimer() {
+    func timerDidFinish() {
         gotoPopupScreen()
     }
     
-    @objc func updatetimer(notificatio:UNNotification) {
-        
+    func updateTimer() {
         let totalTime = TimerManager.shared.totalTime
         let minutes =  totalTime / 60
         let seconds = totalTime % 60
         let formattedTime = String(format: "%02d:%02d", minutes, seconds)
         
         setuplabels(lbl: sessonlbl, text: "Your Session Expires In : \(formattedTime)", textcolor: .AppLabelColor, font: .LatoRegular(size: 16), align: .left)
-        
     }
-    
+   
     
     
     override func viewDidLoad() {
@@ -186,6 +185,8 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
         setupUI()
         // setupTV()
         self.view.backgroundColor = .WhiteColor
+        TimerManager.shared.delegate = self
+        
         viewmodel = AllCountryCodeListViewModel(self)
         mbviewmodel = MBViewModel(self)
         viewmodel1 = MobileSecureBookingViewModel(self)
@@ -641,60 +642,7 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
         self.billingCountryCode = cell.billingCountryCode
     }
     
-    
-    //MARK: - FETCHING COREDATA VALUES
-    //    func fetchCoreDataValues() {
-    //
-    //        fnameA.removeAll()
-    //        passengertypeA.removeAll()
-    //        title2A.removeAll()
-    //        dobA.removeAll()
-    //        passportNoA.removeAll()
-    //        genderA.removeAll()
-    //        lnameA.removeAll()
-    //        passportexpiryA.removeAll()
-    //        passportissuingcountryA.removeAll()
-    //        middleNameA.removeAll()
-    //        leadPassengerA.removeAll()
-    //
-    //        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "PassengerDetails")
-    //        //request.predicate = NSPredicate(format: "age = %@", "21")
-    //        request.returnsObjectsAsFaults = false
-    //        do {
-    //            let result = try context.fetch(request)
-    //
-    //
-    //            details = result
-    //            print(details)
-    //
-    //            for data in result as! [NSManagedObject]{
-    //
-    //                fnameA.append((data.value(forKey: "fname") as? String) ?? "")
-    //                passengertypeA.append((data.value(forKey: "passengerType") as? String) ?? "")
-    //                title2A.append((data.value(forKey: "title2") as? String) ?? "")
-    //                dobA.append((data.value(forKey: "dob") as? String) ?? "")
-    //                passportNoA.append((data.value(forKey: "passportno") as? String) ?? "")
-    //                genderA.append((data.value(forKey: "gender") as? String) ?? "")
-    //                lnameA.append((data.value(forKey: "lname") as? String) ?? "")
-    //                passportexpiryA.append((data.value(forKey: "passportexpirydate") as? String) ?? "")
-    //                passportissuingcountryA.append((data.value(forKey: "passportissuingcountry") as? String) ?? "")
-    //                middleNameA.append("")
-    //                leadPassengerA.append("1")
-    //
-    //
-    //            }
-    //
-    //            DispatchQueue.main.async {[self] in
-    //                setupTV()
-    //            }
-    //        } catch {
-    //            print("Failed")
-    //        }
-    //    }
-    
-    
-    
-    
+
     //MARK: - DELETING COREDATA OBJECT
     func deleteAllRecords() {
         
