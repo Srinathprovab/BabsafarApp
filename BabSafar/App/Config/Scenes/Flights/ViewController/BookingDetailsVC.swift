@@ -99,6 +99,11 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
     var passengertypeArray = [String]()
     var searchTextArray = [String]()
     
+    var grand_total_Price = String()
+    
+   
+    
+    
     //MARK: -  LOADING FUNCTIONS
     
     
@@ -230,10 +235,6 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
     func callAllAPIS() {
         MBfd?.removeAll()
         TimerManager.shared.sessionStop()
-        //        DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
-        //            details.removeAll()
-        //            self.fetchCoreDataValues()
-        //        }
         
         DispatchQueue.main.async {
             self.callMobilePreProcessingBookingAPI()
@@ -304,8 +305,9 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
         sub_total_infant = i?.sub_total_infant ?? "0"
         
         bookNowlbl.text = "\(i?.api_currency ?? "")\(i?.grand_total ?? "")"
+        grand_total_Price = i?.grand_total ?? ""
         
-        let totalSeconds = abs(response.session_expiry_details?.session_start_time ?? 0)
+       // let totalSeconds = abs(response.session_expiry_details?.session_start_time ?? 0)
         TimerManager.shared.totalTime = 900
         TimerManager.shared.startTimer()
         
@@ -367,14 +369,7 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
                                          "ContactInformationTVCell",
                                          "TravelInsuranceTVCell",
                                          "PriceSummaryTVCell",
-                                         "AddTravellerTVCell",
-                                         "AddAdultTravellerTVCell",
-                                         "AddInfantaTravellerTVCell",
-                                         "AddChildTravellerTVCell",
-                                         "FlightDetailsTVCell",
                                          "SearchFlightResultTVCell",
-                                         "MultiCityTripFlightResultTVCell",
-                                         "FlightDetailsTitleTVCell",
                                          "ViewFlightDetailsBtnTVCell",
                                          "UsePromoCodesTVCell",
                                          "AddDeatilsOfTravellerTVCell",
@@ -580,23 +575,6 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
     }
     
     
-    
-    override func didTapOnAddAdultBtn(cell: AddAdultTravellerTVCell) {
-        gotoAddTravellerOrGuestVC(str: "Adult", key1: "add", passType: "1", id1: "")
-    }
-    
-    
-    
-    override func didTapOnAddChildBtn(cell: AddChildTravellerTVCell) {
-        gotoAddTravellerOrGuestVC(str: "Children", key1: "add", passType: "2", id1: "")
-    }
-    
-    
-    override func didTapOnAddInfantaBtn(cell: AddInfantaTravellerTVCell) {
-        gotoAddTravellerOrGuestVC(str: "Infantas", key1: "add", passType: "3", id1: "")
-    }
-    
-    
     //MARK: - didTapOnEditTraveller
     override func didTapOnEditTraveller(cell:AddAdultsOrGuestTVCell){
         gotoAddTravellerOrGuestVC(str: "", key1: "edit", passType: "", id1: cell.travellerId)
@@ -719,8 +697,13 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
         payload.removeAll()
         payload1.removeAll()
         
+        
+        
         var callpaymentbool = true
         var matchingCells: [AddDeatilsOfTravellerTVCell] = []
+        var fnameCharBool = true
+        var lnameCharBool = true
+       
         // Replace with the desired search texts
         
         for case let cell as AddDeatilsOfTravellerTVCell in commonTableView.visibleCells {
@@ -744,16 +727,23 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
                 // Textfield is empty
                 cell.fnameView.layer.borderColor = UIColor.red.cgColor
                 callpaymentbool = false
-            } else {
-                // Textfield is not empty
+            }else if (cell.fnameTF.text?.count ?? 0) <= 3{
+                cell.fnameView.layer.borderColor = UIColor.red.cgColor
+                fnameCharBool = false
+            }else {
+                fnameCharBool = true
             }
             
             if cell.lnameTF.text?.isEmpty == true {
                 // Textfield is empty
                 cell.lnameView.layer.borderColor = UIColor.red.cgColor
                 callpaymentbool = false
+            }else if (cell.lnameTF.text?.count ?? 0) <= 3{
+                cell.lnameView.layer.borderColor = UIColor.red.cgColor
+                lnameCharBool = false
             } else {
                 // Textfield is not empty
+                lnameCharBool = true
             }
             
             
@@ -879,8 +869,33 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
             
             if callpaymentbool == false {
                 showToast(message: "Add Details")
+            }else if fnameCharBool == false {
+                showToast(message: "First Name Should More Than 3 Chars")
+            }else if lnameCharBool == false {
+                showToast(message: "Last Name Should More Than 3 Chars")
+            }else if payemail == "" {
+                showToast(message: "Enter Email Address")
+            }else if payemail.isValidEmail() == false {
+                showToast(message: "Enter Valid Email Addreess")
+            }else if paymobile == "" {
+                showToast(message: "Enter Mobile No")
+            }else if paymobile.isValidMobileNumber() == false {
+                showToast(message: "Enter Valid Mobile No")
+            }
+            else if self.countryCode == "" {
+                showToast(message: "Enter Country Code")
+            }else if checkTermsAndCondationStatus == false {
+                showToast(message: "Please Accept T&C and Privacy Policy")
             }else {
-                CALL_PRE_PROCESS_PASSENGER_DETAIL_API(str: jsonStringData)
+               
+                
+//                guard let vc = StartSendPaymentVC.newInstance.self else {return}
+//                vc.modalPresentationStyle = .fullScreen
+//                vc.payload = payload
+//                vc.grandTotalamount = self.totalPrice1
+//                vc.grand_total_Price = self.grand_total_Price
+//                present(vc, animated: true)
+            
             }
             
             
@@ -889,43 +904,7 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
         }
     }
     
-    
-    
-    
-    
-    
-    //MARK:  Call mobile process passenger Details API
-    func CALL_PRE_PROCESS_PASSENGER_DETAIL_API(str:String){
-        print(str)
-        
-        if payemail == "" {
-            showToast(message: "Enter Email Address")
-        }else if payemail.isValidEmail() == false {
-            showToast(message: "Enter Valid Email Addreess")
-        }else if paymobile == "" {
-            showToast(message: "Enter Mobile No")
-        }else if paymobile.isValidMobileNumber() == false {
-            showToast(message: "Enter Valid Mobile No")
-        }
-        else if self.countryCode == "" {
-            showToast(message: "Enter Country Code")
-        }else if checkTermsAndCondationStatus == false {
-            showToast(message: "Please Accept T&C and Privacy Policy")
-        }else {
-            
-            //   payload1["passenger_request"] = str
-            //  mbviewmodel?.CALL_PRE_PROCESS_PASSENGER_DETAIL_API(dictParam: payload1)
-            //initiatePayment()
-            guard let vc = MyFatoorahPaymentViewController.newInstance.self else {return}
-            vc.modalPresentationStyle = .fullScreen
-            vc.payload = payload
-            present(vc, animated: true)
-        }
-        
-    }
-    
-    
-    
+
     func gotoPaymentVC() {
         
         guard let vc = PaymentVC.newInstance.self else {return}

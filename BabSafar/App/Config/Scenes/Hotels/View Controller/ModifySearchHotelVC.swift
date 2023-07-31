@@ -7,13 +7,15 @@
 
 import UIKit
 
-class ModifySearchHotelVC: BaseTableVC, HotelSearchViewModelDelegate {
-    
+class ModifySearchHotelVC: BaseTableVC {
     
     var payload = [String:Any]()
     var payload1 = [String:Any]()
     var viewModel:HotelSearchViewModel?
     var tablerow = [TableRow]()
+    var countrycode = String()
+    
+    
     static var newInstance: ModifySearchHotelVC? {
         let storyboard = UIStoryboard(name: Storyboard.Hotels.name,
                                       bundle: nil)
@@ -39,7 +41,6 @@ class ModifySearchHotelVC: BaseTableVC, HotelSearchViewModelDelegate {
         
         // Do any additional setup after loading the view.
         setupUI()
-        viewModel = HotelSearchViewModel(self)
     }
     
     
@@ -130,57 +131,55 @@ class ModifySearchHotelVC: BaseTableVC, HotelSearchViewModelDelegate {
     }
     
     func gotoCalenderVC() {
-        guard let vc = CalenderVC.newInstance.self else {return}
+        guard let vc = Calvc.newInstance.self else {return}
         vc.modalPresentationStyle = .overCurrentContext
         self.present(vc, animated: true)
     }
     
-    
-    override func btnAction(cell: ButtonTVCell) {
-        callAPI()
+    override func didTapOnSelectCountryCodeList(cell:SearchHotelTVCell){
+        self.countrycode = cell.countryCode
     }
     
     
-    
-    func callAPI() {
+    override func btnAction(cell: ButtonTVCell) {
+        
         
         payload["city"] = defaults.string(forKey: UserDefaultsKeys.locationcity)
         payload["hotel_destination"] = defaults.string(forKey: UserDefaultsKeys.locationcityid)
         payload["hotel_checkin"] = defaults.string(forKey: UserDefaultsKeys.checkin)
         payload["hotel_checkout"] = defaults.string(forKey: UserDefaultsKeys.checkout)
         payload["rooms"] = "\(defaults.string(forKey: UserDefaultsKeys.roomcount) ?? "1")"
-        payload["adult"] = ["2"]
-        payload["child"] = ["0"]
-        payload["childAge_1"] = ["0","0"]
-        payload["nationality"] = "IN"
+        payload["adult"] = adtArray
+        payload["child"] = chArray
+        payload["childAge_1"] = ["0"]
+        payload["nationality"] = countrycode
         
-        do {
-            let arrJson = try JSONSerialization.data(withJSONObject: payload, options: JSONSerialization.WritingOptions.prettyPrinted)
-            let theJSONText = NSString(data: arrJson, encoding: String.Encoding.utf8.rawValue)
-            print(theJSONText ?? "")
-            
-     //       BASE_URL = "https://provabdevelopment.com/babsafar/mobile_webservices/mobile/index.php/general/"
-            payload1["search_params"] = theJSONText
-            viewModel?.CallHotelSearchAPI(dictParam: payload1)
-            
-        }catch let error as NSError{
-            print(error.description)
+        if defaults.string(forKey: UserDefaultsKeys.locationcity) == "Add City" || defaults.string(forKey: UserDefaultsKeys.locationcity) == nil{
+            showToast(message: "Enter Hotel or City ")
+        }else if defaults.string(forKey: UserDefaultsKeys.checkin) == "Add Check In Date" || defaults.string(forKey: UserDefaultsKeys.checkin) == nil{
+            showToast(message: "Enter Checkin Date")
+        }else if defaults.string(forKey: UserDefaultsKeys.checkout) == "Add Check Out Date" || defaults.string(forKey: UserDefaultsKeys.checkout) == nil{
+            showToast(message: "Enter Checkout Date")
+        }else if defaults.string(forKey: UserDefaultsKeys.checkout) == defaults.string(forKey: UserDefaultsKeys.checkin) {
+            showToast(message: "Enter Different Dates")
+        }else if defaults.string(forKey: UserDefaultsKeys.roomcount) == "" {
+            showToast(message: "Add Rooms For Booking")
+        }else if self.countrycode.isEmpty == true {
+            showToast(message: "Please Select Nationality.")
+        }else if checkDepartureAndReturnDates(payload, p1: "hotel_checkin", p2: "hotel_checkout") == false {
+            showToast(message: "Invalid Date")
+        }else {
+            gotoSearchHotelsResultVC()
         }
-        
     }
     
-    
-    func hoteSearchResult(response: HotelSearchModel) {
-        response.data?.hotelSearchResult?.forEach({ i in
-            print( i.image)
-        })
-        hotelSearchResult = response.data?.hotelSearchResult ?? []
-        gotoSearchHotelsResultVC()
-    }
     
     func gotoSearchHotelsResultVC(){
         guard let vc = SearchHotelsResultVC.newInstance.self else {return}
         vc.modalPresentationStyle = .fullScreen
+        vc.countrycode = self.countrycode
+        callapibool = true
+        vc.payload = self.payload
         present(vc, animated: true)
     }
     

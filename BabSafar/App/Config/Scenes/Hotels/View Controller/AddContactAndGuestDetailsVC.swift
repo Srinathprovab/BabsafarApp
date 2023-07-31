@@ -8,7 +8,7 @@
 import UIKit
 import CoreData
 
-class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, AboutusViewModelDelegate {
+class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, AboutusViewModelDelegate, TimerManagerDelegate {
     
     @IBOutlet weak var holderView: UIView!
     @IBOutlet weak var nav: NavBar!
@@ -90,6 +90,8 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
             callAPI()
         }
         
+        TimerManager.shared.delegate = self
+        
     }
     
     
@@ -148,7 +150,7 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
         DispatchQueue.main.async {[self] in
             setuptv()
         }
-     
+        
     }
     
     
@@ -199,7 +201,9 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
                                          "AddTravellerTVCell",
                                          "HotelPriceSummaryTVCell",
                                          "AcceptTermsAndConditionTVCell",
-                                         "HotelDetailsTVCell"])
+                                         "HotelDetailsTVCell",
+                                         "TotalNoofTravellerTVCell",
+                                         "AddDeatilsOfGuestTVCell"])
         
         
         adultsCount = Int(defaults.string(forKey: UserDefaultsKeys.hadultCount) ?? "1") ?? 0
@@ -211,7 +215,7 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
     func setuptv() {
         
         sessionTimerView.isHidden = false
-       
+        
         tablerow.removeAll()
         
         if defaults.bool(forKey: UserDefaultsKeys.userLoggedIn) == false {
@@ -235,7 +239,7 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
         for i in 1...adultsCount {
             positionsCount += 1
             passengertypeArray.append("Adult")
-            let travellerCell = TableRow(title: "Adult \(i)", key: "adult", characterLimit: positionsCount, cellType: .AddDeatilsOfTravellerTVCell)
+            let travellerCell = TableRow(title: "Adult \(i)", key: "adult", characterLimit: positionsCount, cellType: .AddDeatilsOfGuestTVCell)
             searchTextArray.append("Adult \(i)")
             tablerow.append(travellerCell)
             
@@ -246,7 +250,7 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
             for i in 1...childCount {
                 positionsCount += 1
                 passengertypeArray.append("Child")
-                tablerow.append(TableRow(title:"Child \(i)",key:"child",characterLimit: positionsCount,cellType:.AddDeatilsOfTravellerTVCell))
+                tablerow.append(TableRow(title:"Child \(i)",key:"child",characterLimit: positionsCount,cellType:.AddDeatilsOfGuestTVCell))
                 searchTextArray.append("Child \(i)")
             }
         }
@@ -273,6 +277,19 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
     }
     
     
+    func timerDidFinish() {
+        gotoPopupScreen()
+    }
+    
+    func updateTimer() {
+        let totalTime = TimerManager.shared.totalTime
+        let minutes =  totalTime / 60
+        let seconds = totalTime % 60
+        let formattedTime = String(format: "%02d:%02d", minutes, seconds)
+        
+        setuplabels(lbl: sessonlbl, text: "Your Session Expires In : \(formattedTime)", textcolor: .AppLabelColor, font: .LatoRegular(size: 16), align: .left)
+    }
+   
     
     
     @objc func didTapOnBackBtn(_ sender:UIButton) {
@@ -303,9 +320,9 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
         self.present(vc, animated: true)
     }
     
-   
     
-  
+    
+    
     func gotoPopupScreen() {
         guard let vc = PopupVC.newInstance.self else {return}
         vc.modalPresentationStyle = .overCurrentContext
@@ -403,7 +420,6 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
     func privacyPolicyDetails(response: AboutUsModel) {
         gotoAboutUsVC(title: response.data?.page_title ?? "", desc: response.data?.page_description ?? "")
     }
-    
     
     
     

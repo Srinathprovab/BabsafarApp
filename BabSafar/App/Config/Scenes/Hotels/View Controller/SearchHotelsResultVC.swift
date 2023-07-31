@@ -9,6 +9,7 @@ import UIKit
 import DropDown
 
 class SearchHotelsResultVC: BaseTableVC, UITextFieldDelegate, HotelSearchViewModelDelegate {
+   
     
     
     @IBOutlet weak var holderView: UIView!
@@ -38,6 +39,7 @@ class SearchHotelsResultVC: BaseTableVC, UITextFieldDelegate, HotelSearchViewMod
     var payload = [String:Any]()
     var payload1 = [String:Any]()
     var countrycode = String()
+    var isLoadingData = false
     var viewModel:HotelSearchViewModel?
     
     static var newInstance: SearchHotelsResultVC? {
@@ -66,42 +68,6 @@ class SearchHotelsResultVC: BaseTableVC, UITextFieldDelegate, HotelSearchViewMod
     }
     
     
-    
-    
-    
-    func callAPI() {
-        
-        loderBool = true
-        do {
-            
-            let arrJson = try JSONSerialization.data(withJSONObject: payload, options: JSONSerialization.WritingOptions.prettyPrinted)
-            let theJSONText = NSString(data: arrJson, encoding: String.Encoding.utf8.rawValue)
-            print(theJSONText ?? "")
-            payload1["search_params"] = theJSONText
-            viewModel?.CallHotelSearchAPI(dictParam: payload1)
-            
-        }catch let error as NSError{
-            print(error.description)
-        }
-        
-    }
-    
-    
-    func hoteSearchResult(response: HotelSearchModel) {
-        navView.isHidden = false
-        filterBtnView.isHidden = false
-        commonTableView.isHidden = false
-        cvHolderView.isHidden = false
-        loderBool = false
-        holderView.isHidden = false
-        hotelSearchId = String(response.search_id ?? 0)
-        hotelSearchResult = response.data?.hotelSearchResult ?? []
-     
-        
-        DispatchQueue.main.async {[self] in
-            setuptv()
-        }
-    }
     
     
     
@@ -234,23 +200,6 @@ class SearchHotelsResultVC: BaseTableVC, UITextFieldDelegate, HotelSearchViewMod
         }
     }
     
-    func setuptv() {
-        tablerow.removeAll()
-        
-        hotelSearchResult.forEach { i in
-            tablerow.append(TableRow(title:i.name,
-                                     subTitle: String(i.star_rating ?? 0),
-                                     text:"\(i.currency ?? ""):\(i.price ?? "")",
-                                     headerText: i.refund,
-                                     buttonTitle: i.address,
-                                     image: i.image,
-                                     cellType:.HotelsTVCell))
-        }
-        
-        
-        commonTVData = tablerow
-        commonTableView.reloadData()
-    }
     
     @objc func didTapOnBackBtn(_ sender:UIButton) {
         // dismiss(animated: true)
@@ -334,7 +283,7 @@ class SearchHotelsResultVC: BaseTableVC, UITextFieldDelegate, HotelSearchViewMod
     
     
     override func didTapOnLocationBtnAction(cell: HotelsTVCell){
-       
+        
         guard let vc = MapViewVC.newInstance.self else {return}
         vc.modalPresentationStyle = .fullScreen
         callapibool = true
@@ -342,7 +291,7 @@ class SearchHotelsResultVC: BaseTableVC, UITextFieldDelegate, HotelSearchViewMod
         vc.long = Double(cell.long) ?? 0.0
         vc.annotationtitle = cell.hotelNamelbl.text ?? ""
         present(vc, animated: true)
-     
+        
     }
     
     func goToHotelDetailsVC(hid:String,bs:String,kwdprice:String) {
@@ -407,6 +356,50 @@ class SearchHotelsResultVC: BaseTableVC, UITextFieldDelegate, HotelSearchViewMod
 
 extension SearchHotelsResultVC {
     
+    
+    func callAPI() {
+        
+        loderBool = true
+        do {
+            
+            let arrJson = try JSONSerialization.data(withJSONObject: payload, options: JSONSerialization.WritingOptions.prettyPrinted)
+            let theJSONText = NSString(data: arrJson, encoding: String.Encoding.utf8.rawValue)
+            print(theJSONText ?? "")
+            payload1["search_params"] = theJSONText
+            payload1["offset"] = "0"
+            payload1["limit"] = "20"
+            viewModel?.CallHotelSearchAPI(dictParam: payload1)
+            
+        }catch let error as NSError{
+            print(error.description)
+        }
+        
+    }
+    
+    
+    
+    
+    
+    func hoteSearchResult(response: HotelSearchModel) {
+        navView.isHidden = false
+        filterBtnView.isHidden = false
+        commonTableView.isHidden = false
+        cvHolderView.isHidden = false
+        loderBool = false
+        holderView.isHidden = false
+        
+        hotelSearchId = String(response.search_id ?? 0)
+        hsearchid = String(response.search_id ?? 0)
+        hbookingsource = response.booking_source ?? ""
+        hotelSearchResult = response.data?.hotelSearchResult ?? []
+        
+        
+        DispatchQueue.main.async {[self] in
+            commonTableView.reloadData()
+        }
+    }
+    
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //check search text & original text
         if( isSearchBool == true){
@@ -464,9 +457,6 @@ extension SearchHotelsResultVC {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath) as? HotelsTVCell {
-            print(cell.bookingsource)
-            print(cell.hotelid)
-            print(cell.kwdlbl.text)
             self.goToHotelDetailsVC(hid: cell.hotelid, bs: cell.bookingsource, kwdprice: cell.kwdlbl.text ?? "")
         }
     }
@@ -518,7 +508,7 @@ extension SearchHotelsResultVC:AppliedFilters{
             
             
         case .airlinessortatoz:
-           
+            
             isSearchBool = true
             filtered = hotelSearchResult.sorted { $0.name ?? "" < $1.name ?? "" }
             DispatchQueue.main.async {[self] in
@@ -543,5 +533,40 @@ extension SearchHotelsResultVC:AppliedFilters{
         }
     }
     
+    
+}
+
+
+extension SearchHotelsResultVC {
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let lastRowIndex = tableView.numberOfRows(inSection: 0) - 1
+        if indexPath.row == lastRowIndex && !isLoadingData {
+            callHotelSearchPaginationAPI()
+        }
+    }
+    
+    func callHotelSearchPaginationAPI() {
+        print("You've reached the last cell, trigger the API call.")
+
+        payload.removeAll()
+        payload["booking_source"] = hbookingsource
+        payload["search_id"] = hsearchid
+        payload["offset"] = "41"
+        payload["limit"] = "5"
+        payload["no_of_nights"] = "1"
+        
+       // viewModel?.CallHotelSearchPagenationAPI(dictParam: payload)
+        
+    }
+    
+    func hoteSearchPagenationResult(response: HotelSearchModel) {
+        
+        hotelSearchResult = response.data?.hotelSearchResult ?? []
+        DispatchQueue.main.async {[self] in
+            commonTableView.reloadData()
+        }
+        
+    }
     
 }

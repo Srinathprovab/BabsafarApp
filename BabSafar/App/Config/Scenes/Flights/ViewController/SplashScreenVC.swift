@@ -136,23 +136,46 @@ class SplashScreenVC: UIViewController {
 
 
 
+
 protocol TimerManagerDelegate: AnyObject {
     func timerDidFinish()
     func updateTimer()
 }
 
+
 class TimerManager {
-    
-    
     static let shared = TimerManager() // Singleton instance
     weak var delegate: TimerManagerDelegate?
     
-    
     var timer: Timer?
     var totalTime = 1
-    
+    private var backgroundTask: UIBackgroundTaskIdentifier = .invalid
     
     private init() {}
+    
+    func startTimer() {
+        
+        
+        endBackgroundTask() // End any existing background task (if any)
+        backgroundTask = UIApplication.shared.beginBackgroundTask { [weak self] in
+            self?.endBackgroundTask()
+        }
+        
+        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
+        
+        
+    }
+    
+    @objc func updateTimer() {
+        if totalTime != 0 {
+            totalTime -= 1
+            delegate?.updateTimer()
+        } else {
+            sessionStop()
+            delegate?.timerDidFinish()
+            endBackgroundTask()
+        }
+    }
     
     @objc func sessionStop() {
         if let timer = timer {
@@ -161,52 +184,9 @@ class TimerManager {
         }
     }
     
-    
-    
-    
-    func startTimer() {
-        // Start a background task to allow the timer to continue in the background
-        var backgroundTask: UIBackgroundTaskIdentifier = UIBackgroundTaskIdentifier.invalid
-        backgroundTask = UIApplication.shared.beginBackgroundTask { [weak self] in
-            // End the background task if it's still running when the app returns to the foreground.
-            UIApplication.shared.endBackgroundTask(backgroundTask)
-            backgroundTask = UIBackgroundTaskIdentifier.invalid
-        }
-        
-        // Create and start the timer
-        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
-            self?.updateTimer()
-            
-            // Extend the background task's expiration time to keep the timer running
-            UIApplication.shared.endBackgroundTask(backgroundTask)
-            backgroundTask = UIApplication.shared.beginBackgroundTask { [weak self] in
-                UIApplication.shared.endBackgroundTask(backgroundTask)
-                backgroundTask = UIBackgroundTaskIdentifier.invalid
-            }
-        }
+    private func endBackgroundTask() {
+        guard backgroundTask != .invalid else { return }
+        UIApplication.shared.endBackgroundTask(backgroundTask)
+        backgroundTask = .invalid
     }
-    
-    
-    @objc func updateTimer() {
-        
-        if totalTime != 0 {
-            totalTime -= 1
-            delegate?.updateTimer()
-        } else {
-            if let timer = self.timer {
-                timer.invalidate()
-                self.timer = nil
-                sessionStop()
-                delegate?.timerDidFinish()
-            }
-        }
-    }
-    
-    func timeFormatted(_ totalSeconds: Int) -> String {
-        let seconds: Int = totalSeconds % 60
-        let minutes: Int = (totalSeconds / 60) % 60
-        return String(format: "%02d:%02d", minutes, seconds)
-    }
-    
-    
 }

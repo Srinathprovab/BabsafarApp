@@ -26,12 +26,6 @@ class AddDeatilsOfGuestTVCell: TableViewCell {
     @IBOutlet weak var holderView: UIView!
     @IBOutlet weak var saveView: UIView!
     @IBOutlet weak var viewHeight: NSLayoutConstraint!
-    @IBOutlet weak var mrRadioImg: UIImageView!
-    @IBOutlet weak var mrlbl: UILabel!
-    @IBOutlet weak var mrBtn: UIButton!
-    @IBOutlet weak var mrsRadioImg: UIImageView!
-    @IBOutlet weak var mrslbl: UILabel!
-    @IBOutlet weak var mrsBtn: UIButton!
     @IBOutlet weak var mnameTF: UITextField!
     @IBOutlet weak var fnameTF: UITextField!
     @IBOutlet weak var lnameTF: UITextField!
@@ -145,21 +139,10 @@ class AddDeatilsOfGuestTVCell: TableViewCell {
         
         collapsView()
         
-        
-        mrRadioImg.image = UIImage(named: "radioUnselected")?.withRenderingMode(.alwaysOriginal)
-        mrsRadioImg.image = UIImage(named: "radioUnselected")?.withRenderingMode(.alwaysOriginal)
-        setuplabels(lbl: mrlbl, text: "Male", textcolor: .AppLabelColor, font: .LatoBold(size: 14), align: .left)
-        setuplabels(lbl: mrslbl, text: "Female", textcolor: .AppLabelColor, font: .LatoBold(size: 14), align: .left)
-        mrBtn.setTitle("", for: .normal)
-        mrsBtn.setTitle("", for: .normal)
-        
         setupTextField(txtField: titleTF, tag1: 1, label: "Title*", placeholder: "MR")
         setupTextField(txtField: fnameTF, tag1: 1, label: "First Name*", placeholder: "First Name")
         setupTextField(txtField: mnameTF, tag1: 1, label: "Middle Name(Optional)", placeholder: "Middle Name(Optional)")
         setupTextField(txtField: lnameTF, tag1: 2, label: "Last Name*", placeholder: "Last Name")
-        
-        
-        
         
         setupTitleDropDown()
         
@@ -274,35 +257,6 @@ class AddDeatilsOfGuestTVCell: TableViewCell {
         }
         
         return tableView.indexPath(for: self)
-    }
-    
-    
-    
-    @IBAction func didTapOnMrBtnAction(_ sender: Any) {
-        self.mrRadioImg.image = UIImage(named: "radioSelected")?.withRenderingMode(.alwaysOriginal).withTintColor(HexColor("#254179"))
-        self.mrsRadioImg.image = UIImage(named: "radioUnselected")
-        
-        if travelerArray.count <= indexposition {
-            travelerArray += Array(repeating: Traveler(), count: indexposition - travelerArray.count + 1)
-        }
-        
-        // Update the gender property of the Traveler object at the specified index
-        travelerArray[indexposition].gender = "1"
-        
-        delegate?.didTapOnMrBtnAction(cell: self)
-    }
-    
-    @IBAction func didTapOnMrsBtnAction(_ sender: Any) {
-        self.mrRadioImg.image = UIImage(named: "radioUnselected")
-        self.mrsRadioImg.image = UIImage(named: "radioSelected")?.withRenderingMode(.alwaysOriginal).withTintColor(HexColor("#254179"))
-        
-        if travelerArray.count <= indexposition {
-            travelerArray += Array(repeating: Traveler(), count: indexposition - travelerArray.count + 1)
-        }
-        
-        // Update the gender property of the Traveler object at the specified index
-        travelerArray[indexposition].gender = "2"
-        delegate?.didTapOnMrsBtnAction(cell: self)
     }
     
     

@@ -186,7 +186,7 @@ class SearchHotelsVC: BaseTableVC, TopFlightDetailsViewModelDelegate {
     }
     
     func gotoCalenderVC() {
-        guard let vc = CalenderVC.newInstance.self else {return}
+        guard let vc = Calvc.newInstance.self else {return}
         vc.modalPresentationStyle = .overCurrentContext
         self.present(vc, animated: true)
     }

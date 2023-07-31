@@ -221,6 +221,7 @@ struct ApiEndpoints {
     static let mobileprocesspassengerdetail = "mobile_process_passenger_detail"
     static let mobileprebooking = "mobile_pre_booking"
     static let mobileprehotelsearch = "mobile_pre_hotel_search"
+    static let ajaxHotelSearch_pagination = "ajaxHotelSearch_pagination"
     static let gethotelcitylist = "get_hotel_city_list"
     static let mobileforgotpassword = "mobile_forgot_password"
     static let hotelmobiledetails = "mobile_details"

@@ -121,14 +121,18 @@ class Calvc: UIViewController {
         let panGensture = UILongPressGestureRecognizer(target: self, action: #selector(didStartRangeSelecting(gesture:)))
         panGensture.minimumPressDuration = 0.5
         calendarView.addGestureRecognizer(panGensture)
-        
-        let journyType = defaults.string(forKey: UserDefaultsKeys.journeyType)
-        if journyType == "oneway" {
-            calendarView.allowsMultipleSelection = false
-        }else if journyType == "circle"{
-            calendarView.allowsMultipleSelection = true
+        let tabselect = defaults.string(forKey: UserDefaultsKeys.dashboardTapSelected)
+        if tabselect == "Flights" {
+            let journyType = defaults.string(forKey: UserDefaultsKeys.journeyType)
+            if journyType == "oneway" {
+                calendarView.allowsMultipleSelection = false
+            }else if journyType == "circle"{
+                calendarView.allowsMultipleSelection = true
+            }else {
+                calendarView.allowsMultipleSelection = false
+            }
         }else {
-            calendarView.allowsMultipleSelection = false
+            calendarView.allowsMultipleSelection = true
         }
     }
     
