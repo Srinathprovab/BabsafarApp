@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Lato-Regular.ttf">
+            <string>Lato-Regular</string>
+        </array>
+        <array key="Lato-Semibold.ttf">
+            <string>Lato-Semibold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="62" id="KGk-i7-Jjw" customClass="TravellerDetailsTVCell" customModule="BabSafar" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="370" height="53"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="370" height="53"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4YB-aW-sKd" customClass="BorderedView" customModule="BabSafar" customModuleProvider="target">
+                        <rect key="frame" x="10" y="5" width="350" height="48"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e7f-R5-DZo">
+                                <rect key="frame" x="0.0" y="0.0" width="350" height="48"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="itraveller" translatesAutoresizingMaskIntoConstraints="NO" id="Jh3-BG-Hek">
+                                        <rect key="frame" x="15" y="13" width="28" height="28"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="28" id="VGl-wf-zu9"/>
+                                            <constraint firstAttribute="height" constant="28" id="tL7-Ur-yYA"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Traveller Details" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aBv-jO-jOI">
+                                        <rect key="frame" x="57" y="18.666666666666668" width="99" height="17.000000000000004"/>
+                                        <fontDescription key="fontDescription" name="Lato-Semibold" family="Lato" pointSize="14"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total No Of  Traveller : 2" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D55-05-6UR">
+                                        <rect key="frame" x="208" y="19.666666666666668" width="128" height="14.666666666666668"/>
+                                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
+                                        <color key="textColor" name="AppCalenderDateSelectColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="aBv-jO-jOI" firstAttribute="leading" secondItem="Jh3-BG-Hek" secondAttribute="trailing" constant="14" id="2xL-xb-h9j"/>
+                                    <constraint firstItem="Jh3-BG-Hek" firstAttribute="top" secondItem="e7f-R5-DZo" secondAttribute="top" constant="13" id="84S-Mj-fkP"/>
+                                    <constraint firstAttribute="height" constant="48" id="AMq-pe-fCR"/>
+                                    <constraint firstItem="D55-05-6UR" firstAttribute="centerY" secondItem="Jh3-BG-Hek" secondAttribute="centerY" id="ECU-tJ-zLA"/>
+                                    <constraint firstItem="Jh3-BG-Hek" firstAttribute="leading" secondItem="e7f-R5-DZo" secondAttribute="leading" constant="15" id="NbJ-7Z-Jqu"/>
+                                    <constraint firstItem="aBv-jO-jOI" firstAttribute="centerY" secondItem="Jh3-BG-Hek" secondAttribute="centerY" id="Rsc-yP-jhi"/>
+                                    <constraint firstAttribute="bottom" secondItem="Jh3-BG-Hek" secondAttribute="bottom" constant="7" id="Yff-Ou-ZUK"/>
+                                    <constraint firstAttribute="trailing" secondItem="D55-05-6UR" secondAttribute="trailing" constant="14" id="c3j-f3-Hrz"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="e7f-R5-DZo" firstAttribute="leading" secondItem="4YB-aW-sKd" secondAttribute="leading" id="anc-uF-7sG"/>
+                            <constraint firstAttribute="height" constant="48" id="cFv-C6-GeY"/>
+                            <constraint firstItem="e7f-R5-DZo" firstAttribute="top" secondItem="4YB-aW-sKd" secondAttribute="top" id="d1i-9S-P28"/>
+                            <constraint firstAttribute="trailing" secondItem="e7f-R5-DZo" secondAttribute="trailing" id="f6b-bg-Zqf"/>
+                            <constraint firstAttribute="bottom" secondItem="e7f-R5-DZo" secondAttribute="bottom" id="zai-bp-AlS"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="4"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                <real key="value" value="1"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                <color key="value" name="AppBorderColor"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="4"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                </subviews>
+                <color key="backgroundColor" name="AppHolderViewColor"/>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="4YB-aW-sKd" secondAttribute="trailing" constant="10" id="AKX-CQ-GYe"/>
+                    <constraint firstItem="4YB-aW-sKd" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="BmW-vu-iao"/>
+                    <constraint firstAttribute="bottom" secondItem="4YB-aW-sKd" secondAttribute="bottom" id="fSu-fQ-6ou"/>
+                    <constraint firstItem="4YB-aW-sKd" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="mUw-of-0ik"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="totalnooftravellerlbl" destination="D55-05-6UR" id="SS4-M2-olR"/>
+            </connections>
+            <point key="canvasLocation" x="143.5114503816794" y="124.64788732394366"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="itraveller" width="28" height="28"/>
+        <namedColor name="AppBorderColor">
+            <color red="0.90200001001358032" green="0.9100000262260437" blue="0.90600001811981201" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="AppCalenderDateSelectColor">
+            <color red="0.0" green="0.6589999794960022" blue="0.59600001573562622" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="AppHolderViewColor">
+            <color red="0.94499999284744263" green="0.95300000905990601" blue="0.94900000095367432" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

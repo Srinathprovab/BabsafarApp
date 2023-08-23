@@ -31,7 +31,6 @@ class CommonFromCityTVCell: TableViewCell, HotelCitySearchViewModelDelegate {
     @IBOutlet weak var dual2lbl1: UILabel!
     @IBOutlet weak var dual2lbl2: UILabel!
     @IBOutlet weak var dual2Btn: UIButton!
-    
     @IBOutlet weak var cityTF: UITextField!
     
     
@@ -211,6 +210,10 @@ class CommonFromCityTVCell: TableViewCell, HotelCitySearchViewModelDelegate {
         delegate?.didTapOnDual2Btn(cell: self)
     }
     
+    
+    @IBAction func didTapOnClearBtnAction(_ sender: Any) {
+        cityTF.text = ""
+    }
     
     
 }

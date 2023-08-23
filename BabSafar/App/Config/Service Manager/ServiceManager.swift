@@ -371,7 +371,7 @@ class ServiceManager {
                             print(theJSONText ?? "")
                         }
                     } catch {
-                        print(error.localizedDescription)
+                       // print(error.localizedDescription)
                     }
                 }
 
@@ -393,7 +393,7 @@ class ServiceManager {
                             else {
                                 
                                 
-                                NotificationCenter.default.post(name: NSNotification.Name("somthingwentwrong"), object: nil)
+                                NotificationCenter.default.post(name: NSNotification.Name("resultnil"), object: nil)
                                 completionHandler(false, nil, ApiError.somthingwentwrong.message)
                             }
                             
@@ -423,6 +423,7 @@ class ServiceManager {
                     
                     
                 }else {
+                    NotificationCenter.default.post(name: NSNotification.Name("resultnil"), object: nil)
                     completionHandler(false, nil, "Result Nil")
                 }
             }

@@ -106,11 +106,21 @@ enum TVCellType {
     case SliderTVCell
     case AddDeatilsOfTravellerTVCell
     case TotalNoofTravellerTVCell
+    case TotalPremiumPayableTVCell
+    
+    
+    
     
     //Hotels
     case SearchHotelTVCell
     case HotelPriceSummaryTVCell
     case AddDeatilsOfGuestTVCell
+    
+    
+    //Insurence
+    case InsurenceSearchTVCell
+    case TravellerDetailsTVCell
+    case InsurenceFlightDetailsTVCell
     
 }
 

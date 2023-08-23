@@ -889,12 +889,12 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
             }else {
                
                 
-//                guard let vc = StartSendPaymentVC.newInstance.self else {return}
-//                vc.modalPresentationStyle = .fullScreen
-//                vc.payload = payload
-//                vc.grandTotalamount = self.totalPrice1
-//                vc.grand_total_Price = self.grand_total_Price
-//                present(vc, animated: true)
+                guard let vc = PaymentGatewayVC.newInstance.self else {return}
+                vc.modalPresentationStyle = .fullScreen
+                vc.payload = payload
+                vc.grandTotalamount = self.totalPrice1
+                vc.grand_total_Price = self.grand_total_Price
+                present(vc, animated: true)
             
             }
             

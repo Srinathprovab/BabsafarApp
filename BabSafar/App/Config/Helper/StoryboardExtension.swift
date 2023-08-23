@@ -16,7 +16,7 @@ enum Storyboard: String {
     case Insurance
     case Hotels
     case Calender
-    case Payment
+    case PaymentGateway
     
     var name: String {
         return self.rawValue.capitalizingFirstLetter()

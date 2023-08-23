@@ -127,6 +127,7 @@ class SplashScreenVC: UIViewController {
     func gotodashBoardScreen() {
         guard let vc = DashBoaardTabbarVC.newInstance.self else {return}
         vc.modalPresentationStyle = .fullScreen
+        vc.selectedIndex = 0
         callapibool = true
         present(vc, animated: true)
     }

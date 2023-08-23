@@ -10,7 +10,7 @@ import JTAppleCalendar
 
 class Calvc: UIViewController {
     
-   
+    
     @IBOutlet weak var monthLabel: UILabel!
     @IBOutlet weak var calendarView: JTAppleCalendarView!
     
@@ -46,7 +46,6 @@ class Calvc: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         
         self.celltag = Int(defaults.string(forKey: UserDefaultsKeys.cellTag) ?? "0") ?? 0
-
         
         NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("nointernet"), object: nil)
         
@@ -62,7 +61,7 @@ class Calvc: UIViewController {
     }
     
     
- 
+    
     
     
     override func viewDidLoad() {
@@ -73,7 +72,7 @@ class Calvc: UIViewController {
         setupCalView()
     }
     
-   
+    
     func setupViews(v:UIView,radius:CGFloat,color:UIColor) {
         v.backgroundColor = color
         v.layer.cornerRadius = radius
@@ -88,7 +87,7 @@ class Calvc: UIViewController {
         lbl.font = font
     }
     
-   
+    
     func setupCalView() {
         
         
@@ -118,6 +117,7 @@ class Calvc: UIViewController {
             self.setupMonthLabel(date: visibleDates.monthDates.first?.date ?? Date())
         }
         
+        
         let panGensture = UILongPressGestureRecognizer(target: self, action: #selector(didStartRangeSelecting(gesture:)))
         panGensture.minimumPressDuration = 0.5
         calendarView.addGestureRecognizer(panGensture)
@@ -130,6 +130,13 @@ class Calvc: UIViewController {
                 calendarView.allowsMultipleSelection = true
             }else {
                 calendarView.allowsMultipleSelection = false
+            }
+        }else if tabselect == "Insurence" {
+            let journyType = defaults.string(forKey: UserDefaultsKeys.InsurenceJourneyType)
+            if journyType == "oneway" {
+                calendarView.allowsMultipleSelection = false
+            }else {
+                calendarView.allowsMultipleSelection = true
             }
         }else {
             calendarView.allowsMultipleSelection = true
@@ -220,14 +227,12 @@ class Calvc: UIViewController {
         default: break
         }
         
-        
-        
     }
     
     
-        @IBAction func leftButtonClick(_ sender: Any) {
-            calendarView.scrollToSegment(.previous)
-        }
+    @IBAction func leftButtonClick(_ sender: Any) {
+        calendarView.scrollToSegment(.previous)
+    }
     
     @IBAction func rightButtonClick(_ sender: Any) {
         calendarView.scrollToSegment(.next)
@@ -280,6 +285,35 @@ class Calvc: UIViewController {
                         }
                     }
                 }
+                
+            }else if selectedTab == "Insurence"{
+                
+                if let journeyType = defaults.string(forKey: UserDefaultsKeys.InsurenceJourneyType) {
+                    if journeyType == "oneway" {
+                        if calstartDate == "" {
+                            showToast(message: "Please Select Date")
+                        }else {
+                            defaults.set(calstartDate, forKey: UserDefaultsKeys.icalDepDate)
+                            NotificationCenter.default.post(name: Notification.Name("reload"), object: nil)
+                            dismiss(animated: false)
+                            
+                        }
+                        
+                    }else if journeyType == "circle"{
+                        if calstartDate == "" && calendDate == "" {
+                            showToast(message: "Please Select Dates")
+                        }else if calstartDate == calendDate{
+                            showToast(message: "Please Select Multiple Dates")
+                        }else{
+                            defaults.set(calstartDate, forKey: UserDefaultsKeys.ircalDepDate)
+                            defaults.set(calendDate, forKey: UserDefaultsKeys.ircalRetDate)
+                            NotificationCenter.default.post(name: Notification.Name("reload"), object: nil)
+                            dismiss(animated: false)
+                        }
+                    }
+                }
+                
+              
                 
             }else {
                 

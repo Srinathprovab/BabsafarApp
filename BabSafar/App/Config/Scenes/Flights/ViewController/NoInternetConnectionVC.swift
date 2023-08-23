@@ -77,8 +77,13 @@ class NoInternetConnectionVC: UIViewController {
     
     @IBAction func didTapOnTryAgainBtn(_ sender: Any) {
         if key == "noresult" {
-            if let tabselect = defaults.string(forKey: UserDefaultsKeys.dashboardTapSelected),tabselect == "Flights" {
+            let tabselect = defaults.string(forKey: UserDefaultsKeys.dashboardTapSelected)
+            if tabselect == "Flights" {
                 guard let vc = SearchFlightsVC.newInstance.self else {return}
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc, animated: true)
+            }else if tabselect == "Insurence"{
+                guard let vc = InsuranceVC.newInstance.self else {return}
                 vc.modalPresentationStyle = .fullScreen
                 self.present(vc, animated: true)
             }else {
@@ -87,7 +92,7 @@ class NoInternetConnectionVC: UIViewController {
                 self.present(vc, animated: true)
             }
             
-           
+            
         }else {
             NotificationCenter.default.post(name: NSNotification.Name("reloadTV"), object: nil)
             dismiss(animated: false)

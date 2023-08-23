@@ -108,7 +108,9 @@ class NavBar: UIView {
         lbl1.textColor = .WhiteColor
         lbl1.font = UIFont.LatoMedium(size: 20)
         lbl2.textColor = .WhiteColor
-        lbl2.font = UIFont.LatoLight(size: 14)
+        lbl2.font = UIFont.LatoRegular(size: 14)
+        lbl1.textAlignment = .center
+        lbl2.textAlignment = .center
         
         
         self.contentView.bringSubviewToFront(self.backBtnView)

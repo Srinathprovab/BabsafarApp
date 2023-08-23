@@ -204,6 +204,15 @@ var loderBool = false
 var payemail = String()
 var paymobile = String()
 
+
+//Insurence
+var isearchid = ""
+var iplancode = ""
+var ibookingsource = ""
+var iplandetails = ""
+var selectedPlanContent = [PlanContent]()
+var searchInputs:PreBookingSearch_params?
+
 /* URL endpoints */
 struct ApiEndpoints {
     static let mobilePreFlightSearch = "mobile_pre_flight_search"
@@ -240,9 +249,12 @@ struct ApiEndpoints {
     static let mobileInsertTraveller = "mobileInsertTraveller"
     static let hmobilebooking = "mobile_booking"
     static let mobilehotelprebooking = "mobile_hotel_pre_booking"
-
-
     
+    
+    //Insurence
+    static let mobile_pre_insurance_search = "general/mobile_pre_insurance_search"
+    static let insurance_pre_process_booking = "insurance/pre_process_booking"
+    static let insurance_get_airline_list = "insurance/get_airline_list"
     
 }
 
@@ -267,6 +279,7 @@ struct UserDefaultsKeys {
     static var useremail = "useremail"
     static var usermobile = "usermobile"
     static var journeyType = "Journey_Type"
+    static var InsurenceJourneyType = "Insurence_Journey_Type"
     static var journeyTypeSelectedIndex = "Journey_TypeSelectedIndex"
     static var searchid = "search_id"
     static var accesskey = "access_key"
@@ -381,6 +394,44 @@ struct UserDefaultsKeys {
     static var visatravellerDetails = "Visa_Traveller_Details"
     
     
+    //Insurence
+    static var icalDepDate = "IcalDepDate"
+    static var icalRetDate = "icalRetDate"
+    static var ircalDepDate = "ircalDepDate"
+    static var ircalRetDate = "ircalRetDate"
+    
+    static var ifromCity = "ifromCity"
+    static var ifromlocid = "ifromlocid"
+    static var ifromairport = "ifromairport"
+    static var ifromcityname = "ifromcityname"
+    
+    static var itoCity = "itoCity"
+    static var itolocid = "itolocid"
+    static var itoairport = "itoairport"
+    static var itocityname = "itocityname"
+    
+    static var irtoCity = "rtoCity"
+    static var irtolocid = "rtolocid"
+    static var irtoairport = "rtoairport"
+    static var irtocityname = "rtocityname"
+    
+    static var irfromCity = "irfromCity"
+    static var irfromlocid = "irfromlocid"
+    static var irfromairport = "irfromairport"
+    static var irfromcityname = "irfromcityname"
+    
+    static var iadultCount = "iAdult_Count"
+    static var ichildCount = "iChild_Count"
+    static var iinfantsCount = "iInfants_Count"
+    static var itravellerDetails = "iTraveller_Details"
+    
+    static var iradultCount = "irAdult_Count"
+    static var irchildCount = "irChild_Count"
+    static var irinfantsCount = "irInfants_Count"
+    static var irtravellerDetails = "irTraveller_Details"
+    
+    
+    
 }
 
 
@@ -398,17 +449,6 @@ struct sessionMgrDefaults {
 struct LocalJsonFiles {
     
 }
-
-
-
-//"placeDetails":[
-//{
-//"from":"Bangalore, India, Bengaluru International Airport (BLR)",
-//"from_loc_id":"801",
-//"to":"Dubai, UAE, Dubai International Airport (DXB)",
-//"to_loc_id":"1921",
-//"depature":"21-12-2022"
-//}
 
 
 struct MulticityArray : Codable {

@@ -21,7 +21,7 @@ protocol MultiCityTVCellDelegate {
 
 
 class MultiCityTVCell: TableViewCell,ButtonCVCellDelegate,MultiCityCVCellDelegate {
-   
+    
     
     @IBOutlet weak var holderView: UIView!
     @IBOutlet weak var multiCityTripCV: UICollectionView!
@@ -123,8 +123,8 @@ class MultiCityTVCell: TableViewCell,ButtonCVCellDelegate,MultiCityCVCellDelegat
         addClassBtn.setTitle("", for: .normal)
         dropdownImg.isHidden = true
         economyValuelbl.isHidden = true
-           setupCV()
-       // multiCityTripCV.isHidden = true
+        setupCV()
+        // multiCityTripCV.isHidden = true
         //  setupTV()
     }
     
@@ -160,7 +160,7 @@ class MultiCityTVCell: TableViewCell,ButtonCVCellDelegate,MultiCityCVCellDelegat
     
     
     func updateheight() {
-       
+        
         if fromCityNameArray.count == 5 {
             cvHeight.constant = CGFloat(80 * (fromCityNameArray.count))
         }else {
@@ -481,9 +481,9 @@ extension MultiCityTVCell:UITableViewDelegate,UITableViewDataSource {
             cell.toCityNamelbl.text = toCityShortNameArray[indexPath.row]
             cell.datelbl.text = depatureDatesArray[indexPath.row]
             
-//            cell.fromTF.text = fromCityShortNameArray[indexPath.row]
-//            cell.toTF.text = toCityShortNameArray[indexPath.row]
-//            cell.datelbl.text = depatureDatesArray[indexPath.row]
+            //            cell.fromTF.text = fromCityShortNameArray[indexPath.row]
+            //            cell.toTF.text = toCityShortNameArray[indexPath.row]
+            //            cell.datelbl.text = depatureDatesArray[indexPath.row]
             
             if indexPath.row == 0 {
                 cell.cancelBtnView.isHidden = true

@@ -44,16 +44,26 @@
                                         <color key="textColor" name="AppBtnColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OUn-ir-MOR">
+                                        <rect key="frame" x="0.0" y="49" width="490" height="1"/>
+                                        <color key="backgroundColor" name="AppBorderColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="gHV-f9-C1E"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="37X-Hf-Ugu"/>
                                     <constraint firstItem="teR-KW-Bg2" firstAttribute="leading" secondItem="3zL-RX-uVQ" secondAttribute="trailing" id="9oy-wn-Wcb"/>
+                                    <constraint firstAttribute="bottom" secondItem="OUn-ir-MOR" secondAttribute="bottom" id="EMD-eU-0f1"/>
+                                    <constraint firstAttribute="trailing" secondItem="OUn-ir-MOR" secondAttribute="trailing" id="GAN-3o-rR9"/>
                                     <constraint firstItem="3zL-RX-uVQ" firstAttribute="centerY" secondItem="e8g-NB-69g" secondAttribute="centerY" id="Kkw-yP-qOb"/>
                                     <constraint firstItem="e8g-NB-69g" firstAttribute="leading" secondItem="XhB-co-o5Q" secondAttribute="leading" constant="15" id="Y1S-FA-uTa"/>
                                     <constraint firstItem="e8g-NB-69g" firstAttribute="centerY" secondItem="XhB-co-o5Q" secondAttribute="centerY" id="rZ5-td-yaN"/>
                                     <constraint firstItem="teR-KW-Bg2" firstAttribute="centerY" secondItem="3zL-RX-uVQ" secondAttribute="centerY" id="sQj-zN-bW4"/>
                                     <constraint firstItem="3zL-RX-uVQ" firstAttribute="leading" secondItem="e8g-NB-69g" secondAttribute="trailing" constant="14" id="wwc-NG-pt2"/>
+                                    <constraint firstItem="OUn-ir-MOR" firstAttribute="leading" secondItem="XhB-co-o5Q" secondAttribute="leading" id="zxS-8R-LgA"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZAy-br-H7G">
@@ -185,6 +195,9 @@
         </tableViewCell>
     </objects>
     <resources>
+        <namedColor name="AppBorderColor">
+            <color red="0.90200001001358032" green="0.9100000262260437" blue="0.90600001811981201" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="AppBtnColor">
             <color red="0.92500001192092896" green="0.2669999897480011" blue="0.11800000071525574" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
