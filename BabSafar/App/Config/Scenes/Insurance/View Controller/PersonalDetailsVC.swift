@@ -23,7 +23,9 @@ class PersonalDetailsVC: BaseTableVC, InsurancePreprocessBookingViewModelDelegat
     var billingCountryCode = String()
     var callpaymentbool = true
     var vm:InsurancePreprocessBookingViewModel?
-   
+    var totalFare = String()
+    var baseFare = String()
+    var tax = String()
     
     static var newInstance: PersonalDetailsVC? {
         let storyboard = UIStoryboard(name: Storyboard.Insurance.name,
@@ -62,7 +64,7 @@ class PersonalDetailsVC: BaseTableVC, InsurancePreprocessBookingViewModelDelegat
                                          "EmptyTVCell",
                                          "TravellerDetailsTVCell",
                                          "ContactInformationTVCell",
-                                         "PriceSummaryTVCell",
+                                         "InsurenceFareSummaryTVCell",
                                          "InsurenceFlightDetailsTVCell"])
         
         setupTV()
@@ -110,10 +112,12 @@ class PersonalDetailsVC: BaseTableVC, InsurancePreprocessBookingViewModelDelegat
         
         passengertypeArray = passengertypeArray.unique()
         
-        
-        
         tablerow.append(TableRow(cellType:.ContactInformationTVCell))
-        tablerow.append(TableRow(cellType:.PriceSummaryTVCell))
+        tablerow.append(TableRow(title:baseFare,
+                                 subTitle: tax,
+                                 buttonTitle: totalFare,
+                                 cellType:.InsurenceFareSummaryTVCell))
+        
         tablerow.append(TableRow(height:50, bgColor:.AppHolderViewColor,cellType:.EmptyTVCell))
         commonTVData = tablerow
         commonTableView.reloadData()
@@ -214,6 +218,10 @@ extension PersonalDetailsVC {
     func insurencePaymentshow(response: InsurancePreprocessBookingModel) {
         holderView.isHidden = false
         searchInputs = response.search_params
+        totalFare = "\(response.total_fare?.rounded() ?? 0.0)"
+        baseFare = "\(response.base_fare?.rounded() ?? 0.0)"
+        tax = "\(response.tax?.rounded() ?? 0.0)"
+        
         DispatchQueue.main.async {
             self.setupTV()
         }

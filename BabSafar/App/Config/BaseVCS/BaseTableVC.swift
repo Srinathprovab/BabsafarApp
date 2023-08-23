@@ -919,6 +919,12 @@ extension BaseTableVC: UITableViewDataSource {
                 
                 
                 
+            case .InsurenceFareSummaryTVCell:
+                let cell: InsurenceFareSummaryTVCell = commonTV.dequeTVCell(indexPath: indexPath)
+                commonCell = cell
+                
+                
+                
                 
                 
             default:

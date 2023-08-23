@@ -121,6 +121,7 @@ enum TVCellType {
     case InsurenceSearchTVCell
     case TravellerDetailsTVCell
     case InsurenceFlightDetailsTVCell
+    case InsurenceFareSummaryTVCell
     
 }
 
