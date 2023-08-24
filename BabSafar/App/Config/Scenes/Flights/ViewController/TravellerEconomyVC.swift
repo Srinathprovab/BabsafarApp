@@ -11,6 +11,7 @@ import CoreData
 class TravellerEconomyVC: BaseTableVC {
     
     @IBOutlet weak var holderView: UIView!
+    @IBOutlet weak var tvHeight: NSLayoutConstraint!
     
     
     var selectClassArray = [String]()
@@ -47,7 +48,7 @@ class TravellerEconomyVC: BaseTableVC {
         if let selectedTab = defaults.string(forKey: UserDefaultsKeys.dashboardTapSelected){
             
             if selectedTab == "Flights" {
-                
+                tvHeight.constant = 632
                 if let journeyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
                     if journeyType == "oneway" {
                         adultsCount = Int(defaults.string(forKey: UserDefaultsKeys.adultCount) ?? "1") ?? 0
@@ -68,7 +69,7 @@ class TravellerEconomyVC: BaseTableVC {
                 }
                 
             }else if selectedTab == "Insurence" {
-                
+                tvHeight.constant = 350
                 if let journeyType = defaults.string(forKey: UserDefaultsKeys.InsurenceJourneyType) {
                     if journeyType == "oneway" {
                         adultsCount = Int(defaults.string(forKey: UserDefaultsKeys.iadultCount) ?? "1") ?? 0
@@ -81,6 +82,12 @@ class TravellerEconomyVC: BaseTableVC {
                         infantsCount = Int(defaults.string(forKey: UserDefaultsKeys.irinfantsCount) ?? "0") ?? 0
                     }
                 }
+                
+            }else if selectedTab == "Fasttrack" {
+                
+                tvHeight.constant = 350
+                adultsCount = Int(defaults.string(forKey: UserDefaultsKeys.iradultCount) ?? "1") ?? 0
+                childCount = Int(defaults.string(forKey: UserDefaultsKeys.irchildCount) ?? "0") ?? 0
                 
             }else if selectedTab == "Visa" {
                 adultsCount = 1
@@ -97,7 +104,7 @@ class TravellerEconomyVC: BaseTableVC {
         if let tabselect = defaults.string(forKey: UserDefaultsKeys.dashboardTapSelected){
             switch tabselect {
                 
-            case "Flights","Visa","Insurence":
+            case "Flights","Visa","Insurence","Fasttrack":
                 DispatchQueue.main.async {[self] in
                     setupSearchFlightEconomyTVCells()
                 }
@@ -143,6 +150,7 @@ class TravellerEconomyVC: BaseTableVC {
         commonTableView.backgroundColor = .WhiteColor
         commonTableView.layer.cornerRadius = 10
         commonTableView.clipsToBounds = true
+        commonTableView.isScrollEnabled = false
         commonTableView.registerTVCells(["RadioButtonTVCell",
                                          "TravellerEconomyTVCell",
                                          "LabelTVCell",
@@ -205,6 +213,13 @@ class TravellerEconomyVC: BaseTableVC {
             }
             
             
+            
+            
+        }else if keyString == "fasttrack"{
+            
+            
+            tableRow.append(TableRow(title:"Adults",subTitle: "(12+)",text: defaults.string(forKey: UserDefaultsKeys.fradultCount) ?? "1",cellType:.TravellerEconomyTVCell))
+            tableRow.append(TableRow(title:"Child",subTitle: "(2-11)",text: defaults.string(forKey: UserDefaultsKeys.frchildCount) ?? "0",cellType:.TravellerEconomyTVCell))
             
             
         }else {
@@ -297,10 +312,10 @@ class TravellerEconomyVC: BaseTableVC {
             
         }else if cell.titlelbl.text == "Child"{
             childCount = cell.count
-           
+            
         }else {
             infantsCount = cell.count
-           
+            
         }
         
         
@@ -378,40 +393,23 @@ class TravellerEconomyVC: BaseTableVC {
                 if selectedTab == "Flights" {
                     
                     if let journeyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
-                        if let selectedTab = defaults.string(forKey: UserDefaultsKeys.dashboardTapSelected){
-                            if selectedTab == "Flights" {
-                                
-                                if let journeyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
-                                    if journeyType == "oneway" {
-                                        defaults.set(adultsCount, forKey: UserDefaultsKeys.adultCount)
-                                        defaults.set(childCount, forKey: UserDefaultsKeys.childCount)
-                                        defaults.set(infantsCount, forKey: UserDefaultsKeys.infantsCount)
-                                        
-                                    }else if journeyType == "circle" {
-                                        defaults.set(adultsCount, forKey: UserDefaultsKeys.radultCount)
-                                        defaults.set(childCount, forKey: UserDefaultsKeys.rchildCount)
-                                        defaults.set(infantsCount, forKey: UserDefaultsKeys.rinfantsCount)
-                                    }else {
-                                        defaults.set(adultsCount, forKey: UserDefaultsKeys.madultCount)
-                                        defaults.set(childCount, forKey: UserDefaultsKeys.mchildCount)
-                                        defaults.set(infantsCount, forKey: UserDefaultsKeys.minfantsCount)
-                                    }
-                                }
-                                
-                                gotoBookFlightVC()
-                                
-                            }else{
-                                defaults.set(adultsCount, forKey: UserDefaultsKeys.hadultCount)
-                                defaults.set(childCount, forKey: UserDefaultsKeys.hchildCount)
-                                
-                                NotificationCenter.default.post(name: Notification.Name("reload"), object: nil)
-                                dismiss(animated: false)
-                            }
+                        if journeyType == "oneway" {
+                            defaults.set(adultsCount, forKey: UserDefaultsKeys.adultCount)
+                            defaults.set(childCount, forKey: UserDefaultsKeys.childCount)
+                            defaults.set(infantsCount, forKey: UserDefaultsKeys.infantsCount)
+                            
+                        }else if journeyType == "circle" {
+                            defaults.set(adultsCount, forKey: UserDefaultsKeys.radultCount)
+                            defaults.set(childCount, forKey: UserDefaultsKeys.rchildCount)
+                            defaults.set(infantsCount, forKey: UserDefaultsKeys.rinfantsCount)
+                        }else {
+                            defaults.set(adultsCount, forKey: UserDefaultsKeys.madultCount)
+                            defaults.set(childCount, forKey: UserDefaultsKeys.mchildCount)
+                            defaults.set(infantsCount, forKey: UserDefaultsKeys.minfantsCount)
                         }
                     }
                     
-                    
-                    
+                    gotoBookFlightVC()
                     
                 }else if selectedTab == "Insurence" {
                     
@@ -425,8 +423,11 @@ class TravellerEconomyVC: BaseTableVC {
                             let totaltraverlers = "\(defaults.string(forKey: UserDefaultsKeys.iadultCount) ?? "") Adults | \(defaults.string(forKey: UserDefaultsKeys.ichildCount) ?? "") Children | \(defaults.string(forKey: UserDefaultsKeys.iinfantsCount) ?? "") Infants "
                             defaults.set(totaltraverlers, forKey: UserDefaultsKeys.itravellerDetails)
                             
+                            
+                            
                             NotificationCenter.default.post(name: Notification.Name("reload"), object: nil)
                             dismiss(animated: false)
+                            
                             
                         }else if journeyType == "circle" {
                             defaults.set(adultsCount, forKey: UserDefaultsKeys.iradultCount)
@@ -437,11 +438,27 @@ class TravellerEconomyVC: BaseTableVC {
                             let totaltraverlers = "\(defaults.string(forKey: UserDefaultsKeys.iradultCount) ?? "") Adults | \(defaults.string(forKey: UserDefaultsKeys.irchildCount) ?? "") Children | \(defaults.string(forKey: UserDefaultsKeys.irinfantsCount) ?? "") Infants "
                             defaults.set(totaltraverlers, forKey: UserDefaultsKeys.irtravellerDetails)
                             
+                            
+                            
                             NotificationCenter.default.post(name: Notification.Name("reload"), object: nil)
                             dismiss(animated: false)
+                            
                         }
                     }
                     
+                    
+                    
+                }else if selectedTab == "Fasttrack" {
+                    
+                    defaults.set(adultsCount, forKey: UserDefaultsKeys.fradultCount)
+                    defaults.set(childCount, forKey: UserDefaultsKeys.frchildCount)
+                    
+                    
+                    let totaltraverlers = "\(defaults.string(forKey: UserDefaultsKeys.fradultCount) ?? "") Adults | \(defaults.string(forKey: UserDefaultsKeys.frchildCount) ?? "") Children"
+                    defaults.set(totaltraverlers, forKey: UserDefaultsKeys.frtravellerDetails)
+                    
+                    NotificationCenter.default.post(name: Notification.Name("reload"), object: nil)
+                    dismiss(animated: false)
                     
                     
                 }else if selectedTab == "Visa" {
@@ -456,16 +473,13 @@ class TravellerEconomyVC: BaseTableVC {
                     NotificationCenter.default.post(name: Notification.Name("reloadvisavc"), object: nil)
                     dismiss(animated: false)
                     
-                }else if selectedTab == "Insurence" {
-                    
-                    
                 }else {
                     defaults.set(adultsCount, forKey: UserDefaultsKeys.hadultCount)
                     defaults.set(childCount, forKey: UserDefaultsKeys.hchildCount)
                     
-                    NotificationCenter.default.post(name: Notification.Name("reload"), object: nil)
-                    dismiss(animated: false)
                 }
+                
+                
             }
         }else {
             print("Add Room ......")

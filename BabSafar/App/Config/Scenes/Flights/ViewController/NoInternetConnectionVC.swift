@@ -86,6 +86,10 @@ class NoInternetConnectionVC: UIViewController {
                 guard let vc = InsuranceVC.newInstance.self else {return}
                 vc.modalPresentationStyle = .fullScreen
                 self.present(vc, animated: true)
+            }else if tabselect == "Fasttrack"{
+                guard let vc = SearchFastTrackVC.newInstance.self else {return}
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc, animated: true)
             }else {
                 guard let vc = SearchHotelsVC.newInstance.self else {return}
                 vc.modalPresentationStyle = .fullScreen

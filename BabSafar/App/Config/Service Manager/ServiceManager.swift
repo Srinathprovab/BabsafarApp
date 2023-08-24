@@ -362,18 +362,7 @@ class ServiceManager {
                 print(resp.response?.statusCode as Any)
                 
                
-                if let data = resp.data { // Assuming `response` is the API response object
-                    do {
-                        if let json = try JSONSerialization.jsonObject(with:  resp.data ?? NSData() as Data, options: []) as? [String: Any] {
-
-                            let arrJson = try JSONSerialization.data(withJSONObject: json, options: JSONSerialization.WritingOptions.prettyPrinted)
-                            let theJSONText = NSString(data: arrJson, encoding: String.Encoding.utf8.rawValue)
-                            print(theJSONText ?? "")
-                        }
-                    } catch {
-                       // print(error.localizedDescription)
-                    }
-                }
+                
 
                 if resp.value != nil {
                     //do something with data
@@ -387,6 +376,24 @@ class ServiceManager {
                             
                             let jsonData = try JSONSerialization.data(withJSONObject: resp.value as Any,options: [])
                             if let jsonResponse = try? JSONDecoder().decode(T.self, from: jsonData) {
+                                
+                                
+                                
+                                if let data = resp.data { // Assuming `response` is the API response object
+                                    do {
+                                        if let json = try JSONSerialization.jsonObject(with:  resp.data ?? NSData() as Data, options: []) as? [String: Any] {
+
+                                            let arrJson = try JSONSerialization.data(withJSONObject: json, options: JSONSerialization.WritingOptions.prettyPrinted)
+                                            let theJSONText = NSString(data: arrJson, encoding: String.Encoding.utf8.rawValue)
+                                            print(theJSONText ?? "")
+                                        }
+                                    } catch {
+                                        print(error.localizedDescription)
+                                    }
+                                }
+                                
+                                
+                                
                                 completionHandler(true, jsonResponse, nil)
                             }
                             

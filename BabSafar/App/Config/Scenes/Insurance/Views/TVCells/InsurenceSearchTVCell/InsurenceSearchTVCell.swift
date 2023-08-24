@@ -15,7 +15,7 @@ protocol InsurenceSearchTVCellDelegate {
     func didTapOnSearchInsurenceBtnAction(cell:InsurenceSearchTVCell)
 }
 
-class InsurenceSearchTVCell: TableViewCell {
+class InsurenceSearchTVCell: TableViewCell, FastrackAirlineListViewModelDelegate {
     
     @IBOutlet weak var fromView: UIView!
     @IBOutlet weak var fromTF: UITextField!
@@ -33,16 +33,18 @@ class InsurenceSearchTVCell: TableViewCell {
     @IBOutlet weak var toCityTVHeight: NSLayoutConstraint!
     @IBOutlet weak var searchView: UIView!
     
-    
+    var airlineList = [FastrackAirlineListModel]()
     var cityViewModel: SelectCityViewModel?
+    var airlineViewModel: FastrackAirlineListViewModel?
     var payload = [String:Any]()
-    var txtbool = Bool()
+    var txtbool = true
     var delegate:InsurenceSearchTVCellDelegate?
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         setupUI()
         cityViewModel = SelectCityViewModel(self)
+        airlineViewModel = FastrackAirlineListViewModel(self)
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -53,28 +55,48 @@ class InsurenceSearchTVCell: TableViewCell {
     
     override func updateUI() {
         
-        if let journeyType = defaults.string(forKey: UserDefaultsKeys.InsurenceJourneyType) {
-            if journeyType == "oneway" {
-                returnView.isHidden = true
-                fromTF.text = defaults.string(forKey: UserDefaultsKeys.ifromCity) ?? ""
-                toTF.text = defaults.string(forKey: UserDefaultsKeys.itoCity) ?? ""
-                depDatelbl.text = defaults.string(forKey: UserDefaultsKeys.icalDepDate) ?? "+ Add Date"
-                passengerlbl.text = defaults.string(forKey: UserDefaultsKeys.itravellerDetails) ?? ""
+        if let journeyType = defaults.string(forKey: UserDefaultsKeys.dashboardTapSelected) {
+            if journeyType == "Insurence" {
+                
+                if let journeyType = defaults.string(forKey: UserDefaultsKeys.InsurenceJourneyType) {
+                    if journeyType == "oneway" {
+                        returnView.isHidden = true
+                        fromTF.text = defaults.string(forKey: UserDefaultsKeys.ifromCity) ?? ""
+                        toTF.text = defaults.string(forKey: UserDefaultsKeys.itoCity) ?? ""
+                        depDatelbl.text = defaults.string(forKey: UserDefaultsKeys.icalDepDate) ?? "+ Add Date"
+                        passengerlbl.text = defaults.string(forKey: UserDefaultsKeys.itravellerDetails) ?? ""
+                    }else {
+                        returnView.isHidden = false
+                        fromTF.text = defaults.string(forKey: UserDefaultsKeys.irfromCity) ?? ""
+                        toTF.text = defaults.string(forKey: UserDefaultsKeys.irtoCity) ?? ""
+                        depDatelbl.text = defaults.string(forKey: UserDefaultsKeys.ircalDepDate) ?? "+ Add Date"
+                        returnDatelbl.text = defaults.string(forKey: UserDefaultsKeys.ircalRetDate) ?? "+ Add Date"
+                        passengerlbl.text = defaults.string(forKey: UserDefaultsKeys.irtravellerDetails) ?? ""
+                    }
+                }
+                
+                
+                setupTV()
+                fromCityTVHeight.constant = 0
+                toCityTVHeight.constant = 0
+                CallShowCityListAPI(str: "")
+                
             }else {
+                
                 returnView.isHidden = false
-                fromTF.text = defaults.string(forKey: UserDefaultsKeys.irfromCity) ?? ""
-                toTF.text = defaults.string(forKey: UserDefaultsKeys.irtoCity) ?? ""
-                depDatelbl.text = defaults.string(forKey: UserDefaultsKeys.ircalDepDate) ?? "+ Add Date"
-                returnDatelbl.text = defaults.string(forKey: UserDefaultsKeys.ircalRetDate) ?? "+ Add Date"
-                passengerlbl.text = defaults.string(forKey: UserDefaultsKeys.irtravellerDetails) ?? ""
+                fromTF.text = defaults.string(forKey: UserDefaultsKeys.frfromCity) ?? ""
+                toTF.text = defaults.string(forKey: UserDefaultsKeys.frtoCity) ?? ""
+                depDatelbl.text = defaults.string(forKey: UserDefaultsKeys.frcalDepDate) ?? "+ Add Date"
+                returnDatelbl.text = defaults.string(forKey: UserDefaultsKeys.frcalRetDate) ?? "+ Add Date"
+                passengerlbl.text = defaults.string(forKey: UserDefaultsKeys.frtravellerDetails) ?? ""
+                
+                
+                setupTV()
+                fromCityTVHeight.constant = 0
+                toCityTVHeight.constant = 0
+                self.CALL_GET_AIRLINE_LIST_API(str: "")
             }
         }
-        
-        
-        setupTV()
-        fromCityTVHeight.constant = 0
-        toCityTVHeight.constant = 0
-        CallShowCityListAPI(str: "")
         
     }
     
@@ -152,50 +174,102 @@ extension InsurenceSearchTVCell:SelectCityViewModelProtocal {
     
     @objc func textFiledEditingChanged(_ textField:UITextField) {
         
-        
-        if textField == fromTF {
-            txtbool = true
-            if textField.text?.isEmpty == true {
-                
+    
+        if let journeyType = defaults.string(forKey: UserDefaultsKeys.dashboardTapSelected) {
+            if journeyType == "Insurence" {
+                if textField == fromTF {
+                    txtbool = true
+                    if textField.text?.isEmpty == true {
+                        
+                    }else {
+                        CallShowCityListAPI(str: textField.text ?? "")
+                        
+                    }
+                }else {
+                    txtbool = false
+                    if textField.text?.isEmpty == true {
+                        
+                    }else {
+                        CallShowCityListAPI(str: textField.text ?? "")
+                    }
+                }
             }else {
-                CallShowCityListAPI(str: textField.text ?? "")
                 
-            }
-        }else {
-            txtbool = false
-            if textField.text?.isEmpty == true {
                 
-            }else {
-                CallShowCityListAPI(str: textField.text ?? "")
+                if textField == fromTF {
+                    txtbool = true
+                    if textField.text?.isEmpty == true {
+                        
+                    }else {
+                        CALL_GET_AIRLINE_LIST_API(str: textField.text ?? "")
+                    }
+                }else {
+                    txtbool = false
+                    if textField.text?.isEmpty == true {
+                        
+                    }else {
+                        CALL_GET_AIRLINE_LIST_API(str: textField.text ?? "")
+                    }
+                }
             }
         }
+        
         
         
     }
     
     
     override func textFieldDidBeginEditing(_ textField: UITextField) {
-        if textField == fromTF {
-            fromTF.placeholder = "From City"
-            CallShowCityListAPI(str: textField.text ?? "")
-            
-        }else {
-            toTF.placeholder = "To city"
-            CallShowCityListAPI(str: textField.text ?? "")
+        
+        if let journeyType = defaults.string(forKey: UserDefaultsKeys.dashboardTapSelected) {
+            if journeyType == "Insurence" {
+                if textField == fromTF {
+                    fromTF.placeholder = "From City"
+                    CallShowCityListAPI(str: textField.text ?? "")
+                    
+                }else {
+                    toTF.placeholder = "To city"
+                    CallShowCityListAPI(str: textField.text ?? "")
+                }
+            }else {
+                if textField == fromTF {
+                    fromTF.placeholder = "From City"
+                    CALL_GET_AIRLINE_LIST_API(str: textField.text ?? "")
+                    
+                }else {
+                    toTF.placeholder = "To city"
+                    CALL_GET_AIRLINE_LIST_API(str: textField.text ?? "")
+                }
+            }
         }
+        
+        
+        
     }
     
+    
+   
+    
+    
+   
+    
+    
+}
+
+
+extension InsurenceSearchTVCell {
+    
+    
+    //MARK: - INSURENCE
     
     func CallShowCityListAPI(str:String) {
         payload["term"] = str
         cityViewModel?.CallShowCityListAPI(dictParam: payload)
     }
     
-    
-    
     func ShowCityList(response: [SelectCityModel]) {
         cityList = response
-        print(cityList)
+       
         if txtbool == true {
             fromCityTVHeight.constant = CGFloat(cityList.count * 80)
             DispatchQueue.main.async {[self] in
@@ -210,6 +284,29 @@ extension InsurenceSearchTVCell:SelectCityViewModelProtocal {
         
     }
     
+    //MARK: - FASTRACK
+    
+    func CALL_GET_AIRLINE_LIST_API(str:String) {
+        payload["term"] = str
+        airlineViewModel?.CALL_GET_AIRLINE_LIST_API(dictParam: payload)
+    }
+    
+    func airlineList(response: [FastrackAirlineListModel]) {
+        airlineList = response
+        
+        
+        if txtbool == true {
+            fromCityTVHeight.constant = CGFloat(airlineList.count * 80)
+            DispatchQueue.main.async {[self] in
+                fromCityTV.reloadData()
+            }
+        }else {
+            toCityTVHeight.constant = CGFloat(airlineList.count * 80)
+            DispatchQueue.main.async {[self] in
+                toCityTV.reloadData()
+            }
+        }
+    }
     
     
 }
@@ -237,27 +334,58 @@ extension InsurenceSearchTVCell:UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var ccell = UITableViewCell()
         
-        if tableView == fromCityTV {
-            if let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as? FromCityTVCell {
-                cell.selectionStyle = .none
-                cell.titlelbl.text = cityList[indexPath.row].label
-                cell.subTitlelbl.text = cityList[indexPath.row].name
-                cell.id = cityList[indexPath.row].id ?? ""
-                cell.cityname = cityList[indexPath.row].name ?? ""
-                cell.citycode = cityList[indexPath.row].code ?? ""
-                ccell = cell
+        if let journeyType = defaults.string(forKey: UserDefaultsKeys.dashboardTapSelected) {
+            if journeyType == "Insurence" {
+                if tableView == fromCityTV {
+                    if let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as? FromCityTVCell {
+                        cell.selectionStyle = .none
+                        cell.titlelbl.text = cityList[indexPath.row].label
+                        cell.subTitlelbl.text = cityList[indexPath.row].name
+                        cell.id = cityList[indexPath.row].id ?? ""
+                        cell.cityname = cityList[indexPath.row].name ?? ""
+                        cell.citycode = cityList[indexPath.row].code ?? ""
+                        ccell = cell
+                    }
+                }else {
+                    if let cell = tableView.dequeueReusableCell(withIdentifier: "cell1") as? FromCityTVCell {
+                        cell.selectionStyle = .none
+                        cell.titlelbl.text = cityList[indexPath.row].label
+                        cell.subTitlelbl.text = cityList[indexPath.row].name
+                        cell.id = cityList[indexPath.row].id ?? ""
+                        cell.cityname = cityList[indexPath.row].name ?? ""
+                        cell.citycode = cityList[indexPath.row].code ?? ""
+                        ccell = cell
+                    }
+                }
+            }else {
+                if tableView == fromCityTV {
+                    if let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as? FromCityTVCell {
+                        cell.selectionStyle = .none
+                        cell.titlelbl.text = airlineList[indexPath.row].label
+                        cell.subTitlelbl.text = airlineList[indexPath.row].name
+                        cell.id = airlineList[indexPath.row].id ?? ""
+                        cell.cityname = airlineList[indexPath.row].name ?? ""
+                        cell.citycode = airlineList[indexPath.row].code ?? ""
+                        cell.fasttrackid = airlineList[indexPath.row].fast_track_id ?? ""
+                        ccell = cell
+                    }
+                }else {
+                    if let cell = tableView.dequeueReusableCell(withIdentifier: "cell1") as? FromCityTVCell {
+                        cell.selectionStyle = .none
+                        cell.titlelbl.text = airlineList[indexPath.row].label
+                        cell.subTitlelbl.text = airlineList[indexPath.row].name
+                        cell.id = airlineList[indexPath.row].id ?? ""
+                        cell.fasttrackid = airlineList[indexPath.row].fast_track_id ?? ""
+                        cell.cityname = airlineList[indexPath.row].name ?? ""
+                        cell.citycode = airlineList[indexPath.row].code ?? ""
+                        ccell = cell
+                    }
+                }
             }
-        }else {
-            if let cell = tableView.dequeueReusableCell(withIdentifier: "cell1") as? FromCityTVCell {
-                cell.selectionStyle = .none
-                cell.titlelbl.text = cityList[indexPath.row].label
-                cell.subTitlelbl.text = cityList[indexPath.row].name
-                cell.id = cityList[indexPath.row].id ?? ""
-                cell.cityname = cityList[indexPath.row].name ?? ""
-                cell.citycode = cityList[indexPath.row].code ?? ""
-                ccell = cell
-            }
+            
         }
+        
+        
         
         return ccell
     }
@@ -271,53 +399,85 @@ extension InsurenceSearchTVCell:UITableViewDelegate, UITableViewDataSource {
                 fromTF.text = cityList[indexPath.row].label ?? ""
                 fromTF.resignFirstResponder()
                 
-                
-                if let selectedJType = defaults.string(forKey: UserDefaultsKeys.InsurenceJourneyType) {
-                    if selectedJType == "circle" {
+                if let journeyType = defaults.string(forKey: UserDefaultsKeys.dashboardTapSelected) {
+                    if journeyType == "Insurence" {
                         
-                        defaults.set(cityList[indexPath.row].label ?? "", forKey: UserDefaultsKeys.irfromCity)
-                        defaults.set(cityList[indexPath.row].id ?? "", forKey: UserDefaultsKeys.irfromlocid)
-                        defaults.set("\(cityList[indexPath.row].city ?? "") (\(cityList[indexPath.row].code ?? ""))", forKey: UserDefaultsKeys.irfromairport)
-                        defaults.set(cityList[indexPath.row].city ?? "", forKey: UserDefaultsKeys.irfromcityname)
+                        
+                        if let selectedJType = defaults.string(forKey: UserDefaultsKeys.InsurenceJourneyType) {
+                            if selectedJType == "circle" {
+                                
+                                defaults.set(cityList[indexPath.row].label ?? "", forKey: UserDefaultsKeys.irfromCity)
+                                defaults.set(cityList[indexPath.row].id ?? "", forKey: UserDefaultsKeys.irfromlocid)
+                                defaults.set("\(cityList[indexPath.row].city ?? "") (\(cityList[indexPath.row].code ?? ""))", forKey: UserDefaultsKeys.irfromairport)
+                                defaults.set(cityList[indexPath.row].city ?? "", forKey: UserDefaultsKeys.irfromcityname)
+                            }else {
+                                defaults.set(cityList[indexPath.row].label ?? "", forKey: UserDefaultsKeys.ifromCity)
+                                defaults.set(cityList[indexPath.row].id ?? "", forKey: UserDefaultsKeys.ifromlocid)
+                                defaults.set("\(cityList[indexPath.row].city ?? "") (\(cityList[indexPath.row].code ?? ""))", forKey: UserDefaultsKeys.ifromairport)
+                                defaults.set(cityList[indexPath.row].city ?? "", forKey: UserDefaultsKeys.ifromcityname)
+                                
+                            }
+                            
+                        }
+                        
                     }else {
-                        defaults.set(cityList[indexPath.row].label ?? "", forKey: UserDefaultsKeys.ifromCity)
-                        defaults.set(cityList[indexPath.row].id ?? "", forKey: UserDefaultsKeys.ifromlocid)
-                        defaults.set("\(cityList[indexPath.row].city ?? "") (\(cityList[indexPath.row].code ?? ""))", forKey: UserDefaultsKeys.ifromairport)
-                        defaults.set(cityList[indexPath.row].city ?? "", forKey: UserDefaultsKeys.ifromcityname)
-                        
+                        defaults.set(airlineList[indexPath.row].label ?? "", forKey: UserDefaultsKeys.frfromCity)
+                        defaults.set(airlineList[indexPath.row].id ?? "", forKey: UserDefaultsKeys.frfromlocid)
+                        defaults.set("\(airlineList[indexPath.row].city ?? "") (\(airlineList[indexPath.row].code ?? ""))", forKey: UserDefaultsKeys.frfromairport)
+                        defaults.set(airlineList[indexPath.row].city ?? "", forKey: UserDefaultsKeys.frfromcityname)
+                        defaults.set(airlineList[indexPath.row].fast_track_id ?? "", forKey: UserDefaultsKeys.fromfstcode)
+
                     }
                     
+                    
+                    
+                    fromCityTVHeight.constant = 0
                 }
-                fromCityTVHeight.constant = 0
             }else {
                 
                 toTF.text = cityList[indexPath.row].label ?? ""
                 toTF.resignFirstResponder()
                 
-                if let selectedJType = defaults.string(forKey: UserDefaultsKeys.InsurenceJourneyType) {
-                    if selectedJType == "circle" {
-                        
-                        defaults.set(cityList[indexPath.row].label ?? "", forKey: UserDefaultsKeys.irtoCity)
-                        defaults.set(cityList[indexPath.row].id ?? "", forKey: UserDefaultsKeys.irtolocid)
-                        defaults.set("\(cityList[indexPath.row].city ?? "") (\(cityList[indexPath.row].code ?? ""))", forKey: UserDefaultsKeys.irtoairport)
-                        defaults.set(cityList[indexPath.row].city ?? "", forKey: UserDefaultsKeys.irtocityname)
+                if let journeyType = defaults.string(forKey: UserDefaultsKeys.dashboardTapSelected) {
+                    if journeyType == "Insurence" {
+                        if let selectedJType = defaults.string(forKey: UserDefaultsKeys.InsurenceJourneyType) {
+                            if selectedJType == "circle" {
+                                
+                                defaults.set(cityList[indexPath.row].label ?? "", forKey: UserDefaultsKeys.irtoCity)
+                                defaults.set(cityList[indexPath.row].id ?? "", forKey: UserDefaultsKeys.irtolocid)
+                                defaults.set("\(cityList[indexPath.row].city ?? "") (\(cityList[indexPath.row].code ?? ""))", forKey: UserDefaultsKeys.irtoairport)
+                                defaults.set(cityList[indexPath.row].city ?? "", forKey: UserDefaultsKeys.irtocityname)
+                            }else {
+                                
+                                
+                                defaults.set(cityList[indexPath.row].label ?? "", forKey: UserDefaultsKeys.itoCity)
+                                defaults.set(cityList[indexPath.row].id ?? "", forKey: UserDefaultsKeys.itolocid)
+                                defaults.set("\(cityList[indexPath.row].city ?? "") (\(cityList[indexPath.row].code ?? ""))", forKey: UserDefaultsKeys.itoairport)
+                                defaults.set(cityList[indexPath.row].city ?? "", forKey: UserDefaultsKeys.itocityname)
+                                
+                            }
+                            
+                        }
                     }else {
-                        defaults.set(cityList[indexPath.row].label ?? "", forKey: UserDefaultsKeys.itoCity)
-                        defaults.set(cityList[indexPath.row].id ?? "", forKey: UserDefaultsKeys.itolocid)
-                        defaults.set("\(cityList[indexPath.row].city ?? "") (\(cityList[indexPath.row].code ?? ""))", forKey: UserDefaultsKeys.itoairport)
-                        defaults.set(cityList[indexPath.row].city ?? "", forKey: UserDefaultsKeys.itocityname)
                         
+                        
+                        
+                        defaults.set(airlineList[indexPath.row].label ?? "", forKey: UserDefaultsKeys.frtoCity)
+                        defaults.set(airlineList[indexPath.row].id ?? "", forKey: UserDefaultsKeys.frtolocid)
+                        defaults.set("\(airlineList[indexPath.row].city ?? "") (\(airlineList[indexPath.row].code ?? ""))", forKey: UserDefaultsKeys.frtoairport)
+                        defaults.set(airlineList[indexPath.row].city ?? "", forKey: UserDefaultsKeys.frtocityname)
+                        defaults.set(airlineList[indexPath.row].fast_track_id ?? "", forKey: UserDefaultsKeys.tofstcode)
                     }
                     
                 }
+                
                 toCityTVHeight.constant = 0
             }
         }
+        
+        
+        
     }
-    
-    
-    
-    
     
     
 }

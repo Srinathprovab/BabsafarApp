@@ -256,6 +256,11 @@ struct ApiEndpoints {
     static let insurance_pre_process_booking = "insurance/pre_process_booking"
     static let insurance_get_airline_list = "insurance/get_airline_list"
     
+    //fasttrack
+    static let get_fasttrack_airport_code_list = "ajax/get_fasttrack_airport_code_list"
+    static let general_pre_fastrack_search = "general/pre_fastrack_search"
+
+    
 }
 
 /*App messages*/
@@ -279,7 +284,6 @@ struct UserDefaultsKeys {
     static var useremail = "useremail"
     static var usermobile = "usermobile"
     static var journeyType = "Journey_Type"
-    static var InsurenceJourneyType = "Insurence_Journey_Type"
     static var journeyTypeSelectedIndex = "Journey_TypeSelectedIndex"
     static var searchid = "search_id"
     static var accesskey = "access_key"
@@ -395,7 +399,8 @@ struct UserDefaultsKeys {
     
     
     //Insurence
-    static var icalDepDate = "IcalDepDate"
+    static var InsurenceJourneyType = "Insurence_Journey_Type"
+    static var icalDepDate = "icalDepDate"
     static var icalRetDate = "icalRetDate"
     static var ircalDepDate = "ircalDepDate"
     static var ircalRetDate = "ircalRetDate"
@@ -430,7 +435,52 @@ struct UserDefaultsKeys {
     static var irinfantsCount = "irInfants_Count"
     static var irtravellerDetails = "irTraveller_Details"
     
+    //Fasttrack
+    static var fasttrackJournyType = "fasttrackJournyType"
+    //    static var fcalDepDate = "fcalDepDate"
+    //    static var fcalRetDate = "fcalRetDate"
     
+    //
+    //    static var ffromCity = "ffromCity"
+    //    static var ffromlocid = "ffromlocid"
+    //    static var ffromairport = "ffromairport"
+    //    static var ffromcityname = "ffromcityname"
+    //
+    //    static var ftoCity = "ftoCity"
+    //    static var ftolocid = "ftolocid"
+    //    static var ftoairport = "ftoairport"
+    //    static var ftocityname = "ftocityname"
+    static var frcalDepDate = "frcalDepDate"
+    static var frcalRetDate = "frcalRetDate"
+    
+    static var frtoCity = "frtoCity"
+    static var frtolocid = "frtolocid"
+    static var frtoairport = "frtoairport"
+    static var frtocityname = "frtocityname"
+    
+    static var frfromCity = "rfromCity"
+    static var frfromlocid = "frfromlocid"
+    static var fromfstcode = "fromfstcode"
+    static var tofstcode = "tofstcode"
+    
+    static var frfromairport = "frfromairport"
+    static var frfromcityname = "frfromcityname"
+    
+    static var fadultCount = "fAdult_Count"
+    static var fchildCount = "fChild_Count"
+    static var finfantsCount = "fInfants_Count"
+    static var ftravellerDetails = "fTraveller_Details"
+    
+    static var fradultCount = "frAdult_Count"
+    static var frchildCount = "frChild_Count"
+    static var frinfantsCount = "frInfants_Count"
+    static var frtravellerDetails = "frTraveller_Details"
+    
+    
+    //Elplore Faststrack
+    static var qrfromCity = "qrfromCity"
+    static var qlocid = "qlocid"
+    static var qfstcode = "qfstcode"
     
 }
 

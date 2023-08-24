@@ -17,6 +17,7 @@ class FromCityTVCell: TableViewCell {
     @IBOutlet weak var cityShortNamelbl: UILabel!
     
     
+    var fasttrackid = String()
     var id = String()
     var airportCode = String()
     var value = String()

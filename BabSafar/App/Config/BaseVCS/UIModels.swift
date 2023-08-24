@@ -123,6 +123,15 @@ enum TVCellType {
     case InsurenceFlightDetailsTVCell
     case InsurenceFareSummaryTVCell
     
+    
+    
+    
+    //Fastrack
+    case ExploreTVCell
+    case QuickBookingResultTVCell
+    case SelectedServicesTVCell
+    
+    
 }
 
 enum CVCellType {

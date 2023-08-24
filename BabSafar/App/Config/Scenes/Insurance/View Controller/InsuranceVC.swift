@@ -67,7 +67,11 @@ class InsuranceVC: BaseTableVC {
     }
     
     @objc func didTapOnBackBtn(_ sender:UIButton) {
-        dismiss(animated: true)
+        callapibool = true
+        guard let vc = DashBoaardTabbarVC.newInstance.self else {return}
+        vc.selectedIndex = 0
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: false)
     }
     
     

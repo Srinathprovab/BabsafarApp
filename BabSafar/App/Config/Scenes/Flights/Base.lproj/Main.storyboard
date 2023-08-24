@@ -2066,11 +2066,13 @@
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="3px-nn-XbF">
                                         <rect key="frame" x="0.0" y="220" width="393" height="632"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="632" id="O9J-gz-gsf"/>
+                                        </constraints>
                                     </tableView>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstItem="3px-nn-XbF" firstAttribute="top" secondItem="VP5-ay-CWM" secondAttribute="top" constant="220" id="1qd-8H-OrD"/>
                                     <constraint firstItem="3px-nn-XbF" firstAttribute="leading" secondItem="VP5-ay-CWM" secondAttribute="leading" id="DJE-X4-GFj"/>
                                     <constraint firstAttribute="trailing" secondItem="3px-nn-XbF" secondAttribute="trailing" id="WLh-qx-Mfv"/>
                                     <constraint firstAttribute="bottom" secondItem="3px-nn-XbF" secondAttribute="bottom" id="cqJ-pp-XCO"/>
@@ -2089,6 +2091,7 @@
                     <connections>
                         <outlet property="commonTableView" destination="3px-nn-XbF" id="kzv-Sv-cHQ"/>
                         <outlet property="holderView" destination="VP5-ay-CWM" id="STu-01-IsS"/>
+                        <outlet property="tvHeight" destination="O9J-gz-gsf" id="5np-Pw-5YH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AM6-o7-9r7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

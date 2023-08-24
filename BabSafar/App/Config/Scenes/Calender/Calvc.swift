@@ -138,9 +138,14 @@ class Calvc: UIViewController {
             }else {
                 calendarView.allowsMultipleSelection = true
             }
+        }else if tabselect == "Fasttrack" {
+            calendarView.allowsMultipleSelection = true
         }else {
             calendarView.allowsMultipleSelection = true
         }
+        
+        
+        
     }
     
     
@@ -313,7 +318,22 @@ class Calvc: UIViewController {
                     }
                 }
                 
-              
+                
+                
+            }else if selectedTab == "Fasttrack"{
+                
+                if calstartDate == "" && calendDate == "" {
+                    showToast(message: "Please Select Dates")
+                }else if calstartDate == calendDate{
+                    showToast(message: "Please Select Multiple Dates")
+                }else{
+                    defaults.set(calstartDate, forKey: UserDefaultsKeys.frcalDepDate)
+                    defaults.set(calendDate, forKey: UserDefaultsKeys.frcalRetDate)
+                    
+                    NotificationCenter.default.post(name: Notification.Name("reload"), object: nil)
+                    dismiss(animated: false)
+                }
+                
                 
             }else {
                 

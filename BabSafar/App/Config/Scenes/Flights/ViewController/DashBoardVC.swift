@@ -436,6 +436,21 @@ class DashBoardVC: BaseTableVC, TopFlightDetailsViewModelDelegate, AllCountryCod
     }
     
     
+    //MARK: - didTapOnFastTrackBtnAction SelectModuleTabTVCell
+    
+    override func didTapOnFastTrackBtnAction(cell:SelectModuleTabTVCell){
+        gotoSearchFastTrackVC()
+    }
+    
+    func gotoSearchFastTrackVC() {
+        defaults.set("Fasttrack", forKey: UserDefaultsKeys.dashboardTapSelected)
+        guard let vc = SearchFastTrackVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .overCurrentContext
+        callapibool = true
+        self.present(vc, animated: true)
+    }
+    
+    
 }
 
 
@@ -615,7 +630,7 @@ extension DashBoardVC {
             defaults.set("0", forKey: UserDefaultsKeys.hotelchildcount)
             defaults.set("\(defaults.string(forKey: UserDefaultsKeys.roomcount) ?? "") Rooms,\(defaults.string(forKey: UserDefaultsKeys.hoteladultscount) ?? "") Adults,\(defaults.string(forKey: UserDefaultsKeys.hotelchildcount) ?? "") Childreen", forKey: UserDefaultsKeys.selectPersons)
             
-
+            
             defaults.set("1", forKey: UserDefaultsKeys.iadultCount)
             defaults.set("0", forKey: UserDefaultsKeys.ichildCount)
             defaults.set("0", forKey: UserDefaultsKeys.infantsCount)
@@ -629,6 +644,10 @@ extension DashBoardVC {
             defaults.set(totaltraverlers7, forKey: UserDefaultsKeys.irtravellerDetails)
             
             
+            defaults.set("1", forKey: UserDefaultsKeys.fradultCount)
+            defaults.set("0", forKey: UserDefaultsKeys.frchildCount)
+            let totaltraverlers8 = "\(defaults.string(forKey: UserDefaultsKeys.fradultCount) ?? "1") Adults | \(defaults.string(forKey: UserDefaultsKeys.frchildCount) ?? "") Children"
+            defaults.set(totaltraverlers8, forKey: UserDefaultsKeys.frtravellerDetails)
             
             
             UserDefaults.standard.set(true, forKey: "ExecuteOnce")

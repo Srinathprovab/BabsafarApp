@@ -8,15 +8,15 @@
 import UIKit
 
 protocol SelectModuleTabTVCellDelegate {
+    
     func didTapOnFlightBtnAction(cell:SelectModuleTabTVCell)
     func didTapOnHotelBtnAction(cell:SelectModuleTabTVCell)
     func didTapOnInsurentTabBtnAction(cell:SelectModuleTabTVCell)
     func didTapOnVisaBtnAction(cell:SelectModuleTabTVCell)
-    
     func didTapOnMenuBtn(cell:SelectModuleTabTVCell)
     func didTapOnCurrencyBtn(cell:SelectModuleTabTVCell)
-    
-    
+    func didTapOnFastTrackBtnAction(cell:SelectModuleTabTVCell)
+
 }
 
 class SelectModuleTabTVCell: TableViewCell {
@@ -108,6 +108,12 @@ class SelectModuleTabTVCell: TableViewCell {
     
     @IBAction func didTapOnInsurentTabBtnAction(_ sender: Any) {
         delegate?.didTapOnInsurentTabBtnAction(cell: self)
+    }
+    
+    
+    
+    @IBAction func didTapOnFastTrackBtnAction(_ sender: Any) {
+        delegate?.didTapOnFastTrackBtnAction(cell: self)
     }
     
     
