@@ -22,7 +22,7 @@ class SelectedServicesVC: BaseTableVC {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
+        addObserver()
         if callapibool == true {
             setupTV()
         }
@@ -48,6 +48,7 @@ class SelectedServicesVC: BaseTableVC {
         tablerow.removeAll()
         tablerow.append(TableRow(title:airportName,
                                  subTitle: terminal,
+                                 key: "hide",
                                  image: logoImg,
                                  cellType:.SelectedServicesTVCell))
         commonTVData = tablerow
@@ -74,5 +75,43 @@ class SelectedServicesVC: BaseTableVC {
     @IBAction func closeBtnAction(_ sender: Any) {
         dismiss(animated: true)
     }
+    
+}
+
+
+extension SelectedServicesVC {
+    
+    func addObserver() {
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("offline"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(resultnil), name: NSNotification.Name("resultnil"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reload), name: Notification.Name("reload"), object: nil)
+        
+    }
+    
+    
+    @objc func reload() {
+        DispatchQueue.main.async {[self] in
+            setupTV()
+        }
+    }
+    
+    //MARK: - resultnil
+    @objc func resultnil() {
+        guard let vc = NoInternetConnectionVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.key = "noresult"
+        self.present(vc, animated: true)
+    }
+    
+    
+    //MARK: - nointernet
+    @objc func nointernet() {
+        guard let vc = NoInternetConnectionVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.key = "nointernet"
+        self.present(vc, animated: true)
+    }
+    
     
 }

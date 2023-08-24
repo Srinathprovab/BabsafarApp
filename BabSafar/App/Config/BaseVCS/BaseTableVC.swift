@@ -7,8 +7,8 @@
 
 import UIKit
 
-class BaseTableVC: UIViewController, SearchFlightsTVCellDelegate, TravellerEconomyTVCellDelegate, RadioButtonTVCellDelegate, LabelTVCellDelegate, SignUpWithTVCellDelegate, ButtonTVCellDelegate, TextfieldTVCellDelegate, LoignOrSignupBtnsTVCellDelegate, BookNowButtonsTVCellDelegate, MenuBGTVCellDelegate, DropDownTVCellDelegate, TDetailsLoginTVCellDelegate, ContactInformationTVCellDelegate, TravelInsuranceTVCellDelegate, PriceSummaryTVCellDelegate, AddTravellerTVCellDelegate, SelectGenderTVCellDelegate, SortbyTVCellDelegate, YourPrivacyTVCellDelegate, SearchFlightResultTVCellDelegate, MultiCityTVCellDelegate, CommonFromCityTVCellDelegate,SearchLocationTFTVCellDelegate, HotelsTVCellelegate, PopularFiltersTVCellDelegate, RoomsTVcellDelegate,RoomDetailsTVCellDelegate, AddAdultsOrGuestTVCellDelegate, FlightDetailsTVCellDelegate, CheckBoxTVCellDelegate, FilterDepartureTVCellDelegate, RoundTripFlightResultTVCellDelegate, MultiCityTripFlightResultTVCellDelegate, EnterTravellerDetailsTVCellDelegate, DobTVCellDelegate, ExpireOnTVCellDelegate, ViewFlightDetailsBtnTVCellDelegate, AddRoomsGuestsTVCellDelegate, SearchHotelTVCellDelegate, VocherFlightDetailsTVCellDelegate, FareRulesTVCellDelegate, AcceptTermsAndConditionTVCellDelegate, VisaEnduiryTVCellDelegate, SendUsMessageTVCellDelegate, PaymentOptionTVCellDelegate, FrequentFlyerTVCellDelegate, BookFlightDetailsTVCellDelegate, SelectModuleTabTVCellDelegate, AddInfantaTravellerTVCellDelegate, AddChildTravellerTVCellDelegate, AddAdultTravellerTVCellDelegate, SliderTVCellDelegate, TitleLabelTVCellDelegate, ContactUsLabelTVCellDelegate, MapViewTVCellDelegate, AddDeatilsOfTravellerTVCellDelegate, AddDeatilsOfGuestTVCellDelegate, InsurenceSearchTVCellDelegate, TotalPremiumPayableTVCellDelegate, InsurenceFlightDetailsTVCellDelegate, ExploreTVCellDelegate, QuickBookingResultTVCellDelegate, SelectedServicesTVCellDelegate {
-    
+class BaseTableVC: UIViewController, SearchFlightsTVCellDelegate, TravellerEconomyTVCellDelegate, RadioButtonTVCellDelegate, LabelTVCellDelegate, SignUpWithTVCellDelegate, ButtonTVCellDelegate, TextfieldTVCellDelegate, LoignOrSignupBtnsTVCellDelegate, BookNowButtonsTVCellDelegate, MenuBGTVCellDelegate, DropDownTVCellDelegate, TDetailsLoginTVCellDelegate, ContactInformationTVCellDelegate, TravelInsuranceTVCellDelegate, PriceSummaryTVCellDelegate, AddTravellerTVCellDelegate, SelectGenderTVCellDelegate, SortbyTVCellDelegate, YourPrivacyTVCellDelegate, SearchFlightResultTVCellDelegate, MultiCityTVCellDelegate, CommonFromCityTVCellDelegate,SearchLocationTFTVCellDelegate, HotelsTVCellelegate, PopularFiltersTVCellDelegate, RoomsTVcellDelegate,RoomDetailsTVCellDelegate, AddAdultsOrGuestTVCellDelegate, FlightDetailsTVCellDelegate, CheckBoxTVCellDelegate, FilterDepartureTVCellDelegate, RoundTripFlightResultTVCellDelegate, MultiCityTripFlightResultTVCellDelegate, EnterTravellerDetailsTVCellDelegate, DobTVCellDelegate, ExpireOnTVCellDelegate, ViewFlightDetailsBtnTVCellDelegate, AddRoomsGuestsTVCellDelegate, SearchHotelTVCellDelegate, VocherFlightDetailsTVCellDelegate, FareRulesTVCellDelegate, AcceptTermsAndConditionTVCellDelegate, VisaEnduiryTVCellDelegate, SendUsMessageTVCellDelegate, PaymentOptionTVCellDelegate, FrequentFlyerTVCellDelegate, BookFlightDetailsTVCellDelegate, SelectModuleTabTVCellDelegate, AddInfantaTravellerTVCellDelegate, AddChildTravellerTVCellDelegate, AddAdultTravellerTVCellDelegate, SliderTVCellDelegate, TitleLabelTVCellDelegate, ContactUsLabelTVCellDelegate, MapViewTVCellDelegate, AddDeatilsOfTravellerTVCellDelegate, AddDeatilsOfGuestTVCellDelegate, InsurenceSearchTVCellDelegate, TotalPremiumPayableTVCellDelegate, InsurenceFlightDetailsTVCellDelegate, ExploreTVCellDelegate, QuickBookingResultTVCellDelegate, SelectedServicesTVCellDelegate, FasttrackFlightDeatilsTVCellDelegate {
+   
     
     
     
@@ -309,6 +309,8 @@ class BaseTableVC: UIViewController, SearchFlightsTVCellDelegate, TravellerEcono
     func didTapOnChangeSelectionBtnAction(cell: SelectedServicesTVCell) {}
     func didTapOnAddArrivalServiceBtnAction(cell: SelectedServicesTVCell) {}
     func didTapOnCheckOutBtnAction(cell: SelectedServicesTVCell) {}
+    func didTapOnChangeSelectionBtnAction(cell: FasttrackFlightDeatilsTVCell) {}
+    
     
     
     
@@ -953,6 +955,14 @@ extension BaseTableVC: UITableViewDataSource {
                 
             case .SelectedServicesTVCell:
                 let cell: SelectedServicesTVCell = commonTV.dequeTVCell(indexPath: indexPath)
+                cell.delegate = self
+                commonCell = cell
+                
+                
+                
+                
+            case .FasttrackFlightDeatilsTVCell:
+                let cell: FasttrackFlightDeatilsTVCell = commonTV.dequeTVCell(indexPath: indexPath)
                 cell.delegate = self
                 commonCell = cell
                 

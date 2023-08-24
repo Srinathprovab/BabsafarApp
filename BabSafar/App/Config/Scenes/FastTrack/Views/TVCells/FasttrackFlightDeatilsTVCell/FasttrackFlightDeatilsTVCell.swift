@@ -1,5 +1,5 @@
 //
-//  SelectedServicesTVCell.swift
+//  FasttrackFlightDeatilsTVCell.swift
 //  BabSafar
 //
 //  Created by FCI on 24/08/23.
@@ -8,23 +8,26 @@
 import UIKit
 
 
-protocol SelectedServicesTVCellDelegate {
-    func didTapOnChangeSelectionBtnAction(cell:SelectedServicesTVCell)
-    func didTapOnAddArrivalServiceBtnAction(cell:SelectedServicesTVCell)
-    func didTapOnCheckOutBtnAction(cell:SelectedServicesTVCell)
+protocol FasttrackFlightDeatilsTVCellDelegate {
+    func didTapOnChangeSelectionBtnAction(cell:FasttrackFlightDeatilsTVCell)
 }
 
-class SelectedServicesTVCell: TableViewCell {
-    
+class FasttrackFlightDeatilsTVCell: TableViewCell {
+
     
     @IBOutlet weak var logoImg: UIImageView!
-    @IBOutlet weak var fromAirportNamelbl: UILabel!
+    @IBOutlet weak var airportNamelbl: UILabel!
     @IBOutlet weak var terminallbl: UILabel!
+    @IBOutlet weak var pricelbl: UILabel!
+    @IBOutlet weak var changeSelectionView: BorderedView!
+    @IBOutlet weak var priceView: UIStackView!
     
-    var delegate:SelectedServicesTVCellDelegate?
+    
+    var delegate:FasttrackFlightDeatilsTVCellDelegate?
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        setupUI()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -34,29 +37,21 @@ class SelectedServicesTVCell: TableViewCell {
     }
     
     
+    func setupUI(){
+        changeSelectionView.isHidden = true
+    }
+    
+    
     override func updateUI() {
         logoImg.image = UIImage(named: cellInfo?.image ?? "")?.withRenderingMode(.alwaysOriginal)
-        fromAirportNamelbl.text = cellInfo?.title ?? ""
+        airportNamelbl.text = cellInfo?.title ?? ""
         terminallbl.text = cellInfo?.subTitle ?? ""
-        
+        pricelbl.text = cellInfo?.price ?? ""
     }
     
     
     @IBAction func didTapOnChangeSelectionBtnAction(_ sender: Any) {
         delegate?.didTapOnChangeSelectionBtnAction(cell: self)
     }
-    
-    
-    @IBAction func didTapOnAddArrivalServiceBtnAction(_ sender: Any) {
-        delegate?.didTapOnAddArrivalServiceBtnAction(cell: self)
-    }
-    
-    
-    @IBAction func didTapOnCheckOutBtnAction(_ sender: Any) {
-        delegate?.didTapOnCheckOutBtnAction(cell: self)
-    }
-    
-    
-    
     
 }

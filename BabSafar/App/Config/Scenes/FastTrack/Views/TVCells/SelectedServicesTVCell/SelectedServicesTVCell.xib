@@ -39,9 +39,6 @@
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tCe-J4-z3z">
                                 <rect key="frame" x="53" y="13" width="380" height="34"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="34" id="Zwr-B2-rcv"/>
-                                </constraints>
                                 <string key="text">Departure from Dubai International Airport
 (DXB) - Dubai, UAE</string>
                                 <fontDescription key="fontDescription" name="Lato-Medium" family="Lato" pointSize="14"/>
@@ -53,9 +50,6 @@
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0VN-Xb-jRe">
                                         <rect key="frame" x="14" y="10" width="429" height="38.666666666666664"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="38.670000000000002" id="Ux7-aU-h8N"/>
-                                        </constraints>
                                         <string key="text">Marhaba Lounge - Terminal 2 - 
 Departure from Dubai</string>
                                         <fontDescription key="fontDescription" name="Lato-Semibold" family="Lato" pointSize="16"/>
@@ -199,107 +193,95 @@ Departure from Dubai</string>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pph-sa-P36">
-                                <rect key="frame" x="0.0" y="272" width="473" height="114"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="YK2-H5-n8y">
+                                <rect key="frame" x="16" y="277" width="441" height="48"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="YK2-H5-n8y">
-                                        <rect key="frame" x="16" y="0.0" width="441" height="48"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eg6-qp-j46" customClass="BorderedView" customModule="BabSafar" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="212.66666666666666" height="48"/>
                                         <subviews>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eg6-qp-j46" customClass="BorderedView" customModule="BabSafar" customModuleProvider="target">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add arrival Service" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LYa-CY-dUq">
+                                                <rect key="frame" x="40" y="14.333333333333313" width="132.33333333333334" height="19.333333333333329"/>
+                                                <fontDescription key="fontDescription" name="Lato-Semibold" family="Lato" pointSize="16"/>
+                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CwO-fX-isZ">
                                                 <rect key="frame" x="0.0" y="0.0" width="212.66666666666666" height="48"/>
-                                                <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add arrival Service" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LYa-CY-dUq">
-                                                        <rect key="frame" x="40" y="14.333333333333313" width="132.33333333333334" height="19.333333333333329"/>
-                                                        <fontDescription key="fontDescription" name="Lato-Semibold" family="Lato" pointSize="16"/>
-                                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CwO-fX-isZ">
-                                                        <rect key="frame" x="0.0" y="0.0" width="212.66666666666666" height="48"/>
-                                                        <state key="normal" title="Button"/>
-                                                        <buttonConfiguration key="configuration" style="plain"/>
-                                                        <connections>
-                                                            <action selector="didTapOnAddArrivalServiceBtnAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="UvS-Er-kgz"/>
-                                                        </connections>
-                                                    </button>
-                                                </subviews>
-                                                <color key="backgroundColor" name="IttenarySelectedColor"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="trailing" secondItem="CwO-fX-isZ" secondAttribute="trailing" id="5AX-Hn-zkO"/>
-                                                    <constraint firstAttribute="bottom" secondItem="CwO-fX-isZ" secondAttribute="bottom" id="9G1-Ft-UaB"/>
-                                                    <constraint firstItem="CwO-fX-isZ" firstAttribute="leading" secondItem="eg6-qp-j46" secondAttribute="leading" id="NFR-LS-2au"/>
-                                                    <constraint firstItem="LYa-CY-dUq" firstAttribute="centerY" secondItem="eg6-qp-j46" secondAttribute="centerY" id="aLT-JH-3VP"/>
-                                                    <constraint firstItem="CwO-fX-isZ" firstAttribute="top" secondItem="eg6-qp-j46" secondAttribute="top" id="df6-aj-djg"/>
-                                                    <constraint firstItem="LYa-CY-dUq" firstAttribute="centerX" secondItem="eg6-qp-j46" secondAttribute="centerX" id="if5-ax-mCp"/>
-                                                    <constraint firstAttribute="height" constant="48" id="sII-Nl-ISO"/>
-                                                </constraints>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                        <real key="value" value="8"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                </userDefinedRuntimeAttributes>
-                                            </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mvh-cJ-mpK" customClass="BorderedView" customModule="BabSafar" customModuleProvider="target">
-                                                <rect key="frame" x="228.66666666666663" y="0.0" width="212.33333333333337" height="48"/>
-                                                <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Checkout Now" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mDG-tx-0MZ">
-                                                        <rect key="frame" x="53.33333333333335" y="14.333333333333313" width="105.66666666666669" height="19.333333333333329"/>
-                                                        <fontDescription key="fontDescription" name="Lato-Semibold" family="Lato" pointSize="16"/>
-                                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ows-b4-iq9">
-                                                        <rect key="frame" x="0.0" y="0.0" width="212.33333333333334" height="48"/>
-                                                        <state key="normal" title="Button"/>
-                                                        <buttonConfiguration key="configuration" style="plain"/>
-                                                        <connections>
-                                                            <action selector="didTapOnCheckOutBtnAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="nhv-Jg-DQx"/>
-                                                        </connections>
-                                                    </button>
-                                                </subviews>
-                                                <color key="backgroundColor" name="AppCalenderDateSelectColor"/>
-                                                <constraints>
-                                                    <constraint firstItem="Ows-b4-iq9" firstAttribute="top" secondItem="mvh-cJ-mpK" secondAttribute="top" id="6ww-o6-f58"/>
-                                                    <constraint firstItem="mDG-tx-0MZ" firstAttribute="centerY" secondItem="mvh-cJ-mpK" secondAttribute="centerY" id="DuG-iZ-Do6"/>
-                                                    <constraint firstAttribute="trailing" secondItem="Ows-b4-iq9" secondAttribute="trailing" id="Gdi-vn-w1c"/>
-                                                    <constraint firstItem="Ows-b4-iq9" firstAttribute="leading" secondItem="mvh-cJ-mpK" secondAttribute="leading" id="KYw-Kl-wt8"/>
-                                                    <constraint firstAttribute="height" constant="48" id="Zwl-aO-qnj"/>
-                                                    <constraint firstAttribute="bottom" secondItem="Ows-b4-iq9" secondAttribute="bottom" id="n54-8e-cWt"/>
-                                                    <constraint firstItem="mDG-tx-0MZ" firstAttribute="centerX" secondItem="mvh-cJ-mpK" secondAttribute="centerX" id="rmn-jf-Yp8"/>
-                                                </constraints>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                        <real key="value" value="8"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                </userDefinedRuntimeAttributes>
-                                            </view>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain"/>
+                                                <connections>
+                                                    <action selector="didTapOnAddArrivalServiceBtnAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="UvS-Er-kgz"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
-                                    </stackView>
+                                        <color key="backgroundColor" name="IttenarySelectedColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="CwO-fX-isZ" secondAttribute="trailing" id="5AX-Hn-zkO"/>
+                                            <constraint firstAttribute="bottom" secondItem="CwO-fX-isZ" secondAttribute="bottom" id="9G1-Ft-UaB"/>
+                                            <constraint firstItem="CwO-fX-isZ" firstAttribute="leading" secondItem="eg6-qp-j46" secondAttribute="leading" id="NFR-LS-2au"/>
+                                            <constraint firstItem="LYa-CY-dUq" firstAttribute="centerY" secondItem="eg6-qp-j46" secondAttribute="centerY" id="aLT-JH-3VP"/>
+                                            <constraint firstItem="CwO-fX-isZ" firstAttribute="top" secondItem="eg6-qp-j46" secondAttribute="top" id="df6-aj-djg"/>
+                                            <constraint firstItem="LYa-CY-dUq" firstAttribute="centerX" secondItem="eg6-qp-j46" secondAttribute="centerX" id="if5-ax-mCp"/>
+                                            <constraint firstAttribute="height" constant="48" id="sII-Nl-ISO"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="8"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mvh-cJ-mpK" customClass="BorderedView" customModule="BabSafar" customModuleProvider="target">
+                                        <rect key="frame" x="228.66666666666663" y="0.0" width="212.33333333333337" height="48"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Checkout Now" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mDG-tx-0MZ">
+                                                <rect key="frame" x="53.33333333333335" y="14.333333333333313" width="105.66666666666669" height="19.333333333333329"/>
+                                                <fontDescription key="fontDescription" name="Lato-Semibold" family="Lato" pointSize="16"/>
+                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ows-b4-iq9">
+                                                <rect key="frame" x="0.0" y="0.0" width="212.33333333333334" height="48"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain"/>
+                                                <connections>
+                                                    <action selector="didTapOnCheckOutBtnAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="nhv-Jg-DQx"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" name="AppCalenderDateSelectColor"/>
+                                        <constraints>
+                                            <constraint firstItem="Ows-b4-iq9" firstAttribute="top" secondItem="mvh-cJ-mpK" secondAttribute="top" id="6ww-o6-f58"/>
+                                            <constraint firstItem="mDG-tx-0MZ" firstAttribute="centerY" secondItem="mvh-cJ-mpK" secondAttribute="centerY" id="DuG-iZ-Do6"/>
+                                            <constraint firstAttribute="trailing" secondItem="Ows-b4-iq9" secondAttribute="trailing" id="Gdi-vn-w1c"/>
+                                            <constraint firstItem="Ows-b4-iq9" firstAttribute="leading" secondItem="mvh-cJ-mpK" secondAttribute="leading" id="KYw-Kl-wt8"/>
+                                            <constraint firstAttribute="height" constant="48" id="Zwl-aO-qnj"/>
+                                            <constraint firstAttribute="bottom" secondItem="Ows-b4-iq9" secondAttribute="bottom" id="n54-8e-cWt"/>
+                                            <constraint firstItem="mDG-tx-0MZ" firstAttribute="centerX" secondItem="mvh-cJ-mpK" secondAttribute="centerX" id="rmn-jf-Yp8"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="8"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstItem="YK2-H5-n8y" firstAttribute="leading" secondItem="Pph-sa-P36" secondAttribute="leading" constant="16" id="5dd-pa-F4r"/>
-                                    <constraint firstItem="YK2-H5-n8y" firstAttribute="top" secondItem="Pph-sa-P36" secondAttribute="top" id="9S8-IO-7gl"/>
-                                    <constraint firstAttribute="trailing" secondItem="YK2-H5-n8y" secondAttribute="trailing" constant="16" id="CdB-qZ-qjv"/>
-                                    <constraint firstAttribute="height" constant="114" id="bfx-FA-O38"/>
-                                </constraints>
-                            </view>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="tCe-J4-z3z" secondAttribute="trailing" constant="40" id="3sJ-aN-CKd"/>
                             <constraint firstItem="a7i-Jl-n44" firstAttribute="top" secondItem="tCe-J4-z3z" secondAttribute="bottom" constant="15" id="49L-uc-lXB"/>
-                            <constraint firstItem="Pph-sa-P36" firstAttribute="top" secondItem="a7i-Jl-n44" secondAttribute="bottom" constant="25" id="9o8-2p-1lz"/>
-                            <constraint firstAttribute="bottom" secondItem="Pph-sa-P36" secondAttribute="bottom" constant="5" id="A8e-Be-H4V"/>
                             <constraint firstItem="a7i-Jl-n44" firstAttribute="leading" secondItem="e4J-Eb-Bac" secondAttribute="leading" constant="8" id="Dey-df-B3P"/>
-                            <constraint firstItem="Pph-sa-P36" firstAttribute="leading" secondItem="e4J-Eb-Bac" secondAttribute="leading" id="GJ4-9S-mLO"/>
-                            <constraint firstAttribute="trailing" secondItem="Pph-sa-P36" secondAttribute="trailing" id="OkM-Ev-wGy"/>
+                            <constraint firstAttribute="trailing" secondItem="YK2-H5-n8y" secondAttribute="trailing" constant="16" id="GDM-J6-wTf"/>
                             <constraint firstItem="RMA-Uj-mqW" firstAttribute="top" secondItem="e4J-Eb-Bac" secondAttribute="top" constant="18" id="QAO-6P-UbC"/>
+                            <constraint firstAttribute="bottom" secondItem="YK2-H5-n8y" secondAttribute="bottom" constant="66" id="Tdc-0u-gdV"/>
+                            <constraint firstItem="YK2-H5-n8y" firstAttribute="top" secondItem="a7i-Jl-n44" secondAttribute="bottom" constant="30" id="XSW-dw-FBM"/>
+                            <constraint firstItem="YK2-H5-n8y" firstAttribute="leading" secondItem="e4J-Eb-Bac" secondAttribute="leading" constant="16" id="b9F-yY-Kug"/>
                             <constraint firstItem="tCe-J4-z3z" firstAttribute="leading" secondItem="RMA-Uj-mqW" secondAttribute="trailing" constant="13" id="baC-ea-Lep"/>
                             <constraint firstItem="tCe-J4-z3z" firstAttribute="centerY" secondItem="RMA-Uj-mqW" secondAttribute="centerY" id="fBr-qL-T9S"/>
                             <constraint firstAttribute="trailing" secondItem="a7i-Jl-n44" secondAttribute="trailing" constant="8" id="gNs-AH-l9v"/>
                             <constraint firstItem="RMA-Uj-mqW" firstAttribute="leading" secondItem="e4J-Eb-Bac" secondAttribute="leading" constant="16" id="uoV-cw-vKF"/>
-                            <constraint firstAttribute="height" relation="lessThanOrEqual" constant="391" id="viZ-dW-mFd"/>
+                            <constraint firstAttribute="height" constant="391" id="viZ-dW-mFd"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -317,7 +299,6 @@ Departure from Dubai</string>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="bottomHeight" destination="bfx-FA-O38" id="SAk-Mf-5Oe"/>
                 <outlet property="fromAirportNamelbl" destination="tCe-J4-z3z" id="ZP5-Ar-0T9"/>
                 <outlet property="logoImg" destination="RMA-Uj-mqW" id="evO-rj-6Xw"/>
                 <outlet property="terminallbl" destination="0VN-Xb-jRe" id="LZ8-dp-P9b"/>

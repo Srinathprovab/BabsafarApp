@@ -130,6 +130,7 @@ enum TVCellType {
     case ExploreTVCell
     case QuickBookingResultTVCell
     case SelectedServicesTVCell
+    case FasttrackFlightDeatilsTVCell
     
     
 }
