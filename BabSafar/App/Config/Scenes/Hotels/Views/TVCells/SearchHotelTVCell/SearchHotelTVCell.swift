@@ -7,6 +7,7 @@
 
 import UIKit
 import DropDown
+import IQKeyboardManager
 
 protocol SearchHotelTVCellDelegate {
     func didTapOnCheckinBtn(cell:SearchHotelTVCell)
@@ -79,7 +80,7 @@ class SearchHotelTVCell: TableViewCell, HotelCitySearchViewModelDelegate {
         super.awakeFromNib()
         // Initialization code
         setupUI()
-        
+        IQKeyboardManager.shared().keyboardDistanceFromTextField = 100 // Adjust this value as needed
         cityViewModel = HotelCitySearchViewModel(self)
     }
     
@@ -198,7 +199,7 @@ class SearchHotelTVCell: TableViewCell, HotelCitySearchViewModelDelegate {
     }
     
     override func textFieldDidBeginEditing(_ textField: UITextField) {
-       // locationCitylbl.text = ""
+        // locationCitylbl.text = ""
     }
     
     @objc func textFiledEditingChanged(_ textField:UITextField) {
@@ -289,7 +290,7 @@ class SearchHotelTVCell: TableViewCell, HotelCitySearchViewModelDelegate {
                 filterContentForSearchText(searchText)
             }
         }
-       
+        
     }
     
     func filterContentForSearchText(_ searchText: String) {
@@ -343,7 +344,7 @@ class SearchHotelTVCell: TableViewCell, HotelCitySearchViewModelDelegate {
         }
     }
     
-   
+    
 }
 
 extension SearchHotelTVCell:UITableViewDelegate,UITableViewDataSource {

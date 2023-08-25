@@ -9,8 +9,7 @@ import UIKit
 import MFSDK
 
 
-class PaymentGatewayVC: UIViewController {
-    
+class PaymentGatewayVC: UIViewController, updatePaymentFlightViewModelDelegate {
     
     //MARK: Variables
     var paymentMethods: [MFPaymentMethod]?
@@ -18,8 +17,10 @@ class PaymentGatewayVC: UIViewController {
     var payload = [String:Any]()
     var grandTotalamount: String?
     var grand_total_Price: String?
-    
-  
+    var invoiceValue = Double()
+    var tmpFlightPreBookingId = String()
+    var vm:updatePaymentFlightViewModel?
+    var paymentResponse = String()
     //MARK: Outlet
     @IBOutlet weak var errorCodeLabel : UILabel!
     @IBOutlet weak var payButton: UIButton!
@@ -33,8 +34,8 @@ class PaymentGatewayVC: UIViewController {
     @IBOutlet weak var monthTextField: UITextField!
     @IBOutlet weak var yearTextField: UITextField!
     @IBOutlet weak var secureCodeTextField: UITextField!
-    @IBOutlet weak var sendPaymentButton: UIButton!
-    @IBOutlet weak var sendPaymentActivityIndicator: UIActivityIndicatorView!
+    //    @IBOutlet weak var sendPaymentButton: UIButton!
+    //    @IBOutlet weak var sendPaymentActivityIndicator: UIActivityIndicatorView!
     
     
     static var newInstance: PaymentGatewayVC? {
@@ -51,10 +52,14 @@ class PaymentGatewayVC: UIViewController {
         super.viewDidLoad()
         payButton.isEnabled = false
         
-        self.amountTextField.text = "100"
+        self.amountTextField.isUserInteractionEnabled = false
+        self.amountTextField.text = grandTotalamount
+        invoiceValue = Double(grand_total_Price ?? "0.0") ?? 0.0
+        
         
         setCardInfo()
         initiatePayment()
+        vm = updatePaymentFlightViewModel(self)
         
         
         // set delegate
@@ -78,9 +83,9 @@ class PaymentGatewayVC: UIViewController {
     }
     
     
-    @IBAction func sendPaymentDidTapped(_ sender: Any) {
-        sendPayment()
-    }
+    //    @IBAction func sendPaymentDidTapped(_ sender: Any) {
+    //        sendPayment()
+    //    }
     
     
 }
@@ -89,13 +94,14 @@ extension PaymentGatewayVC  {
     func startSendPaymentLoading() {
         errorCodeLabel.text = "Status:"
         resultTextView.text = "Result:"
-        sendPaymentButton.setTitle("", for: .normal)
-        sendPaymentActivityIndicator.startAnimating()
+        //        sendPaymentButton.setTitle("", for: .normal)
+        //        sendPaymentActivityIndicator.startAnimating()
     }
-    func stopSendPaymentLoading() {
-        sendPaymentButton.setTitle("Send Payment", for: .normal)
-        sendPaymentActivityIndicator.stopAnimating()
-    }
+    //    func stopSendPaymentLoading() {
+    //       PaymentButton.setTitle("Send Payment", for: .normal)
+    //        send
+    //        sendPaymentActivityIndicator.stopAnimating()
+    //    }
     func startLoading() {
         errorCodeLabel.text = "Status:"
         resultTextView.text = "Result:"
@@ -106,6 +112,8 @@ extension PaymentGatewayVC  {
         payButton.setTitle("Pay", for: .normal)
         activityIndicator.stopAnimating()
     }
+    
+    
     func showSuccess(_ message: String) {
         errorCodeLabel.text = "Succes"
         resultTextView.text = "result: \(message)"
@@ -123,18 +131,21 @@ extension PaymentGatewayVC {
         }
     }
     private func setCardInfo() {
-        cardNumberTextField.text = "5123450000000008"
-        cardHolderNameTextField.text = "John Wick"
-        monthTextField.text = "05"
-        yearTextField.text = "21"
-        secureCodeTextField.text = "100"
+        cardNumberTextField.placeholder = "5123450000000008"
+        cardHolderNameTextField.placeholder = "John Wick"
+        monthTextField.placeholder = "05"
+        yearTextField.placeholder = "21"
+        secureCodeTextField.placeholder = "100"
     }
 }
 
 
 
 extension PaymentGatewayVC: MFPaymentDelegate {
+    
     func didInvoiceCreated(invoiceId: String) {
         print("#Invoice id:", invoiceId)
     }
+    
+    
 }

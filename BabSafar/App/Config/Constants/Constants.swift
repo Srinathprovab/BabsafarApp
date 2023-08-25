@@ -213,6 +213,10 @@ var iplandetails = ""
 var selectedPlanContent = [PlanContent]()
 var searchInputs:PreBookingSearch_params?
 
+
+//payment
+var billingCountryCode = String()
+
 /* URL endpoints */
 struct ApiEndpoints {
     static let mobilePreFlightSearch = "mobile_pre_flight_search"
@@ -249,7 +253,8 @@ struct ApiEndpoints {
     static let mobileInsertTraveller = "mobileInsertTraveller"
     static let hmobilebooking = "mobile_booking"
     static let mobilehotelprebooking = "mobile_hotel_pre_booking"
-    
+    static let flightupdatePayment = "payment_gateway/updatePayment"
+
     
     //Insurence
     static let mobile_pre_insurance_search = "general/mobile_pre_insurance_search"

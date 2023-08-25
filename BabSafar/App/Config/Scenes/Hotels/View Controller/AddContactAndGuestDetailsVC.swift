@@ -337,7 +337,7 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
     override func didTapOnCountryCodeBtn(cell: ContactInformationTVCell) {
         self.nationalityCode = cell.nationalityCode
         self.countryCode = cell.countryCodeLbl.text ?? ""
-        self.billingCountryCode = cell.billingCountryCode
+        self.billingCountryCode = cell.isoCountryCode
         print("self.billingCountryCode \(self.billingCountryCode)")
     }
     
@@ -381,7 +381,7 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
     override func didTapOnDropDownBtn(cell: ContactInformationTVCell) {
         self.nationalityCode = cell.nationalityCode
         self.countryCode = cell.countryCodeLbl.text ?? ""
-        self.billingCountryCode = cell.billingCountryCode
+        self.billingCountryCode = cell.isoCountryCode
         print("self.billingCountryCode \(self.billingCountryCode)")
     }
     

@@ -8,6 +8,94 @@
 
 import MFSDK
 
+
+
+
+extension PaymentGatewayVC {
+    
+    func initiatePayment() {
+        let request = generateInitiatePaymentModel()
+        startLoading()
+        MFPaymentRequest.shared.initiatePayment(request: request, apiLanguage: .english, completion: { [weak self] (result) in
+            self?.stopLoading()
+            switch result {
+            case .success(let initiatePaymentResponse):
+                self?.paymentMethods = initiatePaymentResponse.paymentMethods
+                self?.collectionView.reloadData()
+            case .failure(let failError):
+                self?.showFailError(failError)
+            }
+        })
+    }
+    
+    func executePayment(paymentMethodId: Int) {
+        let request = getExecutePaymentRequest(paymentMethodId: paymentMethodId)
+        startLoading()
+        MFPaymentRequest.shared.executePayment(request: request, apiLanguage: .arabic) { [weak self] response, invoiceId  in
+            self?.stopLoading()
+            
+            
+            switch response {
+            case .success(let executePaymentResponse):
+                
+                // Print the entire response object
+                do {
+                    let encoder = JSONEncoder()
+                    // encoder.outputFormatting = .prettyPrinted // If you want the JSON to be formatted nicely
+                    let jsonData = try encoder.encode(executePaymentResponse)
+                    
+                    if let jsonString = String(data: jsonData, encoding: .utf8) {
+                        // Now you have the JSON string representation of the response
+                        print(jsonString)
+                        self?.paymentResponse = jsonString
+                        
+                    }
+                } catch {
+                    print("Error encoding JSON: \(error)")
+                }
+                
+                
+                self?.callUpdatePaymentAPI(status: executePaymentResponse.invoiceStatus ?? "")
+                
+             //   self?.gotoBookingSucessVC(url: self?.paymentResponse ?? "")
+                
+            case .failure(let failError):
+                self?.showFailError(failError)
+            }
+        }
+    }
+    
+    
+    
+    func callUpdatePaymentAPI(status:String) {
+        self.payload.removeAll()
+        payload["app_ref"] = tmpFlightPreBookingId
+        payload["search_id"] = defaults.string(forKey: UserDefaultsKeys.searchid)
+        payload["payment_response"] = self.paymentResponse
+        payload["InvoiceStatus"] = status
+        
+        self.vm?.CALL_UPDATE_PAYMENT_API(dictParam: payload)
+    }
+    
+    
+    func updatePaymentSucess(response: updatePaymentFlightModel) {
+        gotoBookingSucessVC(url: response.data ?? "")
+    }
+    
+    
+    func gotoBookingSucessVC(url:String) {
+        guard let vc = BookingSucessVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .fullScreen
+        vc.voucherUrl = url
+        present(vc, animated: true)
+    }
+    
+    
+}
+
+
+
+
 extension PaymentGatewayVC {
     func executeDirectPayment(paymentMethodId: Int) {
         let request = getExecutePaymentRequest(paymentMethodId: paymentMethodId)
@@ -52,80 +140,40 @@ extension PaymentGatewayVC {
             }
         }
         
-//        else {
-//            // Fallback on earlier versions
-//            let urlScheme = "com.myFatoorah.MFSDKDemo"
-//            MFPaymentRequest.shared.executeApplePayPayment(request: request, urlScheme: urlScheme, apiLanguage: .arabic) { [weak self] response, invoiceId  in
-//                self?.stopLoading()
-//                switch response {
-//                case .success(let executePaymentResponse):
-//                    if let invoiceStatus = executePaymentResponse.invoiceStatus {
-//                        self?.showSuccess(invoiceStatus)
-//                    }
-//                case .failure(let failError):
-//                    self?.showFailError(failError)
-//                }
-//            }
-//        }
     }
     
-    func initiatePayment() {
-        let request = generateInitiatePaymentModel()
-        startLoading()
-        MFPaymentRequest.shared.initiatePayment(request: request, apiLanguage: .english, completion: { [weak self] (result) in
-            self?.stopLoading()
-            switch result {
-            case .success(let initiatePaymentResponse):
-                self?.paymentMethods = initiatePaymentResponse.paymentMethods
-                self?.collectionView.reloadData()
-            case .failure(let failError):
-                self?.showFailError(failError)
-            }
-        })
-    }
-    func executePayment(paymentMethodId: Int) {
-        let request = getExecutePaymentRequest(paymentMethodId: paymentMethodId)
-        startLoading()
-        MFPaymentRequest.shared.executePayment(request: request, apiLanguage: .arabic) { [weak self] response, invoiceId  in
-            self?.stopLoading()
-            switch response {
-            case .success(let executePaymentResponse):
-                if let invoiceStatus = executePaymentResponse.invoiceStatus {
-                    self?.showSuccess(invoiceStatus)
-                }
-            case .failure(let failError):
-                self?.showFailError(failError)
-            }
-        }
-    }
-    func sendPayment() {
-        let request = getSendPaymentRequest()
-        startSendPaymentLoading()
-        MFPaymentRequest.shared.sendPayment(request: request, apiLanguage: .arabic) { [weak self] (result) in
-            self?.stopSendPaymentLoading()
-            switch result {
-            case .success(let sendPaymentResponse):
-                if let invoiceURL = sendPaymentResponse.invoiceURL {
-                    self?.errorCodeLabel.text = "Success"
-                    self?.resultTextView.text = "result: send this link to your customers \(invoiceURL)"
-                }
-            case .failure(let failError):
-                self?.showFailError(failError)
-            }
-            
-        }
-    }
+    
+    
+    
+    
+    //    func sendPayment() {
+    //        let request = getSendPaymentRequest()
+    //        startSendPaymentLoading()
+    //        MFPaymentRequest.shared.sendPayment(request: request, apiLanguage: .arabic) { [weak self] (result) in
+    //            self?.stopSendPaymentLoading()
+    //            switch result {
+    //            case .success(let sendPaymentResponse):
+    //                if let invoiceURL = sendPaymentResponse.invoiceURL {
+    //                    self?.errorCodeLabel.text = "Success"
+    //                    self?.resultTextView.text = "result: send this link to your customers \(invoiceURL)"
+    //                }
+    //            case .failure(let failError):
+    //                self?.showFailError(failError)
+    //            }
+    //
+    //        }
+    //    }
 }
 
 extension PaymentGatewayVC {
     private func generateInitiatePaymentModel() -> MFInitiatePaymentRequest {
         // you can create initiate payment request with invoice value and currency
-        // let invoiceValue = Double(amountTextField.text ?? "") ?? 0
-        // let request = MFInitiatePaymentRequest(invoiceAmount: invoiceValue, currencyIso: .kuwait_KWD)
-        // return request
         
-        let request = MFInitiatePaymentRequest()
+        let request = MFInitiatePaymentRequest(invoiceAmount: Decimal(invoiceValue), currencyIso: .kuwait_KWD)
         return request
+        
+        //        let request = MFInitiatePaymentRequest()
+        //        return request
     }
     private func getCardInfo() -> MFCardInfo {
         let cardNumber = cardNumberTextField.text ?? ""
@@ -139,20 +187,26 @@ extension PaymentGatewayVC {
         //        card.bypass = false // default is true
         return card
     }
+    
+    
+    
     private func getExecutePaymentRequest(paymentMethodId: Int) -> MFExecutePaymentRequest {
-        let invoiceValue = Decimal(string: amountTextField.text ?? "0") ?? 0
-        let request = MFExecutePaymentRequest(invoiceValue: invoiceValue , paymentMethod: paymentMethodId)
+        
+        let request = MFExecutePaymentRequest(invoiceValue: Decimal(invoiceValue) , paymentMethod: paymentMethodId)
         //request.userDefinedField = ""
-        request.customerEmail = "test@myfatoorah.com"// must be email
-        request.customerMobile = "112233"
+        request.customerEmail = payemail// must be email
+        request.customerMobile = paymobile
         request.customerCivilId = "1234567890"
-        request.customerName = "Test MyFatoorah"
+        request.customerName = "name"
+        
         let address = MFCustomerAddress(block: "ddd", street: "sss", houseBuildingNo: "sss", address: "sss", addressInstructions: "sss")
         request.customerAddress = address
-        request.customerReference = "Test MyFatoorah Reference"
+        request.customerReference = tmpFlightPreBookingId
         request.language = .english
         request.mobileCountryCode = MFMobileCountryCodeISO.kuwait.rawValue
         request.displayCurrencyIso = .kuwait_KWD
+        
+        
         //        request.recurringModel = MFRecurringModel(recurringType: .weekly, iteration: 2)
         //        request.supplierValue = 1
         //        request.supplierCode = 2
@@ -166,45 +220,50 @@ extension PaymentGatewayVC {
         return request
     }
     
-    func getSendPaymentRequest() -> MFSendPaymentRequest {
-        let invoiceValue = Decimal(string: amountTextField.text ?? "") ?? 0
-        let request = MFSendPaymentRequest(invoiceValue: invoiceValue, notificationOption: .link, customerName: "Test")
-        
-        // send invoice link as sms to specified number
-        // let request = MFSendPaymentRequest(invoiceValue: invoiceValue, notificationOption: .sms, customerName: "Test")
-        // request.customerMobile  = "" // required here
-        
-        // get invoice link
-        // let request = MFSendPaymentRequest(invoiceValue: invoiceValue, notificationOption: .link, customerName: "Test")
-        
-        //  send invoice link to email
-        // let request = MFSendPaymentRequest(invoiceValue: invoiceValue, notificationOption: .email, customerName: "Test")
-        // request.customerEmail = "" required here
-        
-        
-        
-        //request.userDefinedField = ""
-        request.customerEmail = "a@b.com"// must be email
-        request.customerMobile = "mobile no"//Required
-        request.customerCivilId = ""
-        request.mobileCountryIsoCode = MFMobileCountryCodeISO.kuwait.rawValue
-        request.customerReference = ""
-        request.language = .english
-        let address = MFCustomerAddress(block: "ddd", street: "sss", houseBuildingNo: "sss", address: "sss", addressInstructions: "sss")
-        request.customerAddress = address
-        request.language = .english
-        request.displayCurrencyIso = .kuwait_KWD
-        let date = Date().addingTimeInterval(1000)
-        request.expiryDate = date
-        return request
-    }
+    
+    
+    
+    //    func getSendPaymentRequest() -> MFSendPaymentRequest {
+    //
+    //        let request = MFSendPaymentRequest(invoiceValue: invoiceValue, notificationOption: .link, customerName: "Test")
+    //
+    //        // send invoice link as sms to specified number
+    //        // let request = MFSendPaymentRequest(invoiceValue: invoiceValue, notificationOption: .sms, customerName: "Test")
+    //        // request.customerMobile  = "" // required here
+    //
+    //        // get invoice link
+    //        // let request = MFSendPaymentRequest(invoiceValue: invoiceValue, notificationOption: .link, customerName: "Test")
+    //
+    //        //  send invoice link to email
+    //        // let request = MFSendPaymentRequest(invoiceValue: invoiceValue, notificationOption: .email, customerName: "Test")
+    //        // request.customerEmail = "" required here
+    //
+    //
+    //
+    //        //request.userDefinedField = ""
+    //        request.customerEmail = "a@b.com"// must be email
+    //        request.customerMobile = "mobile no"//Required
+    //        request.customerCivilId = ""
+    //        request.mobileCountryIsoCode = MFMobileCountryCodeISO.kuwait.rawValue
+    //        request.customerReference = ""
+    //        request.language = .english
+    //        let address = MFCustomerAddress(block: "ddd", street: "sss", houseBuildingNo: "sss", address: "sss", addressInstructions: "sss")
+    //        request.customerAddress = address
+    //        request.language = .english
+    //        request.displayCurrencyIso = .kuwait_KWD
+    //        let date = Date().addingTimeInterval(1000)
+    //        request.expiryDate = date
+    //        return request
+    //    }
+    
+    
 }
 
 // MARK: - Recurring Payment
 extension PaymentGatewayVC {
     
     func executeRecurringPayment(paymentMethodId: Int) {
-        let request = MFExecutePaymentRequest(invoiceValue: 5.000 , paymentMethod: paymentMethodId)
+        let request = MFExecutePaymentRequest(invoiceValue: Decimal(invoiceValue) , paymentMethod: paymentMethodId)
         let card = getCardInfo()
         MFPaymentRequest.shared.executeRecurringPayment(request: request, cardInfo: card, recurringType: .custom(intervalDays: 10), iteration: 2, apiLanguage: .english) { (response, invoiceId) in
             switch response {

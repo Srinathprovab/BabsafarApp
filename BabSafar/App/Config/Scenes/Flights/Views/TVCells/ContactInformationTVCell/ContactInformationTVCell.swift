@@ -7,6 +7,7 @@
 
 import UIKit
 import DropDown
+import IQKeyboardManager
 
 protocol ContactInformationTVCellDelegate {
     func didTapOnCountryCodeBtn(cell:ContactInformationTVCell)
@@ -42,7 +43,7 @@ class ContactInformationTVCell: TableViewCell {
     var nationalityCode = String()
     let dropDown = DropDown()
     var countryNameArray = [String]()
-    var billingCountryCode = String()
+    var isoCountryCode = String()
     var billingCountryName = String()
     var delegate:ContactInformationTVCellDelegate?
     
@@ -52,6 +53,8 @@ class ContactInformationTVCell: TableViewCell {
         
         // Initialization code
         setupUI()
+        IQKeyboardManager.shared().keyboardDistanceFromTextField = 100 // Adjust this value as needed
+
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -145,7 +148,7 @@ class ContactInformationTVCell: TableViewCell {
             
             self?.countryCodeLbl.text = ""
             self?.countrycodeTF.text = self?.countrycodesArray[index]
-            self?.billingCountryCode = self?.isocountrycodeArray[index] ?? ""
+            self?.isoCountryCode = self?.isocountrycodeArray[index] ?? ""
             self?.billingCountryName = self?.countryNames[index] ?? ""
             self?.nationalityCode = self?.originArray[index] ?? ""
             self?.countryCodeLbl.textColor = .AppLabelColor

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import IQKeyboardManager
 
 
 protocol ExploreTVCellDelegate {
@@ -31,6 +32,8 @@ class ExploreTVCell: TableViewCell, FastrackAirlineListViewModelDelegate {
         // Initialization code
         setupUI()
         cityViewModel = FastrackAirlineListViewModel(self)
+        IQKeyboardManager.shared().keyboardDistanceFromTextField = 100 // Adjust this value as needed
+
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -43,7 +46,7 @@ class ExploreTVCell: TableViewCell, FastrackAirlineListViewModelDelegate {
     override func updateUI() {
         setupTV()
         tvHeight.constant = 0
-        CallShowCityListAPI(str: "kuwait")
+       // CallShowCityListAPI(str: "kuwait")
     }
     
     func updateHeight() {
@@ -76,7 +79,7 @@ class ExploreTVCell: TableViewCell, FastrackAirlineListViewModelDelegate {
     
     
     override func textFieldDidBeginEditing(_ textField: UITextField) {
-        // CallShowCityListAPI(str: textField.text ?? "")
+         CallShowCityListAPI(str: textField.text ?? "")
     }
     
     

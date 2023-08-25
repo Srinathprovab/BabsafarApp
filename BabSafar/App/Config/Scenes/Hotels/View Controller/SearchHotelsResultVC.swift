@@ -9,7 +9,7 @@ import UIKit
 import DropDown
 
 class SearchHotelsResultVC: BaseTableVC, UITextFieldDelegate, HotelSearchViewModelDelegate {
-   
+    
     
     
     @IBOutlet weak var holderView: UIView!
@@ -17,16 +17,15 @@ class SearchHotelsResultVC: BaseTableVC, UITextFieldDelegate, HotelSearchViewMod
     @IBOutlet weak var navHeight: NSLayoutConstraint!
     @IBOutlet weak var cvHolderView: UIView!
     @IBOutlet weak var recommandedView: UIView!
-    @IBOutlet weak var downimg: UIImageView!
     @IBOutlet weak var recommandedlbl: UILabel!
     @IBOutlet weak var recommandedbtn: UIButton!
     @IBOutlet weak var filterBtnView: UIView!
     @IBOutlet weak var filterImg: UIImageView!
     @IBOutlet weak var filterlbl: UILabel!
     @IBOutlet weak var filterBtn: UIButton!
-    @IBOutlet weak var dropupimg: UIImageView!
-    @IBOutlet weak var moveUpBtn: UIButton!
-    @IBOutlet weak var hiddenView: UIView!
+//    @IBOutlet weak var dropupimg: UIImageView!
+//    @IBOutlet weak var moveUpBtn: UIButton!
+//    @IBOutlet weak var hiddenView: UIView!
     
     let dropDown = DropDown()
     var lastContentOffset: CGFloat = 0
@@ -50,25 +49,16 @@ class SearchHotelsResultVC: BaseTableVC, UITextFieldDelegate, HotelSearchViewMod
     }
     
     
-    //MARK: - somthingwentwrong
-    @objc func somthingwentwrong() {
-        guard let vc = NoInternetConnectionVC.newInstance.self else {return}
-        vc.modalPresentationStyle = .overCurrentContext
-        vc.key = "noresult"
-        self.present(vc, animated: true)
-    }
+    
     
     override func viewWillAppear(_ animated: Bool) {
-        NotificationCenter.default.addObserver(self, selector: #selector(somthingwentwrong), name: Notification.Name("somthingwentwrong"), object: nil)
+        addObserver()
         
         if callapibool == true{
             holderView.isHidden = true
             callAPI()
         }
     }
-    
-    
-    
     
     
     func setupinitialView() {
@@ -84,13 +74,6 @@ class SearchHotelsResultVC: BaseTableVC, UITextFieldDelegate, HotelSearchViewMod
         NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("nointernet"), object: nil)
     }
     
-    
-    //MARK: - nointernet
-    @objc func nointernet() {
-        guard let vc = NoInternetConnectionVC.newInstance.self else {return}
-        vc.modalPresentationStyle = .overCurrentContext
-        self.present(vc, animated: true)
-    }
     
     
     
@@ -148,19 +131,18 @@ class SearchHotelsResultVC: BaseTableVC, UITextFieldDelegate, HotelSearchViewMod
         holderView.layer.borderColor = UIColor.AppBorderColor.cgColor
         cvHolderView.backgroundColor = .WhiteColor
         cvHolderView.addBottomBorderWithColor(color: .AppBorderColor, width: 1)
-        downimg.image = UIImage(named: "down")?.withRenderingMode(.alwaysOriginal)
         recommandedbtn.setTitle("", for: .normal)
-        setuplabels(lbl: recommandedlbl, text: "Recomanded", textcolor: .AppTabSelectColor, font: .LatoBold(size: 16), align: .right)
-        filterImg.image = UIImage(named: "filter1")?.withRenderingMode(.alwaysOriginal)
-        filterBtn.setTitle("", for: .normal)
+        
+        setuplabels(lbl: recommandedlbl, text: "SORT", textcolor: .AppLabelColor, font: .LatoBold(size: 16), align: .right)
         setuplabels(lbl: filterlbl, text: "FILTER", textcolor: .AppLabelColor, font: .LatoRegular(size: 16), align: .left)
         
         commonTableView.backgroundColor = .WhiteColor
-        hiddenView.isHidden = true
-        hiddenView.backgroundColor = .AppBtnColor
-        hiddenView.addCornerRadiusWithShadow(color: .lightGray, borderColor: .clear, cornerRadius: 4)
-        dropupimg.image = UIImage(named: "dropup")?.withRenderingMode(.alwaysOriginal).withTintColor(.WhiteColor)
-        moveUpBtn.setTitle("", for: .normal)
+//        hiddenView.isHidden = true
+//        hiddenView.backgroundColor = .AppBtnColor
+//        hiddenView.addCornerRadiusWithShadow(color: .lightGray, borderColor: .clear, cornerRadius: 4)
+        
+        
+        
         filterBtn.addTarget(self, action: #selector(didTapOnFilterBtnAction(_:)), for: .touchUpInside)
         recommandedbtn.addTarget(self, action: #selector(didTapOnSortBtnAction(_:)), for: .touchUpInside)
         setupDropDown()
@@ -277,22 +259,28 @@ class SearchHotelsResultVC: BaseTableVC, UITextFieldDelegate, HotelSearchViewMod
     }
     
     
-    override func didTapOnRefundableBtn(cell: HotelsTVCell) {
-        print("didTapOnRefundableBtn")
+    
+    //MARK: - didTapOnTermsAndConditionBtn HotelsTVCell
+    override func didTapOnTermsAndConditionBtn(cell: HotelsTVCell) {
+        goToTermsPopupVC(titlestr: cell.hotelNamelbl.text ?? "", hoteldesc: cell.hotelDescLabel)
     }
     
     
-    override func didTapOnLocationBtnAction(cell: HotelsTVCell){
-        
-        guard let vc = MapViewVC.newInstance.self else {return}
-        vc.modalPresentationStyle = .fullScreen
-        callapibool = true
-        vc.lat = Double(cell.lat) ?? 0.0
-        vc.long = Double(cell.long) ?? 0.0
-        vc.annotationtitle = cell.hotelNamelbl.text ?? ""
+    func goToTermsPopupVC(titlestr:String,hoteldesc:String) {
+        guard let vc = TermsPopupVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.titlestr = titlestr
+        vc.disc = hoteldesc
         present(vc, animated: true)
-        
     }
+    
+    
+    
+    //MARK: - didTapOnBookNowBtnAction HotelsTVCell
+    override func didTapOnBookNowBtnAction(cell: HotelsTVCell){
+        self.goToHotelDetailsVC(hid: cell.hotelid, bs: cell.bookingsource, kwdprice: cell.kwdlbl.text ?? "")
+    }
+    
     
     func goToHotelDetailsVC(hid:String,bs:String,kwdprice:String) {
         guard let vc = HotelDetailsVC.newInstance.self else {return}
@@ -307,31 +295,31 @@ class SearchHotelsResultVC: BaseTableVC, UITextFieldDelegate, HotelSearchViewMod
     
     
     //MARK: - scrollViewDidScroll
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView.contentOffset.y > self.lastContentOffset {
-            // scrolling down
-            if self.hiddenView.alpha == 1 {
-                UIView.animate(withDuration: 0.3) {
-                    self.hiddenView.alpha = 0
-                    self.hiddenView.isHidden = true
-                }
-            }
-        } else if scrollView.contentOffset.y < self.lastContentOffset {
-            // scrolling up
-            if self.hiddenView.alpha == 0 {
-                UIView.animate(withDuration: 0.3) {
-                    self.hiddenView.alpha = 1
-                    self.hiddenView.isHidden = false
-                }
-            }
-        }
-        self.lastContentOffset = scrollView.contentOffset.y
-    }
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        if scrollView.contentOffset.y > self.lastContentOffset {
+//            // scrolling down
+//            if self.hiddenView.alpha == 1 {
+//                UIView.animate(withDuration: 0.3) {
+//                    self.hiddenView.alpha = 0
+//                    self.hiddenView.isHidden = true
+//                }
+//            }
+//        } else if scrollView.contentOffset.y < self.lastContentOffset {
+//            // scrolling up
+//            if self.hiddenView.alpha == 0 {
+//                UIView.animate(withDuration: 0.3) {
+//                    self.hiddenView.alpha = 1
+//                    self.hiddenView.isHidden = false
+//                }
+//            }
+//        }
+//        self.lastContentOffset = scrollView.contentOffset.y
+//    }
     
-    @IBAction func didTapOnMoveUpScreenBtn(_ sender: Any) {
-        commonTableView.scrollToRow(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
-        self.hiddenView.isHidden = true
-    }
+//    @IBAction func didTapOnMoveUpScreenBtn(_ sender: Any) {
+//        commonTableView.scrollToRow(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
+//        self.hiddenView.isHidden = true
+//    }
     
     
     @objc func didTapOnFilterBtnAction(_ sender:UIButton) {
@@ -351,6 +339,9 @@ class SearchHotelsResultVC: BaseTableVC, UITextFieldDelegate, HotelSearchViewMod
         present(vc, animated: true)
     }
     
+    @IBAction func didTapOnMapViewBtnAction(_ sender: Any) {
+        print("didTapOnMapViewBtnAction")
+    }
 }
 
 
@@ -423,14 +414,15 @@ extension SearchHotelsResultVC {
                 cell.hotelImg.sd_setImage(with: URL(string: dict.image ?? ""), placeholderImage:UIImage(contentsOfFile:"placeholder.png"))
                 cell.ratingslbl.text = String(dict.star_rating ?? 0)
                 cell.locationlbl.text = dict.address
-                cell.refundablelbl.text = dict.refund
                 cell.kwdlbl.text = "\(dict.currency ?? ""):\(dict.price ?? "")"
                 cell.bookingsource = dict.booking_source ?? ""
                 cell.hotelid = String(dict.hotel_code ?? 0)
                 cell.lat = dict.latitude ?? ""
                 cell.long = dict.longitude ?? ""
+                cell.hotelDesc = dict.hotel_desc
+                cell.perNightlbl.text = "Total Price For 2 Night"
+                cell.faretypelbl.text = dict.refund ?? ""
                 cell.facilityArray = dict.facility ?? []
-                cell.facilityCV.reloadData()
                 ccell = cell
             }else{
                 let dict = hotelSearchResult[indexPath.row]
@@ -439,14 +431,15 @@ extension SearchHotelsResultVC {
                 cell.hotelImg.sd_setImage(with: URL(string: dict.image ?? ""), placeholderImage:UIImage(contentsOfFile:"placeholder.png"))
                 cell.ratingslbl.text = String(dict.star_rating ?? 0)
                 cell.locationlbl.text = dict.address
-                cell.refundablelbl.text = dict.refund
                 cell.kwdlbl.text = "\(dict.currency ?? ""):\(dict.price ?? "")"
                 cell.bookingsource = dict.booking_source ?? ""
                 cell.hotelid = String(dict.hotel_code ?? 0)
                 cell.lat = dict.latitude ?? ""
                 cell.long = dict.longitude ?? ""
+                cell.hotelDesc = dict.hotel_desc
+                cell.perNightlbl.text = "Total Price For 2 Night"
                 cell.facilityArray = dict.facility ?? []
-                cell.facilityCV.reloadData()
+                cell.faretypelbl.text = dict.refund ?? ""
                 ccell = cell
             }
         }
@@ -455,11 +448,6 @@ extension SearchHotelsResultVC {
     }
     
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let cell = tableView.cellForRow(at: indexPath) as? HotelsTVCell {
-            self.goToHotelDetailsVC(hid: cell.hotelid, bs: cell.bookingsource, kwdprice: cell.kwdlbl.text ?? "")
-        }
-    }
     
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -474,8 +462,6 @@ extension SearchHotelsResultVC:AppliedFilters{
     func filtersByApplied(minpricerange: Double, maxpricerange: Double, noofStopsArray: [String], refundableTypeArray: [String], departureTime: String, arrivalTime: String, noOvernightFlight: String, airlinesFilterArray: [String], connectingFlightsFilterArray: [String], ConnectingAirportsFilterArray: [String]) {
         
     }
-    
-    
     
     
     
@@ -534,6 +520,9 @@ extension SearchHotelsResultVC:AppliedFilters{
     }
     
     
+    
+    
+    
 }
 
 
@@ -548,7 +537,7 @@ extension SearchHotelsResultVC {
     
     func callHotelSearchPaginationAPI() {
         print("You've reached the last cell, trigger the API call.")
-
+        
         payload.removeAll()
         payload["booking_source"] = hbookingsource
         payload["search_id"] = hsearchid
@@ -556,7 +545,7 @@ extension SearchHotelsResultVC {
         payload["limit"] = "5"
         payload["no_of_nights"] = "1"
         
-       // viewModel?.CallHotelSearchPagenationAPI(dictParam: payload)
+        // viewModel?.CallHotelSearchPagenationAPI(dictParam: payload)
         
     }
     
@@ -568,5 +557,44 @@ extension SearchHotelsResultVC {
         }
         
     }
+    
+}
+
+
+
+extension SearchHotelsResultVC {
+    
+    func addObserver() {
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("offline"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(resultnil), name: NSNotification.Name("resultnil"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reload), name: Notification.Name("reload"), object: nil)
+        
+    }
+    
+    
+    @objc func reload() {
+        DispatchQueue.main.async {[self] in
+            callAPI()
+        }
+    }
+    
+    //MARK: - resultnil
+    @objc func resultnil() {
+        guard let vc = NoInternetConnectionVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.key = "noresult"
+        self.present(vc, animated: true)
+    }
+    
+    
+    //MARK: - nointernet
+    @objc func nointernet() {
+        guard let vc = NoInternetConnectionVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.key = "nointernet"
+        self.present(vc, animated: true)
+    }
+    
     
 }

@@ -53,6 +53,8 @@ class BaggageInfoVC: BaseTableVC, FlightDetailsViewModelProtocal, FDViewModelDel
     
     
     override func viewWillAppear(_ animated: Bool) {
+        
+        addObserver()
         hiddenView.isHidden = true
         chatBtnView.isHidden = true
         
@@ -76,19 +78,12 @@ class BaggageInfoVC: BaseTableVC, FlightDetailsViewModelProtocal, FDViewModelDel
             }
         }
         
-        NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("nointernet"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadTV), name: Notification.Name("reloadTV"), object: nil)
-        
         
         
         if callapibool == true {
             holderView.isHidden = true
             callApi()
         }
-    }
-    
-    func callApi() {
-        callGetFlightDetailsAPI()
     }
     
     
@@ -98,18 +93,6 @@ class BaggageInfoVC: BaseTableVC, FlightDetailsViewModelProtocal, FDViewModelDel
         
     }
     
-    
-    //MARK: - nointernet
-    @objc func nointernet() {
-        guard let vc = NoInternetConnectionVC.newInstance.self else {return}
-        vc.modalPresentationStyle = .overCurrentContext
-        self.present(vc, animated: true)
-    }
-    
-    
-    @objc func reloadTV() {
-        callApi()
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -305,7 +288,27 @@ class BaggageInfoVC: BaseTableVC, FlightDetailsViewModelProtocal, FDViewModelDel
     }
     
     
-    func callGetFlightDetailsAPI() {
+    
+    
+    
+    @IBAction func didTapOnMoveToTopTapBtn(_ sender: Any) {
+        commonTableView.scrollToRow(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
+    }
+    
+    @IBAction func didTapOnShowChatWindow(_ sender: Any) {
+        Freshchat.sharedInstance().showConversations(self)
+    }
+    
+    
+    
+}
+
+
+
+extension BaggageInfoVC {
+    
+    //MARK: - callGetFlightDetailsAPI
+    func callApi() {
         payload["search_id"] = defaults.string(forKey: UserDefaultsKeys.searchid)
         payload["selectedResultindex"] = defaults.string(forKey: UserDefaultsKeys.selectedResult)
         payload["user_id"] = defaults.string(forKey: UserDefaultsKeys.userid) ?? "0"
@@ -358,15 +361,15 @@ class BaggageInfoVC: BaseTableVC, FlightDetailsViewModelProtocal, FDViewModelDel
     }
     
     
+    
+    
+    //MARK: - callFareRulesAPI
     func callFareRulesAPI() {
         payload.removeAll()
         payload["fare_rule_ref_key"] = farerulerefkey
         payload["farerulesref_content"] = farerulesrefcontent
         fareruleViewModel?.CALL_GET_FARE_RULES_API(dictParam: payload)
     }
-    
-    
-    
     
     func fareRulesDetails(response: FareRulesModel) {
         
@@ -384,16 +387,6 @@ class BaggageInfoVC: BaseTableVC, FlightDetailsViewModelProtocal, FDViewModelDel
     }
     
     
-    @IBAction func didTapOnMoveToTopTapBtn(_ sender: Any) {
-        commonTableView.scrollToRow(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
-    }
-    
-    @IBAction func didTapOnShowChatWindow(_ sender: Any) {
-        Freshchat.sharedInstance().showConversations(self)
-    }
-    
-    
-   
 }
 
 
@@ -486,4 +479,43 @@ extension BaggageInfoVC {
         }
         
     }
+}
+
+
+
+extension BaggageInfoVC {
+    
+    func addObserver() {
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("offline"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(resultnil), name: NSNotification.Name("resultnil"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reload), name: Notification.Name("reload"), object: nil)
+        
+    }
+    
+    
+    @objc func reload() {
+        DispatchQueue.main.async {[self] in
+            callApi()
+        }
+    }
+    
+    //MARK: - resultnil
+    @objc func resultnil() {
+        guard let vc = NoInternetConnectionVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.key = "noresult"
+        self.present(vc, animated: true)
+    }
+    
+    
+    //MARK: - nointernet
+    @objc func nointernet() {
+        guard let vc = NoInternetConnectionVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.key = "nointernet"
+        self.present(vc, animated: true)
+    }
+    
+    
 }

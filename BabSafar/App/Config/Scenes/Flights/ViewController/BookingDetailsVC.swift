@@ -13,16 +13,8 @@ import MFSDK
 
 
 class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBViewModelDelegate, MobileSecureBookingViewModelDelegate, AboutusViewModelDelegate, ProfileDetailsViewModelDelegate, TravellerDeleteViewModelDelegate, TimerManagerDelegate {
-   
-    
-    func travellerDeletedSucess(response: AddTravellerModel) {
-        
-    }
     
     
-    func updateProfileDetails(response: ProfileDetailsModel) {
-        
-    }
     
     
     @IBOutlet weak var holderView: UIView!
@@ -62,6 +54,7 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
     var totalPrice = Double()
     var appreference = String()
     var totalPrice1 = String()
+    let seconds = 0.1
     
     
     var moreDeatilsViewModel:AboutusViewModel?
@@ -71,7 +64,7 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
     var travellerViewModel:TravellerViewModel?
     var profileDetilsVM:ProfileDetailsViewModel?
     var deleteTreavelerVM : TravellerDeleteViewModel?
-    var billingCountryCode = String()
+    
     var billingCountryName = String()
     
     var adultsCount = Int()
@@ -81,27 +74,29 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
     var timer: Timer?
     var totalTime = 1
     
-    var fnameA = [String]()
-    var passengertypeA = [String]()
-    var title2A = [String]()
-    var mnameA = [String]()
-    var lnameA = [String]()
-    var dobA = [String]()
-    var passportNoA = [String]()
-    var countryCodeA = [String]()
-    var genderA = [String]()
-    var passportexpiryA = [String]()
-    var passportissuingcountryA = [String]()
-    var middleNameA = [String]()
-    var leadPassengerA = [String]()
-    var passengerType = String()
+    //    var fnameA = [String]()
+    //    var passengertypeA = [String]()
+    //    var title2A = [String]()
+    //    var mnameA = [String]()
+    //    var lnameA = [String]()
+    //    var dobA = [String]()
+    //    var passportNoA = [String]()
+    //    var countryCodeA = [String]()
+    //    var genderA = [String]()
+    //    var passportexpiryA = [String]()
+    //    var passportissuingcountryA = [String]()
+    //    var middleNameA = [String]()
+    //    var leadPassengerA = [String]()
+    //    var passengerType = String()
+    
+    
     var positionsCount = 0
     var passengertypeArray = [String]()
     var searchTextArray = [String]()
-    
+    var totalAmountforBooking = String()
     var grand_total_Price = String()
     
-   
+    
     
     
     //MARK: -  LOADING FUNCTIONS
@@ -114,6 +109,8 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
     
     
     override func viewWillAppear(_ animated: Bool) {
+        
+        addObserver()
         chatBtnView.isHidden = true
         hiddenView.isHidden = true
         travelerArray.removeAll()
@@ -149,14 +146,6 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
         tablerow.removeAll()
         checkOptionCountArray.removeAll()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(contaddTraveller), name: Notification.Name("contaddTraveller"), object: nil)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("nointernet"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadTV), name: Notification.Name("reloadTV"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(addAdultsDetails(notification:)), name: NSNotification.Name("addAdultsDetails"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(reload(notification:)), name: NSNotification.Name("reload"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadAfterLogin), name: NSNotification.Name("reloadAfterLogin"), object: nil)
-        
         
         if callapibool == true {
             holderView.isHidden = true
@@ -164,7 +153,6 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
         }
         
         
-       
     }
     
     
@@ -172,15 +160,6 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
         gotoPopupScreen()
     }
     
-    func updateTimer() {
-        let totalTime = TimerManager.shared.totalTime
-        let minutes =  totalTime / 60
-        let seconds = totalTime % 60
-        let formattedTime = String(format: "%02d:%02d", minutes, seconds)
-        
-        setuplabels(lbl: sessonlbl, text: "Your Session Expires In : \(formattedTime)", textcolor: .AppLabelColor, font: .LatoRegular(size: 16), align: .left)
-    }
-   
     
     
     override func viewDidLoad() {
@@ -203,148 +182,12 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
     }
     
     
-    @objc func contaddTraveller() {
-        showToast(message: "Cont Adddddddddd")
-    }
-    
-    //MARK: - reloadAfterLogin
-    @objc func reloadAfterLogin() {
-        callProfileDetailsAPI()
-    }
-    
-    //MARK: - call Profile Details API
-    func callProfileDetailsAPI() {
-        payload["user_id"] = defaults.string(forKey: UserDefaultsKeys.userid) ?? "0"
-        profileDetilsVM?.CallGetProileDetails_API(dictParam: payload)
-    }
-    
-    
-    func getProfileDetails(response: ProfileDetailsModel) {
-        pdetails = response.data
-        
-        defaults.set(response.data?.email, forKey: UserDefaultsKeys.useremail)
-        defaults.set(response.data?.phone, forKey: UserDefaultsKeys.usermobile)
-        
-        
-        DispatchQueue.main.async {[self] in
-            callAllAPIS()
-        }
-    }
-    
-    let seconds = 0.1
-    func callAllAPIS() {
-        MBfd?.removeAll()
-        TimerManager.shared.sessionStop()
-        
-        DispatchQueue.main.async {
-            self.callMobilePreProcessingBookingAPI()
-        }
-        
-        
-        
-    }
     
     
     
-    //MARK: - nointernet
-    @objc func nointernet() {
-        guard let vc = NoInternetConnectionVC.newInstance.self else {return}
-        vc.modalPresentationStyle = .overCurrentContext
-        self.present(vc, animated: true)
-    }
     
     
-    @objc func reloadTV() {
-        callAllAPIS()
-    }
     
-    
-    //MARK: -call Mobile Pre Processing Booking API
-    func callMobilePreProcessingBookingAPI() {
-        
-        payload.removeAll()
-        payload["search_id"] = defaults.string(forKey: UserDefaultsKeys.searchid)
-        payload["selectedResult"] = defaults.string(forKey: UserDefaultsKeys.selectedResult)
-        payload["booking_source"] = defaults.string(forKey: UserDefaultsKeys.bookingsourcekey)
-        payload["user_id"] = defaults.string(forKey: UserDefaultsKeys.userid) ?? 0
-        payload["traceId"] = defaults.string(forKey: UserDefaultsKeys.traceId) ?? 0
-        mbviewmodel?.CALLPREPROCESSINGBOOKINGAPI(dictParam: payload)
-    }
-    
-    var totalAmountforBooking = String()
-    func mobilepreprocessbookingDetails(response: MBModel) {
-        
-        //        chatBtnView.isHidden = false
-        holderView.isHidden = false
-        
-        accesskey = response.pre_booking_params?.access_key ?? ""
-        accesskeytp = response.access_key_tp ?? ""
-        bookingsource = response.booking_source ?? ""
-        tmpFlightPreBookingId = response.pre_booking_params?.transaction_id ?? ""
-        activepaymentoptions = response.active_payment_options?[0] ?? ""
-        totalPrice = response.total_price?.rounded() ?? 0.0
-        appreference = response.pre_booking_params?.transaction_id ?? ""
-        
-        
-        totalAmountforBooking = response.flight_data?[0].totalPrice ?? "0.0"
-        mbSummery = response.flight_data?[0].flight_details?.summery ?? []
-        
-        
-        let i = response.pre_booking_params?.priceDetails
-        Adults_Base_Price = String(i?.adultsBasePrice ?? "0.0")
-        Adults_Tax_Price = String(i?.adultsTaxPrice ?? "0.0")
-        Childs_Base_Price = String(i?.childBasePrice ?? "0.0")
-        Childs_Tax_Price = String(i?.childTaxPrice ?? "0.0")
-        Infants_Base_Price = String(i?.infantBasePrice ?? "0.0")
-        Infants_Tax_Price = String(i?.infantTaxPrice ?? "0.0")
-        AdultsTotalPrice = i?.adultsTotalPrice ?? "0"
-        ChildTotalPrice = i?.childTotalPrice ?? "0"
-        InfantTotalPrice = i?.infantTotalPrice ?? "0"
-        sub_total_adult = i?.sub_total_adult ?? "0"
-        sub_total_child = i?.sub_total_child ?? "0"
-        sub_total_infant = i?.sub_total_infant ?? "0"
-        
-        bookNowlbl.text = "\(i?.api_currency ?? "")\(i?.grand_total ?? "")"
-        grand_total_Price = i?.grand_total ?? ""
-        
-       // let totalSeconds = abs(response.session_expiry_details?.session_start_time ?? 0)
-        TimerManager.shared.totalTime = 900
-        TimerManager.shared.startTimer()
-        
-        DispatchQueue.main.async {
-            self.setupTV()
-        }
-        
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + self.seconds) {
-            self.callGetCointryListAPI()
-        }
-        
-    }
-    
-    
-    //MARK: - Call Get Cointry List API
-    func callGetCointryListAPI() {
-        viewmodel?.CALLGETCOUNTRYLIST_API(dictParam: [:])
-    }
-    
-    //MARK:  GetCountryList Response
-    func getCountryList(response: AllCountryCodeListModel) {
-        countrylist = response.all_country_code_list ?? []
-    }
-    
-    
-    //MARK: - addAdultsDetails
-    @objc func addAdultsDetails(notification:NSNotification) {
-        setupTV()
-    }
-    
-    
-    //MARK: - reload commonTableView
-    @objc func reload(notification:NSNotification) {
-        //  fetchCoreDataValues()
-        //  setupTV()
-    }
     
     
     func setupUI() {
@@ -467,9 +310,8 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
     
     //MARK: - didTapOnCountryCodeBtn
     override func didTapOnCountryCodeBtn(cell: ContactInformationTVCell) {
-        self.nationalityCode = cell.nationalityCode
-        self.countryCode = cell.billingCountryCode
-        self.billingCountryCode = cell.billingCountryCode
+        self.nationalityCode = cell.isoCountryCode
+        billingCountryCode = cell.countrycodeTF.text ?? ""
     }
     
     //MARK: - editingTextField
@@ -615,12 +457,11 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
     
     //MARK: - didTapOnDropDownBtn
     override func didTapOnDropDownBtn(cell: ContactInformationTVCell) {
-        self.nationalityCode = cell.nationalityCode
-        self.countryCode = cell.billingCountryCode
-        self.billingCountryCode = cell.billingCountryCode
+        self.nationalityCode = cell.isoCountryCode
+        billingCountryCode = cell.countrycodeTF.text ?? ""
     }
     
-
+    
     //MARK: - DELETING COREDATA OBJECT
     func deleteAllRecords() {
         
@@ -703,7 +544,7 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
         var matchingCells: [AddDeatilsOfTravellerTVCell] = []
         var fnameCharBool = true
         var lnameCharBool = true
-       
+        
         // Replace with the desired search texts
         
         for case let cell as AddDeatilsOfTravellerTVCell in commonTableView.visibleCells {
@@ -792,30 +633,160 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
                 // Textfield is not empty
             }
             
-            
-            
         }
         
         
-        
-        
-        
         let mrtitleArray = travelerArray.compactMap({$0.mrtitle})
-        //    let passengertypeArray = travelerArray.compactMap({$0.passengertype})
+        let passengertypeArray = travelerArray.compactMap({$0.passengertype})
         let genderArray = travelerArray.compactMap({$0.gender})
         let firstnameArray = travelerArray.compactMap({$0.firstName})
         let lastNameArray = travelerArray.compactMap({$0.lastName})
+        let middlenameArray = travelerArray.compactMap({$0.middlename})
         let dobArray = travelerArray.compactMap({$0.dob})
         let passportnoArray = travelerArray.compactMap({$0.passportno})
         let nationalityArray = travelerArray.compactMap({$0.nationality})
         let passportIssuingCountryArray = travelerArray.compactMap({$0.passportIssuingCountry})
         let passportExpireDateArray = travelerArray.compactMap({$0.passportExpireDate})
         
+//        {
+//            Frequent =     (
+//                        (
+//                    Select
+//                )
+//            );
+//            "access_key" = "";
+//            "access_key_tp" = "14bc8bd08d89eecf924a29c846fb7d68*_*3*_*k5I6HYaCS0gDLz3A";
+//            address2 = ecity;
+//            baggageAmount = 0;
+//            "billing_address_1" = DA;
+//            "billing_city" = sdfsd;
+//            "billing_country" = AL;
+//            "billing_email" = "TEST@GMAIL.COM";
+//            "billing_state" = ASDAS;
+//            "billing_zipcode" = sdf;
+//            "booking_source" = "YToxOntpOjA7czoxNjoiUFRCU0lEMDAwMDAwMDAxNiI7fQ==";
+//            "booking_step" = book;
+//            "country_mobile_code" = "+355";
+//            "date_of_birth" =     (
+//                "25-08-2005"
+//            );
+//            "device_source" = "MOBILE(A)";
+//            "ff_no" =     (
+//                        (
+//                    ""
+//                )
+//            );
+//            "first_name" =     (
+//                test
+//            );
+//            gender =     (
+//                1
+//            );
+//            hidseatprice = "";
+//            insurance = 1;
+//            "insurance_baseprice" = "";
+//            "insurance_code" = "";
+//            "insurance_name" = "";
+//            "insurance_policy_cover_type" = 0;
+//            "insurance_policy_duration" = 0;
+//            "insurance_policy_option" = 0;
+//            "insurance_policy_type" = 0;
+//            "insurance_totalprice" = "";
+//            isInsurance = 0;
+//            "last_name" =     (
+//                test
+//            );
+//            mealsAmount = 0;
+//            "name_title" =     (
+//                1
+//            );
+//            "passenger_contact" = 9364634444;
+//            "passenger_nationality" =     (
+//                2
+//            );
+//            "passenger_passport_expiry" =     (
+//                "25-08-2025"
+//            );
+//            "passenger_passport_issuing_country" =     (
+//                3
+//            );
+//            "passenger_passport_number" =     (
+//                AJ1234567
+//            );
+//            "passenger_type" =     (
+//                Adult
+//            );
+//            "payment_method" = PNHB1;
+//            "promocode_code" = "";
+//            "promocode_val" = "";
+//            "redeem_points_post" = 1;
+//            "search_id" = 73831;
+//            selectedCurrency = KWD;
+//            selectedResult = "0_2_0";
+//            tc = on;
+//            "tmp_flight_pre_booking_id" = "BAS-F-TP-0825-1460";
+//            "user_id" = 0;
+//        }
         
+        
+        
+//    search_id:67031
+//    tmp_flight_pre_booking_id:BAS-F-TP-0710-7241
+//    //access_key:7b49b5ede3927a565845ab6e4bdc4f1a*_*6*_*0fyyl4nYG4V1PoNv
+//    access_key_tp:09f5f858cbd703be250829e552cf03a6*_*6*_*Z33j4lU44VK9Fxn1
+//    insurance_policy_type:0
+//    insurance_policy_option:0
+//    insurance_policy_cover_type:0
+//    insurance_policy_duration:0
+//    isInsurance:0
+//    selectedResult:0_5_0
+//    redeem_points_post:1
+//    booking_source:YToxOntpOjA7czoxNjoiUFRCU0lEMDAwMDAwMDAxNiI7fQ==
+//    promocode_val:""
+//    promocode_code:""
+//    mealsAmount:"0"
+//    baggageAmount:"0"
+//    passenger_type:["Adult"]
+//    lead_passenger:["1"]
+//    gender:["1"]
+//    passenger_nationality:["92"]
+//    name_title:["2"]
+//    first_name:["Shweta"]
+//    middle_name:[""]
+//    last_name:["Upadhyay"]
+//    date_of_birth:["13-04-1995"]
+//    passenger_passport_number:["POIL7675"]
+//    passenger_passport_issuing_country:["92"]
+//    passenger_passport_expiry:["16-08-2039"]
+//    //passenger_passport_expiry_month:["8"]
+//    //passenger_passport_expiry_year":["2039"]
+//    Frequent:[["Select"]]
+//    ff_no:[[""]]
+//    address2:ECITY
+//    billing_address_1:hjfggh
+//    billing_state:Karnataka
+//    billing_city:Bangalore
+//    billing_zipcode:560100
+//    billing_email:upadhyayshweta78@gmail.com
+//    passenger_contact:8965231470
+//    billing_country:IN
+//    country_mobile_code:+91
+//    insurance:0
+//    tc:on
+//    booking_step:book
+//    payment_method:PNHB1
+//    selectedCurrency:AED
+//    user_id:2738
+//    insurance_name:
+//    insurance_code:
+//    insurance_totalprice:
+//    insurance_baseprice:
+//    hidseatprice:
+//    device_source:MOBILE(A)
         
         payload["search_id"] = defaults.string(forKey: UserDefaultsKeys.searchid)
         payload["tmp_flight_pre_booking_id"] = tmpFlightPreBookingId
-        payload["access_key"] = accesskey
+     //   payload["access_key"] = accesskey
         payload["access_key_tp"] =  accesskeytp
         payload["insurance_policy_type"] = "0"
         payload["insurance_policy_option"] = "0"
@@ -832,11 +803,11 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
         
         payload["passenger_type"] = passengertypeArray
         //   payload["lead_passenger"] = laedpassengerArray
-        //  payload["gender"] = genderArray
+        payload["gender"] = genderArray
         payload["passenger_nationality"] = nationalityArray
         payload["name_title"] = mrtitleArray
         payload["first_name"] = firstnameArray
-        //     payload["middle_name"] = middlenameArray
+        payload["middle_name"] = middlenameArray
         payload["last_name"] = lastNameArray
         payload["date_of_birth"] = dobArray
         payload["passenger_passport_number"] = passportnoArray
@@ -844,6 +815,7 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
         payload["passenger_passport_expiry"] = passportExpireDateArray
         payload["Frequent"] = [["Select"]]
         payload["ff_no"] = [[""]]
+        
         payload["address2"] = "ecity"
         payload["billing_address_1"] = "DA"
         payload["billing_state"] = "ASDAS"
@@ -852,8 +824,8 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
         
         payload["billing_email"] = payemail
         payload["passenger_contact"] = paymobile
-        payload["billing_country"] = self.billingCountryCode
-        payload["country_mobile_code"] = self.countryCode
+        payload["billing_country"] = nationalityCode
+        payload["country_mobile_code"] = billingCountryCode
         payload["insurance"] = "1"
         payload["tc"] = "on"
         payload["booking_step"] = "book"
@@ -861,83 +833,74 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
         payload["selectedCurrency"] = defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? "KWD"
         payload["user_id"] = defaults.string(forKey: UserDefaultsKeys.userid) ?? "0"
         
+        payload["insurance_name"] = ""
+        payload["insurance_code"] = ""
+        payload["insurance_totalprice"] = ""
+        payload["insurance_baseprice"] = ""
+        payload["hidseatprice"] = ""
+        payload["device_source"] = "MOBILE(A)"
         
-        do{
+        
+        if callpaymentbool == false {
+            showToast(message: "Add Details")
+        }else if fnameCharBool == false {
+            showToast(message: "First Name Should More Than 3 Chars")
+        }else if lnameCharBool == false {
+            showToast(message: "Last Name Should More Than 3 Chars")
+        }else if payemail == "" {
+            showToast(message: "Enter Email Address")
+        }else if payemail.isValidEmail() == false {
+            showToast(message: "Enter Valid Email Addreess")
+        }else if paymobile == "" {
+            showToast(message: "Enter Mobile No")
+        }else if paymobile.isValidMobileNumber() == false {
+            showToast(message: "Enter Valid Mobile No")
+        }else if self.countryCode == "" {
+            showToast(message: "Enter Country Code")
+        }else if checkTermsAndCondationStatus == false {
+            showToast(message: "Please Accept T&C and Privacy Policy")
+        }else {
             
-            let jsonData = try JSONSerialization.data(withJSONObject: payload, options: JSONSerialization.WritingOptions.prettyPrinted)
-            let jsonStringData =  NSString(data: jsonData as Data, encoding: NSUTF8StringEncoding)! as String
+            mbviewmodel?.CALL_MOBILE_PROCESS_PASSENGER_DETAIL_API(dictParam: payload)
             
-            if callpaymentbool == false {
-                showToast(message: "Add Details")
-            }else if fnameCharBool == false {
-                showToast(message: "First Name Should More Than 3 Chars")
-            }else if lnameCharBool == false {
-                showToast(message: "Last Name Should More Than 3 Chars")
-            }else if payemail == "" {
-                showToast(message: "Enter Email Address")
-            }else if payemail.isValidEmail() == false {
-                showToast(message: "Enter Valid Email Addreess")
-            }else if paymobile == "" {
-                showToast(message: "Enter Mobile No")
-            }else if paymobile.isValidMobileNumber() == false {
-                showToast(message: "Enter Valid Mobile No")
-            }
-            else if self.countryCode == "" {
-                showToast(message: "Enter Country Code")
-            }else if checkTermsAndCondationStatus == false {
-                showToast(message: "Please Accept T&C and Privacy Policy")
-            }else {
-               
-                
-                guard let vc = PaymentGatewayVC.newInstance.self else {return}
-                vc.modalPresentationStyle = .fullScreen
-                vc.payload = payload
-                vc.grandTotalamount = self.totalPrice1
-                vc.grand_total_Price = self.grand_total_Price
-                present(vc, animated: true)
-            
-            }
-            
-            
-        }catch{
-            print(error.localizedDescription)
         }
     }
     
-
-    func gotoPaymentVC() {
-        
-        guard let vc = PaymentVC.newInstance.self else {return}
-        vc.modalPresentationStyle = .fullScreen
-        vc.tmpFlightPreBookingId = self.tmpFlightPreBookingId
-        vc.accesskey = self.accesskey
-        vc.accesskeytp = self.accesskeytp
-        vc.bookingsource = self.bookingsource
-        vc.email = payemail
-        vc.mobile = paymobile
-        vc.countryCode = self.countryCode
-        present(vc, animated: true)
-    }
     
     
     //MARK: mobile process passenger Details
     func mobileprocesspassengerDetails(response: MBPModel) {
-        payload.removeAll()
-        BASE_URL = ""
-        payload["search_id"] = defaults.string(forKey: UserDefaultsKeys.searchid)
-        payload["app_reference"] = response.data?.post_data?.app_reference
-        payload["promocode_val"] = response.data?.post_data?.promocode_val
-        payload["selectedCurrency"] = defaults.string(forKey: UserDefaultsKeys.selectedCurrency)
         
-        
-        if response.status == false {
-            showToast(message: response.message ?? "")
-        }else {
-            mbviewmodel?.Call_mobile_pre_booking_API(dictParam: payload, url: "https://provabdevelopment.com/babsafar/mobile_webservices/mobile/index.php/flight/mobile_pre_booking")
+        DispatchQueue.main.async {
+            BASE_URL = ""
+            self.viewmodel1?.Call_mobile_secure_booking_API(dictParam: [:], url: "https://provabdevelopment.com/pro_new/mobile/index.php/flight/mobile_secure_booking/\(self.tmpFlightPreBookingId)/\(defaults.string(forKey: UserDefaultsKeys.searchid) ?? "")")
         }
         
         
     }
+    
+    
+    
+    func mobilesecurebookingDetails(response: MobilePrePaymentModel) {
+        loderBool = false
+        if response.status == false {
+            showToast(message: response.message ?? "")
+        }else {
+            guard let vc = PaymentGatewayVC.newInstance.self else {return}
+            vc.modalPresentationStyle = .fullScreen
+            vc.payload = payload
+            vc.grandTotalamount = self.totalPrice1
+            vc.grand_total_Price = self.grand_total_Price
+            vc.tmpFlightPreBookingId = self.tmpFlightPreBookingId
+            present(vc, animated: true)
+        }
+        
+        
+    }
+    
+    
+    
+    
     
     
     
@@ -984,21 +947,6 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
         
     }
     
-    
-    func mobilesecurebookingDetails(response: MobilePrePaymentModel) {
-        loderBool = false
-        if response.status == false {
-            showToast(message: response.message ?? "")
-        }else {
-            guard let vc = LoadWebViewVC.newInstance.self else {return}
-            vc.modalPresentationStyle = .fullScreen
-            vc.urlString = response.url ?? ""
-            vc.isVcFrom = "Booking"
-            present(vc, animated: true)
-        }
-        
-        
-    }
     
     func mobolePaymentDetails(response: MobilePaymentModel) {
         
@@ -1050,6 +998,186 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
     }
     
     
+    func travellerDeletedSucess(response: AddTravellerModel) {
+        
+    }
+    
+    
+    func updateProfileDetails(response: ProfileDetailsModel) {
+        
+    }
+    
 }
 
 
+extension BookingDetailsVC {
+    
+    //MARK: - Call Get Cointry List API
+    func callGetCointryListAPI() {
+        viewmodel?.CALLGETCOUNTRYLIST_API(dictParam: [:])
+    }
+    
+    //MARK:  GetCountryList Response
+    func getCountryList(response: AllCountryCodeListModel) {
+        countrylist = response.all_country_code_list ?? []
+    }
+    
+    //MARK: - call Profile Details API
+    func callProfileDetailsAPI() {
+        payload["user_id"] = defaults.string(forKey: UserDefaultsKeys.userid) ?? "0"
+        profileDetilsVM?.CallGetProileDetails_API(dictParam: payload)
+    }
+    
+    
+    func getProfileDetails(response: ProfileDetailsModel) {
+        pdetails = response.data
+        
+        defaults.set(response.data?.email, forKey: UserDefaultsKeys.useremail)
+        defaults.set(response.data?.phone, forKey: UserDefaultsKeys.usermobile)
+        
+        
+        DispatchQueue.main.async {[self] in
+            callAllAPIS()
+        }
+    }
+    
+    
+    func callAllAPIS() {
+        MBfd?.removeAll()
+        TimerManager.shared.sessionStop()
+        
+        DispatchQueue.main.async {
+            self.callMobilePreProcessingBookingAPI()
+        }
+        
+        
+    }
+    
+    
+    //MARK: -call Mobile Pre Processing Booking API
+    func callMobilePreProcessingBookingAPI() {
+        
+        payload.removeAll()
+        payload["search_id"] = defaults.string(forKey: UserDefaultsKeys.searchid)
+        payload["selectedResult"] = defaults.string(forKey: UserDefaultsKeys.selectedResult)
+        payload["booking_source"] = defaults.string(forKey: UserDefaultsKeys.bookingsourcekey)
+        payload["user_id"] = defaults.string(forKey: UserDefaultsKeys.userid) ?? 0
+        payload["traceId"] = defaults.string(forKey: UserDefaultsKeys.traceId) ?? 0
+        mbviewmodel?.CALLPREPROCESSINGBOOKINGAPI(dictParam: payload)
+    }
+    
+    
+    func mobilepreprocessbookingDetails(response: MBModel) {
+        
+        
+        
+        holderView.isHidden = false
+        
+        accesskey = response.pre_booking_params?.access_key ?? ""
+        accesskeytp = response.access_key_tp ?? ""
+        bookingsource = response.booking_source ?? ""
+        tmpFlightPreBookingId = response.pre_booking_params?.transaction_id ?? ""
+        activepaymentoptions = response.active_payment_options?[0] ?? ""
+        totalPrice = response.total_price?.rounded() ?? 0.0
+        appreference = response.pre_booking_params?.transaction_id ?? ""
+        
+        
+        totalAmountforBooking = response.flight_data?[0].totalPrice ?? "0.0"
+        mbSummery = response.flight_data?[0].flight_details?.summery ?? []
+        
+        
+        let i = response.pre_booking_params?.priceDetails
+        Adults_Base_Price = String(i?.adultsBasePrice ?? "0.0")
+        Adults_Tax_Price = String(i?.adultsTaxPrice ?? "0.0")
+        Childs_Base_Price = String(i?.childBasePrice ?? "0.0")
+        Childs_Tax_Price = String(i?.childTaxPrice ?? "0.0")
+        Infants_Base_Price = String(i?.infantBasePrice ?? "0.0")
+        Infants_Tax_Price = String(i?.infantTaxPrice ?? "0.0")
+        AdultsTotalPrice = i?.adultsTotalPrice ?? "0"
+        ChildTotalPrice = i?.childTotalPrice ?? "0"
+        InfantTotalPrice = i?.infantTotalPrice ?? "0"
+        sub_total_adult = i?.sub_total_adult ?? "0"
+        sub_total_child = i?.sub_total_child ?? "0"
+        sub_total_infant = i?.sub_total_infant ?? "0"
+        
+        bookNowlbl.text = "\(i?.api_currency ?? "")\(i?.grand_total ?? "")"
+        grand_total_Price = i?.grand_total ?? ""
+        
+        // let totalSeconds = abs(response.session_expiry_details?.session_start_time ?? 0)
+        TimerManager.shared.totalTime = 900
+        TimerManager.shared.startTimer()
+        
+        DispatchQueue.main.async {
+            self.setupTV()
+        }
+        
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + self.seconds) {
+            self.callGetCointryListAPI()
+        }
+        
+    }
+    
+    
+    
+    
+    
+}
+
+
+
+
+extension BookingDetailsVC {
+    
+    func addObserver() {
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("offline"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(resultnil), name: NSNotification.Name("resultnil"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reload), name: Notification.Name("reload"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadAfterLogin), name: NSNotification.Name("reloadAfterLogin"), object: nil)
+    }
+    
+    
+    @objc func reload() {
+        DispatchQueue.main.async {[self] in
+            callAllAPIS()
+        }
+    }
+    
+    //MARK: - resultnil
+    @objc func resultnil() {
+        guard let vc = NoInternetConnectionVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.key = "noresult"
+        self.present(vc, animated: true)
+    }
+    
+    
+    //MARK: - nointernet
+    @objc func nointernet() {
+        guard let vc = NoInternetConnectionVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.key = "nointernet"
+        self.present(vc, animated: true)
+    }
+    
+    //MARK: - reloadAfterLogin
+    @objc func reloadAfterLogin() {
+        callProfileDetailsAPI()
+    }
+    
+    
+    //MARK: - updateTimer
+    func updateTimer() {
+        let totalTime = TimerManager.shared.totalTime
+        let minutes =  totalTime / 60
+        let seconds = totalTime % 60
+        let formattedTime = String(format: "%02d:%02d", minutes, seconds)
+        
+        setuplabels(lbl: sessonlbl, text: "Your Session Expires In : \(formattedTime)", textcolor: .AppLabelColor, font: .LatoRegular(size: 16), align: .left)
+    }
+    
+    
+    
+    
+}

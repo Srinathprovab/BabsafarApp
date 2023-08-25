@@ -177,8 +177,10 @@ class BaseTableVC: UIViewController, SearchFlightsTVCellDelegate, TravellerEcono
     func didTapOnDual1Btn(cell:CommonFromCityTVCell){}
     func didTapOnDual2Btn(cell:CommonFromCityTVCell){}
     func mapViewBtnAction(cell:SearchLocationTFTVCell){}
-    func didTapOnRefundableBtn(cell: HotelsTVCell) {}
-    func didTapOnLocationBtnAction(cell: HotelsTVCell) {}
+    
+    func didTapOnTermsAndConditionBtn(cell: HotelsTVCell) {}
+    func didTapOnBookNowBtnAction(cell: HotelsTVCell){}
+
     func didTapOnOneRatingViewBtn(cell: PopularFiltersTVCell) {}
     func didTapOnTwoRatingViewBtn(cell: PopularFiltersTVCell) {}
     func didTapOnThreeatingViewBtn(cell: PopularFiltersTVCell) {}
@@ -310,7 +312,6 @@ class BaseTableVC: UIViewController, SearchFlightsTVCellDelegate, TravellerEcono
     func didTapOnAddArrivalServiceBtnAction(cell: SelectedServicesTVCell) {}
     func didTapOnCheckOutBtnAction(cell: SelectedServicesTVCell) {}
     func didTapOnChangeSelectionBtnAction(cell: FasttrackFlightDeatilsTVCell) {}
-    
     
     
     
@@ -964,6 +965,13 @@ extension BaseTableVC: UITableViewDataSource {
             case .FasttrackFlightDeatilsTVCell:
                 let cell: FasttrackFlightDeatilsTVCell = commonTV.dequeTVCell(indexPath: indexPath)
                 cell.delegate = self
+                commonCell = cell
+                
+                
+                
+                
+            case .HotelDesclblTVCell:
+                let cell: HotelDesclblTVCell = commonTV.dequeTVCell(indexPath: indexPath)
                 commonCell = cell
                 
                 

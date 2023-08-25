@@ -142,6 +142,9 @@ class SearchHotelsVC: BaseTableVC, TopFlightDetailsViewModelDelegate {
         payload["child"] = chArray
         payload["childAge_1"] = ["0"]
         payload["nationality"] = countrycode
+        payload["language"] = "english"
+        payload["search_source"] = "postman"
+        payload["currency"] = defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? "KWD"
         
         if defaults.string(forKey: UserDefaultsKeys.locationcity) == "Add City" || defaults.string(forKey: UserDefaultsKeys.locationcity) == nil{
             showToast(message: "Enter Hotel or City ")

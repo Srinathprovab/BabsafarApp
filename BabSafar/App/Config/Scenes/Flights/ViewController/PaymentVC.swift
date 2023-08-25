@@ -179,7 +179,7 @@ class PaymentVC: BaseTableVC, MBViewModelDelegate, MobileSecureBookingViewModelD
                 DispatchQueue.main.async {[self] in
                  //   BASE_URL = "https://provabdevelopment.com/babsafar/mobile_webservices/mobile/index.php/flight/"
                     payload1["passenger_request"] = jsonStringData
-                    mbviewmodel?.CALL_PRE_PROCESS_PASSENGER_DETAIL_API(dictParam: payload1)
+                    mbviewmodel?.CALL_MOBILE_PROCESS_PASSENGER_DETAIL_API(dictParam: payload1)
                 }
             }
             

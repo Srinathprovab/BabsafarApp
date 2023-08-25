@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import IQKeyboardManager
 
 class ContactTVCell: TableViewCell {
     
@@ -23,6 +24,8 @@ class ContactTVCell: TableViewCell {
         super.awakeFromNib()
         // Initialization code
         setupUI()
+        IQKeyboardManager.shared().keyboardDistanceFromTextField = 100 // Adjust this value as needed
+
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

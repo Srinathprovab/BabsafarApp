@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import IQKeyboardManager
 
 
 protocol InsurenceSearchTVCellDelegate {
@@ -45,6 +46,8 @@ class InsurenceSearchTVCell: TableViewCell, FastrackAirlineListViewModelDelegate
         setupUI()
         cityViewModel = SelectCityViewModel(self)
         airlineViewModel = FastrackAirlineListViewModel(self)
+        IQKeyboardManager.shared().keyboardDistanceFromTextField = 100 // Adjust this value as needed
+
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -477,6 +480,23 @@ extension InsurenceSearchTVCell:UITableViewDelegate, UITableViewDataSource {
         
         
         
+    }
+    
+    
+}
+
+
+
+extension InsurenceSearchTVCell {
+    
+    //MARK - UITextField Delegates
+    override func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        //For mobile numer validation
+        let maxLength = 50
+        let currentString: NSString = textField.text! as NSString
+        let newString: NSString =  currentString.replacingCharacters(in: range, with: string) as NSString
+        return newString.length <= maxLength
+      //  return true
     }
     
     

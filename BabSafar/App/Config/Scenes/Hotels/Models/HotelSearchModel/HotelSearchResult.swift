@@ -3,6 +3,8 @@
 import Foundation
 struct HotelSearchResult : Codable {
     let booking_source : String?
+    let data_mode : String?
+    let giata_id : String?
     let hotel_code : Int?
     let city_code : String?
     let country_code : String?
@@ -13,7 +15,7 @@ struct HotelSearchResult : Codable {
     let phone_number : String?
     let fax : String?
     let email : String?
-    let website : String?
+    let hotel_desc : Hotel_desc?
     let image : String?
     let thumb_image : String?
     let accomodation_cstr : String?
@@ -28,11 +30,18 @@ struct HotelSearchResult : Codable {
     let xml_currency : String?
     let xml_net : String?
     let price : String?
+    let org_price : String?
     let xml_price : String?
-
+    let hotel_dis_mar_parm : String?
+  //  let dis_mar : Dis_mar?
+    let no_of_nights : Int?
+    let hotel_shortdesc : String?
+    
     enum CodingKeys: String, CodingKey {
-
+        
         case booking_source = "booking_source"
+        case data_mode = "data_mode"
+        case giata_id = "giata_id"
         case hotel_code = "hotel_code"
         case city_code = "city_code"
         case country_code = "country_code"
@@ -43,7 +52,7 @@ struct HotelSearchResult : Codable {
         case phone_number = "phone_number"
         case fax = "fax"
         case email = "email"
-        case website = "website"
+        case hotel_desc = "hotel_desc"
         case image = "image"
         case thumb_image = "thumb_image"
         case accomodation_cstr = "accomodation_cstr"
@@ -58,12 +67,19 @@ struct HotelSearchResult : Codable {
         case xml_currency = "xml_currency"
         case xml_net = "xml_net"
         case price = "price"
+        case org_price = "org_price"
         case xml_price = "xml_price"
+        case hotel_dis_mar_parm = "hotel_dis_mar_parm"
+    //    case dis_mar = "dis_mar"
+        case no_of_nights = "no_of_nights"
+        case hotel_shortdesc = "hotel_shortdesc"
     }
-
+    
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         booking_source = try values.decodeIfPresent(String.self, forKey: .booking_source)
+        data_mode = try values.decodeIfPresent(String.self, forKey: .data_mode)
+        giata_id = try values.decodeIfPresent(String.self, forKey: .giata_id)
         hotel_code = try values.decodeIfPresent(Int.self, forKey: .hotel_code)
         city_code = try values.decodeIfPresent(String.self, forKey: .city_code)
         country_code = try values.decodeIfPresent(String.self, forKey: .country_code)
@@ -74,7 +90,7 @@ struct HotelSearchResult : Codable {
         phone_number = try values.decodeIfPresent(String.self, forKey: .phone_number)
         fax = try values.decodeIfPresent(String.self, forKey: .fax)
         email = try values.decodeIfPresent(String.self, forKey: .email)
-        website = try values.decodeIfPresent(String.self, forKey: .website)
+        hotel_desc = try values.decodeIfPresent(Hotel_desc.self, forKey: .hotel_desc)
         image = try values.decodeIfPresent(String.self, forKey: .image)
         thumb_image = try values.decodeIfPresent(String.self, forKey: .thumb_image)
         accomodation_cstr = try values.decodeIfPresent(String.self, forKey: .accomodation_cstr)
@@ -89,7 +105,12 @@ struct HotelSearchResult : Codable {
         xml_currency = try values.decodeIfPresent(String.self, forKey: .xml_currency)
         xml_net = try values.decodeIfPresent(String.self, forKey: .xml_net)
         price = try values.decodeIfPresent(String.self, forKey: .price)
+        org_price = try values.decodeIfPresent(String.self, forKey: .org_price)
         xml_price = try values.decodeIfPresent(String.self, forKey: .xml_price)
+        hotel_dis_mar_parm = try values.decodeIfPresent(String.self, forKey: .hotel_dis_mar_parm)
+    //    dis_mar = try values.decodeIfPresent(Dis_mar.self, forKey: .dis_mar)
+        no_of_nights = try values.decodeIfPresent(Int.self, forKey: .no_of_nights)
+        hotel_shortdesc = try values.decodeIfPresent(String.self, forKey: .hotel_shortdesc)
     }
-
+    
 }

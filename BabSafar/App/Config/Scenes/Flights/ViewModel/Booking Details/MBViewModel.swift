@@ -53,7 +53,7 @@ class MBViewModel {
     
     
     //MARK:  mobile_process_passenger_detail
-    func CALL_PRE_PROCESS_PASSENGER_DETAIL_API(dictParam: [String: Any]){
+    func CALL_MOBILE_PROCESS_PASSENGER_DETAIL_API(dictParam: [String: Any]){
         let parms = NSDictionary(dictionary:dictParam)
         print("Parameters = \(parms)")
         

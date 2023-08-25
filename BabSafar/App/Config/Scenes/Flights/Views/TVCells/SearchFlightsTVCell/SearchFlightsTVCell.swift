@@ -582,7 +582,7 @@ extension SearchFlightsTVCell:UITableViewDelegate, UITableViewDataSource {
                 fromTF.placeholder = ""
                 fromTF.resignFirstResponder()
                 toTF.placeholder = "Destination"
-                toTF.becomeFirstResponder()
+                //toTF.becomeFirstResponder()
                 
                 if let selectedJType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
                     if selectedJType == "circle" {

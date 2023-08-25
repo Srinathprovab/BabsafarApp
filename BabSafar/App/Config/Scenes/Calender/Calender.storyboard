@@ -360,10 +360,42 @@
             </objects>
             <point key="canvasLocation" x="2005.3435114503816" y="1741.549295774648"/>
         </scene>
+        <!--Booking SucessVC-->
+        <scene sceneID="y7P-k5-afZ">
+            <objects>
+                <viewController storyboardIdentifier="BookingSucessVC" id="KLT-s3-t4K" customClass="BookingSucessVC" customModule="BabSafar" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="54z-9V-ViW">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="loader" translatesAutoresizingMaskIntoConstraints="NO" id="y6x-vS-dyH">
+                                <rect key="frame" x="156.66666666666666" y="386" width="80" height="80"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="80" id="PeO-2K-5Lj"/>
+                                    <constraint firstAttribute="width" constant="80" id="w0H-R0-mZ2"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="6pJ-Ld-bfC"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="y6x-vS-dyH" firstAttribute="centerY" secondItem="54z-9V-ViW" secondAttribute="centerY" id="JdV-Kt-zX3"/>
+                            <constraint firstItem="y6x-vS-dyH" firstAttribute="centerX" secondItem="54z-9V-ViW" secondAttribute="centerX" id="iLz-Xo-VC8"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="gifImageView" destination="y6x-vS-dyH" id="ZUA-gc-eJk"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MoC-S1-qoM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2844" y="1742"/>
+        </scene>
     </scenes>
     <resources>
         <image name="arrow.down.circle.fill" catalog="system" width="128" height="123"/>
         <image name="arrow.up.circle.fill" catalog="system" width="128" height="123"/>
+        <image name="loader" width="128" height="128"/>
         <image name="multiply" catalog="system" width="128" height="111"/>
         <namedColor name="AppHolderViewColor">
             <color red="0.94499999284744263" green="0.95300000905990601" blue="0.94900000095367432" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

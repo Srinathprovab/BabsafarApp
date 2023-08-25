@@ -68,38 +68,13 @@ class SearchFlightResultVC: BaseTableVC, UITextFieldDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         BASE_URL = BASE_URL1
-        NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("nointernet"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadTV), name: Notification.Name("reloadTV"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(somthingwentwrong), name: Notification.Name("somthingwentwrong"), object: nil)
+        addObserver()
         
         if callapibool == true {
             
             holderView.isHidden = true
             callAPI()
         }
-    }
-    
-    
-    
-    //MARK: - somthingwentwrong
-    @objc func somthingwentwrong() {
-        guard let vc = NoInternetConnectionVC.newInstance.self else {return}
-        vc.modalPresentationStyle = .overCurrentContext
-        vc.key = "noresult"
-        self.present(vc, animated: true)
-    }
-    
-    
-    //MARK: - nointernet
-    @objc func nointernet() {
-        guard let vc = NoInternetConnectionVC.newInstance.self else {return}
-        vc.modalPresentationStyle = .overCurrentContext
-        self.present(vc, animated: true)
-    }
-    
-    
-    @objc func reloadTV() {
-        commonTableView.reloadData()
     }
     
     
@@ -251,17 +226,17 @@ class SearchFlightResultVC: BaseTableVC, UITextFieldDelegate {
     }
     
     
-    // MARK: - FILTER BY KWDPRICE
-    
-    func minutesFromString(_ durationString: String) -> Double {
-        let components = durationString.split(separator: " ")
-        guard components.count == 2 else { return 0.0 }
-        let hours = Double(components[0].dropLast()) ?? 0.0
-        let minutes = Double(components[1].dropLast()) ?? 0.0
-        return hours * 60.0 + minutes
-    }
-    
-    
+    //    // MARK: - FILTER BY KWDPRICE
+    //
+    //    func minutesFromString(_ durationString: String) -> Double {
+    //        let components = durationString.split(separator: " ")
+    //        guard components.count == 2 else { return 0.0 }
+    //        let hours = Double(components[0].dropLast()) ?? 0.0
+    //        let minutes = Double(components[1].dropLast()) ?? 0.0
+    //        return hours * 60.0 + minutes
+    //    }
+    //
+    //
     
     // MARK: - Oneway SearchFlightResultTVCell
     
@@ -1720,3 +1695,42 @@ extension SearchFlightResultVC:FlightListModelProtocal{
     
 }
 
+
+
+
+extension SearchFlightResultVC {
+    
+    func addObserver() {
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("offline"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(resultnil), name: NSNotification.Name("resultnil"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reload), name: Notification.Name("reload"), object: nil)
+        
+    }
+    
+    
+    @objc func reload() {
+        DispatchQueue.main.async {[self] in
+            callAPI()
+        }
+    }
+    
+    //MARK: - resultnil
+    @objc func resultnil() {
+        guard let vc = NoInternetConnectionVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.key = "noresult"
+        self.present(vc, animated: true)
+    }
+    
+    
+    //MARK: - nointernet
+    @objc func nointernet() {
+        guard let vc = NoInternetConnectionVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.key = "nointernet"
+        self.present(vc, animated: true)
+    }
+    
+    
+}

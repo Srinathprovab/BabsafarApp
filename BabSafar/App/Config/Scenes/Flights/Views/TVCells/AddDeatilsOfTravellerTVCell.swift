@@ -61,15 +61,6 @@ class AddDeatilsOfTravellerTVCell: TableViewCell {
     @IBOutlet weak var holderView: UIView!
     @IBOutlet weak var saveView: UIView!
     @IBOutlet weak var viewHeight: NSLayoutConstraint!
-    
-    //    @IBOutlet weak var mrRadioImg: UIImageView!
-    //    @IBOutlet weak var mrlbl: UILabel!
-    //    @IBOutlet weak var mrBtn: UIButton!
-    //    @IBOutlet weak var mrsRadioImg: UIImageView!
-    //    @IBOutlet weak var mrslbl: UILabel!
-    //    @IBOutlet weak var mrsBtn: UIButton!
-    
-    //  @IBOutlet weak var mnameTF: UITextField!
     @IBOutlet weak var fnameTF: UITextField!
     @IBOutlet weak var lnameTF: UITextField!
     @IBOutlet weak var dobTF: UITextField!
@@ -77,13 +68,11 @@ class AddDeatilsOfTravellerTVCell: TableViewCell {
     @IBOutlet weak var passportnoTF: UITextField!
     @IBOutlet weak var passportIssuingCountryTF: UITextField!
     @IBOutlet weak var passportExpireDateTF: UITextField!
-    
     @IBOutlet weak var titleView: UIView!
     @IBOutlet weak var titleTF: UITextField!
     @IBOutlet weak var nameTitleSelectBtn: UIButton!
     @IBOutlet weak var passportNationalitySelectBtn: UIButton!
     @IBOutlet weak var passportIssueingCountrySelectBtn: UIButton!
-    //  @IBOutlet weak var mnameView: UIView!
     @IBOutlet weak var fnameView: UIView!
     @IBOutlet weak var lnameView: UIView!
     @IBOutlet weak var dobView: UIView!
@@ -179,6 +168,7 @@ class AddDeatilsOfTravellerTVCell: TableViewCell {
                 
                 // Update the gender property of the Traveler object at the specified index
                 travelerArray[self.indexposition ].passengertype = "Adult"
+                travelerArray[self.indexposition ].middlename = ""
                 titledropDown.dataSource = ["Mr","Ms","Mrs"]
                
             } else if cellInfo.key == "child" {
@@ -188,6 +178,7 @@ class AddDeatilsOfTravellerTVCell: TableViewCell {
                 
                 // Update the gender property of the Traveler object at the specified index
                 travelerArray[self.indexposition ].passengertype = "Child"
+                travelerArray[self.indexposition ].middlename = ""
                 titledropDown.dataSource = ["Master","Miss"]
                
             } else {
@@ -197,6 +188,7 @@ class AddDeatilsOfTravellerTVCell: TableViewCell {
                 
                 // Update the gender property of the Traveler object at the specified index
                 travelerArray[self.indexposition ].passengertype = "Infant"
+                travelerArray[self.indexposition ].middlename = ""
                 titledropDown.dataSource = ["Master","Miss"]
                
             }
@@ -223,14 +215,7 @@ class AddDeatilsOfTravellerTVCell: TableViewCell {
         holderView.clipsToBounds = true
         
         collapsView()
-        
-        
-        //        mrRadioImg.image = UIImage(named: "radioUnselected")?.withRenderingMode(.alwaysOriginal)
-        //        mrsRadioImg.image = UIImage(named: "radioUnselected")?.withRenderingMode(.alwaysOriginal)
-        //        setuplabels(lbl: mrlbl, text: "Male", textcolor: .AppLabelColor, font: .LatoBold(size: 14), align: .left)
-        //        setuplabels(lbl: mrslbl, text: "Female", textcolor: .AppLabelColor, font: .LatoBold(size: 14), align: .left)
-        //        mrBtn.setTitle("", for: .normal)
-        //        mrsBtn.setTitle("", for: .normal)
+      
         
         setupTextField(txtField: titleTF, tag1: 11, label: "Title*", placeholder: "MR")
         setupTextField(txtField: fnameTF, tag1: 1, label: "First Name*", placeholder: "First Name")
@@ -342,24 +327,29 @@ class AddDeatilsOfTravellerTVCell: TableViewCell {
             switch item {
             case "Mr":
                 travelerArray[self?.indexposition ?? 0].mrtitle = "1"
+                travelerArray[self?.indexposition ?? 0].gender = "1"
                 break
                 
                 
             case "Master":
                 travelerArray[self?.indexposition ?? 0].mrtitle = "4"
+                travelerArray[self?.indexposition ?? 0].gender = "1"
                 break
                 
             case "Ms":
                 travelerArray[self?.indexposition ?? 0].mrtitle = "2"
+                travelerArray[self?.indexposition ?? 0].gender = "2"
                 break
                 
                 
             case "Miss":
                 travelerArray[self?.indexposition ?? 0].mrtitle = "3"
+                travelerArray[self?.indexposition ?? 0].gender = "2"
                 break
                 
             case "Mrs":
                 travelerArray[self?.indexposition ?? 0].mrtitle = "5"
+                travelerArray[self?.indexposition ?? 0].gender = "2"
                 break
                 
             default:
@@ -420,10 +410,6 @@ class AddDeatilsOfTravellerTVCell: TableViewCell {
         }
         
     }
-    
-    
-    
-    
     
     
     func showdobDatePicker() {

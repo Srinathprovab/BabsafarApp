@@ -176,8 +176,8 @@ class PersonalDetailsVC: BaseTableVC, InsurancePreprocessBookingViewModelDelegat
     //MARK: - didTapOnCountryCodeBtn
     override func didTapOnCountryCodeBtn(cell: ContactInformationTVCell) {
         self.nationalityCode = cell.nationalityCode
-        self.countryCode = cell.billingCountryCode
-        self.billingCountryCode = cell.billingCountryCode
+        self.countryCode = cell.isoCountryCode
+        self.billingCountryCode = cell.isoCountryCode
     }
     
     override func editingTextField(tf:UITextField){

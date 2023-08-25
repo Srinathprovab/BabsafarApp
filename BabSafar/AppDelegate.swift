@@ -9,7 +9,7 @@ import UIKit
 import CoreData
 import FreshchatSDK
 import MFSDK
-
+import IQKeyboardManager
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -19,6 +19,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
+        
+        IQKeyboardManager.shared().isEnabled = true
+        IQKeyboardManager.shared().keyboardDistanceFromTextField = 100 // Adjust this value as needed
+
         
         let freshchatConfig = FreshchatConfig(appID: "b917643d-d1b7-4f6f-a84e-8735c9a7152c", andAppKey: "7fee08e9-ca75-473e-ac2f-edd31ffe5e7a")
         Freshchat.sharedInstance().initWith(freshchatConfig)

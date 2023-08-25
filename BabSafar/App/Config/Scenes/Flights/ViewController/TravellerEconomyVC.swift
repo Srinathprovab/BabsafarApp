@@ -35,7 +35,7 @@ class TravellerEconomyVC: BaseTableVC {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
+        tvHeight.constant = 390
         NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("nointernet"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadTV), name: Notification.Name("reloadTV"), object: nil)
         setupinitialUI()
@@ -48,7 +48,7 @@ class TravellerEconomyVC: BaseTableVC {
         if let selectedTab = defaults.string(forKey: UserDefaultsKeys.dashboardTapSelected){
             
             if selectedTab == "Flights" {
-                tvHeight.constant = 632
+                
                 if let journeyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
                     if journeyType == "oneway" {
                         adultsCount = Int(defaults.string(forKey: UserDefaultsKeys.adultCount) ?? "1") ?? 0
@@ -69,7 +69,7 @@ class TravellerEconomyVC: BaseTableVC {
                 }
                 
             }else if selectedTab == "Insurence" {
-                tvHeight.constant = 350
+                
                 if let journeyType = defaults.string(forKey: UserDefaultsKeys.InsurenceJourneyType) {
                     if journeyType == "oneway" {
                         adultsCount = Int(defaults.string(forKey: UserDefaultsKeys.iadultCount) ?? "1") ?? 0
@@ -94,6 +94,8 @@ class TravellerEconomyVC: BaseTableVC {
                 childCount = 0
                 infantsCount = 0
             }else {
+                
+                tvHeight.constant = 350
                 adultsCount = Int(defaults.string(forKey: UserDefaultsKeys.hadultCount) ?? "1") ?? 1
                 childCount = Int(defaults.string(forKey: UserDefaultsKeys.hchildCount) ?? "0") ?? 0
                 
