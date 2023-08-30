@@ -120,6 +120,9 @@ class SplashScreenVC: UIViewController {
         loderBool = false
         DispatchQueue.main.asyncAfter(deadline: .now() + 7.0, execute: {
             self.gotodashBoardScreen()
+            
+            //                        defaults.set("Flights", forKey: UserDefaultsKeys.dashboardTapSelected)
+            //                        self.gotoBookingConfirmedVC(url: "https://provabdevelopment.com/pro_new/mobile/index.php/voucher/flight/BAS-F-TP-0830-5316/PTBSID0000000016")
         })
     }
     
@@ -132,6 +135,14 @@ class SplashScreenVC: UIViewController {
         present(vc, animated: true)
     }
     
+    
+    func gotoBookingConfirmedVC(url:String) {
+        guard let vc = BookingConfirmedVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .fullScreen
+        callapibool = true
+        vc.urlString = url
+        present(vc, animated: true)
+    }
     
 }
 

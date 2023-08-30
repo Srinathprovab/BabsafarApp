@@ -55,9 +55,8 @@ extension PaymentGatewayVC {
                 }
                 
                 
+                self?.showSuccess(executePaymentResponse.invoiceStatus ?? "")
                 self?.callUpdatePaymentAPI(status: executePaymentResponse.invoiceStatus ?? "")
-                
-             //   self?.gotoBookingSucessVC(url: self?.paymentResponse ?? "")
                 
             case .failure(let failError):
                 self?.showFailError(failError)
@@ -68,18 +67,67 @@ extension PaymentGatewayVC {
     
     
     func callUpdatePaymentAPI(status:String) {
-        self.payload.removeAll()
-        payload["app_ref"] = tmpFlightPreBookingId
-        payload["search_id"] = defaults.string(forKey: UserDefaultsKeys.searchid)
-        payload["payment_response"] = self.paymentResponse
-        payload["InvoiceStatus"] = status
         
-        self.vm?.CALL_UPDATE_PAYMENT_API(dictParam: payload)
+        self.payload.removeAll()
+        if let selectedTap = defaults.object(forKey: UserDefaultsKeys.dashboardTapSelected) as? String ,selectedTap == "Flights"{
+            
+        }else {
+            
+           
+            
+        }
+        
+        
+        if let selectedTap = defaults.object(forKey: UserDefaultsKeys.dashboardTapSelected) as? String {
+            if selectedTap == "Flights" {
+                payload["app_ref"] = tmpFlightPreBookingId
+                payload["search_id"] = defaults.string(forKey: UserDefaultsKeys.searchid)
+                payload["payment_response"] = self.paymentResponse
+                payload["InvoiceStatus"] = status
+                
+                self.vm?.CALL_UPDATE_PAYMENT_API(dictParam: payload, endpoint: "updatePayment")
+            } else if selectedTap == "Hotels" {
+                payload["pg_status"] = "Succss"
+                payload["product"] = "VHCID1420613748"
+                payload["search_id"] = hotelSearchId
+                payload["book_id"] = tmpFlightPreBookingId
+                payload["payment_response"] = paymentResponse
+                
+                self.vm?.CALL_UPDATE_PAYMENT_API(dictParam: payload, endpoint: "success")
+            } else {
+                payload["InvoiceStatus"] = "Paid"
+                payload["search_id"] = searchid
+                payload["app_ref"] = tmpFlightPreBookingId
+                payload["payment_response"] = paymentResponse
+                
+                self.vm?.CALL_UPDATE_PAYMENT_API(dictParam: payload, endpoint: "updatePayment_insurance")
+            }
+        } else {
+            // Handle the case where 'selectedTap' is not found in UserDefaults
+        }
+
+        
     }
     
     
     func updatePaymentSucess(response: updatePaymentFlightModel) {
-        gotoBookingSucessVC(url: response.data ?? "")
+        
+       
+        
+        if let selectedTap = defaults.object(forKey: UserDefaultsKeys.dashboardTapSelected) as? String {
+            if selectedTap == "Flights" {
+                gotoBookingSucessVC(url: response.data ?? "")
+            } else if selectedTap == "Hotels" {
+                callSecureBookingAPI(urlStr: response.data ?? "")
+            } else {
+                // Handle other cases
+                print(response.data)
+            }
+        } else {
+            // Handle the case where 'selectedTap' is not found in UserDefaults
+        }
+
+        
     }
     
     
@@ -88,6 +136,19 @@ extension PaymentGatewayVC {
         vc.modalPresentationStyle = .fullScreen
         vc.voucherUrl = url
         present(vc, animated: true)
+    }
+    
+    
+    
+    func callSecureBookingAPI(urlStr:String) {
+        BASE_URL = ""
+        vm?.CALL_SECURE_BOOKING_API(dictParam: [:], url: urlStr)
+    }
+    
+    
+    func sucerBookingSucess(response: secureBooingModel) {
+        BASE_URL = BASE_URL1
+        gotoBookingSucessVC(url: response.url ?? "")
     }
     
     
@@ -106,19 +167,19 @@ extension PaymentGatewayVC {
             switch response {
             case .success(let directPaymentResponse):
                 if let cardInfoResponse = directPaymentResponse.cardInfoResponse, let card = cardInfoResponse.cardInfo {
-                    self?.resultTextView.text = "Status: with card number: \(card.number ?? "")"
+                    // self?.resultTextView.text = "Status: with card number: \(card.number ?? "")"
                 }
                 if let invoiceId = invoiceId {
-                    self?.errorCodeLabel.text = "Success with invoice id \(invoiceId)"
+                    //  self?.errorCodeLabel.text = "Success with invoice id \(invoiceId)"
                 } else {
-                    self?.errorCodeLabel.text = "Success"
+                    // self?.errorCodeLabel.text = "Success"
                 }
             case .failure(let failError):
-                self?.resultTextView.text = "Error: \(failError.errorDescription)"
+                // self?.resultTextView.text = "Error: \(failError.errorDescription)"
                 if let invoiceId = invoiceId {
-                    self?.errorCodeLabel.text = "Fail: \(failError.statusCode) with invoice id \(invoiceId)"
+                    // self?.errorCodeLabel.text = "Fail: \(failError.statusCode) with invoice id \(invoiceId)"
                 } else {
-                    self?.errorCodeLabel.text = "Fail: \(failError.statusCode)"
+                    // self?.errorCodeLabel.text = "Fail: \(failError.statusCode)"
                 }
             }
         }

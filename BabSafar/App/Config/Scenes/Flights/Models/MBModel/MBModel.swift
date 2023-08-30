@@ -34,6 +34,7 @@ struct MBModel : Codable {
     //    let insuranceCountry : [InsuranceCountry]?
     //    let insurancePeriod : [InsurancePeriod]?
     //    let safe_search_data : Safe_search_data?
+    let frequent_flyers : [Frequent_flyers]?
     
     enum CodingKeys: String, CodingKey {
         
@@ -62,6 +63,7 @@ struct MBModel : Codable {
         //        case insuranceCountry = "insuranceCountry"
         //        case insurancePeriod = "insurancePeriod"
         //        case safe_search_data = "safe_search_data"
+        case frequent_flyers = "frequent_flyers"
     }
     
     init(from decoder: Decoder) throws {
@@ -91,6 +93,8 @@ struct MBModel : Codable {
         //        insuranceCountry = try values.decodeIfPresent([InsuranceCountry].self, forKey: .insuranceCountry)
         //        insurancePeriod = try values.decodeIfPresent([InsurancePeriod].self, forKey: .insurancePeriod)
         //        safe_search_data = try values.decodeIfPresent(Safe_search_data.self, forKey: .safe_search_data)
+        frequent_flyers = try values.decodeIfPresent([Frequent_flyers].self, forKey: .frequent_flyers)
+        
     }
     
 }

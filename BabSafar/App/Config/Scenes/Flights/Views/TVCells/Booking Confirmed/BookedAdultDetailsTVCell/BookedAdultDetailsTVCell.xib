@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -23,30 +24,42 @@
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="du1-ZH-Otu">
                                 <rect key="frame" x="0.0" y="0.0" width="498" height="35"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wlf-hY-hN2">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wlf-hY-hN2">
                                         <rect key="frame" x="0.0" y="0.0" width="158" height="35"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="grj-jr-y9q">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="grj-jr-y9q">
                                         <rect key="frame" x="170" y="0.0" width="158" height="35"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z7A-UV-FUu">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z7A-UV-FUu">
                                         <rect key="frame" x="340" y="0.0" width="158" height="35"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="grj-jr-y9q" secondAttribute="bottom" id="BLk-vc-0qF"/>
+                                    <constraint firstItem="Wlf-hY-hN2" firstAttribute="top" secondItem="du1-ZH-Otu" secondAttribute="top" id="Ia6-ed-dJ4"/>
+                                    <constraint firstItem="grj-jr-y9q" firstAttribute="top" secondItem="du1-ZH-Otu" secondAttribute="top" id="RcL-Am-2me"/>
+                                    <constraint firstItem="grj-jr-y9q" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Wlf-hY-hN2" secondAttribute="trailing" id="Wnh-3J-eWc"/>
+                                    <constraint firstItem="Z7A-UV-FUu" firstAttribute="top" secondItem="du1-ZH-Otu" secondAttribute="top" id="Y4K-jU-IEy"/>
+                                    <constraint firstAttribute="bottom" secondItem="Wlf-hY-hN2" secondAttribute="bottom" id="ZWu-dw-PUG"/>
+                                    <constraint firstItem="Wlf-hY-hN2" firstAttribute="leading" secondItem="du1-ZH-Otu" secondAttribute="leading" id="dOg-qe-S1H"/>
+                                    <constraint firstAttribute="bottom" secondItem="Z7A-UV-FUu" secondAttribute="bottom" id="jDo-ad-8da"/>
+                                    <constraint firstItem="Z7A-UV-FUu" firstAttribute="leading" secondItem="grj-jr-y9q" secondAttribute="trailing" constant="12" id="jsT-oQ-BQb"/>
+                                    <constraint firstAttribute="trailing" secondItem="Z7A-UV-FUu" secondAttribute="trailing" id="rbP-a9-b4m"/>
+                                </constraints>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemGray5Color"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="35" id="AiM-uA-Deg"/>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="35" id="AiM-uA-Deg"/>
                             <constraint firstItem="du1-ZH-Otu" firstAttribute="top" secondItem="Ekd-GE-NDF" secondAttribute="top" id="PAc-Ci-0Lv"/>
                             <constraint firstItem="du1-ZH-Otu" firstAttribute="leading" secondItem="Ekd-GE-NDF" secondAttribute="leading" id="aSx-J8-75K"/>
                             <constraint firstAttribute="bottom" secondItem="du1-ZH-Otu" secondAttribute="bottom" id="jQO-BZ-kWV"/>

@@ -74,7 +74,6 @@ class SideMenuVC: BaseTableVC, ProfileDetailsViewModelDelegate, LogoutViewModelD
     
     //MARK: - call Profile Details API
     func callProfileDetailsAPI() {
-      //  BASE_URL = "https://provabdevelopment.com/babsafar/mobile_webservices/mobile/index.php/user/"
         payload["user_id"] = defaults.string(forKey: UserDefaultsKeys.userid) ?? "0"
         viewmodel1?.CallGetProileDetails_API(dictParam: payload)
     }
@@ -104,13 +103,19 @@ class SideMenuVC: BaseTableVC, ProfileDetailsViewModelDelegate, LogoutViewModelD
         tablerow.removeAll()
         tablerow.append(TableRow(cellType:.MenuBGTVCell))
         tablerow.append(TableRow(height:30,cellType:.EmptyTVCell))
-        tablerow.append(TableRow(title:"My Bookings",key: "menu", image: "bookings",cellType:.SideMenuTitleTVCell))
-        //   tablerow.append(TableRow(title:"Free Cancellation",key: "menu", image: "feecancel",cellType:.SideMenuTitleTVCell))
+        
+        if let loginstatus = defaults.object(forKey: UserDefaultsKeys.loggedInStatus) as? Bool ,loginstatus == true {
+            tablerow.append(TableRow(title:"My Bookings",key: "menu", image: "bookings",cellType:.SideMenuTitleTVCell))
+        }
+        
         tablerow.append(TableRow(title:"Customer Support",key: "menu", image: "customer",cellType:.SideMenuTitleTVCell))
         tablerow.append(TableRow(title:"Services",key: "products", image: "",cellType:.SideMenuTitleTVCell))
         tablerow.append(TableRow(title:"Flights",key: "menu", image: "bookings",cellType:.SideMenuTitleTVCell))
         tablerow.append(TableRow(title:"Hotels",key: "menu", image: "hotel",cellType:.SideMenuTitleTVCell))
+        tablerow.append(TableRow(title:"Insurence",key: "menu", image: "insurence",cellType:.SideMenuTitleTVCell))
         tablerow.append(TableRow(title:"Visa",key: "menu", image: "visa",cellType:.SideMenuTitleTVCell))
+        tablerow.append(TableRow(title:"Fastrack",key: "menu", image: "fasttrack",cellType:.SideMenuTitleTVCell))
+        
         tablerow.append(TableRow(height:60,cellType:.EmptyTVCell))
         
         if defaults.bool(forKey: UserDefaultsKeys.loggedInStatus) == true {
@@ -142,7 +147,6 @@ class SideMenuVC: BaseTableVC, ProfileDetailsViewModelDelegate, LogoutViewModelD
     
     
     func callLogoutAPI() {
-     //   BASE_URL = "https://provabdevelopment.com/babsafar/mobile_webservices/mobile/index.php/auth/"
         BASE_URL = BASE_URL1
         payload.removeAll()
         payload["username"] = defaults.string(forKey: UserDefaultsKeys.useremail) ?? ""
@@ -158,7 +162,9 @@ class SideMenuVC: BaseTableVC, ProfileDetailsViewModelDelegate, LogoutViewModelD
             defaults.set("0", forKey: UserDefaultsKeys.userid)
             defaults.set("", forKey: UserDefaultsKeys.useremail)
             defaults.set("", forKey: UserDefaultsKeys.usermobile)
-            
+            defaults.set("", forKey: UserDefaultsKeys.uname)
+            defaults.set("", forKey: UserDefaultsKeys.mcountrycode)
+
             // Reset Standard User Defaults
             UserDefaults.resetStandardUserDefaults()
             self.setupMenuTVCells()
@@ -198,6 +204,20 @@ extension SideMenuVC {
                 
             case "Visa":
                 guard let vc = VisaEnduiryVC.newInstance.self else {return}
+                vc.modalPresentationStyle = .overCurrentContext
+                present(vc, animated: true)
+                break
+                
+                
+            case "Insurence":
+                guard let vc = InsuranceVC.newInstance.self else {return}
+                vc.modalPresentationStyle = .overCurrentContext
+                present(vc, animated: true)
+                break
+                
+                
+            case "Fastrack":
+                guard let vc = SearchFastTrackVC.newInstance.self else {return}
                 vc.modalPresentationStyle = .overCurrentContext
                 present(vc, animated: true)
                 break

@@ -36,7 +36,6 @@ class InsurenceViewModel {
                     guard let response = result else {return}
                     self.view.insurenceList(response: response)
                 } else {
-                   
                     self.view.showToast(message: errorMessage ?? "")
                 }
             }

@@ -47,7 +47,7 @@ class FareBreakdownTVCell: TableViewCell {
         fareBreakdownTV.tableFooterView = UIView()
         fareBreakdownTV.separatorStyle = .none
         fareBreakdownTV.isScrollEnabled = false
-        TVheight.constant = (6 * 50)
+        TVheight.constant = (6 * 35)
     }
     
 }

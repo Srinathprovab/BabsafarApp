@@ -107,7 +107,7 @@ enum TVCellType {
     case AddDeatilsOfTravellerTVCell
     case TotalNoofTravellerTVCell
     case TotalPremiumPayableTVCell
-    
+    case BCFlightDetailsTVCell
     
     
     
@@ -116,6 +116,7 @@ enum TVCellType {
     case HotelPriceSummaryTVCell
     case AddDeatilsOfGuestTVCell
     case HotelDesclblTVCell
+    case VoucherHotelDetailsTVCell
     
     
     //Insurence

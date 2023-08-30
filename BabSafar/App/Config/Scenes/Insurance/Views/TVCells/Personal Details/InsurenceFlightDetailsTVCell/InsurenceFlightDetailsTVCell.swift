@@ -11,6 +11,7 @@ import DropDown
 protocol InsurenceFlightDetailsTVCellDelegate {
     func doneTimePicker(cell:InsurenceFlightDetailsTVCell)
     func cancelTimePicker(cell:InsurenceFlightDetailsTVCell)
+    func editingTextField(tf:UITextField)
 }
 
 class InsurenceFlightDetailsTVCell: TableViewCell, AirlineListViewModelDelegate {
@@ -67,7 +68,7 @@ class InsurenceFlightDetailsTVCell: TableViewCell, AirlineListViewModelDelegate 
     
     
     func setupUI() {
-        setupTextField(txtField: pnrTF, tag: 1)
+        setupTextField(txtField: pnrTF, tag: 55)
         setupTextField(txtField: depTimeTF, tag: 2)
         setupTextField(txtField: arrivalTimeTF, tag: 3)
         showdepTimePicker()
@@ -96,6 +97,8 @@ class InsurenceFlightDetailsTVCell: TableViewCell, AirlineListViewModelDelegate 
         default:
             break
         }
+        
+        delegate?.editingTextField(tf: textField)
     }
     
     

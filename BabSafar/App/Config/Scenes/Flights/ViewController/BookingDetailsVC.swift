@@ -74,22 +74,6 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
     var timer: Timer?
     var totalTime = 1
     
-    //    var fnameA = [String]()
-    //    var passengertypeA = [String]()
-    //    var title2A = [String]()
-    //    var mnameA = [String]()
-    //    var lnameA = [String]()
-    //    var dobA = [String]()
-    //    var passportNoA = [String]()
-    //    var countryCodeA = [String]()
-    //    var genderA = [String]()
-    //    var passportexpiryA = [String]()
-    //    var passportissuingcountryA = [String]()
-    //    var middleNameA = [String]()
-    //    var leadPassengerA = [String]()
-    //    var passengerType = String()
-    
-    
     var positionsCount = 0
     var passengertypeArray = [String]()
     var searchTextArray = [String]()
@@ -117,8 +101,6 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
         searchTextArray.removeAll()
         
         
-        countryCode = defaults.string(forKey: UserDefaultsKeys.mobilecountrycode) ?? ""
-        billingCountryCode = defaults.string(forKey: UserDefaultsKeys.mobilecountrycode) ?? ""
         
         if let journeyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
             if journeyType == "oneway" {
@@ -180,14 +162,6 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
         
         
     }
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     func setupUI() {
@@ -269,8 +243,6 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
         
         passengertypeArray = passengertypeArray.unique()
         
-        
-        
         tablerow.append(TableRow(cellType:.ContactInformationTVCell))
         tablerow.append(TableRow(cellType:.UsePromoCodesTVCell))
         tablerow.append(TableRow(cellType:.PriceSummaryTVCell))
@@ -311,7 +283,7 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
     //MARK: - didTapOnCountryCodeBtn
     override func didTapOnCountryCodeBtn(cell: ContactInformationTVCell) {
         self.nationalityCode = cell.isoCountryCode
-        billingCountryCode = cell.countrycodeTF.text ?? ""
+        paymobilecountrycode = cell.countrycodeTF.text ?? ""
     }
     
     //MARK: - editingTextField
@@ -323,6 +295,9 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
             paymobile = tf.text ?? ""
         }
     }
+    
+    
+   
     
     
     //MARK: - didTapOnInsureSkipButton TravelInsuranceTVCell
@@ -458,7 +433,7 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
     //MARK: - didTapOnDropDownBtn
     override func didTapOnDropDownBtn(cell: ContactInformationTVCell) {
         self.nationalityCode = cell.isoCountryCode
-        billingCountryCode = cell.countrycodeTF.text ?? ""
+        paymobilecountrycode = cell.countrycodeTF.text ?? ""
     }
     
     
@@ -541,252 +516,125 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
         
         
         var callpaymentbool = true
-        var matchingCells: [AddDeatilsOfTravellerTVCell] = []
         var fnameCharBool = true
         var lnameCharBool = true
-        
-        // Replace with the desired search texts
-        
-        for case let cell as AddDeatilsOfTravellerTVCell in commonTableView.visibleCells {
-            if let cellText = cell.titlelbl.text, searchTextArray.contains(cellText) {
-                matchingCells.append(cell)
-            }
-        }
-        
-        for cell in matchingCells {
-            
-            if cell.titleTF.text?.isEmpty == true {
-                // Textfield is empty
-                cell.titleView.layer.borderColor = UIColor.red.cgColor
-                callpaymentbool = false
+        let positionsCount = commonTableView.numberOfRows(inSection: 0)
+        for position in 0..<positionsCount {
+            // Fetch the cell for the given position
+            if let cell = commonTableView.cellForRow(at: IndexPath(row: position, section: 0)) as? AddDeatilsOfTravellerTVCell {
                 
-            } else {
-                // Textfield is not empty
+                if cell.titleTF.text?.isEmpty == true {
+                    // Textfield is empty
+                    cell.titleView.layer.borderColor = UIColor.red.cgColor
+                    callpaymentbool = false
+                    
+                } else {
+                    // Textfield is not empty
+                }
+                
+                if cell.fnameTF.text?.isEmpty == true {
+                    // Textfield is empty
+                    cell.fnameView.layer.borderColor = UIColor.red.cgColor
+                    callpaymentbool = false
+                }else if (cell.fnameTF.text?.count ?? 0) <= 3{
+                    cell.fnameView.layer.borderColor = UIColor.red.cgColor
+                    fnameCharBool = false
+                }else {
+                    fnameCharBool = true
+                }
+                
+                if cell.lnameTF.text?.isEmpty == true {
+                    // Textfield is empty
+                    cell.lnameView.layer.borderColor = UIColor.red.cgColor
+                    callpaymentbool = false
+                }else if (cell.lnameTF.text?.count ?? 0) <= 3{
+                    cell.lnameView.layer.borderColor = UIColor.red.cgColor
+                    lnameCharBool = false
+                } else {
+                    // Textfield is not empty
+                    lnameCharBool = true
+                }
+                
+                
+                if cell.dobTF.text?.isEmpty == true {
+                    // Textfield is empty
+                    cell.dobView.layer.borderColor = UIColor.red.cgColor
+                    callpaymentbool = false
+                } else {
+                    // Textfield is not empty
+                }
+                
+                
+                //                if cell.nationalityTF.text?.isEmpty == true {
+                //                    // Textfield is empty
+                //                    cell.nationalityView.layer.borderColor = UIColor.red.cgColor
+                //                    callpaymentbool = false
+                //                } else {
+                //                    // Textfield is not empty
+                //                }
+                
+                
+                
+                if cell.passportnoTF.text?.isEmpty == true {
+                    // Textfield is empty
+                    cell.passportnoView.layer.borderColor = UIColor.red.cgColor
+                    callpaymentbool = false
+                } else {
+                    // Textfield is not empty
+                }
+                
+                
+                if cell.passportIssuingCountryTF.text?.isEmpty == true {
+                    // Textfield is empty
+                    cell.issuecountryView.layer.borderColor = UIColor.red.cgColor
+                    callpaymentbool = false
+                } else {
+                    // Textfield is not empty
+                }
+                
+                
+                if cell.passportExpireDateTF.text?.isEmpty == true {
+                    // Textfield is empty
+                    cell.passportexpireView.layer.borderColor = UIColor.red.cgColor
+                    callpaymentbool = false
+                } else {
+                    // Textfield is not empty
+                }
+                
             }
-            
-            if cell.fnameTF.text?.isEmpty == true {
-                // Textfield is empty
-                cell.fnameView.layer.borderColor = UIColor.red.cgColor
-                callpaymentbool = false
-            }else if (cell.fnameTF.text?.count ?? 0) <= 3{
-                cell.fnameView.layer.borderColor = UIColor.red.cgColor
-                fnameCharBool = false
-            }else {
-                fnameCharBool = true
-            }
-            
-            if cell.lnameTF.text?.isEmpty == true {
-                // Textfield is empty
-                cell.lnameView.layer.borderColor = UIColor.red.cgColor
-                callpaymentbool = false
-            }else if (cell.lnameTF.text?.count ?? 0) <= 3{
-                cell.lnameView.layer.borderColor = UIColor.red.cgColor
-                lnameCharBool = false
-            } else {
-                // Textfield is not empty
-                lnameCharBool = true
-            }
-            
-            
-            if cell.dobTF.text?.isEmpty == true {
-                // Textfield is empty
-                cell.dobView.layer.borderColor = UIColor.red.cgColor
-                callpaymentbool = false
-            } else {
-                // Textfield is not empty
-            }
-            
-            
-            if cell.nationalityTF.text?.isEmpty == true {
-                // Textfield is empty
-                cell.nationalityView.layer.borderColor = UIColor.red.cgColor
-                callpaymentbool = false
-            } else {
-                // Textfield is not empty
-            }
-            
-            
-            
-            if cell.passportnoTF.text?.isEmpty == true {
-                // Textfield is empty
-                cell.passportnoView.layer.borderColor = UIColor.red.cgColor
-                callpaymentbool = false
-            } else {
-                // Textfield is not empty
-            }
-            
-            
-            if cell.passportIssuingCountryTF.text?.isEmpty == true {
-                // Textfield is empty
-                cell.issuecountryView.layer.borderColor = UIColor.red.cgColor
-                callpaymentbool = false
-            } else {
-                // Textfield is not empty
-            }
-            
-            
-            if cell.passportExpireDateTF.text?.isEmpty == true {
-                // Textfield is empty
-                cell.passportexpireView.layer.borderColor = UIColor.red.cgColor
-                callpaymentbool = false
-            } else {
-                // Textfield is not empty
-            }
-            
         }
         
-        
+        let laedpassengerArray = travelerArray.compactMap({$0.laedpassenger})
         let mrtitleArray = travelerArray.compactMap({$0.mrtitle})
-        let passengertypeArray = travelerArray.compactMap({$0.passengertype})
         let genderArray = travelerArray.compactMap({$0.gender})
         let firstnameArray = travelerArray.compactMap({$0.firstName})
         let lastNameArray = travelerArray.compactMap({$0.lastName})
         let middlenameArray = travelerArray.compactMap({$0.middlename})
         let dobArray = travelerArray.compactMap({$0.dob})
         let passportnoArray = travelerArray.compactMap({$0.passportno})
-        let nationalityArray = travelerArray.compactMap({$0.nationality})
+        //   let nationalityArray = travelerArray.compactMap({$0.nationality})
         let passportIssuingCountryArray = travelerArray.compactMap({$0.passportIssuingCountry})
         let passportExpireDateArray = travelerArray.compactMap({$0.passportExpireDate})
-        
-//        {
-//            Frequent =     (
-//                        (
-//                    Select
-//                )
-//            );
-//            "access_key" = "";
-//            "access_key_tp" = "14bc8bd08d89eecf924a29c846fb7d68*_*3*_*k5I6HYaCS0gDLz3A";
-//            address2 = ecity;
-//            baggageAmount = 0;
-//            "billing_address_1" = DA;
-//            "billing_city" = sdfsd;
-//            "billing_country" = AL;
-//            "billing_email" = "TEST@GMAIL.COM";
-//            "billing_state" = ASDAS;
-//            "billing_zipcode" = sdf;
-//            "booking_source" = "YToxOntpOjA7czoxNjoiUFRCU0lEMDAwMDAwMDAxNiI7fQ==";
-//            "booking_step" = book;
-//            "country_mobile_code" = "+355";
-//            "date_of_birth" =     (
-//                "25-08-2005"
-//            );
-//            "device_source" = "MOBILE(A)";
-//            "ff_no" =     (
-//                        (
-//                    ""
-//                )
-//            );
-//            "first_name" =     (
-//                test
-//            );
-//            gender =     (
-//                1
-//            );
-//            hidseatprice = "";
-//            insurance = 1;
-//            "insurance_baseprice" = "";
-//            "insurance_code" = "";
-//            "insurance_name" = "";
-//            "insurance_policy_cover_type" = 0;
-//            "insurance_policy_duration" = 0;
-//            "insurance_policy_option" = 0;
-//            "insurance_policy_type" = 0;
-//            "insurance_totalprice" = "";
-//            isInsurance = 0;
-//            "last_name" =     (
-//                test
-//            );
-//            mealsAmount = 0;
-//            "name_title" =     (
-//                1
-//            );
-//            "passenger_contact" = 9364634444;
-//            "passenger_nationality" =     (
-//                2
-//            );
-//            "passenger_passport_expiry" =     (
-//                "25-08-2025"
-//            );
-//            "passenger_passport_issuing_country" =     (
-//                3
-//            );
-//            "passenger_passport_number" =     (
-//                AJ1234567
-//            );
-//            "passenger_type" =     (
-//                Adult
-//            );
-//            "payment_method" = PNHB1;
-//            "promocode_code" = "";
-//            "promocode_val" = "";
-//            "redeem_points_post" = 1;
-//            "search_id" = 73831;
-//            selectedCurrency = KWD;
-//            selectedResult = "0_2_0";
-//            tc = on;
-//            "tmp_flight_pre_booking_id" = "BAS-F-TP-0825-1460";
-//            "user_id" = 0;
-//        }
+        let passengertypeArray = travelerArray.compactMap({$0.passengertype})
         
         
+        // Convert arrays to string representations
+        let laedpassengerString = "[\"" + laedpassengerArray.joined(separator: "\",\"") + "\"]"
+        let genderString = "[\"" + genderArray.joined(separator: "\",\"") + "\"]"
+        let mrtitleString = "[\"" + mrtitleArray.joined(separator: "\",\"") + "\"]"
+        let firstnameString = "[\"" + firstnameArray.joined(separator: "\",\"") + "\"]"
+        let middlenameString = "[\"" + middlenameArray.joined(separator: "\",\"") + "\"]"
+        let lastNameString = "[\"" + lastNameArray.joined(separator: "\",\"") + "\"]"
+        let dobString = "[\"" + dobArray.joined(separator: "\",\"") + "\"]"
+        let passportnoString = "[\"" + passportnoArray.joined(separator: "\",\"") + "\"]"
+        let passportIssuingCountryString = "[\"" + passportIssuingCountryArray.joined(separator: "\",\"") + "\"]"
+        let passportExpireDateString = "[\"" + passportExpireDateArray.joined(separator: "\",\"") + "\"]"
+        let passengertypeArrayString = "[\"" + passengertypeArray.joined(separator: "\",\"") + "\"]"
         
-//    search_id:67031
-//    tmp_flight_pre_booking_id:BAS-F-TP-0710-7241
-//    //access_key:7b49b5ede3927a565845ab6e4bdc4f1a*_*6*_*0fyyl4nYG4V1PoNv
-//    access_key_tp:09f5f858cbd703be250829e552cf03a6*_*6*_*Z33j4lU44VK9Fxn1
-//    insurance_policy_type:0
-//    insurance_policy_option:0
-//    insurance_policy_cover_type:0
-//    insurance_policy_duration:0
-//    isInsurance:0
-//    selectedResult:0_5_0
-//    redeem_points_post:1
-//    booking_source:YToxOntpOjA7czoxNjoiUFRCU0lEMDAwMDAwMDAxNiI7fQ==
-//    promocode_val:""
-//    promocode_code:""
-//    mealsAmount:"0"
-//    baggageAmount:"0"
-//    passenger_type:["Adult"]
-//    lead_passenger:["1"]
-//    gender:["1"]
-//    passenger_nationality:["92"]
-//    name_title:["2"]
-//    first_name:["Shweta"]
-//    middle_name:[""]
-//    last_name:["Upadhyay"]
-//    date_of_birth:["13-04-1995"]
-//    passenger_passport_number:["POIL7675"]
-//    passenger_passport_issuing_country:["92"]
-//    passenger_passport_expiry:["16-08-2039"]
-//    //passenger_passport_expiry_month:["8"]
-//    //passenger_passport_expiry_year":["2039"]
-//    Frequent:[["Select"]]
-//    ff_no:[[""]]
-//    address2:ECITY
-//    billing_address_1:hjfggh
-//    billing_state:Karnataka
-//    billing_city:Bangalore
-//    billing_zipcode:560100
-//    billing_email:upadhyayshweta78@gmail.com
-//    passenger_contact:8965231470
-//    billing_country:IN
-//    country_mobile_code:+91
-//    insurance:0
-//    tc:on
-//    booking_step:book
-//    payment_method:PNHB1
-//    selectedCurrency:AED
-//    user_id:2738
-//    insurance_name:
-//    insurance_code:
-//    insurance_totalprice:
-//    insurance_baseprice:
-//    hidseatprice:
-//    device_source:MOBILE(A)
         
         payload["search_id"] = defaults.string(forKey: UserDefaultsKeys.searchid)
         payload["tmp_flight_pre_booking_id"] = tmpFlightPreBookingId
-     //   payload["access_key"] = accesskey
+        //   payload["access_key"] = accesskey
         payload["access_key_tp"] =  accesskeytp
         payload["insurance_policy_type"] = "0"
         payload["insurance_policy_option"] = "0"
@@ -801,20 +649,24 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
         payload["mealsAmount"] = "0"
         payload["baggageAmount"] = "0"
         
-        payload["passenger_type"] = passengertypeArray
-        //   payload["lead_passenger"] = laedpassengerArray
-        payload["gender"] = genderArray
-        payload["passenger_nationality"] = nationalityArray
-        payload["name_title"] = mrtitleArray
-        payload["first_name"] = firstnameArray
-        payload["middle_name"] = middlenameArray
-        payload["last_name"] = lastNameArray
-        payload["date_of_birth"] = dobArray
-        payload["passenger_passport_number"] = passportnoArray
-        payload["passenger_passport_issuing_country"] = passportIssuingCountryArray
-        payload["passenger_passport_expiry"] = passportExpireDateArray
-        payload["Frequent"] = [["Select"]]
-        payload["ff_no"] = [[""]]
+        
+        // Assign string representations to payload dictionary
+        payload["lead_passenger"] = laedpassengerString
+        payload["gender"] = genderString
+        payload["passenger_nationality"] = passportIssuingCountryString
+        payload["name_title"] = mrtitleString
+        payload["first_name"] = firstnameString
+        payload["middle_name"] = middlenameString
+        payload["last_name"] = lastNameString
+        payload["date_of_birth"] = dobString
+        payload["passenger_passport_number"] = passportnoString
+        payload["passenger_passport_issuing_country"] = passportIssuingCountryString
+        payload["passenger_passport_expiry"] = passportExpireDateString
+        payload["passenger_type"] = passengertypeArrayString
+        
+        
+        payload["Frequent"] = "\([["Select"]])"
+        payload["ff_no"] = "\([[""]])"
         
         payload["address2"] = "ecity"
         payload["billing_address_1"] = "DA"
@@ -825,7 +677,7 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
         payload["billing_email"] = payemail
         payload["passenger_contact"] = paymobile
         payload["billing_country"] = nationalityCode
-        payload["country_mobile_code"] = billingCountryCode
+        payload["country_mobile_code"] = paymobilecountrycode
         payload["insurance"] = "1"
         payload["tc"] = "on"
         payload["booking_step"] = "book"
@@ -839,6 +691,8 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
         payload["insurance_baseprice"] = ""
         payload["hidseatprice"] = ""
         payload["device_source"] = "MOBILE(A)"
+        
+        
         
         
         if callpaymentbool == false {
@@ -855,14 +709,14 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
             showToast(message: "Enter Mobile No")
         }else if paymobile.isValidMobileNumber() == false {
             showToast(message: "Enter Valid Mobile No")
-        }else if self.countryCode == "" {
+        }else if callpaymentbool == false {
+            showToast(message: "Add Details")
+        }else if paymobilecountrycode == "" {
             showToast(message: "Enter Country Code")
         }else if checkTermsAndCondationStatus == false {
             showToast(message: "Please Accept T&C and Privacy Policy")
         }else {
-            
             mbviewmodel?.CALL_MOBILE_PROCESS_PASSENGER_DETAIL_API(dictParam: payload)
-            
         }
     }
     
@@ -1007,6 +861,10 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
         
     }
     
+    override func didTapOnFlyerProgramBtnAction(cell:AddDeatilsOfTravellerTVCell){
+        print(cell.flyerProgramTF.text)
+    }
+    
 }
 
 
@@ -1080,7 +938,7 @@ extension BookingDetailsVC {
         activepaymentoptions = response.active_payment_options?[0] ?? ""
         totalPrice = response.total_price?.rounded() ?? 0.0
         appreference = response.pre_booking_params?.transaction_id ?? ""
-        
+        frequent_flyersArray = response.frequent_flyers ?? []
         
         totalAmountforBooking = response.flight_data?[0].totalPrice ?? "0.0"
         mbSummery = response.flight_data?[0].flight_details?.summery ?? []
@@ -1117,9 +975,6 @@ extension BookingDetailsVC {
         }
         
     }
-    
-    
-    
     
     
 }

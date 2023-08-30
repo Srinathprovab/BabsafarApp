@@ -161,7 +161,7 @@ class InsuranceVC: BaseTableVC {
                     payload["to_loc_id"] = defaults.string(forKey: UserDefaultsKeys.itolocid)
                     payload["departure_date"] = defaults.string(forKey: UserDefaultsKeys.icalDepDate)
                     payload["user_id"] = defaults.string(forKey: UserDefaultsKeys.userid) ?? "0"
-                    payload["arrival_date"] = defaults.string(forKey: UserDefaultsKeys.icalDepDate)
+                    payload["arrival_date"] = ""
                     
                     if cell.fromTF.text == "" {
                         showToast(message: "Select From City")

@@ -30,8 +30,8 @@ class ContactInformationTVCell: TableViewCell {
     @IBOutlet weak var countryCodeLbl: UILabel!
     @IBOutlet weak var countryCodeBtn: UIButton!
     @IBOutlet weak var countrycodeTF: UITextField!
-
     
+    var maxLength = 8
     var isSearchBool = Bool()
     var searchText = String()
     var filterdcountrylist = [All_country_code_list]()
@@ -53,8 +53,7 @@ class ContactInformationTVCell: TableViewCell {
         
         // Initialization code
         setupUI()
-        IQKeyboardManager.shared().keyboardDistanceFromTextField = 100 // Adjust this value as needed
-
+        
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -66,9 +65,30 @@ class ContactInformationTVCell: TableViewCell {
     override func updateUI() {
         filterdcountrylist = countrylist
         loadCountryNamesAndCode()
+        
+        
+        
+        if let userLoggedIn = defaults.object(forKey: UserDefaultsKeys.loggedInStatus) as? Bool ,userLoggedIn == true{
+            if let email = defaults.string(forKey: UserDefaultsKeys.useremail) {
+                payemail = email
+                emailTF.text = payemail
+            }
+            
+            if let mobile = defaults.string(forKey: UserDefaultsKeys.usermobile) {
+                paymobile = mobile
+                mobileTF.text = paymobile
+            }
+            
+            if let code = defaults.string(forKey: UserDefaultsKeys.mcountrycode) {
+                paymobilecountrycode = code
+                countrycodeTF.text = paymobilecountrycode
+                
+            }
+            
+        }
     }
     
-  
+    
     
     func setupUI() {
         contentView.backgroundColor = .AppHolderViewColor
@@ -95,13 +115,13 @@ class ContactInformationTVCell: TableViewCell {
         setuptf(tf: mobileTF, tag1: 2, leftpadding: 20, font: .LatoRegular(size: 16), placeholder: "Enter Mobile Number")
         setuptf(tf: countrycodeTF, tag1: 3, leftpadding: 20, font: .LatoRegular(size: 16), placeholder: "+355")
         
-
+        
         setupDropDown()
         countryCodeBtn.isHidden = true
         countrycodeTF.addTarget(self, action: #selector(searchTextChanged(textField:)), for: .editingChanged)
         countrycodeTF.addTarget(self, action: #selector(searchTextBegin(textField:)), for: .editingDidBegin)
-        countrycodeTF.text = defaults.string(forKey: UserDefaultsKeys.mobilecountrycode)
-
+        // countrycodeTF.text = defaults.string(forKey: UserDefaultsKeys.mobilecountrycode)
+        
     }
     
     func setuptf(tf:UITextField,tag1:Int,leftpadding:Int,font:UIFont,placeholder:String){
@@ -130,12 +150,30 @@ class ContactInformationTVCell: TableViewCell {
     }
     
     @objc func editingText(textField:UITextField) {
+        
+        if textField == mobileTF {
+            if let text = textField.text {
+                let length = text.count
+                if length != maxLength {
+                    mobileNoView.layer.borderColor = UIColor.red.cgColor
+                    mobilenoMaxLengthBool = false
+                }else{
+                    mobileNoView.layer.borderColor = UIColor.AppBorderColor.cgColor
+                    mobilenoMaxLengthBool = true
+                }
+               
+            } else {
+                mobileNoView.layer.borderColor = UIColor.red.cgColor
+                mobilenoMaxLengthBool = false
+            }
+        }
+        
         delegate?.editingTextField(tf: textField)
     }
     
     @IBAction func didTapOnCountryCodeBtn(_ sender: Any) {
         dropDown.show()
-       // delegate?.didTapOnCountryCodeBtn(cell: self)
+        // delegate?.didTapOnCountryCodeBtn(cell: self)
     }
     
     func setupDropDown() {
@@ -156,11 +194,12 @@ class ContactInformationTVCell: TableViewCell {
             
             
             self?.countrycodeTF.text = self?.countrycodesArray[index] ?? ""
+            paymobilecountrycode = self?.countrycodesArray[index] ?? ""
             self?.countrycodeTF.resignFirstResponder()
             self?.mobileTF.text = ""
             self?.mobileTF.becomeFirstResponder()
             
-            self?.delegate?.didTapOnDropDownBtn(cell: self!)
+            self?.delegate?.didTapOnCountryCodeBtn(cell: self!)
             
         }
     }
@@ -231,7 +270,7 @@ extension ContactInformationTVCell {
     override func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         //For mobile numer validation
         if textField == mobileTF {
-            let maxLength = self.billingCountryName.getMobileNumberMaxLength() ?? 8
+             maxLength = self.billingCountryName.getMobileNumberMaxLength() ?? 8
             let currentString: NSString = textField.text! as NSString
             let newString: NSString =  currentString.replacingCharacters(in: range, with: string) as NSString
             
@@ -239,12 +278,12 @@ extension ContactInformationTVCell {
             let characterSet = CharacterSet(charactersIn: string)
             return allowedCharacters.isSuperset(of: characterSet) && newString.length <= maxLength
         }else {
-            let maxLength = 30
+             maxLength = 30
             let currentString: NSString = textField.text! as NSString
             let newString: NSString =  currentString.replacingCharacters(in: range, with: string) as NSString
             return newString.length <= maxLength
         }
-      //  return true
+        //  return true
     }
     
     

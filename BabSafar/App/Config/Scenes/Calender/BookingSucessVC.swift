@@ -23,23 +23,43 @@ class BookingSucessVC: UIViewController {
     
     
     var voucherUrl = String()
+    
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // Do any additional setup after loading the view.
+        if let gifPath = Bundle.main.path(forResource: "sucessful", ofType: "gif") {
+            if let gifData = try? Data(contentsOf: URL(fileURLWithPath: gifPath)) {
+                
+                let jeremyGif = UIImage.animatedGif(from: gifData)
+                self.gifImageView.image = jeremyGif
+                
+            }
+        }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 10.0) {
+            self.gotoBookingConfirmedVC()
+        }
+       
+    }
+
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view.
-        
-        // Load the GIF image
-        if let gifImage = UIImage(named: "loderimg") {
-            // Set the image of the UIImageView to the loaded GIF
-            gifImageView.image = gifImage
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 7.0, execute: {
-            self.goto()
-        })
+    
+       
     }
     
-    func goto() {
-        print(voucherUrl)
+    func gotoBookingConfirmedVC() {
+        guard let vc = BookingConfirmedVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .fullScreen
+        vc.urlString = self.voucherUrl
+        callapibool = true
+        present(vc, animated: true)
     }
     
     

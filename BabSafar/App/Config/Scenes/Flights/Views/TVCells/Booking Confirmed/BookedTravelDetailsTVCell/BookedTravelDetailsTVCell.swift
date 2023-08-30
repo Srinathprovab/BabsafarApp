@@ -20,6 +20,7 @@ class BookedTravelDetailsTVCell: TableViewCell {
     
     
     var Customerdetails = [Customer_details]()
+    var hCustomerdetails = [HCustomer_details]()
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -36,18 +37,27 @@ class BookedTravelDetailsTVCell: TableViewCell {
     
     
     override func updateUI() {
-        Customerdetails = cellInfo?.moreData as? [Customer_details] ?? []
         
-        if Customerdetails.count > 0 {
-            tvHeight.constant = CGFloat(Customerdetails.count * 35)
+        
+        
+        if let selectedTap = defaults.object(forKey: UserDefaultsKeys.dashboardTapSelected) as? String ,selectedTap == "Flights"{
+            Customerdetails = cellInfo?.moreData as? [Customer_details] ?? []
+            
+            if Customerdetails.count > 0 {
+                tvHeight.constant = CGFloat(Customerdetails.count * 35)
+            }
+            
+            
+        }else {
+            
+           
+            hCustomerdetails = cellInfo?.moreData as? [HCustomer_details] ?? []
+            if hCustomerdetails.count > 0 {
+                tvHeight.constant = CGFloat(hCustomerdetails.count * 35)
+            }
+            
         }
         
-        
-        if cellInfo?.key == "hotel" {
-            travellerNamelbl.text = "Guest Name"
-            typelbl.text = "Type"
-            seatlbl.text = "Room Type"
-        }
         
         adultDetailsTV.reloadData()
     }
@@ -66,11 +76,15 @@ class BookedTravelDetailsTVCell: TableViewCell {
         setuplabels(lbl: travellerNamelbl, text: "Traveller Name", textcolor: HexColor("#5B5B5B"), font: .LatoRegular(size: 13), align: .center)
         setuplabels(lbl: typelbl, text: "Ticket No", textcolor: HexColor("#5B5B5B"), font: .LatoRegular(size: 13), align: .center)
         setuplabels(lbl: seatlbl, text: "Status", textcolor: HexColor("#5B5B5B"), font: .LatoRegular(size: 13), align: .center)
-        
+        travellerNamelbl.text = "Passenger Name"
+        typelbl.text = "Passport No"
+        seatlbl.text = "Country"
     }
     
     func setupTV() {
         adultDetailsTV.register(UINib(nibName: "BookedAdultDetailsTVCell", bundle: nil), forCellReuseIdentifier: "cell")
+        adultDetailsTV.register(UINib(nibName: "BookedAdultDetailsTVCell", bundle: nil), forCellReuseIdentifier: "cell1")
+        
         adultDetailsTV.delegate = self
         adultDetailsTV.dataSource = self
         adultDetailsTV.tableFooterView = UIView()
@@ -91,21 +105,46 @@ class BookedTravelDetailsTVCell: TableViewCell {
 
 extension BookedTravelDetailsTVCell:UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Customerdetails.count
+        
+        if let selectedTap = defaults.object(forKey: UserDefaultsKeys.dashboardTapSelected) as? String ,selectedTap == "Flights"{
+            return Customerdetails.count
+        }else {
+            return hCustomerdetails.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var c = UITableViewCell()
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as? BookedAdultDetailsTVCell {
-            cell.selectionStyle = .none
-            
-            let data = Customerdetails[indexPath.row]
-            cell.travellerNamelbl.text = "\(data.first_name ?? "") \(data.last_name ?? "")"
-            cell.typelbl.text = data.ticket_no ?? ""
-            cell.seatlbl.text = data.status ?? ""
-            
-            
-            c = cell
+        
+        if let selectedTap = defaults.object(forKey: UserDefaultsKeys.dashboardTapSelected) as? String ,selectedTap == "Flights"{
+            if let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as? BookedAdultDetailsTVCell {
+                cell.selectionStyle = .none
+                
+                let data = Customerdetails[indexPath.row]
+                cell.travellerNamelbl.text = "\(data.first_name ?? "") \(data.last_name ?? "")"
+                
+                cell.typelbl.text = data.passport_number ?? ""
+                cell.seatlbl.text = data.passport_issuing_country ?? ""
+                if indexPath.row == 0{
+                    cell.travellerNamelbl.numberOfLines = 2
+                    cell.setAttributedText(str1: "\(data.first_name ?? "") \(data.last_name ?? "")", str2: "\nLead Passenger")
+                }
+                
+                
+                c = cell
+            }
+        }else {
+            if let cell = tableView.dequeueReusableCell(withIdentifier: "cell1") as? BookedAdultDetailsTVCell {
+                cell.selectionStyle = .none
+                
+                let data = hCustomerdetails[indexPath.row]
+                cell.travellerNamelbl.text = "\(data.first_name ?? "")"
+                cell.typelbl.text = data.pax_type ?? ""
+                cell.seatlbl.text = data.pax_type ?? ""
+                
+                
+                c = cell
+            }
         }
         return c
     }

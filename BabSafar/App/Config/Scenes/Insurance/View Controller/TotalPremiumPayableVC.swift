@@ -104,7 +104,7 @@ extension TotalPremiumPayableVC {
     
     func insurencePaymentshow(response: InsurancePreprocessBookingModel) {
         holderView.isHidden = false
-        price = "\(response.currencyCode ?? ""):\(response.total_fare?.rounded() ?? 0.0)"
+        price = "\(response.currencyCode ?? ""):\(String(format: "%.3f", response.total_fare ?? 0.0))"
         DispatchQueue.main.async {
             self.setupTV()
         }

@@ -6,7 +6,7 @@ struct PricingBreakdown : Codable {
     let maxAge : String?
     let gender : String?
     let currencyCode : String?
-    let premiumAmount : Double?
+    let premiumAmount : String?
     let premiumBreakdown : PremiumBreakdown?
     
     enum CodingKeys: String, CodingKey {
@@ -25,7 +25,7 @@ struct PricingBreakdown : Codable {
         maxAge = try values.decodeIfPresent(String.self, forKey: .maxAge)
         gender = try values.decodeIfPresent(String.self, forKey: .gender)
         currencyCode = try values.decodeIfPresent(String.self, forKey: .currencyCode)
-        premiumAmount = try values.decodeIfPresent(Double.self, forKey: .premiumAmount)
+        premiumAmount = try values.decodeIfPresent(String.self, forKey: .premiumAmount)
         premiumBreakdown = try values.decodeIfPresent(PremiumBreakdown.self, forKey: .premiumBreakdown)
     }
     

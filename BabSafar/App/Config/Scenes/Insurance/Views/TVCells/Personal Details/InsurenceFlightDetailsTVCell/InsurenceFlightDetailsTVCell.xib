@@ -157,9 +157,9 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wcm-vV-KcX" customClass="BorderedView" customModule="BabSafar" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="158.66666666666666" height="40"/>
                                         <subviews>
-                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="PNR No" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wDB-r6-BLv">
+                                            <textField opaque="NO" tag="55" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="PNR No" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wDB-r6-BLv">
                                                 <rect key="frame" x="0.0" y="0.0" width="158.66666666666666" height="40"/>
-                                                <nil key="textColor"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
                                         </subviews>

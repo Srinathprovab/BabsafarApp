@@ -6,9 +6,7 @@
 //
 
 import UIKit
-protocol TitleLabelTVCellDelegate {
-    func didTapOnViewMapBtnAction(cell:TitleLabelTVCell)
-}
+
 
 class TitleLabelTVCell: TableViewCell {
     
@@ -17,13 +15,9 @@ class TitleLabelTVCell: TableViewCell {
     @IBOutlet weak var locImg: UIImageView!
     @IBOutlet weak var locationlbl: UILabel!
     @IBOutlet weak var imgWidth: NSLayoutConstraint!
-    @IBOutlet weak var viewMapBtnView: UIView!
-    @IBOutlet weak var viewMaplbl: UILabel!
-    @IBOutlet weak var viewMapBtn: UIButton!
     
     
     var key = ""
-    var delegate:TitleLabelTVCellDelegate?
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -40,9 +34,6 @@ class TitleLabelTVCell: TableViewCell {
         hotelNamelbl.text = cellInfo?.title
         locationlbl.text = cellInfo?.subTitle
        
-        if cellInfo?.key == "hotel" {
-            viewMapBtnView.isHidden = false
-        }
     }
     
     func setupUI() {
@@ -53,10 +44,7 @@ class TitleLabelTVCell: TableViewCell {
         locImg.image = UIImage(named: "loc")?.withRenderingMode(.alwaysOriginal).withTintColor(HexColor("#A3A3A3"))
         locationlbl.numberOfLines = 0
         
-        viewMapBtnView.backgroundColor = .red
-        viewMapBtnView.addCornerRadiusWithShadow(color: .clear, borderColor: .clear, cornerRadius: 3)
-        setuplabels(lbl: viewMaplbl, text: "VIEW MAP", textcolor: .WhiteColor, font: .LatoSemibold(size: 14), align: .center)
-        viewMapBtnView.isHidden = true
+       
     }
     
     
@@ -69,10 +57,5 @@ class TitleLabelTVCell: TableViewCell {
         locationlbl.font = UIFont.LatoRegular(size: 14)
     }
     
-    
-    
-    @IBAction func didTapOnViewMapBtnAction(_ sender: Any) {
-        delegate?.didTapOnViewMapBtnAction(cell: self)
-    }
     
 }

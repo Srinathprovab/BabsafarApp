@@ -154,6 +154,8 @@ class SearchFlightsTVCell: TableViewCell, SelectCityViewModelProtocal {
                 addClassValuelbl.text = defaults.string(forKey: UserDefaultsKeys.selectClass) ?? "Add Details"
                 returnView.alpha = 0.5
                 
+                returnDatelbl.text = "+ Add Return Date"
+                defaults.set("+ Add Return Date", forKey: UserDefaultsKeys.rcalRetDate)
             }else {
                 fromCitylbl.text = defaults.string(forKey: UserDefaultsKeys.rfromCity) ?? "Origin"
                 toCitylbl.text = defaults.string(forKey: UserDefaultsKeys.rtoCity) ?? "Destination"
@@ -336,6 +338,9 @@ class SearchFlightsTVCell: TableViewCell, SelectCityViewModelProtocal {
     
     
     @objc func didTapOnCloseReturnView(_ sender:UIButton) {
+        
+        returnDatelbl.text = "+ Add Return Date"
+        defaults.set("+ Add Return Date", forKey: UserDefaultsKeys.rcalRetDate)
         delegate?.didTapOnCloseReturnView(cell: self)
     }
     
@@ -364,6 +369,8 @@ class SearchFlightsTVCell: TableViewCell, SelectCityViewModelProtocal {
         
         if let journeyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
             if journeyType == "oneway" {
+                
+                defaults.set("+ Add Return Date", forKey: UserDefaultsKeys.rcalRetDate)
                 delegate?.didTapOnReturnToOnewayBtnAction(cell: self)
             }else {
                 delegate?.didTapOnReturnBtnAction(cell: self)

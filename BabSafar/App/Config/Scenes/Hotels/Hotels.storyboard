@@ -694,8 +694,8 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hsQ-Ll-JVT">
                                         <rect key="frame" x="0.0" y="0.0" width="361" height="48"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Delmon Boutique Hotel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wZq-mZ-Ja5">
-                                                <rect key="frame" x="107.00000000000001" y="15.666666666666657" width="147.33333333333337" height="17"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Delmon Boutique Hotel" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wZq-mZ-Ja5">
+                                                <rect key="frame" x="5" y="15.666666666666657" width="306" height="17"/>
                                                 <fontDescription key="fontDescription" name="Lato-Semibold" family="Lato" pointSize="14"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -717,9 +717,10 @@
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="zl3-EA-F3V" secondAttribute="trailing" constant="15" id="4dH-yw-eXm"/>
                                             <constraint firstItem="zl3-EA-F3V" firstAttribute="centerY" secondItem="wZq-mZ-Ja5" secondAttribute="centerY" id="6aG-mH-S2O"/>
+                                            <constraint firstItem="wZq-mZ-Ja5" firstAttribute="leading" secondItem="hsQ-Ll-JVT" secondAttribute="leading" constant="5" id="aCd-Cd-uWH"/>
                                             <constraint firstItem="wZq-mZ-Ja5" firstAttribute="centerY" secondItem="hsQ-Ll-JVT" secondAttribute="centerY" id="bBI-Br-39j"/>
                                             <constraint firstAttribute="height" constant="48" id="sem-nP-uv5"/>
-                                            <constraint firstItem="wZq-mZ-Ja5" firstAttribute="centerX" secondItem="hsQ-Ll-JVT" secondAttribute="centerX" id="wuD-UN-cCU"/>
+                                            <constraint firstItem="zl3-EA-F3V" firstAttribute="leading" secondItem="wZq-mZ-Ja5" secondAttribute="trailing" constant="5" id="wef-6B-Xvm"/>
                                         </constraints>
                                     </view>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="kjg-p1-UGW">

@@ -3,8 +3,8 @@ import Foundation
 struct Charge : Codable {
 	let sequenceNo : String?
 	let rateType : String?
-	let percentageValue : Double?
-	let amountValue : Double?
+	let percentageValue : String?
+	let amountValue : String?
 
 	enum CodingKeys: String, CodingKey {
 
@@ -18,8 +18,8 @@ struct Charge : Codable {
 		let values = try decoder.container(keyedBy: CodingKeys.self)
 		sequenceNo = try values.decodeIfPresent(String.self, forKey: .sequenceNo)
 		rateType = try values.decodeIfPresent(String.self, forKey: .rateType)
-		percentageValue = try values.decodeIfPresent(Double.self, forKey: .percentageValue)
-		amountValue = try values.decodeIfPresent(Double.self, forKey: .amountValue)
+		percentageValue = try values.decodeIfPresent(String.self, forKey: .percentageValue)
+		amountValue = try values.decodeIfPresent(String.self, forKey: .amountValue)
 	}
 
 }

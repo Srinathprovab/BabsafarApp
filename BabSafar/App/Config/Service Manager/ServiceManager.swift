@@ -361,7 +361,22 @@ class ServiceManager {
                // print(resp.value as Any)
                 print(resp.response?.statusCode as Any)
                 
-               
+                
+                if let data = resp.data { // Assuming `response` is the API response object
+                    do {
+                        if let json = try JSONSerialization.jsonObject(with:  data , options: []) as? [String: Any] {
+
+                            let arrJson = try JSONSerialization.data(withJSONObject: json, options: JSONSerialization.WritingOptions.prettyPrinted)
+                            let theJSONText = NSString(data: arrJson, encoding: String.Encoding.utf8.rawValue)
+                            print(theJSONText ?? "")
+                        }
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+                }
+                
+                
+                
                 
 
                 if resp.value != nil {
@@ -378,27 +393,11 @@ class ServiceManager {
                             if let jsonResponse = try? JSONDecoder().decode(T.self, from: jsonData) {
                                 
                                 
-                                
-                                if let data = resp.data { // Assuming `response` is the API response object
-                                    do {
-                                        if let json = try JSONSerialization.jsonObject(with:  resp.data ?? NSData() as Data, options: []) as? [String: Any] {
-
-                                            let arrJson = try JSONSerialization.data(withJSONObject: json, options: JSONSerialization.WritingOptions.prettyPrinted)
-                                            let theJSONText = NSString(data: arrJson, encoding: String.Encoding.utf8.rawValue)
-                                            print(theJSONText ?? "")
-                                        }
-                                    } catch {
-                                        print(error.localizedDescription)
-                                    }
-                                }
-                                
-                                
-                                
+                             
                                 completionHandler(true, jsonResponse, nil)
                             }
                             
                             else {
-                                
                                 
                                 NotificationCenter.default.post(name: NSNotification.Name("resultnil"), object: nil)
                                 completionHandler(false, nil, ApiError.somthingwentwrong.message)
@@ -430,6 +429,8 @@ class ServiceManager {
                     
                     
                 }else {
+                    
+                    
                     NotificationCenter.default.post(name: NSNotification.Name("resultnil"), object: nil)
                     completionHandler(false, nil, "Result Nil")
                 }

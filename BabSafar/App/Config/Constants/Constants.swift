@@ -67,7 +67,8 @@ var totalNoOfTravellers = String()
 var passengerA = [Passenger]()
 var travelerArray: [Traveler] = []
 var ageCategory: AgeCategory = .adult
-
+var latArray = [String]()
+var longArray = [String]()
 
 
 //MARK: - Hotel
@@ -203,6 +204,8 @@ var loderBool = false
 //Flight Paynow Screen
 var payemail = String()
 var paymobile = String()
+var paymobilecountrycode = String()
+var frequent_flyersArray = [Frequent_flyers]()
 
 
 //Insurence
@@ -212,6 +215,8 @@ var ibookingsource = ""
 var iplandetails = ""
 var selectedPlanContent = [PlanContent]()
 var searchInputs:PreBookingSearch_params?
+var mobilenoMaxLengthBool = false
+var plan_details_token = String()
 
 
 //payment
@@ -260,6 +265,8 @@ struct ApiEndpoints {
     static let mobile_pre_insurance_search = "general/mobile_pre_insurance_search"
     static let insurance_pre_process_booking = "insurance/pre_process_booking"
     static let insurance_get_airline_list = "insurance/get_airline_list"
+    static let process_passenger_detail = "insurance/process_passenger_detail"
+
     
     //fasttrack
     static let get_fasttrack_airport_code_list = "ajax/get_fasttrack_airport_code_list"
@@ -288,6 +295,9 @@ struct UserDefaultsKeys {
     static var userid = "userid"
     static var useremail = "useremail"
     static var usermobile = "usermobile"
+    static var uname = "uname"
+    static var mcountrycode = "mcountrycode"
+    
     static var journeyType = "Journey_Type"
     static var journeyTypeSelectedIndex = "Journey_TypeSelectedIndex"
     static var searchid = "search_id"

@@ -28,8 +28,7 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
     var passengercontact = String()
     var countryCode = String()
     var nationalityCode = String()
-    var billingCountryCode = String()
-    
+    var price = String()
     var timer: Timer?
     var totalTime = 1
     var tablerow = [TableRow]()
@@ -71,19 +70,11 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
     
     override func viewWillAppear(_ animated: Bool) {
         
+        addObserver()
+        
         if screenHeight < 835 {
             navHeight.constant = 90
         }
-        NotificationCenter.default.addObserver(self, selector: #selector(addAdultsDetails(notification:)), name: NSNotification.Name("addAdultsDetails"), object: nil)
-        
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("nointernet"), object: nil)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(reload(notification:)), name: NSNotification.Name("reload"), object: nil)
-        
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(updatetimer), name: NSNotification.Name("updatetimer"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(stopTimer), name: NSNotification.Name("sessionStop"), object: nil)
         
         if callapibool == true {
             holderView.isHidden = true
@@ -94,26 +85,6 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
         
     }
     
-    
-    @objc func stopTimer() {
-        gotoPopupScreen()
-    }
-    
-    @objc func updatetimer(notificatio:UNNotification) {
-        
-        let totalTime = TimerManager.shared.totalTime
-        let minutes =  totalTime / 60
-        let seconds = totalTime % 60
-        let formattedTime = String(format: "%02d:%02d", minutes, seconds)
-        
-        setuplabels(lbl: sessonlbl, text: "Your Session Expires In : \(formattedTime)", textcolor: .AppLabelColor, font: .LatoRegular(size: 16), align: .left)
-        
-    }
-    
-    //MARK: - reload commonTableView
-    @objc func reload(notification:NSNotification) {
-        commonTableView.reloadData()
-    }
     
     
     //MARK: - CALL MOBILE BOOKING API
@@ -133,15 +104,18 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
         
     }
     
+    
+    
     func hotelMobileBookingDetails(response: HotelMBModel) {
         
         childCount = Int(defaults.string(forKey: UserDefaultsKeys.hotelchildcount) ?? "0") ?? 0
         holderView.isHidden = false
         hbookingDetails = response.data?.hotel_details
         roompaxesdetails = response.data?.room_paxes_details ?? []
-        
+        grandTotal = "\(response.data?.currency_obj?.to_currency ?? ""):\(response.data?.total_price ?? "")"
         bookingsource = response.data?.booking_source ?? ""
         token = response.data?.token ?? ""
+        price = "\(response.data?.total_price ?? "")"
         
         //   let totalSeconds = abs(response.session_expiry_details?.session_start_time ?? 0)
         TimerManager.shared.totalTime = 900
@@ -153,17 +127,6 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
         
     }
     
-    
-    //MARK: - nointernet
-    @objc func nointernet() {
-        guard let vc = NoInternetConnectionVC.newInstance.self else {return}
-        vc.modalPresentationStyle = .overCurrentContext
-        self.present(vc, animated: true)
-    }
-    
-    @objc func addAdultsDetails(notification:NSNotification) {
-        commonTableView.reloadData()
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -180,7 +143,7 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
         nav.backBtn.addTarget(self, action: #selector(didTapOnBackBtn(_:)), for: .touchUpInside)
         bookNowView.backgroundColor = .AppBtnColor
         
-        setuplabels(lbl: bookNowlbl, text: kwdprice, textcolor: .WhiteColor, font: .LatoMedium(size: 18), align: .left)
+        setuplabels(lbl: bookNowlbl, text: grandTotal, textcolor: .WhiteColor, font: .LatoMedium(size: 18), align: .left)
         setuplabels(lbl: kwdlbl, text: "Pay Now", textcolor: .WhiteColor, font: .LatoMedium(size: 18), align: .right)
         bookNowBtn.setTitle("", for: .normal)
         bookNowBtn.addTarget(self, action: #selector(didTapOnBookNowBtn(_:)), for: .touchUpInside)
@@ -211,14 +174,13 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
     }
     
     
-    
     func setuptv() {
         
         sessionTimerView.isHidden = false
         
         tablerow.removeAll()
         
-        if defaults.bool(forKey: UserDefaultsKeys.userLoggedIn) == false {
+        if defaults.bool(forKey: UserDefaultsKeys.loggedInStatus) == false {
             tablerow.append(TableRow(cellType:.TDetailsLoginTVCell))
         }
         tablerow.append(TableRow(title:hbookingDetails?.name,
@@ -289,7 +251,7 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
         
         setuplabels(lbl: sessonlbl, text: "Your Session Expires In : \(formattedTime)", textcolor: .AppLabelColor, font: .LatoRegular(size: 16), align: .left)
     }
-   
+    
     
     
     @objc func didTapOnBackBtn(_ sender:UIButton) {
@@ -300,7 +262,8 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
     
     override func didTapOnLoginBtn(cell:TDetailsLoginTVCell){
         guard let vc = LoginVC.newInstance.self else {return}
-        vc.modalPresentationStyle = .overCurrentContext
+        vc.modalPresentationStyle = .fullScreen
+        vc.isVcFrom = "BookingDetailsVC"
         self.present(vc, animated: true)
         
     }
@@ -328,26 +291,23 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
         vc.modalPresentationStyle = .overCurrentContext
         self.present(vc, animated: true)
     }
-    
-    
-    
+
     
     
     //MARK: - didTapOnCountryCodeBtn
     override func didTapOnCountryCodeBtn(cell: ContactInformationTVCell) {
         self.nationalityCode = cell.nationalityCode
         self.countryCode = cell.countryCodeLbl.text ?? ""
-        self.billingCountryCode = cell.isoCountryCode
-        print("self.billingCountryCode \(self.billingCountryCode)")
+        billingCountryCode = cell.isoCountryCode
     }
     
     //MARK: - editingTextField
     override func editingTextField(tf:UITextField){
         
         if tf.tag == 1 {
-            self.email = tf.text ?? ""
+            payemail = tf.text ?? ""
         }else {
-            self.mobile = tf.text ?? ""
+            paymobile = tf.text ?? ""
         }
     }
     
@@ -381,8 +341,7 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
     override func didTapOnDropDownBtn(cell: ContactInformationTVCell) {
         self.nationalityCode = cell.nationalityCode
         self.countryCode = cell.countryCodeLbl.text ?? ""
-        self.billingCountryCode = cell.isoCountryCode
-        print("self.billingCountryCode \(self.billingCountryCode)")
+        billingCountryCode = cell.isoCountryCode
     }
     
     
@@ -438,42 +397,48 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
     @objc func didTapOnBookNowBtn(_ sender: UIButton) {
         
         payload.removeAll()
+       
         
         var callpaymenthotelbool = true
-        var matchingCells: [AddDeatilsOfGuestTVCell] = []
-        // Replace with the desired search texts
-        
-        for case let cell as AddDeatilsOfGuestTVCell in commonTableView.visibleCells {
-            if let cellText = cell.titlelbl.text, searchTextArray.contains(cellText) {
-                matchingCells.append(cell)
-            }
-        }
-        
-        for cell in matchingCells {
-            
-            if cell.titleTF.text?.isEmpty == true {
-                // Textfield is empty
-                cell.titleView.layer.borderColor = UIColor.red.cgColor
-                callpaymenthotelbool = false
+        var fnameCharBool = true
+        var lnameCharBool = true
+        let positionsCount = commonTableView.numberOfRows(inSection: 0)
+        for position in 0..<positionsCount {
+            // Fetch the cell for the given position
+            if let cell = commonTableView.cellForRow(at: IndexPath(row: position, section: 0)) as? AddDeatilsOfGuestTVCell {
                 
-            } else {
-                // Textfield is not empty
-            }
-            
-            if cell.fnameTF.text?.isEmpty == true {
-                // Textfield is empty
-                cell.fnameView.layer.borderColor = UIColor.red.cgColor
-                callpaymenthotelbool = false
-            } else {
-                // Textfield is not empty
-            }
-            
-            if cell.lnameTF.text?.isEmpty == true {
-                // Textfield is empty
-                cell.lnameView.layer.borderColor = UIColor.red.cgColor
-                callpaymenthotelbool = false
-            } else {
-                // Textfield is not empty
+                
+                if cell.titleTF.text?.isEmpty == true {
+                    // Textfield is empty
+                    cell.titleView.layer.borderColor = UIColor.red.cgColor
+                    callpaymenthotelbool = false
+                    
+                } else {
+                    // Textfield is not empty
+                }
+                
+                if cell.fnameTF.text?.isEmpty == true {
+                    // Textfield is empty
+                    cell.fnameView.layer.borderColor = UIColor.red.cgColor
+                    callpaymenthotelbool = false
+                }else if (cell.fnameTF.text?.count ?? 0) <= 3{
+                    cell.fnameView.layer.borderColor = UIColor.red.cgColor
+                    fnameCharBool = false
+                } else {
+                    // Textfield is not empty
+                }
+                
+                if cell.lnameTF.text?.isEmpty == true {
+                    // Textfield is empty
+                    cell.lnameView.layer.borderColor = UIColor.red.cgColor
+                    callpaymenthotelbool = false
+                }else if (cell.lnameTF.text?.count ?? 0) <= 3{
+                    cell.lnameView.layer.borderColor = UIColor.red.cgColor
+                    lnameCharBool = false
+                } else {
+                    // Textfield is not empty
+                }
+                
             }
             
         }
@@ -486,6 +451,12 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
         
         
         
+        let mrtitleString = "[\"" + mrtitleArray.joined(separator: "\",\"") + "\"]"
+        let firstnameString = "[\"" + firstnameArray.joined(separator: "\",\"") + "\"]"
+        let lastNameString = "[\"" + lastNameArray.joined(separator: "\",\"") + "\"]"
+        let passengertypeString = "[\"" + passengertypeArray.joined(separator: "\",\"") + "\"]"
+        
+        
         payload.removeAll()
         payload["booking_source"] = bookingsource
         payload["promo_code"] = ""
@@ -494,26 +465,50 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
         payload["reducing_amount"] = "0"
         payload["reward_usable"] = "0"
         payload["reward_earned"] = "0"
-        payload["billing_email"] = self.email
-        payload["passenger_contact"] = self.mobile
-        payload["first_name"] = firstnameArray
-        payload["last_name"] = lastNameArray
-        payload["name_title"] = mrtitleArray
+        payload["billing_email"] = payemail
+        payload["passenger_contact"] = paymobile
+        payload["first_name"] = firstnameString
+        payload["last_name"] = lastNameString
+        payload["name_title"] = mrtitleString
         payload["billing_country"] = billingCountryCode
         payload["country_code"] = self.countryCode
-        payload["passenger_type"] = passengertypeArray
-        payload["user_id"] = "0"
+        payload["passenger_type"] = passengertypeString
+        payload["user_id"] = defaults.string(forKey: UserDefaultsKeys.userid) ?? "0"
+        
+        
+        do{
+            
+            let jsonData = try JSONSerialization.data(withJSONObject: payload, options: JSONSerialization.WritingOptions.prettyPrinted)
+            let jsonStringData =  NSString(data: jsonData as Data, encoding: NSUTF8StringEncoding)! as String
+            
+            
+                
+               
+               print(jsonStringData)
+                
+            
+            
+        }catch{
+            print(error.localizedDescription)
+        }
         
         
         
-        if billingCountryCode == "" {
-            showToast(message: "Enter Country Code")
-        }else if callpaymenthotelbool == false{
+         if callpaymenthotelbool == false {
             showToast(message: "Add Details")
-        }else if checkTermsAndCondationStatus == false {
+        }else if fnameCharBool == false {
+            showToast(message: "First Name Should More Than 3 Chars")
+        } else if lnameCharBool == false {
+            showToast(message: "Last Name Should More Than 3 Chars")
+        }else if payemail == "" {
+            showToast(message: "Enter Email Id")
+        } else if paymobile == "" {
+            showToast(message: "Enter Mobile Number")
+        }else if billingCountryCode == "" {
+            showToast(message: "Enter Country Code")
+        }  else if checkTermsAndCondationStatus == false {
             showToast(message: "Please Accept T&C and Privacy Policy")
         }else {
-            
             vm?.CALL_HOTEL_MOBILE_PRE_BOOKING_DETAILS_API(dictParam: payload)
         }
         
@@ -525,10 +520,12 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
         if response.status == 0 {
             showToast(message: response.msg ?? "")
         }else {
-            guard let vc = LoadWebViewVC.newInstance.self else {return}
+            guard let vc = PaymentGatewayVC.newInstance.self else {return}
             vc.modalPresentationStyle = .fullScreen
-            vc.urlString = response.data?.post_data?.url ?? ""
-            vc.isVcFrom = "Booking"
+            vc.payload = payload
+            vc.grandTotalamount = grandTotal
+            vc.grand_total_Price = price
+            vc.tmpFlightPreBookingId = response.data?.post_data?.appreference ?? ""
             present(vc, animated: true)
         }
     }
@@ -572,4 +569,58 @@ extension AddContactAndGuestDetailsVC {
         }
         
     }
+}
+
+
+
+extension AddContactAndGuestDetailsVC {
+    
+    func addObserver() {
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("offline"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(resultnil), name: NSNotification.Name("resultnil"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reload), name: Notification.Name("reload"), object: nil)
+        
+    }
+    
+    
+    @objc func reload() {
+        DispatchQueue.main.async {[self] in
+            callAPI()
+        }
+    }
+    
+    //MARK: - resultnil
+    @objc func resultnil() {
+        guard let vc = NoInternetConnectionVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.key = "noresult"
+        self.present(vc, animated: true)
+    }
+    
+    
+    //MARK: - nointernet
+    @objc func nointernet() {
+        guard let vc = NoInternetConnectionVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.key = "nointernet"
+        self.present(vc, animated: true)
+    }
+    
+    @objc func stopTimer() {
+        gotoPopupScreen()
+    }
+    
+    @objc func updatetimer(notificatio:UNNotification) {
+        
+        let totalTime = TimerManager.shared.totalTime
+        let minutes =  totalTime / 60
+        let seconds = totalTime % 60
+        let formattedTime = String(format: "%02d:%02d", minutes, seconds)
+        
+        setuplabels(lbl: sessonlbl, text: "Your Session Expires In : \(formattedTime)", textcolor: .AppLabelColor, font: .LatoRegular(size: 16), align: .left)
+        
+    }
+    
+    
 }

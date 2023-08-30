@@ -49,7 +49,7 @@
                                 <rect key="frame" x="317" y="196" width="24" height="24"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4.5" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JTn-SR-thU">
-                                        <rect key="frame" x="3.5" y="5" width="17" height="14.5"/>
+                                        <rect key="frame" x="3.5" y="5" width="17" height="14"/>
                                         <fontDescription key="fontDescription" name="Lato-Medium" family="Lato" pointSize="12"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -132,7 +132,7 @@ Fahidi Metro </string>
                                 <rect key="frame" x="286" y="277" width="60" height="25"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Book Now" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YjP-xJ-OQO">
-                                        <rect key="frame" x="6.5" y="6.5" width="47.5" height="12"/>
+                                        <rect key="frame" x="6.5" y="6.5" width="47" height="12"/>
                                         <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="10"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -167,7 +167,7 @@ Fahidi Metro </string>
                                 <rect key="frame" x="10" y="258" width="80" height="20"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Refundable" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gpq-QU-728">
-                                        <rect key="frame" x="15" y="4" width="50.5" height="12"/>
+                                        <rect key="frame" x="14.5" y="4" width="51" height="12"/>
                                         <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="10"/>
                                         <color key="textColor" name="AppCalenderDateSelectColor"/>
                                         <nil key="highlightedColor"/>
@@ -209,11 +209,11 @@ Fahidi Metro </string>
                             <constraint firstItem="vXb-aM-agc" firstAttribute="leading" secondItem="iXw-PS-N0r" secondAttribute="trailing" constant="10" id="qJd-4x-CGj"/>
                             <constraint firstItem="tjj-nZ-Ba6" firstAttribute="top" secondItem="0zn-zS-eGV" secondAttribute="bottom" constant="5" id="qjK-ld-M2I"/>
                             <constraint firstItem="qnd-gJ-NWc" firstAttribute="centerY" secondItem="vQL-06-Y9S" secondAttribute="centerY" id="tDc-lZ-lDo"/>
+                            <constraint firstItem="qnd-gJ-NWc" firstAttribute="top" secondItem="ycE-4P-H9d" secondAttribute="bottom" constant="1.5" id="teU-q0-Vt9"/>
                             <constraint firstItem="NOF-Dc-Pnq" firstAttribute="top" secondItem="lmt-nr-OOh" secondAttribute="top" constant="6" id="uhX-cj-EUl"/>
                             <constraint firstAttribute="trailing" secondItem="tjj-nZ-Ba6" secondAttribute="trailing" constant="5" id="v6I-4h-hJL"/>
                             <constraint firstAttribute="trailing" secondItem="vQL-06-Y9S" secondAttribute="trailing" constant="5" id="z3e-Wq-jCB"/>
                             <constraint firstItem="iXw-PS-N0r" firstAttribute="top" secondItem="gHI-Ar-zNd" secondAttribute="bottom" constant="10" id="zE4-Ih-U3j"/>
-                            <constraint firstItem="ycE-4P-H9d" firstAttribute="top" secondItem="vXb-aM-agc" secondAttribute="bottom" constant="5" id="ztd-eD-TfA"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">

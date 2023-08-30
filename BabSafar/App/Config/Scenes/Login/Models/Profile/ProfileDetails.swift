@@ -15,15 +15,16 @@ struct ProfileDetails : Codable {
     let email : String?
     let address : String?
     let address2 : String?
+    let country_code : String?
     let country_name : String?
     let state_name : String?
     let city_name : String?
     let pin_code : String?
     let date_of_birth : String?
     let image : String?
-    
+
     enum CodingKeys: String, CodingKey {
-        
+
         case gender = "gender"
         case first_name = "first_name"
         case last_name = "last_name"
@@ -31,6 +32,7 @@ struct ProfileDetails : Codable {
         case email = "email"
         case address = "address"
         case address2 = "address2"
+        case country_code = "country_code"
         case country_name = "country_name"
         case state_name = "state_name"
         case city_name = "city_name"
@@ -38,7 +40,7 @@ struct ProfileDetails : Codable {
         case date_of_birth = "date_of_birth"
         case image = "image"
     }
-    
+
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         gender = try values.decodeIfPresent(String.self, forKey: .gender)
@@ -48,6 +50,7 @@ struct ProfileDetails : Codable {
         email = try values.decodeIfPresent(String.self, forKey: .email)
         address = try values.decodeIfPresent(String.self, forKey: .address)
         address2 = try values.decodeIfPresent(String.self, forKey: .address2)
+        country_code = try values.decodeIfPresent(String.self, forKey: .country_code)
         country_name = try values.decodeIfPresent(String.self, forKey: .country_name)
         state_name = try values.decodeIfPresent(String.self, forKey: .state_name)
         city_name = try values.decodeIfPresent(String.self, forKey: .city_name)
@@ -55,5 +58,5 @@ struct ProfileDetails : Codable {
         date_of_birth = try values.decodeIfPresent(String.self, forKey: .date_of_birth)
         image = try values.decodeIfPresent(String.self, forKey: .image)
     }
-    
+
 }

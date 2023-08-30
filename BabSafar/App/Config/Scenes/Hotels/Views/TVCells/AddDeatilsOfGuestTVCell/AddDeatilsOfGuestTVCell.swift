@@ -103,7 +103,6 @@ class AddDeatilsOfGuestTVCell: TableViewCell {
                 
                 // Update the gender property of the Traveler object at the specified index
                 travelerArray[self.indexposition ].passengertype = "AD"
-                travelerArray[self.indexposition ].laedpassenger = "1"
                 travelerArray[self.indexposition ].middlename = ""
             } else {
                 if travelerArray.count <= self.indexposition {
@@ -112,7 +111,6 @@ class AddDeatilsOfGuestTVCell: TableViewCell {
                 
                 // Update the gender property of the Traveler object at the specified index
                 travelerArray[self.indexposition ].passengertype = "CH"
-                travelerArray[self.indexposition ].laedpassenger = "0"
                 travelerArray[self.indexposition ].middlename = ""
             }
             
@@ -171,7 +169,7 @@ class AddDeatilsOfGuestTVCell: TableViewCell {
         txtField.backgroundColor = .clear
         txtField.font = UIFont.LatoRegular(size: 16)
         txtField.addTarget(self, action: #selector(editingTextField1(textField:)), for: .editingChanged)
-        txtField.textColor = .SubTitleColor
+        txtField.textColor = .titleLabelColor
     }
     
     
@@ -181,7 +179,7 @@ class AddDeatilsOfGuestTVCell: TableViewCell {
         titledropDown.direction = .bottom
         titledropDown.backgroundColor = .WhiteColor
         titledropDown.anchorView = self.titleView
-        titledropDown.dataSource = ["MR","MS","MRS"]
+        titledropDown.dataSource = ["Mr","Ms","Mrs"]
         titledropDown.bottomOffset = CGPoint(x: 0, y: titleView.frame.size.height + 20)
         titledropDown.selectionAction = { [weak self] (index: Int, item: String) in
             self?.titleTF.text = item
@@ -191,16 +189,19 @@ class AddDeatilsOfGuestTVCell: TableViewCell {
             }
             
             switch item {
-            case "MR":
+            case "Mr":
                 travelerArray[self?.indexposition ?? 0].mrtitle = "1"
+                travelerArray[self?.indexposition ?? 0].gender = "1"
                 break
                 
-            case "MS":
+            case "Ms":
                 travelerArray[self?.indexposition ?? 0].mrtitle = "2"
+                travelerArray[self?.indexposition ?? 0].gender = "2"
                 break
                 
-            case "MRS":
+            case "Mrs":
                 travelerArray[self?.indexposition ?? 0].mrtitle = "3"
+                travelerArray[self?.indexposition ?? 0].gender = "2"
                 break
                 
             default:

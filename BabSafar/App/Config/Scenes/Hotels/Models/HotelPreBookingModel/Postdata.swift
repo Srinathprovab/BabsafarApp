@@ -11,14 +11,14 @@ struct Postdata : Codable {
     let appreference : String?
     let searchid : String?
     let apicurrency : String?
-    let url : String?
+    let pg_record : Pg_record?
 
     enum CodingKeys: String, CodingKey {
 
         case appreference = "appreference"
         case searchid = "searchid"
         case apicurrency = "apicurrency"
-        case url = "url"
+        case pg_record = "pg_record"
     }
 
     init(from decoder: Decoder) throws {
@@ -26,7 +26,7 @@ struct Postdata : Codable {
         appreference = try values.decodeIfPresent(String.self, forKey: .appreference)
         searchid = try values.decodeIfPresent(String.self, forKey: .searchid)
         apicurrency = try values.decodeIfPresent(String.self, forKey: .apicurrency)
-        url = try values.decodeIfPresent(String.self, forKey: .url)
+        pg_record = try values.decodeIfPresent(Pg_record.self, forKey: .pg_record)
     }
 
 }

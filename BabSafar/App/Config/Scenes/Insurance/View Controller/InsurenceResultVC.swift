@@ -114,6 +114,7 @@ extension InsurenceResultVC:InsurenceViewModelDelegate, UITableViewDelegate,UITa
             availablePlans = response.data?.col_x?.list?.availablePlans ?? [[]]
             ibookingsource = response.data?.col_x?.booking_source_key ?? ""
             isearchid = "\(response.data?.col_x?.search_id ?? 0)"
+           
             
             DispatchQueue.main.async {
                 self.setupTV()
@@ -161,7 +162,7 @@ extension InsurenceResultVC:InsurenceViewModelDelegate, UITableViewDelegate,UITa
                 
                 let data = availablePlans[section][row]
                 cell.titlelbl.text = data.planTitle ?? ""
-                cell.pricelbl.text = "\(data.currency ?? ""):\(data.totalPremiumAmount?.rounded() ?? 0.0)"
+                cell.pricelbl.text = "\(data.currency ?? ""):\(data.totalPremiumAmount ?? "0.0")"
                 cell.logo.sd_setImage(with: URL(string: data.plan_image ?? "" ), placeholderImage:UIImage(contentsOfFile:"placeholder.png"))
                 cell.plancode = data.planCode ?? ""
                 cell.plandetails = data.plan_details_token ?? ""

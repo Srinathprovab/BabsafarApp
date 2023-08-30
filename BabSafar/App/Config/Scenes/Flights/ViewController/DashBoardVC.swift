@@ -10,7 +10,9 @@ import CoreData
 import FreshchatSDK
 
 
-class DashBoardVC: BaseTableVC, TopFlightDetailsViewModelDelegate, AllCountryCodeListViewModelDelegate {
+class DashBoardVC: BaseTableVC, TopFlightDetailsViewModelDelegate, AllCountryCodeListViewModelDelegate, ProfileDetailsViewModelDelegate {
+    
+    
     
     
     @IBOutlet weak var banerImage: UIImageView!
@@ -46,6 +48,7 @@ class DashBoardVC: BaseTableVC, TopFlightDetailsViewModelDelegate, AllCountryCod
     private var panBaseLocation: CGFloat = 0.0
     var payload = [String:Any]()
     var viewModel1 : FlightListViewModel?
+    var profileViewmodel:ProfileDetailsViewModel?
     
     //MARK: - Expand/Collapse the side menu by changing trailing's constant
     private var sideMenuTrailingConstraint: NSLayoutConstraint!
@@ -70,15 +73,14 @@ class DashBoardVC: BaseTableVC, TopFlightDetailsViewModelDelegate, AllCountryCod
     
     //MARK: - LOADING FUNCTIONS
     override func viewWillAppear(_ animated: Bool) {
-        callCountryListAPI()
-        chatBtnView.isHidden = true
         addObserver()
         
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
+        chatBtnView.isHidden = true
+        
         if callapibool == true {
-            callApi()
+            DispatchQueue.main.async {
+                self.callApi()
+            }
         }
     }
     
@@ -91,6 +93,7 @@ class DashBoardVC: BaseTableVC, TopFlightDetailsViewModelDelegate, AllCountryCod
         setupUI()
         viewmodel = TopFlightDetailsViewModel(self)
         vm = AllCountryCodeListViewModel(self)
+        profileViewmodel = ProfileDetailsViewModel(self)
         
     }
     
@@ -102,6 +105,11 @@ class DashBoardVC: BaseTableVC, TopFlightDetailsViewModelDelegate, AllCountryCod
     
     func getCountryList(response: AllCountryCodeListModel) {
         countrylist = response.all_country_code_list ?? []
+        
+        
+        DispatchQueue.main.async {
+            self.callProfileDetailsAPI()
+        }
     }
     
     
@@ -181,6 +189,11 @@ class DashBoardVC: BaseTableVC, TopFlightDetailsViewModelDelegate, AllCountryCod
         DispatchQueue.main.async {[self] in
             setupTV()
         }
+        
+        DispatchQueue.main.async {[self] in
+            callCountryListAPI()
+        }
+        
         
     }
     
@@ -727,8 +740,8 @@ extension DashBoardVC {
             payload["from_loc_id"] = (userinfo["from_city"] as? String) ?? ""
             payload["to"] = (userinfo["toFlight"] as? String) ?? ""
             payload["to_loc_id"] = (userinfo["to_city"] as? String) ?? ""
-            payload["depature"] = convertDateFormat(inputDate: userinfo["travel_date"] as? String ?? "", f1: "yyyy-MM-dd", f2: "dd-MM-yyyy")
-            payload["return"] = convertDateFormat(inputDate: userinfo["return_date"] as? String ?? "", f1: "yyyy-MM-dd", f2: "dd-MM-yyyy")
+            payload["depature"] = userinfo["travel_date"] as? String ?? ""
+            payload["return"] = userinfo["return_date"] as? String ?? ""
             payload["out_jrn"] = "All Times"
             payload["ret_jrn"] = "All Times"
             payload["carrier"] = ""
@@ -782,4 +795,36 @@ extension DashBoardVC {
         self.present(vc, animated: false)
     }
     
+}
+
+
+
+extension DashBoardVC {
+    
+    //MARK: - call Profile Details API
+    func callProfileDetailsAPI() {
+        payload.removeAll()
+        payload["user_id"] = defaults.string(forKey: UserDefaultsKeys.userid) ?? "0"
+        
+        if let userLoggedIn = defaults.object(forKey: UserDefaultsKeys.loggedInStatus) as? Bool ,userLoggedIn == true{
+            profileViewmodel?.CallGetProileDetails_API(dictParam: payload)
+        }
+    }
+    
+    
+    func getProfileDetails(response: ProfileDetailsModel) {
+        
+        pdetails = response.data
+        
+        defaults.set("\(response.data?.first_name ?? "") \(response.data?.last_name ?? "")", forKey: UserDefaultsKeys.uname)
+        defaults.set(response.data?.email, forKey: UserDefaultsKeys.useremail)
+        defaults.set(response.data?.phone, forKey: UserDefaultsKeys.usermobile)
+        defaults.set("\(response.data?.country_code ?? "")", forKey: UserDefaultsKeys.mcountrycode)
+
+        
+    }
+    
+    func updateProfileDetails(response: ProfileDetailsModel) {
+        
+    }
 }

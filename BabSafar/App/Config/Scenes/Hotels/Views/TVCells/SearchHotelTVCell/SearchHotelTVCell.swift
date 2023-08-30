@@ -222,12 +222,14 @@ class SearchHotelTVCell: TableViewCell, HotelCitySearchViewModelDelegate {
     
     func hotelCitySearchResult(response: [HotelCityListModel]) {
         hotelList = response
-        
-        hotelSearchTVHeight.constant = CGFloat(hotelList.count * 80)
+        updateHeight(height: 80)
+    }
+    
+    func updateHeight(height:Int) {
+        hotelSearchTVHeight.constant = CGFloat(hotelList.count * height)
         DispatchQueue.main.async {[self] in
             hotelSearchTV.reloadData()
         }
-        
     }
     
     
@@ -366,14 +368,17 @@ extension SearchHotelTVCell:UITableViewDelegate,UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath) as? FromCityTVCell {
-            hotelSearchTVHeight.constant = 0
-            cityTF.resignFirstResponder()
+            
+            //cityTF.resignFirstResponder()
             cityTF.text = ""
             locationCitylbl.text = hotelList[indexPath.row].value ?? ""
+            locationCitylbl.textColor = .AppLabelColor
+            
             defaults.set(hotelList[indexPath.row].value ?? "", forKey: UserDefaultsKeys.locationcity)
             defaults.set(hotelList[indexPath.row].id ?? "", forKey: UserDefaultsKeys.locationcityid)
             defaults.set(hotelList[indexPath.row].label ?? "", forKey: UserDefaultsKeys.locationcityname)
             
+            updateHeight(height: 0)
         }
     }
     

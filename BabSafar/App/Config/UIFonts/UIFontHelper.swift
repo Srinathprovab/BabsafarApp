@@ -13,7 +13,7 @@ extension UIFont{
     
     //MARK:- shifu app
     
-    
+    //poppins
     public static func PoppinsSemiBold(size: CGFloat) -> UIFont {
         return UIFont(name: "Poppins-SemiBold", size: size) ?? UIFont.systemFont(ofSize: size)
     }
@@ -37,7 +37,7 @@ extension UIFont{
     }
     
     
-    
+    //opensans
     public static func OpenSansMedium(size: CGFloat) -> UIFont {
         return UIFont(name: "OpenSans-Medium", size: size) ?? UIFont.systemFont(ofSize: size)
     }
@@ -45,6 +45,11 @@ extension UIFont{
     public static func RobotMedium(size: CGFloat) -> UIFont {
         return UIFont(name: "Roboto-Medium", size: size)!
     }
+    
+    
+    
+    
+    
     
     
     public static func LatoSemiboldItalic(size: CGFloat) -> UIFont {
@@ -83,6 +88,35 @@ extension UIFont{
     public static func LatoBold(size: CGFloat) -> UIFont {
         return UIFont(name: "Lato-Bold", size: size)!
     }
+    
+    
+    //
+    public static func InterMedium(size: CGFloat) -> UIFont {
+        return UIFont(name: "Inter-Medium", size: size) ?? UIFont.systemFont(ofSize: size)
+    }
+    
+    public static func InterLight(size: CGFloat) -> UIFont {
+        return UIFont(name: "Inter-Light", size: size) ?? UIFont.systemFont(ofSize: size)
+    }
+    
+    
+    public static func InterBold(size: CGFloat) -> UIFont {
+        return UIFont(name: "Inter-Bold", size: size) ?? UIFont.systemFont(ofSize: size)
+    }
+    
+    public static func InterRegular(size: CGFloat) -> UIFont {
+        return UIFont(name: "Inter-Regular", size: size) ?? UIFont.systemFont(ofSize: size)
+    }
+    
+    
+    public static func InterSemiBold(size: CGFloat) -> UIFont {
+        return UIFont(name: "Inter-SemiBold", size: size) ?? UIFont.systemFont(ofSize: size)
+    }
+    
+    
+    
+    
+    
     
     
     

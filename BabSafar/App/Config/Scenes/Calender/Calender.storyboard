@@ -10,6 +10,9 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <array key="Inter-Bold.ttf">
+            <string>Inter-Bold</string>
+        </array>
         <array key="Lato-Bold.ttf">
             <string>Lato-Bold</string>
         </array>
@@ -369,17 +372,25 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="loader" translatesAutoresizingMaskIntoConstraints="NO" id="y6x-vS-dyH">
-                                <rect key="frame" x="156.66666666666666" y="386" width="80" height="80"/>
+                                <rect key="frame" x="136.66666666666666" y="366" width="119.99999999999997" height="120"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="80" id="PeO-2K-5Lj"/>
-                                    <constraint firstAttribute="width" constant="80" id="w0H-R0-mZ2"/>
+                                    <constraint firstAttribute="height" constant="120" id="PeO-2K-5Lj"/>
+                                    <constraint firstAttribute="width" constant="120" id="w0H-R0-mZ2"/>
                                 </constraints>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Booking Sucess" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CqG-fL-IzP">
+                                <rect key="frame" x="126.33333333333333" y="491" width="140.66666666666669" height="22"/>
+                                <fontDescription key="fontDescription" name="Inter-Bold" family="Inter" pointSize="18"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6pJ-Ld-bfC"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="CqG-fL-IzP" firstAttribute="centerX" secondItem="y6x-vS-dyH" secondAttribute="centerX" id="9xv-yf-Lb0"/>
                             <constraint firstItem="y6x-vS-dyH" firstAttribute="centerY" secondItem="54z-9V-ViW" secondAttribute="centerY" id="JdV-Kt-zX3"/>
+                            <constraint firstItem="CqG-fL-IzP" firstAttribute="top" secondItem="y6x-vS-dyH" secondAttribute="bottom" constant="5" id="bPW-7v-AYE"/>
                             <constraint firstItem="y6x-vS-dyH" firstAttribute="centerX" secondItem="54z-9V-ViW" secondAttribute="centerX" id="iLz-Xo-VC8"/>
                         </constraints>
                     </view>
@@ -390,6 +401,60 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MoC-S1-qoM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2844" y="1742"/>
+        </scene>
+        <!--Booking ConfirmedVC-->
+        <scene sceneID="hs8-7R-0bK">
+            <objects>
+                <viewController storyboardIdentifier="BookingConfirmedVC" id="Xsl-p7-pjO" customClass="BookingConfirmedVC" customModule="BabSafar" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="72L-zw-9o0">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XYV-81-diZ">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qPS-Qe-16L" customClass="NavBar" customModule="BabSafar" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="393" height="130"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="130" id="A3d-aL-90L"/>
+                                        </constraints>
+                                    </view>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="YyK-FP-cLK">
+                                        <rect key="frame" x="0.0" y="130" width="393" height="722"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    </tableView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="YyK-FP-cLK" firstAttribute="leading" secondItem="XYV-81-diZ" secondAttribute="leading" id="523-it-uxM"/>
+                                    <constraint firstAttribute="trailing" secondItem="qPS-Qe-16L" secondAttribute="trailing" id="Mvg-vx-gEg"/>
+                                    <constraint firstItem="qPS-Qe-16L" firstAttribute="top" secondItem="XYV-81-diZ" secondAttribute="top" id="PZf-IP-TFy"/>
+                                    <constraint firstAttribute="trailing" secondItem="YyK-FP-cLK" secondAttribute="trailing" id="VoX-iu-Wii"/>
+                                    <constraint firstItem="YyK-FP-cLK" firstAttribute="top" secondItem="qPS-Qe-16L" secondAttribute="bottom" id="YNG-BP-4DX"/>
+                                    <constraint firstAttribute="bottom" secondItem="YyK-FP-cLK" secondAttribute="bottom" id="h0j-l1-X5x"/>
+                                    <constraint firstItem="qPS-Qe-16L" firstAttribute="leading" secondItem="XYV-81-diZ" secondAttribute="leading" id="pWh-EW-0L6"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="Lp6-2N-klP"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Lp6-2N-klP" firstAttribute="trailing" secondItem="XYV-81-diZ" secondAttribute="trailing" id="Idq-sa-1xg"/>
+                            <constraint firstItem="XYV-81-diZ" firstAttribute="top" secondItem="72L-zw-9o0" secondAttribute="top" id="MjQ-CA-KdS"/>
+                            <constraint firstItem="XYV-81-diZ" firstAttribute="leading" secondItem="Lp6-2N-klP" secondAttribute="leading" id="ZlG-MX-Bcx"/>
+                            <constraint firstAttribute="bottom" secondItem="XYV-81-diZ" secondAttribute="bottom" id="lfC-gu-jUk"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="commonTableView" destination="YyK-FP-cLK" id="Zgz-4c-2wg"/>
+                        <outlet property="navBar" destination="qPS-Qe-16L" id="WID-Rz-Qq1"/>
+                        <outlet property="navHeight" destination="A3d-aL-90L" id="v3c-bb-vUF"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nT7-H4-FBP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1121" y="2461"/>
         </scene>
     </scenes>
     <resources>

@@ -47,7 +47,7 @@ class InsurenceSearchTVCell: TableViewCell, FastrackAirlineListViewModelDelegate
         cityViewModel = SelectCityViewModel(self)
         airlineViewModel = FastrackAirlineListViewModel(self)
         IQKeyboardManager.shared().keyboardDistanceFromTextField = 100 // Adjust this value as needed
-
+        
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -82,7 +82,7 @@ class InsurenceSearchTVCell: TableViewCell, FastrackAirlineListViewModelDelegate
                 setupTV()
                 fromCityTVHeight.constant = 0
                 toCityTVHeight.constant = 0
-                CallShowCityListAPI(str: "")
+              //  CallShowCityListAPI(str: "")
                 
             }else {
                 
@@ -97,7 +97,7 @@ class InsurenceSearchTVCell: TableViewCell, FastrackAirlineListViewModelDelegate
                 setupTV()
                 fromCityTVHeight.constant = 0
                 toCityTVHeight.constant = 0
-                self.CALL_GET_AIRLINE_LIST_API(str: "")
+               // self.CALL_GET_AIRLINE_LIST_API(str: "")
             }
         }
         
@@ -135,11 +135,13 @@ class InsurenceSearchTVCell: TableViewCell, FastrackAirlineListViewModelDelegate
     
     @IBAction func didTapOnClearFromTfBtnAction(_ sender: Any) {
         fromTF.text = ""
+        fromTF.becomeFirstResponder()
     }
     
     
     @IBAction func didTapOnClearToTFBtnAction(_ sender: Any) {
         toTF.text = ""
+        toTF.becomeFirstResponder()
     }
     
     
@@ -177,7 +179,7 @@ extension InsurenceSearchTVCell:SelectCityViewModelProtocal {
     
     @objc func textFiledEditingChanged(_ textField:UITextField) {
         
-    
+        
         if let journeyType = defaults.string(forKey: UserDefaultsKeys.dashboardTapSelected) {
             if journeyType == "Insurence" {
                 if textField == fromTF {
@@ -251,10 +253,10 @@ extension InsurenceSearchTVCell:SelectCityViewModelProtocal {
     }
     
     
-   
     
     
-   
+    
+    
     
     
 }
@@ -272,7 +274,7 @@ extension InsurenceSearchTVCell {
     
     func ShowCityList(response: [SelectCityModel]) {
         cityList = response
-       
+        
         if txtbool == true {
             fromCityTVHeight.constant = CGFloat(cityList.count * 80)
             DispatchQueue.main.async {[self] in
@@ -429,7 +431,7 @@ extension InsurenceSearchTVCell:UITableViewDelegate, UITableViewDataSource {
                         defaults.set("\(airlineList[indexPath.row].city ?? "") (\(airlineList[indexPath.row].code ?? ""))", forKey: UserDefaultsKeys.frfromairport)
                         defaults.set(airlineList[indexPath.row].city ?? "", forKey: UserDefaultsKeys.frfromcityname)
                         defaults.set(airlineList[indexPath.row].fast_track_id ?? "", forKey: UserDefaultsKeys.fromfstcode)
-
+                        
                     }
                     
                     
@@ -496,7 +498,7 @@ extension InsurenceSearchTVCell {
         let currentString: NSString = textField.text! as NSString
         let newString: NSString =  currentString.replacingCharacters(in: range, with: string) as NSString
         return newString.length <= maxLength
-      //  return true
+        //  return true
     }
     
     

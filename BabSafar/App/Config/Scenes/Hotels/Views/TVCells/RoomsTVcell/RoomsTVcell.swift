@@ -11,9 +11,12 @@ protocol RoomsTVcellDelegate {
     func didTapOnRoomsBtn(cell:RoomsTVcell)
     func didTapOnHotelsDetailsBtn(cell:RoomsTVcell)
     func didTapOnAmenitiesBtn(cell:RoomsTVcell)
+    func didTapOnCancellationPolicyBtnAction(cell:NewRoomDetailsTVCell)
+    func didTapOnSelectRoomBtnAction(cell:NewRoomDetailsTVCell)
 }
 
-class RoomsTVcell: TableViewCell {
+class RoomsTVcell: TableViewCell, NewRoomTVCellDelegate {
+    
     
     @IBOutlet weak var holderView: UIView!
     @IBOutlet weak var roomsView: UIView!
@@ -86,7 +89,7 @@ class RoomsTVcell: TableViewCell {
     
     
     func setuTV() {
-        roomDetailsTV.register(UINib(nibName: "RoomDetailsTVCell", bundle: nil), forCellReuseIdentifier: "rooms")
+        roomDetailsTV.register(UINib(nibName: "NewRoomTVCell", bundle: nil), forCellReuseIdentifier: "rooms")
         roomDetailsTV.register(UINib(nibName: "TitleLabelTVCell", bundle: nil), forCellReuseIdentifier: "cell1")
         roomDetailsTV.register(UINib(nibName: "TitleLabelTVCell", bundle: nil), forCellReuseIdentifier: "cell2")
         roomDetailsTV.register(UINib(nibName: "TitleLabelTVCell", bundle: nil), forCellReuseIdentifier: "cell3")
@@ -138,6 +141,17 @@ class RoomsTVcell: TableViewCell {
         delegate?.didTapOnAmenitiesBtn(cell:self)
     }
     
+    
+    
+    func didTapOnCancellationPolicyBtnAction(cell: NewRoomDetailsTVCell) {
+        delegate?.didTapOnCancellationPolicyBtnAction(cell: cell)
+    }
+    
+    func didTapOnSelectRoomBtnAction(cell: NewRoomDetailsTVCell) {
+        delegate?.didTapOnSelectRoomBtnAction(cell: cell)
+    }
+    
+    
 }
 
 
@@ -171,27 +185,17 @@ extension RoomsTVcell: UITableViewDataSource ,UITableViewDelegate {
         var ccell = UITableViewCell()
         
         if self.key == "rooms" {
-            if let cell = tableView.dequeueReusableCell(withIdentifier: "rooms") as? RoomDetailsTVCell {
+            if let cell = tableView.dequeueReusableCell(withIdentifier: "rooms") as? NewRoomTVCell {
                 cell.selectionStyle = .none
-                
-                
+                cell.delegate = self
                 if indexPath.section < roomsDetails.count && indexPath.row < roomsDetails[indexPath.section].count {
                     
                     let section = indexPath.section
-                    let row = indexPath.row
-                    let data = roomsDetails[section][row]
+                    let data = roomsDetails[section]
+                    cell.room = data
                     
-                    cell.roomTypelbl.text = data.name ?? ""
-                    cell.adultslbl.text = "\(data.adults ?? 0) Adults"
-                    cell.noofRoomslbl.text = "No Of Rooms :\(data.rooms ?? 0) "
-                    cell.kwdlbl.text = "\(data.currency ?? ""):\(data.net ?? "")"
-                    cell.roomImg.sd_setImage(with: URL(string: data.image ?? "" ), placeholderImage:UIImage(contentsOfFile:"placeholder.png"))
-                    if data.refund == true {
-                        cell.refundableView.isHidden = false
-                    }
-                    
-                    cell.ratekey = data.rateKey ?? ""
-                    
+                    cell.tvheight.constant = CGFloat(cell.room.count * 101)
+                    cell.roomInfoTV.reloadData()
                     
                 } else {
                     print("Index out of range error: indexPath = \(indexPath)")
@@ -226,35 +230,35 @@ extension RoomsTVcell: UITableViewDataSource ,UITableViewDelegate {
     
     
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-       
-        if self.key == "rooms" {
-            if let cell = tableView.cellForRow(at: indexPath) as? RoomDetailsTVCell {
-                
-                if indexPath.section < roomsDetails.count && indexPath.row < roomsDetails[indexPath.section].count {
-                    selectedrRateKeyArray = cell.ratekey
-                } else {
-                    print("Index out of range")
-                }
-                
-                print(selectedrRateKeyArray)
-                cell.radioImg.image = UIImage(named: "radioSelected")
-                NotificationCenter.default.post(name: NSNotification.Name("showBookNowBtn"), object: nil)
-                
-            }
-        }
-        
-    }
-    
-    
-    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        if self.key == "rooms" {
-            if let cell = tableView.cellForRow(at: indexPath) as? RoomDetailsTVCell {
-                cell.radioImg.image = UIImage(named: "radioUnselected")
-            }
-        }
-        
-    }
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//
+//        if self.key == "rooms" {
+//            if let cell = tableView.cellForRow(at: indexPath) as? RoomDetailsTVCell {
+//
+//                if indexPath.section < roomsDetails.count && indexPath.row < roomsDetails[indexPath.section].count {
+//                    selectedrRateKeyArray = cell.ratekey
+//                } else {
+//                    print("Index out of range")
+//                }
+//
+//                print(selectedrRateKeyArray)
+//                cell.radioImg.image = UIImage(named: "radioSelected")
+//                NotificationCenter.default.post(name: NSNotification.Name("showBookNowBtn"), object: nil)
+//
+//            }
+//        }
+//
+//    }
+//
+//
+//    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+//        if self.key == "rooms" {
+//            if let cell = tableView.cellForRow(at: indexPath) as? RoomDetailsTVCell {
+//                cell.radioImg.image = UIImage(named: "radioUnselected")
+//            }
+//        }
+//
+//    }
     
     
 }

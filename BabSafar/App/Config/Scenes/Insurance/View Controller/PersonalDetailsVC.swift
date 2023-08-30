@@ -7,7 +7,8 @@
 
 import UIKit
 
-class PersonalDetailsVC: BaseTableVC, InsurancePreprocessBookingViewModelDelegate {
+class PersonalDetailsVC: BaseTableVC, InsurancePreprocessBookingViewModelDelegate, processPassengerDetailViewModelDelegate {
+    
     
     @IBOutlet var holderView: UIView!
     
@@ -22,10 +23,25 @@ class PersonalDetailsVC: BaseTableVC, InsurancePreprocessBookingViewModelDelegat
     var nationalityCode = String()
     var billingCountryCode = String()
     var callpaymentbool = true
+    var flightDetailsFieldsBool = true
     var vm:InsurancePreprocessBookingViewModel?
+    var vm1:processPassengerDetailViewModel?
     var totalFare = String()
     var baseFare = String()
     var tax = String()
+    
+    
+    var flpnr_number = String()
+    var fldept_flightcode = String()
+    var fldept_time = String()
+    var flarrival_flightcode = String()
+    var flarrival_time = String()
+    var plan_code = String()
+    var plan_ssrcode = String()
+    var token = String()
+    var app_reference = String()
+    var price = ""
+    
     
     static var newInstance: PersonalDetailsVC? {
         let storyboard = UIStoryboard(name: Storyboard.Insurance.name,
@@ -54,6 +70,7 @@ class PersonalDetailsVC: BaseTableVC, InsurancePreprocessBookingViewModelDelegat
         // Do any additional setup after loading the view.
         setupUI()
         vm = InsurancePreprocessBookingViewModel(self)
+        vm1 = processPassengerDetailViewModel(self)
     }
     
     
@@ -163,6 +180,9 @@ class PersonalDetailsVC: BaseTableVC, InsurancePreprocessBookingViewModelDelegat
     
     //MARK: - doneTimePicker cancelTimePicker  InsurenceFlightDetailsTVCell
     override func doneTimePicker(cell: InsurenceFlightDetailsTVCell) {
+        fldept_time = cell.depTimeTF.text ?? ""
+        flarrival_time = cell.arrivalTimeTF.text ?? ""
+        
         self.view.endEditing(true)
     }
     
@@ -175,16 +195,20 @@ class PersonalDetailsVC: BaseTableVC, InsurancePreprocessBookingViewModelDelegat
     
     //MARK: - didTapOnCountryCodeBtn
     override func didTapOnCountryCodeBtn(cell: ContactInformationTVCell) {
+        
         self.nationalityCode = cell.nationalityCode
-        self.countryCode = cell.isoCountryCode
+        self.countryCode = cell.countrycodeTF.text ?? ""
         self.billingCountryCode = cell.isoCountryCode
+        
     }
     
     override func editingTextField(tf:UITextField){
         
         if tf.tag == 1 {
             payemail = tf.text ?? ""
-        }else {
+        }else if tf.tag == 55 {
+            flpnr_number = tf.text ?? ""
+        }else{
             paymobile = tf.text ?? ""
         }
     }
@@ -220,7 +244,20 @@ extension PersonalDetailsVC {
         searchInputs = response.search_params
         totalFare = "\(response.total_fare?.rounded() ?? 0.0)"
         baseFare = "\(response.base_fare?.rounded() ?? 0.0)"
-        tax = "\(response.tax?.rounded() ?? 0.0)"
+        tax = "\(response.tax ?? 0)"
+        
+        plan_code = response.selected_package?.planCode ?? ""
+        plan_ssrcode = response.selected_package?.sSRFeeCode ?? ""
+        token = iplandetails
+        app_reference = response.app_reference ?? ""
+        price = "\(response.total_fare?.rounded() ?? 0.0)"
+        grandTotal = "\(response.fare_breakdown?.currencyCode ?? ""):\(response.total_fare?.rounded() ?? 0.0)"
+        //        var plan_code = String()
+        //        var plan_ssrcode = String()
+        //        var plan_details_token = String()
+        //        var app_reference = String()
+        //
+        
         
         DispatchQueue.main.async {
             self.setupTV()
@@ -254,17 +291,14 @@ extension PersonalDetailsVC {
 
 
 extension PersonalDetailsVC {
-    func submitBtnTap(){
-        checkTravellerDetailsFields()
-        checkFlightDetailsFields()
-    }
+    
     
     
     
     func checkTravellerDetailsFields() {
         
         payload.removeAll()
-       
+        
         
         var textfilldshouldmorethan3lettersBool = true
         // Assuming you have a positionsCount variable that holds the number of cells in the table view
@@ -308,7 +342,7 @@ extension PersonalDetailsVC {
                     showToast(message: "Enter More Than 3 Chars")
                     cell.lnameView.layer.borderColor = UIColor.red.cgColor
                     textfilldshouldmorethan3lettersBool = false
-                   
+                    
                 }else {
                     // Textfield is not empty
                     callpaymentbool = true
@@ -363,22 +397,6 @@ extension PersonalDetailsVC {
         }
         
         
-        let mrtitleArray = travelerArray.compactMap({$0.mrtitle})
-        let laedpassengerArray = travelerArray.compactMap({$0.laedpassenger})
-        let middlenameArray = travelerArray.compactMap({$0.middlename})
-        let passengertypeArray = travelerArray.compactMap({$0.passengertype})
-        let genderArray = travelerArray.compactMap({$0.gender})
-        let firstnameArray = travelerArray.compactMap({$0.firstName})
-        let lastNameArray = travelerArray.compactMap({$0.lastName})
-        let dobArray = travelerArray.compactMap({$0.dob})
-        let passportnoArray = travelerArray.compactMap({$0.passportno})
-        let nationalityArray = travelerArray.compactMap({$0.nationality})
-        let passportIssuingCountryArray = travelerArray.compactMap({$0.passportIssuingCountry})
-        let passportExpireDateArray = travelerArray.compactMap({$0.passportExpireDate})
-        let frequentFlyrNoArray = travelerArray.compactMap({$0.frequentFlyrNo})
-        let mealNameArray = travelerArray.compactMap({$0.meal})
-        let specialAssicintenceArray = travelerArray.compactMap({$0.specialAssicintence})
-        
         
     }
     
@@ -415,6 +433,7 @@ extension PersonalDetailsVC {
             } else {
                 // Textfield is not empty
                 callpaymentbool = true
+                
             }
             
             
@@ -442,6 +461,122 @@ extension PersonalDetailsVC {
             
         }
     }
+    
+    
+    func submitBtnTap(){
+        checkTravellerDetailsFields()
+        checkFlightDetailsFields()
+        
+        
+        if flightDetailsFieldsBool == false {
+            showToast(message: "Pleas fill all filelds in flight deatls section")
+        }else if callpaymentbool == false {
+            showToast(message: "Pleas fill all filelds in traveller details section")
+        }else if payemail.isEmpty == true {
+            showToast(message: "Enter Email Address")
+        }else if payemail.isValidEmail() == false {
+            showToast(message: "Enter Valid Email Address")
+        }else if countryCode == "" {
+            showToast(message: "Select Country Code")
+        }else if paymobile.isEmpty == true {
+            showToast(message: "Enter Mobile Number")
+        }else if mobilenoMaxLengthBool == false {
+            showToast(message: "Enter Valid Mobile Number")
+        }else {
+            callapiiiii()
+        }
+        
+        
+    }
+    
+    
+    
+    func callapiiiii() {
+        
+        let mrtitleArray = travelerArray.compactMap({$0.mrtitle})
+        //  let passengertypeArray = travelerArray.compactMap({$0.passengertype})
+        let firstnameArray = travelerArray.compactMap({$0.firstName})
+        let lastNameArray = travelerArray.compactMap({$0.lastName})
+        let dobArray = travelerArray.compactMap({$0.dob})
+        let passportnoArray = travelerArray.compactMap({$0.passportno})
+        let passportIssuingCountryArray = travelerArray.compactMap({$0.passportIssuingCountry})
+        let passportExpireDateArray = travelerArray.compactMap({$0.passportExpireDate})
+        let passportnationalityAraay = travelerArray.compactMap({$0.nationality})
+        
+        let mrtitleString = "[\"" + mrtitleArray.joined(separator: "\",\"") + "\"]"
+        let firstnameString = "[\"" + firstnameArray.joined(separator: "\",\"") + "\"]"
+        let lastNameString = "[\"" + lastNameArray.joined(separator: "\",\"") + "\"]"
+        let passengertypeString = "[\"" + passengertypeArray.joined(separator: "\",\"") + "\"]"
+        let dobArrayString = "[\"" + dobArray.joined(separator: "\",\"") + "\"]"
+        let passportnoArrayString = "[\"" + passportnoArray.joined(separator: "\",\"") + "\"]"
+        let passportIssuingCountryArrayString = "[\"" + passportIssuingCountryArray.joined(separator: "\",\"") + "\"]"
+        let passportExpireDateArrayString = "[\"" + passportExpireDateArray.joined(separator: "\",\"") + "\"]"
+        
+        
+        
+        payload.removeAll()
+        payload["search_id"] = isearchid
+        payload["flpnr_number"] = flpnr_number
+        payload["fldept_flightcode"] = defaults.string(forKey: UserDefaultsKeys.ifromlocid) ?? ""
+        payload["fldept_time"] = fldept_time
+        payload["flarrival_flightcode"] = defaults.string(forKey: UserDefaultsKeys.itolocid) ?? ""
+        payload["flarrival_time"] = flarrival_time
+        payload["type"] = passengertypeString
+        payload["title"] = mrtitleString
+        payload["first_name"] = firstnameString
+        payload["last_name"] = lastNameString
+        //   payload["gender"] = genderArray
+        payload["dob"] = dobArrayString
+        payload["passport_number"] = passportnoArrayString
+        payload["passport_issuing_country"] = passportIssuingCountryArrayString
+        payload["passport_expiry"] = passportExpireDateArrayString
+        payload["passport_nationality"] = passportIssuingCountryArray
+        payload["plan_code"] = plan_code
+        payload["plan_ssrcode"] = plan_ssrcode
+        payload["token"] = token
+        payload["booking_source"] = ibookingsource
+        payload["app_reference"] = app_reference
+        payload["contname"] = "Test"
+        payload["contemail"] = payemail
+        payload["contphonenmber"] = paymobile
+        
+        do{
+            
+            let jsonData = try JSONSerialization.data(withJSONObject: payload, options: JSONSerialization.WritingOptions.prettyPrinted)
+            let jsonStringData =  NSString(data: jsonData as Data, encoding: NSUTF8StringEncoding)! as String
+            
+            print(jsonStringData)
+            
+        }catch{
+            print(error.localizedDescription)
+        }
+        
+        vm1?.CALL_PROCESS_PASSENGER_API(dictParam: payload)
+        
+        
+    }
+    
+    
+    func processPassengerDetails(response: processPassengerDetailModel) {
+        gotoPaymentGatewayVC(tmpFlightPreBookingId: response.form_params?.app_reference ?? "",
+                             url: response.form_url ?? "",
+                             searchid: response.form_params?.search_id ?? "")
+    }
+    
+    
+    func gotoPaymentGatewayVC(tmpFlightPreBookingId:String,url:String,searchid:String) {
+        guard let vc = PaymentGatewayVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .fullScreen
+        vc.payload = payload
+        vc.grandTotalamount = grandTotal
+        vc.grand_total_Price = price
+        vc.tmpFlightPreBookingId = tmpFlightPreBookingId
+        vc.form_url_paymentSucess = url
+        vc.searchid = searchid
+        present(vc, animated: true)
+    }
+    
+    
 }
 
 

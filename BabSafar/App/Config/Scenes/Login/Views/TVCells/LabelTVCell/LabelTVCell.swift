@@ -33,8 +33,8 @@ class LabelTVCell: TableViewCell {
         
         holderView.backgroundColor = .WhiteColor
         
-        titlelbl.textColor = .AppLabelColor
-        titlelbl.font = UIFont.LatoRegular(size: 20)
+        titlelbl.textColor = .SubTitleColor
+        titlelbl.font = UIFont.LatoRegular(size: 16)
         titlelbl.numberOfLines = 0
         closeButton.isHidden = true
         
@@ -60,6 +60,13 @@ class LabelTVCell: TableViewCell {
         menuOptionImage.image = UIImage(named: cellInfo?.image ?? "")?.withRenderingMode(.alwaysOriginal).withTintColor(.AppCalenderDateSelectColor)
         
         switch cellInfo?.key {
+            
+            
+        case "bc":
+            titlelbl.textColor = .AppTabSelectColor
+            titlelbl.textAlignment = .center
+            titlelbl.font = .LatoBold(size: 16)
+            break
             
         case "showbtn":
             closeButton.isHidden = false
@@ -87,9 +94,9 @@ class LabelTVCell: TableViewCell {
             break
             
         case "booked":
-            titlelbl.font = UIFont.LatoRegular(size: 16)
+            titlelbl.font = UIFont.LatoRegular(size: 13)
             titlelbl.textColor = HexColor("#5B5B5B")
-            titlelbl.numberOfLines = 0
+            titlelbl.numberOfLines = 2
             titlelbl.textAlignment = .center
             lblLeftConstraint.constant = 30
             break

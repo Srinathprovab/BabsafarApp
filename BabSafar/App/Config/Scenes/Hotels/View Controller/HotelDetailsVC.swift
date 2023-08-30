@@ -39,21 +39,18 @@ class HotelDetailsVC: BaseTableVC, HotelDetailsViewModelDelegate {
     
     //MARK: - Loading function
     override func viewWillAppear(_ animated: Bool) {
-        bookNowView.isUserInteractionEnabled = false
-        bookNowView.alpha = 0.5
+        
+        addObserver()
         
         if screenHeight < 835 {
             navHeight.constant = 130
         }
         
-        
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("nointernet"), object: nil)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(showBookNowBtn), name: Notification.Name("showBookNowBtn"), object: nil)
-        
-        
         if callapibool == true{
+            
+            bookNowView.isUserInteractionEnabled = false
+            bookNowView.alpha = 0.5
+            
             holderView.isHidden = true
             callAPI()
         }
@@ -67,45 +64,7 @@ class HotelDetailsVC: BaseTableVC, HotelDetailsViewModelDelegate {
         bookNowView.alpha = 1
     }
     
-    //MARK: - nointernet
-    @objc func nointernet() {
-        guard let vc = NoInternetConnectionVC.newInstance.self else {return}
-        vc.modalPresentationStyle = .overCurrentContext
-        self.present(vc, animated: true)
-    }
-    //MARK: - CALL HOTEL DETAILS API
-    func callAPI() {
-        payload["booking_source"] = bookingsource
-        payload["hotel_id"] = hotelid
-        payload["search_id"] = hotelSearchId
-        viewmodel?.CALL_HOTEL_DETAILS_API(dictParam: payload)
-    }
     
-    
-    
-    
-    func hotelDetails(response: HotelSelectedDetailsModel) {
-        holderView.isHidden = false
-        hsearchid = response.params?.search_id ?? ""
-        htoken = response.hotel_details?.token ?? ""
-        htokenkey = response.hotel_details?.tokenKey ?? ""
-        hbookingsource = response.hotel_details?.booking_source ?? ""
-        
-        
-        hotelDetails = response.hotel_details
-        roomsDetails = response.hotel_details?.rooms ?? [[]]
-        images = response.hotel_details?.images ?? []
-        formatAmeArray = response.hotel_details?.format_ame ?? []
-        formatDesc = response.hotel_details?.format_desc ?? []
-        img = response.hotel_details?.image ?? ""
-        
-        
-        
-        
-        DispatchQueue.main.async {[self] in
-            setuptv()
-        }
-    }
     
     
     //MARK: - Loading function
@@ -139,7 +98,7 @@ class HotelDetailsVC: BaseTableVC, HotelDetailsViewModelDelegate {
         setuplabels(lbl: kwdlbl, text: "Book Now", textcolor: .WhiteColor, font: .LatoMedium(size: 18), align: .right)
         bookNowBtn.setTitle("", for: .normal)
         bookNowBtn.addTarget(self, action: #selector(didTapOnBookNowBtn(_:)), for: .touchUpInside)
-        commonTableView.registerTVCells(["HotelImagesTVCell","TitleLabelTVCell","EmptyTVCell","RoomsTVcell"])
+        commonTableView.registerTVCells(["HotelImagesTVCell","EmptyTVCell","RoomsTVcell"])
         
     }
     
@@ -149,13 +108,13 @@ class HotelDetailsVC: BaseTableVC, HotelDetailsViewModelDelegate {
     func setuptv() {
         tablerow.removeAll()
         
-        tablerow.append(TableRow(data:imgArray, image:img,cellType:.HotelImagesTVCell))
         tablerow.append(TableRow(title:hotelDetails?.name ?? "",
                                  subTitle: "\(hotelDetails?.address ?? "")|\(hotelDetails?.city_name ?? "")",
-                                 key: "hotel",
-                                 cellType:.TitleLabelTVCell))
+                                 data:imgArray,
+                                 image:img,
+                                 cellType:.HotelImagesTVCell))
         
-        tablerow.append(TableRow(height:20,bgColor: HexColor("#E6E8E7"),cellType:.EmptyTVCell))
+        
         tablerow.append(TableRow(moreData:roomsDetails,cellType:.RoomsTVcell))
         tablerow.append(TableRow(height:50,cellType:.EmptyTVCell))
         
@@ -204,16 +163,108 @@ class HotelDetailsVC: BaseTableVC, HotelDetailsViewModelDelegate {
     }
     
     //MARK: - didTapOnViewMapBtnAction
-    override func didTapOnViewMapBtnAction(cell: TitleLabelTVCell) {
-        guard let vc = MapViewVC.newInstance.self else {return}
-        vc.modalPresentationStyle = .fullScreen
-        callapibool = true
-        vc.lat = Double(hotelDetails?.latitude ?? "") ?? 0.0
-        vc.long = Double(hotelDetails?.longitude ?? "") ?? 0.0
-        vc.annotationtitle = hotelDetails?.name ?? ""
-        present(vc, animated: true)
+    //    override func didTapOnViewMapBtnAction(cell: TitleLabelTVCell) {
+    //        guard let vc = MapViewVC.newInstance.self else {return}
+    //        vc.modalPresentationStyle = .fullScreen
+    //        callapibool = true
+    //        vc.lat = Double(hotelDetails?.latitude ?? "") ?? 0.0
+    //        vc.long = Double(hotelDetails?.longitude ?? "") ?? 0.0
+    //        vc.annotationtitle = hotelDetails?.name ?? ""
+    //        present(vc, animated: true)
+    //    }
+    
+    
+    
+    override func didTapOnCancellationPolicyBtnAction(cell:NewRoomDetailsTVCell){
+        print("didTapOnCancellationPolicyBtnAction")
+    }
+    
+    override func didTapOnSelectRoomBtnAction(cell:NewRoomDetailsTVCell){
+        
+        bookNowView.isUserInteractionEnabled = true
+        bookNowView.alpha = 1
+        grandTotal = cell.pricelbl.text ?? ""
+        setuplabels(lbl: bookNowlbl, text: cell.pricelbl.text ?? "" , textcolor: .WhiteColor, font: .LatoMedium(size: 18), align: .left)
+        selectedrRateKeyArray = cell.ratekey
+        
+    }
+    
+    
+}
+
+
+
+extension HotelDetailsVC {
+    
+    
+    //MARK: - CALL HOTEL DETAILS API
+    func callAPI() {
+        payload["booking_source"] = bookingsource
+        payload["hotel_id"] = hotelid
+        payload["search_id"] = hotelSearchId
+        viewmodel?.CALL_HOTEL_DETAILS_API(dictParam: payload)
+    }
+    
+    func hotelDetails(response: HotelSelectedDetailsModel) {
+        holderView.isHidden = false
+        hsearchid = response.params?.search_id ?? ""
+        htoken = response.hotel_details?.token ?? ""
+        htokenkey = response.hotel_details?.tokenKey ?? ""
+        hbookingsource = response.hotel_details?.booking_source ?? ""
+        
+        
+        hotelDetails = response.hotel_details
+        roomsDetails = response.hotel_details?.rooms ?? [[]]
+        images = response.hotel_details?.images ?? []
+        formatAmeArray = response.hotel_details?.format_ame ?? []
+        formatDesc = response.hotel_details?.format_desc ?? []
+        img = response.hotel_details?.image ?? ""
+        
+        
+        
+        
+        DispatchQueue.main.async {[self] in
+            setuptv()
+        }
     }
     
 }
 
 
+
+extension HotelDetailsVC {
+    
+    func addObserver() {
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("offline"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(resultnil), name: NSNotification.Name("resultnil"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reload), name: Notification.Name("reload"), object: nil)
+        
+    }
+    
+    
+    @objc func reload() {
+        DispatchQueue.main.async {[self] in
+            callAPI()
+        }
+    }
+    
+    //MARK: - resultnil
+    @objc func resultnil() {
+        guard let vc = NoInternetConnectionVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.key = "noresult"
+        self.present(vc, animated: true)
+    }
+    
+    
+    //MARK: - nointernet
+    @objc func nointernet() {
+        guard let vc = NoInternetConnectionVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.key = "nointernet"
+        self.present(vc, animated: true)
+    }
+    
+    
+}

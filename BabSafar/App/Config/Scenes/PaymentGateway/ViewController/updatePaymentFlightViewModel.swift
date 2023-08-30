@@ -10,6 +10,7 @@ import Foundation
 
 protocol updatePaymentFlightViewModelDelegate : BaseViewModelProtocol {
     func updatePaymentSucess(response : updatePaymentFlightModel)
+    func sucerBookingSucess(response : secureBooingModel)
 }
 
 class updatePaymentFlightViewModel {
@@ -20,13 +21,13 @@ class updatePaymentFlightViewModel {
     }
 
 
-    func CALL_UPDATE_PAYMENT_API(dictParam: [String: Any]){
+    func CALL_UPDATE_PAYMENT_API(dictParam: [String: Any],endpoint:String){
         let parms = NSDictionary(dictionary:dictParam)
         print("Parameters = \(parms)")
 
         self.view?.showLoader()
 
-        ServiceManager.postOrPutApiCall(endPoint: ApiEndpoints.flightupdatePayment ,parameters: parms, resultType: updatePaymentFlightModel.self, p:dictParam) { sucess, result, errorMessage in
+        ServiceManager.postOrPutApiCall(endPoint: "payment_gateway/\(endpoint)" ,parameters: parms, resultType: updatePaymentFlightModel.self, p:dictParam) { sucess, result, errorMessage in
 
             DispatchQueue.main.async {
                 self.view?.hideLoader()
@@ -41,6 +42,34 @@ class updatePaymentFlightViewModel {
             }
         }
     }
+    
+    
+    
+    
+    func CALL_SECURE_BOOKING_API(dictParam: [String: Any],url:String){
+        let parms = NSDictionary(dictionary:dictParam)
+        print("Parameters = \(parms)")
+
+        self.view?.showLoader()
+
+        ServiceManager.postOrPutApiCall(endPoint: url ,parameters: parms, resultType: secureBooingModel.self, p:dictParam) { sucess, result, errorMessage in
+
+            DispatchQueue.main.async {
+                self.view?.hideLoader()
+                if sucess {
+                    guard let response = result else {return}
+                    self.view.sucerBookingSucess(response: response)
+                } else {
+                    
+                    self.view.showToast(message: errorMessage ?? "")
+                }
+            }
+        }
+    }
+    
+    
+    
+    
     
 
 }

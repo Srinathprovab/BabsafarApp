@@ -27,6 +27,8 @@ class SearchHotelsResultVC: BaseTableVC, UITextFieldDelegate, HotelSearchViewMod
 //    @IBOutlet weak var moveUpBtn: UIButton!
 //    @IBOutlet weak var hiddenView: UIView!
     
+    
+    
     let dropDown = DropDown()
     var lastContentOffset: CGFloat = 0
     var tablerow = [TableRow]()
@@ -204,7 +206,7 @@ class SearchHotelsResultVC: BaseTableVC, UITextFieldDelegate, HotelSearchViewMod
     @objc func didTapOnEditBtn(_ sender:UIButton){
         
         if let tabSelected = defaults.string(forKey: UserDefaultsKeys.dashboardTapSelected) {
-            if tabSelected == "flights" {
+            if tabSelected == "Flights" {
                 guard let vc = SearchFlightsVC.newInstance.self else {return}
                 vc.modalPresentationStyle = .overCurrentContext
                 present(vc, animated: true)
@@ -340,7 +342,9 @@ class SearchHotelsResultVC: BaseTableVC, UITextFieldDelegate, HotelSearchViewMod
     }
     
     @IBAction func didTapOnMapViewBtnAction(_ sender: Any) {
-        print("didTapOnMapViewBtnAction")
+        guard let vc = MapViewVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
     }
 }
 
@@ -372,6 +376,9 @@ extension SearchHotelsResultVC {
     
     
     func hoteSearchResult(response: HotelSearchModel) {
+        latArray.removeAll()
+        longArray.removeAll()
+        
         navView.isHidden = false
         filterBtnView.isHidden = false
         commonTableView.isHidden = false
@@ -383,6 +390,11 @@ extension SearchHotelsResultVC {
         hsearchid = String(response.search_id ?? 0)
         hbookingsource = response.booking_source ?? ""
         hotelSearchResult = response.data?.hotelSearchResult ?? []
+        
+        response.data?.hotelSearchResult?.forEach({ i in
+            latArray.append(i.latitude ?? "")
+            longArray.append(i.longitude ?? "")
+        })
         
         
         DispatchQueue.main.async {[self] in

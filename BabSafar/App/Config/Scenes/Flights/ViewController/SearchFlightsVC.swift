@@ -729,8 +729,8 @@ extension SearchFlightsVC {
             payload["from_loc_id"] = (userinfo["from_city"] as? String) ?? ""
             payload["to"] = (userinfo["toFlight"] as? String) ?? ""
             payload["to_loc_id"] = (userinfo["to_city"] as? String) ?? ""
-            payload["depature"] = convertDateFormat(inputDate: userinfo["travel_date"] as? String ?? "", f1: "yyyy-MM-dd", f2: "dd-MM-yyyy")
-            payload["return"] = convertDateFormat(inputDate: userinfo["return_date"] as? String ?? "", f1: "yyyy-MM-dd", f2: "dd-MM-yyyy")
+            payload["depature"] = userinfo["travel_date"] as? String ?? ""
+            payload["return"] = userinfo["return_date"] as? String ?? ""
             payload["out_jrn"] = "All Times"
             payload["ret_jrn"] = "All Times"
             payload["carrier"] = ""
