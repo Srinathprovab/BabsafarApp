@@ -72,13 +72,13 @@ extension BCFlightDetailsTVCell: UITableViewDelegate,UITableViewDataSource {
             cell.selectionStyle = .none
             
             let data = bookingFlightDetails[indexPath.row]
-            
+            cell.showLayover()
             cell.img.sd_setImage(with: URL(string: data.airline_image ?? ""), placeholderImage:UIImage(contentsOfFile:"placeholder.png"))
 
             cell.airlineNamelbl.text = data.airline_name ?? ""
             cell.flightNolbl.text = "(\(data.airline_code ?? "")-\(data.flight_number ?? ""))"
             cell.durationlbl.text = data.duration ?? ""
-            cell.stopslbl.text = data.is_layover ?? ""
+            cell.economylbl.text = data.cabin_class ?? ""
             
             cell.fromCitylbl.text = data.from_airport_name ?? ""
             cell.fromTimelbl.text = data.departure_time ?? ""
@@ -88,6 +88,14 @@ extension BCFlightDetailsTVCell: UITableViewDelegate,UITableViewDataSource {
             cell.tocitylbl.text = data.to_airport_name ?? ""
             cell.todatelbl.text = data.arrival_date ?? ""
 
+            cell.fromTerminallbl.text = "Terminal \(data.origin_terminal ?? "")"
+            cell.toTerminallbl.text = "Terminal \(data.destination_terminal ?? "")"
+            
+            
+            if indexPath.row == 0 {
+                //cell.hideLayover()
+            }
+            
             
             ccell = cell
         }

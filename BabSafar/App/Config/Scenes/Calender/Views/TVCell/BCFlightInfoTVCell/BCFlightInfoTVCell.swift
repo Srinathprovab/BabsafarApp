@@ -19,11 +19,16 @@ class BCFlightInfoTVCell: UITableViewCell {
     @IBOutlet weak var fromCitylbl: UILabel!
     @IBOutlet weak var fromdatelbl: UILabel!
     @IBOutlet weak var durationlbl: UILabel!
-    @IBOutlet weak var stopslbl: UILabel!
+    @IBOutlet weak var economylbl: UILabel!
     @IBOutlet weak var toTimelbl: UILabel!
     @IBOutlet weak var tocitylbl: UILabel!
     @IBOutlet weak var todatelbl: UILabel!
-//    @IBOutlet weak var pricelbl: UILabel!
+    @IBOutlet weak var fromTerminallbl: UILabel!
+    @IBOutlet weak var toTerminallbl: UILabel!
+    @IBOutlet weak var layoverView: UILabel!
+    @IBOutlet weak var layoverTimelbl: UILabel!
+    @IBOutlet weak var layoverHeight: NSLayoutConstraint!
+    
     
     
     override func awakeFromNib() {
@@ -37,6 +42,16 @@ class BCFlightInfoTVCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    
+    func hideLayover() {
+        layoverView.isHidden = true
+        layoverHeight.constant = 0
+    }
+    
+    func showLayover() {
+        layoverView.isHidden = true
+        layoverHeight.constant = 18
+    }
 
     
     
