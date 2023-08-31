@@ -67,28 +67,21 @@ class AddDeatilsOfTravellerTVCell: TableViewCell {
     @IBOutlet weak var fnameTF: UITextField!
     @IBOutlet weak var lnameTF: UITextField!
     @IBOutlet weak var dobTF: UITextField!
-    //@IBOutlet weak var nationalityTF: UITextField!
     @IBOutlet weak var passportnoTF: UITextField!
     @IBOutlet weak var passportIssuingCountryTF: UITextField!
     @IBOutlet weak var passportExpireDateTF: UITextField!
     @IBOutlet weak var titleView: UIView!
     @IBOutlet weak var titleTF: UITextField!
     @IBOutlet weak var nameTitleSelectBtn: UIButton!
-    //  @IBOutlet weak var passportNationalitySelectBtn: UIButton!
     @IBOutlet weak var passportIssueingCountrySelectBtn: UIButton!
     @IBOutlet weak var fnameView: UIView!
     @IBOutlet weak var lnameView: UIView!
     @IBOutlet weak var dobView: UIView!
-    // @IBOutlet weak var nationalityView: UIView!
     @IBOutlet weak var passportnoView: UIView!
     @IBOutlet weak var issuecountryView: UIView!
     @IBOutlet weak var passportexpireView: UIView!
-    
-    
     @IBOutlet weak var flyerNoTF: UITextField!
     @IBOutlet weak var flyerProgramTF: UITextField!
-    
-    
     @IBOutlet weak var flyerPgmBtn: UIButton!
     
     
@@ -216,6 +209,7 @@ class AddDeatilsOfTravellerTVCell: TableViewCell {
         
         
         if cellInfo?.title == "Adult 1" {
+            setAttributedText(str1: "Adult 1", str2: "  Lead Passanger")
             travelerArray[self.indexposition ].laedpassenger = "1"
             expandView()
             expandViewBool = false
@@ -773,5 +767,22 @@ extension AddDeatilsOfTravellerTVCell {
         let newString: NSString =  currentString.replacingCharacters(in: range, with: string) as NSString
         
         return newString.length <= maxLength
+    }
+    
+    func setAttributedText(str1:String,str2:String)  {
+        
+        let atter1 = [NSAttributedString.Key.foregroundColor:UIColor.AppLabelColor,NSAttributedString.Key.font:UIFont.LatoRegular(size: 14)] as [NSAttributedString.Key : Any]
+        let atter2 = [NSAttributedString.Key.foregroundColor:UIColor.AppCalenderDateSelectColor,NSAttributedString.Key.font:UIFont.LatoRegular(size: 10)] as [NSAttributedString.Key : Any]
+        
+        let atterStr1 = NSMutableAttributedString(string: str1, attributes: atter1)
+        let atterStr2 = NSMutableAttributedString(string: str2, attributes: atter2)
+        
+        
+        let combination = NSMutableAttributedString()
+        combination.append(atterStr1)
+        combination.append(atterStr2)
+        
+        titlelbl.attributedText = combination
+        
     }
 }

@@ -102,7 +102,7 @@ var pdetails:ProfileDetails?
 //MARK: - Baggage Info details 
 var farerulerefkey = String()
 var farerulesrefcontent = String()
-var fdbool = Bool()
+var fdbool = true
 
 
 //MARK: - HOME SCREEN

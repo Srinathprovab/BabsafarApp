@@ -164,6 +164,7 @@
 		65597F2C29782D06007056B3 /* FareBreakdownTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65597F2A29782D06007056B3 /* FareBreakdownTVCell.swift */; };
 		65597F3029782E1E007056B3 /* TitleLblTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65597F2E29782E1E007056B3 /* TitleLblTVCell.xib */; };
 		65597F3129782E1E007056B3 /* TitleLblTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65597F2F29782E1E007056B3 /* TitleLblTVCell.swift */; };
+		655FDA7F2AA08FFF007992C2 /* CancellationPolicyPopupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655FDA7E2AA08FFF007992C2 /* CancellationPolicyPopupVC.swift */; };
 		6561FF7B297FA27C0015864F /* Deail_code_list.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6561FF7A297FA27C0015864F /* Deail_code_list.swift */; };
 		6573050329811339007C1C5B /* SearchHotelTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6573050129811339007C1C5B /* SearchHotelTVCell.swift */; };
 		6573050429811339007C1C5B /* SearchHotelTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6573050229811339007C1C5B /* SearchHotelTVCell.xib */; };
@@ -372,8 +373,8 @@
 		65FE752E29B07B7500D2BC48 /* ViewFlightFromToDetailsTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FE752C29B07B7500D2BC48 /* ViewFlightFromToDetailsTVCell.swift */; };
 		65FE752F29B07B7500D2BC48 /* ViewFlightFromToDetailsTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65FE752D29B07B7500D2BC48 /* ViewFlightFromToDetailsTVCell.xib */; };
 		65FFFBB129B213D100E66B0D /* JourneySummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FFFBB029B213D100E66B0D /* JourneySummary.swift */; };
-		6D645A8848B5BB96DC61AB75 /* Pods_BabSafar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDED061DA1D1CC04908B44CD /* Pods_BabSafar.framework */; };
-		AB2EB2B76983D7B30C021E30 /* Pods_BabSafar_BabSafarUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AA3FF00EF05F67EC5970E8E /* Pods_BabSafar_BabSafarUITests.framework */; };
+		7944177E3E8A36FB61671829 /* Pods_BabSafarTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCEA8D8A0E14D737316B3E3 /* Pods_BabSafarTests.framework */; };
+		799C027E82C5387A6400ADD3 /* Pods_BabSafar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08F89F6A274BBCB309B2C7A5 /* Pods_BabSafar.framework */; };
 		BF45B3652889067400DAB201 /* TextfieldTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF45B3632889067400DAB201 /* TextfieldTVCell.swift */; };
 		BF45B3662889067400DAB201 /* TextfieldTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF45B3642889067400DAB201 /* TextfieldTVCell.xib */; };
 		BF45B36A2889069300DAB201 /* ButtonTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF45B3682889069300DAB201 /* ButtonTVCell.swift */; };
@@ -615,7 +616,7 @@
 		BF9C1F7128A212ED0080BCA0 /* AboutUsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9C1F7028A212ED0080BCA0 /* AboutUsVC.swift */; };
 		BF9C1F7428A2183B0080BCA0 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF9C1F7228A2180D0080BCA0 /* WebKit.framework */; };
 		BF9C200528A25F530080BCA0 /* FlightListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9C200428A25F530080BCA0 /* FlightListModel.swift */; };
-		D9648D782989E825350E3C1E /* Pods_BabSafarTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E33241F8804C804EDC444CB /* Pods_BabSafarTests.framework */; };
+		CFFC9302480C85155B87B46D /* Pods_BabSafar_BabSafarUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A876EF9E3D1A1D3B4496D8CE /* Pods_BabSafar_BabSafarUITests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -636,10 +637,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0A1A9F3A3281F9A236B5B078 /* Pods-BabSafar.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BabSafar.debug.xcconfig"; path = "Target Support Files/Pods-BabSafar/Pods-BabSafar.debug.xcconfig"; sourceTree = "<group>"; };
-		1E33241F8804C804EDC444CB /* Pods_BabSafarTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BabSafarTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		313EF408E8BC3BAA3C362692 /* Pods-BabSafar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BabSafar.release.xcconfig"; path = "Target Support Files/Pods-BabSafar/Pods-BabSafar.release.xcconfig"; sourceTree = "<group>"; };
-		3AA3FF00EF05F67EC5970E8E /* Pods_BabSafar_BabSafarUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BabSafar_BabSafarUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		08F89F6A274BBCB309B2C7A5 /* Pods_BabSafar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BabSafar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1DD20A62EA61F875609206CD /* Pods-BabSafar-BabSafarUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BabSafar-BabSafarUITests.release.xcconfig"; path = "Target Support Files/Pods-BabSafar-BabSafarUITests/Pods-BabSafar-BabSafarUITests.release.xcconfig"; sourceTree = "<group>"; };
+		445796855D6486BDE97E9982 /* Pods-BabSafarTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BabSafarTests.debug.xcconfig"; path = "Target Support Files/Pods-BabSafarTests/Pods-BabSafarTests.debug.xcconfig"; sourceTree = "<group>"; };
+		5472D4D3CF7BA9349114A2B6 /* Pods-BabSafar-BabSafarUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BabSafar-BabSafarUITests.debug.xcconfig"; path = "Target Support Files/Pods-BabSafar-BabSafarUITests/Pods-BabSafar-BabSafarUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		5DCEA8D8A0E14D737316B3E3 /* Pods_BabSafarTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BabSafarTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		650039DB2936038B00411403 /* BabSafar.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BabSafar.xcdatamodel; sourceTree = "<group>"; };
 		6501E011295C533E007E9E3B /* HotelCityListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotelCityListModel.swift; sourceTree = "<group>"; };
 		6501E013295C5424007E9E3B /* HotelCitySearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotelCitySearchViewModel.swift; sourceTree = "<group>"; };
@@ -798,6 +800,7 @@
 		65597F2A29782D06007056B3 /* FareBreakdownTVCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FareBreakdownTVCell.swift; sourceTree = "<group>"; };
 		65597F2E29782E1E007056B3 /* TitleLblTVCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TitleLblTVCell.xib; sourceTree = "<group>"; };
 		65597F2F29782E1E007056B3 /* TitleLblTVCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitleLblTVCell.swift; sourceTree = "<group>"; };
+		655FDA7E2AA08FFF007992C2 /* CancellationPolicyPopupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancellationPolicyPopupVC.swift; sourceTree = "<group>"; };
 		6561FF7A297FA27C0015864F /* Deail_code_list.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Deail_code_list.swift; sourceTree = "<group>"; };
 		6573050129811339007C1C5B /* SearchHotelTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHotelTVCell.swift; sourceTree = "<group>"; };
 		6573050229811339007C1C5B /* SearchHotelTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchHotelTVCell.xib; sourceTree = "<group>"; };
@@ -1008,8 +1011,9 @@
 		65FE752C29B07B7500D2BC48 /* ViewFlightFromToDetailsTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewFlightFromToDetailsTVCell.swift; sourceTree = "<group>"; };
 		65FE752D29B07B7500D2BC48 /* ViewFlightFromToDetailsTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ViewFlightFromToDetailsTVCell.xib; sourceTree = "<group>"; };
 		65FFFBB029B213D100E66B0D /* JourneySummary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JourneySummary.swift; sourceTree = "<group>"; };
-		A2E12BD8135C36B111DB44EA /* Pods-BabSafar-BabSafarUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BabSafar-BabSafarUITests.release.xcconfig"; path = "Target Support Files/Pods-BabSafar-BabSafarUITests/Pods-BabSafar-BabSafarUITests.release.xcconfig"; sourceTree = "<group>"; };
-		AA04BBE647C2890170460791 /* Pods-BabSafarTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BabSafarTests.debug.xcconfig"; path = "Target Support Files/Pods-BabSafarTests/Pods-BabSafarTests.debug.xcconfig"; sourceTree = "<group>"; };
+		9B46CF1FA9D99FC0839942DF /* Pods-BabSafar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BabSafar.release.xcconfig"; path = "Target Support Files/Pods-BabSafar/Pods-BabSafar.release.xcconfig"; sourceTree = "<group>"; };
+		A876EF9E3D1A1D3B4496D8CE /* Pods_BabSafar_BabSafarUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BabSafar_BabSafarUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B2CEE844C2069EED8A7FE644 /* Pods-BabSafarTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BabSafarTests.release.xcconfig"; path = "Target Support Files/Pods-BabSafarTests/Pods-BabSafarTests.release.xcconfig"; sourceTree = "<group>"; };
 		BF2AF95B28C0B0B200B509BC /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF45B3632889067400DAB201 /* TextfieldTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextfieldTVCell.swift; sourceTree = "<group>"; };
 		BF45B3642889067400DAB201 /* TextfieldTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextfieldTVCell.xib; sourceTree = "<group>"; };
@@ -1259,9 +1263,7 @@
 		BF9C1F7028A212ED0080BCA0 /* AboutUsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutUsVC.swift; sourceTree = "<group>"; };
 		BF9C1F7228A2180D0080BCA0 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		BF9C200428A25F530080BCA0 /* FlightListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightListModel.swift; sourceTree = "<group>"; };
-		D72FD4D6EB2158659051BA31 /* Pods-BabSafarTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BabSafarTests.release.xcconfig"; path = "Target Support Files/Pods-BabSafarTests/Pods-BabSafarTests.release.xcconfig"; sourceTree = "<group>"; };
-		DDED061DA1D1CC04908B44CD /* Pods_BabSafar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BabSafar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E189DE62BECB988EA1C5E84A /* Pods-BabSafar-BabSafarUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BabSafar-BabSafarUITests.debug.xcconfig"; path = "Target Support Files/Pods-BabSafar-BabSafarUITests/Pods-BabSafar-BabSafarUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		EF4CAB33ED3A97C6B89842DF /* Pods-BabSafar.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BabSafar.debug.xcconfig"; path = "Target Support Files/Pods-BabSafar/Pods-BabSafar.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1270,7 +1272,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BF9C1F7428A2183B0080BCA0 /* WebKit.framework in Frameworks */,
-				6D645A8848B5BB96DC61AB75 /* Pods_BabSafar.framework in Frameworks */,
+				799C027E82C5387A6400ADD3 /* Pods_BabSafar.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1278,7 +1280,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D9648D782989E825350E3C1E /* Pods_BabSafarTests.framework in Frameworks */,
+				7944177E3E8A36FB61671829 /* Pods_BabSafarTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1286,7 +1288,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AB2EB2B76983D7B30C021E30 /* Pods_BabSafar_BabSafarUITests.framework in Frameworks */,
+				CFFC9302480C85155B87B46D /* Pods_BabSafar_BabSafarUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2591,12 +2593,12 @@
 		81D605A645B086954A65ED45 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				0A1A9F3A3281F9A236B5B078 /* Pods-BabSafar.debug.xcconfig */,
-				313EF408E8BC3BAA3C362692 /* Pods-BabSafar.release.xcconfig */,
-				E189DE62BECB988EA1C5E84A /* Pods-BabSafar-BabSafarUITests.debug.xcconfig */,
-				A2E12BD8135C36B111DB44EA /* Pods-BabSafar-BabSafarUITests.release.xcconfig */,
-				AA04BBE647C2890170460791 /* Pods-BabSafarTests.debug.xcconfig */,
-				D72FD4D6EB2158659051BA31 /* Pods-BabSafarTests.release.xcconfig */,
+				EF4CAB33ED3A97C6B89842DF /* Pods-BabSafar.debug.xcconfig */,
+				9B46CF1FA9D99FC0839942DF /* Pods-BabSafar.release.xcconfig */,
+				5472D4D3CF7BA9349114A2B6 /* Pods-BabSafar-BabSafarUITests.debug.xcconfig */,
+				1DD20A62EA61F875609206CD /* Pods-BabSafar-BabSafarUITests.release.xcconfig */,
+				445796855D6486BDE97E9982 /* Pods-BabSafarTests.debug.xcconfig */,
+				B2CEE844C2069EED8A7FE644 /* Pods-BabSafarTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -2608,9 +2610,9 @@
 				65D6A3C929F4FB2A00AFAF44 /* FreshchatSDK.xcframework */,
 				BF2AF95B28C0B0B200B509BC /* Alamofire.framework */,
 				BF9C1F7228A2180D0080BCA0 /* WebKit.framework */,
-				DDED061DA1D1CC04908B44CD /* Pods_BabSafar.framework */,
-				3AA3FF00EF05F67EC5970E8E /* Pods_BabSafar_BabSafarUITests.framework */,
-				1E33241F8804C804EDC444CB /* Pods_BabSafarTests.framework */,
+				08F89F6A274BBCB309B2C7A5 /* Pods_BabSafar.framework */,
+				A876EF9E3D1A1D3B4496D8CE /* Pods_BabSafar_BabSafarUITests.framework */,
+				5DCEA8D8A0E14D737316B3E3 /* Pods_BabSafarTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -2933,6 +2935,7 @@
 				65FBA467294DF6C500B92504 /* AddRoomsGuestsVC.swift */,
 				6524D52129E3D01C001621CB /* AddRoomsVCViewController.swift */,
 				65EB1FDB2A0B872F00CA06E7 /* MapViewVC.swift */,
+				655FDA7E2AA08FFF007992C2 /* CancellationPolicyPopupVC.swift */,
 			);
 			path = "View Controller";
 			sourceTree = "<group>";
@@ -3916,12 +3919,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BF94FC802886901200778946 /* Build configuration list for PBXNativeTarget "BabSafar" */;
 			buildPhases = (
-				A0E32A822D245C38F9FC6704 /* [CP] Check Pods Manifest.lock */,
+				088D89B3852076839CA3F2F1 /* [CP] Check Pods Manifest.lock */,
 				BF94FC522886901000778946 /* Sources */,
 				BF94FC532886901000778946 /* Frameworks */,
 				BF94FC542886901000778946 /* Resources */,
-				8932D5C0A39D2337CEA81430 /* [CP] Embed Pods Frameworks */,
-				976C324EAB2372D02543A2EF /* [CP] Copy Pods Resources */,
+				59BBD34C69462AE6A74788AB /* [CP] Embed Pods Frameworks */,
+				E6CB56E918D3007A9B6E37F5 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -3936,7 +3939,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BF94FC832886901200778946 /* Build configuration list for PBXNativeTarget "BabSafarTests" */;
 			buildPhases = (
-				2B3D75842D71451E7C1B6306 /* [CP] Check Pods Manifest.lock */,
+				0852877DD0F569C044585F7D /* [CP] Check Pods Manifest.lock */,
 				BF94FC682886901200778946 /* Sources */,
 				BF94FC692886901200778946 /* Frameworks */,
 				BF94FC6A2886901200778946 /* Resources */,
@@ -3955,12 +3958,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BF94FC862886901200778946 /* Build configuration list for PBXNativeTarget "BabSafarUITests" */;
 			buildPhases = (
-				416630802BFA1A3C28EA7FE5 /* [CP] Check Pods Manifest.lock */,
+				A320F903A460C36E92158D59 /* [CP] Check Pods Manifest.lock */,
 				BF94FC722886901200778946 /* Sources */,
 				BF94FC732886901200778946 /* Frameworks */,
 				BF94FC742886901200778946 /* Resources */,
-				0A911335EC957EC14A01B9B1 /* [CP] Embed Pods Frameworks */,
-				DE617F4D8FEF6418D5DDBBB9 /* [CP] Copy Pods Resources */,
+				FB688B36C65A955262F0FF2B /* [CP] Embed Pods Frameworks */,
+				445ED2BDC5914A367773D8B1 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -4221,24 +4224,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0A911335EC957EC14A01B9B1 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-BabSafar-BabSafarUITests/Pods-BabSafar-BabSafarUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-BabSafar-BabSafarUITests/Pods-BabSafar-BabSafarUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BabSafar-BabSafarUITests/Pods-BabSafar-BabSafarUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		2B3D75842D71451E7C1B6306 /* [CP] Check Pods Manifest.lock */ = {
+		0852877DD0F569C044585F7D /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -4260,63 +4246,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		416630802BFA1A3C28EA7FE5 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-BabSafar-BabSafarUITests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		8932D5C0A39D2337CEA81430 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-BabSafar/Pods-BabSafar-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-BabSafar/Pods-BabSafar-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BabSafar/Pods-BabSafar-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		976C324EAB2372D02543A2EF /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-BabSafar/Pods-BabSafar-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-BabSafar/Pods-BabSafar-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BabSafar/Pods-BabSafar-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		A0E32A822D245C38F9FC6704 /* [CP] Check Pods Manifest.lock */ = {
+		088D89B3852076839CA3F2F1 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -4338,7 +4268,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		DE617F4D8FEF6418D5DDBBB9 /* [CP] Copy Pods Resources */ = {
+		445ED2BDC5914A367773D8B1 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -4353,6 +4283,79 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BabSafar-BabSafarUITests/Pods-BabSafar-BabSafarUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		59BBD34C69462AE6A74788AB /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-BabSafar/Pods-BabSafar-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-BabSafar/Pods-BabSafar-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BabSafar/Pods-BabSafar-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A320F903A460C36E92158D59 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-BabSafar-BabSafarUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E6CB56E918D3007A9B6E37F5 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-BabSafar/Pods-BabSafar-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-BabSafar/Pods-BabSafar-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BabSafar/Pods-BabSafar-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FB688B36C65A955262F0FF2B /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-BabSafar-BabSafarUITests/Pods-BabSafar-BabSafarUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-BabSafar-BabSafarUITests/Pods-BabSafar-BabSafarUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BabSafar-BabSafarUITests/Pods-BabSafar-BabSafarUITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -4568,6 +4571,7 @@
 				65C8F66C2A66ACB20042B2B4 /* similarFlightsVC.swift in Sources */,
 				BF94FCE22886938600778946 /* TableViewCell.swift in Sources */,
 				6525490429A1220E0019521B /* SendUsMessageTVCell.swift in Sources */,
+				655FDA7F2AA08FFF007992C2 /* CancellationPolicyPopupVC.swift in Sources */,
 				6502A2582A96356C00C68097 /* AirlineListViewModel.swift in Sources */,
 				6501F1EC2A96544500504C54 /* FasttrackResultVC.swift in Sources */,
 				BF94FCBB2886911300778946 /* FontManager.swift in Sources */,
@@ -4954,13 +4958,13 @@
 		};
 		BF94FC812886901200778946 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0A1A9F3A3281F9A236B5B078 /* Pods-BabSafar.debug.xcconfig */;
+			baseConfigurationReference = EF4CAB33ED3A97C6B89842DF /* Pods-BabSafar.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = BabSafar/BabSafar.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 15;
 				DEVELOPMENT_TEAM = 5TLY5PME9K;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BabSafar/Info.plist;
@@ -4996,13 +5000,13 @@
 		};
 		BF94FC822886901200778946 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 313EF408E8BC3BAA3C362692 /* Pods-BabSafar.release.xcconfig */;
+			baseConfigurationReference = 9B46CF1FA9D99FC0839942DF /* Pods-BabSafar.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = BabSafar/BabSafar.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 15;
 				DEVELOPMENT_TEAM = 5TLY5PME9K;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BabSafar/Info.plist;
@@ -5038,7 +5042,7 @@
 		};
 		BF94FC842886901200778946 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AA04BBE647C2890170460791 /* Pods-BabSafarTests.debug.xcconfig */;
+			baseConfigurationReference = 445796855D6486BDE97E9982 /* Pods-BabSafarTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -5058,7 +5062,7 @@
 		};
 		BF94FC852886901200778946 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D72FD4D6EB2158659051BA31 /* Pods-BabSafarTests.release.xcconfig */;
+			baseConfigurationReference = B2CEE844C2069EED8A7FE644 /* Pods-BabSafarTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -5078,7 +5082,7 @@
 		};
 		BF94FC872886901200778946 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E189DE62BECB988EA1C5E84A /* Pods-BabSafar-BabSafarUITests.debug.xcconfig */;
+			baseConfigurationReference = 5472D4D3CF7BA9349114A2B6 /* Pods-BabSafar-BabSafarUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -5096,7 +5100,7 @@
 		};
 		BF94FC882886901200778946 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A2E12BD8135C36B111DB44EA /* Pods-BabSafar-BabSafarUITests.release.xcconfig */;
+			baseConfigurationReference = 1DD20A62EA61F875609206CD /* Pods-BabSafar-BabSafarUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;

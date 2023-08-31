@@ -64,7 +64,7 @@ class PopularFiltersTVCell: TableViewCell {
         setupViews(v: fourRatingView, radius: 2, color: .WhiteColor)
         setupViews(v: fiveRatingView, radius: 2, color: .WhiteColor)
         
-        setupLabels(lbl: titlelbl, text: "popular  filters", textcolor: .AppLabelColor, font: .LatoMedium(size: 17))
+        setupLabels(lbl: titlelbl, text: "Star Ratings", textcolor: .AppLabelColor, font: .LatoMedium(size: 17))
         setupLabels(lbl: onelbl, text: "1", textcolor: .AppLabelColor, font: .LatoRegular(size: 14))
         setupLabels(lbl: twolbl, text: "2", textcolor: .AppLabelColor, font: .LatoRegular(size: 14))
         setupLabels(lbl: threelbl, text: "3", textcolor: .AppLabelColor, font: .LatoRegular(size: 14))

@@ -20,6 +20,10 @@ class NewRoomDetailsTVCell: UITableViewCell {
     @IBOutlet weak var pricelbl: UILabel!
     @IBOutlet weak var bablbl: UILabel!
     
+    
+    var fareTypeString = String()
+    var CancellationPolicyAmount = String()
+    var CancellationPolicyFromDate = String()
     var ratekey = String()
     var ratekeyNewArray = [String]()
     var delegate:NewRoomDetailsTVCellDelegate?

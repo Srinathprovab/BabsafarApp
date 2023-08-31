@@ -399,6 +399,9 @@ class AddRoomsVCViewController: UIViewController, UITableViewDelegate, UITableVi
                 adtArray.append("\(cell.adultcount)")
                 chArray.append("\(cell.childCount)")
                 
+                
+                
+                
             }
             
             if totalRooms == 2 {
@@ -523,7 +526,16 @@ class AddRoomsVCViewController: UIViewController, UITableViewDelegate, UITableVi
         defaults.set(totalAdults, forKey: UserDefaultsKeys.hoteladultscount)
         defaults.set(totalChildren, forKey: UserDefaultsKeys.hotelchildcount)
         
-        defaults.set("\(defaults.string(forKey: UserDefaultsKeys.roomcount) ?? "") Rooms,\(defaults.string(forKey: UserDefaultsKeys.hoteladultscount) ?? "") Adults,\(defaults.string(forKey: UserDefaultsKeys.hotelchildcount) ?? "") Childreen", forKey: UserDefaultsKeys.selectPersons)
+        
+        
+        
+        if totalChildren == 0 {
+            defaults.set("Rooms \(defaults.string(forKey: UserDefaultsKeys.roomcount) ?? ""):Adults \(defaults.string(forKey: UserDefaultsKeys.hoteladultscount) ?? "")", forKey: UserDefaultsKeys.selectPersons)
+        }else {
+            defaults.set("Rooms \(defaults.string(forKey: UserDefaultsKeys.roomcount) ?? ""):Adults \(defaults.string(forKey: UserDefaultsKeys.hoteladultscount) ?? ""),Children \(defaults.string(forKey: UserDefaultsKeys.hotelchildcount) ?? "")", forKey: UserDefaultsKeys.selectPersons)
+        }
+        
+       
         
         NotificationCenter.default.post(name: NSNotification.Name("hotelrooms"), object: nil)
         dismiss(animated: true)

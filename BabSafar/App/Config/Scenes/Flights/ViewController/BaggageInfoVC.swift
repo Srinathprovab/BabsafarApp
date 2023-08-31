@@ -57,7 +57,7 @@ class BaggageInfoVC: BaseTableVC, FlightDetailsViewModelProtocal, FDViewModelDel
         addObserver()
         hiddenView.isHidden = true
         chatBtnView.isHidden = true
-        
+        fdbool = false
         
         if let journeyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
             if journeyType == "oneway" {

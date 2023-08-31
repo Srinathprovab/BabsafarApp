@@ -162,31 +162,28 @@ class HotelDetailsVC: BaseTableVC, HotelDetailsViewModelDelegate {
         cell.roomDetailsTV.reloadData()
     }
     
-    //MARK: - didTapOnViewMapBtnAction
-    //    override func didTapOnViewMapBtnAction(cell: TitleLabelTVCell) {
-    //        guard let vc = MapViewVC.newInstance.self else {return}
-    //        vc.modalPresentationStyle = .fullScreen
-    //        callapibool = true
-    //        vc.lat = Double(hotelDetails?.latitude ?? "") ?? 0.0
-    //        vc.long = Double(hotelDetails?.longitude ?? "") ?? 0.0
-    //        vc.annotationtitle = hotelDetails?.name ?? ""
-    //        present(vc, animated: true)
-    //    }
-    
-    
+    //MARK: - didTapOnCancellationPolicyBtnAction
     
     override func didTapOnCancellationPolicyBtnAction(cell:NewRoomDetailsTVCell){
-        print("didTapOnCancellationPolicyBtnAction")
+        
+        guard let vc = CancellationPolicyPopupVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.amount = cell.CancellationPolicyAmount
+        vc.datetime = cell.CancellationPolicyFromDate
+        vc.fartType = cell.fareTypeString
+        self.present(vc, animated: false)
+        
     }
     
+    
+    //MARK: - didTapOnSelectRoomBtnAction
+    
     override func didTapOnSelectRoomBtnAction(cell:NewRoomDetailsTVCell){
-        
         bookNowView.isUserInteractionEnabled = true
         bookNowView.alpha = 1
         grandTotal = cell.pricelbl.text ?? ""
         setuplabels(lbl: bookNowlbl, text: cell.pricelbl.text ?? "" , textcolor: .WhiteColor, font: .LatoMedium(size: 18), align: .left)
         selectedrRateKeyArray = cell.ratekey
-        
     }
     
     

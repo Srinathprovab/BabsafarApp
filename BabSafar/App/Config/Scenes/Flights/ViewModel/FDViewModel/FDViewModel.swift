@@ -29,7 +29,7 @@ class FDViewModel {
         ServiceManager.postOrPutApiCall(endPoint: "flight/\(ApiEndpoints.getBaggageFlightDetails)" , parameters: parms, resultType: FDModel.self, p:dictParam) { sucess, result, errorMessage in
 
             DispatchQueue.main.async {
-              //  self.view?.hideLoader()
+                self.view?.hideLoader()
                 if sucess {
                     guard let response = result else {return}
                     self.view.flightDetails(response: response)

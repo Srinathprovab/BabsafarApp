@@ -125,7 +125,7 @@ extension BookedTravelDetailsTVCell:UITableViewDelegate,UITableViewDataSource {
                 cell.travellerNamelbl.text = "\(data.first_name ?? "") \(data.last_name ?? "")"
                 
                 cell.typelbl.text = data.passport_number ?? ""
-                cell.seatlbl.text = data.passport_issuing_country ?? ""
+                cell.seatlbl.text = data.passenger_nationality_name ?? ""
                 if indexPath.row == 0{
                     //cell.travellerNamelbl.numberOfLines = 2
                     cell.setAttributedText(str1: "\(data.first_name ?? "") \(data.last_name ?? "")", str2: "\nLead Passenger")

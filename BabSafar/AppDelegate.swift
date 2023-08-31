@@ -10,6 +10,8 @@ import CoreData
 import FreshchatSDK
 import MFSDK
 import IQKeyboardManager
+import GoogleMaps
+
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -36,6 +38,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let them = MFTheme(navigationTintColor: .white, navigationBarTintColor: .lightGray, navigationTitle: "Payment", cancelButtonTitle: "Cancel")
         MFSettings.shared.setTheme(theme: them)
         
+        
+        GMSServices.provideAPIKey("YOUR_GOOGLE_MAPS_API_KEY")
+
+
         
         
         return true

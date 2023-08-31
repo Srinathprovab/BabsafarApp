@@ -89,20 +89,31 @@ extension NewRoomTVCell: UITableViewDataSource ,UITableViewDelegate {
             
             let data = room[indexPath.row]
             self.titlelbl.text = data.name ?? ""
-            //            cell.adultslbl.text = "\(data.adults ?? 0) Adults"
-            //            cell.noofRoomslbl.text = "No Of Rooms :\(data.rooms ?? 0) "
             cell.pricelbl.text = "\(data.currency ?? ""):\(data.net ?? "")"
-            // cell.roomImg.sd_setImage(with: URL(string: data.image ?? "" ), placeholderImage:UIImage(contentsOfFile:"placeholder.png"))
+          
             
             if data.refund == true {
                 cell.fareTypelbl.text = "Refundable"
+                cell.fareTypeString = "Refundable"
             }else {
                 cell.fareTypelbl.text = "Non Refundable"
+                cell.fareTypeString = "Non Refundable"
+            }
+            
+            // Access the cancellationPolicies array
+            if let cancellationPolicies1 = data.cancellationPolicies {
+                // Iterate over the cancellationPolicies array
+                for policy in cancellationPolicies1 {
+                    let amount = policy.amount
+                    let fromDate = policy.from
+                    cell.CancellationPolicyAmount = amount ?? ""
+                    cell.CancellationPolicyFromDate = fromDate ?? ""
+                    
+                }
             }
             
             
             cell.ratekey = data.rateKey ?? ""
-            
             ccell = cell
         }
         

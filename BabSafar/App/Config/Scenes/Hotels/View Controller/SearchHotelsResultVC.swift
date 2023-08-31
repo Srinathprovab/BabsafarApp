@@ -342,15 +342,9 @@ class SearchHotelsResultVC: BaseTableVC, UITextFieldDelegate, HotelSearchViewMod
     }
     
     @IBAction func didTapOnMapViewBtnAction(_ sender: Any) {
-        
-        print(latArray)
-        
-        print(longArray)
-        
-        
         guard let vc = MapViewVC.newInstance.self else {return}
         vc.modalPresentationStyle = .fullScreen
-        //present(vc, animated: true)
+        present(vc, animated: true)
     }
 }
 
@@ -384,6 +378,8 @@ extension SearchHotelsResultVC {
     func hoteSearchResult(response: HotelSearchModel) {
         latArray.removeAll()
         longArray.removeAll()
+        prices.removeAll()
+        
         
         navView.isHidden = false
         filterBtnView.isHidden = false
@@ -400,7 +396,10 @@ extension SearchHotelsResultVC {
         response.data?.hotelSearchResult?.forEach({ i in
             latArray.append(i.latitude ?? "")
             longArray.append(i.longitude ?? "")
+            prices.append(i.price ?? "")
         })
+        
+       
         
         
         DispatchQueue.main.async {[self] in
@@ -426,6 +425,7 @@ extension SearchHotelsResultVC {
             cell.delegate = self
             
             if( isSearchBool == true){
+                
                 let dict = filtered[indexPath.row]
                 
                 cell.hotelNamelbl.text = dict.name
@@ -476,12 +476,90 @@ extension SearchHotelsResultVC {
 }
 
 
+
+
+extension SearchHotelsResultVC {
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let lastRowIndex = tableView.numberOfRows(inSection: 0) - 1
+        if indexPath.row == lastRowIndex && !isLoadingData {
+            callHotelSearchPaginationAPI()
+        }
+    }
+    
+    func callHotelSearchPaginationAPI() {
+        print("You've reached the last cell, trigger the API call.")
+        
+        payload.removeAll()
+        payload["booking_source"] = hbookingsource
+        payload["search_id"] = hsearchid
+        payload["offset"] = "41"
+        payload["limit"] = "5"
+        payload["no_of_nights"] = "1"
+        
+        // viewModel?.CallHotelSearchPagenationAPI(dictParam: payload)
+        
+    }
+    
+    func hoteSearchPagenationResult(response: HotelSearchModel) {
+        
+        hotelSearchResult = response.data?.hotelSearchResult ?? []
+        DispatchQueue.main.async {[self] in
+            commonTableView.reloadData()
+        }
+        
+    }
+    
+}
+
+
+
+
 extension SearchHotelsResultVC:AppliedFilters{
+     
+    
     
     func filtersByApplied(minpricerange: Double, maxpricerange: Double, noofStopsArray: [String], refundableTypeArray: [String], departureTime: String, arrivalTime: String, noOvernightFlight: String, airlinesFilterArray: [String], connectingFlightsFilterArray: [String], ConnectingAirportsFilterArray: [String]) {
         
     }
     
+    
+    
+    //MARK: - hotelFilterByApplied
+    func hotelFilterByApplied(minpricerange: Double, maxpricerange: Double, starRating: String, refundableTypeArray: [String]) {
+
+        isSearchBool = true
+        
+        print("====minpricerange ==== \(minpricerange)")
+        print("====maxpricerange ==== \(maxpricerange)")
+        print(" ==== starRating === \(starRating)")
+        print(" ==== refundableTypeArray === \n\(refundableTypeArray)")
+        
+        
+       
+        let filteredArray = hotelSearchResult.filter { i in
+            guard let netPrice = Double(i.price ?? "0.0") else { return false }
+            let ratingMatches = i.star_rating == Int(starRating) || starRating.isEmpty
+            let refundableMatch = refundableTypeArray.isEmpty || refundableTypeArray.contains(i.refund ?? "")
+
+            
+            
+            return ratingMatches &&
+            netPrice >= minpricerange &&
+            netPrice <= maxpricerange && refundableMatch
+        }
+        
+        filtered = filteredArray
+        if filtered.count == 0{
+            TableViewHelper.EmptyMessage(message: "No Data Found", tableview: commonTableView, vc: self)
+        }else {
+            TableViewHelper.EmptyMessage(message: "", tableview: commonTableView, vc: self)
+        }
+        
+        DispatchQueue.main.async {[self] in
+            commonTableView.reloadData()
+        }
+    }
     
     
     
@@ -545,41 +623,6 @@ extension SearchHotelsResultVC:AppliedFilters{
 }
 
 
-extension SearchHotelsResultVC {
-    
-    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        let lastRowIndex = tableView.numberOfRows(inSection: 0) - 1
-        if indexPath.row == lastRowIndex && !isLoadingData {
-            callHotelSearchPaginationAPI()
-        }
-    }
-    
-    func callHotelSearchPaginationAPI() {
-        print("You've reached the last cell, trigger the API call.")
-        
-        payload.removeAll()
-        payload["booking_source"] = hbookingsource
-        payload["search_id"] = hsearchid
-        payload["offset"] = "41"
-        payload["limit"] = "5"
-        payload["no_of_nights"] = "1"
-        
-        // viewModel?.CallHotelSearchPagenationAPI(dictParam: payload)
-        
-    }
-    
-    func hoteSearchPagenationResult(response: HotelSearchModel) {
-        
-        hotelSearchResult = response.data?.hotelSearchResult ?? []
-        DispatchQueue.main.async {[self] in
-            commonTableView.reloadData()
-        }
-        
-    }
-    
-}
-
-
 
 extension SearchHotelsResultVC {
     
@@ -617,3 +660,5 @@ extension SearchHotelsResultVC {
     
     
 }
+
+

@@ -25,6 +25,9 @@ target 'BabSafar' do
   pod 'FreshchatSDK'
   pod 'Firebase/Core'
   pod 'MyFatoorah'
+pod 'GoogleMaps'
+
+
 
 
 

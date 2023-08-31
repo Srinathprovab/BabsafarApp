@@ -109,7 +109,7 @@ extension RoundTripFlightResultTVCell:UITableViewDataSource,UITableViewDelegate 
         if let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as? SearchFlightResultTVCell {
             cell.selectionStyle = .none
             
-           
+            
             cell.holderViewTopConstraint.constant = 0
             cell.holderView.layer.cornerRadius = 0
             cell.holderView.clipsToBounds = true
@@ -132,14 +132,14 @@ extension RoundTripFlightResultTVCell:UITableViewDataSource,UITableViewDelegate 
             cell.bagWeightlbl.text = cell.convertToDesiredFormat(data?[indexPath.row].weight_Allowance ?? "")
             cell.airoplaneImg.image = UIImage(named: "airo1")?.withRenderingMode(.alwaysOriginal).withTintColor(.AppBtnColor)
             cell.setAttributedString1(str1: cellInfo?.price ?? "", str2: cellInfo?.headerText ?? "")
-
+            
             if let similatFlights = cellInfo?.data as? [[RTJ_flight_list]], (similatFlights.count - 1) != 0 {
                 setuplabels(lbl: cell.moreSimlarOptionlbl, text: "More similar options(\(similatFlights.count))", textcolor: .WhiteColor, font: .LatoRegular(size: 10), align: .right)
                 cell.showSimilarlbl()
             }
             cell.imagesHolderView.backgroundColor = HexColor("#00A898")
             if indexPath.row == 0 {
-               
+                
                 cell.imagesHolderColoerChange()
                 if cellInfo?.key1 == "Refundable" {
                     setuplabels(lbl: cell.kwdPricelbl, text: cellInfo?.key1 ?? "", textcolor: HexColor("#2FA804"), font: .LatoRegular(size: 13), align: .center)
@@ -147,30 +147,25 @@ extension RoundTripFlightResultTVCell:UITableViewDataSource,UITableViewDelegate 
                     setuplabels(lbl: cell.kwdPricelbl, text: cellInfo?.key1 ?? "", textcolor: .AppBtnColor, font: .LatoRegular(size: 13), align: .center)
                 }
                 
-                cell.markuppricelbl.textColor = .WhiteColor
-                cell.flightsDetailsBtnView.isHidden = true
-                cell.bookNowView.backgroundColor = HexColor("#FFCC33")
-                setuplabels(lbl: cell.bookNowlbl, text: "Flight Details", textcolor: .AppLabelColor, font: .LatoRegular(size: 12), align: .center)
-
+                //                cell.markuppricelbl.textColor = .WhiteColor
+                //                cell.flightsDetailsBtnView.isHidden = true
+                //                cell.bookNowView.backgroundColor = HexColor("#FFCC33")
+                //                setuplabels(lbl: cell.bookNowlbl, text: "Flight Details", textcolor: .AppLabelColor, font: .LatoRegular(size: 12), align: .center)
+                //
                 cell.bookNowBtn.addTarget(self, action: #selector(didTapOnFlightDetailsBtn(_:)), for: .touchUpInside)
-                cell.airoplaneImg.image = UIImage(named: "airo2")?.withRenderingMode(.alwaysOriginal).withTintColor(HexColor("#00A898"))
-
-                cell.moreSimlarOptionlbl.isHidden = true
-                cell.similarimg.isHidden = true
-                cell.hideSimilarlbl()
+                //                cell.airoplaneImg.image = UIImage(named: "airo2")?.withRenderingMode(.alwaysOriginal).withTintColor(HexColor("#00A898"))
+                //
+                //                cell.moreSimlarOptionlbl.isHidden = true
+                //                cell.similarimg.isHidden = true
+                //                cell.hideSimilarlbl()
             }
             
-
+            
             cell.refundablelbl.isHidden = true
             cell.viewVoucherBtn.isHidden = true
             cell.flightsDetailsBtnView.isHidden = true
             cell.bookNowBtn.addTarget(self, action: #selector(didTapOnBookNowBtn(_:)), for: .touchUpInside)
             cell.similarBtn.addTarget(self, action: #selector(didTapOnSimilarFlightsBtnAction(_:)), for: .touchUpInside)
-
-            
-          
-            
-            
             
             
             ccell = cell

@@ -290,7 +290,7 @@ class SearchFlightResultTVCell: TableViewCell {
         viewVoucherBtn.isHidden = true
         viewVoucherBtn.setTitle("Book Now", for: .normal)
         viewVoucherBtn.setTitleColor(.WhiteColor, for: .normal)
-        viewVoucherBtn.titleLabel?.font = UIFont.LatoRegular(size: 16)
+        viewVoucherBtn.titleLabel?.font = UIFont.LatoBold(size: 16)
         viewVoucherBtn.backgroundColor = HexColor("#F05324")
         
         deplbl.text = ""
@@ -305,12 +305,12 @@ class SearchFlightResultTVCell: TableViewCell {
         
         flightsDetailsBtnView.backgroundColor = HexColor("#FFCC33")
         flightsDetailsBtnView.addCornerRadiusWithShadow(color: .clear, borderColor: .clear, cornerRadius: 3)
-        setuplabels(lbl: flightsDetailslbl, text: "Flight Details", textcolor: .AppLabelColor, font: .LatoRegular(size: 12), align: .center)
+        setuplabels(lbl: flightsDetailslbl, text: "Flight Details", textcolor: .AppLabelColor, font: .LatoBold(size: 14), align: .center)
         flightsDetailsBtn.setTitle("", for: .normal)
         
         bookNowView.backgroundColor = .red
         bookNowView.addCornerRadiusWithShadow(color: .clear, borderColor: .clear, cornerRadius: 3)
-        setuplabels(lbl: bookNowlbl, text: "Book Now", textcolor: .WhiteColor, font: .LatoSemibold(size: 12), align: .center)
+        setuplabels(lbl: bookNowlbl, text: "Book Now", textcolor: .WhiteColor, font: .LatoBold(size: 14), align: .center)
         bookNowBtn.setTitle("", for: .normal)
         
         setupsimilarList()
@@ -324,6 +324,15 @@ class SearchFlightResultTVCell: TableViewCell {
         imagesHolderView.backgroundColor = HexColor("#E6E8E7")
         bagImg.image = UIImage(named: "bag")?.withRenderingMode(.alwaysOriginal).withTintColor(.AppLabelColor)
         suitCaseImg.image = UIImage(named: "suit")?.withRenderingMode(.alwaysOriginal).withTintColor(.AppLabelColor)
+        
+        self.markuppricelbl.textColor = .WhiteColor
+        self.flightsDetailsBtnView.isHidden = true
+        self.bookNowView.backgroundColor = HexColor("#FFCC33")
+        setuplabels(lbl: self.bookNowlbl, text: "Flight Details", textcolor: .AppLabelColor, font: .LatoRegular(size: 12), align: .center)
+        self.airoplaneImg.image = UIImage(named: "airo2")?.withRenderingMode(.alwaysOriginal).withTintColor(HexColor("#00A898"))
+        self.moreSimlarOptionlbl.isHidden = true
+        self.similarimg.isHidden = true
+        self.hideSimilarlbl()
     }
     
     func hideSimilarlbl(){

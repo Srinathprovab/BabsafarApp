@@ -56,6 +56,11 @@ PODS:
     - GoogleUtilities/Network (~> 7.8)
     - "GoogleUtilities/NSData+zlib (~> 7.8)"
     - nanopb (< 2.30910.0, >= 2.30908.0)
+  - GoogleMaps (8.1.0):
+    - GoogleMaps/Maps (= 8.1.0)
+  - GoogleMaps/Base (8.1.0)
+  - GoogleMaps/Maps (8.1.0):
+    - GoogleMaps/Base
   - GoogleUtilities/AppDelegateSwizzler (7.11.1):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
@@ -102,6 +107,7 @@ DEPENDENCIES:
   - DropDown
   - Firebase/Core
   - FreshchatSDK
+  - GoogleMaps
   - IQKeyboardManager
   - JTAppleCalendar (~> 7.1.6)
   - MARKRangeSlider
@@ -127,6 +133,7 @@ SPEC REPOS:
     - FirebaseInstallations
     - FreshchatSDK
     - GoogleAppMeasurement
+    - GoogleMaps
     - GoogleUtilities
     - IQKeyboardManager
     - JTAppleCalendar
@@ -154,6 +161,7 @@ SPEC CHECKSUMS:
   FirebaseInstallations: b2a05a3fe707df764345d68685534d07d0664af3
   FreshchatSDK: 7fc71b38fc537db8e6e338bc5206c45f7a646f98
   GoogleAppMeasurement: 0ba93018e916f7badf915c2337d43cc1fa96b3f9
+  GoogleMaps: 97300a4b89a3641563782c52228c4530f5fe0d89
   GoogleUtilities: 9aa0ad5a7bc171f8bae016300bfcfa3fb8425749
   IQKeyboardManager: 45a1fa55c1a5b02c61ac0fd7fd5b62bb4ad20d97
   JTAppleCalendar: b7fb40852f5f319fe55c8ec3861f1de0edc99cc8
@@ -171,6 +179,6 @@ SPEC CHECKSUMS:
   TTRangeSlider: 8cf72eca457c3b700c92eb0074be908c986e25ec
   UIView-Shimmer: ff0a32c73d67c7dbdea3d9e530538b10d18aea56
 
-PODFILE CHECKSUM: 0111438280c8ab76f7a8d70b4eb04d19d19ea73f
+PODFILE CHECKSUM: a4707f6900e324f8caefd64c9f9e5caa652fa4f9
 
 COCOAPODS: 1.11.3
