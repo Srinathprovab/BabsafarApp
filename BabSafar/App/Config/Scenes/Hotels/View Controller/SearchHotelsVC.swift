@@ -33,11 +33,23 @@ class SearchHotelsVC: BaseTableVC, TopFlightDetailsViewModelDelegate {
         if screenHeight < 835 {
             tableViewTopConstraint.constant = 110
         }
+        setInitalValues()
         
-        //  callTopFlightsHotelsDetailsAPI()
+        
         NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("nointernet"), object: nil)
         
     }
+    
+    
+    
+    func setInitalValues() {
+        defaults.set("1", forKey: UserDefaultsKeys.roomcount)
+        defaults.set("1", forKey: UserDefaultsKeys.hoteladultscount)
+        defaults.set("0", forKey: UserDefaultsKeys.hotelchildcount)
+        
+        defaults.set("\(defaults.string(forKey: UserDefaultsKeys.roomcount) ?? "") Rooms,\(defaults.string(forKey: UserDefaultsKeys.hoteladultscount) ?? "") Adults,\(defaults.string(forKey: UserDefaultsKeys.hotelchildcount) ?? "") Childreen", forKey: UserDefaultsKeys.selectPersons)
+    }
+    
     
     //MARK: - nointernet
     @objc func nointernet() {
@@ -132,15 +144,32 @@ class SearchHotelsVC: BaseTableVC, TopFlightDetailsViewModelDelegate {
     
     override func didTapOnSearchHotelBtn(cell: SearchHotelTVCell) {
         
-        
+        payload.removeAll()
         payload["city"] = defaults.string(forKey: UserDefaultsKeys.locationcity)
         payload["hotel_destination"] = defaults.string(forKey: UserDefaultsKeys.locationcityid)
         payload["hotel_checkin"] = defaults.string(forKey: UserDefaultsKeys.checkin)
         payload["hotel_checkout"] = defaults.string(forKey: UserDefaultsKeys.checkout)
+        
         payload["rooms"] = "\(defaults.string(forKey: UserDefaultsKeys.roomcount) ?? "1")"
         payload["adult"] = adtArray
         payload["child"] = chArray
-        payload["childAge_1"] = ["0"]
+        
+        
+        
+        
+        for roomIndex in 0..<totalRooms {
+            if let numChildren = Int(chArray[roomIndex]), numChildren > 0 {
+                var childAges: [String] = Array(repeating: "0", count: numChildren)
+                
+                if numChildren > 2 {
+                    childAges.append("0")
+                }
+                
+                payload["childAge_\(roomIndex + 1)"] = childAges
+            }
+        }
+        
+        
         payload["nationality"] = countrycode
         payload["language"] = "english"
         payload["search_source"] = "postman"
@@ -161,7 +190,22 @@ class SearchHotelsVC: BaseTableVC, TopFlightDetailsViewModelDelegate {
         }else if checkDepartureAndReturnDates(payload, p1: "hotel_checkin", p2: "hotel_checkout") == false {
             showToast(message: "Invalid Date")
         }else {
+            
+            
+            do{
+                
+                let jsonData = try JSONSerialization.data(withJSONObject: payload, options: JSONSerialization.WritingOptions.prettyPrinted)
+                let jsonStringData =  NSString(data: jsonData as Data, encoding: NSUTF8StringEncoding)! as String
+                
+                print(jsonStringData)
+                
+
+            }catch{
+                print(error.localizedDescription)
+            }
+            
             gotoSearchHotelsResultVC()
+            
         }
     }
     

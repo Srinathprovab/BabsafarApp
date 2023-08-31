@@ -719,24 +719,30 @@ extension SearchFlightResultVC: AppliedFilters{
                 dateFormatter.dateFormat = "h:mm a"
                 
                 
-                    
                 
-//                let sortedArray = MCJflightlist.filter { j in
-//                    guard let summary = j.first?.flight_details?.summary else { return false }
-//                    guard let price = j.first?.price?.api_total_display_fare else { return false }
-//
-//                    let priceRangeMatch = ((Double(price) ) >= minpricerange && (Double(price) ) <= maxpricerange)
-//                    let noOfStopsMatch = noofStopsArray.isEmpty || summary.contains(where: { noofStopsArray.contains("\($0.no_of_stops ?? 0)") })
-//                    let refundableMatch = refundableTypeArray.isEmpty || refundableTypeArray.contains(j.first?.fareType ?? "")
-//                    let airlinesMatch = airlinesFilterArray.isEmpty || summary.contains(where: { airlinesFilterArray.contains($0.operator_name ?? "") })
-//                    let connectingFlightsMatch = connectingFlightsFilterArray.isEmpty || summary.contains(where: { connectingFlightsFilterArray.contains($0.operator_name ?? "") }) == true
-//                    let ConnectingAirportsMatch = connectingFlightsFilterArray.isEmpty || summary.contains(where: { connectingFlightsFilterArray.contains($0.destination?.airport_name ?? "") }) == true
-//
-//                    return priceRangeMatch && noOfStopsMatch && refundableMatch && airlinesMatch && connectingFlightsMatch && ConnectingAirportsMatch
-//                }
-//
-//                multicityFilterdList(list: sortedArray ?? [])
-
+                
+                
+                
+                //              MCJflightlist?.filter { flightList in
+                //                    guard let summary = flightList.first?.flight_details?.summary else { return false }
+                //                    guard let price = flightList.first?.price?.api_total_display_fare else { return false }
+                //
+                //                    let priceRangeMatch = ((Double(price)) >= minpricerange && (Double(price)) <= maxpricerange)
+                //                    let noOfStopsMatch = noofStopsArray.isEmpty || summary.contains(where: { noofStopsArray.contains("\($0.no_of_stops ?? 0)") })
+                //                    let refundableMatch = refundableTypeArray.isEmpty || refundableTypeArray.contains(flightList.first?.fareType ?? "")
+                //                    let airlinesMatch = airlinesFilterArray.isEmpty || summary.contains(where: { airlinesFilterArray.contains($0.operator_name ?? "") })
+                //                    let connectingFlightsMatch = connectingFlightsFilterArray.isEmpty || summary.contains(where: { connectingFlightsFilterArray.contains($0.operator_name ?? "") }) == true
+                //                    let connectingAirportsMatch = ConnectingAirportsFilterArray.isEmpty || summary.contains(where: { ConnectingAirportsFilterArray.contains($0.destination?.airport_name ?? "") }) == true
+                //
+                //                    return priceRangeMatch && noOfStopsMatch && refundableMatch && airlinesMatch && connectingFlightsMatch && connectingAirportsMatch
+                //                }
+                //
+                //
+                //
+                //     multicityFilterdList(list: filteredList)
+                
+                
+                
                 
             }
         }

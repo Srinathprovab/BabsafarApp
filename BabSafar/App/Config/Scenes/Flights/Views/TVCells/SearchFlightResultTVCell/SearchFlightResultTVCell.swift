@@ -318,6 +318,14 @@ class SearchFlightResultTVCell: TableViewCell {
     }
     
     
+    func imagesHolderColoerChange(){
+        suitcaseWeightlbl.textColor = .AppLabelColor
+        bagWeightlbl.textColor = .AppLabelColor
+        imagesHolderView.backgroundColor = HexColor("#E6E8E7")
+        bagImg.image = UIImage(named: "bag")?.withRenderingMode(.alwaysOriginal).withTintColor(.AppLabelColor)
+        suitCaseImg.image = UIImage(named: "suit")?.withRenderingMode(.alwaysOriginal).withTintColor(.AppLabelColor)
+    }
+    
     func hideSimilarlbl(){
         similarimg.isHidden = true
         similarBtn.isHidden = true

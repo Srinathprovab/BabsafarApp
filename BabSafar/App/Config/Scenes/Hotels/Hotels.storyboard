@@ -202,10 +202,13 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JWx-6H-vjd" customClass="BorderedView" customModule="BabSafar" customModuleProvider="target">
                                                 <rect key="frame" x="151.66666666666666" y="5" width="90" height="40"/>
                                                 <subviews>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="map1" translatesAutoresizingMaskIntoConstraints="NO" id="qe1-fe-eeP">
+                                                        <rect key="frame" x="0.0" y="0.0" width="90" height="40"/>
+                                                    </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Map View" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="viF-iA-jFq">
                                                         <rect key="frame" x="13.666666666666689" y="11.666666666666657" width="62.333333333333343" height="17"/>
                                                         <fontDescription key="fontDescription" name="Lato-Medium" family="Lato" pointSize="14"/>
-                                                        <nil key="textColor"/>
+                                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qvf-nL-iEw">
@@ -219,6 +222,7 @@
                                                 </subviews>
                                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.22271758831099958" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                 <constraints>
+                                                    <constraint firstItem="qe1-fe-eeP" firstAttribute="leading" secondItem="JWx-6H-vjd" secondAttribute="leading" id="0ty-sZ-IPN"/>
                                                     <constraint firstAttribute="bottom" secondItem="qvf-nL-iEw" secondAttribute="bottom" id="7C8-BP-7yw"/>
                                                     <constraint firstItem="viF-iA-jFq" firstAttribute="centerY" secondItem="JWx-6H-vjd" secondAttribute="centerY" id="RVL-7m-5gC"/>
                                                     <constraint firstItem="qvf-nL-iEw" firstAttribute="top" secondItem="JWx-6H-vjd" secondAttribute="top" id="SzW-CQ-VQk"/>
@@ -226,7 +230,10 @@
                                                     <constraint firstItem="qvf-nL-iEw" firstAttribute="leading" secondItem="JWx-6H-vjd" secondAttribute="leading" id="Yid-VO-XNG"/>
                                                     <constraint firstAttribute="height" constant="40" id="c0P-JV-JpF"/>
                                                     <constraint firstItem="viF-iA-jFq" firstAttribute="centerX" secondItem="JWx-6H-vjd" secondAttribute="centerX" id="fgD-lG-Wfl"/>
+                                                    <constraint firstItem="qe1-fe-eeP" firstAttribute="top" secondItem="JWx-6H-vjd" secondAttribute="top" id="kR9-dK-Q5R"/>
+                                                    <constraint firstAttribute="bottom" secondItem="qe1-fe-eeP" secondAttribute="bottom" id="kVv-iZ-J8w"/>
                                                     <constraint firstAttribute="width" constant="90" id="opz-2g-0Nn"/>
+                                                    <constraint firstAttribute="trailing" secondItem="qe1-fe-eeP" secondAttribute="trailing" id="yhc-eX-DFm"/>
                                                 </constraints>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -827,6 +834,7 @@
     <resources>
         <image name="close2" width="24" height="24"/>
         <image name="filter1" width="20" height="20"/>
+        <image name="map1" width="30" height="13.333333015441895"/>
         <image name="multiply" catalog="system" width="128" height="111"/>
         <image name="sort" width="8.6666669845581055" height="10.333333015441895"/>
         <namedColor name="AppBorderColor">

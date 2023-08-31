@@ -34,10 +34,6 @@ class BookedAdultDetailsTVCell: UITableViewCell {
         setuplabels(lbl: typelbl, text: "", textcolor: HexColor("#5B5B5B"), font: .LatoRegular(size: 14), align: .center)
         setuplabels(lbl: seatlbl, text: "", textcolor: HexColor("#5B5B5B"), font: .LatoRegular(size: 14), align: .center)
         
-        
-        travellerNamelbl.numberOfLines = 2
-        typelbl.numberOfLines = 2
-        seatlbl.numberOfLines = 2
     }
     
     func setupViews(v:UIView,radius:CGFloat,color:UIColor) {

@@ -7,6 +7,11 @@
 
 import UIKit
 
+protocol UnderLineTVCellPrtocal {
+    func didTapOnLoginBtn(cell:UnderLineTVCell)
+    func didTapOnSignUpBtn(cell:UnderLineTVCell)
+}
+
 class UnderLineTVCell: TableViewCell {
     
     
@@ -14,8 +19,10 @@ class UnderLineTVCell: TableViewCell {
     @IBOutlet weak var rightLineView: UIView!
     @IBOutlet weak var leftLineView: UIView!
     @IBOutlet weak var titlelbl: UILabel!
+    @IBOutlet weak var btnTitlelbl: UILabel!
     
     
+    var delegate:UnderLineTVCellPrtocal?
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -28,16 +35,30 @@ class UnderLineTVCell: TableViewCell {
         // Configure the view for the selected state
     }
     
+    override func updateUI() {
+        btnTitlelbl.text = cellInfo?.title ?? ""
+        titlelbl.text = cellInfo?.subTitle ?? ""
+    }
     
     func setupUI() {
         holderView.backgroundColor = .WhiteColor
         leftLineView.backgroundColor = HexColor("#A39797")
         rightLineView.backgroundColor = HexColor("#A39797")
         
-        titlelbl.text = "Or Sign Up With"
+        titlelbl.text = "Or"
         titlelbl.textColor = .AppLabelColor
         titlelbl.font = UIFont.LatoRegular(size: 14)
         
     }
+    
+    
+    @IBAction func didTapOnBtnAction(_ sender: Any) {
+        if btnTitlelbl.text == "Login" {
+            delegate?.didTapOnLoginBtn(cell: self)
+        }else {
+            delegate?.didTapOnSignUpBtn(cell: self)
+        }
+    }
+    
     
 }

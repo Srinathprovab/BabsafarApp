@@ -13,7 +13,7 @@ class ResetPasswordVC: BaseTableVC, ForgetPasswordViewModelDelegate {
     
     @IBOutlet weak var nav: NavBar!
     @IBOutlet weak var holderView: UIView!
-    
+    @IBOutlet weak var navHeight: NSLayoutConstraint!
     
     var tablerow = [TableRow]()
     var email = String()
@@ -61,6 +61,9 @@ class ResetPasswordVC: BaseTableVC, ForgetPasswordViewModelDelegate {
     
     func setupUI() {
         nav.titlelbl.text = "Reset Password"
+        if screenHeight < 855 {
+            navHeight.constant = 110
+        }
         nav.backBtn.addTarget(self, action: #selector(didTapOnBackBtn(_:)), for: .touchUpInside)
         commonTableView.registerTVCells(["LabelTVCell","TextfieldTVCell","ButtonTVCell"])
         setuptv()
@@ -116,7 +119,6 @@ class ResetPasswordVC: BaseTableVC, ForgetPasswordViewModelDelegate {
     var payload = [String:Any]()
     var viewmodel:ForgetPasswordViewModel?
     func callResetPasswordAPI() {
-   //     BASE_URL = "https://provabdevelopment.com/babsafar/mobile_webservices/mobile/index.php/auth/"
         payload["email"] = email
         payload["phone"] = mobile
         viewmodel?.CallForgetPasswordAPI(dictParam: payload)

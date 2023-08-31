@@ -207,6 +207,10 @@ var paymobile = String()
 var paymobilecountrycode = String()
 var frequent_flyersArray = [Frequent_flyers]()
 
+var totalRooms = 0
+var totalAdults = 0
+var totalChildren = 0
+
 
 //Insurence
 var isearchid = ""

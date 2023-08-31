@@ -137,9 +137,10 @@ extension RoundTripFlightResultTVCell:UITableViewDataSource,UITableViewDelegate 
                 setuplabels(lbl: cell.moreSimlarOptionlbl, text: "More similar options(\(similatFlights.count))", textcolor: .WhiteColor, font: .LatoRegular(size: 10), align: .right)
                 cell.showSimilarlbl()
             }
-            
+            cell.imagesHolderView.backgroundColor = HexColor("#00A898")
             if indexPath.row == 0 {
                
+                cell.imagesHolderColoerChange()
                 if cellInfo?.key1 == "Refundable" {
                     setuplabels(lbl: cell.kwdPricelbl, text: cellInfo?.key1 ?? "", textcolor: HexColor("#2FA804"), font: .LatoRegular(size: 13), align: .center)
                 }else {

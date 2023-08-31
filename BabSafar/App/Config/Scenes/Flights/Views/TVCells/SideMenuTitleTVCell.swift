@@ -35,7 +35,7 @@ class SideMenuTitleTVCell: TableViewCell {
     
     override func updateUI() {
         menuTitlelbl.text = cellInfo?.title ?? ""
-        menuOptionImg.image = UIImage(named: cellInfo?.image ?? "")?.withRenderingMode(.alwaysOriginal).withTintColor(.AppCalenderDateSelectColor)
+        menuOptionImg.image = UIImage(named: cellInfo?.image ?? "")?.withRenderingMode(.alwaysOriginal)
         
         if cellInfo?.key == "products" {
             menuOptionImg.isHidden = true

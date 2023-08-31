@@ -79,7 +79,7 @@ struct Booking_details : Codable {
     let booking_transaction_details : [Booking_transaction_details]?
     let customer_details : [Customer_details]?
     let cancellation_details : String?
-
+    
     enum CodingKeys: String, CodingKey {
 
         case origin = "origin"
@@ -240,6 +240,8 @@ struct Booking_details : Codable {
         booking_transaction_details = try values.decodeIfPresent([Booking_transaction_details].self, forKey: .booking_transaction_details)
         customer_details = try values.decodeIfPresent([Customer_details].self, forKey: .customer_details)
         cancellation_details = try values.decodeIfPresent(String.self, forKey: .cancellation_details)
+        
+
     }
 
 }

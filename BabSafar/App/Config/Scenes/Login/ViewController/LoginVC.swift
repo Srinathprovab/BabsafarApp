@@ -12,6 +12,8 @@ class LoginVC: BaseTableVC, RegisterViewModelProtocal {
     
     
     @IBOutlet weak var holderView: UIView!
+    @IBOutlet weak var topConstraint: NSLayoutConstraint!
+    
     
     static var newInstance: LoginVC? {
         let storyboard = UIStoryboard(name: Storyboard.Login.name,
@@ -19,6 +21,8 @@ class LoginVC: BaseTableVC, RegisterViewModelProtocal {
         let vc = storyboard.instantiateViewController(withIdentifier: self.className()) as? LoginVC
         return vc
     }
+    
+    
     var tablerow = [TableRow]()
     var loginKey = "login"
     var fname = ""
@@ -35,22 +39,7 @@ class LoginVC: BaseTableVC, RegisterViewModelProtocal {
     var isVcFrom = String()
     
     override func viewWillAppear(_ animated: Bool) {
-        NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("nointernet"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadTV), name: Notification.Name("reloadTV"), object: nil)
-        
-    }
-    
-    
-    //MARK: - nointernet
-    @objc func nointernet() {
-        guard let vc = NoInternetConnectionVC.newInstance.self else {return}
-        vc.modalPresentationStyle = .overCurrentContext
-        self.present(vc, animated: true)
-    }
-    
-    
-    @objc func reloadTV() {
-        commonTableView.reloadData()
+        addObserver()
     }
     
     
@@ -71,64 +60,24 @@ class LoginVC: BaseTableVC, RegisterViewModelProtocal {
         
         holderView.layer.cornerRadius = 10
         holderView.clipsToBounds = true
-        commonTableView.registerTVCells(["LabelTVCell","LoignOrSignupBtnsTVCell","TextfieldTVCell","ButtonTVCell","UnderLineTVCell","SignUpWithTVCell","EmptyTVCell"])
+        commonTableView.registerTVCells(["LabelTVCell",
+                                         "LoignOrSignupBtnsTVCell",
+                                         "TextfieldTVCell",
+                                         "ButtonTVCell",
+                                         "UnderLineTVCell",
+                                         "EmptyTVCell"])
         
         appendLoginTvcells()
     }
     
     
-    func appendLoginTvcells() {
-        if screenHeight > 835 {
-            commonTableView.isScrollEnabled = false
-        }
-        tablerow.removeAll()
-        
-        tablerow.append(TableRow(height:20,cellType:.EmptyTVCell))
-        tablerow.append(TableRow(key:"loginshowbtn",cellType:.LabelTVCell))
-        tablerow.append(TableRow(cellType:.LoignOrSignupBtnsTVCell))
-        tablerow.append(TableRow(title:"Email address",key: "email", text: "11", tempText: "Email ID",cellType:.TextfieldTVCell))
-        tablerow.append(TableRow(title:"Password",key: "pwd", text: "2", tempText: "Password",cellType:.TextfieldTVCell))
-        tablerow.append(TableRow(title:"Log In",key: "btn",cellType:.ButtonTVCell))
-        tablerow.append(TableRow(cellType:.UnderLineTVCell))
-        tablerow.append(TableRow(cellType:.SignUpWithTVCell))
-        tablerow.append(TableRow(height:30,cellType:.EmptyTVCell))
-        commonTVData = tablerow
-        commonTableView.reloadData()
-        
-    }
-    
-    
-    func appendSignupTvcells() {
-        commonTableView.isScrollEnabled = true
-        tablerow.removeAll()
-        
-        tablerow.append(TableRow(height:20,cellType:.EmptyTVCell))
-        tablerow.append(TableRow(key:"loginshowbtn",cellType:.LabelTVCell))
-        tablerow.append(TableRow(cellType:.LoignOrSignupBtnsTVCell))
-        tablerow.append(TableRow(title:"First Name",subTitle: self.fname,key: "signup", text: "1", tempText: "First Name",cellType:.TextfieldTVCell))
-        tablerow.append(TableRow(title:"Last Name",subTitle: self.lname,key: "signup", text: "2", tempText: "Last Name",cellType:.TextfieldTVCell))
-        tablerow.append(TableRow(title:"Mobile Number",subTitle: self.mobile,key: "signup", text: "12", tempText: "+961",cellType:.TextfieldTVCell))
-        tablerow.append(TableRow(title:"Email address",subTitle: self.email,key: "signup", text: "11", tempText: "Address",cellType:.TextfieldTVCell))
-        tablerow.append(TableRow(title:"Password",subTitle: self.pass,key: "signuppwd", text: "5", tempText: "Password",cellType:.TextfieldTVCell))
-        tablerow.append(TableRow(title:"Conform Password",subTitle: self.cpass,key: "signuppwd", text: "6", tempText: "Password",cellType:.TextfieldTVCell))
-        
-        tablerow.append(TableRow(title:"Sign Up",key: "btn",cellType:.ButtonTVCell))
-        tablerow.append(TableRow(height:30,cellType:.EmptyTVCell))
-        commonTVData = tablerow
-        commonTableView.reloadData()
-        
-        
-    }
     
     
     
     override func didTapOnCloseBtn(cell: LabelTVCell) {
         dismiss(animated: true)
-        // self.presentingViewController?.presentingViewController?.dismiss(animated: true)
     }
-    override func didTapOnGoogleBtn(cell: SignUpWithTVCell) {
-        print("didTapOnGoogleBtn")
-    }
+    
     
     
     
@@ -188,22 +137,13 @@ class LoginVC: BaseTableVC, RegisterViewModelProtocal {
     }
     
     
-    override func didTapOnLoginBtn(cell: LoignOrSignupBtnsTVCell) {
+    override func didTapOnLoginBtn(cell: UnderLineTVCell) {
         loginKey = "login"
-        cell.loginView.backgroundColor = .AppTabSelectColor
-        cell.loginlbl.textColor = .WhiteColor
-        cell.signUpView.backgroundColor = .WhiteColor
-        cell.signuplbl.textColor = .AppLabelColor
-        
         appendLoginTvcells()
     }
     
-    override func didTapOnSignUpBtn(cell: LoignOrSignupBtnsTVCell) {
+    override func didTapOnSignUpBtn(cell: UnderLineTVCell) {
         loginKey = "reg"
-        cell.loginView.backgroundColor = .WhiteColor
-        cell.loginlbl.textColor = .AppLabelColor
-        cell.signUpView.backgroundColor = .AppTabSelectColor
-        cell.signuplbl.textColor = .WhiteColor
         appendSignupTvcells()
         
     }
@@ -224,55 +164,60 @@ class LoginVC: BaseTableVC, RegisterViewModelProtocal {
     }
     
     
+    
+    //MARK: - Login or  Register Button Action
     override func btnAction(cell: ButtonTVCell) {
         
         if loginKey == "reg" {
-            if fname == "" {
-                showToast(message: "Enter First name")
-            }else if lname == "" {
-                showToast(message: "Enter Last name")
-            }else if mobile == "" {
-                showToast(message: "Enter Mobile No")
-            }else if mobile.isValidMobileNumber() == false {
-                showToast(message: "Enter Valid Mobile No")
-            }else if email == "" {
-                showToast(message: "Enter Email")
-            }else if email.isValidEmail() == false {
-                showToast(message: "Enter Valid Email ID")
-            }else if pass == "" {
-                showToast(message: "Enter Password")
-            }else if cpass == "" {
-                showToast(message: "Enter Conform Password")
-            }else if pass != cpass {
-                showToast(message: "Password not same")
-            }else {
-                payload["first_name"] = fname
-                payload["last_name"] = lname
-                payload["email"] = email
-                payload["password"] = pass
-                payload["phone"] = mobile
-                
-                regViewModel?.CallRegisterAPI(dictParam: payload)
-                
-            }
+            callRegisterAPI()
         }else {
-            
-            if uname == "" {
-                showToast(message: "Enter Email")
-            }else if uname.isValidEmail() == false {
-                showToast(message: "Enter Valid Email")
-            }else if password == "" {
-                showToast(message: "Enter Password")
-            }else {
-                payload.removeAll()
-                payload["username"] = uname
-                payload["password"] = password
-                regViewModel?.CallLoginAPI(dictParam: payload)
-                
-            }
+            callLoginAPI()
         }
     }
     
+    
+}
+
+
+
+//MARK: - Login Realted Stuff
+extension LoginVC {
+    
+    
+    func appendLoginTvcells() {
+        topConstraint.constant = 530
+        commonTableView.isScrollEnabled = false
+        
+        tablerow.removeAll()
+        
+        tablerow.append(TableRow(height:20,cellType:.EmptyTVCell))
+        tablerow.append(TableRow(key:"loginshowbtn",cellType:.LabelTVCell))
+        tablerow.append(TableRow(title:"Email address",key: "email", text: "11", tempText: "Email ID",cellType:.TextfieldTVCell))
+        tablerow.append(TableRow(title:"Password",key: "pwd", text: "2", tempText: "Password",cellType:.TextfieldTVCell))
+        tablerow.append(TableRow(title:"Log In",key: "btn",cellType:.ButtonTVCell))
+        tablerow.append(TableRow(height:30,cellType:.EmptyTVCell))
+        tablerow.append(TableRow(title:"Sign Up",subTitle: "If You Dont Have An Account?",cellType:.UnderLineTVCell))
+        
+        commonTVData = tablerow
+        commonTableView.reloadData()
+        
+    }
+    
+    func callLoginAPI() {
+        if uname == "" {
+            showToast(message: "Enter Email")
+        }else if uname.isValidEmail() == false {
+            showToast(message: "Enter Valid Email")
+        }else if password == "" {
+            showToast(message: "Enter Password")
+        }else {
+            payload.removeAll()
+            payload["username"] = uname
+            payload["password"] = password
+            regViewModel?.CallLoginAPI(dictParam: payload)
+            
+        }
+    }
     
     func loginDetails(response: LoginModel) {
         print(response)
@@ -288,13 +233,83 @@ class LoginVC: BaseTableVC, RegisterViewModelProtocal {
             let seconds = 2.0
             DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {[self] in
                 
-                if isVcFrom == "BookingDetailsVC" {
+                if isVcFrom == "BookingDetailsVC" || isVcFrom == "SideMenuVC"{
                     NotificationCenter.default.post(name: NSNotification.Name("reloadAfterLogin"), object: nil)
                     self.dismiss(animated: true)
                 }else {
                     gotoHomeScreen()
                 }
             }
+        }
+    }
+}
+
+//MARK: - Register Realted Stuff
+extension LoginVC {
+    
+    
+    
+    
+    func appendSignupTvcells() {
+        
+        if screenHeight < 835 {
+            topConstraint.constant = 580
+        }else {
+            topConstraint.constant = 698
+        }
+        commonTableView.isScrollEnabled = true
+        tablerow.removeAll()
+        
+        tablerow.append(TableRow(height:20,cellType:.EmptyTVCell))
+        tablerow.append(TableRow(key:"loginshowbtn",cellType:.LabelTVCell))
+        tablerow.append(TableRow(title:"First Name",subTitle: self.fname,key: "signup", text: "1", tempText: "First Name",cellType:.TextfieldTVCell))
+        tablerow.append(TableRow(title:"Last Name",subTitle: self.lname,key: "signup", text: "2", tempText: "Last Name",cellType:.TextfieldTVCell))
+        tablerow.append(TableRow(title:"Mobile Number",subTitle: self.mobile,key: "signup", text: "12", tempText: "+961",cellType:.TextfieldTVCell))
+        tablerow.append(TableRow(title:"Email address",subTitle: self.email,key: "signup", text: "11", tempText: "Address",cellType:.TextfieldTVCell))
+        tablerow.append(TableRow(title:"Password",subTitle: self.pass,key: "signuppwd", text: "5", tempText: "Password",cellType:.TextfieldTVCell))
+        tablerow.append(TableRow(title:"Conform Password",subTitle: self.cpass,key: "signuppwd", text: "6", tempText: "Password",cellType:.TextfieldTVCell))
+        
+        tablerow.append(TableRow(title:"Sign Up",key: "btn",cellType:.ButtonTVCell))
+        tablerow.append(TableRow(height:30,cellType:.EmptyTVCell))
+        tablerow.append(TableRow(title:"Login",subTitle: "If You Have An Account?",cellType:.UnderLineTVCell))
+        tablerow.append(TableRow(height:30,cellType:.EmptyTVCell))
+        
+        commonTVData = tablerow
+        commonTableView.reloadData()
+        
+        
+    }
+    
+    
+    
+    func callRegisterAPI() {
+        if fname == "" {
+            showToast(message: "Enter First name")
+        }else if lname == "" {
+            showToast(message: "Enter Last name")
+        }else if mobile == "" {
+            showToast(message: "Enter Mobile No")
+        }else if mobile.isValidMobileNumber() == false {
+            showToast(message: "Enter Valid Mobile No")
+        }else if email == "" {
+            showToast(message: "Enter Email")
+        }else if email.isValidEmail() == false {
+            showToast(message: "Enter Valid Email ID")
+        }else if pass == "" {
+            showToast(message: "Enter Password")
+        }else if cpass == "" {
+            showToast(message: "Enter Conform Password")
+        }else if pass != cpass {
+            showToast(message: "Password not same")
+        }else {
+            payload["first_name"] = fname
+            payload["last_name"] = lname
+            payload["email"] = email
+            payload["password"] = pass
+            payload["phone"] = mobile
+            
+            regViewModel?.CallRegisterAPI(dictParam: payload)
+            
         }
     }
     
@@ -325,6 +340,44 @@ class LoginVC: BaseTableVC, RegisterViewModelProtocal {
         vc.modalPresentationStyle = .fullScreen
         vc.selectedIndex = 0
         present(vc, animated: true)
+    }
+    
+}
+
+
+
+extension LoginVC {
+    
+    func addObserver() {
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("offline"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(resultnil), name: NSNotification.Name("resultnil"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadTV), name: Notification.Name("reloadTV"), object: nil)
+        
+    }
+    
+    
+    @objc func reloadTV() {
+        DispatchQueue.main.async {[self] in
+            commonTableView.reloadData()
+        }
+    }
+    
+    //MARK: - resultnil
+    @objc func resultnil() {
+        guard let vc = NoInternetConnectionVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.key = "noresult"
+        self.present(vc, animated: true)
+    }
+    
+    
+    //MARK: - nointernet
+    @objc func nointernet() {
+        guard let vc = NoInternetConnectionVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.key = "nointernet"
+        self.present(vc, animated: true)
     }
     
     

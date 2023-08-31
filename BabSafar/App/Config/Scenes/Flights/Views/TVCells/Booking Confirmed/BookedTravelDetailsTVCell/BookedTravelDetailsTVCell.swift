@@ -44,7 +44,7 @@ class BookedTravelDetailsTVCell: TableViewCell {
             Customerdetails = cellInfo?.moreData as? [Customer_details] ?? []
             
             if Customerdetails.count > 0 {
-                tvHeight.constant = CGFloat(Customerdetails.count * 35)
+                tvHeight.constant = CGFloat(Customerdetails.count * 48)
             }
             
             
@@ -89,6 +89,7 @@ class BookedTravelDetailsTVCell: TableViewCell {
         adultDetailsTV.dataSource = self
         adultDetailsTV.tableFooterView = UIView()
         adultDetailsTV.showsHorizontalScrollIndicator = false
+        
     }
     
     func setupViews(v:UIView,radius:CGFloat,color:UIColor) {
@@ -126,7 +127,7 @@ extension BookedTravelDetailsTVCell:UITableViewDelegate,UITableViewDataSource {
                 cell.typelbl.text = data.passport_number ?? ""
                 cell.seatlbl.text = data.passport_issuing_country ?? ""
                 if indexPath.row == 0{
-                    cell.travellerNamelbl.numberOfLines = 2
+                    //cell.travellerNamelbl.numberOfLines = 2
                     cell.setAttributedText(str1: "\(data.first_name ?? "") \(data.last_name ?? "")", str2: "\nLead Passenger")
                 }
                 

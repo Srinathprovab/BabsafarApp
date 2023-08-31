@@ -211,7 +211,7 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
         
         passengertypeArray.removeAll()
         tablerow.append(TableRow(height:20, bgColor:.AppHolderViewColor,cellType:.EmptyTVCell))
-        tablerow.append(TableRow(cellType:.TotalNoofTravellerTVCell))
+        tablerow.append(TableRow(title:"Passenger Details",cellType:.TotalNoofTravellerTVCell))
         for i in 1...adultsCount {
             positionsCount += 1
             passengertypeArray.append("Adult")
@@ -241,7 +241,7 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
         }
         
         
-        passengertypeArray = passengertypeArray.unique()
+      //  passengertypeArray = passengertypeArray.unique()
         
         tablerow.append(TableRow(cellType:.ContactInformationTVCell))
         tablerow.append(TableRow(cellType:.UsePromoCodesTVCell))
@@ -615,7 +615,7 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
         //   let nationalityArray = travelerArray.compactMap({$0.nationality})
         let passportIssuingCountryArray = travelerArray.compactMap({$0.passportIssuingCountry})
         let passportExpireDateArray = travelerArray.compactMap({$0.passportExpireDate})
-        let passengertypeArray = travelerArray.compactMap({$0.passengertype})
+       // let passengertypeArray = travelerArray.compactMap({$0.passengertype})
         
         
         // Convert arrays to string representations

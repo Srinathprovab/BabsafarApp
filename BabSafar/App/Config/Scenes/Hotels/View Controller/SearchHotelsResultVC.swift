@@ -23,9 +23,9 @@ class SearchHotelsResultVC: BaseTableVC, UITextFieldDelegate, HotelSearchViewMod
     @IBOutlet weak var filterImg: UIImageView!
     @IBOutlet weak var filterlbl: UILabel!
     @IBOutlet weak var filterBtn: UIButton!
-//    @IBOutlet weak var dropupimg: UIImageView!
-//    @IBOutlet weak var moveUpBtn: UIButton!
-//    @IBOutlet weak var hiddenView: UIView!
+    //    @IBOutlet weak var dropupimg: UIImageView!
+    //    @IBOutlet weak var moveUpBtn: UIButton!
+    //    @IBOutlet weak var hiddenView: UIView!
     
     
     
@@ -139,9 +139,9 @@ class SearchHotelsResultVC: BaseTableVC, UITextFieldDelegate, HotelSearchViewMod
         setuplabels(lbl: filterlbl, text: "FILTER", textcolor: .AppLabelColor, font: .LatoRegular(size: 16), align: .left)
         
         commonTableView.backgroundColor = .WhiteColor
-//        hiddenView.isHidden = true
-//        hiddenView.backgroundColor = .AppBtnColor
-//        hiddenView.addCornerRadiusWithShadow(color: .lightGray, borderColor: .clear, cornerRadius: 4)
+        //        hiddenView.isHidden = true
+        //        hiddenView.backgroundColor = .AppBtnColor
+        //        hiddenView.addCornerRadiusWithShadow(color: .lightGray, borderColor: .clear, cornerRadius: 4)
         
         
         
@@ -297,31 +297,31 @@ class SearchHotelsResultVC: BaseTableVC, UITextFieldDelegate, HotelSearchViewMod
     
     
     //MARK: - scrollViewDidScroll
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        if scrollView.contentOffset.y > self.lastContentOffset {
-//            // scrolling down
-//            if self.hiddenView.alpha == 1 {
-//                UIView.animate(withDuration: 0.3) {
-//                    self.hiddenView.alpha = 0
-//                    self.hiddenView.isHidden = true
-//                }
-//            }
-//        } else if scrollView.contentOffset.y < self.lastContentOffset {
-//            // scrolling up
-//            if self.hiddenView.alpha == 0 {
-//                UIView.animate(withDuration: 0.3) {
-//                    self.hiddenView.alpha = 1
-//                    self.hiddenView.isHidden = false
-//                }
-//            }
-//        }
-//        self.lastContentOffset = scrollView.contentOffset.y
-//    }
+    //    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    //        if scrollView.contentOffset.y > self.lastContentOffset {
+    //            // scrolling down
+    //            if self.hiddenView.alpha == 1 {
+    //                UIView.animate(withDuration: 0.3) {
+    //                    self.hiddenView.alpha = 0
+    //                    self.hiddenView.isHidden = true
+    //                }
+    //            }
+    //        } else if scrollView.contentOffset.y < self.lastContentOffset {
+    //            // scrolling up
+    //            if self.hiddenView.alpha == 0 {
+    //                UIView.animate(withDuration: 0.3) {
+    //                    self.hiddenView.alpha = 1
+    //                    self.hiddenView.isHidden = false
+    //                }
+    //            }
+    //        }
+    //        self.lastContentOffset = scrollView.contentOffset.y
+    //    }
     
-//    @IBAction func didTapOnMoveUpScreenBtn(_ sender: Any) {
-//        commonTableView.scrollToRow(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
-//        self.hiddenView.isHidden = true
-//    }
+    //    @IBAction func didTapOnMoveUpScreenBtn(_ sender: Any) {
+    //        commonTableView.scrollToRow(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
+    //        self.hiddenView.isHidden = true
+    //    }
     
     
     @objc func didTapOnFilterBtnAction(_ sender:UIButton) {
@@ -342,9 +342,15 @@ class SearchHotelsResultVC: BaseTableVC, UITextFieldDelegate, HotelSearchViewMod
     }
     
     @IBAction func didTapOnMapViewBtnAction(_ sender: Any) {
+        
+        print(latArray)
+        
+        print(longArray)
+        
+        
         guard let vc = MapViewVC.newInstance.self else {return}
         vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
+        //present(vc, animated: true)
     }
 }
 
@@ -471,6 +477,7 @@ extension SearchHotelsResultVC {
 
 
 extension SearchHotelsResultVC:AppliedFilters{
+    
     func filtersByApplied(minpricerange: Double, maxpricerange: Double, noofStopsArray: [String], refundableTypeArray: [String], departureTime: String, arrivalTime: String, noOvernightFlight: String, airlinesFilterArray: [String], connectingFlightsFilterArray: [String], ConnectingAirportsFilterArray: [String]) {
         
     }

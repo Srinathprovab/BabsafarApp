@@ -197,7 +197,7 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
         
         passengertypeArray.removeAll()
         tablerow.append(TableRow(height:20, bgColor:.AppHolderViewColor,cellType:.EmptyTVCell))
-        tablerow.append(TableRow(cellType:.TotalNoofTravellerTVCell))
+        tablerow.append(TableRow(title:"Guest Details",cellType:.TotalNoofTravellerTVCell))
         for i in 1...adultsCount {
             positionsCount += 1
             passengertypeArray.append("Adult")

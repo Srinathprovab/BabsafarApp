@@ -116,7 +116,7 @@ class LabelTVCell: TableViewCell {
             break
             
         case "cpwd":
-            titlelbl.font = UIFont.LatoRegular(size: 16)
+            titlelbl.font = UIFont.LatoRegular(size: 14)
             titlelbl.textColor = .AppLabelColor
             titlelbl.numberOfLines = 0
             break

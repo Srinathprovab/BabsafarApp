@@ -304,7 +304,7 @@
                                                         <buttonConfiguration key="configuration" style="plain"/>
                                                     </button>
                                                 </subviews>
-                                                <color key="backgroundColor" name="RefundableColor"/>
+                                                <color key="backgroundColor" red="0.098039215686274508" green="0.65098039215686276" blue="0.59607843137254901" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="trailing" secondItem="Yvk-tZ-zb8" secondAttribute="trailing" id="6zJ-Q3-xxG"/>
                                                     <constraint firstItem="fBt-Fo-vGh" firstAttribute="leading" secondItem="cis-SR-VUx" secondAttribute="leading" id="BJB-Lw-ANs"/>
@@ -966,9 +966,6 @@
         </namedColor>
         <namedColor name="IttenarySelectedColor">
             <color red="0.3919999897480011" green="0.15299999713897705" blue="0.43500000238418579" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="RefundableColor">
-            <color red="0.15700000524520874" green="0.51800000667572021" blue="0.097999997437000275" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

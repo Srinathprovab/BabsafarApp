@@ -10,6 +10,7 @@ import UIKit
 class TotalNoofTravellerTVCell: TableViewCell {
 
     @IBOutlet weak var holderView: UIView!
+    @IBOutlet weak var titlelbl: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -20,6 +21,10 @@ class TotalNoofTravellerTVCell: TableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    override func updateUI() {
+        titlelbl.text = cellInfo?.title ?? ""
     }
     
 }

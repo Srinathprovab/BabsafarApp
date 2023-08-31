@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -27,6 +28,7 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="ZHG-93-vxa" secondAttribute="bottom" id="3hq-eu-jgn"/>
+                                    <constraint firstAttribute="height" constant="698" id="5kW-aY-auh"/>
                                     <constraint firstItem="ZHG-93-vxa" firstAttribute="top" secondItem="t7a-z3-EeT" secondAttribute="top" id="Hye-wS-4fc"/>
                                     <constraint firstAttribute="trailing" secondItem="ZHG-93-vxa" secondAttribute="trailing" id="ZeH-Bx-L81"/>
                                     <constraint firstItem="ZHG-93-vxa" firstAttribute="leading" secondItem="t7a-z3-EeT" secondAttribute="leading" id="fY9-wu-6i6"/>
@@ -39,12 +41,12 @@
                             <constraint firstItem="t7a-z3-EeT" firstAttribute="leading" secondItem="UD1-os-CHb" secondAttribute="leading" id="82G-BL-Eg6"/>
                             <constraint firstAttribute="bottom" secondItem="t7a-z3-EeT" secondAttribute="bottom" id="Hx8-0V-1Bq"/>
                             <constraint firstItem="UD1-os-CHb" firstAttribute="trailing" secondItem="t7a-z3-EeT" secondAttribute="trailing" id="ffy-HW-isM"/>
-                            <constraint firstItem="t7a-z3-EeT" firstAttribute="top" secondItem="UD1-os-CHb" secondAttribute="top" constant="150" id="iGQ-Pv-x5Z"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="commonTableView" destination="ZHG-93-vxa" id="uOf-2l-juV"/>
                         <outlet property="holderView" destination="t7a-z3-EeT" id="1ng-5p-aop"/>
+                        <outlet property="topConstraint" destination="5kW-aY-auh" id="Naq-LQ-nNJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8GJ-Ja-4js" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -263,6 +265,7 @@
                         <outlet property="commonTableView" destination="aiL-up-mOb" id="Qn3-WV-Cmr"/>
                         <outlet property="holderView" destination="KPK-V8-bLj" id="fOt-AP-bRG"/>
                         <outlet property="nav" destination="LGY-nR-SbD" id="X5J-O6-RNw"/>
+                        <outlet property="navHeight" destination="AmU-Ol-bWc" id="5aF-lK-KUh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="01O-ph-SVe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

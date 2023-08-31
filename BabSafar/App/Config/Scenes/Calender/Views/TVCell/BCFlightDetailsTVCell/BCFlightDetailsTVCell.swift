@@ -56,6 +56,7 @@ extension BCFlightDetailsTVCell: UITableViewDelegate,UITableViewDataSource {
         flightDetaillsTV.dataSource = self
         flightDetaillsTV.tableFooterView = UIView()
         flightDetaillsTV.separatorStyle = .none
+        flightDetaillsTV.isScrollEnabled = false
     }
     
     
@@ -72,7 +73,7 @@ extension BCFlightDetailsTVCell: UITableViewDelegate,UITableViewDataSource {
             
             let data = bookingFlightDetails[indexPath.row]
             
-           // cell.img.sd_setImage(with: URL(string: data.fare_class ?? ""), placeholderImage:UIImage(contentsOfFile:"placeholder.png"))
+            cell.img.sd_setImage(with: URL(string: data.airline_image ?? ""), placeholderImage:UIImage(contentsOfFile:"placeholder.png"))
 
             cell.airlineNamelbl.text = data.airline_name ?? ""
             cell.flightNolbl.text = "(\(data.airline_code ?? "")-\(data.flight_number ?? ""))"

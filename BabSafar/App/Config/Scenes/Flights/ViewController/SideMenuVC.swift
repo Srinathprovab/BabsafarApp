@@ -110,10 +110,10 @@ class SideMenuVC: BaseTableVC, ProfileDetailsViewModelDelegate, LogoutViewModelD
         
         tablerow.append(TableRow(title:"Customer Support",key: "menu", image: "customer",cellType:.SideMenuTitleTVCell))
         tablerow.append(TableRow(title:"Services",key: "products", image: "",cellType:.SideMenuTitleTVCell))
-        tablerow.append(TableRow(title:"Flights",key: "menu", image: "bookings",cellType:.SideMenuTitleTVCell))
-        tablerow.append(TableRow(title:"Hotels",key: "menu", image: "hotel",cellType:.SideMenuTitleTVCell))
-        tablerow.append(TableRow(title:"Insurence",key: "menu", image: "insurence",cellType:.SideMenuTitleTVCell))
-        tablerow.append(TableRow(title:"Visa",key: "menu", image: "visa",cellType:.SideMenuTitleTVCell))
+        tablerow.append(TableRow(title:"Flights",key: "menu", image: "flightmenu",cellType:.SideMenuTitleTVCell))
+        tablerow.append(TableRow(title:"Hotels",key: "menu", image: "hotelmenu",cellType:.SideMenuTitleTVCell))
+        tablerow.append(TableRow(title:"Insurence",key: "menu", image: "insure",cellType:.SideMenuTitleTVCell))
+        tablerow.append(TableRow(title:"Visa",key: "menu", image: "visatab",cellType:.SideMenuTitleTVCell))
         tablerow.append(TableRow(title:"Fastrack",key: "menu", image: "fasttrack",cellType:.SideMenuTitleTVCell))
         
         tablerow.append(TableRow(height:60,cellType:.EmptyTVCell))

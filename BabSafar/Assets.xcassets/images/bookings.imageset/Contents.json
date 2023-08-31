@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Vector (9).png",
+      "filename" : "CarbonTicket 1.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Vector (10).png",
+      "filename" : "CarbonTicket 1@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Vector (11).png",
+      "filename" : "CarbonTicket 1@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

@@ -44,6 +44,8 @@ struct Booking_itinerary_details : Codable {
     let arrival_date : String?
     let arrival_time : String?
     let duration : String?
+    let airline_image : String?
+    
     
     enum CodingKeys: String, CodingKey {
         
@@ -90,6 +92,7 @@ struct Booking_itinerary_details : Codable {
         case arrival_date = "arrival_date"
         case arrival_time = "arrival_time"
         case duration = "duration"
+        case airline_image = "airline_image"
     }
     
     init(from decoder: Decoder) throws {
@@ -137,6 +140,8 @@ struct Booking_itinerary_details : Codable {
         arrival_date = try values.decodeIfPresent(String.self, forKey: .arrival_date)
         arrival_time = try values.decodeIfPresent(String.self, forKey: .arrival_time)
         duration = try values.decodeIfPresent(String.self, forKey: .duration)
+        airline_image = try values.decodeIfPresent(String.self, forKey: .airline_image)
+
     }
     
 }

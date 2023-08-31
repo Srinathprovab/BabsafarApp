@@ -73,6 +73,7 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="holderView" destination="icK-rc-F5U" id="ngr-aT-GQR"/>
+                <outlet property="titlelbl" destination="UCV-WX-zsz" id="tz0-No-d9r"/>
             </connections>
             <point key="canvasLocation" x="6.8702290076335872" y="37.323943661971832"/>
         </tableViewCell>

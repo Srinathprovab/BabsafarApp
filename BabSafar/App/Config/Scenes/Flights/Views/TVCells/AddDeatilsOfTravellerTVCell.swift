@@ -187,7 +187,7 @@ class AddDeatilsOfTravellerTVCell: TableViewCell {
                 
                 // Update the gender property of the Traveler object at the specified index
                 travelerArray[self.indexposition ].middlename = ""
-                travelerArray[self.indexposition ].laedpassenger = "1"
+                travelerArray[self.indexposition ].laedpassenger = "0"
                 titledropDown.dataSource = ["Mr","Ms","Mrs"]
                 
             } else if cellInfo.key == "child" {
@@ -197,7 +197,7 @@ class AddDeatilsOfTravellerTVCell: TableViewCell {
                 
                 // Update the gender property of the Traveler object at the specified index
                 travelerArray[self.indexposition ].middlename = ""
-                travelerArray[self.indexposition ].laedpassenger = "1"
+                travelerArray[self.indexposition ].laedpassenger = "0"
                 titledropDown.dataSource = ["Master","Miss"]
                 
             } else {
@@ -207,7 +207,7 @@ class AddDeatilsOfTravellerTVCell: TableViewCell {
                 
                 // Update the gender property of the Traveler object at the specified index
                 travelerArray[self.indexposition ].middlename = ""
-                travelerArray[self.indexposition ].laedpassenger = "1"
+                travelerArray[self.indexposition ].laedpassenger = "0"
                 titledropDown.dataSource = ["Master","Miss"]
                 
             }
@@ -216,6 +216,7 @@ class AddDeatilsOfTravellerTVCell: TableViewCell {
         
         
         if cellInfo?.title == "Adult 1" {
+            travelerArray[self.indexposition ].laedpassenger = "1"
             expandView()
             expandViewBool = false
         }
