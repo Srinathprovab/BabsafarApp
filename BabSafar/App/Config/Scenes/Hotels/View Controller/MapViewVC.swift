@@ -28,11 +28,9 @@ class MapViewVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         // Do any additional setup after loading the view.
         setupUI()
-        
-        
+        addMarkersToMap()
         
     }
     
@@ -42,18 +40,31 @@ class MapViewVC: UIViewController {
         nav.titlelbl.text = "Map View"
         nav.backBtn.addTarget(self, action: #selector(backbtnAction), for: .touchUpInside)
         
-        let googleMapView1 = GMSMapView(frame: view.bounds)
-        googleMapView.addSubview(googleMapView1)
-        
-        
-        let marker = GMSMarker()
-        marker.position = CLLocationCoordinate2D(latitude: 37.7749, longitude: -122.4194)
-        marker.title = "San Francisco"
-        marker.snippet = "California, USA"
-        marker.map = googleMapView1
         
         
     }
+    
+    func addMarkersToMap() {
+        let gmsView = GMSMapView(frame: view.bounds)
+        googleMapView.addSubview(gmsView)
+        
+        for index in 0..<latArray.count {
+            if let latitude = Double(latArray[index]), let longitude = Double(longArray[index]) {
+                let marker = GMSMarker()
+                marker.position = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+                marker.title = "Location \(index + 1)"
+                
+                // Create a custom marker icon with an image
+                if let markerImage = UIImage(named: "loc")?.withRenderingMode(.alwaysOriginal).withTintColor(.red) {
+                    let markerView = UIImageView(image: markerImage)
+                    marker.iconView = markerView
+                }
+                
+                marker.map = gmsView
+            }
+        }
+    }
+
     
     
     @objc func backbtnAction() {

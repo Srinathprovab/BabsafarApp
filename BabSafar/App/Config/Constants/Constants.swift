@@ -130,6 +130,7 @@ var pnrNo = String()
 var bookingRefrence = String()
 var bookingId = String()
 var flightSelectedIndex = Int()
+var prebookingcancellationpolicy : Pre_booking_cancellation_policy?
 
 
 var countrylist = [All_country_code_list]()

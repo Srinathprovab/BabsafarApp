@@ -7,6 +7,8 @@
 
 import UIKit
 import CoreData
+import MessageUI
+
 
 class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, AboutusViewModelDelegate, TimerManagerDelegate {
     
@@ -22,6 +24,7 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
     @IBOutlet weak var subtitlelbl: UILabel!
     
     
+    var hotelSearchData :HSearchData?
     var kwdprice = String()
     var mobile = String()
     var email = String()
@@ -40,7 +43,7 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
     var token = String()
     var vm:HotelMBViewModel?
     var moreDeatilsViewModel:AboutusViewModel?
-    
+
     var adultsCount = Int()
     var childCount = Int()
     
@@ -110,6 +113,10 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
         
         childCount = Int(defaults.string(forKey: UserDefaultsKeys.hotelchildcount) ?? "0") ?? 0
         holderView.isHidden = false
+        
+        
+        prebookingcancellationpolicy = response.data?.pre_booking_cancellation_policy
+        hotelSearchData = response.data?.search_data
         hbookingDetails = response.data?.hotel_details
         roompaxesdetails = response.data?.room_paxes_details ?? []
         grandTotal = "\(response.data?.currency_obj?.to_currency ?? ""):\(response.data?.total_price ?? "")"
@@ -162,15 +169,17 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
                                          "AddChildTravellerTVCell",
                                          "ContactInformationTVCell",
                                          "AddTravellerTVCell",
-                                         "HotelPriceSummaryTVCell",
+                                         "NewHotelPriceSummeryTVCell",
                                          "AcceptTermsAndConditionTVCell",
                                          "HotelDetailsTVCell",
+                                         "UserSpecificationTVCell",
                                          "TotalNoofTravellerTVCell",
-                                         "AddDeatilsOfGuestTVCell"])
+                                         "AddDeatilsOfGuestTVCell",
+                                         "SpecialRequestTVCell"])
         
         
-        adultsCount = Int(defaults.string(forKey: UserDefaultsKeys.hadultCount) ?? "1") ?? 0
-        childCount = Int(defaults.string(forKey: UserDefaultsKeys.hchildCount) ?? "0") ?? 0
+        adultsCount = Int(defaults.string(forKey: UserDefaultsKeys.hoteladultscount) ?? "1") ?? 0
+        childCount = Int(defaults.string(forKey: UserDefaultsKeys.hotelchildcount) ?? "0") ?? 0
     }
     
     
@@ -185,9 +194,10 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
         }
         tablerow.append(TableRow(title:hbookingDetails?.name,
                                  subTitle: hbookingDetails?.address,
-                                 text: hbookingDetails?.checkIn,
-                                 buttonTitle:"\(roompaxesdetails?[0].no_of_adults ?? 0)", image:hbookingDetails?.image,
-                                 tempText: hbookingDetails?.checkOut,
+                                 text: convertDateFormat(inputDate: hbookingDetails?.checkIn ?? "", f1: "yyyy-MM-dd", f2: "dd MMM yyyy"),
+                                 buttonTitle:"\(adultsCount + childCount)",
+                                 image:hbookingDetails?.image,
+                                 tempText: convertDateFormat(inputDate: hbookingDetails?.checkOut ?? "", f1: "yyyy-MM-dd", f2: "dd MMM yyyy"),
                                  tempInfo: "\(roompaxesdetails?[0].no_of_rooms ?? 0)",
                                  cellType:.HotelDetailsTVCell))
         
@@ -217,20 +227,23 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
             }
         }
         
+        tablerow.append(TableRow(cellType:.UserSpecificationTVCell))
         tablerow.append(TableRow(cellType:.ContactInformationTVCell))
         tablerow.append(TableRow(height:10, bgColor:.AppHolderViewColor,cellType:.EmptyTVCell))
-        tablerow.append(TableRow(title:"Price Summary",
-                                 subTitle: "\(roompaxesdetails?.first?.room_name ?? "")",
-                                 price: "\(roompaxesdetails?.first?.currency ?? ""):\(roompaxesdetails?.first?.net ?? "")",
-                                 key: "\(roompaxesdetails?.first?.currency ?? ""):00000",
-                                 text: "\(roompaxesdetails?.first?.no_of_adults ?? 0)",
-                                 headerText: "\(roompaxesdetails?.first?.currency ?? ""):00000",
-                                 buttonTitle: "Refundable000",
-                                 tempText: "\(roompaxesdetails?.first?.no_of_children ?? 0)",
-                                 cellType:.HotelPriceSummaryTVCell))
-        tablerow.append(TableRow(height:10, bgColor:.AppHolderViewColor,cellType:.EmptyTVCell))
         
-        tablerow.append(TableRow(title:"I Accept T&C and Privacy Policy",cellType:.AcceptTermsAndConditionTVCell))
+        
+        tablerow.append(TableRow(title:hbookingDetails?.name,
+                                 subTitle: hbookingDetails?.address,
+                                 price: "\(roompaxesdetails?.first?.currency ?? ""):\(roompaxesdetails?.first?.net ?? "")",
+                                 text: convertDateFormat(inputDate: hbookingDetails?.checkIn ?? "", f1: "yyyy-MM-dd", f2: "dd MMM yyyy"),
+                                 headerText: "Room:\(roompaxesdetails?.first?.no_of_rooms ?? 0) \(roompaxesdetails?.first?.room_name ?? "")",
+                                 buttonTitle:convertDateFormat(inputDate: hbookingDetails?.checkOut ?? "", f1: "yyyy-MM-dd", f2: "dd MMM yyyy"),
+                                 tempText: "\(hotelSearchData?.no_of_nights ?? 0)",
+                                 TotalQuestions: "\(roompaxesdetails?.first?.no_of_adults ?? 0)",
+                                 cellType:.NewHotelPriceSummeryTVCell,
+                                 questionBase: "\(roompaxesdetails?.first?.no_of_children ?? 0)"))
+        
+        tablerow.append(TableRow(cellType:.SpecialRequestTVCell))
         tablerow.append(TableRow(height:50, bgColor:.AppHolderViewColor,cellType:.EmptyTVCell))
         
         
@@ -291,7 +304,7 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
         vc.modalPresentationStyle = .overCurrentContext
         self.present(vc, animated: true)
     }
-
+    
     
     
     //MARK: - didTapOnCountryCodeBtn
@@ -348,16 +361,7 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
     
     //MARK: - did Tap On T&C Action
     
-    override func didTapOnTAndCAction(cell: AcceptTermsAndConditionTVCell) {
-        payload.removeAll()
-        BASE_URL = ""
-        payload["id"] = "3"
-        moreDeatilsViewModel?.CALL_GET_TERMSANDCONDITION_API(dictParam: payload, url: "https://provabdevelopment.com/babsafar/mobile_webservices/mobile/index.php/general/cms")
-    }
     
-    func termsandcobditionDetails(response: AboutUsModel) {
-        gotoAboutUsVC(title: response.data?.page_title ?? "", desc: response.data?.page_description ?? "")
-    }
     
     func contactDetals(response: ContactUsModel) {
         
@@ -367,37 +371,15 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
         
     }
     
-    //MARK: - did Tap On Privacy Policy Action
-    override func didTapOnPrivacyPolicyAction(cell: AcceptTermsAndConditionTVCell) {
-        payload.removeAll()
-        BASE_URL = ""
-        payload["id"] = "4"
-        moreDeatilsViewModel?.CALL_GET_PRIVICYPOLICY_API(dictParam: payload, url: "https://provabdevelopment.com/babsafar/mobile_webservices/mobile/index.php/general/cms")
-    }
-    
-    
-    func privacyPolicyDetails(response: AboutUsModel) {
-        gotoAboutUsVC(title: response.data?.page_title ?? "", desc: response.data?.page_description ?? "")
-    }
-    
     
     
     //MARK: - Load URLS of T&C And Privacy Policy
     
-    func gotoAboutUsVC(title:String,desc:String) {
-        guard let vc = AboutUsVC.newInstance.self else {return}
-        vc.titleString = title
-        vc.key1 = "webviewhide"
-        vc.desc = desc
-        vc.modalPresentationStyle = .fullScreen
-        self.present(vc, animated: true)
-        
-    }
     
     @objc func didTapOnBookNowBtn(_ sender: UIButton) {
         
         payload.removeAll()
-       
+        
         
         var callpaymenthotelbool = true
         var fnameCharBool = true
@@ -448,6 +430,7 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
         let passengertypeArray = travelerArray.compactMap({$0.passengertype})
         let firstnameArray = travelerArray.compactMap({$0.firstName})
         let lastNameArray = travelerArray.compactMap({$0.lastName})
+        //    let laedGuestArray = travelerArray.compactMap({$0.laedpassenger})
         
         
         
@@ -455,6 +438,7 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
         let firstnameString = "[\"" + firstnameArray.joined(separator: "\",\"") + "\"]"
         let lastNameString = "[\"" + lastNameArray.joined(separator: "\",\"") + "\"]"
         let passengertypeString = "[\"" + passengertypeArray.joined(separator: "\",\"") + "\"]"
+        //   let laedGuesString = "[\"" + laedGuestArray.joined(separator: "\",\"") + "\"]"
         
         
         payload.removeAll()
@@ -470,10 +454,12 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
         payload["first_name"] = firstnameString
         payload["last_name"] = lastNameString
         payload["name_title"] = mrtitleString
+        //      payload["lead_guest"] = laedGuesString
         payload["billing_country"] = billingCountryCode
         payload["country_code"] = self.countryCode
         payload["passenger_type"] = passengertypeString
         payload["user_id"] = defaults.string(forKey: UserDefaultsKeys.userid) ?? "0"
+        
         
         
         do{
@@ -482,10 +468,10 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
             let jsonStringData =  NSString(data: jsonData as Data, encoding: NSUTF8StringEncoding)! as String
             
             
-                
-               
-               print(jsonStringData)
-                
+            
+            
+            print(jsonStringData)
+            
             
             
         }catch{
@@ -494,7 +480,7 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
         
         
         
-         if callpaymenthotelbool == false {
+        if callpaymenthotelbool == false {
             showToast(message: "Add Details")
         }else if fnameCharBool == false {
             showToast(message: "First Name Should More Than 3 Chars")
@@ -548,6 +534,48 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
     }
     
     
+    //MARK: - SpecialRequestTVCell didTapOnTAndCAction
+    override func didTapOnTAndCAction(cell: SpecialRequestTVCell) {
+//        payload.removeAll()
+//        BASE_URL = ""
+//        payload["id"] = "3"
+//        moreDeatilsViewModel?.CALL_GET_TERMSANDCONDITION_API(dictParam: payload, url: "https://provabdevelopment.com/babsafar/mobile_webservices/mobile/index.php/general/cms")
+    }
+    
+    func termsandcobditionDetails(response: AboutUsModel) {
+        gotoAboutUsVC(title: response.data?.page_title ?? "", desc: response.data?.page_description ?? "")
+    }
+    
+    
+    //MARK: - SpecialRequestTVCell didTapOnPrivacyPolicyAction
+    override func didTapOnPrivacyPolicyAction(cell: SpecialRequestTVCell) {
+//        payload.removeAll()
+//        BASE_URL = ""
+//        payload["id"] = "4"
+//        moreDeatilsViewModel?.CALL_GET_PRIVICYPOLICY_API(dictParam: payload, url: "https://provabdevelopment.com/babsafar/mobile_webservices/mobile/index.php/general/cms")
+    }
+    
+    
+    func privacyPolicyDetails(response: AboutUsModel) {
+        gotoAboutUsVC(title: response.data?.page_title ?? "", desc: response.data?.page_description ?? "")
+        BASE_URL = BASE_URL1
+    }
+    
+    
+    func gotoAboutUsVC(title:String,desc:String) {
+        guard let vc = AboutUsVC.newInstance.self else {return}
+        vc.titleString = title
+        vc.key1 = "webviewhide"
+        vc.desc = desc
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true)
+        
+    }
+    
+    //MARK: - didTapOnforMoreInfo HotelDetailsTVCell
+    override func didTapOnforMoreInfo(cell: HotelDetailsTVCell) {
+        openMailComposer(emailstr: "babsafar.support@johnmenzies.aero")
+    }
     
 }
 
@@ -620,6 +648,38 @@ extension AddContactAndGuestDetailsVC {
         
         setuplabels(lbl: sessonlbl, text: "Your Session Expires In : \(formattedTime)", textcolor: .AppLabelColor, font: .LatoRegular(size: 16), align: .left)
         
+    }
+    
+    
+}
+
+
+
+//MARK: - MFMailComposeViewControllerDelegate
+extension AddContactAndGuestDetailsVC:MFMailComposeViewControllerDelegate{
+    
+    func openMailComposer(emailstr:String) {
+        if MFMailComposeViewController.canSendMail() {
+            let mailComposeViewController = MFMailComposeViewController()
+            mailComposeViewController.mailComposeDelegate = self
+            mailComposeViewController.setToRecipients([emailstr]) // Replace with the recipient's email address
+            
+            // You can also set a subject and body for the email if needed
+            mailComposeViewController.setSubject("Subject")
+            mailComposeViewController.setMessageBody("Hello, here's my message.", isHTML: false)
+            
+            self.present(mailComposeViewController, animated: true, completion: nil)
+        } else {
+            // Handle the case where the device cannot send email
+            let alertController = UIAlertController(title: "Error", message: "Your device cannot send email.", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alertController.addAction(okAction)
+            self.present(alertController, animated: true, completion: nil)
+        }
+    }
+    
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true, completion: nil)
     }
     
     

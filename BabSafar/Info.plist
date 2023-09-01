@@ -61,6 +61,9 @@
 	<key>LSSupportsOpeningDocumentsInPlace</key>
 	<true/>
     
+    
+   
+
     <key>NSLocationWhenInUseUsageDescription</key>
     <string>We need your location to show nearby places on the map.</string>
     <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>

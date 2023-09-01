@@ -15,7 +15,7 @@ class BCFlightDetailsTVCell: TableViewCell {
     @IBOutlet weak var tvHeight: NSLayoutConstraint!
     
     
-    var bookingFlightDetails = [Booking_itinerary_details]()
+    var bookingFlightDetails = [Booking_itinerary_summary]()
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -30,8 +30,8 @@ class BCFlightDetailsTVCell: TableViewCell {
     
     
     override func updateUI() {
-        bookingFlightDetails = cellInfo?.moreData as? [Booking_itinerary_details] ?? []
-        tvHeight.constant = CGFloat(bookingFlightDetails.count * 124)
+        bookingFlightDetails = cellInfo?.moreData as? [Booking_itinerary_summary] ?? []
+        tvHeight.constant = CGFloat(bookingFlightDetails.count * 182)
         flightDetaillsTV.reloadData()
     }
     
@@ -73,27 +73,31 @@ extension BCFlightDetailsTVCell: UITableViewDelegate,UITableViewDataSource {
             
             let data = bookingFlightDetails[indexPath.row]
             cell.showLayover()
-            cell.img.sd_setImage(with: URL(string: data.airline_image ?? ""), placeholderImage:UIImage(contentsOfFile:"placeholder.png"))
+            cell.img.sd_setImage(with: URL(string: data.operator_image ?? ""), placeholderImage:UIImage(contentsOfFile:"placeholder.png"))
 
-            cell.airlineNamelbl.text = data.airline_name ?? ""
-            cell.flightNolbl.text = "(\(data.airline_code ?? "")-\(data.flight_number ?? ""))"
+            cell.airlineNamelbl.text = data.operator_name ?? ""
+            cell.flightNolbl.text = "(\(data.operator_code ?? "")-\(data.flight_number ?? ""))"
             cell.durationlbl.text = data.duration ?? ""
             cell.economylbl.text = data.cabin_class ?? ""
+          
+            cell.fromTimelbl.text = data.origin?.time ?? ""
+            cell.fromCitylbl.text = data.origin?.airport_name ?? ""
+            cell.fromdatelbl.text = data.origin?.date ?? ""
             
-            cell.fromCitylbl.text = data.from_airport_name ?? ""
-            cell.fromTimelbl.text = data.departure_time ?? ""
-            cell.fromdatelbl.text = data.departure_date ?? ""
             
-            cell.toTimelbl.text = data.arrival_time ?? ""
-            cell.tocitylbl.text = data.to_airport_name ?? ""
-            cell.todatelbl.text = data.arrival_date ?? ""
+            cell.toTimelbl.text = data.destination?.time ?? ""
+            cell.tocitylbl.text = data.destination?.airport_name ?? ""
+            cell.todatelbl.text = data.destination?.date ?? ""
 
-            cell.fromTerminallbl.text = "Terminal \(data.origin_terminal ?? "")"
-            cell.toTerminallbl.text = "Terminal \(data.destination_terminal ?? "")"
+            cell.fromTerminallbl.text = "Terminal \(data.origin?.terminal ?? "")"
+            cell.toTerminallbl.text = "Terminal \(data.destination?.terminal ?? "")"
             
+            cell.layoverTimelbl.text = "Layover \(data.destination?.airport_name ?? "") (\(data.destination?.loc ?? ""))\(data.weight_Allowance ?? "")"
             
-            if indexPath.row == 0 {
-                //cell.hideLayover()
+            if indexPath.row != 0 {
+                cell.hideLayover()
+            }else {
+                cell.showLayover()
             }
             
             

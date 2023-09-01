@@ -170,8 +170,10 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="adultlbl" destination="Bwa-u2-TLc" id="1qj-R8-DMg"/>
+                <outlet property="cancellationlbl" destination="fZf-PE-Fyu" id="E83-JG-YE6"/>
                 <outlet property="checkInlbl" destination="mff-Ub-dwA" id="NqR-M6-7P2"/>
                 <outlet property="checkOutlbl" destination="Aig-oI-s2f" id="h7f-JK-yEp"/>
+                <outlet property="formoreInfolbl" destination="ue8-eI-2IK" id="5DG-a8-bFU"/>
                 <outlet property="holderView" destination="4aG-MD-oLA" id="BcX-r1-dL8"/>
                 <outlet property="hotelDetailslbl" destination="36n-xS-UtV" id="GaP-dA-8md"/>
                 <outlet property="hotelIconImg" destination="mqt-OL-nG8" id="0aR-FC-hij"/>

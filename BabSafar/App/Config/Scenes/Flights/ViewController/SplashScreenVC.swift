@@ -119,10 +119,10 @@ class SplashScreenVC: UIViewController {
         
         loderBool = false
         DispatchQueue.main.asyncAfter(deadline: .now() + 7.0, execute: {
-           // self.gotodashBoardScreen()
+             self.gotodashBoardScreen()
             
-            defaults.set("Flights", forKey: UserDefaultsKeys.dashboardTapSelected)
-            self.gotoBookingConfirmedVC(url: "https://provabdevelopment.com/pro_new/mobile/index.php/voucher/flight/BAS-F-TP-0830-4570/PTBSID0000000016")
+//            defaults.set("Flights", forKey: UserDefaultsKeys.dashboardTapSelected)
+//            self.gotoBookingConfirmedVC(url: "https://provabdevelopment.com/pro_new/mobile/index.php/voucher/flight/BAS-F-TP-0901-3421/PTBSID0000000016")
         })
     }
     

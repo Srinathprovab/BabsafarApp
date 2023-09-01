@@ -20,7 +20,7 @@ struct HMBData : Codable {
     let converted_currency_rate : Int?
     let room_paxes_details : [Room_paxes_details]?
     let token : String?
-    let pre_booking_cancellation_policy : String?
+   // let pre_booking_cancellation_policy : String?
     let currency_obj : Currency_obj?
     let traveller_details : String?
     let unformatted_total_price : Double?
@@ -28,9 +28,13 @@ struct HMBData : Codable {
     let reward_usable : Int?
     let reward_earned : Int?
     let total_price_with_rewards : Int?
-
+    let search_data : HSearchData?
+    let pre_booking_cancellation_policy : Pre_booking_cancellation_policy?
+    
+    
+    
     enum CodingKeys: String, CodingKey {
-
+        
         case payment_method = "payment_method"
         case payment_booking_source = "payment_booking_source"
         case booking_source = "booking_source"
@@ -42,7 +46,7 @@ struct HMBData : Codable {
         case converted_currency_rate = "converted_currency_rate"
         case room_paxes_details = "room_paxes_details"
         case token = "token"
-        case pre_booking_cancellation_policy = "pre_booking_cancellation_policy"
+   //     case pre_booking_cancellation_policy = "pre_booking_cancellation_policy"
         case currency_obj = "currency_obj"
         case traveller_details = "traveller_details"
         case unformatted_total_price = "unformatted_total_price"
@@ -50,8 +54,11 @@ struct HMBData : Codable {
         case reward_usable = "reward_usable"
         case reward_earned = "reward_earned"
         case total_price_with_rewards = "total_price_with_rewards"
+        case search_data = "search_data"
+        case pre_booking_cancellation_policy = "pre_booking_cancellation_policy"
+        
     }
-
+    
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         payment_method = try values.decodeIfPresent(String.self, forKey: .payment_method)
@@ -65,7 +72,7 @@ struct HMBData : Codable {
         converted_currency_rate = try values.decodeIfPresent(Int.self, forKey: .converted_currency_rate)
         room_paxes_details = try values.decodeIfPresent([Room_paxes_details].self, forKey: .room_paxes_details)
         token = try values.decodeIfPresent(String.self, forKey: .token)
-        pre_booking_cancellation_policy = try values.decodeIfPresent(String.self, forKey: .pre_booking_cancellation_policy)
+  //      pre_booking_cancellation_policy = try values.decodeIfPresent(String.self, forKey: .pre_booking_cancellation_policy)
         currency_obj = try values.decodeIfPresent(Currency_obj.self, forKey: .currency_obj)
         traveller_details = try values.decodeIfPresent(String.self, forKey: .traveller_details)
         unformatted_total_price = try values.decodeIfPresent(Double.self, forKey: .unformatted_total_price)
@@ -73,6 +80,8 @@ struct HMBData : Codable {
         reward_usable = try values.decodeIfPresent(Int.self, forKey: .reward_usable)
         reward_earned = try values.decodeIfPresent(Int.self, forKey: .reward_earned)
         total_price_with_rewards = try values.decodeIfPresent(Int.self, forKey: .total_price_with_rewards)
+        search_data = try values.decodeIfPresent(HSearchData.self, forKey: .search_data)
+        pre_booking_cancellation_policy = try values.decodeIfPresent(Pre_booking_cancellation_policy.self, forKey: .pre_booking_cancellation_policy)
     }
-
+    
 }

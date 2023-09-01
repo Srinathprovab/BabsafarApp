@@ -49,11 +49,11 @@
                                     <constraint firstItem="grj-jr-y9q" firstAttribute="top" secondItem="du1-ZH-Otu" secondAttribute="top" id="RcL-Am-2me"/>
                                     <constraint firstItem="grj-jr-y9q" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Wlf-hY-hN2" secondAttribute="trailing" id="Wnh-3J-eWc"/>
                                     <constraint firstItem="Z7A-UV-FUu" firstAttribute="top" secondItem="du1-ZH-Otu" secondAttribute="top" id="Y4K-jU-IEy"/>
+                                    <constraint firstAttribute="trailing" secondItem="Z7A-UV-FUu" secondAttribute="trailing" id="ZBK-er-dJI"/>
                                     <constraint firstAttribute="bottom" secondItem="Wlf-hY-hN2" secondAttribute="bottom" id="ZWu-dw-PUG"/>
                                     <constraint firstItem="Wlf-hY-hN2" firstAttribute="leading" secondItem="du1-ZH-Otu" secondAttribute="leading" id="dOg-qe-S1H"/>
                                     <constraint firstAttribute="bottom" secondItem="Z7A-UV-FUu" secondAttribute="bottom" id="jDo-ad-8da"/>
                                     <constraint firstItem="Z7A-UV-FUu" firstAttribute="leading" secondItem="grj-jr-y9q" secondAttribute="trailing" constant="12" id="jsT-oQ-BQb"/>
-                                    <constraint firstAttribute="trailing" secondItem="Z7A-UV-FUu" secondAttribute="trailing" id="rbP-a9-b4m"/>
                                 </constraints>
                             </stackView>
                         </subviews>

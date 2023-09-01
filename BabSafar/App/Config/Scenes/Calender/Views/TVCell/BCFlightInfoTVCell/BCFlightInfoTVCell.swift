@@ -25,7 +25,7 @@ class BCFlightInfoTVCell: UITableViewCell {
     @IBOutlet weak var todatelbl: UILabel!
     @IBOutlet weak var fromTerminallbl: UILabel!
     @IBOutlet weak var toTerminallbl: UILabel!
-    @IBOutlet weak var layoverView: UILabel!
+    @IBOutlet weak var layoverView: UIView!
     @IBOutlet weak var layoverTimelbl: UILabel!
     @IBOutlet weak var layoverHeight: NSLayoutConstraint!
     
@@ -45,11 +45,11 @@ class BCFlightInfoTVCell: UITableViewCell {
     
     func hideLayover() {
         layoverView.isHidden = true
-        layoverHeight.constant = 0
+        layoverHeight.constant = 18
     }
     
     func showLayover() {
-        layoverView.isHidden = true
+        layoverView.isHidden = false
         layoverHeight.constant = 18
     }
 

@@ -259,7 +259,7 @@ airport (MCT)</string>
                 <outlet property="img" destination="eP8-jZ-fwz" id="jFr-tj-YzQ"/>
                 <outlet property="layoverHeight" destination="4iB-7U-Hmr" id="V0K-tb-HHm"/>
                 <outlet property="layoverTimelbl" destination="FA5-K2-RAl" id="H07-Cl-6Pq"/>
-                <outlet property="layoverView" destination="FA5-K2-RAl" id="aC2-bF-ezt"/>
+                <outlet property="layoverView" destination="NHn-Jo-pHK" id="4Yy-TE-aEQ"/>
                 <outlet property="toTerminallbl" destination="2EH-Md-IFV" id="XVs-yK-K3e"/>
                 <outlet property="toTimelbl" destination="WZz-OV-Pnz" id="M10-05-ZqB"/>
                 <outlet property="tocitylbl" destination="567-Ig-Vpc" id="RT0-15-GFo"/>

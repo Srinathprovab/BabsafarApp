@@ -117,6 +117,9 @@ enum TVCellType {
     case AddDeatilsOfGuestTVCell
     case HotelDesclblTVCell
     case VoucherHotelDetailsTVCell
+    case SpecialRequestTVCell
+    case NewHotelPriceSummeryTVCell
+    case UserSpecificationTVCell
     
     
     //Insurence

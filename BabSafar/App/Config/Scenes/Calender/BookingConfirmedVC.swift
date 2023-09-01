@@ -36,7 +36,7 @@ class BookingConfirmedVC: BaseTableVC, VocherDetailsViewModelDelegate, HotelVouc
     var total_rooms = ""
     var adult_count = ""
     var vocherpdf = ""
-    var bookingitinerarydetails = [Booking_itinerary_details]()
+    var bookingitinerarydetails = [Booking_itinerary_summary]()
 
     
     
@@ -171,7 +171,7 @@ extension BookingConfirmedVC {
         })
         
         response.data?.booking_details?.forEach({ j in
-            bookingitinerarydetails = j.booking_itinerary_details ?? []
+            bookingitinerarydetails = j.booking_itinerary_summary ?? []
             Customerdetails = j.customer_details ?? []
             
             
@@ -214,7 +214,7 @@ extension BookingConfirmedVC {
         
         tablerow.append(TableRow(title:"Passenger Details",key: "bc",cellType:.LabelTVCell))
 
-        tablerow.append(TableRow(moreData:Customerdetails,cellType:.BookedTravelDetailsTVCell))
+        tablerow.append(TableRow(title:"Lead Passenger",moreData:Customerdetails,cellType:.BookedTravelDetailsTVCell))
         tablerow.append(TableRow(height:35,cellType:.EmptyTVCell))
         tablerow.append(TableRow(title:"Thank you for booking with bab safar Your attraction voucher has been shared on the confirmed email.",key: "booked",cellType:.LabelTVCell))
         tablerow.append(TableRow(title:"Download E - Ticket",key:"booked",cellType:.ButtonTVCell))
@@ -309,7 +309,7 @@ extension BookingConfirmedVC {
         
         
         tablerow.append(TableRow(title:"Guest Details",cellType:.LabelTVCell))
-        tablerow.append(TableRow(moreData:hCustomerdetails,cellType:.BookedTravelDetailsTVCell))
+        tablerow.append(TableRow(title:"Lead Guest",moreData:hCustomerdetails,cellType:.BookedTravelDetailsTVCell))
         tablerow.append(TableRow(height:35,cellType:.EmptyTVCell))
         
         tablerow.append(TableRow(title:"Thank you for booking with bab safar Your attraction voucher has been shared on the confirmed email.",key: "booked",cellType:.LabelTVCell))

@@ -39,7 +39,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         MFSettings.shared.setTheme(theme: them)
         
         
-        GMSServices.provideAPIKey("YOUR_GOOGLE_MAPS_API_KEY")
+        GMSServices.provideAPIKey("AIzaSyAfgpJ36EyQji0KETVN-UuooOpATS_zgb0")
 
 
         

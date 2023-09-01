@@ -104,6 +104,7 @@ class AddDeatilsOfGuestTVCell: TableViewCell {
                 // Update the gender property of the Traveler object at the specified index
                 travelerArray[self.indexposition ].passengertype = "AD"
                 travelerArray[self.indexposition ].middlename = ""
+                travelerArray[self.indexposition ].laedpassenger = "0"
             } else {
                 if travelerArray.count <= self.indexposition {
                     travelerArray += Array(repeating: Traveler(), count: (self.indexposition ) - travelerArray.count + 1)
@@ -112,12 +113,15 @@ class AddDeatilsOfGuestTVCell: TableViewCell {
                 // Update the gender property of the Traveler object at the specified index
                 travelerArray[self.indexposition ].passengertype = "CH"
                 travelerArray[self.indexposition ].middlename = ""
+                travelerArray[self.indexposition ].laedpassenger = "0"
             }
             
         }
         
         
         if cellInfo?.title == "Adult 1" {
+            setAttributedText(str1: "Adult 1", str2: "  Lead Guest")
+            travelerArray[self.indexposition ].laedpassenger = "1"
             expandView()
             expandViewBool = false
         }
@@ -129,11 +133,7 @@ class AddDeatilsOfGuestTVCell: TableViewCell {
         setuplabels(lbl: titlelbl, text: "", textcolor: .AppLabelColor, font: .LatoRegular(size: 14), align: .left)
         dropdownimg.image = UIImage(named: "down")?.withRenderingMode(.alwaysOriginal).withTintColor(.AppLabelColor)
         
-        contentView.backgroundColor = .clear
-        holderView.layer.borderColor = UIColor.AppBorderColor.cgColor
-        holderView.layer.borderWidth = 1
-        holderView.layer.cornerRadius = 8
-        holderView.clipsToBounds = true
+       
         
         collapsView()
         
@@ -271,7 +271,22 @@ class AddDeatilsOfGuestTVCell: TableViewCell {
         titledropDown.show()
     }
     
-    
+    func setAttributedText(str1:String,str2:String)  {
+        
+        let atter1 = [NSAttributedString.Key.foregroundColor:UIColor.AppLabelColor,NSAttributedString.Key.font:UIFont.LatoRegular(size: 14)] as [NSAttributedString.Key : Any]
+        let atter2 = [NSAttributedString.Key.foregroundColor:UIColor.AppCalenderDateSelectColor,NSAttributedString.Key.font:UIFont.LatoRegular(size: 10)] as [NSAttributedString.Key : Any]
+        
+        let atterStr1 = NSMutableAttributedString(string: str1, attributes: atter1)
+        let atterStr2 = NSMutableAttributedString(string: str2, attributes: atter2)
+        
+        
+        let combination = NSMutableAttributedString()
+        combination.append(atterStr1)
+        combination.append(atterStr2)
+        
+        titlelbl.attributedText = combination
+        
+    }
 }
 
 

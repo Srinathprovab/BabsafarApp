@@ -718,37 +718,27 @@ extension SearchFlightResultVC: AppliedFilters{
                 
                 roundTripFilterdList(list: sortedArray ?? [[]])
             }else {
-                
-                
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "h:mm a"
-                
-                
-                
-                
-                
-                
-                //              MCJflightlist?.filter { flightList in
-                //                    guard let summary = flightList.first?.flight_details?.summary else { return false }
-                //                    guard let price = flightList.first?.price?.api_total_display_fare else { return false }
-                //
-                //                    let priceRangeMatch = ((Double(price)) >= minpricerange && (Double(price)) <= maxpricerange)
-                //                    let noOfStopsMatch = noofStopsArray.isEmpty || summary.contains(where: { noofStopsArray.contains("\($0.no_of_stops ?? 0)") })
-                //                    let refundableMatch = refundableTypeArray.isEmpty || refundableTypeArray.contains(flightList.first?.fareType ?? "")
-                //                    let airlinesMatch = airlinesFilterArray.isEmpty || summary.contains(where: { airlinesFilterArray.contains($0.operator_name ?? "") })
-                //                    let connectingFlightsMatch = connectingFlightsFilterArray.isEmpty || summary.contains(where: { connectingFlightsFilterArray.contains($0.operator_name ?? "") }) == true
-                //                    let connectingAirportsMatch = ConnectingAirportsFilterArray.isEmpty || summary.contains(where: { ConnectingAirportsFilterArray.contains($0.destination?.airport_name ?? "") }) == true
-                //
-                //                    return priceRangeMatch && noOfStopsMatch && refundableMatch && airlinesMatch && connectingFlightsMatch && connectingAirportsMatch
-                //                }
-                //
-                //
-                //
-                //     multicityFilterdList(list: filteredList)
-                
-                
-                
-                
+
+                    if let flightList = MCJflightlist {
+                        let filteredList = flightList.filter { flight in
+                            guard let summary = flight.flight_details?.summary else { return false }
+                            let priceString = flight.price?.api_total_display_fare ?? 0.0 // Provide a default value if it's nil
+                            let doublePrice = Double(priceString) // Convert to Double or use a default value if conversion fails
+                            
+                            
+                            let priceRangeMatch = (doublePrice >= minpricerange && doublePrice <= maxpricerange)
+                            let noOfStopsMatch = noofStopsArray.isEmpty || summary.contains(where: { noofStopsArray.contains("\($0.no_of_stops ?? 0)") })
+                            let refundableMatch = refundableTypeArray.isEmpty || refundableTypeArray.contains(flight.fareType ?? "")
+                            let airlinesMatch = airlinesFilterArray.isEmpty || summary.contains(where: { airlinesFilterArray.contains($0.operator_name ?? "") })
+                            let connectingFlightsMatch = connectingFlightsFilterArray.isEmpty || summary.contains(where: { connectingFlightsFilterArray.contains($0.operator_name ?? "") })
+                            let connectingAirportsMatch = ConnectingAirportsFilterArray.isEmpty || summary.contains(where: { ConnectingAirportsFilterArray.contains($0.destination?.airport_name ?? "") })
+                            
+                            return priceRangeMatch && noOfStopsMatch && refundableMatch && airlinesMatch && connectingFlightsMatch && connectingAirportsMatch
+                        }
+
+                        multicityFilterdList(list: filteredList)
+                    }
+            
             }
         }
         
@@ -1553,6 +1543,13 @@ extension SearchFlightResultVC: AppliedFilters{
                     prices.append(i.totalPrice ?? "")
                     
                     i.flight_details?.summary?.forEach({ j in
+                        
+                        
+                        AirlinesArray.append(j.operator_name ?? "")
+                        ConnectingFlightsArray.append(j.operator_name ?? "")
+                        ConnectingAirportsArray.append(j.destination?.airport_name ?? "")
+                        
+                        
                         let dateFormatter = DateFormatter()
                         dateFormatter.dateFormat = "dd MMM yyyy"
                         if let date = dateFormatter.date(from: "\(j.destination?.date ?? "")"){
