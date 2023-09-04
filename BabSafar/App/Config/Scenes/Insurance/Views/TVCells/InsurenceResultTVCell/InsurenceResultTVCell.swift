@@ -21,7 +21,12 @@ class InsurenceResultTVCell: UITableViewCell {
     @IBOutlet weak var logo: UIImageView!
     @IBOutlet weak var planContentTV: UITableView!
     @IBOutlet weak var tvHeight: NSLayoutConstraint!
+    @IBOutlet weak var paxCountlbl: UILabel!
     
+    
+    var isExpanded = false
+    
+    var row = Int()
     var plancode = ""
     var plandetails = ""
     var planContent = [PlanContent]()
@@ -42,14 +47,16 @@ class InsurenceResultTVCell: UITableViewCell {
     
     
     override func prepareForReuse() {
-        hide()
+        // hide()
     }
     
     func setupUI() {
         bottomView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         bottomView.layer.cornerRadius = 10
         bottomView.clipsToBounds = true
-        setupTV()
+        paxCountlbl.text = "For \(itotalPax) Pax"
+        planContentTV.isHidden = true
+     //   setupTV()
         
     }
     
@@ -62,24 +69,29 @@ class InsurenceResultTVCell: UITableViewCell {
         planContentTV.showsHorizontalScrollIndicator = false
         planContentTV.separatorStyle = .none
         planContentTV.isScrollEnabled = false
+        hide()
+    }
+    
+    
+    func show() {
+        planContentTV.isHidden = false
+        tvHeight.constant = CGFloat(100 * planContent.count)
+        UIView.animate(withDuration: 0.3) {
+            self.layoutIfNeeded() // Animate the height change
+        }
         
-        show()
+        planContentTV.reloadData()
+    }
+    
+    func hide() {
+        planContentTV.isHidden = true
+        tvHeight.constant = 0
+        UIView.animate(withDuration: 0.3) {
+            self.layoutIfNeeded() // Animate the height change
+        }
     }
     
     
-    func show(){
-        self.planContentTV.isHidden = false
-        self.tvHeight.constant = 200
-        self.planContentBool = false
-        self.planContentTV.reloadData()
-    }
-    
-    func hide(){
-        self.planContentTV.isHidden = true
-        self.tvHeight.constant = 0
-        self.planContentBool = true
-        self.planContentTV.reloadData()
-    }
     
     
     @IBAction func didTapOnSelectInsurenceBtnAction(_ sender: Any) {
@@ -87,10 +99,22 @@ class InsurenceResultTVCell: UITableViewCell {
     }
     
     @IBAction func didTapOnKeyBenifitsBtnAction(_ sender: Any) {
+//        isExpanded.toggle()
+//
+//        updateUI()
         delegate?.didTapOnKeyBenifitsBtnAction(cell: self)
     }
     
-   
+    private func updateUI() {
+        // Modify the UI elements in the cell based on isExpanded
+        if isExpanded {
+            // Show additional content or expand the cell as needed
+            show()
+        } else {
+            // Hide additional content or collapse the cell as needed
+            hide()
+        }
+    }
     
     
     
@@ -114,7 +138,7 @@ extension InsurenceResultTVCell:UITableViewDataSource,UITableViewDelegate {
             let data = planContent[indexPath.row]
             cell.titlelbl.text = data.title ?? ""
             cell.logoimg.sd_setImage(with: URL(string: data.image ?? "" ), placeholderImage:UIImage(contentsOfFile:"placeholder.png"))
-
+            
             
             ccell = cell
         }
@@ -125,5 +149,5 @@ extension InsurenceResultTVCell:UITableViewDataSource,UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
-
+    
 }

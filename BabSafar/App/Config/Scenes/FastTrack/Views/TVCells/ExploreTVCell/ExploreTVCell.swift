@@ -22,6 +22,11 @@ class ExploreTVCell: TableViewCell, FastrackAirlineListViewModelDelegate {
     @IBOutlet weak var searchTV: UITableView!
     @IBOutlet weak var tvHeight: NSLayoutConstraint!
     
+    
+    
+    var airport = String()
+    var airport_fst_code = String()
+    var airport_loc_id = String()
     var airlineList:[FastrackAirlineListModel] = []
     var payload = [String:Any]()
     var cityViewModel: FastrackAirlineListViewModel?
@@ -33,7 +38,7 @@ class ExploreTVCell: TableViewCell, FastrackAirlineListViewModelDelegate {
         setupUI()
         cityViewModel = FastrackAirlineListViewModel(self)
         IQKeyboardManager.shared().keyboardDistanceFromTextField = 100 // Adjust this value as needed
-
+        
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -46,7 +51,7 @@ class ExploreTVCell: TableViewCell, FastrackAirlineListViewModelDelegate {
     override func updateUI() {
         setupTV()
         tvHeight.constant = 0
-       // CallShowCityListAPI(str: "kuwait")
+        // CallShowCityListAPI(str: "kuwait")
     }
     
     func updateHeight() {
@@ -79,7 +84,7 @@ class ExploreTVCell: TableViewCell, FastrackAirlineListViewModelDelegate {
     
     
     override func textFieldDidBeginEditing(_ textField: UITextField) {
-         CallShowCityListAPI(str: textField.text ?? "")
+        CallShowCityListAPI(str: textField.text ?? "")
     }
     
     
@@ -149,10 +154,16 @@ extension ExploreTVCell:UITableViewDelegate, UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        defaults.set(airlineList[indexPath.row].label ?? "", forKey: UserDefaultsKeys.qrfromCity)
-        defaults.set(airlineList[indexPath.row].id ?? "", forKey: UserDefaultsKeys.qlocid)
-        defaults.set(airlineList[indexPath.row].fast_track_id ?? "", forKey: UserDefaultsKeys.qfstcode)
+//        defaults.set(airlineList[indexPath.row].label ?? "", forKey: UserDefaultsKeys.qrfromCity)
+//        defaults.set(airlineList[indexPath.row].id ?? "", forKey: UserDefaultsKeys.qlocid)
+//        defaults.set(airlineList[indexPath.row].fast_track_id ?? "", forKey: UserDefaultsKeys.qfstcode)
+        
         searchTF.text = airlineList[indexPath.row].label ?? ""
+        airport = airlineList[indexPath.row].label ?? ""
+        airport_loc_id = airlineList[indexPath.row].id ?? ""
+        airport_fst_code = airlineList[indexPath.row].fast_track_id ?? ""
+        searchTF.resignFirstResponder()
+        
         tvHeight.constant = 0
     }
     

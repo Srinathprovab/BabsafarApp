@@ -88,6 +88,17 @@ var adtArray = [String]()
 var chArray = [String]()
 var callapibool = Bool()
 
+
+var neighbourwoodArray = [Loc]()
+var amenitiesArray = [HFacility]()
+var nearBylocationsArray = [Near_by]()
+
+//let star : [Star]?
+//let refund : [String]?
+//let facility : [HFiltersFacility]?
+//let near_by : [Near_by]?
+
+
 //MARK: - FILTER RELATED VARIABLES
 var filterTap = String()
 var filterPrice = String()
@@ -214,14 +225,18 @@ var totalChildren = 0
 
 
 //Insurence
+var itotalPax = ""
 var isearchid = ""
 var iplancode = ""
 var ibookingsource = ""
 var iplandetails = ""
+var iplanprice = ""
 var selectedPlanContent = [PlanContent]()
 var searchInputs:PreBookingSearch_params?
 var mobilenoMaxLengthBool = false
 var plan_details_token = String()
+var fldept_flightcode = String()
+var flarrival_flightcode = String()
 
 
 //payment
@@ -276,7 +291,6 @@ struct ApiEndpoints {
     //fasttrack
     static let get_fasttrack_airport_code_list = "ajax/get_fasttrack_airport_code_list"
     static let general_pre_fastrack_search = "general/pre_fastrack_search"
-
     
 }
 

@@ -46,7 +46,7 @@ class SearchFastTrackVC: BaseTableVC {
     func setupUI() {
         nav.titlelbl.text = "Fasttrack"
         nav.backBtn.addTarget(self, action: #selector(didTapOnBackBtn(_:)), for: .touchUpInside)
-        commonTableView.registerTVCells(["InsurenceSearchTVCell",
+        commonTableView.registerTVCells(["FasttrackSearchTVCell",
                                          "EmptyTVCell",
                                          "ExploreTVCell"])
         commonTableView.isScrollEnabled = false
@@ -98,7 +98,7 @@ class SearchFastTrackVC: BaseTableVC {
     
     func setuptv() {
         tablerow.removeAll()
-        tablerow.append(TableRow(cellType:.InsurenceSearchTVCell))
+        tablerow.append(TableRow(cellType:.FasttrackSearchTVCell))
         commonTVData = tablerow
         commonTableView.reloadData()
     }
@@ -120,12 +120,12 @@ class SearchFastTrackVC: BaseTableVC {
     }
     
     
-    //MARK: - didTapOnDepartureDateBtnAction InsurenceSearchTVCell
-    override func didTapOnDepartureDateBtnAction(cell: InsurenceSearchTVCell) {
+    //MARK: - didTapOnDepartureDateBtnAction FasttrackSearchTVCell
+    override func didTapOnDepartureDateBtnAction(cell: FasttrackSearchTVCell) {
         gotoCalenderVC(key: "dep", titleStr: "Departure Date")
     }
     
-    override func didTapOnReturnDateBtnAction(cell: InsurenceSearchTVCell) {
+    override func didTapOnReturnDateBtnAction(cell: FasttrackSearchTVCell) {
         gotoCalenderVC(key: "ret", titleStr: "Ruturn Date")
     }
     
@@ -139,8 +139,8 @@ class SearchFastTrackVC: BaseTableVC {
     }
     
     
-    //MARK: - didTapOnAddPassengersBtnAction InsurenceSearchTVCell
-    override func didTapOnAddPassengersBtnAction(cell: InsurenceSearchTVCell) {
+    //MARK: - didTapOnAddPassengersBtnAction FasttrackSearchTVCell
+    override func didTapOnAddPassengersBtnAction(cell: FasttrackSearchTVCell) {
         gotoTravellerEconomyVC(str: "fasttrack")
     }
     
@@ -152,10 +152,10 @@ class SearchFastTrackVC: BaseTableVC {
     }
     
     
-    //MARK: - didTapOnSearchInsurenceBtnAction InsurenceSearchTVCell
-    override func didTapOnSearchInsurenceBtnAction(cell: InsurenceSearchTVCell) {
+    //MARK: - didTapOnSearchInsurenceBtnAction FasttrackSearchTVCell
+    override func didTapOnSearchInsurenceBtnAction(cell: FasttrackSearchTVCell) {
         
-
+        
         payload.removeAll()
         payload["airport_fst_code"] = "1"
         payload["from"] = defaults.string(forKey: UserDefaultsKeys.frfromCity)
@@ -194,7 +194,21 @@ class SearchFastTrackVC: BaseTableVC {
     
     //MARK: - didTapOnSearchBtnAction ExploreTVCell
     override func didTapOnSearchBtnAction(cell: ExploreTVCell) {
-        gotoFasttrackResultVC(input: payload)
+
+        payload.removeAll()
+        
+        payload["airport"] = cell.airport
+        payload["airport_fst_code"] = cell.airport_fst_code
+        payload["airport_loc_id"] = cell.airport_loc_id
+        payload["user_id"] = defaults.string(forKey: UserDefaultsKeys.userid) ?? "0"
+        payload["search_source"] = "postman"
+        
+        if cell.searchTF.text?.isEmpty == true {
+            showToast(message: "Please Select Airport")
+        }else {
+            gotoFasttrackResultVC(input: payload)
+        }
+        
     }
     
     
@@ -210,7 +224,6 @@ extension SearchFastTrackVC {
         NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("offline"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(resultnil), name: NSNotification.Name("resultnil"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reload), name: Notification.Name("reload"), object: nil)
-        
         
     }
     

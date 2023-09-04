@@ -936,7 +936,7 @@ extension BookingDetailsVC {
         bookingsource = response.booking_source ?? ""
         tmpFlightPreBookingId = response.pre_booking_params?.transaction_id ?? ""
         activepaymentoptions = response.active_payment_options?[0] ?? ""
-        totalPrice = response.total_price?.rounded() ?? 0.0
+        totalPrice = Double(String(format: "%.2f", response.total_price ?? "")) ?? 0.0
         appreference = response.pre_booking_params?.transaction_id ?? ""
         frequent_flyersArray = response.frequent_flyers ?? []
         

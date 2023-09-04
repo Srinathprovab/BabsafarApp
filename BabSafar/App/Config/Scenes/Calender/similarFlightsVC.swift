@@ -62,14 +62,14 @@ class similarFlightsVC: BaseTableVC {
                 j.flight_details?.summary?.forEach({ k in
                     tablerow.append(TableRow(
                         title:"\(k.operator_name ?? "") (\(k.operator_code ?? "") \(k.flight_number ?? ""))",
-                        subTitle: "\(j.price?.api_total_display_fare?.rounded() ?? 0.0)" ,
+                        subTitle: String(format: "%.2f", j.price?.api_total_display_fare ?? ""),
                         price: j.aPICurrencyType,
                         Weight_Allowance: k.weight_Allowance,
                         key:"oneway",
                         text: k.origin?.time,
                         headerText: k.destination?.time,
                         buttonTitle: "\(k.destination?.city ?? "") (\(k.destination?.loc ?? ""))",
-                        errormsg: "\(j.price?.api_total_display_fare_withoutmarkup?.rounded() ?? 0.0)",
+                        errormsg: String(format: "%.2f", j.price?.api_total_display_fare_withoutmarkup ?? ""),
                         key1:j.fareType,
                         image: k.operator_image,
                         tempText:"\(k.origin?.city ?? "") (\(k.origin?.loc ?? ""))",
@@ -99,10 +99,10 @@ class similarFlightsVC: BaseTableVC {
         similarflightListCircle.forEach({ i in
             
             i.forEach { k in
-                tablerow.append(TableRow(title:"\(k.price?.api_total_display_fare?.rounded() ?? 0.0)",
+                tablerow.append(TableRow(title:String(format: "%.2f", k.price?.api_total_display_fare ?? ""),
                                          price:k.aPICurrencyType,
                                          key: "circle",
-                                         headerText:"\(k.price?.api_total_display_fare_withoutmarkup?.rounded() ?? 0.0)",
+                                         headerText:String(format: "%.2f", k.price?.api_total_display_fare_withoutmarkup ?? ""),
                                          errormsg:String(k.flight_details?.summary?.first?.no_of_stops ?? 0),
                                          key1:k.fareType ?? "",
                                          moreData:k.flight_details,
@@ -128,9 +128,9 @@ class similarFlightsVC: BaseTableVC {
         
         
         similarflightListMulticity.forEach { k in
-            tablerow.append(TableRow(title:"\(k.price?.api_total_display_fare?.rounded() ?? 0.0)",
+            tablerow.append(TableRow(title:String(format: "%.2f", k.price?.api_total_display_fare ?? ""),
                                      price:k.aPICurrencyType,
-                                     headerText:"\(k.price?.api_total_display_fare?.rounded() ?? 0.0)",
+                                     headerText:String(format: "%.2f", k.price?.api_total_display_fare ?? ""),
                                      key1:k.fareType ?? "",
                                      moreData:k.flight_details,
                                      TotalQuestions: k.selectedResult,

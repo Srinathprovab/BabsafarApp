@@ -33,9 +33,11 @@ struct HotelSearchResult : Codable {
     let org_price : String?
     let xml_price : String?
     let hotel_dis_mar_parm : String?
-  //  let dis_mar : Dis_mar?
+    //  let dis_mar : Dis_mar?
     let no_of_nights : Int?
     let hotel_shortdesc : String?
+    let filter_sumry : Filter_sumry?
+    
     
     enum CodingKeys: String, CodingKey {
         
@@ -70,9 +72,10 @@ struct HotelSearchResult : Codable {
         case org_price = "org_price"
         case xml_price = "xml_price"
         case hotel_dis_mar_parm = "hotel_dis_mar_parm"
-    //    case dis_mar = "dis_mar"
+        //    case dis_mar = "dis_mar"
         case no_of_nights = "no_of_nights"
         case hotel_shortdesc = "hotel_shortdesc"
+        case filter_sumry = "filter_sumry"
     }
     
     init(from decoder: Decoder) throws {
@@ -108,9 +111,11 @@ struct HotelSearchResult : Codable {
         org_price = try values.decodeIfPresent(String.self, forKey: .org_price)
         xml_price = try values.decodeIfPresent(String.self, forKey: .xml_price)
         hotel_dis_mar_parm = try values.decodeIfPresent(String.self, forKey: .hotel_dis_mar_parm)
-    //    dis_mar = try values.decodeIfPresent(Dis_mar.self, forKey: .dis_mar)
+        //    dis_mar = try values.decodeIfPresent(Dis_mar.self, forKey: .dis_mar)
         no_of_nights = try values.decodeIfPresent(Int.self, forKey: .no_of_nights)
         hotel_shortdesc = try values.decodeIfPresent(String.self, forKey: .hotel_shortdesc)
+        filter_sumry = try values.decodeIfPresent(Filter_sumry.self, forKey: .filter_sumry)
+        
     }
     
 }

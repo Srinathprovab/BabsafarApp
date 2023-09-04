@@ -93,6 +93,7 @@ class PersonalDetailsVC: BaseTableVC, InsurancePreprocessBookingViewModelDelegat
         tablerow.removeAll()
         passengertypeArray.removeAll()
         
+        
         tablerow.append(TableRow(cellType:.InsurenceFlightDetailsTVCell))
         tablerow.append(TableRow(height:20, bgColor:.AppHolderViewColor,cellType:.EmptyTVCell))
         tablerow.append(TableRow(title:"\(defaults.string(forKey: UserDefaultsKeys.totalTravellerCount) ?? "1")",
@@ -242,22 +243,17 @@ extension PersonalDetailsVC {
     func insurencePaymentshow(response: InsurancePreprocessBookingModel) {
         holderView.isHidden = false
         searchInputs = response.search_params
-        totalFare = "\(response.total_fare?.rounded() ?? 0.0)"
-        baseFare = "\(response.base_fare?.rounded() ?? 0.0)"
+        totalFare = String(format: "%.2f", response.total_fare!)
+        baseFare = String(format: "%.2f", response.base_fare!)
         tax = "\(response.tax ?? 0)"
         
         plan_code = response.selected_package?.planCode ?? ""
         plan_ssrcode = response.selected_package?.sSRFeeCode ?? ""
         token = iplandetails
         app_reference = response.app_reference ?? ""
-        price = "\(response.total_fare?.rounded() ?? 0.0)"
-        grandTotal = "\(response.fare_breakdown?.currencyCode ?? ""):\(response.total_fare?.rounded() ?? 0.0)"
-        //        var plan_code = String()
-        //        var plan_ssrcode = String()
-        //        var plan_details_token = String()
-        //        var app_reference = String()
-        //
-        
+        price =  String(format: "%.2f", response.total_fare ?? "")
+        grandTotal = "\(response.fare_breakdown?.currencyCode ?? ""):\(String(format: "%.2f", response.total_fare ?? ""))"
+       
         
         DispatchQueue.main.async {
             self.setupTV()
@@ -415,7 +411,7 @@ extension PersonalDetailsVC {
                 callpaymentbool = true
             }
             
-            if cell.depAirlinelbl.text == "Select Airline"{
+            if cell.depAirlineTF.text == ""{
                 // Textfield is empty
                 cell.depView.layer.borderColor = UIColor.red.cgColor
                 callpaymentbool = false
@@ -425,7 +421,7 @@ extension PersonalDetailsVC {
                 callpaymentbool = true
             }
             
-            if cell.arrivalAirlinelbl.text == "Select Airline"{
+            if cell.arrivalAirlineTF.text == ""{
                 // Textfield is empty
                 cell.arrivalView.layer.borderColor = UIColor.red.cgColor
                 callpaymentbool = false
@@ -494,42 +490,42 @@ extension PersonalDetailsVC {
     func callapiiiii() {
         
         let mrtitleArray = travelerArray.compactMap({$0.mrtitle})
-        //  let passengertypeArray = travelerArray.compactMap({$0.passengertype})
+        let genderArray = travelerArray.compactMap({$0.gender})
         let firstnameArray = travelerArray.compactMap({$0.firstName})
         let lastNameArray = travelerArray.compactMap({$0.lastName})
         let dobArray = travelerArray.compactMap({$0.dob})
         let passportnoArray = travelerArray.compactMap({$0.passportno})
         let passportIssuingCountryArray = travelerArray.compactMap({$0.passportIssuingCountry})
         let passportExpireDateArray = travelerArray.compactMap({$0.passportExpireDate})
-        let passportnationalityAraay = travelerArray.compactMap({$0.nationality})
         
-        let mrtitleString = "[\"" + mrtitleArray.joined(separator: "\",\"") + "\"]"
-        let firstnameString = "[\"" + firstnameArray.joined(separator: "\",\"") + "\"]"
-        let lastNameString = "[\"" + lastNameArray.joined(separator: "\",\"") + "\"]"
-        let passengertypeString = "[\"" + passengertypeArray.joined(separator: "\",\"") + "\"]"
-        let dobArrayString = "[\"" + dobArray.joined(separator: "\",\"") + "\"]"
-        let passportnoArrayString = "[\"" + passportnoArray.joined(separator: "\",\"") + "\"]"
-        let passportIssuingCountryArrayString = "[\"" + passportIssuingCountryArray.joined(separator: "\",\"") + "\"]"
-        let passportExpireDateArrayString = "[\"" + passportExpireDateArray.joined(separator: "\",\"") + "\"]"
-        
+//        let mrtitleString = "[\"" + mrtitleArray.joined(separator: "\",\"") + "\"]"
+//        let firstnameString = "[\"" + firstnameArray.joined(separator: "\",\"") + "\"]"
+//        let lastNameString = "[\"" + lastNameArray.joined(separator: "\",\"") + "\"]"
+//        let passengertypeString = "[\"" + passengertypeArray.joined(separator: "\",\"") + "\"]"
+//        let dobArrayString = "[\"" + dobArray.joined(separator: "\",\"") + "\"]"
+//        let passportnoArrayString = "[\"" + passportnoArray.joined(separator: "\",\"") + "\"]"
+//        let passportIssuingCountryArrayString = "[\"" + passportIssuingCountryArray.joined(separator: "\",\"") + "\"]"
+//        let passportExpireDateArrayString = "[\"" + passportExpireDateArray.joined(separator: "\",\"") + "\"]"
+//        let genderArrayString = "[\"" + genderArray.joined(separator: "\",\"") + "\"]"
+
         
         
         payload.removeAll()
         payload["search_id"] = isearchid
         payload["flpnr_number"] = flpnr_number
-        payload["fldept_flightcode"] = defaults.string(forKey: UserDefaultsKeys.ifromlocid) ?? ""
+        payload["fldept_flightcode"] = "KU"
         payload["fldept_time"] = fldept_time
-        payload["flarrival_flightcode"] = defaults.string(forKey: UserDefaultsKeys.itolocid) ?? ""
+        payload["flarrival_flightcode"] = "KU"
         payload["flarrival_time"] = flarrival_time
-        payload["type"] = passengertypeString
-        payload["title"] = mrtitleString
-        payload["first_name"] = firstnameString
-        payload["last_name"] = lastNameString
-        //   payload["gender"] = genderArray
-        payload["dob"] = dobArrayString
-        payload["passport_number"] = passportnoArrayString
-        payload["passport_issuing_country"] = passportIssuingCountryArrayString
-        payload["passport_expiry"] = passportExpireDateArrayString
+        payload["type"] = passengertypeArray
+        payload["title"] = ["Mr"]
+        payload["first_name"] = firstnameArray
+        payload["last_name"] = lastNameArray
+        payload["gender"] = genderArray
+        payload["dob"] = dobArray
+        payload["passport_number"] = passportnoArray
+        payload["passport_issuing_country"] = passportIssuingCountryArray
+        payload["passport_expiry"] = passportExpireDateArray
         payload["passport_nationality"] = passportIssuingCountryArray
         payload["plan_code"] = plan_code
         payload["plan_ssrcode"] = plan_ssrcode
@@ -539,6 +535,8 @@ extension PersonalDetailsVC {
         payload["contname"] = "Test"
         payload["contemail"] = payemail
         payload["contphonenmber"] = paymobile
+        
+        
         
         do{
             
@@ -558,6 +556,7 @@ extension PersonalDetailsVC {
     
     
     func processPassengerDetails(response: processPassengerDetailModel) {
+        
         gotoPaymentGatewayVC(tmpFlightPreBookingId: response.form_params?.app_reference ?? "",
                              url: response.form_url ?? "",
                              searchid: response.form_params?.search_id ?? "")

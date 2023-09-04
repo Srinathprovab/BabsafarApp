@@ -52,7 +52,7 @@ class RoundTripFlightResultTVCell: TableViewCell {
         
         
         
-        tvHeight.constant = CGFloat(arrayCount * 162)
+        tvHeight.constant = CGFloat(arrayCount * 165)
         roundTripTV.reloadData()
         
     }

@@ -60,7 +60,7 @@ class TotalPremiumPayableVC: BaseTableVC, InsurancePreprocessBookingViewModelDel
     func setupTV() {
         tablerow.removeAll()
         
-        tablerow.append(TableRow(title:price,cellType:.TotalPremiumPayableTVCell))
+        tablerow.append(TableRow(title:iplanprice,cellType:.TotalPremiumPayableTVCell))
         tablerow.append(TableRow(height:100,cellType:.EmptyTVCell))
         
         commonTVData = tablerow
@@ -89,11 +89,12 @@ class TotalPremiumPayableVC: BaseTableVC, InsurancePreprocessBookingViewModelDel
     
 }
 
-
-
 extension TotalPremiumPayableVC {
     
+    
+    
     func callAPI() {
+        payload.removeAll()
         payload["search_id"] = isearchid
         payload["plan_code"] = iplancode
         payload["booking_source"] = ibookingsource
@@ -104,7 +105,7 @@ extension TotalPremiumPayableVC {
     
     func insurencePaymentshow(response: InsurancePreprocessBookingModel) {
         holderView.isHidden = false
-        price = "\(response.currencyCode ?? ""):\(String(format: "%.3f", response.total_fare ?? 0.0))"
+      //  price = "\(response.currencyCode ?? ""):\(response.selected_package?.price?.total_fare_api ?? "0.0")"
         DispatchQueue.main.async {
             self.setupTV()
         }

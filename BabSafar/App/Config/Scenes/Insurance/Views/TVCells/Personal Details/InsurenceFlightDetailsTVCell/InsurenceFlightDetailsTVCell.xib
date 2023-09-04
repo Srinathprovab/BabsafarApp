@@ -200,20 +200,19 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T5C-rm-UB5" customClass="BorderedView" customModule="BabSafar" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="104.66666666666667" height="40"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select Airline" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UvL-Yd-nDw">
-                                                <rect key="frame" x="5" y="2" width="77.666666666666671" height="36"/>
-                                                <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
+                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Select Airline" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wnW-K2-G6C">
+                                                <rect key="frame" x="0.0" y="0.0" width="90.666666666666671" height="40"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="down" translatesAutoresizingMaskIntoConstraints="NO" id="MTi-pF-ukd">
-                                                <rect key="frame" x="84.666666666666671" y="17.666666666666657" width="10" height="5"/>
+                                                <rect key="frame" x="90.666666666666671" y="17.666666666666657" width="10" height="5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="10" id="AMd-oh-Lud"/>
                                                     <constraint firstAttribute="height" constant="5" id="Ggq-zX-faa"/>
                                                 </constraints>
                                             </imageView>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q3M-ZG-Vxr">
+                                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q3M-ZG-Vxr">
                                                 <rect key="frame" x="0.0" y="0.0" width="104.66666666666667" height="40"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain"/>
@@ -224,17 +223,16 @@
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstAttribute="trailing" secondItem="MTi-pF-ukd" secondAttribute="trailing" constant="10" id="7Wc-59-Ms7"/>
+                                            <constraint firstAttribute="trailing" secondItem="MTi-pF-ukd" secondAttribute="trailing" constant="4" id="7Wc-59-Ms7"/>
                                             <constraint firstItem="MTi-pF-ukd" firstAttribute="centerY" secondItem="T5C-rm-UB5" secondAttribute="centerY" id="7n0-z0-YMM"/>
-                                            <constraint firstItem="MTi-pF-ukd" firstAttribute="leading" secondItem="UvL-Yd-nDw" secondAttribute="trailing" constant="2" id="9QJ-j2-NW8"/>
+                                            <constraint firstAttribute="bottom" secondItem="wnW-K2-G6C" secondAttribute="bottom" id="CzL-rP-Rij"/>
+                                            <constraint firstItem="wnW-K2-G6C" firstAttribute="leading" secondItem="T5C-rm-UB5" secondAttribute="leading" id="HV0-Ed-nCf"/>
                                             <constraint firstAttribute="trailing" secondItem="q3M-ZG-Vxr" secondAttribute="trailing" id="MOk-MF-HRa"/>
                                             <constraint firstItem="q3M-ZG-Vxr" firstAttribute="leading" secondItem="T5C-rm-UB5" secondAttribute="leading" id="Nia-KZ-Q0w"/>
                                             <constraint firstItem="q3M-ZG-Vxr" firstAttribute="top" secondItem="T5C-rm-UB5" secondAttribute="top" id="ZAN-Al-o5o"/>
-                                            <constraint firstItem="UvL-Yd-nDw" firstAttribute="leading" secondItem="T5C-rm-UB5" secondAttribute="leading" constant="5" id="aFE-EA-2kM"/>
-                                            <constraint firstAttribute="bottom" secondItem="UvL-Yd-nDw" secondAttribute="bottom" constant="2" id="aac-0K-BAy"/>
-                                            <constraint firstItem="UvL-Yd-nDw" firstAttribute="centerY" secondItem="T5C-rm-UB5" secondAttribute="centerY" id="c00-VI-lx9"/>
-                                            <constraint firstItem="UvL-Yd-nDw" firstAttribute="top" secondItem="T5C-rm-UB5" secondAttribute="top" constant="2" id="dsV-eY-edl"/>
+                                            <constraint firstItem="wnW-K2-G6C" firstAttribute="top" secondItem="T5C-rm-UB5" secondAttribute="top" id="iME-dF-oes"/>
                                             <constraint firstAttribute="bottom" secondItem="q3M-ZG-Vxr" secondAttribute="bottom" id="rl1-nM-yMg"/>
+                                            <constraint firstItem="MTi-pF-ukd" firstAttribute="leading" secondItem="wnW-K2-G6C" secondAttribute="trailing" id="wif-8c-R5K"/>
                                             <constraint firstAttribute="height" constant="40" id="zT3-Uy-O0e"/>
                                         </constraints>
                                         <userDefinedRuntimeAttributes>
@@ -344,20 +342,19 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0dR-Lp-8WZ" customClass="BorderedView" customModule="BabSafar" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="104.66666666666667" height="40"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select Airline" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bya-t7-JtU">
-                                                <rect key="frame" x="5" y="2" width="77.666666666666671" height="36"/>
-                                                <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
+                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Select Airline" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1b6-ug-u9O">
+                                                <rect key="frame" x="0.0" y="0.0" width="90.666666666666671" height="40"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="down" translatesAutoresizingMaskIntoConstraints="NO" id="EGp-Gi-XsK">
-                                                <rect key="frame" x="84.666666666666671" y="17.666666666666686" width="10" height="5"/>
+                                                <rect key="frame" x="90.666666666666671" y="17.666666666666686" width="10" height="5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="10" id="IyM-sE-fSs"/>
                                                     <constraint firstAttribute="height" constant="5" id="aP3-Fh-Jws"/>
                                                 </constraints>
                                             </imageView>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bGn-Qb-ED9">
+                                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bGn-Qb-ED9">
                                                 <rect key="frame" x="0.0" y="0.0" width="104.66666666666667" height="40"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain"/>
@@ -368,16 +365,15 @@
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstItem="Bya-t7-JtU" firstAttribute="leading" secondItem="0dR-Lp-8WZ" secondAttribute="leading" constant="5" id="FwF-nH-0cA"/>
-                                            <constraint firstItem="Bya-t7-JtU" firstAttribute="centerY" secondItem="0dR-Lp-8WZ" secondAttribute="centerY" id="LPz-5e-yVN"/>
                                             <constraint firstItem="EGp-Gi-XsK" firstAttribute="centerY" secondItem="0dR-Lp-8WZ" secondAttribute="centerY" id="S2q-Je-2ep"/>
                                             <constraint firstItem="bGn-Qb-ED9" firstAttribute="leading" secondItem="0dR-Lp-8WZ" secondAttribute="leading" id="W6T-d7-bAj"/>
-                                            <constraint firstAttribute="trailing" secondItem="EGp-Gi-XsK" secondAttribute="trailing" constant="10" id="XlE-oL-M2Y"/>
-                                            <constraint firstItem="Bya-t7-JtU" firstAttribute="top" secondItem="0dR-Lp-8WZ" secondAttribute="top" constant="2" id="YuY-2g-mce"/>
-                                            <constraint firstItem="EGp-Gi-XsK" firstAttribute="leading" secondItem="Bya-t7-JtU" secondAttribute="trailing" constant="2" id="ZH6-7p-8jU"/>
+                                            <constraint firstAttribute="trailing" secondItem="EGp-Gi-XsK" secondAttribute="trailing" constant="4" id="XlE-oL-M2Y"/>
+                                            <constraint firstItem="1b6-ug-u9O" firstAttribute="leading" secondItem="0dR-Lp-8WZ" secondAttribute="leading" id="YlT-sE-Hv3"/>
                                             <constraint firstAttribute="trailing" secondItem="bGn-Qb-ED9" secondAttribute="trailing" id="Zme-3Q-gNd"/>
                                             <constraint firstAttribute="bottom" secondItem="bGn-Qb-ED9" secondAttribute="bottom" id="cTv-7a-Sc6"/>
-                                            <constraint firstAttribute="bottom" secondItem="Bya-t7-JtU" secondAttribute="bottom" constant="2" id="kK9-Kr-8qo"/>
+                                            <constraint firstAttribute="bottom" secondItem="1b6-ug-u9O" secondAttribute="bottom" id="ebQ-pw-Y2g"/>
+                                            <constraint firstItem="1b6-ug-u9O" firstAttribute="top" secondItem="0dR-Lp-8WZ" secondAttribute="top" id="qFf-iD-3l9"/>
+                                            <constraint firstItem="EGp-Gi-XsK" firstAttribute="leading" secondItem="1b6-ug-u9O" secondAttribute="trailing" id="qfh-Yh-pgg"/>
                                             <constraint firstAttribute="height" constant="40" id="unK-G2-ExG"/>
                                             <constraint firstItem="bGn-Qb-ED9" firstAttribute="top" secondItem="0dR-Lp-8WZ" secondAttribute="top" id="ytb-cR-ieN"/>
                                         </constraints>
@@ -547,12 +543,12 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="arrivalAirlinelbl" destination="Bya-t7-JtU" id="V2M-VC-VT0"/>
+                <outlet property="arrivalAirlineTF" destination="1b6-ug-u9O" id="wdd-sS-GR9"/>
                 <outlet property="arrivalDatelbl" destination="lGe-jd-02D" id="KFC-bA-ip6"/>
                 <outlet property="arrivalTimeTF" destination="sWZ-kN-E7z" id="vK9-fD-tH7"/>
                 <outlet property="arrivalTimeView" destination="h28-ct-6M2" id="0bh-Ip-ED4"/>
                 <outlet property="arrivalView" destination="0dR-Lp-8WZ" id="7bn-7Q-OYf"/>
-                <outlet property="depAirlinelbl" destination="UvL-Yd-nDw" id="uNk-87-1pa"/>
+                <outlet property="depAirlineTF" destination="wnW-K2-G6C" id="6ic-Wm-hOQ"/>
                 <outlet property="depDatelbl" destination="ujm-Eh-C1H" id="1fL-bJ-EGL"/>
                 <outlet property="depTimeTF" destination="p1A-CS-LLI" id="aVY-Af-iMY"/>
                 <outlet property="depTimeView" destination="Vgn-xS-Def" id="0FJ-bA-DFe"/>

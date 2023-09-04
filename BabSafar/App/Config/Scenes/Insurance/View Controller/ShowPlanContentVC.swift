@@ -25,7 +25,7 @@ class ShowPlanContentVC: UIViewController {
     
     
     override func viewWillAppear(_ animated: Bool) {
-        self.tvHeight.constant = CGFloat(selectedPlanContent.count * 70)
+        self.tvHeight.constant = CGFloat(selectedPlanContent.count * 75)
         self.planContentTV.reloadData()
     }
     
@@ -58,6 +58,7 @@ class ShowPlanContentVC: UIViewController {
     
     
     @IBAction func closeBtnAction(_ sender: Any) {
+        callapibool = false
         dismiss(animated: true)
     }
     

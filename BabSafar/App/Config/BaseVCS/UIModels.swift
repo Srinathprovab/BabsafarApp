@@ -122,6 +122,7 @@ enum TVCellType {
     case UserSpecificationTVCell
     
     
+    
     //Insurence
     case InsurenceSearchTVCell
     case TravellerDetailsTVCell
@@ -136,6 +137,8 @@ enum TVCellType {
     case QuickBookingResultTVCell
     case SelectedServicesTVCell
     case FasttrackFlightDeatilsTVCell
+    case FasttrackSearchTVCell
+    case ExploreResultTVCell
     
     
 }

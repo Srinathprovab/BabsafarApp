@@ -225,6 +225,36 @@
                                                     <action selector="didTapOnReturnDateBtnAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="HIB-fh-Y2U"/>
                                                 </connections>
                                             </button>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z8n-Zj-Npr">
+                                                <rect key="frame" x="176.33333333333334" y="0.0" width="20" height="20"/>
+                                                <subviews>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="close9" translatesAutoresizingMaskIntoConstraints="NO" id="EM2-f9-8fI">
+                                                        <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
+                                                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    </imageView>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SVb-Q0-z6K">
+                                                        <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
+                                                        <state key="normal" title="Button"/>
+                                                        <buttonConfiguration key="configuration" style="plain"/>
+                                                        <connections>
+                                                            <action selector="didTapOnCloseRetunBtnAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="UM4-WM-ru2"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                                <color key="backgroundColor" red="0.098039215690000001" green="0.65098039220000004" blue="0.59607843140000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="trailing" secondItem="EM2-f9-8fI" secondAttribute="trailing" id="3Uy-wI-ZAK"/>
+                                                    <constraint firstAttribute="bottom" secondItem="EM2-f9-8fI" secondAttribute="bottom" id="IML-YJ-Mqd"/>
+                                                    <constraint firstItem="SVb-Q0-z6K" firstAttribute="leading" secondItem="z8n-Zj-Npr" secondAttribute="leading" id="M75-Ai-kCo"/>
+                                                    <constraint firstAttribute="width" constant="20" id="PqT-bC-acQ"/>
+                                                    <constraint firstAttribute="bottom" secondItem="SVb-Q0-z6K" secondAttribute="bottom" id="Rc5-HZ-Eln"/>
+                                                    <constraint firstAttribute="trailing" secondItem="SVb-Q0-z6K" secondAttribute="trailing" id="Slu-yx-wsu"/>
+                                                    <constraint firstItem="EM2-f9-8fI" firstAttribute="top" secondItem="z8n-Zj-Npr" secondAttribute="top" id="gfD-py-IZs"/>
+                                                    <constraint firstItem="EM2-f9-8fI" firstAttribute="leading" secondItem="z8n-Zj-Npr" secondAttribute="leading" id="su1-8T-MAZ"/>
+                                                    <constraint firstItem="SVb-Q0-z6K" firstAttribute="top" secondItem="z8n-Zj-Npr" secondAttribute="top" id="sv3-Lf-4g5"/>
+                                                    <constraint firstAttribute="height" constant="20" id="uq3-fE-2MH"/>
+                                                </constraints>
+                                            </view>
                                         </subviews>
                                         <color key="backgroundColor" name="AppHolderViewColor"/>
                                         <constraints>
@@ -233,8 +263,10 @@
                                             <constraint firstItem="RNq-hv-7KO" firstAttribute="leading" secondItem="bG3-o0-NoL" secondAttribute="leading" constant="16" id="9OU-uk-9Y3"/>
                                             <constraint firstAttribute="trailing" secondItem="kIN-C5-FpX" secondAttribute="trailing" id="9yV-j9-qsm"/>
                                             <constraint firstItem="3BO-iR-hrV" firstAttribute="leading" secondItem="bG3-o0-NoL" secondAttribute="leading" constant="16" id="Uvv-rp-Qod"/>
+                                            <constraint firstItem="z8n-Zj-Npr" firstAttribute="top" secondItem="bG3-o0-NoL" secondAttribute="top" id="XK0-E2-6m8"/>
                                             <constraint firstItem="3BO-iR-hrV" firstAttribute="top" secondItem="bG3-o0-NoL" secondAttribute="top" constant="6" id="ZJ5-Q0-B6t"/>
                                             <constraint firstItem="kIN-C5-FpX" firstAttribute="top" secondItem="bG3-o0-NoL" secondAttribute="top" id="ZL4-Z4-RyN"/>
+                                            <constraint firstAttribute="trailing" secondItem="z8n-Zj-Npr" secondAttribute="trailing" id="dAI-oW-ijs"/>
                                             <constraint firstAttribute="trailing" secondItem="RNq-hv-7KO" secondAttribute="trailing" constant="5" id="lYu-hd-Mcr"/>
                                             <constraint firstAttribute="bottom" secondItem="kIN-C5-FpX" secondAttribute="bottom" id="nLP-4o-Qud"/>
                                             <constraint firstAttribute="height" constant="60" id="suV-zy-ueS"/>
@@ -406,6 +438,7 @@
     </objects>
     <resources>
         <image name="clear" width="17" height="17"/>
+        <image name="close9" width="17" height="17"/>
         <image name="downnew" width="24" height="24"/>
         <namedColor name="AppBtnColor">
             <color red="0.92500001192092896" green="0.2669999897480011" blue="0.11800000071525574" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

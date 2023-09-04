@@ -14,6 +14,8 @@ class InsurenceResultVC:UIViewController {
     @IBOutlet weak var citylbl: UILabel!
     @IBOutlet weak var datelbl: UILabel!
     
+    
+    var expandedIndexPath: IndexPath?
     var availablePlans = [[AvailablePlans]]()
     var payload = [String:Any]()
     var tablerow = [TableRow]()
@@ -50,12 +52,16 @@ class InsurenceResultVC:UIViewController {
     }
     
     @IBAction func didTapOnBackBtn(_ sender: Any) {
-        dismiss(animated: true)
+        guard let vc = InsuranceVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: false)
     }
     
     
     @IBAction func didTapOnEditSearchBtn(_ sender: Any) {
-        print("didTapOnEditSearchBtn")
+        guard let vc = ModifyInsuranceVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .overCurrentContext
+        self.present(vc, animated: true)
     }
     
     
@@ -67,25 +73,18 @@ extension InsurenceResultVC:InsurenceViewModelDelegate, UITableViewDelegate,UITa
     
     func didTapOnKeyBenifitsBtnAction(cell: InsurenceResultTVCell) {
         
-        //        if cell.planContentBool == true {
-        //            cell.show()
-        //        }else {
-        //            cell.hide()
-        //        }
-        ////        guard let index =  insurenceListTV.indexPath(for: cell) else {return}
-        ////        self.insurenceListTV.reloadRows(at: [index], with: .automatic)
-        ////
-        //        insurenceListTV.beginUpdates()
-        //        insurenceListTV.endUpdates()
-        
         selectedPlanContent = cell.planContent
-        
+        gotoShowPlanContentVC()
+        //        if let indexPath = insurenceListTV.indexPath(for: cell) {
+        //            insurenceListTV.reloadRows(at: [indexPath], with: .automatic)
+        //        }
+    }
+    
+    
+    func gotoShowPlanContentVC() {
         guard let vc = ShowPlanContentVC.newInstance.self else {return}
         vc.modalPresentationStyle = .overCurrentContext
-        callapibool = true
-        self.present(vc, animated: false)
-        
-        
+        self.present(vc, animated: true)
     }
     
     
@@ -114,7 +113,7 @@ extension InsurenceResultVC:InsurenceViewModelDelegate, UITableViewDelegate,UITa
             availablePlans = response.data?.col_x?.list?.availablePlans ?? [[]]
             ibookingsource = response.data?.col_x?.booking_source_key ?? ""
             isearchid = "\(response.data?.col_x?.search_id ?? 0)"
-           
+            itotalPax = "\(response.data?.col_x?.search_params?.total_pax ?? 0)"
             
             DispatchQueue.main.async {
                 self.setupTV()
@@ -158,15 +157,26 @@ extension InsurenceResultVC:InsurenceViewModelDelegate, UITableViewDelegate,UITa
                 
                 let section = indexPath.section
                 let row = indexPath.row
+                cell.row = indexPath.row
                 cell.indexvalue = indexPath.section
                 
                 let data = availablePlans[section][row]
                 cell.titlelbl.text = data.planTitle ?? ""
-                cell.pricelbl.text = "\(data.currency ?? ""):\(data.totalPremiumAmount ?? "0.0")"
+                cell.pricelbl.text = "\(data.currency ?? ""):\(data.price?.total_fare_api ?? "0.0")"
                 cell.logo.sd_setImage(with: URL(string: data.plan_image ?? "" ), placeholderImage:UIImage(contentsOfFile:"placeholder.png"))
                 cell.plancode = data.planCode ?? ""
                 cell.plandetails = data.plan_details_token ?? ""
                 cell.planContent = data.planContent ?? []
+                
+                
+                // Check if the current indexPath is the one that should be expanded
+//                if indexPath == expandedIndexPath {
+//                    cell.isExpanded = true
+//                    cell.show()
+//                } else {
+//                    cell.isExpanded = false
+//                    cell.hide()
+//                }
                 
                 
             } else {
@@ -180,15 +190,20 @@ extension InsurenceResultVC:InsurenceViewModelDelegate, UITableViewDelegate,UITa
     }
     
     
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
     
     
     
+    
     func didTapOnSelectInsurenceBtnAction(cell: InsurenceResultTVCell) {
+        selectedPlanContent.removeAll()
+        
         iplancode = cell.plancode
         iplandetails = cell.plandetails
+        iplanprice = cell.pricelbl.text ?? ""
         selectedPlanContent = cell.planContent
         gotoTotalPremiumPayableVC()
     }

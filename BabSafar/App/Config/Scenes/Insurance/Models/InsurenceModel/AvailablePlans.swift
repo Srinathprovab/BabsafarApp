@@ -22,7 +22,7 @@ struct AvailablePlans : Codable {
     let planType : String?
     let up_sell_plan : Bool?
     let currency : String?
-    //  let price : Price?
+    let price : IPrice?
     let plan_details_token : String?
     let plan_image : String?
     
@@ -49,7 +49,7 @@ struct AvailablePlans : Codable {
         case planType = "PlanType"
         case up_sell_plan = "up_sell_plan"
         case currency = "Currency"
-        //     case price = "price"
+        case price = "price"
         case plan_details_token = "plan_details_token"
         case plan_image = "plan_image"
     }
@@ -77,7 +77,7 @@ struct AvailablePlans : Codable {
         planType = try values.decodeIfPresent(String.self, forKey: .planType)
         up_sell_plan = try values.decodeIfPresent(Bool.self, forKey: .up_sell_plan)
         currency = try values.decodeIfPresent(String.self, forKey: .currency)
-        //      price = try values.decodeIfPresent(Price.self, forKey: .price)
+        price = try values.decodeIfPresent(IPrice.self, forKey: .price)
         plan_details_token = try values.decodeIfPresent(String.self, forKey: .plan_details_token)
         plan_image = try values.decodeIfPresent(String.self, forKey: .plan_image)
     }

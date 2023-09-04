@@ -1,13 +1,13 @@
 //
-//  InsuranceVC.swift
+//  ModifyInsuranceVC.swift
 //  BabSafar
 //
-//  Created by MA673 on 29/07/22.
+//  Created by FCI on 04/09/23.
 //
 
 import UIKit
 
-class InsuranceVC: BaseTableVC {
+class ModifyInsuranceVC: BaseTableVC {
     
     
     @IBOutlet weak var holderView: UIView!
@@ -21,10 +21,10 @@ class InsuranceVC: BaseTableVC {
     var payload = [String:Any]()
     var tablerow = [TableRow]()
     
-    static var newInstance: InsuranceVC? {
+    static var newInstance: ModifyInsuranceVC? {
         let storyboard = UIStoryboard(name: Storyboard.Insurance.name,
                                       bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: self.className()) as? InsuranceVC
+        let vc = storyboard.instantiateViewController(withIdentifier: self.className()) as? ModifyInsuranceVC
         return vc
     }
     
@@ -39,6 +39,9 @@ class InsuranceVC: BaseTableVC {
         
         // Do any additional setup after loading the view.
         setupUI()
+        
+        self.view.backgroundColor = .black.withAlphaComponent(0.5)
+        self.holderView.backgroundColor = .clear
         
     }
     
@@ -235,7 +238,7 @@ class InsuranceVC: BaseTableVC {
 }
 
 
-extension InsuranceVC {
+extension ModifyInsuranceVC {
     
     func addObserver() {
         

@@ -70,6 +70,9 @@ class LabelTVCell: TableViewCell {
             
         case "showbtn":
             closeButton.isHidden = false
+            titlelbl.textColor = .AppTabSelectColor
+            titlelbl.textAlignment = .left
+            titlelbl.font = .LatoBold(size: 16)
             break
             
             

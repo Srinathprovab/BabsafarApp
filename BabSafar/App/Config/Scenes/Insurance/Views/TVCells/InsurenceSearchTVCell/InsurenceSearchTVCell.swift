@@ -14,6 +14,10 @@ protocol InsurenceSearchTVCellDelegate {
     func didTapOnReturnDateBtnAction(cell:InsurenceSearchTVCell)
     func didTapOnAddPassengersBtnAction(cell:InsurenceSearchTVCell)
     func didTapOnSearchInsurenceBtnAction(cell:InsurenceSearchTVCell)
+    func didTapOnCloseRetunBtnAction(cell:InsurenceSearchTVCell)
+    func didTapOnRetunToRoundTripBtnAction(cell:InsurenceSearchTVCell)
+
+    
 }
 
 class InsurenceSearchTVCell: TableViewCell, FastrackAirlineListViewModelDelegate {
@@ -63,13 +67,14 @@ class InsurenceSearchTVCell: TableViewCell, FastrackAirlineListViewModelDelegate
                 
                 if let journeyType = defaults.string(forKey: UserDefaultsKeys.InsurenceJourneyType) {
                     if journeyType == "oneway" {
-                        returnView.isHidden = true
+                    
+                        returnView.alpha = 0.5
                         fromTF.text = defaults.string(forKey: UserDefaultsKeys.ifromCity) ?? ""
                         toTF.text = defaults.string(forKey: UserDefaultsKeys.itoCity) ?? ""
                         depDatelbl.text = defaults.string(forKey: UserDefaultsKeys.icalDepDate) ?? "+ Add Date"
                         passengerlbl.text = defaults.string(forKey: UserDefaultsKeys.itravellerDetails) ?? ""
                     }else {
-                        returnView.isHidden = false
+                        returnView.alpha = 1
                         fromTF.text = defaults.string(forKey: UserDefaultsKeys.irfromCity) ?? ""
                         toTF.text = defaults.string(forKey: UserDefaultsKeys.irtoCity) ?? ""
                         depDatelbl.text = defaults.string(forKey: UserDefaultsKeys.ircalDepDate) ?? "+ Add Date"
@@ -105,7 +110,7 @@ class InsurenceSearchTVCell: TableViewCell, FastrackAirlineListViewModelDelegate
     
     
     func setupUI() {
-        returnView.isHidden = true
+       
         setupView(v: fromView)
         setupView(v: toView)
         setupView(v: depDateView)
@@ -151,7 +156,24 @@ class InsurenceSearchTVCell: TableViewCell, FastrackAirlineListViewModelDelegate
     
     
     @IBAction func didTapOnReturnDateBtnAction(_ sender: Any) {
-        delegate?.didTapOnReturnDateBtnAction(cell: self)
+        if let journeyType = defaults.string(forKey: UserDefaultsKeys.dashboardTapSelected) {
+            
+            if journeyType == "Insurence" {
+                if let journeyType = defaults.string(forKey: UserDefaultsKeys.InsurenceJourneyType) {
+                    if journeyType == "oneway" {
+                        self.returnView.alpha = 0.5
+                        delegate?.didTapOnRetunToRoundTripBtnAction(cell: self)
+                    }else {
+                        self.returnView.alpha = 1
+                        delegate?.didTapOnReturnDateBtnAction(cell: self)
+                    }
+                }
+                
+            }else {
+                delegate?.didTapOnReturnDateBtnAction(cell: self)
+            }
+        }
+       
     }
     
     
@@ -162,6 +184,14 @@ class InsurenceSearchTVCell: TableViewCell, FastrackAirlineListViewModelDelegate
     
     @IBAction func didTapOnSearchInsurenceBtnAction(_ sender: Any) {
         delegate?.didTapOnSearchInsurenceBtnAction(cell: self)
+    }
+    
+    
+ 
+    @IBAction func didTapOnCloseRetunBtnAction(_ sender: Any) {
+        returnDatelbl.text = "+ Add Date"
+        defaults.set("+ Add Date", forKey: UserDefaultsKeys.ircalRetDate)
+        delegate?.didTapOnCloseRetunBtnAction(cell: self)
     }
     
     

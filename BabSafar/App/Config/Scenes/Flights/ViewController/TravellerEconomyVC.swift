@@ -166,10 +166,11 @@ class TravellerEconomyVC: BaseTableVC {
     func setupSearchFlightEconomyTVCells(){
         
         tableRow.removeAll()
-        
+        tableRow.append(TableRow(title:"Add Travellers ",key: "showbtn",cellType:.LabelTVCell))
+
         if keyString == "traveller" {
             
-            tableRow.append(TableRow(title:"Add Travellers ",key: "showbtn",cellType:.LabelTVCell))
+
             if let journeyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
                 if journeyType == "oneway" {
                     tableRow.append(TableRow(title:"Adults",subTitle: "(12+)",text: defaults.string(forKey: UserDefaultsKeys.adultCount) ?? "1",cellType:.TravellerEconomyTVCell))
@@ -484,7 +485,7 @@ class TravellerEconomyVC: BaseTableVC {
                 
             }
         }else {
-            print("Add Room ......")
+           
             count += 1
             roomCountArray.append(count)
             //  setupSearchHotelsEconomyTVCells()
@@ -496,7 +497,6 @@ class TravellerEconomyVC: BaseTableVC {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath) as? LabelTVCell {
             cell.menuOptionImage.image = UIImage(named: "radioSelected")
-            print(cell.titlelbl.text)
             if let journeyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
                 if journeyType == "oneway" {
                     defaults.set(cell.titlelbl.text ?? "", forKey: UserDefaultsKeys.selectClass)
@@ -516,5 +516,7 @@ class TravellerEconomyVC: BaseTableVC {
             cell.menuOptionImage.image = UIImage(named: "radioUnselected")
         }
     }
+    
+    
     
 }

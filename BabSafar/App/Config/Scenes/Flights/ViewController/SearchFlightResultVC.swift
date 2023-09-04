@@ -451,8 +451,7 @@ class SearchFlightResultVC: BaseTableVC, UITextFieldDelegate {
         
         // Use flatMap to combine all the arrays into a single array
         let similarFlightList = FlightList?.filter { flight in
-            return "\(flight.first?.price?.api_total_display_fare?.rounded() ?? 0.0)" == cell.displayPrice
-            
+            return String(format: "%.2f", flight.first?.price?.api_total_display_fare ?? "") == cell.displayPrice
         }
         
         if similarFlightList?.count != 0 {
@@ -480,7 +479,7 @@ class SearchFlightResultVC: BaseTableVC, UITextFieldDelegate {
         // Iterate through the FlightList
         FlightList?.forEach({ i in
             i.forEach { j in
-                if let fare = j.price?.api_total_display_fare?.rounded() {
+                if let fare = Double(String(format: "%.2f", j.price?.api_total_display_fare ?? "")){
                     // Check if the fare is already present in the dictionary
                     if let existingFlights = similarFlightsDictionary[fare] {
                         // If it exists, append the current flight to the existing array
@@ -518,7 +517,7 @@ class SearchFlightResultVC: BaseTableVC, UITextFieldDelegate {
         // Iterate through the FlightList
         RTFlightList?.forEach({ i in
             i.forEach { j in
-                if let fare = j.price?.api_total_display_fare?.rounded() {
+                if let fare = Double(String(format: "%.2f", j.price?.api_total_display_fare ?? "")){
                     // Check if the fare is already present in the dictionary
                     if let existingFlights = similarFlightsDictionary[fare] {
                         // If it exists, append the current flight to the existing array
@@ -558,7 +557,7 @@ class SearchFlightResultVC: BaseTableVC, UITextFieldDelegate {
         // Iterate through the FlightList
         
         MCJflightlist?.forEach { j in
-            if let fare = j.price?.api_total_display_fare?.rounded() {
+            if let fare = Double(String(format: "%.2f", j.price?.api_total_display_fare ?? "")){
                 // Check if the fare is already present in the dictionary
                 if let existingFlights = similarFlightsDictionary[fare] {
                     // If it exists, append the current flight to the existing array
@@ -589,7 +588,7 @@ class SearchFlightResultVC: BaseTableVC, UITextFieldDelegate {
     override func didTapOnSimilarFlightsBtnAction(cell:RoundTripFlightResultTVCell){
         // Use flatMap to combine all the arrays into a single array
         let similarFlightList = RTFlightList?.filter { flight in
-            return "\(flight.first?.price?.api_total_display_fare?.rounded() ?? 0.0)" == cell.displayPrice
+            return String(format: "%.2f", flight.first?.price?.api_total_display_fare ?? "") == cell.displayPrice
         }
         
         if similarFlightList?.count != 0 {
@@ -608,7 +607,7 @@ class SearchFlightResultVC: BaseTableVC, UITextFieldDelegate {
     override func didTapOnSimilarOptionBtnAction(cell:MultiCityTripFlightResultTVCell){
         // Use flatMap to combine all the arrays into a single array
         let similarFlightList = MCJflightlist?.filter { flight in
-            return "\(flight.price?.api_total_display_fare?.rounded() ?? 0.0)" == cell.displayPrice
+            return String(format: "%.2f", flight.price?.api_total_display_fare ?? "") == cell.displayPrice
         }
         
         if similarFlightList?.count != 0 {
@@ -1168,18 +1167,18 @@ extension SearchFlightResultVC: AppliedFilters{
         
         updatedUniqueList.forEach({ i in
             i.forEach { j in
-                let similarFlights1 = similar(fare: j.price?.api_total_display_fare?.rounded() ?? 0.0)
+                let similarFlights1 = similar(fare: Double(String(format: "%.2f", j.price?.api_total_display_fare ?? "")) ?? 0.0)
                 j.flight_details?.summary?.forEach({ k in
                     tablerow.append(TableRow(
                         title:"\(k.operator_name ?? "") (\(k.operator_code ?? "") \(k.flight_number ?? ""))",
-                        subTitle: "\(j.price?.api_total_display_fare?.rounded() ?? 0.0)" ,
+                        subTitle: String(format: "%.2f", j.price?.api_total_display_fare ?? ""),
                         price: j.aPICurrencyType,
                         Weight_Allowance: k.weight_Allowance,
                         key:"oneway",
                         text: k.origin?.time,
                         headerText: k.destination?.time,
                         buttonTitle: "\(k.destination?.city ?? "") (\(k.destination?.loc ?? ""))",
-                        errormsg: "\(j.price?.api_total_display_fare_withoutmarkup?.rounded() ?? 0.0)",
+                        errormsg: String(format: "%.2f", j.price?.api_total_display_fare_withoutmarkup ?? ""),
                         key1:j.fareType,
                         image: k.operator_image,
                         moreData: similarFlights1,
@@ -1282,18 +1281,18 @@ extension SearchFlightResultVC: AppliedFilters{
         
         
         list.forEach { j in
-            let similarFlights1 = similar(fare: j.price?.api_total_display_fare?.rounded() ?? 0.0)
+            let similarFlights1 = similar(fare: Double(String(format: "%.2f", j.price?.api_total_display_fare ?? "")) ?? 0.0)
             j.flight_details?.summary?.forEach({ k in
                 tablerow.append(TableRow(
                     title:"\(k.operator_name ?? "") (\(k.operator_code ?? "") \(k.flight_number ?? ""))",
-                    subTitle: "\(j.price?.api_total_display_fare?.rounded() ?? 0.0)" ,
+                    subTitle: String(format: "%.2f", j.price?.api_total_display_fare ?? ""),
                     price: j.aPICurrencyType,
                     Weight_Allowance: k.weight_Allowance,
                     key:"oneway",
                     text: k.origin?.time,
                     headerText: k.destination?.time,
                     buttonTitle: "\(k.destination?.city ?? "") (\(k.destination?.loc ?? ""))",
-                    errormsg: "\(j.price?.api_total_display_fare_withoutmarkup?.rounded() ?? 0.0)",
+                    errormsg: String(format: "%.2f", j.price?.api_total_display_fare_withoutmarkup ?? ""),
                     key1:j.fareType,
                     image: k.operator_image, moreData: similarFlights1,
                     tempText:"\(k.origin?.city ?? "") (\(k.origin?.loc ?? ""))",
@@ -1344,11 +1343,11 @@ extension SearchFlightResultVC: AppliedFilters{
             updatedUniqueList.forEach({ i in
                 
                 i.forEach { k in
-                    let similarFlights1 = similar_roundtrip(fare: k.price?.api_total_display_fare?.rounded() ?? 0.0)
-                    tablerow.append(TableRow(title:"\(k.price?.api_total_display_fare?.rounded() ?? 0.0)",
+                    let similarFlights1 = similar_roundtrip(fare: Double(String(format: "%.2f", k.price?.api_total_display_fare ?? "")) ?? 0.0) 
+                    tablerow.append(TableRow(title: String(format: "%.2f", k.price?.api_total_display_fare ?? ""),
                                              price:k.aPICurrencyType,
                                              key: "circle",
-                                             headerText:"\(k.price?.api_total_display_fare_withoutmarkup?.rounded() ?? 0.0)",
+                                             headerText:String(format: "%.2f", k.price?.api_total_display_fare_withoutmarkup ?? ""),
                                              data: similarFlights1,
                                              errormsg:String(k.flight_details?.summary?.first?.no_of_stops ?? 0),
                                              key1:k.fareType ?? "",
@@ -1385,11 +1384,11 @@ extension SearchFlightResultVC: AppliedFilters{
         
         
         list.forEach { k in
-            let similarFlights1 = similar_roundtrip(fare: k.price?.api_total_display_fare?.rounded() ?? 0.0)
-            tablerow.append(TableRow(title:"\(k.price?.api_total_display_fare?.rounded() ?? 0.0)",
+            let similarFlights1 = similar_roundtrip(fare: Double(String(format: "%.2f", k.price?.api_total_display_fare ?? "")) ?? 0.0)
+            tablerow.append(TableRow(title: String(format: "%.2f", k.price?.api_total_display_fare ?? ""),
                                      price:k.aPICurrencyType,
                                      key: "circle",
-                                     headerText:"\(k.price?.api_total_display_fare_withoutmarkup?.rounded() ?? 0.0)",
+                                     headerText: String(format: "%.2f", k.price?.api_total_display_fare_withoutmarkup ?? ""),
                                      data: similarFlights1,
                                      errormsg:String(k.flight_details?.summary?.first?.no_of_stops ?? 0),
                                      key1:k.fareType ?? "",
@@ -1438,12 +1437,12 @@ extension SearchFlightResultVC: AppliedFilters{
             
             
             updatedUniqueList.forEach { k in
-                let similarFlights1 = similar_multicity(fare: k.price?.api_total_display_fare?.rounded() ?? 0.0)
-                tablerow.append(TableRow(title:"\(k.price?.api_total_display_fare?.rounded() ?? 0.0)",
+                let similarFlights1 = similar_multicity(fare: Double(String(format: "%.2f", k.price?.api_total_display_fare ?? "")) ?? 0.0)
+                tablerow.append(TableRow(title: String(format: "%.2f", k.price?.api_total_display_fare ?? ""),
                                          price:k.aPICurrencyType,
-                                         headerText:"\(k.price?.api_total_display_fare?.rounded() ?? 0.0)",
+                                         headerText: String(format: "%.2f", k.price?.api_total_display_fare ?? ""),
                                          data: similarFlights1,
-                                         errormsg: "\(k.price?.api_total_display_fare_withoutmarkup?.rounded() ?? 0.0)",
+                                         errormsg: String(format: "%.2f", k.price?.api_total_display_fare_withoutmarkup ?? ""),
                                          key1:k.fareType ?? "",
                                          moreData:k.flight_details,
                                          TotalQuestions: k.selectedResult,

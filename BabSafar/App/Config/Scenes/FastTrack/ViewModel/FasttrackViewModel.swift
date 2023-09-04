@@ -10,6 +10,7 @@ import Foundation
 
 protocol FasttrackViewModelDelegate : BaseViewModelProtocol {
     func fasttrackList(response : FasttrackModel)
+    func exploreSearchList(response : ExploreModel)
 }
 
 class FasttrackViewModel {
@@ -33,6 +34,29 @@ class FasttrackViewModel {
                 if sucess {
                     guard let response = result else {return}
                     self.view.fasttrackList(response: response)
+                } else {
+                    self.view.showToast(message: errorMessage ?? "")
+                }
+            }
+        }
+    }
+    
+    
+    
+    
+    func CALL_EXPLORE_SEARCH_API(dictParam: [String: Any]){
+        let parms = NSDictionary(dictionary:dictParam)
+        print("Parameters = \(parms)")
+        
+        self.view?.showLoader()
+        
+        ServiceManager.postOrPutApiCall(endPoint: ApiEndpoints.general_pre_fastrack_search , urlParams: parms as? Dictionary<String, String>, parameters: parms, resultType: ExploreModel.self, p:dictParam) { sucess, result, errorMessage in
+            
+            DispatchQueue.main.async {
+                self.view?.hideLoader()
+                if sucess {
+                    guard let response = result else {return}
+                    self.view.exploreSearchList(response: response)
                 } else {
                     self.view.showToast(message: errorMessage ?? "")
                 }

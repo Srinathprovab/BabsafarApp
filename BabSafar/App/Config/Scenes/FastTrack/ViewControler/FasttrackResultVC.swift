@@ -10,6 +10,7 @@ import UIKit
 class FasttrackResultVC: BaseTableVC, FasttrackViewModelDelegate {
     
     
+    
     @IBOutlet weak var holderView: UIView!
     @IBOutlet weak var citylbl: UILabel!
     @IBOutlet weak var datelbl: UILabel!
@@ -19,12 +20,18 @@ class FasttrackResultVC: BaseTableVC, FasttrackViewModelDelegate {
     @IBOutlet weak var explorelbl: UILabel!
     @IBOutlet weak var depimg: UIImageView!
     @IBOutlet weak var airportNamelbl: UILabel!
+    @IBOutlet weak var btnsViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var btnsView: UIView!
+    @IBOutlet weak var filterView: UIView!
+    
     
     var availablePlans = [[AvailablePlans]]()
     var payload = [String:Any]()
     var tablerow = [TableRow]()
     var fromList = [From]()
     var toList = [To]()
+    
+    var eploreList = [EList]()
     var key = "dep"
     var vm:FasttrackViewModel?
     static var newInstance: FasttrackResultVC? {
@@ -39,7 +46,12 @@ class FasttrackResultVC: BaseTableVC, FasttrackViewModelDelegate {
         addObserver()
         if callapibool == true {
             holderView.isHidden = true
-            callAPI()
+            if let selectedTab = defaults.object(forKey: UserDefaultsKeys.fasttrackJournyType) as? String ,selectedTab == "quick" {
+                callQuickBookingAPI()
+            }else {
+                callExploreAPI()
+            }
+            
         }
     }
     
@@ -55,59 +67,34 @@ class FasttrackResultVC: BaseTableVC, FasttrackViewModelDelegate {
     func setupUI() {
         departureSelected()
         commonTableView.registerTVCells(["QuickBookingResultTVCell",
-                                         "EmptyTVCell"])
+                                         "EmptyTVCell",
+                                         "ExploreResultTVCell"])
     }
     
     func departureSelected() {
         key = "dep"
-        //        defaults.set("quick", forKey: UserDefaultsKeys.InsurenceJourneyType)
         airportNamelbl.text = defaults.string(forKey: UserDefaultsKeys.frfromCity)
         quickbookingView.backgroundColor = HexColor("#D7B912")
         exploreView.backgroundColor = .WhiteColor
         depimg.image = UIImage(named: "dep")?.withRenderingMode(.alwaysOriginal)
         DispatchQueue.main.async {[self] in
-            setupTV()
+            setupQuickBookingTV()
         }
     }
     
     func arrivalSelected() {
         key = "arrival"
-        //        defaults.set("explore", forKey: UserDefaultsKeys.InsurenceJourneyType)
         airportNamelbl.text = defaults.string(forKey: UserDefaultsKeys.frtoCity)
         quickbookingView.backgroundColor = .WhiteColor
         exploreView.backgroundColor = HexColor("#D7B912")
         depimg.image = UIImage(named: "arrival")?.withRenderingMode(.alwaysOriginal)
         DispatchQueue.main.async {[self] in
-            setupTV()
+            setupQuickBookingTV()
         }
     }
     
     
-    func setupTV() {
-        tablerow.removeAll()
-        
-        
-        if key == "dep" {
-            fromList.forEach { i in
-                tablerow.append(TableRow(title:i.sku,
-                                         price: i.category_id,
-                                         cellType:.QuickBookingResultTVCell))
-            }
-        }else {
-            toList.forEach { i in
-                tablerow.append(TableRow(title:i.sku,
-                                         price: i.category_id,
-                                         cellType:.QuickBookingResultTVCell))
-            }
-        }
-        
-        tablerow.append(TableRow(height:50,
-                                 bgColor: .AppHolderViewColor,
-                                 cellType:.EmptyTVCell))
-        
-        commonTVData = tablerow
-        commonTableView.reloadData()
-    }
+    
     
     
     //MARK: - didTapOnSelectBtnAction QuickBookingResultTVCell
@@ -154,17 +141,31 @@ class FasttrackResultVC: BaseTableVC, FasttrackViewModelDelegate {
     }
     
     
+    
+    //MARK: - didTapOnBookNowBtnAction ExploreResultTVCell
+    override func didTapOnBookNowBtnAction(cell: ExploreResultTVCell) {
+        print(cell.titlelbl.text)
+    }
+    
+    @IBAction func didTapOnFilterBtnAction(_ sender: Any) {
+        print("didTapOnFilterBtnAction")
+    }
+    
+    
 }
 
 
 extension FasttrackResultVC {
     
-    func callAPI() {
+    func callQuickBookingAPI() {
         vm?.CALL_FASTTRACK_API(dictParam: payload)
     }
     
     func fasttrackList(response: FasttrackModel) {
         holderView.isHidden = false
+        filterView.isHidden = true
+        btnsView.isHidden = false
+        btnsViewHeight.constant = 50
         fromList = response.fasttrackdata?.col_x?.list?.from ?? []
         toList = response.fasttrackdata?.col_x?.list?.to ?? []
         
@@ -173,11 +174,86 @@ extension FasttrackResultVC {
         datelbl.text = "\(response.fasttrackdata?.col_x?.search_params?.departure_date ?? "") to \(response.fasttrackdata?.col_x?.search_params?.arrival_date ?? "") | \(defaults.string(forKey: UserDefaultsKeys.frtravellerDetails) ?? "")"
         
         DispatchQueue.main.async {
-            self.setupTV()
+            self.setupQuickBookingTV()
         }
         
     }
     
+    func setupQuickBookingTV() {
+        tablerow.removeAll()
+        
+        
+        if key == "dep" {
+            fromList.forEach { i in
+                tablerow.append(TableRow(title:i.sku,
+                                         price: i.category_id,
+                                         cellType:.QuickBookingResultTVCell))
+            }
+        }else {
+            toList.forEach { i in
+                tablerow.append(TableRow(title:i.sku,
+                                         price: i.category_id,
+                                         cellType:.QuickBookingResultTVCell))
+            }
+        }
+        
+        tablerow.append(TableRow(height:50,
+                                 bgColor: .AppHolderViewColor,
+                                 cellType:.EmptyTVCell))
+        
+        commonTVData = tablerow
+        commonTableView.reloadData()
+    }
+    
+    
+    
+    
+    
+}
+
+
+extension FasttrackResultVC {
+    
+    func callExploreAPI() {
+        vm?.CALL_EXPLORE_SEARCH_API(dictParam: payload)
+    }
+    
+    func exploreSearchList(response: ExploreModel) {
+        holderView.isHidden = false
+        filterView.isHidden = false
+        btnsView.isHidden = true
+        btnsViewHeight.constant = 0
+        
+        eploreList = response.fasttrackdata?.col_x?.list ?? []
+        
+        citylbl.text = "\(response.fasttrackdata?.col_x?.search_params?.to_loc_airport_city ?? "")(\(response.fasttrackdata?.col_x?.search_params?.to_loc ?? ""))"
+        
+        datelbl.isHidden = true
+        
+        DispatchQueue.main.async {
+            self.setupExploreTV()
+        }
+        
+    }
+    
+    
+    
+    func setupExploreTV() {
+        tablerow.removeAll()
+        
+        eploreList.forEach { i in
+            tablerow.append(TableRow(title:i.sku,image: "",cellType:.ExploreResultTVCell))
+        }
+        
+        tablerow.append(TableRow(height:50,
+                                 bgColor: .AppHolderViewColor,
+                                 cellType:.EmptyTVCell))
+        
+        commonTVData = tablerow
+        commonTableView.reloadData()
+    }
+    
+
 }
 
 
@@ -195,7 +271,7 @@ extension FasttrackResultVC {
     
     @objc func reload() {
         DispatchQueue.main.async {[self] in
-            setupTV()
+            callQuickBookingAPI()
         }
     }
     

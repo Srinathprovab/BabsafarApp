@@ -20,8 +20,8 @@ class InsurenceFlightDetailsTVCell: TableViewCell, AirlineListViewModelDelegate 
     @IBOutlet weak var fromAirportNamelbl: UILabel!
     @IBOutlet weak var toAirportNamelbl: UILabel!
     @IBOutlet weak var pnrTF: UITextField!
-    @IBOutlet weak var depAirlinelbl: UILabel!
-    @IBOutlet weak var arrivalAirlinelbl: UILabel!
+    @IBOutlet weak var depAirlineTF: UITextField!
+    @IBOutlet weak var arrivalAirlineTF: UITextField!
     @IBOutlet weak var depDatelbl: UILabel!
     @IBOutlet weak var arrivalDatelbl: UILabel!
     @IBOutlet weak var depTimeTF: UITextField!
@@ -36,8 +36,11 @@ class InsurenceFlightDetailsTVCell: TableViewCell, AirlineListViewModelDelegate 
     let arrivalAirlineDropdown = DropDown()
     let depTimePicker = UIDatePicker()
     let arrivalTimePicker = UIDatePicker()
+    var filterdcountrylist = [AirlineListModel]()
     var arilineList = [AirlineListModel]()
     var countryNames = [String]()
+    var codes = [String]()
+   
     var vm:AirlineListViewModel?
     var delegate:InsurenceFlightDetailsTVCellDelegate?
     
@@ -71,10 +74,19 @@ class InsurenceFlightDetailsTVCell: TableViewCell, AirlineListViewModelDelegate 
         setupTextField(txtField: pnrTF, tag: 55)
         setupTextField(txtField: depTimeTF, tag: 2)
         setupTextField(txtField: arrivalTimeTF, tag: 3)
+        setupTextField(txtField: depAirlineTF, tag: 4)
+        setupTextField(txtField: arrivalAirlineTF, tag: 5)
+
         showdepTimePicker()
         showArrivalTimePicker()
         setupdepratureAirlineDropDown()
         setuparrivalAirlineDropdown()
+        
+        
+        depAirlineTF.addTarget(self, action: #selector(searchTextChanged(textField:)), for: .editingChanged)
+        arrivalAirlineTF.addTarget(self, action: #selector(searchTextChanged(textField:)), for: .editingChanged)
+        
+        
     }
     
     
@@ -164,7 +176,7 @@ extension InsurenceFlightDetailsTVCell {
     @objc func doneTimePicker(){
         
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "hh:mm a" // Customize the date format as needed
+        dateFormatter.dateFormat = "hh:mm" // Customize the date format as needed
         
         if depTimeTF.isFirstResponder {
             depTimeTF.text = dateFormatter.string(from: depTimePicker.date)
@@ -173,7 +185,7 @@ extension InsurenceFlightDetailsTVCell {
             arrivalTimeTF.text = dateFormatter.string(from: arrivalTimePicker.date)
             arrivalTimeView.layer.borderColor = UIColor.AppBorderColor.cgColor
         }
-    
+        
         delegate?.doneTimePicker(cell: self)
     }
     
@@ -195,11 +207,9 @@ extension InsurenceFlightDetailsTVCell {
     
     func airlineList(response: [AirlineListModel]) {
         arilineList = response
-        countryNames.removeAll()
+        filterdcountrylist = arilineList
+        loadCountryNamesAndCode()
         
-        arilineList.forEach { i in
-            countryNames.append(i.label ?? "")
-        }
     }
     
     
@@ -211,8 +221,12 @@ extension InsurenceFlightDetailsTVCell {
         depratureAirlineDropdown.bottomOffset = CGPoint(x: 0, y: self.depView.frame.size.height + 10)
         depratureAirlineDropdown.selectionAction = { [weak self] (index: Int, item: String) in
             
-            self?.depAirlinelbl.text = self?.countryNames[index] ?? ""
+            self?.depAirlineTF.text = self?.countryNames[index] ?? ""
+            fldept_flightcode = self?.codes[index] ?? ""
+            self?.depTimeTF.becomeFirstResponder()
             self?.depView.layer.borderColor = UIColor.AppBorderColor.cgColor
+            
+            
         }
         
     }
@@ -225,9 +239,75 @@ extension InsurenceFlightDetailsTVCell {
         arrivalAirlineDropdown.bottomOffset = CGPoint(x: 0, y: self.arrivalView.frame.size.height + 10)
         arrivalAirlineDropdown.selectionAction = { [weak self] (index: Int, item: String) in
             
-            self?.arrivalAirlinelbl.text = self?.countryNames[index] ?? ""
+            self?.arrivalAirlineTF.text = self?.countryNames[index] ?? ""
+            flarrival_flightcode = self?.codes[index] ?? ""
+            self?.arrivalTimeTF.becomeFirstResponder()
             self?.arrivalView.layer.borderColor = UIColor.AppBorderColor.cgColor
+            
+            
         }
+        
+    }
+    
+    
+}
+
+
+
+
+extension InsurenceFlightDetailsTVCell{
+    
+    
+    @objc func searchTextChanged(textField: UITextField) {
+        let searchText = textField.text ?? ""
+        filterContentForSearchText(searchText, tf: textField)
+        
+    }
+    
+    func filterContentForSearchText(_ searchText: String,tf:UITextField) {
+        
+        filterdcountrylist.removeAll()
+        filterdcountrylist = arilineList.filter { thing in
+            return "\(thing.label?.lowercased() ?? "")".contains(searchText.lowercased())
+        }
+        
+        
+        loadCountryNamesAndCode()
+        if tf == depAirlineTF {
+            DispatchQueue.main.async {[self] in
+                depratureAirlineDropdown.dataSource = countryNames
+                depratureAirlineDropdown.show()
+            }
+        }else {
+            DispatchQueue.main.async {[self] in
+                arrivalAirlineDropdown.dataSource = countryNames
+                arrivalAirlineDropdown.show()
+            }
+        }
+    }
+    
+    func loadCountryNamesAndCode(){
+        countryNames.removeAll()
+        codes.removeAll()
+        
+        filterdcountrylist.forEach { i in
+            countryNames.append(i.label ?? "")
+            codes.append(i.code ?? "")
+        }
+    }
+    
+    
+}
+
+
+extension InsurenceFlightDetailsTVCell {
+    
+    //MARK - UITextField Delegates
+    override func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        var maxLength = 30
+        let currentString: NSString = textField.text! as NSString
+        let newString: NSString =  currentString.replacingCharacters(in: range, with: string) as NSString
+        return newString.length <= maxLength
         
     }
     
