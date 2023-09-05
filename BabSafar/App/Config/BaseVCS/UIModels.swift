@@ -128,6 +128,7 @@ enum TVCellType {
     case TravellerDetailsTVCell
     case InsurenceFlightDetailsTVCell
     case InsurenceFareSummaryTVCell
+    case InsurenceResultTVCell
     
     
     
@@ -139,6 +140,8 @@ enum TVCellType {
     case FasttrackFlightDeatilsTVCell
     case FasttrackSearchTVCell
     case ExploreResultTVCell
+    case ExploreSummeryTVCell
+    case ExploreLeadPassengerTVCell
     
     
 }

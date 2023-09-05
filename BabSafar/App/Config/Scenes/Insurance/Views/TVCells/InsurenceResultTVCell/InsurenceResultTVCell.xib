@@ -163,7 +163,7 @@
                             <constraint firstItem="xPC-lN-XJm" firstAttribute="top" secondItem="RxZ-Gh-Bmf" secondAttribute="bottom" constant="17.670000000000002" id="WCC-Sk-F1t"/>
                             <constraint firstItem="RDl-hn-GPt" firstAttribute="leading" secondItem="v5h-j8-pXR" secondAttribute="leading" constant="17" id="aOz-8U-FSg"/>
                             <constraint firstItem="zbH-pA-qxX" firstAttribute="trailing" secondItem="VQv-b1-QOr" secondAttribute="trailing" id="dAg-Nu-sRB"/>
-                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="161" id="dm1-Cb-VXb"/>
+                            <constraint firstAttribute="height" relation="lessThanOrEqual" constant="161" id="dm1-Cb-VXb"/>
                             <constraint firstItem="31c-2O-Bu6" firstAttribute="top" secondItem="v5h-j8-pXR" secondAttribute="top" constant="14.33" id="iTA-ui-0rw"/>
                             <constraint firstItem="wBK-KE-BFX" firstAttribute="top" secondItem="v5h-j8-pXR" secondAttribute="top" constant="12" id="jHM-c1-SkZ"/>
                             <constraint firstAttribute="trailing" secondItem="31c-2O-Bu6" secondAttribute="trailing" constant="15" id="jV3-PL-h3a"/>
@@ -192,10 +192,13 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="bottomView" destination="xPC-lN-XJm" id="kR3-fe-VZc"/>
+                <outlet property="bottomViewHeight" destination="xd7-rA-eDw" id="gz4-Hj-Lc6"/>
+                <outlet property="holderView" destination="v5h-j8-pXR" id="IbD-oZ-leG"/>
                 <outlet property="logo" destination="wBK-KE-BFX" id="JTQ-Oh-zvy"/>
                 <outlet property="paxCountlbl" destination="abX-0X-Ebq" id="bcu-gS-Wg7"/>
                 <outlet property="planContentTV" destination="SwP-lB-a0h" id="UOo-nf-iqJ"/>
                 <outlet property="pricelbl" destination="zbH-pA-qxX" id="QKj-mx-hKo"/>
+                <outlet property="selectView" destination="RxZ-Gh-Bmf" id="iLC-TO-F5w"/>
                 <outlet property="subtitlelbl" destination="abX-0X-Ebq" id="Jh1-va-esy"/>
                 <outlet property="titlelbl" destination="31c-2O-Bu6" id="J48-tc-IH8"/>
                 <outlet property="tvHeight" destination="Aq9-F9-WFT" id="34g-Mi-MuG"/>

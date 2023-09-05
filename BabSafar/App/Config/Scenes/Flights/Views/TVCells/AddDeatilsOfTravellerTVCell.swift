@@ -242,7 +242,7 @@ class AddDeatilsOfTravellerTVCell: TableViewCell {
         setupTextField(txtField: passportExpireDateTF, tag1: 7, label: "Passport Exprity Date*", placeholder: "Exprity Date")
         setupTextField(txtField: flyerProgramTF, tag1: 8, label: "Flyer Program ", placeholder: "Flyer Program")
         setupTextField(txtField: flyerNoTF, tag1: 9, label: "Flyer Number ", placeholder: "Flyer Number")
-
+        
         
         
         //  passportNationalitySelectBtn.setTitle("", for: .normal)
@@ -381,19 +381,19 @@ class AddDeatilsOfTravellerTVCell: TableViewCell {
     }
     
     
-        func setupFlyerDropDown() {
-    
-            flyerdropDown.direction = .bottom
-            flyerdropDown.backgroundColor = .WhiteColor
-            flyerdropDown.anchorView = self.flyerPgmBtn
-            flyerdropDown.bottomOffset = CGPoint(x: 0, y: flyerPgmBtn.frame.size.height + 20)
-            flyerdropDown.selectionAction = { [weak self] (index: Int, item: String) in
-                
-                self?.flyerProgramTF.text = item
-                self?.delegate?.didTapOnFlyerProgramBtnAction(cell: self!)
-            }
-    
+    func setupFlyerDropDown() {
+        
+        flyerdropDown.direction = .bottom
+        flyerdropDown.backgroundColor = .WhiteColor
+        flyerdropDown.anchorView = self.flyerPgmBtn
+        flyerdropDown.bottomOffset = CGPoint(x: 0, y: flyerPgmBtn.frame.size.height + 20)
+        flyerdropDown.selectionAction = { [weak self] (index: Int, item: String) in
+            
+            self?.flyerProgramTF.text = item
+            self?.delegate?.didTapOnFlyerProgramBtnAction(cell: self!)
         }
+        
+    }
     
     
     func setupIssuingCountryDropDown() {

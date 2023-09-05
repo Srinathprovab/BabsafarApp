@@ -100,7 +100,7 @@ extension PaymentGatewayVC {
                 payload["app_ref"] = tmpFlightPreBookingId
                 payload["payment_response"] = paymentResponse
                 
-                self.vm?.CALL_UPDATE_PAYMENT_API(dictParam: payload, endpoint: "updatePayment_insurance")
+                self.vm?.CALL_UPDATE_PAYMENT_INSURENCE_API(dictParam: payload, endpoint: "updatePayment_insurance")
             }
         } else {
             // Handle the case where 'selectedTap' is not found in UserDefaults
@@ -119,9 +119,6 @@ extension PaymentGatewayVC {
                 gotoBookingSucessVC(url: response.data ?? "")
             } else if selectedTap == "Hotels" {
                 callSecureBookingAPI(urlStr: response.data ?? "")
-            } else {
-                // Handle other cases
-                print(response.data)
             }
         } else {
             // Handle the case where 'selectedTap' is not found in UserDefaults
@@ -129,6 +126,12 @@ extension PaymentGatewayVC {
 
         
     }
+    
+    
+    func insurenceUpdatePaymentSucess(response: updateInsurenceModel) {
+        gotoBookingSucessVC(url: response.url ?? "")
+    }
+    
     
     
     func gotoBookingSucessVC(url:String) {

@@ -32,9 +32,9 @@ class PersonalDetailsVC: BaseTableVC, InsurancePreprocessBookingViewModelDelegat
     
     
     var flpnr_number = String()
-    var fldept_flightcode = String()
+    var fldept_flightcode = ""
     var fldept_time = String()
-    var flarrival_flightcode = String()
+    var flarrival_flightcode = ""
     var flarrival_time = String()
     var plan_code = String()
     var plan_ssrcode = String()
@@ -213,6 +213,17 @@ class PersonalDetailsVC: BaseTableVC, InsurancePreprocessBookingViewModelDelegat
             paymobile = tf.text ?? ""
         }
     }
+    
+    //MARK: - didTapOnSelectDepartureAirlineButAction InsurenceFlightDetailsTVCell
+    override func didTapOnSelectDepartureAirlineButAction(cell:InsurenceFlightDetailsTVCell){
+        self.fldept_flightcode = cell.fldept_flightcode
+    }
+    
+    //MARK: - didTapOnSelectArrivalAirlineButAction InsurenceFlightDetailsTVCell
+    override func didTapOnSelectArrivalAirlineButAction(cell:InsurenceFlightDetailsTVCell){
+        self.flarrival_flightcode = cell.flarrival_flightcode
+    }
+    
     
     
     
@@ -498,35 +509,35 @@ extension PersonalDetailsVC {
         let passportIssuingCountryArray = travelerArray.compactMap({$0.passportIssuingCountry})
         let passportExpireDateArray = travelerArray.compactMap({$0.passportExpireDate})
         
-//        let mrtitleString = "[\"" + mrtitleArray.joined(separator: "\",\"") + "\"]"
-//        let firstnameString = "[\"" + firstnameArray.joined(separator: "\",\"") + "\"]"
-//        let lastNameString = "[\"" + lastNameArray.joined(separator: "\",\"") + "\"]"
-//        let passengertypeString = "[\"" + passengertypeArray.joined(separator: "\",\"") + "\"]"
-//        let dobArrayString = "[\"" + dobArray.joined(separator: "\",\"") + "\"]"
-//        let passportnoArrayString = "[\"" + passportnoArray.joined(separator: "\",\"") + "\"]"
-//        let passportIssuingCountryArrayString = "[\"" + passportIssuingCountryArray.joined(separator: "\",\"") + "\"]"
-//        let passportExpireDateArrayString = "[\"" + passportExpireDateArray.joined(separator: "\",\"") + "\"]"
-//        let genderArrayString = "[\"" + genderArray.joined(separator: "\",\"") + "\"]"
+        let mrtitleString = "[\"" + mrtitleArray.joined(separator: "\",\"") + "\"]"
+        let firstnameString = "[\"" + firstnameArray.joined(separator: "\",\"") + "\"]"
+        let lastNameString = "[\"" + lastNameArray.joined(separator: "\",\"") + "\"]"
+        let passengertypeString = "[\"" + passengertypeArray.joined(separator: "\",\"") + "\"]"
+        let dobArrayString = "[\"" + dobArray.joined(separator: "\",\"") + "\"]"
+        let passportnoArrayString = "[\"" + passportnoArray.joined(separator: "\",\"") + "\"]"
+        let passportIssuingCountryArrayString = "[\"" + passportIssuingCountryArray.joined(separator: "\",\"") + "\"]"
+        let passportExpireDateArrayString = "[\"" + passportExpireDateArray.joined(separator: "\",\"") + "\"]"
+        let genderArrayString = "[\"" + genderArray.joined(separator: "\",\"") + "\"]"
 
         
         
         payload.removeAll()
         payload["search_id"] = isearchid
         payload["flpnr_number"] = flpnr_number
-        payload["fldept_flightcode"] = "KU"
+        payload["fldept_flightcode"] = fldept_flightcode
         payload["fldept_time"] = fldept_time
-        payload["flarrival_flightcode"] = "KU"
+        payload["flarrival_flightcode"] = flarrival_flightcode
         payload["flarrival_time"] = flarrival_time
-        payload["type"] = passengertypeArray
+        payload["type"] = passengertypeString
         payload["title"] = ["Mr"]
-        payload["first_name"] = firstnameArray
-        payload["last_name"] = lastNameArray
-        payload["gender"] = genderArray
-        payload["dob"] = dobArray
-        payload["passport_number"] = passportnoArray
-        payload["passport_issuing_country"] = passportIssuingCountryArray
-        payload["passport_expiry"] = passportExpireDateArray
-        payload["passport_nationality"] = passportIssuingCountryArray
+        payload["first_name"] = firstnameString
+        payload["last_name"] = lastNameString
+        payload["gender"] = genderArrayString
+        payload["dob"] = dobArrayString
+        payload["passport_number"] = passportnoArrayString
+        payload["passport_issuing_country"] = passportIssuingCountryArrayString
+        payload["passport_expiry"] = passportExpireDateArrayString
+        payload["passport_nationality"] = passportIssuingCountryArrayString
         payload["plan_code"] = plan_code
         payload["plan_ssrcode"] = plan_ssrcode
         payload["token"] = token

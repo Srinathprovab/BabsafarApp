@@ -89,6 +89,7 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="checkImg" destination="laI-V3-ijh" id="Dd4-Xj-SPk"/>
+                <outlet property="specialRequestlbl" destination="C9R-vX-nMp" id="npj-a7-HJQ"/>
                 <outlet property="titlelbl" destination="i6Q-fW-yhc" id="nKI-eJ-JPy"/>
             </connections>
             <point key="canvasLocation" x="260.30534351145036" y="211.97183098591552"/>

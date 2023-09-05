@@ -144,7 +144,15 @@ class FasttrackResultVC: BaseTableVC, FasttrackViewModelDelegate {
     
     //MARK: - didTapOnBookNowBtnAction ExploreResultTVCell
     override func didTapOnBookNowBtnAction(cell: ExploreResultTVCell) {
-        print(cell.titlelbl.text)
+        fplan_code = cell.titlelbl.text ?? ""
+        gotoFBookingDetailsVC()
+    }
+    
+    func gotoFBookingDetailsVC(){
+        callapibool = true
+        guard let vc = FBookingDetailsVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: false)
     }
     
     @IBAction func didTapOnFilterBtnAction(_ sender: Any) {
@@ -223,6 +231,9 @@ extension FasttrackResultVC {
         filterView.isHidden = false
         btnsView.isHidden = true
         btnsViewHeight.constant = 0
+        fbooking_source = response.fasttrackdata?.col_x?.booking_source ?? ""
+        fsearch_id = response.fasttrackdata?.col_x?.search_id ?? ""
+        
         
         eploreList = response.fasttrackdata?.col_x?.list ?? []
         
@@ -245,7 +256,8 @@ extension FasttrackResultVC {
             tablerow.append(TableRow(title:i.sku,image: "",cellType:.ExploreResultTVCell))
         }
         
-        tablerow.append(TableRow(height:50,
+        tablerow.append(TableRow(key:"result",
+                                 height:50,
                                  bgColor: .AppHolderViewColor,
                                  cellType:.EmptyTVCell))
         

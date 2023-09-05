@@ -12,7 +12,7 @@ protocol InsurenceResultTVCellDelegate {
     func didTapOnKeyBenifitsBtnAction(cell:InsurenceResultTVCell)
 }
 
-class InsurenceResultTVCell: UITableViewCell {
+class InsurenceResultTVCell: TableViewCell {
     
     @IBOutlet weak var bottomView: UIView!
     @IBOutlet weak var titlelbl: UILabel!
@@ -22,7 +22,9 @@ class InsurenceResultTVCell: UITableViewCell {
     @IBOutlet weak var planContentTV: UITableView!
     @IBOutlet weak var tvHeight: NSLayoutConstraint!
     @IBOutlet weak var paxCountlbl: UILabel!
-    
+    @IBOutlet weak var selectView: UIView!
+    @IBOutlet weak var bottomViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var holderView: UIView!
     
     var isExpanded = false
     
@@ -43,6 +45,28 @@ class InsurenceResultTVCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
         
         // Configure the view for the selected state
+    }
+    
+    
+    
+    override func updateUI() {
+        titlelbl.text = cellInfo?.title ?? ""
+        pricelbl.text = "\(cellInfo?.text ?? ""):\(cellInfo?.headerText ?? "")"
+        paxCountlbl.text = "For \(cellInfo?.buttonTitle ?? "") Pax"
+       
+        if cellInfo?.key == "bc" {
+            bottomView.isHidden = true
+            selectView.isHidden = true
+            bottomViewHeight.constant = 0
+            contentView.backgroundColor = .WhiteColor
+            self.logo.sd_setImage(with: URL(string: cellInfo?.image ?? ""), placeholderImage:UIImage(contentsOfFile:"placeholder.png"))
+        
+            holderView.layer.cornerRadius = 4
+            holderView.layer.borderWidth = 0.5
+            holderView.layer.borderColor = UIColor.AppBorderColor.cgColor
+
+        }
+        
     }
     
     
@@ -105,16 +129,16 @@ class InsurenceResultTVCell: UITableViewCell {
         delegate?.didTapOnKeyBenifitsBtnAction(cell: self)
     }
     
-    private func updateUI() {
-        // Modify the UI elements in the cell based on isExpanded
-        if isExpanded {
-            // Show additional content or expand the cell as needed
-            show()
-        } else {
-            // Hide additional content or collapse the cell as needed
-            hide()
-        }
-    }
+//    private func updateUI() {
+//        // Modify the UI elements in the cell based on isExpanded
+//        if isExpanded {
+//            // Show additional content or expand the cell as needed
+//            show()
+//        } else {
+//            // Hide additional content or collapse the cell as needed
+//            hide()
+//        }
+//    }
     
     
     

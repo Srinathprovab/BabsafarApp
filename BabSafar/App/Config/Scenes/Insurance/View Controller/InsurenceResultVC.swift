@@ -201,6 +201,7 @@ extension InsurenceResultVC:InsurenceViewModelDelegate, UITableViewDelegate,UITa
     func didTapOnSelectInsurenceBtnAction(cell: InsurenceResultTVCell) {
         selectedPlanContent.removeAll()
         
+        iplanTitle = cell.titlelbl.text ?? ""
         iplancode = cell.plancode
         iplandetails = cell.plandetails
         iplanprice = cell.pricelbl.text ?? ""

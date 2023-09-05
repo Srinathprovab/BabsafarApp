@@ -12,6 +12,11 @@ protocol InsurenceFlightDetailsTVCellDelegate {
     func doneTimePicker(cell:InsurenceFlightDetailsTVCell)
     func cancelTimePicker(cell:InsurenceFlightDetailsTVCell)
     func editingTextField(tf:UITextField)
+    func didTapOnSelectDepartureAirlineButAction(cell:InsurenceFlightDetailsTVCell)
+    func didTapOnSelectArrivalAirlineButAction(cell:InsurenceFlightDetailsTVCell)
+    
+    
+    
 }
 
 class InsurenceFlightDetailsTVCell: TableViewCell, AirlineListViewModelDelegate {
@@ -40,6 +45,8 @@ class InsurenceFlightDetailsTVCell: TableViewCell, AirlineListViewModelDelegate 
     var arilineList = [AirlineListModel]()
     var countryNames = [String]()
     var codes = [String]()
+    var fldept_flightcode = String()
+    var flarrival_flightcode = String()
    
     var vm:AirlineListViewModel?
     var delegate:InsurenceFlightDetailsTVCellDelegate?
@@ -64,9 +71,27 @@ class InsurenceFlightDetailsTVCell: TableViewCell, AirlineListViewModelDelegate 
         depDatelbl.text = searchInputs?.depature ?? ""
         arrivalDatelbl.text = searchInputs?.arrival ?? ""
         
+        
+        if let selectedTap = defaults.object(forKey: UserDefaultsKeys.InsurenceJourneyType) as? String {
+            if selectedTap == "oneway" {
+                arrivalTimeTF.isUserInteractionEnabled = false
+                arrivalAirlineTF.isUserInteractionEnabled = false
+                arrivalView.alpha = 0.5
+            }else {
+                arrivalTimeTF.isUserInteractionEnabled = true
+                arrivalAirlineTF.isUserInteractionEnabled = true
+                arrivalView.alpha = 1
+            }
+            
+        }else {
+            
+        }
+        
+        
         DispatchQueue.main.async {
             self.callAPI()
         }
+        
     }
     
     
@@ -87,8 +112,9 @@ class InsurenceFlightDetailsTVCell: TableViewCell, AirlineListViewModelDelegate 
         arrivalAirlineTF.addTarget(self, action: #selector(searchTextChanged(textField:)), for: .editingChanged)
         
         
+        
+        
     }
-    
     
     
     func setupTextField(txtField:UITextField,tag:Int) {
@@ -222,11 +248,10 @@ extension InsurenceFlightDetailsTVCell {
         depratureAirlineDropdown.selectionAction = { [weak self] (index: Int, item: String) in
             
             self?.depAirlineTF.text = self?.countryNames[index] ?? ""
-            fldept_flightcode = self?.codes[index] ?? ""
+            self?.fldept_flightcode = self?.codes[index] ?? ""
             self?.depTimeTF.becomeFirstResponder()
             self?.depView.layer.borderColor = UIColor.AppBorderColor.cgColor
-            
-            
+            self?.delegate?.didTapOnSelectDepartureAirlineButAction(cell: self!)
         }
         
     }
@@ -240,11 +265,11 @@ extension InsurenceFlightDetailsTVCell {
         arrivalAirlineDropdown.selectionAction = { [weak self] (index: Int, item: String) in
             
             self?.arrivalAirlineTF.text = self?.countryNames[index] ?? ""
-            flarrival_flightcode = self?.codes[index] ?? ""
+            self?.flarrival_flightcode = self?.codes[index] ?? ""
             self?.arrivalTimeTF.becomeFirstResponder()
             self?.arrivalView.layer.borderColor = UIColor.AppBorderColor.cgColor
-            
-            
+            self?.delegate?.didTapOnSelectArrivalAirlineButAction(cell: self!)
+
         }
         
     }

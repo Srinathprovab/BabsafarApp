@@ -10,6 +10,7 @@ import MFSDK
 
 
 class PaymentGatewayVC: UIViewController, updatePaymentFlightViewModelDelegate {
+   
     
     
     //MARK: Variables

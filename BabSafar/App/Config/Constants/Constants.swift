@@ -228,6 +228,7 @@ var totalChildren = 0
 var itotalPax = ""
 var isearchid = ""
 var iplancode = ""
+var iplanTitle = ""
 var ibookingsource = ""
 var iplandetails = ""
 var iplanprice = ""
@@ -235,9 +236,17 @@ var selectedPlanContent = [PlanContent]()
 var searchInputs:PreBookingSearch_params?
 var mobilenoMaxLengthBool = false
 var plan_details_token = String()
-var fldept_flightcode = String()
-var flarrival_flightcode = String()
 
+
+
+//fastrack
+var fbooking_source = ""
+var fsearch_id = ""
+var fplan_code = ""
+var adult18Array = [String]()
+var adult18PriceArray = [String]()
+var child2_7Array = [String]()
+var terminalArray = [String]()
 
 //payment
 var billingCountryCode = String()
@@ -291,7 +300,8 @@ struct ApiEndpoints {
     //fasttrack
     static let get_fasttrack_airport_code_list = "ajax/get_fasttrack_airport_code_list"
     static let general_pre_fastrack_search = "general/pre_fastrack_search"
-    
+    static let efastrack_booking = "fastrack/booking"
+
 }
 
 /*App messages*/

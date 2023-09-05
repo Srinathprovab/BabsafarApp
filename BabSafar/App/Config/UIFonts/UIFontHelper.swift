@@ -176,7 +176,7 @@ extension UIColor {
     
     public static var errorLabelColor: UIColor {
         get {
-            return UIColor.red.withAlphaComponent(0.6)
+            return HexColor("#ED1654")
         }
     }
     

@@ -106,12 +106,13 @@
                             <constraint firstAttribute="trailing" secondItem="frC-yp-NlJ" secondAttribute="trailing" constant="12" id="7Ao-ld-CSi"/>
                             <constraint firstItem="rmK-v5-Jpg" firstAttribute="top" secondItem="frC-yp-NlJ" secondAttribute="bottom" constant="2" id="7sY-j4-fcH"/>
                             <constraint firstItem="frC-yp-NlJ" firstAttribute="leading" secondItem="H6l-av-zhK" secondAttribute="leading" constant="12" id="B52-gx-mkM"/>
+                            <constraint firstItem="rmK-v5-Jpg" firstAttribute="top" secondItem="frC-yp-NlJ" secondAttribute="bottom" constant="2" id="EDb-t0-QoS"/>
                             <constraint firstItem="Ccg-BH-r9x" firstAttribute="leading" secondItem="H6l-av-zhK" secondAttribute="leading" constant="16" id="Fpy-po-D1F"/>
+                            <constraint firstItem="Ccg-BH-r9x" firstAttribute="top" secondItem="rmK-v5-Jpg" secondAttribute="bottom" constant="29" id="HFX-hr-mmp"/>
                             <constraint firstItem="rmK-v5-Jpg" firstAttribute="trailing" secondItem="frC-yp-NlJ" secondAttribute="trailing" id="JJq-hE-AnJ"/>
                             <constraint firstItem="rmK-v5-Jpg" firstAttribute="leading" secondItem="frC-yp-NlJ" secondAttribute="leading" id="RC6-9g-LZD"/>
-                            <constraint firstAttribute="height" constant="190" id="VJ1-9e-tXr"/>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="190" id="VJ1-9e-tXr"/>
                             <constraint firstAttribute="trailing" secondItem="Ccg-BH-r9x" secondAttribute="trailing" constant="16" id="dXo-Pf-0Zi"/>
-                            <constraint firstItem="Ccg-BH-r9x" firstAttribute="top" secondItem="frC-yp-NlJ" secondAttribute="bottom" constant="32" id="pUk-ME-TH9"/>
                             <constraint firstItem="frC-yp-NlJ" firstAttribute="top" secondItem="H6l-av-zhK" secondAttribute="top" constant="20" id="uZJ-Xk-t79"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>

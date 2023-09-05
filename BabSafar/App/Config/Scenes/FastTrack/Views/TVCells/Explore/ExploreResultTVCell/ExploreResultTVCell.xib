@@ -79,6 +79,12 @@ Departure from Dubai</string>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="KWD150.00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Aih-vt-1RF">
+                                <rect key="frame" x="251" y="86" width="91" height="20"/>
+                                <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
+                                <color key="textColor" name="AppTabSelectColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
@@ -91,6 +97,8 @@ Departure from Dubai</string>
                             <constraint firstAttribute="bottom" secondItem="3Wn-7Z-H9y" secondAttribute="bottom" id="S8O-ly-kc0"/>
                             <constraint firstItem="fvp-nt-4t7" firstAttribute="top" secondItem="Xkv-YF-D0C" secondAttribute="bottom" constant="39.329999999999998" id="THy-TG-2PQ"/>
                             <constraint firstAttribute="bottom" secondItem="fvp-nt-4t7" secondAttribute="bottom" constant="10" id="YnG-2m-wU6"/>
+                            <constraint firstAttribute="bottom" secondItem="Aih-vt-1RF" secondAttribute="bottom" constant="20" id="ajS-sF-OaT"/>
+                            <constraint firstItem="Aih-vt-1RF" firstAttribute="trailing" secondItem="fvp-nt-4t7" secondAttribute="trailing" id="jJx-tK-jdk"/>
                             <constraint firstAttribute="height" constant="126" id="rzj-nx-EMM"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
@@ -116,7 +124,9 @@ Departure from Dubai</string>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="booknowView" destination="fvp-nt-4t7" id="tkt-il-tlR"/>
                 <outlet property="img" destination="3Wn-7Z-H9y" id="dcV-8G-miJ"/>
+                <outlet property="pricelbl" destination="Aih-vt-1RF" id="fM4-3S-9os"/>
                 <outlet property="titlelbl" destination="Xkv-YF-D0C" id="udt-4W-Zqg"/>
             </connections>
             <point key="canvasLocation" x="39.694656488549619" y="74.647887323943664"/>
@@ -132,6 +142,9 @@ Departure from Dubai</string>
         </namedColor>
         <namedColor name="AppHolderViewColor">
             <color red="0.94499999284744263" green="0.95300000905990601" blue="0.94900000095367432" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="AppTabSelectColor">
+            <color red="0.3919999897480011" green="0.15299999713897705" blue="0.43500000238418579" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

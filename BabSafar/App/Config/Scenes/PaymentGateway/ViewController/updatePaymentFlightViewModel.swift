@@ -11,6 +11,7 @@ import Foundation
 protocol updatePaymentFlightViewModelDelegate : BaseViewModelProtocol {
     func updatePaymentSucess(response : updatePaymentFlightModel)
     func sucerBookingSucess(response : secureBooingModel)
+    func insurenceUpdatePaymentSucess(response : updateInsurenceModel)
 }
 
 class updatePaymentFlightViewModel {
@@ -34,6 +35,30 @@ class updatePaymentFlightViewModel {
                 if sucess {
                     guard let response = result else {return}
                     self.view.updatePaymentSucess(response: response)
+                } else {
+                    // Show alert
+                    //  print("error === \(errorMessage ?? "")")
+                    self.view.showToast(message: errorMessage ?? "")
+                }
+            }
+        }
+    }
+    
+    
+    
+    func CALL_UPDATE_PAYMENT_INSURENCE_API(dictParam: [String: Any],endpoint:String){
+        let parms = NSDictionary(dictionary:dictParam)
+        print("Parameters = \(parms)")
+
+        self.view?.showLoader()
+
+        ServiceManager.postOrPutApiCall(endPoint: "payment_gateway/\(endpoint)" ,parameters: parms, resultType: updateInsurenceModel.self, p:dictParam) { sucess, result, errorMessage in
+
+            DispatchQueue.main.async {
+                self.view?.hideLoader()
+                if sucess {
+                    guard let response = result else {return}
+                    self.view.insurenceUpdatePaymentSucess(response: response)
                 } else {
                     // Show alert
                     //  print("error === \(errorMessage ?? "")")

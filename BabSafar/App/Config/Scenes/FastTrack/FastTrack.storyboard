@@ -10,6 +10,9 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <array key="Lato-Bold.ttf">
+            <string>Lato-Bold</string>
+        </array>
         <array key="Lato-Medium.ttf">
             <string>Lato-Medium</string>
         </array>
@@ -517,6 +520,108 @@
             </objects>
             <point key="canvasLocation" x="833" y="-2"/>
         </scene>
+        <!--Booking DetailsVC-->
+        <scene sceneID="umf-SJ-22g">
+            <objects>
+                <viewController storyboardIdentifier="FBookingDetailsVC" id="RHu-N8-BjY" customClass="FBookingDetailsVC" customModule="BabSafar" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="3qj-q3-1JM">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8nI-Gd-DEM">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y3m-BJ-krg" customClass="NavBar" customModule="BabSafar" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="393" height="130"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="130" id="8Yo-bx-Jl1"/>
+                                        </constraints>
+                                    </view>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="iZW-B1-Yqu">
+                                        <rect key="frame" x="0.0" y="130" width="393" height="642"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    </tableView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dTf-Y8-2mq" customClass="BorderedView" customModule="BabSafar" customModuleProvider="target">
+                                        <rect key="frame" x="20" y="772" width="353" height="45"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="KWD150.00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="55G-PW-rN7">
+                                                <rect key="frame" x="19.999999999999993" y="12.999999999999998" width="90.333333333333314" height="19.333333333333329"/>
+                                                <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Proceed To Payment" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IWZ-BM-igQ">
+                                                <rect key="frame" x="187.33333333333337" y="12.999999999999998" width="145.66666666666663" height="19.333333333333329"/>
+                                                <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lnt-5B-Wg2">
+                                                <rect key="frame" x="186" y="0.0" width="167" height="45"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="167" id="ihX-pV-dWr"/>
+                                                </constraints>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain"/>
+                                                <connections>
+                                                    <action selector="didTapOnProceedPaymentBtnAction:" destination="RHu-N8-BjY" eventType="touchUpInside" id="n8F-CU-ZOs"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" name="AppBtnColor"/>
+                                        <constraints>
+                                            <constraint firstItem="55G-PW-rN7" firstAttribute="leading" secondItem="dTf-Y8-2mq" secondAttribute="leading" constant="20" id="DPs-Lv-Eyq"/>
+                                            <constraint firstAttribute="bottom" secondItem="Lnt-5B-Wg2" secondAttribute="bottom" id="GNh-iu-rGj"/>
+                                            <constraint firstItem="IWZ-BM-igQ" firstAttribute="centerY" secondItem="55G-PW-rN7" secondAttribute="centerY" id="Sdq-aM-z5y"/>
+                                            <constraint firstAttribute="trailing" secondItem="IWZ-BM-igQ" secondAttribute="trailing" constant="20" id="V4W-P2-gdO"/>
+                                            <constraint firstAttribute="height" constant="45" id="lFj-SI-lfN"/>
+                                            <constraint firstItem="Lnt-5B-Wg2" firstAttribute="top" secondItem="dTf-Y8-2mq" secondAttribute="top" id="lTq-yE-UuZ"/>
+                                            <constraint firstItem="55G-PW-rN7" firstAttribute="centerY" secondItem="dTf-Y8-2mq" secondAttribute="centerY" id="nQv-Du-Bt4"/>
+                                            <constraint firstAttribute="trailing" secondItem="Lnt-5B-Wg2" secondAttribute="trailing" id="shb-JR-mZv"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="4"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" name="AppHolderViewColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="dTf-Y8-2mq" secondAttribute="bottom" constant="35" id="5Dj-KO-l4S"/>
+                                    <constraint firstAttribute="trailing" secondItem="dTf-Y8-2mq" secondAttribute="trailing" constant="20" id="9l8-dI-h5l"/>
+                                    <constraint firstItem="iZW-B1-Yqu" firstAttribute="top" secondItem="y3m-BJ-krg" secondAttribute="bottom" id="CVD-q8-hDa"/>
+                                    <constraint firstAttribute="trailing" secondItem="y3m-BJ-krg" secondAttribute="trailing" id="DUK-rD-yMQ"/>
+                                    <constraint firstItem="dTf-Y8-2mq" firstAttribute="leading" secondItem="8nI-Gd-DEM" secondAttribute="leading" constant="20" id="IS6-wt-8Wx"/>
+                                    <constraint firstItem="dTf-Y8-2mq" firstAttribute="top" secondItem="iZW-B1-Yqu" secondAttribute="bottom" id="SaE-tQ-mfP"/>
+                                    <constraint firstAttribute="trailing" secondItem="iZW-B1-Yqu" secondAttribute="trailing" id="WtC-Rw-fmw"/>
+                                    <constraint firstItem="iZW-B1-Yqu" firstAttribute="leading" secondItem="8nI-Gd-DEM" secondAttribute="leading" id="sXg-Mm-u6u"/>
+                                    <constraint firstItem="y3m-BJ-krg" firstAttribute="top" secondItem="8nI-Gd-DEM" secondAttribute="top" id="x76-6a-xOW"/>
+                                    <constraint firstItem="y3m-BJ-krg" firstAttribute="leading" secondItem="8nI-Gd-DEM" secondAttribute="leading" id="y4i-Aa-A1h"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="U4N-hY-gAc"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="U4N-hY-gAc" firstAttribute="trailing" secondItem="8nI-Gd-DEM" secondAttribute="trailing" id="D2j-Gz-Ad3"/>
+                            <constraint firstItem="8nI-Gd-DEM" firstAttribute="top" secondItem="3qj-q3-1JM" secondAttribute="top" id="QVe-Tt-Hnx"/>
+                            <constraint firstItem="8nI-Gd-DEM" firstAttribute="leading" secondItem="U4N-hY-gAc" secondAttribute="leading" id="ROo-Sm-WMO"/>
+                            <constraint firstAttribute="bottom" secondItem="8nI-Gd-DEM" secondAttribute="bottom" id="xCD-XJ-7j6"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="commonTableView" destination="iZW-B1-Yqu" id="DAh-R6-FGU"/>
+                        <outlet property="holderView" destination="8nI-Gd-DEM" id="wPQ-08-RT8"/>
+                        <outlet property="nav" destination="y3m-BJ-krg" id="BmV-OP-YlN"/>
+                        <outlet property="pricelbl" destination="55G-PW-rN7" id="61M-uj-PS3"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jAY-VW-gGg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="832.82442748091603" y="688.73239436619724"/>
+        </scene>
         <!--Selected ServicesVC-->
         <scene sceneID="cfl-fe-TTT">
             <objects>
@@ -611,6 +716,9 @@
         <image name="leftarrow" width="8.3333330154418945" height="14.666666984558105"/>
         <namedColor name="AppBorderColor">
             <color red="0.90200001001358032" green="0.9100000262260437" blue="0.90600001811981201" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="AppBtnColor">
+            <color red="0.92500001192092896" green="0.2669999897480011" blue="0.11800000071525574" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="AppHolderViewColor">
             <color red="0.94499999284744263" green="0.95300000905990601" blue="0.94900000095367432" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
