@@ -217,9 +217,9 @@ extension SideMenuVC {
                 
                 
             case "Fastrack":
-                guard let vc = SearchFastTrackVC.newInstance.self else {return}
-                vc.modalPresentationStyle = .overCurrentContext
-                present(vc, animated: true)
+//                guard let vc = SearchFastTrackVC.newInstance.self else {return}
+//                vc.modalPresentationStyle = .overCurrentContext
+//                present(vc, animated: true)
                 break
                 
                 

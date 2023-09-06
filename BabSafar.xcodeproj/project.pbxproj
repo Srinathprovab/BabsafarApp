@@ -224,7 +224,6 @@
 		65A3D9792A9E1A3F00E26687 /* BCFlightDetailsTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65A3D9772A9E1A3F00E26687 /* BCFlightDetailsTVCell.xib */; };
 		65A3D97F2A9E1CB300E26687 /* BCFlightInfoTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A3D97D2A9E1CB300E26687 /* BCFlightInfoTVCell.swift */; };
 		65A3D9802A9E1CB300E26687 /* BCFlightInfoTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65A3D97E2A9E1CB300E26687 /* BCFlightInfoTVCell.xib */; };
-		65A3D9822A9E2CBA00E26687 /* loderimg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 65A3D9812A9E2CBA00E26687 /* loderimg.gif */; };
 		65A3D9842A9F1CB800E26687 /* Frequent_flyers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A3D9832A9F1CB800E26687 /* Frequent_flyers.swift */; };
 		65B67DD229517B1D008F86D3 /* HotelSearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B67DD129517B1C008F86D3 /* HotelSearchResult.swift */; };
 		65B67DD429517C07008F86D3 /* Hdata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B67DD329517C07008F86D3 /* Hdata.swift */; };
@@ -333,6 +332,8 @@
 		65D76D272A98E3830064149B /* HotelDesclblTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65D76D252A98E3830064149B /* HotelDesclblTVCell.xib */; };
 		65D891B82A712CE600211761 /* AddDeatilsOfGuestTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D891B62A712CE600211761 /* AddDeatilsOfGuestTVCell.swift */; };
 		65D891B92A712CE600211761 /* AddDeatilsOfGuestTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65D891B72A712CE600211761 /* AddDeatilsOfGuestTVCell.xib */; };
+		65D9E2A22AA84DEA00A90C18 /* ModifySearchFastTrackVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D9E2A12AA84DEA00A90C18 /* ModifySearchFastTrackVC.swift */; };
+		65D9E2A42AA857A700A90C18 /* loderimg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 65D9E2A32AA857A700A90C18 /* loderimg.gif */; };
 		65DB8C5D29A720AE003BDEE5 /* PaymentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DB8C5C29A720AE003BDEE5 /* PaymentVC.swift */; };
 		65DB8C6129A7226E003BDEE5 /* PaymentOptionTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DB8C5F29A7226E003BDEE5 /* PaymentOptionTVCell.swift */; };
 		65DB8C6229A7226E003BDEE5 /* PaymentOptionTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65DB8C6029A7226E003BDEE5 /* PaymentOptionTVCell.xib */; };
@@ -912,7 +913,6 @@
 		65A3D9772A9E1A3F00E26687 /* BCFlightDetailsTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BCFlightDetailsTVCell.xib; sourceTree = "<group>"; };
 		65A3D97D2A9E1CB300E26687 /* BCFlightInfoTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BCFlightInfoTVCell.swift; sourceTree = "<group>"; };
 		65A3D97E2A9E1CB300E26687 /* BCFlightInfoTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BCFlightInfoTVCell.xib; sourceTree = "<group>"; };
-		65A3D9812A9E2CBA00E26687 /* loderimg.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loderimg.gif; sourceTree = "<group>"; };
 		65A3D9832A9F1CB800E26687 /* Frequent_flyers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Frequent_flyers.swift; sourceTree = "<group>"; };
 		65B67DD129517B1C008F86D3 /* HotelSearchResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HotelSearchResult.swift; sourceTree = "<group>"; };
 		65B67DD329517C07008F86D3 /* Hdata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hdata.swift; sourceTree = "<group>"; };
@@ -1023,6 +1023,8 @@
 		65D7B4032A373DAB00FC58E4 /* MFSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = MFSDK.xcframework; path = Pods/MyFatoorah/SDK/v2/MFSDK.xcframework; sourceTree = "<group>"; };
 		65D891B62A712CE600211761 /* AddDeatilsOfGuestTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDeatilsOfGuestTVCell.swift; sourceTree = "<group>"; };
 		65D891B72A712CE600211761 /* AddDeatilsOfGuestTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddDeatilsOfGuestTVCell.xib; sourceTree = "<group>"; };
+		65D9E2A12AA84DEA00A90C18 /* ModifySearchFastTrackVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifySearchFastTrackVC.swift; sourceTree = "<group>"; };
+		65D9E2A32AA857A700A90C18 /* loderimg.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loderimg.gif; sourceTree = "<group>"; };
 		65DB8C5C29A720AE003BDEE5 /* PaymentVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentVC.swift; sourceTree = "<group>"; };
 		65DB8C5F29A7226E003BDEE5 /* PaymentOptionTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentOptionTVCell.swift; sourceTree = "<group>"; };
 		65DB8C6029A7226E003BDEE5 /* PaymentOptionTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PaymentOptionTVCell.xib; sourceTree = "<group>"; };
@@ -1415,6 +1417,7 @@
 			isa = PBXGroup;
 			children = (
 				6501F1E92A96505000504C54 /* SearchFastTrackVC.swift */,
+				65D9E2A12AA84DEA00A90C18 /* ModifySearchFastTrackVC.swift */,
 				6501F1EB2A96544500504C54 /* FasttrackResultVC.swift */,
 				65C3CE5C2A97701C00904C99 /* SelectedServicesVC.swift */,
 				65DFBB9A2AA6CFFD00D0B15C /* FBookingDetailsVC.swift */,
@@ -3906,7 +3909,6 @@
 		BF94FC93288690C600778946 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				6501F1E02A964F6000504C54 /* FastTrack */,
 				65C5BE7B2A791BE0005F7942 /* PaymentGateway */,
 				65C7B18E2A39C9BB004FE51A /* Calender */,
 				BF93D87C2888388E00D5C5F3 /* Login */,
@@ -3914,6 +3916,7 @@
 				BF56D05B2893F5FF0092387D /* Hotels */,
 				BF56D0522893E6F60092387D /* Insurance */,
 				BF5CF3C2289393A40071BF9B /* Visa Enduiry */,
+				6501F1E02A964F6000504C54 /* FastTrack */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -3922,7 +3925,7 @@
 			isa = PBXGroup;
 			children = (
 				65C82BA92A9B407200FE3A3D /* sucessful.gif */,
-				65A3D9812A9E2CBA00E26687 /* loderimg.gif */,
+				65D9E2A32AA857A700A90C18 /* loderimg.gif */,
 				6557158029AE1DE30000A911 /* loderimg3.gif */,
 				65C8CA85292631FF00091D2B /* loderimg5.gif */,
 				65C7B1BE2A3B1674004FE51A /* loderimg4.gif */,
@@ -4298,6 +4301,7 @@
 				6506DDF529AFB219008F1734 /* SelectModuleTabTVCell.xib in Resources */,
 				BF5B4A27288A58FA000DF4BF /* ItineraryTVCell.xib in Resources */,
 				BF56D0512893E4570092387D /* CommonFromCityTVCell.xib in Resources */,
+				65D9E2A42AA857A700A90C18 /* loderimg.gif in Resources */,
 				65597F212977D25C007056B3 /* UsePromoCodesTVCell.xib in Resources */,
 				BF94FD102886B81D00778946 /* Lato-Heavy.ttf in Resources */,
 				BF45B3952889531C00DAB201 /* SearchFlightResultTVCell.xib in Resources */,
@@ -4474,7 +4478,6 @@
 				BF94FD022886B81D00778946 /* Lato-HeavyItalic.ttf in Resources */,
 				BF94FC612886901000778946 /* Main.storyboard in Resources */,
 				BF87CD042890F553000B6A1A /* YourPrivacyTVCell.xib in Resources */,
-				65A3D9822A9E2CBA00E26687 /* loderimg.gif in Resources */,
 				651CC80629405A810047D330 /* BookFlightDetailsTVCell.xib in Resources */,
 				BF94FD0A2886B81D00778946 /* Lato-Regular.ttf in Resources */,
 				65D6A3C129F4D61200AFAF44 /* SliderTVCell.xib in Resources */,
@@ -4980,6 +4983,7 @@
 				651F1BA6299E2A9A00463AE6 /* AboutUsModel.swift in Sources */,
 				6502A2372A95C6A600C68097 /* TotalPremiumPayableTVCell.swift in Sources */,
 				653D6DBD28EECB2E009576D0 /* Total_breakup.swift in Sources */,
+				65D9E2A22AA84DEA00A90C18 /* ModifySearchFastTrackVC.swift in Sources */,
 				65DFBBCE2AA7446B00D0B15C /* IBooking_customer_details.swift in Sources */,
 				65D76D112A989CB80064149B /* updatePaymentFlightModel.swift in Sources */,
 				BF8D524828924C3F001CD1E5 /* calendarCVCell.swift in Sources */,
@@ -5284,7 +5288,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = BabSafar/BabSafar.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 18;
+				CURRENT_PROJECT_VERSION = 20;
 				DEVELOPMENT_TEAM = 5TLY5PME9K;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BabSafar/Info.plist;
@@ -5326,7 +5330,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = BabSafar/BabSafar.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 18;
+				CURRENT_PROJECT_VERSION = 20;
 				DEVELOPMENT_TEAM = 5TLY5PME9K;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BabSafar/Info.plist;

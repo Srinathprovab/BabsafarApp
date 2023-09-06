@@ -29,4 +29,25 @@ class ExploreSummeryTVCell: TableViewCell {
         // Configure the view for the selected state
     }
     
+    
+    override func updateUI() {
+        
+        titlelbl.text = eproduct_details?.data?.from?.sku ?? ""
+        
+        setAttributedText(str1: "\(eproduct_details?.data?.from?.currency ?? ""):", str2: eproduct_details?.data?.from?.price ?? "", lbl: pricelbl1)
+        pricelbl1.isHidden = true
+        
+        setAttributedText(str1: "\(eproduct_details?.data?.from?.currency ?? ""):", str2: eproduct_details?.data?.from?.price ?? "", lbl: subTotallbl)
+        
+        setAttributedText(str1: "\(eproduct_details?.data?.from?.currency ?? ""):", str2: eproduct_details?.data?.from?.price ?? "", lbl: totalDiscountlbl)
+        
+        setAttributedText(str1: "\(eproduct_details?.data?.from?.currency ?? ""):", str2: eproduct_details?.data?.from?.price ?? "", lbl: totalAmountlbl)
+    }
+    
+    
+    
+   
+        
+
+    
 }

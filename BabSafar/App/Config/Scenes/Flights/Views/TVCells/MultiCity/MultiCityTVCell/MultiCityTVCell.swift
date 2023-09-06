@@ -221,37 +221,54 @@ class MultiCityTVCell: TableViewCell,ButtonCVCellDelegate,MultiCityCVCellDelegat
     
     func didTapOnDeleteMultiCityTrip(cell: MultiCityCVCell) {
         
-        fromCityNameArray.remove(at: cell.cancelBtn.tag)
-        fromCityShortNameArray.remove(at: cell.cancelBtn.tag)
-        toCityNameArray.remove(at: cell.cancelBtn.tag)
-        toCityShortNameArray.remove(at: cell.cancelBtn.tag)
         
-        //---------------
         
-        depatureDatesArray.remove(at: cell.cancelBtn.tag)
-        fromlocidArray.remove(at: cell.cancelBtn.tag)
-        tolocidArray.remove(at: cell.cancelBtn.tag)
-        fromCityArray.remove(at: cell.cancelBtn.tag)
-        toCityArray.remove(at: cell.cancelBtn.tag)
-        
-        addmulticityCount -= 1
-        //---------------
-        
-        multiCityTripCV.deleteItems(at: [IndexPath(item: cell.cancelBtn.tag, section: 0)])
-        DispatchQueue.main.async {[self] in
+        if cell.cancelBtn.tag >= 0 && cell.cancelBtn.tag < fromCityNameArray.count {
             
-            if fromCityNameArray.count < 5 {
-                if let cell = multiCityTripCV.cellForItem(at: IndexPath(item: (fromCityNameArray.count), section: 0)) as? ButtonCVCell {
-                    cell.isHidden = false
-                    cell.holderViewHeight.constant = 60
+            fromCityNameArray.remove(at: cell.cancelBtn.tag)
+            fromCityShortNameArray.remove(at: cell.cancelBtn.tag)
+            toCityNameArray.remove(at: cell.cancelBtn.tag)
+            toCityShortNameArray.remove(at: cell.cancelBtn.tag)
+          
+            depatureDatesArray.remove(at: cell.cancelBtn.tag)
+            fromlocidArray.remove(at: cell.cancelBtn.tag)
+            tolocidArray.remove(at: cell.cancelBtn.tag)
+            fromCityArray.remove(at: cell.cancelBtn.tag)
+            toCityArray.remove(at: cell.cancelBtn.tag)
+            
+            addmulticityCount -= 1
+        } else {
+            // Handle the case when the index is out of range, perhaps with an error message or some other logic.
+        }
+
+      
+        
+        
+        
+        let itemIndexToDelete = cell.cancelBtn.tag
+        if itemIndexToDelete >= 0 && itemIndexToDelete < multiCityTripCV.numberOfItems(inSection: 0) {
+            
+            multiCityTripCV.deleteItems(at: [IndexPath(item: itemIndexToDelete, section: 0)])
+            
+            DispatchQueue.main.async {[self] in
+                
+                if fromCityNameArray.count < 5 {
+                    if let cell = multiCityTripCV.cellForItem(at: IndexPath(item: (fromCityNameArray.count), section: 0)) as? ButtonCVCell {
+                        cell.isHidden = false
+                        cell.holderViewHeight.constant = 60
+                    }
                 }
             }
+        } else {
+            // Handle the case when the index is out of range, perhaps with an error message or some other logic.
         }
+
         
         
         updateheight()
         NotificationCenter.default.post(name: Notification.Name("reload"), object: nil)
     }
+    
     
     func setupViews(v:UIView,radius:CGFloat,color:UIColor) {
         v.backgroundColor = color

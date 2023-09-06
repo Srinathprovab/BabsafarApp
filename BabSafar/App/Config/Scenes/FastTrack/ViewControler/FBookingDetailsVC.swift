@@ -173,7 +173,7 @@ extension FBookingDetailsVC {
         child2_7Array.removeAll()
         terminalArray.removeAll()
         adult18PriceArray.removeAll()
-        
+        eproduct_details = response.product_details
         sku = response.product_details?.data?.from?.sku ?? ""
         totalprice = response.product_details?.data?.from?.price ?? ""
         currency = response.product_details?.data?.from?.currency ?? ""

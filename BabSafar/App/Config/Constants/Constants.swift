@@ -93,16 +93,12 @@ var neighbourwoodArray = [Loc]()
 var amenitiesArray = [HFacility]()
 var nearBylocationsArray = [Near_by]()
 
-//let star : [Star]?
-//let refund : [String]?
-//let facility : [HFiltersFacility]?
-//let near_by : [Near_by]?
-
 
 //MARK: - FILTER RELATED VARIABLES
 var filterTap = String()
 var filterPrice = String()
 var prices = [String]()
+var filterModel = FilterModel()
 
 
 
@@ -247,6 +243,7 @@ var adult18Array = [String]()
 var adult18PriceArray = [String]()
 var child2_7Array = [String]()
 var terminalArray = [String]()
+var eproduct_details:EProduct_details?
 
 //payment
 var billingCountryCode = String()

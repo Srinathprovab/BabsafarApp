@@ -123,12 +123,17 @@ class FasttrackResultVC: BaseTableVC, FasttrackViewModelDelegate {
     
     
     @IBAction func didTapOnBackBtn(_ sender: Any) {
-        dismiss(animated: true)
+        callapibool = false
+        guard let vc = SearchFastTrackVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: false)
     }
     
     
     @IBAction func didTapOnEditSearchBtn(_ sender: Any) {
-        print("didTapOnEditSearchBtn")
+        guard let vc = ModifySearchFastTrackVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .overCurrentContext
+        self.present(vc, animated: false)
     }
     
     

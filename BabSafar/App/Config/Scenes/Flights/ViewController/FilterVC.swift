@@ -7,6 +7,22 @@
 
 import UIKit
 
+
+
+struct FilterModel {
+    var minPriceRange: Double?
+    var maxPriceRange: Double?
+    var noOfStops: [String] = []
+    var refundableTypes: [String] = []
+    var airlines: [String] = []
+    var departureTime: String?
+    var arrivalTime: String?
+    var noOvernightFlight: String?
+    var connectingFlights: [String] = []
+    var connectingAirports: [String] = []
+}
+
+
 enum SortParameter {
     case PriceHigh
     case PriceLow
@@ -65,7 +81,7 @@ class FilterVC: BaseTableVC{
     var minpricerangefilter = Double()
     var maxpricerangefilter = Double()
     var starRatingFilter = String()
-
+    
     
     var stopsArray = ["0 Stop","1 Stop","1+ Stop"]
     var refundableTypeArray = ["Refundable","Non Refundable"]
@@ -230,7 +246,7 @@ class FilterVC: BaseTableVC{
         commonTableView.isScrollEnabled = false
         tablerow.removeAll()
         
-        tablerow.append(TableRow(title:"Price",cellType:.SliderTVCell))
+        tablerow.append(TableRow(height: 2,bgColor: .WhiteColor,cellType:.EmptyTVCell))
         tablerow.append(TableRow(title:"Departure",key: "no",cellType:.SortbyTVCell))
         tablerow.append(TableRow(title:"Arrival Time",key: "no",cellType:.SortbyTVCell))
         tablerow.append(TableRow(title:"Duration",key: "no",cellType:.SortbyTVCell))
@@ -534,6 +550,8 @@ class FilterVC: BaseTableVC{
                     
                 }
             }
+            
+            // setupFilterTVCells()
         }else {
             if let tabSelected = defaults.string(forKey: UserDefaultsKeys.dashboardTapSelected) {
                 if tabSelected == "Flights" {
@@ -551,6 +569,10 @@ class FilterVC: BaseTableVC{
                         resetSortBy(cell: cell4)
                     }
                     
+                    if let cell5 = commonTableView.cellForRow(at: IndexPath(item: 4, section: 0)) as? SortbyTVCell {
+                        resetSortBy(cell: cell5)
+                    }
+                    
                 }else {
                     if let cell1 = commonTableView.cellForRow(at: IndexPath(item: 0, section: 0)) as? SortbyTVCell {
                         resetSortBy(cell: cell1)
@@ -559,8 +581,12 @@ class FilterVC: BaseTableVC{
                         resetSortBy(cell: cell2)
                     }
                     
+                   
+                    
                 }
             }
+            
+            
         }
     }
     
@@ -654,7 +680,7 @@ class FilterVC: BaseTableVC{
         }else {
             
             switch cell.filtertitle {
-           
+                
                 
             case "Booking Type":
                 
@@ -747,7 +773,7 @@ class FilterVC: BaseTableVC{
             }
         }else {
             switch cell.filtertitle {
-            
+                
                 
             case "Booking Type":
                 
@@ -764,7 +790,7 @@ class FilterVC: BaseTableVC{
                 break
                 
                 
-           
+                
                 
             default:
                 break
@@ -840,7 +866,35 @@ class FilterVC: BaseTableVC{
                     maxpricerangefilter = Double(pricesFloat.max() ?? 0.0)
                 }
                 
-                delegate?.filtersByApplied(minpricerange:minpricerangefilter,maxpricerange: maxpricerangefilter,noofStopsArray: noOfStopsFilterArray, refundableTypeArray: refundablerTypeFilteArray, departureTime: departureTimeFilter,arrivalTime: arrivalTimeFilter, noOvernightFlight: noOvernightFlightFilterStr,airlinesFilterArray: airlinesFilterArray,connectingFlightsFilterArray: connectingFlightsFilterArray,ConnectingAirportsFilterArray: ConnectingAirportsFilterArray)
+                filterModel.minPriceRange = minpricerangefilter
+                filterModel.maxPriceRange = maxpricerangefilter
+                filterModel.noOfStops = noOfStopsFilterArray
+                filterModel.refundableTypes = refundablerTypeFilteArray
+                filterModel.airlines = airlinesFilterArray
+                filterModel.departureTime = departureTimeFilter
+                filterModel.arrivalTime = arrivalTimeFilter
+                filterModel.noOvernightFlight = noOvernightFlightFilterStr
+                filterModel.connectingFlights = connectingFlightsFilterArray
+                filterModel.connectingAirports = ConnectingAirportsFilterArray
+
+                
+                
+                
+//                delegate?.filtersByApplied(minpricerange:minpricerangefilter,maxpricerange: maxpricerangefilter,noofStopsArray: noOfStopsFilterArray, refundableTypeArray: refundablerTypeFilteArray, departureTime: departureTimeFilter,arrivalTime: arrivalTimeFilter, noOvernightFlight: noOvernightFlightFilterStr,airlinesFilterArray: airlinesFilterArray,connectingFlightsFilterArray: connectingFlightsFilterArray,ConnectingAirportsFilterArray: ConnectingAirportsFilterArray)
+                
+                
+                delegate?.filtersByApplied(minpricerange:filterModel.minPriceRange ?? 0.0,
+                                           maxpricerange: filterModel.maxPriceRange ?? 0.0,
+                                           noofStopsArray:  filterModel.noOfStops,
+                                           refundableTypeArray: filterModel.refundableTypes,
+                                           departureTime:  filterModel.departureTime ?? "",
+                                           arrivalTime: filterModel.arrivalTime ?? "",
+                                           noOvernightFlight: filterModel.noOvernightFlight ?? "",
+                                           airlinesFilterArray: filterModel.airlines,
+                                           connectingFlightsFilterArray: filterModel.connectingFlights,
+                                           ConnectingAirportsFilterArray: filterModel.connectingAirports)
+                
+                
             }else {
                 delegate?.filtersSortByApplied(sortBy: sortBy)
             }

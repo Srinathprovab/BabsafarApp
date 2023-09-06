@@ -394,7 +394,6 @@ class DashBoardVC: BaseTableVC, TopFlightDetailsViewModelDelegate, AllCountryCod
     }
     
     
-    
     func sideMenuState(expanded: Bool) {
         if expanded {
             NotificationCenter.default.post(name: NSNotification.Name("callprofileapi"), object: nil)
@@ -452,7 +451,7 @@ class DashBoardVC: BaseTableVC, TopFlightDetailsViewModelDelegate, AllCountryCod
     //MARK: - didTapOnFastTrackBtnAction SelectModuleTabTVCell
     
     override func didTapOnFastTrackBtnAction(cell:SelectModuleTabTVCell){
-        gotoSearchFastTrackVC()
+       // gotoSearchFastTrackVC()
     }
     
     func gotoSearchFastTrackVC() {
@@ -465,9 +464,6 @@ class DashBoardVC: BaseTableVC, TopFlightDetailsViewModelDelegate, AllCountryCod
     
     
 }
-
-
-
 
 extension DashBoardVC: UIGestureRecognizerDelegate {
     @objc func TapGestureRecognizer(sender: UITapGestureRecognizer) {

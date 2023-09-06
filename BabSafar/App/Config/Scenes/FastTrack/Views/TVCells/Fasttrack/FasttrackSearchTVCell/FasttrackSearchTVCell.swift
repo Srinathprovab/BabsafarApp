@@ -201,6 +201,7 @@ extension FasttrackSearchTVCell {
     func ShowCityList(response: [SelectCityModel]) {
         cityList = response
         
+        
         if txtbool == true {
             fromCityTVHeight.constant = CGFloat(cityList.count * 80)
             DispatchQueue.main.async {[self] in
@@ -259,7 +260,7 @@ extension FasttrackSearchTVCell:UITableViewDelegate, UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return cityList.count
+        return airlineList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -268,27 +269,37 @@ extension FasttrackSearchTVCell:UITableViewDelegate, UITableViewDataSource {
         if tableView == fromCityTV {
             if let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as? FromCityTVCell {
                 cell.selectionStyle = .none
-                cell.titlelbl.text = airlineList[indexPath.row].label
-                cell.subTitlelbl.text = airlineList[indexPath.row].name
-                cell.id = airlineList[indexPath.row].id ?? ""
-                cell.cityname = airlineList[indexPath.row].name ?? ""
-                cell.citycode = airlineList[indexPath.row].code ?? ""
-                cell.fasttrackid = airlineList[indexPath.row].fast_track_id ?? ""
+                if indexPath.row < airlineList.count {
+                    cell.titlelbl.text = airlineList[indexPath.row].label
+                    cell.subTitlelbl.text = airlineList[indexPath.row].name
+                    cell.id = airlineList[indexPath.row].id ?? ""
+                    cell.fasttrackid = airlineList[indexPath.row].fast_track_id ?? ""
+                    cell.cityname = airlineList[indexPath.row].name ?? ""
+                    cell.citycode = airlineList[indexPath.row].code ?? ""
+                } else {
+                    // Handle the case when the index is out of range, perhaps with an error message or some other logic.
+                }
                 ccell = cell
             }
         }else {
             if let cell = tableView.dequeueReusableCell(withIdentifier: "cell1") as? FromCityTVCell {
                 cell.selectionStyle = .none
-                cell.titlelbl.text = airlineList[indexPath.row].label
-                cell.subTitlelbl.text = airlineList[indexPath.row].name
-                cell.id = airlineList[indexPath.row].id ?? ""
-                cell.fasttrackid = airlineList[indexPath.row].fast_track_id ?? ""
-                cell.cityname = airlineList[indexPath.row].name ?? ""
-                cell.citycode = airlineList[indexPath.row].code ?? ""
+                
+                if indexPath.row < airlineList.count {
+                    cell.titlelbl.text = airlineList[indexPath.row].label
+                    cell.subTitlelbl.text = airlineList[indexPath.row].name
+                    cell.id = airlineList[indexPath.row].id ?? ""
+                    cell.fasttrackid = airlineList[indexPath.row].fast_track_id ?? ""
+                    cell.cityname = airlineList[indexPath.row].name ?? ""
+                    cell.citycode = airlineList[indexPath.row].code ?? ""
+                } else {
+                    // Handle the case when the index is out of range, perhaps with an error message or some other logic.
+                }
+
+                
                 ccell = cell
             }
         }
-        
         
         
         return ccell

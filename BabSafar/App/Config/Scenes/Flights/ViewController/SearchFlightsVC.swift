@@ -176,7 +176,13 @@ class SearchFlightsVC: BaseTableVC {
         commonTableView.layer.cornerRadius = 10
         commonTableView.clipsToBounds = true
         commonTableView.backgroundColor = .clear
-        commonTableView.registerTVCells(["SearchFlightsTVCell","EmptyTVCell","TopCityTVCell","MultiCityTVCell","CheckBoxTVCell","ButtonTVCell","checkOptionsTVCell"])
+        commonTableView.registerTVCells(["SearchFlightsTVCell",
+                                         "EmptyTVCell",
+                                         "TopCityTVCell",
+                                         "MultiCityTVCell",
+                                         "CheckBoxTVCell",
+                                         "ButtonTVCell",
+                                         "checkOptionsTVCell"])
         
     }
     
@@ -274,6 +280,8 @@ class SearchFlightsVC: BaseTableVC {
     
     override func didTapOnReturnToOnewayBtnAction(cell: SearchFlightsTVCell){
         setupRoundTrip()
+        
+        gotoCalenderVC(key: "ret", titleStr: "Ruturn Date")
     }
     
     override func didTapOnCloseReturnView(cell: SearchFlightsTVCell){

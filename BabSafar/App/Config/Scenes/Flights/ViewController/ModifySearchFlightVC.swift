@@ -84,7 +84,16 @@ class ModifySearchFlightVC: BaseTableVC {
                 }
             }
         }else {
-            setupRoundTrip()
+          //  setupRoundTrip()
+            if let journeyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
+                if journeyType == "oneway" {
+                    setupOneWay()
+                }else if journeyType == "circle"{
+                    setupRoundTrip()
+                }else {
+                    setupMulticity()
+                }
+            }
         }
     }
     

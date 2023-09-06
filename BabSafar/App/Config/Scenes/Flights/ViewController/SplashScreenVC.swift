@@ -8,6 +8,27 @@
 import UIKit
 
 
+//MARK: - setAttributedText
+func setAttributedText(str1:String,str2:String,lbl:UILabel)  {
+        
+        let atter1 = [NSAttributedString.Key.foregroundColor:UIColor.AppTabSelectColor,
+                      NSAttributedString.Key.font:UIFont.LatoBold(size: 12)] as [NSAttributedString.Key : Any]
+        let atter2 = [NSAttributedString.Key.foregroundColor:UIColor.AppTabSelectColor,
+                      NSAttributedString.Key.font:UIFont.LatoBold(size: 16)] as [NSAttributedString.Key : Any]
+        
+        let atterStr1 = NSMutableAttributedString(string: str1, attributes: atter1)
+        let atterStr2 = NSMutableAttributedString(string: str2, attributes: atter2)
+        
+        
+        let combination = NSMutableAttributedString()
+        combination.append(atterStr1)
+        combination.append(atterStr2)
+        
+        lbl.attributedText = combination
+        
+    }
+
+
 //MARK: - INITIAL SETUP LABELS
 func setuplabels(lbl:UILabel,text:String,textcolor:UIColor,font:UIFont,align:NSTextAlignment) {
     lbl.text = text
@@ -119,10 +140,10 @@ class SplashScreenVC: UIViewController {
         
         loderBool = false
         DispatchQueue.main.asyncAfter(deadline: .now() + 7.0, execute: {
-           //  self.gotodashBoardScreen()
+            self.gotodashBoardScreen()
             
-            defaults.set("Insurence", forKey: UserDefaultsKeys.dashboardTapSelected)
-            self.gotoBookingConfirmedVC(url: "https://provabdevelopment.com/pro_new/mobile/index.php/voucher/insurance/BAS-I-TP-05091559-1675/PTBSID00000000077/show_voucher/CONFIRMED")
+            //            defaults.set("Insurence", forKey: UserDefaultsKeys.dashboardTapSelected)
+            //            self.gotoBookingConfirmedVC(url: "https://provabdevelopment.com/pro_new/mobile/index.php/voucher/insurance/BAS-I-TP-05091559-1675/PTBSID00000000077/show_voucher/CONFIRMED")
         })
     }
     

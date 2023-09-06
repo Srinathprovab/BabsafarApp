@@ -61,7 +61,7 @@ class InsurenceResultVC:UIViewController {
     @IBAction func didTapOnEditSearchBtn(_ sender: Any) {
         guard let vc = ModifyInsuranceVC.newInstance.self else {return}
         vc.modalPresentationStyle = .overCurrentContext
-        self.present(vc, animated: true)
+        self.present(vc, animated: false)
     }
     
     

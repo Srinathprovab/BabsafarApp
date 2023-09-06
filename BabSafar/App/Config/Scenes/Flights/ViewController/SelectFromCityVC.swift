@@ -403,9 +403,6 @@ extension SelectFromCityVC {
                                 
                                 defaults.set(cell.citycode , forKey: UserDefaultsKeys.mtoCity1)
                                 
-                                
-                                
-                                
                                 if addmulticityCount < fromCityNameArray.count {
                                     addmulticityCount += 1
                                     defaults.set(cell.titlelbl.text ?? "", forKey: UserDefaultsKeys.mfromCity)
@@ -413,12 +410,22 @@ extension SelectFromCityVC {
                                     defaults.set(cell.cityShortNamelbl.text , forKey: UserDefaultsKeys.mfromairportCode)
                                     defaults.set(cell.value , forKey: UserDefaultsKeys.mfromCityValue)
                                     
-                                    fromCityNameArray[self.celltag + 1] = cell.titlelbl.text ?? ""
-                                    fromCityShortNameArray[self.celltag + 1] = cell.cityShortNamelbl.text ?? ""
                                     
-                                    fromCityArray[self.celltag + 1] = cell.value
-                                    fromlocidArray[self.celltag + 1] = cell.id
+                                  
+                                    
+                                    if self.celltag + 1 < fromCityNameArray.count {
+                                        
+                                        fromCityNameArray[self.celltag + 1] = cell.titlelbl.text ?? ""
+                                        fromCityShortNameArray[self.celltag + 1] = cell.cityShortNamelbl.text ?? ""
+                                        fromCityArray[self.celltag + 1] = cell.value
+                                        fromlocidArray[self.celltag + 1] = cell.id
+                                        
+                                    } else {
+                                        
+                                    }
+                                    
                                     defaults.set(cell.citycode , forKey: UserDefaultsKeys.mfromCity1)
+
                                 }
                                 
                                 

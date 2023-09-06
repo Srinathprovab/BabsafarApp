@@ -664,6 +664,9 @@ extension SearchFlightResultVC: AppliedFilters{
         print(" ===== connectingFlightsFilterArray ====== \n\(connectingFlightsFilterArray)")
         print(" ===== ConnectingAirportsFilterArray ====== \n\(ConnectingAirportsFilterArray)")
         
+       
+       
+        
         
         
         if let journyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
