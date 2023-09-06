@@ -69,6 +69,19 @@ class SliderTVCell: TableViewCell, TTRangeSliderDelegate {
         let pricesFloat = prices.compactMap { Float($0) }
         let minValue = pricesFloat.min() ?? 0.0
         let maxValue = pricesFloat.max() ?? 0.0
+        
+        
+        
+        // Check if filterModel has values for minPriceRange and maxPriceRange
+//            if let minPrice = filterModel.minPriceRange, let maxPrice = filterModel.maxPriceRange {
+//                // Set the slider values manually
+//                rangeSlider.selectedMinimum = Float(minPrice)
+//                rangeSlider.selectedMaximum = Float(maxPrice)
+//                minValue = Float(minPrice)
+//                maxValue = Float(maxPrice)
+//            }
+        
+        
         rangeSlider.minValue = minValue
         rangeSlider.maxValue = maxValue
         minValue1 = Double(minValue)
@@ -94,6 +107,9 @@ class SliderTVCell: TableViewCell, TTRangeSliderDelegate {
         rangeSlider.minLabelColour = .black
         rangeSlider.delegate = self
         downBtn.isHidden = true
+        
+        
+        
     }
     
     

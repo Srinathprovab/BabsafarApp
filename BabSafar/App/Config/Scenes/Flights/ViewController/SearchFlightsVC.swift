@@ -505,10 +505,16 @@ class SearchFlightsVC: BaseTableVC {
                 payload["infant"] = defaults.string(forKey:UserDefaultsKeys.rinfantsCount)
                 payload["v_class"] = defaults.string(forKey:UserDefaultsKeys.rselectClass)
                 payload["sector_type"] = "international"
-                payload["from"] = defaults.string(forKey:UserDefaultsKeys.rfromCity)
-                payload["from_loc_id"] = defaults.string(forKey:UserDefaultsKeys.rfromlocid)
-                payload["to"] = defaults.string(forKey:UserDefaultsKeys.rtoCity)
-                payload["to_loc_id"] = defaults.string(forKey:UserDefaultsKeys.rtolocid)
+                //    payload["from"] = defaults.string(forKey:UserDefaultsKeys.rfromCity)
+                //                payload["from_loc_id"] = defaults.string(forKey:UserDefaultsKeys.rfromlocid)
+                //                payload["to"] = defaults.string(forKey:UserDefaultsKeys.rtoCity)
+                //                payload["to_loc_id"] = defaults.string(forKey:UserDefaultsKeys.rtolocid)
+                
+                payload["from"] = defaults.string(forKey:UserDefaultsKeys.fromCity)
+                payload["from_loc_id"] = defaults.string(forKey:UserDefaultsKeys.fromlocid)
+                payload["to"] = defaults.string(forKey:UserDefaultsKeys.toCity)
+                payload["to_loc_id"] = defaults.string(forKey:UserDefaultsKeys.tolocid)
+                
                 payload["depature"] = defaults.string(forKey:UserDefaultsKeys.rcalDepDate)
                 payload["return"] = defaults.string(forKey:UserDefaultsKeys.rcalRetDate)
                 payload["out_jrn"] = "All Times"
@@ -765,14 +771,24 @@ extension SearchFlightsVC {
                 
                 
             }else {
-                defaults.set((userinfo["from_city_name"] as? String) ?? "" , forKey: UserDefaultsKeys.rfromcityname)
-                defaults.set((userinfo["to_city_name"] as? String) ?? "" , forKey: UserDefaultsKeys.rtocityname)
-                defaults.set((userinfo["from_city_loc"] as? String) ?? "" , forKey: UserDefaultsKeys.rfromairport)
-                defaults.set((userinfo["to_city_loc"] as? String) ?? "" , forKey: UserDefaultsKeys.rtoairport)
-                //   viewModel1?.CallRoundTRipSearchFlightAPI(dictParam: payload)
+//                defaults.set((userinfo["from_city_name"] as? String) ?? "" , forKey: UserDefaultsKeys.rfromcityname)
+//                defaults.set((userinfo["to_city_name"] as? String) ?? "" , forKey: UserDefaultsKeys.rtocityname)
+//                defaults.set((userinfo["from_city_loc"] as? String) ?? "" , forKey: UserDefaultsKeys.rfromairport)
+//                defaults.set((userinfo["to_city_loc"] as? String) ?? "" , forKey: UserDefaultsKeys.rtoairport)
+//                //   viewModel1?.CallRoundTRipSearchFlightAPI(dictParam: payload)
+//
+//                defaults.set((userinfo["fromFlight"] as? String) ?? "" , forKey: UserDefaultsKeys.rfromCity)
+//                defaults.set((userinfo["toFlight"] as? String) ?? "" , forKey: UserDefaultsKeys.rtoCity)
                 
-                defaults.set((userinfo["fromFlight"] as? String) ?? "" , forKey: UserDefaultsKeys.rfromCity)
-                defaults.set((userinfo["toFlight"] as? String) ?? "" , forKey: UserDefaultsKeys.rtoCity)
+                
+                defaults.set((userinfo["from_city_name"] as? String) ?? "" , forKey: UserDefaultsKeys.fromcityname)
+                defaults.set((userinfo["to_city_name"] as? String) ?? "" , forKey: UserDefaultsKeys.tocityname)
+                defaults.set((userinfo["from_city_loc"] as? String) ?? "" , forKey: UserDefaultsKeys.fromairport)
+                defaults.set((userinfo["to_city_name"] as? String) ?? "" , forKey: UserDefaultsKeys.toairport)
+                //  viewModel1?.CallSearchFlightAPI(dictParam: payload)
+                
+                defaults.set((userinfo["fromFlight"] as? String) ?? "" , forKey: UserDefaultsKeys.fromCity)
+                defaults.set((userinfo["toFlight"] as? String) ?? "" , forKey: UserDefaultsKeys.toCity)
                 
             }
             

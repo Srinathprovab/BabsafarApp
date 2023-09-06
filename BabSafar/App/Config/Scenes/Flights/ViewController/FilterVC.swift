@@ -129,8 +129,7 @@ class FilterVC: BaseTableVC{
     
     override func viewWillAppear(_ animated: Bool) {
         
-        print("  viewWillAppear ")
-        print(AirlinesArray.joined(separator: ","))
+    
         NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("nointernet"), object: nil)
     }
     
@@ -205,7 +204,11 @@ class FilterVC: BaseTableVC{
                                          "EmptyTVCell",
                                          "SortbyTVCell",
                                          "ButtonTVCell",
-                                         "DoubleSliderTVCell","PopularFiltersTVCell","LabelTVCell","SliderTVCell","FilterDepartureTVCell"])
+                                         "DoubleSliderTVCell",
+                                         "PopularFiltersTVCell",
+                                         "LabelTVCell",
+                                         "SliderTVCell",
+                                         "FilterDepartureTVCell"])
         
     }
     
@@ -540,18 +543,26 @@ class FilterVC: BaseTableVC{
         cell.hightoLowView.backgroundColor = .WhiteColor
     }
     
+    func resetFilterValues() {
+        DispatchQueue.main.async {
+            self.setupFilterTVCells()
+        }
+    }
+
+    
     @IBAction func didTapOnResetBtn(_ sender: Any) {
         sortBy = .nothing
         if filterKey == "filter" {
-            if let tabSelected = defaults.string(forKey: UserDefaultsKeys.dashboardTapSelected) {
-                if tabSelected == "Flights" {
-                    
-                }else {
-                    
-                }
-            }
+//            if let tabSelected = defaults.string(forKey: UserDefaultsKeys.dashboardTapSelected) {
+//                if tabSelected == "Flights" {
+//
+//                }else {
+//
+//                }
+//            }
             
-            // setupFilterTVCells()
+            resetFilterValues()
+          
         }else {
             if let tabSelected = defaults.string(forKey: UserDefaultsKeys.dashboardTapSelected) {
                 if tabSelected == "Flights" {

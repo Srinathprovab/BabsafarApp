@@ -507,6 +507,7 @@ class ModifySearchFlightVC: BaseTableVC {
                 payload["psscarrier"] = "ALL"
                 payload["search_flight"] = "Search"
                 payload["user_id"] = defaults.string(forKey:UserDefaultsKeys.userid) ?? "0"
+                payload["currency"] = defaults.string(forKey:UserDefaultsKeys.selectedCurrency) ?? "KWD"
                 
                 if directFlightBool == false {
                     payload["direct_flight"] = "on"
@@ -541,10 +542,16 @@ class ModifySearchFlightVC: BaseTableVC {
                 payload["infant"] = defaults.string(forKey:UserDefaultsKeys.rinfantsCount)
                 payload["v_class"] = defaults.string(forKey:UserDefaultsKeys.rselectClass)
                 payload["sector_type"] = "international"
-                payload["from"] = defaults.string(forKey:UserDefaultsKeys.rfromCity)
-                payload["from_loc_id"] = defaults.string(forKey:UserDefaultsKeys.rfromlocid)
-                payload["to"] = defaults.string(forKey:UserDefaultsKeys.rtoCity)
-                payload["to_loc_id"] = defaults.string(forKey:UserDefaultsKeys.rtolocid)
+                //    payload["from"] = defaults.string(forKey:UserDefaultsKeys.rfromCity)
+                //                payload["from_loc_id"] = defaults.string(forKey:UserDefaultsKeys.rfromlocid)
+                //                payload["to"] = defaults.string(forKey:UserDefaultsKeys.rtoCity)
+                //                payload["to_loc_id"] = defaults.string(forKey:UserDefaultsKeys.rtolocid)
+                
+                payload["from"] = defaults.string(forKey:UserDefaultsKeys.fromCity)
+                payload["from_loc_id"] = defaults.string(forKey:UserDefaultsKeys.fromlocid)
+                payload["to"] = defaults.string(forKey:UserDefaultsKeys.toCity)
+                payload["to_loc_id"] = defaults.string(forKey:UserDefaultsKeys.tolocid)
+                
                 payload["depature"] = defaults.string(forKey:UserDefaultsKeys.rcalDepDate)
                 payload["return"] = defaults.string(forKey:UserDefaultsKeys.rcalRetDate)
                 payload["out_jrn"] = "All Times"
@@ -553,6 +560,8 @@ class ModifySearchFlightVC: BaseTableVC {
                 payload["psscarrier"] = "ALL"
                 payload["search_flight"] = "Search"
                 payload["user_id"] = defaults.string(forKey:UserDefaultsKeys.userid) ?? "0"
+                payload["currency"] = defaults.string(forKey:UserDefaultsKeys.selectedCurrency) ?? "KWD"
+                
                 if directFlightBool == false {
                     payload["direct_flight"] = "on"
                 }

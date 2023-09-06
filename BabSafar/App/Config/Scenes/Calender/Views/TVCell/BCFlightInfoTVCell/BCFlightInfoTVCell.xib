@@ -23,15 +23,15 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="182" id="KGk-i7-Jjw" customClass="BCFlightInfoTVCell" customModule="BabSafar" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="400" height="182"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="191" id="KGk-i7-Jjw" customClass="BCFlightInfoTVCell" customModule="BabSafar" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="401" height="191"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="400" height="182"/>
+                <rect key="frame" x="0.0" y="0.0" width="401" height="191"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kcg-k7-ptQ" customClass="BorderedView" customModule="BabSafar" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="0.0" width="400" height="182"/>
+                        <rect key="frame" x="0.0" y="0.0" width="401" height="191"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eP8-jZ-fwz">
                                 <rect key="frame" x="12" y="6" width="30" height="30"/>
@@ -53,19 +53,19 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DAf-2A-clS">
-                                <rect key="frame" x="0.0" y="41.000000000000007" width="400" height="111.66666666666669"/>
+                                <rect key="frame" x="0.0" y="41.000000000000007" width="401" height="111.66666666666669"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="ejU-N5-nfC">
-                                        <rect key="frame" x="12" y="6" width="153" height="102"/>
+                                        <rect key="frame" x="12" y="6" width="153.66666666666666" height="102"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="751" text="05:50" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="buR-7W-bDv">
-                                                <rect key="frame" x="0.0" y="0.0" width="153" height="19.333333333333332"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="153.66666666666666" height="19.333333333333332"/>
                                                 <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
                                                 <color key="textColor" name="AppTabSelectColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wcg-s3-kkc">
-                                                <rect key="frame" x="0.0" y="24.333333333333325" width="153" height="33.666666666666657"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wcg-s3-kkc">
+                                                <rect key="frame" x="0.0" y="24.333333333333325" width="153.66666666666666" height="33.666666666666657"/>
                                                 <string key="text">Dubai International 
 Airport (DXB)</string>
                                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
@@ -73,13 +73,13 @@ Airport (DXB)</string>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="20-02-2023" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Md3-3G-gPo">
-                                                <rect key="frame" x="0.0" y="63" width="153" height="17"/>
+                                                <rect key="frame" x="0.0" y="63" width="153.66666666666666" height="17"/>
                                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
                                                 <color key="textColor" name="SubTitleColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="Terminal:1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QO1-R5-ayp">
-                                                <rect key="frame" x="0.0" y="85" width="153" height="17"/>
+                                                <rect key="frame" x="0.0" y="85" width="153.66666666666666" height="17"/>
                                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
                                                 <color key="textColor" name="SubTitleColor"/>
                                                 <nil key="highlightedColor"/>
@@ -102,7 +102,7 @@ Airport (DXB)</string>
                                         </constraints>
                                     </stackView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ofM-QI-g5N">
-                                        <rect key="frame" x="170" y="55.333333333333329" width="60" height="1"/>
+                                        <rect key="frame" x="170.66666666666666" y="55.333333333333329" width="60" height="1"/>
                                         <color key="backgroundColor" name="AppCalenderDateSelectColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="7C3-ln-6mp"/>
@@ -110,16 +110,16 @@ Airport (DXB)</string>
                                         </constraints>
                                     </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="iG1-ZD-vWM">
-                                        <rect key="frame" x="235" y="6" width="153" height="102"/>
+                                        <rect key="frame" x="235.66666666666663" y="6" width="153.33333333333337" height="102"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="751" text="05:50" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WZz-OV-Pnz">
-                                                <rect key="frame" x="0.0" y="0.0" width="153" height="19.333333333333332"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="153.33333333333334" height="19.333333333333332"/>
                                                 <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
                                                 <color key="textColor" name="AppTabSelectColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="567-Ig-Vpc">
-                                                <rect key="frame" x="0.0" y="24.333333333333325" width="153" height="33.666666666666657"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="567-Ig-Vpc">
+                                                <rect key="frame" x="0.0" y="24.333333333333325" width="153.33333333333334" height="33.666666666666657"/>
                                                 <string key="text">seebinetrnational
 airport (MCT)</string>
                                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
@@ -127,45 +127,42 @@ airport (MCT)</string>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="20-02-2023" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JXj-X5-oYJ">
-                                                <rect key="frame" x="0.0" y="63" width="153" height="17"/>
+                                                <rect key="frame" x="0.0" y="63" width="153.33333333333334" height="17"/>
                                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
                                                 <color key="textColor" name="SubTitleColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="Terminal:1" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2EH-Md-IFV">
-                                                <rect key="frame" x="0.0" y="85" width="153" height="17"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="Terminal:1" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GHU-32-oCt">
+                                                <rect key="frame" x="0.0" y="85" width="153.33333333333334" height="17"/>
                                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
                                                 <color key="textColor" name="SubTitleColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
                                         <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="GHU-32-oCt" secondAttribute="trailing" id="4P6-4k-43f"/>
                                             <constraint firstAttribute="trailing" secondItem="567-Ig-Vpc" secondAttribute="trailing" id="4eX-3R-AvK"/>
-                                            <constraint firstItem="JXj-X5-oYJ" firstAttribute="top" secondItem="567-Ig-Vpc" secondAttribute="bottom" constant="5" id="AcO-ak-eCN"/>
-                                            <constraint firstAttribute="trailing" secondItem="2EH-Md-IFV" secondAttribute="trailing" id="HVB-wD-4YT"/>
+                                            <constraint firstItem="GHU-32-oCt" firstAttribute="leading" secondItem="iG1-ZD-vWM" secondAttribute="leading" id="AqH-X4-j9k"/>
+                                            <constraint firstItem="GHU-32-oCt" firstAttribute="top" secondItem="JXj-X5-oYJ" secondAttribute="bottom" constant="5" id="BMu-wK-7RQ"/>
                                             <constraint firstItem="WZz-OV-Pnz" firstAttribute="leading" secondItem="iG1-ZD-vWM" secondAttribute="leading" id="KLb-vV-UkT"/>
                                             <constraint firstItem="567-Ig-Vpc" firstAttribute="top" secondItem="WZz-OV-Pnz" secondAttribute="bottom" constant="5" id="Nxe-jb-Qgd"/>
                                             <constraint firstItem="JXj-X5-oYJ" firstAttribute="leading" secondItem="iG1-ZD-vWM" secondAttribute="leading" id="Q13-UM-AOf"/>
-                                            <constraint firstItem="567-Ig-Vpc" firstAttribute="top" secondItem="WZz-OV-Pnz" secondAttribute="bottom" constant="5" id="QRC-3H-Lvt"/>
-                                            <constraint firstAttribute="bottom" secondItem="2EH-Md-IFV" secondAttribute="bottom" id="SpY-Ml-STM"/>
                                             <constraint firstItem="WZz-OV-Pnz" firstAttribute="top" secondItem="iG1-ZD-vWM" secondAttribute="top" id="Waa-4w-hu3"/>
                                             <constraint firstItem="567-Ig-Vpc" firstAttribute="leading" secondItem="iG1-ZD-vWM" secondAttribute="leading" id="bLT-A6-5C7"/>
                                             <constraint firstAttribute="trailing" secondItem="WZz-OV-Pnz" secondAttribute="trailing" id="cMm-gY-kBO"/>
-                                            <constraint firstItem="2EH-Md-IFV" firstAttribute="top" secondItem="JXj-X5-oYJ" secondAttribute="bottom" constant="5" id="qFH-ke-HVe"/>
+                                            <constraint firstAttribute="bottom" secondItem="GHU-32-oCt" secondAttribute="bottom" id="r89-TI-afE"/>
                                             <constraint firstAttribute="trailing" secondItem="JXj-X5-oYJ" secondAttribute="trailing" id="vfA-ht-RHn"/>
-                                            <constraint firstItem="2EH-Md-IFV" firstAttribute="leading" secondItem="iG1-ZD-vWM" secondAttribute="leading" id="zL9-cq-QH3"/>
-                                            <constraint firstAttribute="bottom" secondItem="JXj-X5-oYJ" secondAttribute="bottom" id="zkq-aM-MyH"/>
                                             <constraint firstItem="JXj-X5-oYJ" firstAttribute="top" secondItem="567-Ig-Vpc" secondAttribute="bottom" constant="5" id="zrd-Fk-MHg"/>
                                         </constraints>
                                     </stackView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="1h 40mis" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PzR-KJ-GGd">
-                                        <rect key="frame" x="171.66666666666666" y="35.333333333333329" width="57" height="17"/>
+                                        <rect key="frame" x="172" y="35.333333333333329" width="57" height="17"/>
                                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
                                         <color key="textColor" name="SubTitleColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="Economy" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5vo-uk-zXH">
-                                        <rect key="frame" x="171.66666666666666" y="59.333333333333329" width="56.666666666666657" height="17"/>
+                                        <rect key="frame" x="172.33333333333334" y="59.333333333333329" width="56.666666666666657" height="17"/>
                                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
                                         <color key="textColor" name="SubTitleColor"/>
                                         <nil key="highlightedColor"/>
@@ -173,7 +170,6 @@ airport (MCT)</string>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="111.67" id="4HB-Em-ekp"/>
                                     <constraint firstItem="iG1-ZD-vWM" firstAttribute="top" secondItem="DAf-2A-clS" secondAttribute="top" constant="6" id="4xV-jV-zHI"/>
                                     <constraint firstAttribute="bottom" secondItem="ejU-N5-nfC" secondAttribute="bottom" constant="3.6699999999999999" id="6fi-Lw-zQm"/>
                                     <constraint firstItem="ofM-QI-g5N" firstAttribute="centerY" secondItem="DAf-2A-clS" secondAttribute="centerY" id="9GA-1l-Vsv"/>
@@ -191,18 +187,18 @@ airport (MCT)</string>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NHn-Jo-pHK" customClass="BorderedView" customModule="BabSafar" customModuleProvider="target">
-                                <rect key="frame" x="25" y="160" width="350" height="18"/>
+                                <rect key="frame" x="25" y="162.66666666666666" width="351" height="22"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="layover Durationseeb Airport (MCT)12 Hrs 20Mins" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FA5-K2-RAl">
-                                        <rect key="frame" x="10" y="3" width="330" height="12"/>
-                                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="10"/>
+                                        <rect key="frame" x="10" y="3.6666666666666847" width="331" height="14.666666666666664"/>
+                                        <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="12"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" red="0.0" green="0.6588235294117647" blue="0.59607843137254901" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="18" id="4iB-7U-Hmr"/>
+                                    <constraint firstAttribute="height" constant="22" id="4iB-7U-Hmr"/>
                                     <constraint firstItem="FA5-K2-RAl" firstAttribute="centerY" secondItem="NHn-Jo-pHK" secondAttribute="centerY" id="9IM-8r-NKz"/>
                                     <constraint firstAttribute="trailing" secondItem="FA5-K2-RAl" secondAttribute="trailing" constant="10" id="j0y-JE-kdn"/>
                                     <constraint firstItem="FA5-K2-RAl" firstAttribute="leading" secondItem="NHn-Jo-pHK" secondAttribute="leading" constant="10" id="wML-hc-2MP"/>
@@ -210,7 +206,7 @@ airport (MCT)</string>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="9"/>
+                                        <real key="value" value="0.0"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
@@ -220,17 +216,17 @@ airport (MCT)</string>
                             <constraint firstItem="Zww-9Q-dGL" firstAttribute="leading" secondItem="hdm-Nk-oIr" secondAttribute="trailing" constant="5" id="02O-KX-evT"/>
                             <constraint firstItem="Zww-9Q-dGL" firstAttribute="centerY" secondItem="hdm-Nk-oIr" secondAttribute="centerY" id="09T-Wc-zgd"/>
                             <constraint firstItem="hdm-Nk-oIr" firstAttribute="leading" secondItem="eP8-jZ-fwz" secondAttribute="trailing" constant="5" id="6Al-Fc-oyh"/>
-                            <constraint firstItem="NHn-Jo-pHK" firstAttribute="top" secondItem="DAf-2A-clS" secondAttribute="bottom" constant="7.3300000000000001" id="7mJ-C6-1rB"/>
-                            <constraint firstAttribute="height" relation="lessThanOrEqual" constant="182" id="GLa-y4-I6G"/>
+                            <constraint firstAttribute="height" constant="191" id="CWj-Ps-2Qz"/>
                             <constraint firstItem="eP8-jZ-fwz" firstAttribute="leading" secondItem="kcg-k7-ptQ" secondAttribute="leading" constant="12" id="LEg-ve-Hs9"/>
                             <constraint firstItem="DAf-2A-clS" firstAttribute="top" secondItem="eP8-jZ-fwz" secondAttribute="bottom" constant="5" id="O0f-ba-agw"/>
                             <constraint firstItem="DAf-2A-clS" firstAttribute="leading" secondItem="kcg-k7-ptQ" secondAttribute="leading" id="QbY-wa-Mgo"/>
-                            <constraint firstAttribute="bottom" secondItem="NHn-Jo-pHK" secondAttribute="bottom" constant="4" id="VL5-kS-4Ea"/>
+                            <constraint firstItem="NHn-Jo-pHK" firstAttribute="top" secondItem="DAf-2A-clS" secondAttribute="bottom" constant="10" id="Xat-XV-vaN"/>
                             <constraint firstAttribute="trailing" secondItem="NHn-Jo-pHK" secondAttribute="trailing" constant="25" id="aVZ-aO-cOE"/>
                             <constraint firstAttribute="trailing" secondItem="DAf-2A-clS" secondAttribute="trailing" id="bIq-zx-enO"/>
                             <constraint firstItem="eP8-jZ-fwz" firstAttribute="top" secondItem="kcg-k7-ptQ" secondAttribute="top" constant="6" id="fSQ-Yr-vb1"/>
                             <constraint firstItem="hdm-Nk-oIr" firstAttribute="centerY" secondItem="eP8-jZ-fwz" secondAttribute="centerY" id="mGJ-g2-WsE"/>
                             <constraint firstItem="NHn-Jo-pHK" firstAttribute="leading" secondItem="kcg-k7-ptQ" secondAttribute="leading" constant="25" id="wRl-2e-CbZ"/>
+                            <constraint firstAttribute="bottom" secondItem="NHn-Jo-pHK" secondAttribute="bottom" constant="6.3300000000000001" id="xMr-dV-3aB"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -260,12 +256,12 @@ airport (MCT)</string>
                 <outlet property="layoverHeight" destination="4iB-7U-Hmr" id="V0K-tb-HHm"/>
                 <outlet property="layoverTimelbl" destination="FA5-K2-RAl" id="H07-Cl-6Pq"/>
                 <outlet property="layoverView" destination="NHn-Jo-pHK" id="4Yy-TE-aEQ"/>
-                <outlet property="toTerminallbl" destination="2EH-Md-IFV" id="XVs-yK-K3e"/>
+                <outlet property="toTerminallbl" destination="GHU-32-oCt" id="AQj-Ja-J5G"/>
                 <outlet property="toTimelbl" destination="WZz-OV-Pnz" id="M10-05-ZqB"/>
                 <outlet property="tocitylbl" destination="567-Ig-Vpc" id="RT0-15-GFo"/>
                 <outlet property="todatelbl" destination="JXj-X5-oYJ" id="nD6-LQ-ko4"/>
             </connections>
-            <point key="canvasLocation" x="65.648854961832058" y="126.7605633802817"/>
+            <point key="canvasLocation" x="66.412213740458014" y="129.92957746478874"/>
         </tableViewCell>
     </objects>
     <resources>

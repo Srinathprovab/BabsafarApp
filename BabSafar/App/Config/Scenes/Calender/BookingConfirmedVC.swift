@@ -38,7 +38,7 @@ class BookingConfirmedVC: BaseTableVC, VocherDetailsViewModelDelegate, HotelVouc
     var total_rooms = ""
     var adult_count = ""
     var vocherpdf = ""
-    var bookingitinerarydetails = [Booking_itinerary_summary]()
+    var bookingitinerarydetails = [Booking_itinerary_details]()
     var currency = ""
     var totalPrice = ""
     var totalPax = ""
@@ -178,7 +178,7 @@ extension BookingConfirmedVC {
         })
         
         response.data?.booking_details?.forEach({ j in
-            bookingitinerarydetails = j.booking_itinerary_summary ?? []
+            bookingitinerarydetails = j.booking_itinerary_details ?? []
             Customerdetails = j.customer_details ?? []
             
             

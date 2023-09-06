@@ -92,12 +92,13 @@ extension ItineraryAddTVCell:UITableViewDelegate,UITableViewDataSource {
                 cell.destTerminal1lbl.text = "Terminal: \(data.destination?.terminal ?? "0")"
             }
             
-            cell.timelbl.text = "\(data.layOverDuration ?? "") layover time (\(data.destination?.city ?? ""))"
+            cell.timelbl.text = "Layover Duration\(data.destination?.city ?? "") (\(data.destination?.loc ?? "")) \(data.layOverDuration ?? "")"
+            
             if tableView.isLast(for: indexPath) {
-                print(indexPath.row)
                 cell.timeView.isHidden = true
               
             }
+            
             cell.airwaysImg1.sd_setImage(with: URL(string: data.operator_image ?? ""), placeholderImage:UIImage(contentsOfFile:"placeholder.png"))
             
             c = cell

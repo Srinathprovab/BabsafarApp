@@ -83,7 +83,7 @@ class BookedTravelDetailsTVCell: TableViewCell {
         setuplabels(lbl: seatlbl, text: "Status", textcolor: HexColor("#5B5B5B"), font: .LatoRegular(size: 13), align: .center)
         travellerNamelbl.text = "Passenger Name"
         typelbl.text = "Passport No"
-        seatlbl.text = "Country"
+        seatlbl.text = "    Country"
     }
     
     func setupTV() {

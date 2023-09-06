@@ -157,8 +157,8 @@ class SearchFlightsTVCell: TableViewCell, SelectCityViewModelProtocal {
                 returnDatelbl.text = "+ Add Return Date"
                 defaults.set("+ Add Return Date", forKey: UserDefaultsKeys.rcalRetDate)
             }else {
-                fromCitylbl.text = defaults.string(forKey: UserDefaultsKeys.rfromCity) ?? "Origin"
-                toCitylbl.text = defaults.string(forKey: UserDefaultsKeys.rtoCity) ?? "Destination"
+                fromCitylbl.text = defaults.string(forKey: UserDefaultsKeys.fromCity) ?? "Origin"
+                toCitylbl.text = defaults.string(forKey: UserDefaultsKeys.toCity) ?? "Destination"
                 self.departureDatelbl.text = defaults.string(forKey: UserDefaultsKeys.rcalDepDate) ?? "+ Add Departure Date"
                 self.returnDatelbl.text = defaults.string(forKey: UserDefaultsKeys.rcalRetDate) ?? "+ Add Return Date"
                 economyValuelbl.text = defaults.string(forKey: UserDefaultsKeys.rtravellerDetails) ?? "Add Traveller Details"
@@ -594,10 +594,16 @@ extension SearchFlightsTVCell:UITableViewDelegate, UITableViewDataSource {
                 if let selectedJType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
                     if selectedJType == "circle" {
                         
-                        defaults.set(cityList[indexPath.row].label ?? "", forKey: UserDefaultsKeys.rfromCity)
-                        defaults.set(cityList[indexPath.row].id ?? "", forKey: UserDefaultsKeys.rfromlocid)
-                        defaults.set("\(cityList[indexPath.row].city ?? "") (\(cityList[indexPath.row].code ?? ""))", forKey: UserDefaultsKeys.rfromairport)
-                        defaults.set(cityList[indexPath.row].city ?? "", forKey: UserDefaultsKeys.rfromcityname)
+//                        defaults.set(cityList[indexPath.row].label ?? "", forKey: UserDefaultsKeys.rfromCity)
+                        //                        defaults.set(cityList[indexPath.row].id ?? "", forKey: UserDefaultsKeys.rfromlocid)
+                        //                        defaults.set("\(cityList[indexPath.row].city ?? "") (\(cityList[indexPath.row].code ?? ""))", forKey: UserDefaultsKeys.rfromairport)
+                        //                        defaults.set(cityList[indexPath.row].city ?? "", forKey: UserDefaultsKeys.rfromcityname)
+                        
+                        defaults.set(cityList[indexPath.row].label ?? "", forKey: UserDefaultsKeys.fromCity)
+                        defaults.set(cityList[indexPath.row].id ?? "", forKey: UserDefaultsKeys.fromlocid)
+                        defaults.set("\(cityList[indexPath.row].city ?? "") (\(cityList[indexPath.row].code ?? ""))", forKey: UserDefaultsKeys.fromairport)
+                        defaults.set(cityList[indexPath.row].city ?? "", forKey: UserDefaultsKeys.fromcityname)
+                        
                     }else {
                         defaults.set(cityList[indexPath.row].label ?? "", forKey: UserDefaultsKeys.fromCity)
                         defaults.set(cityList[indexPath.row].id ?? "", forKey: UserDefaultsKeys.fromlocid)
@@ -618,10 +624,16 @@ extension SearchFlightsTVCell:UITableViewDelegate, UITableViewDataSource {
                 if let selectedJType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
                     if selectedJType == "circle" {
                         
-                        defaults.set(cityList[indexPath.row].label ?? "", forKey: UserDefaultsKeys.rtoCity)
-                        defaults.set(cityList[indexPath.row].id ?? "", forKey: UserDefaultsKeys.rtolocid)
-                        defaults.set("\(cityList[indexPath.row].city ?? "") (\(cityList[indexPath.row].code ?? ""))", forKey: UserDefaultsKeys.rtoairport)
-                        defaults.set(cityList[indexPath.row].city ?? "", forKey: UserDefaultsKeys.rtocityname)
+//                        defaults.set(cityList[indexPath.row].label ?? "", forKey: UserDefaultsKeys.rtoCity)
+//                        defaults.set(cityList[indexPath.row].id ?? "", forKey: UserDefaultsKeys.rtolocid)
+//                        defaults.set("\(cityList[indexPath.row].city ?? "") (\(cityList[indexPath.row].code ?? ""))", forKey: UserDefaultsKeys.rtoairport)
+//                        defaults.set(cityList[indexPath.row].city ?? "", forKey: UserDefaultsKeys.rtocityname)
+                        
+                        defaults.set(cityList[indexPath.row].label ?? "", forKey: UserDefaultsKeys.toCity)
+                        defaults.set(cityList[indexPath.row].id ?? "", forKey: UserDefaultsKeys.tolocid)
+                        defaults.set("\(cityList[indexPath.row].city ?? "") (\(cityList[indexPath.row].code ?? ""))", forKey: UserDefaultsKeys.toairport)
+                        defaults.set(cityList[indexPath.row].city ?? "", forKey: UserDefaultsKeys.tocityname)
+                        
                     }else {
                         defaults.set(cityList[indexPath.row].label ?? "", forKey: UserDefaultsKeys.toCity)
                         defaults.set(cityList[indexPath.row].id ?? "", forKey: UserDefaultsKeys.tolocid)

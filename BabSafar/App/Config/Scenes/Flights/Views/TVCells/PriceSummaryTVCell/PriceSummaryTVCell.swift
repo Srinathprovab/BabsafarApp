@@ -44,6 +44,7 @@ class PriceSummaryTVCell: TableViewCell {
     
     override func updateUI() {
         self.key =  cellInfo?.key ?? ""
+        totalPaymentValuelbl.text = cellInfo?.price ?? ""
         
         if let selectedTab = defaults.string(forKey: UserDefaultsKeys.dashboardTapSelected){
             
@@ -96,7 +97,7 @@ class PriceSummaryTVCell: TableViewCell {
         psImg.image = UIImage(named:"pricesummery")?.withRenderingMode(.alwaysOriginal)
         setupLabels(lbl: titlelbl, text: "Price Summary", textcolor: .AppLabelColor, font: .LatoSemibold(size: 16))
         setupLabels(lbl: totalPaymentlbl, text: "Total Trip Cost", textcolor: .AppLabelColor, font: .LatoBold(size: 16))
-        setupLabels(lbl: totalPaymentValuelbl, text: grandTotal, textcolor: .AppLabelColor, font: .LatoBold(size: 16))
+        setupLabels(lbl: totalPaymentValuelbl, text: "", textcolor: .AppLabelColor, font: .LatoBold(size: 16))
         
     }
     

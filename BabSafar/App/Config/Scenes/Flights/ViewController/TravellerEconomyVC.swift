@@ -35,7 +35,7 @@ class TravellerEconomyVC: BaseTableVC {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        tvHeight.constant = 390
+        tvHeight.constant = 410
         NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("nointernet"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadTV), name: Notification.Name("reloadTV"), object: nil)
         setupinitialUI()
@@ -166,27 +166,29 @@ class TravellerEconomyVC: BaseTableVC {
     func setupSearchFlightEconomyTVCells(){
         
         tableRow.removeAll()
-        tableRow.append(TableRow(title:"Add Travellers ",key: "showbtn",cellType:.LabelTVCell))
-
+        
         if keyString == "traveller" {
             
+            tableRow.append(TableRow(title:"Add Travellers ",key: "showbtn",cellType:.LabelTVCell))
 
             if let journeyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
                 if journeyType == "oneway" {
+                    
+                    
                     tableRow.append(TableRow(title:"Adults",subTitle: "(12+)",text: defaults.string(forKey: UserDefaultsKeys.adultCount) ?? "1",cellType:.TravellerEconomyTVCell))
                     tableRow.append(TableRow(title:"Child",subTitle: "(2-11)",text: defaults.string(forKey: UserDefaultsKeys.childCount) ?? "0",cellType:.TravellerEconomyTVCell))
-                    tableRow.append(TableRow(title:"Infants",subTitle: "(0-2)",text: defaults.string(forKey: UserDefaultsKeys.infantsCount) ?? "0",cellType:.TravellerEconomyTVCell))
+                    tableRow.append(TableRow(title:"Infant",subTitle: "(0-2)",text: defaults.string(forKey: UserDefaultsKeys.infantsCount) ?? "0",cellType:.TravellerEconomyTVCell))
                     
                     
                 }else if journeyType == "circle"{
                     tableRow.append(TableRow(title:"Adults",subTitle: "(12+)",text: defaults.string(forKey: UserDefaultsKeys.radultCount) ?? "1",cellType:.TravellerEconomyTVCell))
                     tableRow.append(TableRow(title:"Child",subTitle: "(2-11)",text: defaults.string(forKey: UserDefaultsKeys.rchildCount) ?? "0",cellType:.TravellerEconomyTVCell))
-                    tableRow.append(TableRow(title:"Infants",subTitle: "(0-2)",text: defaults.string(forKey: UserDefaultsKeys.rinfantsCount) ?? "0",cellType:.TravellerEconomyTVCell))
+                    tableRow.append(TableRow(title:"Infant",subTitle: "(0-2)",text: defaults.string(forKey: UserDefaultsKeys.rinfantsCount) ?? "0",cellType:.TravellerEconomyTVCell))
                 }else {
                     
                     tableRow.append(TableRow(title:"Adults",subTitle: "(12+)",text: defaults.string(forKey: UserDefaultsKeys.madultCount) ?? "1",cellType:.TravellerEconomyTVCell))
                     tableRow.append(TableRow(title:"Child",subTitle: "(2-11)",text: defaults.string(forKey: UserDefaultsKeys.mchildCount) ?? "0",cellType:.TravellerEconomyTVCell))
-                    tableRow.append(TableRow(title:"Infants",subTitle: "(0-2)",text: defaults.string(forKey: UserDefaultsKeys.minfantsCount) ?? "0",cellType:.TravellerEconomyTVCell))
+                    tableRow.append(TableRow(title:"Infant",subTitle: "(0-2)",text: defaults.string(forKey: UserDefaultsKeys.minfantsCount) ?? "0",cellType:.TravellerEconomyTVCell))
                 }
             }
             
@@ -194,24 +196,27 @@ class TravellerEconomyVC: BaseTableVC {
             
         }else if keyString == "visa"{
             
+            tableRow.append(TableRow(title:"Add Travellers ",key: "showbtn",cellType:.LabelTVCell))
+
             tableRow.append(TableRow(title:"Adults",subTitle: "(12+)",text: defaults.string(forKey: UserDefaultsKeys.visaadultCount) ?? "1",cellType:.TravellerEconomyTVCell))
             tableRow.append(TableRow(title:"Child",subTitle: "(2-11)",text: defaults.string(forKey: UserDefaultsKeys.visachildCount) ?? "0",cellType:.TravellerEconomyTVCell))
-            tableRow.append(TableRow(title:"Infants",subTitle: "(0-2)",text: defaults.string(forKey: UserDefaultsKeys.visainfantsCount) ?? "0",cellType:.TravellerEconomyTVCell))
+            tableRow.append(TableRow(title:"Infant",subTitle: "(0-2)",text: defaults.string(forKey: UserDefaultsKeys.visainfantsCount) ?? "0",cellType:.TravellerEconomyTVCell))
             
         }else if keyString == "insurence"{
             
-            
+            tableRow.append(TableRow(title:"Add Travellers ",key: "showbtn",cellType:.LabelTVCell))
+
             if let journeyType = defaults.string(forKey: UserDefaultsKeys.InsurenceJourneyType) {
                 if journeyType == "oneway" {
                     tableRow.append(TableRow(title:"Adults",subTitle: "(12+)",text: defaults.string(forKey: UserDefaultsKeys.iadultCount) ?? "1",cellType:.TravellerEconomyTVCell))
                     tableRow.append(TableRow(title:"Child",subTitle: "(2-11)",text: defaults.string(forKey: UserDefaultsKeys.ichildCount) ?? "0",cellType:.TravellerEconomyTVCell))
-                    tableRow.append(TableRow(title:"Infants",subTitle: "(0-2)",text: defaults.string(forKey: UserDefaultsKeys.iinfantsCount) ?? "0",cellType:.TravellerEconomyTVCell))
+                    tableRow.append(TableRow(title:"Infant",subTitle: "(0-2)",text: defaults.string(forKey: UserDefaultsKeys.iinfantsCount) ?? "0",cellType:.TravellerEconomyTVCell))
                     
                     
                 }else{
                     tableRow.append(TableRow(title:"Adults",subTitle: "(12+)",text: defaults.string(forKey: UserDefaultsKeys.iradultCount) ?? "1",cellType:.TravellerEconomyTVCell))
                     tableRow.append(TableRow(title:"Child",subTitle: "(2-11)",text: defaults.string(forKey: UserDefaultsKeys.irchildCount) ?? "0",cellType:.TravellerEconomyTVCell))
-                    tableRow.append(TableRow(title:"Infants",subTitle: "(0-2)",text: defaults.string(forKey: UserDefaultsKeys.irinfantsCount) ?? "0",cellType:.TravellerEconomyTVCell))
+                    tableRow.append(TableRow(title:"Infant",subTitle: "(0-2)",text: defaults.string(forKey: UserDefaultsKeys.irinfantsCount) ?? "0",cellType:.TravellerEconomyTVCell))
                 }
             }
             
@@ -221,6 +226,8 @@ class TravellerEconomyVC: BaseTableVC {
         }else if keyString == "fasttrack"{
             
             
+            tableRow.append(TableRow(title:"Add Travellers ",key: "showbtn",cellType:.LabelTVCell))
+
             tableRow.append(TableRow(title:"Adults",subTitle: "(12+)",text: defaults.string(forKey: UserDefaultsKeys.fradultCount) ?? "1",cellType:.TravellerEconomyTVCell))
             tableRow.append(TableRow(title:"Child",subTitle: "(2-11)",text: defaults.string(forKey: UserDefaultsKeys.frchildCount) ?? "0",cellType:.TravellerEconomyTVCell))
             
@@ -269,72 +276,81 @@ class TravellerEconomyVC: BaseTableVC {
         
     }
     
+    
+
+
     override func didTapOnIncrementButton(cell: TravellerEconomyTVCell) {
-        
-        
-        
-        if (infantsCount) > 8 {
-            showToast(message: "Infants Count not mor than 9 ")
-            showAlertOnWindow(title: "", message: "Infants Count not mor than 9", titles: ["OK"], completionHanlder: nil)
-        }else if (adultsCount + childCount) > 8 {
-            showToast(message: "adultsCount not mor than 9 ")
-            showAlertOnWindow(title: "", message: "Adults Count Not More Than 9", titles: ["OK"], completionHanlder: nil)
-        }else  {
-            if cell.count >= 0 {
+        if cell.titlelbl.text == "Infant" {
+            // Increment the infant count if it's less than the number of adults
+            if infantsCount < adultsCount {
+                infantsCount += 1
                 cell.count += 1
                 cell.countlbl.text = "\(cell.count)"
             }
             
-            if cell.titlelbl.text == "Adults" {
-                adultsCount = cell.count
-            }else if cell.titlelbl.text == "Child"{
-                childCount = cell.count
-            }else {
-                infantsCount = cell.count
+            
+        } else if cell.titlelbl.text == "Adults" {
+            // Increment adults, but don't exceed 9 travelers in total
+            if (adultsCount + childCount) < 9 {
+                adultsCount += 1
+                cell.count += 1
+                cell.countlbl.text = "\(cell.count)"
+            }
+        } else {
+            if (adultsCount + childCount) < 9 {
+                // Increment children, but don't exceed 9 travelers in total
+                if cell.count >= 0 {
+                    cell.count += 1
+                    cell.countlbl.text = "\(cell.count)"
+                }
+                if cell.titlelbl.text == "Child" {
+                    childCount = cell.count
+                }
             }
         }
         
-        print("Total Count === \(adultsCount + childCount + infantsCount)")
-        defaults.set((adultsCount + childCount + infantsCount), forKey: UserDefaultsKeys.totalTravellerCount)
-        
+        updateTotalTravelerCount()
     }
-    
-    
+
     override func didTapOnDecrementButton(cell: TravellerEconomyTVCell) {
-        
-        if cell.count > 0 {
-            cell.count -= 1
-        }
-        print(cell.count)
-        
-        if cell.titlelbl.text == "Adults" {
-            if cell.count == 0 {
-                cell.count = 1
+        if cell.titlelbl.text == "Infant" {
+            // Decrement the infant count if it's greater than 0
+            if infantsCount > 0 {
+                infantsCount -= 1
+                cell.count -= 1
+                cell.countlbl.text = "\(cell.count)"
             }
-            adultsCount = cell.count
-            
-        }else if cell.titlelbl.text == "Child"{
-            childCount = cell.count
-            
-        }else {
-            infantsCount = cell.count
-            
+        } else if cell.titlelbl.text == "Adults" {
+            // Decrement adults, but don't go below 1
+            if adultsCount > 1 {
+                adultsCount -= 1
+                cell.count -= 1
+                cell.countlbl.text = "\(cell.count)"
+            }
+
+        } else {
+            // Decrement children
+            if cell.count > 0 {
+                cell.count -= 1
+                cell.countlbl.text = "\(cell.count)"
+            }
+            if cell.titlelbl.text == "Child" {
+                childCount = cell.count
+            }
         }
-        
-        
-        if (adultsCount + childCount) > 8 {
-            showToast(message: "adultsCount not mor than 9 ")
-            showAlertOnWindow(title: "", message: "Adults Count Not More Than 9", titles: ["OK"], completionHanlder: nil)
-        }else {
-            cell.countlbl.text = "\(cell.count)"
-            
-        }
-        
-        
-        print("Total Count === \(adultsCount + childCount + infantsCount)")
-        defaults.set((adultsCount + childCount + infantsCount), forKey: UserDefaultsKeys.totalTravellerCount)
-        
+
+        updateTotalTravelerCount()
     }
+    
+    
+
+
+    func updateTotalTravelerCount() {
+        let totalTravelers = adultsCount + childCount + infantsCount
+        print("Total Count === \(totalTravelers)")
+        defaults.set(totalTravelers, forKey: UserDefaultsKeys.totalTravellerCount)
+    }
+
     
     
     override func didTapOnCloseBtn(cell: LabelTVCell) {
@@ -485,7 +501,7 @@ class TravellerEconomyVC: BaseTableVC {
                 
             }
         }else {
-           
+            
             count += 1
             roomCountArray.append(count)
             //  setupSearchHotelsEconomyTVCells()

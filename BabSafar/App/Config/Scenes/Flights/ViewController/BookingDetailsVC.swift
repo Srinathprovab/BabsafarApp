@@ -245,7 +245,7 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
         
         tablerow.append(TableRow(cellType:.ContactInformationTVCell))
         tablerow.append(TableRow(cellType:.UsePromoCodesTVCell))
-        tablerow.append(TableRow(cellType:.PriceSummaryTVCell))
+        tablerow.append(TableRow(price:bookNowlbl.text ?? "",cellType:.PriceSummaryTVCell))
         tablerow.append(TableRow(title:"I Accept T&C and Privacy Policy",cellType:.AcceptTermsAndConditionTVCell))
         tablerow.append(TableRow(height:50, bgColor:.AppHolderViewColor,cellType:.EmptyTVCell))
         
@@ -462,7 +462,7 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
         payload.removeAll()
         BASE_URL = ""
         payload["id"] = "3"
-        moreDeatilsViewModel?.CALL_GET_TERMSANDCONDITION_API(dictParam: payload, url: "https://provabdevelopment.com/babsafar/mobile_webservices/mobile/index.php/general/cms")
+        moreDeatilsViewModel?.CALL_GET_TERMSANDCONDITION_API(dictParam: payload, url: "https://provabdevelopment.com/pro_new/mobile/index.php/general/cms")
     }
     
     func termsandcobditionDetails(response: AboutUsModel) {
@@ -484,7 +484,7 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
         payload.removeAll()
         BASE_URL = ""
         payload["id"] = "4"
-        moreDeatilsViewModel?.CALL_GET_PRIVICYPOLICY_API(dictParam: payload, url: "https://provabdevelopment.com/babsafar/mobile_webservices/mobile/index.php/general/cms")
+        moreDeatilsViewModel?.CALL_GET_PRIVICYPOLICY_API(dictParam: payload, url: "https://provabdevelopment.com/pro_new/mobile/index.php/general/cms")
     }
     
     
@@ -752,10 +752,7 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
         
     }
     
-    
-    
-    
-    
+
     
     
     func mobilePreBookingModelDetails(response: MobilePreBookingModel) {

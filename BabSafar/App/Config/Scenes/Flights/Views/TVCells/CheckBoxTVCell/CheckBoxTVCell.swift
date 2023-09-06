@@ -71,8 +71,8 @@ class CheckBoxTVCell: TableViewCell {
         
         switch titlelbl.text {
         case "Stops":
-            downBtn.isHidden = true
-            downImg.isHidden = true
+//            downBtn.isHidden = true
+//            downImg.isHidden = true
             // expand()
             break
             
@@ -88,6 +88,10 @@ class CheckBoxTVCell: TableViewCell {
         default:
             break
         }
+        
+        
+        
+        expand()
         
         checkOptionsTV.reloadData()
     }

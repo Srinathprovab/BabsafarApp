@@ -432,7 +432,8 @@ extension SearchHotelsResultVC {
                 cell.hotelImg.sd_setImage(with: URL(string: dict.image ?? ""), placeholderImage:UIImage(contentsOfFile:"placeholder.png"))
                 cell.ratingslbl.text = String(dict.star_rating ?? 0)
                 cell.locationlbl.text = dict.address
-                cell.kwdlbl.text = "\(dict.currency ?? ""):\(dict.price ?? "")"
+            //    cell.kwdlbl.text = "\(dict.currency ?? ""):\(String(format: "%.2f", dict.price ?? ""))"
+                setAttributedText(str1: dict.currency ?? "", str2: dict.price ?? "", lbl: cell.kwdlbl)
                 cell.bookingsource = dict.booking_source ?? ""
                 cell.hotelid = String(dict.hotel_code ?? 0)
                 cell.lat = dict.latitude ?? ""
@@ -449,7 +450,8 @@ extension SearchHotelsResultVC {
                 cell.hotelImg.sd_setImage(with: URL(string: dict.image ?? ""), placeholderImage:UIImage(contentsOfFile:"placeholder.png"))
                 cell.ratingslbl.text = String(dict.star_rating ?? 0)
                 cell.locationlbl.text = dict.address
-                cell.kwdlbl.text = "\(dict.currency ?? ""):\(dict.price ?? "")"
+              //  cell.kwdlbl.text = "\(dict.currency ?? ""):\()"
+                setAttributedText(str1: dict.currency ?? "", str2: dict.price ?? "", lbl: cell.kwdlbl)
                 cell.bookingsource = dict.booking_source ?? ""
                 cell.hotelid = String(dict.hotel_code ?? 0)
                 cell.lat = dict.latitude ?? ""

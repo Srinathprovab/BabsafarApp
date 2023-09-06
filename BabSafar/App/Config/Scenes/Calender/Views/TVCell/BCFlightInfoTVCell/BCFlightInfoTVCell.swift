@@ -45,12 +45,12 @@ class BCFlightInfoTVCell: UITableViewCell {
     
     func hideLayover() {
         layoverView.isHidden = true
-        layoverHeight.constant = 18
+       //layoverHeight.constant = 0
     }
     
     func showLayover() {
         layoverView.isHidden = false
-        layoverHeight.constant = 18
+        layoverHeight.constant = 22
     }
 
     
