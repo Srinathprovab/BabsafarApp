@@ -164,7 +164,7 @@ class SideMenuVC: BaseTableVC, ProfileDetailsViewModelDelegate, LogoutViewModelD
             defaults.set("", forKey: UserDefaultsKeys.usermobile)
             defaults.set("", forKey: UserDefaultsKeys.uname)
             defaults.set("", forKey: UserDefaultsKeys.mcountrycode)
-
+            
             // Reset Standard User Defaults
             UserDefaults.resetStandardUserDefaults()
             self.setupMenuTVCells()
@@ -183,43 +183,30 @@ extension SideMenuVC {
             
             switch cell.menuTitlelbl.text {
             case "My Bookings":
-                guard let vc = DashBoaardTabbarVC.newInstance.self else {return}
-                vc.modalPresentationStyle = .overCurrentContext
-                vc.selectedIndex = 1
-                present(vc, animated: true)
+                gotoDashBoaardTabbarVC()
                 break
                 
             case "Flights":
-                guard let vc = SearchFlightsVC.newInstance.self else {return}
-                vc.modalPresentationStyle = .overCurrentContext
-                present(vc, animated: true)
+                gotoSearchFlightsVC()
                 break
                 
             case "Hotels":
-                guard let vc = SearchHotelsVC.newInstance.self else {return}
-                vc.modalPresentationStyle = .overCurrentContext
-                present(vc, animated: true)
+                gotoSearchHotelsVC()
                 break
                 
                 
             case "Visa":
-                guard let vc = VisaEnduiryVC.newInstance.self else {return}
-                vc.modalPresentationStyle = .overCurrentContext
-                present(vc, animated: true)
+                gotoVisaEnduiryVC()
                 break
                 
                 
             case "Insurence":
-                guard let vc = InsuranceVC.newInstance.self else {return}
-                vc.modalPresentationStyle = .overCurrentContext
-                present(vc, animated: true)
+                gotoInsuranceVC()
                 break
                 
                 
             case "Fastrack":
-//                guard let vc = SearchFastTrackVC.newInstance.self else {return}
-//                vc.modalPresentationStyle = .overCurrentContext
-//                present(vc, animated: true)
+                gotoSearchFastTrackVC()
                 break
                 
                 
@@ -231,6 +218,48 @@ extension SideMenuVC {
                 break
             }
         }
+    }
+    
+    func gotoDashBoaardTabbarVC(){
+        guard let vc = DashBoaardTabbarVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .fullScreen
+        vc.selectedIndex = 1
+        present(vc, animated: true)
+    }
+    
+    
+    func gotoSearchFlightsVC(){
+        guard let vc = SearchFlightsVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+    }
+    
+    
+    
+    func gotoSearchHotelsVC(){
+        guard let vc = SearchHotelsVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+    }
+    
+    
+    func gotoVisaEnduiryVC(){
+        guard let vc = VisaEnduiryVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+    }
+    
+    
+    func gotoInsuranceVC(){
+        guard let vc = InsuranceVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+    }
+    
+    func gotoSearchFastTrackVC(){
+        guard let vc = SearchFastTrackVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
     }
     
     

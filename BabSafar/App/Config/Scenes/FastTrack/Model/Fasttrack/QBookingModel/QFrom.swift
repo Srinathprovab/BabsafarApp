@@ -1,7 +1,14 @@
-
+//
+//  QFrom.swift
+//  BabSafar
+//
+//  Created by FCI on 07/09/23.
+//
 
 import Foundation
-struct EFrom : Codable {
+
+
+struct QFrom : Codable {
     let id : Int?
     let discount : Int?
     let discount_type : String?
@@ -11,7 +18,7 @@ struct EFrom : Codable {
     let api_price : String?
     let price : Int?
     let discounted_price : Int?
-    let form_fields : [Form_fields]?
+    let form_fields : [QForm_fields]?
     let currency : String?
     let name : String?
     let status : Int?
@@ -44,7 +51,7 @@ struct EFrom : Codable {
         api_price = try values.decodeIfPresent(String.self, forKey: .api_price)
         price = try values.decodeIfPresent(Int.self, forKey: .price)
         discounted_price = try values.decodeIfPresent(Int.self, forKey: .discounted_price)
-        form_fields = try values.decodeIfPresent([Form_fields].self, forKey: .form_fields)
+        form_fields = try values.decodeIfPresent([QForm_fields].self, forKey: .form_fields)
         currency = try values.decodeIfPresent(String.self, forKey: .currency)
         name = try values.decodeIfPresent(String.self, forKey: .name)
         status = try values.decodeIfPresent(Int.self, forKey: .status)

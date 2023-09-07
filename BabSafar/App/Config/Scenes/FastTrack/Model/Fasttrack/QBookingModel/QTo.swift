@@ -1,7 +1,13 @@
-
+//
+//  QTo.swift
+//  BabSafar
+//
+//  Created by FCI on 07/09/23.
+//
 
 import Foundation
-struct EFrom : Codable {
+
+struct QTo : Codable {
     let id : Int?
     let discount : Int?
     let discount_type : String?
@@ -11,13 +17,13 @@ struct EFrom : Codable {
     let api_price : String?
     let price : Int?
     let discounted_price : Int?
-    let form_fields : [Form_fields]?
+    let form_fields : [QForm_fields]?
     let currency : String?
     let name : String?
     let status : Int?
-
+    
     enum CodingKeys: String, CodingKey {
-
+        
         case id = "id"
         case discount = "discount"
         case discount_type = "discount_type"
@@ -32,7 +38,7 @@ struct EFrom : Codable {
         case name = "name"
         case status = "status"
     }
-
+    
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         id = try values.decodeIfPresent(Int.self, forKey: .id)
@@ -44,10 +50,10 @@ struct EFrom : Codable {
         api_price = try values.decodeIfPresent(String.self, forKey: .api_price)
         price = try values.decodeIfPresent(Int.self, forKey: .price)
         discounted_price = try values.decodeIfPresent(Int.self, forKey: .discounted_price)
-        form_fields = try values.decodeIfPresent([Form_fields].self, forKey: .form_fields)
+        form_fields = try values.decodeIfPresent([QForm_fields].self, forKey: .form_fields)
         currency = try values.decodeIfPresent(String.self, forKey: .currency)
         name = try values.decodeIfPresent(String.self, forKey: .name)
         status = try values.decodeIfPresent(Int.self, forKey: .status)
     }
-
+    
 }

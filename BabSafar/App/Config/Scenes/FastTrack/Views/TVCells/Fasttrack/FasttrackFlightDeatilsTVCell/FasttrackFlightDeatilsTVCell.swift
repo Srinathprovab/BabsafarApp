@@ -9,18 +9,14 @@ import UIKit
 
 
 protocol FasttrackFlightDeatilsTVCellDelegate {
-    func didTapOnChangeSelectionBtnAction(cell:FasttrackFlightDeatilsTVCell)
+    func didTapOnCloseBtnAction(cell:SelectedServicesTVCell)
 }
 
 class FasttrackFlightDeatilsTVCell: TableViewCell {
-
     
-    @IBOutlet weak var logoImg: UIImageView!
-    @IBOutlet weak var airportNamelbl: UILabel!
-    @IBOutlet weak var terminallbl: UILabel!
-    @IBOutlet weak var pricelbl: UILabel!
-    @IBOutlet weak var changeSelectionView: BorderedView!
-    @IBOutlet weak var priceView: UIStackView!
+    
+    @IBOutlet weak var fasttrackDetailsTV: UITableView!
+    @IBOutlet weak var tvHeight: NSLayoutConstraint!
     
     
     var delegate:FasttrackFlightDeatilsTVCellDelegate?
@@ -29,29 +25,80 @@ class FasttrackFlightDeatilsTVCell: TableViewCell {
         // Initialization code
         setupUI()
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
+        
         // Configure the view for the selected state
     }
     
     
-    func setupUI(){
-        changeSelectionView.isHidden = true
+    func updateHeight() {
+        tvHeight.constant = CGFloat(quickServiceA.count * 255)
+        fasttrackDetailsTV.reloadData()
     }
-    
     
     override func updateUI() {
-        logoImg.image = UIImage(named: cellInfo?.image ?? "")?.withRenderingMode(.alwaysOriginal)
-        airportNamelbl.text = cellInfo?.title ?? ""
-        terminallbl.text = cellInfo?.subTitle ?? ""
-        pricelbl.text = cellInfo?.price ?? ""
+        updateHeight()
+    }
+    
+    func setupUI(){
+        setupTV()
     }
     
     
-    @IBAction func didTapOnChangeSelectionBtnAction(_ sender: Any) {
-        delegate?.didTapOnChangeSelectionBtnAction(cell: self)
+    @objc func  didTapOnCloseBtnAction() {
+        
     }
+    
+}
+
+
+extension FasttrackFlightDeatilsTVCell : UITableViewDelegate,UITableViewDataSource {
+    
+    
+    
+    func setupTV() {
+        let nib = UINib(nibName: "SelectedServicesTVCell", bundle: nil)
+        fasttrackDetailsTV.register(nib, forCellReuseIdentifier: "cell")
+        fasttrackDetailsTV.delegate = self
+        fasttrackDetailsTV.dataSource = self
+        fasttrackDetailsTV.tableFooterView = UIView()
+        fasttrackDetailsTV.separatorStyle = .none
+        fasttrackDetailsTV.isScrollEnabled = false
+    }
+    
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return quickServiceA.count
+    }
+    
+    
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var ccell = UITableViewCell()
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as? SelectedServicesTVCell {
+            cell.selectionStyle = .none
+            cell.index = indexPath.row
+            let data = quickServiceA[indexPath.row]
+            cell.logoImg.image = UIImage(named: data.logoimg)?.withRenderingMode(.alwaysOriginal)
+            cell.fromAirportNamelbl.text = data.airportname
+            cell.terminallbl.text = data.title
+            cell.priceView.isHidden = false
+            cell.pricelbl.text = data.price
+            cell.cancelView.isHidden = true
+            cell.closeView.isHidden = false
+            
+            
+            ccell = cell
+        }
+        return ccell
+    }
+    
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+    
     
 }

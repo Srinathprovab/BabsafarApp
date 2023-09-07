@@ -7,6 +7,16 @@
 
 import UIKit
 
+
+struct QuickService {
+    let serviceType: String
+    let price: String
+    let title: String
+    let logoimg: String
+    let airportname: String
+}
+
+
 class FasttrackResultVC: BaseTableVC, FasttrackViewModelDelegate {
     
     
@@ -30,7 +40,7 @@ class FasttrackResultVC: BaseTableVC, FasttrackViewModelDelegate {
     var tablerow = [TableRow]()
     var fromList = [From]()
     var toList = [To]()
-    
+    var currency = String()
     var eploreList = [EList]()
     var key = "dep"
     var vm:FasttrackViewModel?
@@ -44,6 +54,8 @@ class FasttrackResultVC: BaseTableVC, FasttrackViewModelDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         addObserver()
+//        quickServiceA.removeAll()
+        
         if callapibool == true {
             holderView.isHidden = true
             if let selectedTab = defaults.object(forKey: UserDefaultsKeys.fasttrackJournyType) as? String ,selectedTab == "quick" {
@@ -99,24 +111,38 @@ class FasttrackResultVC: BaseTableVC, FasttrackViewModelDelegate {
     
     //MARK: - didTapOnSelectBtnAction QuickBookingResultTVCell
     override func didTapOnSelectBtnAction(cell: QuickBookingResultTVCell) {
+        let airportName = self.airportNamelbl.text ?? ""
+        let terminal = cell.titlelbl.text ?? ""
+        
         if key == "dep" {
-            gotoSelectedServicesVC(airportname: self.airportNamelbl.text ?? "",
-                                   terminal: cell.titlelbl.text ?? "",
-                                   logoname: "dep")
-        }else {
-            gotoSelectedServicesVC(airportname: self.airportNamelbl.text ?? "",
-                                   terminal: cell.titlelbl.text ?? "",
-                                   logoname: "arrival")
+            
+           
+            let quickService = QuickService(serviceType: "dep",
+                                            price: cell.pricelbl.text ?? "",
+                                            title: terminal,
+                                            logoimg: "dep",
+                                            airportname:  airportNamelbl.text ?? "")
+                quickServiceA.append(quickService)
+                gotoSelectedServicesVC()
+            
+        } else {
+            
+                let quickService = QuickService(serviceType: "arrival",
+                                                price: cell.pricelbl.text ?? "",
+                                                title: terminal,
+                                                logoimg: "arrival",
+                                                airportname: airportNamelbl.text ?? "")
+                quickServiceA.append(quickService)
+                gotoSelectedServicesVC()
+            
         }
     }
+
     
-    func gotoSelectedServicesVC(airportname:String,terminal:String,logoname:String) {
+    func gotoSelectedServicesVC() {
         callapibool = true
         guard let vc = SelectedServicesVC.newInstance.self else {return}
         vc.modalPresentationStyle = .overCurrentContext
-        vc.airportName = airportname
-        vc.terminal = terminal
-        vc.logoImg = logoname
         self.present(vc, animated: false)
     }
     
@@ -181,6 +207,9 @@ extension FasttrackResultVC {
         btnsViewHeight.constant = 50
         fromList = response.fasttrackdata?.col_x?.list?.from ?? []
         toList = response.fasttrackdata?.col_x?.list?.to ?? []
+        currency = response.currency ?? ""
+        fbooking_source = response.fasttrackdata?.col_x?.booking_source ?? ""
+        fsearch_id = response.fasttrackdata?.col_x?.search_id ?? ""
         
         citylbl.text = "\(response.fasttrackdata?.col_x?.search_params?.from_loc_airport_city ?? "")(\(response.fasttrackdata?.col_x?.search_params?.from_loc ?? "")) - \(response.fasttrackdata?.col_x?.search_params?.to_loc_airport_city ?? "")(\(response.fasttrackdata?.col_x?.search_params?.to_loc ?? ""))"
         
@@ -199,13 +228,14 @@ extension FasttrackResultVC {
         if key == "dep" {
             fromList.forEach { i in
                 tablerow.append(TableRow(title:i.sku,
-                                         price: i.category_id,
+                                         subTitle: "\(currency):",
+                                         price: "\(i.price ?? 0)",
                                          cellType:.QuickBookingResultTVCell))
             }
         }else {
             toList.forEach { i in
                 tablerow.append(TableRow(title:i.sku,
-                                         price: i.category_id,
+                                         price: "\(i.price ?? 0)",
                                          cellType:.QuickBookingResultTVCell))
             }
         }
@@ -282,7 +312,33 @@ extension FasttrackResultVC {
         NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("offline"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(resultnil), name: NSNotification.Name("resultnil"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reload), name: Notification.Name("reload"), object: nil)
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(addservice), name: Notification.Name("addservice"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(closeService), name: Notification.Name("closeService"), object: nil)
+
+    }
+    
+    
+    @objc func closeService(notify:NSNotification) {
+    
+        DispatchQueue.main.async {[self] in
+            quickServiceA.removeAll()
+            
+            quickbookingView.isUserInteractionEnabled = true
+            exploreView.isUserInteractionEnabled = true
+            departureSelected()
+        }
+       
+    }
+    
+    
+    @objc func addservice(notify:NSNotification) {
+        if notify.object as? String == "dep" {
+            departureSelected()
+            exploreView.isUserInteractionEnabled = false
+        }else {
+            arrivalSelected()
+            quickbookingView.isUserInteractionEnabled = false
+        }
     }
     
     

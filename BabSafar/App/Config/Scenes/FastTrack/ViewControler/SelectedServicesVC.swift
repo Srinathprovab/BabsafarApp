@@ -10,10 +10,17 @@ import UIKit
 class SelectedServicesVC: BaseTableVC {
     
     
+    @IBOutlet weak var tvHeight: NSLayoutConstraint!
+    @IBOutlet weak var addArrivalView: BorderedView!
+    @IBOutlet weak var addArrivallbl: UILabel!
+    
+    
+    
     var tablerow = [TableRow]()
     var airportName = String()
     var terminal = String()
     var logoImg = String()
+    var serviceType = String()
     static var newInstance: SelectedServicesVC? {
         let storyboard = UIStoryboard(name: Storyboard.FastTrack.name,
                                       bundle: nil)
@@ -38,42 +45,108 @@ class SelectedServicesVC: BaseTableVC {
     func setupUI() {
         self.view.backgroundColor = .black.withAlphaComponent(0.5)
         commonTableView.registerTVCells(["SelectedServicesTVCell"])
-        commonTableView.isScrollEnabled = false
+        
+        commonTableView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner] // Top left corner, Top right corner respectively
         commonTableView.layer.cornerRadius = 10
         commonTableView.clipsToBounds = true
+        commonTableView.isScrollEnabled = false
+        
+    }
+    
+    func setHeight(){
+        if quickServiceA.count == 1 {
+            addArrivalView.isHidden = false
+            tvHeight.constant = 255
+        }else {
+            addArrivalView.isHidden = true
+            tvHeight.constant = CGFloat(255 * quickServiceA.count)
+        }
     }
     
     
     func setupTV() {
         tablerow.removeAll()
-        tablerow.append(TableRow(title:airportName,
-                                 subTitle: terminal,
-                                 key: "hide",
-                                 image: logoImg,
-                                 cellType:.SelectedServicesTVCell))
+        setHeight()
+        
+        quickServiceA.forEach { i in
+            
+            if i.serviceType == "dep" {
+                serviceType = "arrival"
+                addArrivallbl.text = "Add Arrival Service"
+                tablerow.append(TableRow(title:i.airportname,
+                                         subTitle: i.title,
+                                         key: "hideprice",
+                                         image: i.logoimg,
+                                         cellType:.SelectedServicesTVCell))
+            }else {
+                serviceType = "dep"
+                addArrivallbl.text = "Add Departure Service"
+                tablerow.append(TableRow(title:i.airportname,
+                                         subTitle: i.title,
+                                         key: "hideprice",
+                                         image: i.logoimg,
+                                         cellType:.SelectedServicesTVCell))
+            }
+            
+            
+        }
         commonTVData = tablerow
         commonTableView.reloadData()
     }
     
     
     
-    //MARK: - didTapOnChangeSelectionBtnAction SelectedServicesTVCell
-    override func didTapOnChangeSelectionBtnAction(cell: SelectedServicesTVCell) {
+    override func didTapOnCancelCardBtnAction(cell: SelectedServicesTVCell) {
+        // Assuming you have the index of the QuickService you want to remove, for example, 'indexToRemove'
+        
+        let index = commonTableView.indexPath(for: cell)
+        let indexToRemove = index?.row ?? 0
+        
+        if indexToRemove >= 0 && indexToRemove < quickServiceA.count {
+            quickServiceA.remove(at: indexToRemove)
+        }
+        
+        if quickServiceA.count > 0 {
+            DispatchQueue.main.async {
+                self.setupTV()
+            }
+        }else {
+            NotificationCenter.default.post(name: NSNotification.Name("closeService"), object: serviceType)
+            dismiss(animated: true)
+        }
+        
+        
+    }
+    
+    
+    
+    
+    @IBAction func closeBtnAction(_ sender: Any) {
+        NotificationCenter.default.post(name: NSNotification.Name("closeService"), object: serviceType)
+        dismiss(animated: true)
+    }
+    
+    
+    //MARK: - didTapOnAddArrivalServiceBtnAction
+    
+    @IBAction func didTapOnAddArrivalServiceBtnAction(_ sender: Any) {
+        NotificationCenter.default.post(name: NSNotification.Name("addservice"), object: serviceType)
         dismiss(animated: false)
     }
     
-    //MARK: - didTapOnAddArrivalServiceBtnAction SelectedServicesTVCell
-    override func didTapOnAddArrivalServiceBtnAction(cell: SelectedServicesTVCell) {
-        print("didTapOnAddArrivalServiceBtnAction")
+    
+    //MARK: - didTapOnCheckOutBtnAction
+    
+    @IBAction func didTapOnCheckOutBtnAction(_ sender: Any) {
+        gotoFBookingDetailsVC()
     }
     
-    //MARK: - didTapOnCheckOutBtnAction SelectedServicesTVCell
-    override func didTapOnCheckOutBtnAction(cell: SelectedServicesTVCell) {
-        print("didTapOnCheckOutBtnAction")
-    }
     
-    @IBAction func closeBtnAction(_ sender: Any) {
-        dismiss(animated: true)
+    func gotoFBookingDetailsVC(){
+        callapibool = true
+        guard let vc = FBookingDetailsVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: false)
     }
     
 }
@@ -87,6 +160,17 @@ extension SelectedServicesVC {
         NotificationCenter.default.addObserver(self, selector: #selector(resultnil), name: NSNotification.Name("resultnil"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reload), name: Notification.Name("reload"), object: nil)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(closefrombookingdetails), name: Notification.Name("closefrombookingdetails"), object: nil)
+
+    }
+    
+  
+    
+    @objc func closefrombookingdetails() {
+        
+        DispatchQueue.main.async {[self] in
+            setupTV()
+        }
     }
     
     

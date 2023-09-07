@@ -451,7 +451,7 @@ class DashBoardVC: BaseTableVC, TopFlightDetailsViewModelDelegate, AllCountryCod
     //MARK: - didTapOnFastTrackBtnAction SelectModuleTabTVCell
     
     override func didTapOnFastTrackBtnAction(cell:SelectModuleTabTVCell){
-       // gotoSearchFastTrackVC()
+        gotoSearchFastTrackVC()
     }
     
     func gotoSearchFastTrackVC() {

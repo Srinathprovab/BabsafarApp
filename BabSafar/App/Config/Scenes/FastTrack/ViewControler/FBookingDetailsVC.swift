@@ -10,7 +10,6 @@ import UIKit
 class FBookingDetailsVC: BaseTableVC, EBookingViewModelDelegate {
     
     
-    
     @IBOutlet weak var nav: NavBar!
     @IBOutlet weak var pricelbl: UILabel!
     @IBOutlet weak var holderView: UIView!
@@ -34,12 +33,31 @@ class FBookingDetailsVC: BaseTableVC, EBookingViewModelDelegate {
     var currency = String()
     var sku = String()
     var payload = [String:Any]()
+    var from_plan_code = String()
+    var to_plan_code = String()
+    var totalAmount = 0
     var vm:EBookingViewModel?
     
     override func viewWillAppear(_ animated: Bool) {
+        addObserver()
         if callapibool == true {
-            holderView.isHidden = true
-            callFastrackExploreBookingAPI()
+            callAPI()
+        }
+    }
+    
+    
+    func callAPI() {
+        holderView.isHidden = true
+        if let selectedTab = defaults.object(forKey: UserDefaultsKeys.fasttrackJournyType) as? String  {
+            
+            if selectedTab == "quick" {
+                callFastrackQuickBookingBookingAPI()
+            }else {
+                callFastrackExploreBookingAPI()
+            }
+            
+        }else {
+            
         }
     }
     
@@ -61,12 +79,18 @@ class FBookingDetailsVC: BaseTableVC, EBookingViewModelDelegate {
                                          "ExploreResultTVCell",
                                          "ExploreLeadPassengerTVCell",
                                          "EmptyTVCell",
-                                         "SpecialRequestTVCell"])
-       
+                                         "SpecialRequestTVCell",
+                                         "FasttrackFlightDeatilsTVCell"])
+        
+        
+        
+        
+        
     }
     
     @objc func didTapOnBackBtnAction() {
         callapibool = false
+        NotificationCenter.default.post(name: NSNotification.Name("closefrombookingdetails"), object: nil)
         dismiss(animated: true)
     }
     
@@ -124,27 +148,6 @@ class FBookingDetailsVC: BaseTableVC, EBookingViewModelDelegate {
     
     
     
-    
-    func setAttributedText(str1:String,str2:String)  {
-        
-        let atter1 = [NSAttributedString.Key.foregroundColor:UIColor.WhiteColor,
-                      NSAttributedString.Key.font:UIFont.LatoBold(size: 12)] as [NSAttributedString.Key : Any]
-        let atter2 = [NSAttributedString.Key.foregroundColor:UIColor.WhiteColor,
-                      NSAttributedString.Key.font:UIFont.LatoBold(size: 16)] as [NSAttributedString.Key : Any]
-        
-        let atterStr1 = NSMutableAttributedString(string: str1, attributes: atter1)
-        let atterStr2 = NSMutableAttributedString(string: str2, attributes: atter2)
-        
-        
-        let combination = NSMutableAttributedString()
-        combination.append(atterStr1)
-        combination.append(atterStr2)
-        
-        pricelbl.attributedText = combination
-        
-    }
-    
-    
     @IBAction func didTapOnProceedPaymentBtnAction(_ sender: Any) {
         paymentTap()
     }
@@ -175,39 +178,41 @@ extension FBookingDetailsVC {
         adult18PriceArray.removeAll()
         eproduct_details = response.product_details
         sku = response.product_details?.data?.from?.sku ?? ""
-        totalprice = response.product_details?.data?.from?.price ?? ""
+        totalprice = "\(response.product_details?.data?.from?.price ?? 0)"
         currency = response.product_details?.data?.from?.currency ?? ""
         setAttributedText(str1: "\(currency):", str2: totalprice)
-
-
-         response.product_details?.data?.from?.form_fields?.forEach({ i in
-             if i.title == "Adults (18+ Years)" {
-                 i.options?.forEach({ j in
-                     adult18Array.append(j.formatted_title ?? "")
-                     adult18PriceArray.append(j.price ?? "")
-                 })
-             }
-             
-             if i.title == "Child (2-17 Years)" {
-                 i.options?.forEach({ j in
-                     child2_7Array.append(j.formatted_title ?? "")
-                 })
-             }
-             
-             
-             if i.title == "Available Airport Terminal" {
-                 i.options?.forEach({ j in
-                     terminalArray.append(j.formatted_title ?? "")
-                 })
-             }
-             
-             
+        
+        response.product_details?.data?.from?.form_fields?.forEach({ i in
+            if i.title == "Adults (18+ Years)" {
+                i.options?.forEach({ j in
+                    adult18Array.append(j.formatted_title ?? "")
+                    adult18PriceArray.append("\(j.price ?? 0)")
+                })
+            }
+            
+            if i.title == "Child (2-17 Years)" {
+                i.options?.forEach({ j in
+                    child2_7Array.append(j.formatted_title ?? "")
+                })
+            }
+            
+            
+            if i.title == "Available Airport Terminal" {
+                i.options?.forEach({ j in
+                    terminalArray.append(j.formatted_title ?? "")
+                })
+            }
+            
+            
         })
         
         DispatchQueue.main.async {
             self.setupExploreTV()
         }
     }
+    
+    
+    
     
     
     func setupExploreTV() {
@@ -221,13 +226,69 @@ extension FBookingDetailsVC {
                                  image: "",
                                  cellType:.ExploreResultTVCell))
         tablerow.append(TableRow(cellType:.ExploreLeadPassengerTVCell))
-        tablerow.append(TableRow(cellType:.ExploreSummeryTVCell))
+        tablerow.append(TableRow(title:"",key: "explore",cellType:.ExploreSummeryTVCell))
         tablerow.append(TableRow(key:"explore",cellType:.SpecialRequestTVCell))
         tablerow.append(TableRow(height:50,bgColor: .AppHolderViewColor,cellType:.EmptyTVCell))
         
         commonTVData = tablerow
         commonTableView.reloadData()
     }
+}
+
+
+
+extension FBookingDetailsVC {
+    
+    
+    func callFastrackQuickBookingBookingAPI() {
+        payload.removeAll()
+        
+        quickServiceA.forEach { i in
+            if i.serviceType == "dep" {
+                from_plan_code = i.title
+            }else {
+                to_plan_code = i.title
+            }
+        }
+        
+        payload["search_id"] = fsearch_id
+        payload["booking_source"] = fbooking_source
+        payload["from_plan_code"] = from_plan_code
+        payload["to_plan_code"] = to_plan_code
+        
+        vm?.CALL_Quick_BOOKING_LIST_API(dictParam: payload)
+    }
+    
+    
+    func quickbookingDetails(response: QBookingModel) {
+        holderView.isHidden = false
+        
+        qproduct_details = response.product_details
+        currency = response.product_details?.data?.from?.currency ?? ""
+        
+        DispatchQueue.main.async {
+            self.setupQuickBookingTV()
+        }
+    }
+    
+    
+    
+    func setupQuickBookingTV() {
+        tablerow.removeAll()
+        
+        setupTotalAmount()
+        tablerow.append(TableRow(cellType:.FasttrackFlightDeatilsTVCell))
+        tablerow.append(TableRow(title:"",key: "quick",cellType:.ExploreSummeryTVCell))
+        tablerow.append(TableRow(key:"explore",cellType:.SpecialRequestTVCell))
+        tablerow.append(TableRow(height:50,bgColor: .AppHolderViewColor,cellType:.EmptyTVCell))
+        
+        
+        commonTVData = tablerow
+        commonTableView.reloadData()
+    }
+    
+    
+    
 }
 
 
@@ -244,4 +305,127 @@ extension FBookingDetailsVC {
         print(depDate)
         print(depTime)
     }
+}
+
+
+
+extension FBookingDetailsVC {
+    
+    func addObserver() {
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("offline"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(resultnil), name: NSNotification.Name("resultnil"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reload), name: Notification.Name("reload"), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(closebtnindex), name: Notification.Name("closebtnindex"), object: nil)
+        
+    }
+    
+    
+    
+    @objc func closebtnindex(notify:NSNotification) {
+        
+        let indexToRemove = (notify.object as? Int) ?? 0
+        
+        if indexToRemove >= 0 && indexToRemove < quickServiceA.count {
+            quickServiceA.remove(at: indexToRemove)
+        }
+        
+        if quickServiceA.count > 0 {
+            DispatchQueue.main.async {
+                self.setupQuickBookingTV()
+            }
+        }else {
+            gotoSearchFastTrackVC()
+        }
+    }
+    
+    
+    func gotoSearchFastTrackVC(){
+        callapibool = false
+        guard let vc = SearchFastTrackVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true)
+    }
+    
+    
+    @objc func reload() {
+        DispatchQueue.main.async {[self] in
+            callAPI()
+        }
+    }
+    
+    //MARK: - resultnil
+    @objc func resultnil() {
+        guard let vc = NoInternetConnectionVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.key = "noresult"
+        self.present(vc, animated: true)
+    }
+    
+    
+    //MARK: - nointernet
+    @objc func nointernet() {
+        guard let vc = NoInternetConnectionVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.key = "nointernet"
+        self.present(vc, animated: true)
+    }
+    
+    
+    func setupTotalAmount() {
+        if quickServiceA.count == 1 {
+            totalAmount = 0
+            
+            quickServiceA.forEach({ i in
+                if i.serviceType == "dep" {
+                    totalAmount = (qproduct_details?.data?.from?.price ?? 0) + totalAmount
+                    
+                }else {
+                    totalAmount = (qproduct_details?.data?.to?.price ?? 0) + totalAmount
+                    
+                }
+            })
+        }
+        
+        if quickServiceA.count == 2 {
+            totalAmount = 0
+            
+            quickServiceA.forEach({ i in
+                if i.serviceType == "dep" {
+                    totalAmount = (qproduct_details?.data?.from?.price ?? 0) + totalAmount
+                }else {
+                    totalAmount = (qproduct_details?.data?.to?.price ?? 0) + totalAmount
+                }
+            })
+        }
+        
+        setAttributedText(str1: "\(currency):", str2: "\(totalAmount)")
+        
+        
+    }
+    
+    
+    func setAttributedText(str1:String,str2:String)  {
+        
+        let atter1 = [NSAttributedString.Key.foregroundColor:UIColor.WhiteColor,
+                      NSAttributedString.Key.font:UIFont.LatoBold(size: 14)] as [NSAttributedString.Key : Any]
+        let atter2 = [NSAttributedString.Key.foregroundColor:UIColor.WhiteColor,
+                      NSAttributedString.Key.font:UIFont.LatoBold(size: 18)] as [NSAttributedString.Key : Any]
+        
+        let atterStr1 = NSMutableAttributedString(string: str1, attributes: atter1)
+        let atterStr2 = NSMutableAttributedString(string: str2, attributes: atter2)
+        
+        
+        let combination = NSMutableAttributedString()
+        combination.append(atterStr1)
+        combination.append(atterStr2)
+        
+        pricelbl.attributedText = combination
+        
+    }
+    
+    
+    
+    
 }

@@ -1,9 +1,15 @@
-
+//
+//  QOptions.swift
+//  BabSafar
+//
+//  Created by FCI on 07/09/23.
+//
 
 import Foundation
-struct Options : Codable {
-    let value : String?
+
+struct QOptions : Codable {
     let title : String?
+    let value : String?
     let api_price : String?
     let price : Int?
     let price_type : String?
@@ -11,8 +17,8 @@ struct Options : Codable {
 
     enum CodingKeys: String, CodingKey {
 
-        case value = "value"
         case title = "title"
+        case value = "value"
         case api_price = "api_price"
         case price = "price"
         case price_type = "price_type"
@@ -21,8 +27,8 @@ struct Options : Codable {
 
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        value = try values.decodeIfPresent(String.self, forKey: .value)
         title = try values.decodeIfPresent(String.self, forKey: .title)
+        value = try values.decodeIfPresent(String.self, forKey: .value)
         api_price = try values.decodeIfPresent(String.self, forKey: .api_price)
         price = try values.decodeIfPresent(Int.self, forKey: .price)
         price_type = try values.decodeIfPresent(String.self, forKey: .price_type)

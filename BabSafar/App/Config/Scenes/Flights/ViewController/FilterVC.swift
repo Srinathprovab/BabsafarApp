@@ -56,7 +56,10 @@ protocol AppliedFilters:AnyObject {
     func hotelFilterByApplied(minpricerange:Double,
                               maxpricerange:Double,
                               starRating: String,
-                              refundableTypeArray:[String])
+                              refundableTypeArray:[String],
+                              nearByLocA:[String],
+                              niberhoodA:[String],
+                              aminitiesA:[String])
 }
 
 
@@ -75,36 +78,19 @@ class FilterVC: BaseTableVC{
     @IBOutlet weak var filtersBtn: UIButton!
     @IBOutlet weak var resetBtn: UIButton!
     
-    
+    //MARK: - Flights
     weak var delegate: AppliedFilters?
     var sortBy: SortParameter = .nothing
     var minpricerangefilter = Double()
     var maxpricerangefilter = Double()
     var starRatingFilter = String()
-    
-    
     var stopsArray = ["0 Stop","1 Stop","1+ Stop"]
     var refundableTypeArray = ["Refundable","Non Refundable"]
     var luggageArray = ["Cabin Baggage","Checked Baggage"]
-    var classArray = ["Economy","Permium Economy","Bussiness","First Class"]
     var tablerow = [TableRow]()
     var filterKey = String()
-    var free_airport_shuttleArray = ["Free Ariport Shuttle","All Inclusive","Facilities"]
-    var guestRating = ["Wonderful 4.5+","Very good 4+","Good 3.5+","Average 3+","Poor 4.5+"]
-    var guestRating1 = ["Fully Refundable","Reserve Now , Pay Later"]
-    var  healthsafetyArray = ["only show stay with enhanced health & safety measures"]
-    var badPreference = ["Twin Beds","Double Bed"]
-    var brands = ["Maison Privee","Jumeirah","Rove hotels"]
-    var accessibilityFeatures = ["Accessibility Equipment","Accessible Bathroom","Accessible Path Of Travel"]
-    var distance_from_center = [String]()
     var noOverNightFlightArray = ["No"]
     var paymentTypeArray = ["Refundable","Non Refundable"]
-    var badPreferenceArray = ["Twin Beds","Double Bed"]
-    var amenitiesArray = ["24 Hour Front Desk","Adults Only","Air Conditioned"]
-    var neighbourhoodArray = ["Deira","Dubai","Jebel ali","Jumeirah"]
-    var accommodationArray = ["Hotel"]
-    
-    
     var noOvernightFlightFilterStr = String()
     var noOfStopsFilterArray = [String]()
     var refundablerTypeFilteArray = [String]()
@@ -114,8 +100,11 @@ class FilterVC: BaseTableVC{
     var connectingFlightsFilterArray = [String]()
     var ConnectingAirportsFilterArray = [String]()
     
-    var pricetitle = String()
-    var pricefilterValue = String()
+    //MARK: - Hotels
+    var selectedNeighbourwoodArray = [String]()
+    var selectednearBylocationsArray = [String]()
+    var selectedamenitiesArray = [String]()
+    
     static var newInstance: FilterVC? {
         let storyboard = UIStoryboard(name: Storyboard.Main.name,
                                       bundle: nil)
@@ -129,7 +118,7 @@ class FilterVC: BaseTableVC{
     
     override func viewWillAppear(_ animated: Bool) {
         
-    
+        
         NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("nointernet"), object: nil)
     }
     
@@ -266,18 +255,19 @@ class FilterVC: BaseTableVC{
     
     
     
+    
     func setupHotelsFilterTVCells() {
         
         commonTableView.isScrollEnabled = true
         tablerow.removeAll()
         
-        
         tablerow.append(TableRow(title:"Price",cellType:.SliderTVCell))
         tablerow.append(TableRow(title:"Star Ratings ",cellType:.PopularFiltersTVCell))
         tablerow.append(TableRow(title:"Booking Type",data: paymentTypeArray,cellType:.CheckBoxTVCell))
-        tablerow.append(TableRow(title:"Neighbourhood",data: badPreference,cellType:.CheckBoxTVCell))
-        tablerow.append(TableRow(title:"Near By Location's",data: brands,cellType:.CheckBoxTVCell))
+        tablerow.append(TableRow(title:"Neighbourhood",data: neighbourwoodArray,cellType:.CheckBoxTVCell))
+        tablerow.append(TableRow(title:"Near By Location's",data: nearBylocationsArray,cellType:.CheckBoxTVCell))
         tablerow.append(TableRow(title:"Amenities",data: amenitiesArray,cellType:.CheckBoxTVCell))
+        
         
         
         tablerow.append(TableRow(height:100,cellType:.EmptyTVCell))
@@ -287,6 +277,8 @@ class FilterVC: BaseTableVC{
         commonTVData = tablerow
         commonTableView.reloadData()
     }
+    
+    
     
     func setupHotelsSortByTVCells() {
         commonTableView.isScrollEnabled = false
@@ -548,21 +540,21 @@ class FilterVC: BaseTableVC{
             self.setupFilterTVCells()
         }
     }
-
+    
     
     @IBAction func didTapOnResetBtn(_ sender: Any) {
         sortBy = .nothing
         if filterKey == "filter" {
-//            if let tabSelected = defaults.string(forKey: UserDefaultsKeys.dashboardTapSelected) {
-//                if tabSelected == "Flights" {
-//
-//                }else {
-//
-//                }
-//            }
+            //            if let tabSelected = defaults.string(forKey: UserDefaultsKeys.dashboardTapSelected) {
+            //                if tabSelected == "Flights" {
+            //
+            //                }else {
+            //
+            //                }
+            //            }
             
             resetFilterValues()
-          
+            
         }else {
             if let tabSelected = defaults.string(forKey: UserDefaultsKeys.dashboardTapSelected) {
                 if tabSelected == "Flights" {
@@ -592,7 +584,7 @@ class FilterVC: BaseTableVC{
                         resetSortBy(cell: cell2)
                     }
                     
-                   
+                    
                     
                 }
             }
@@ -705,6 +697,27 @@ class FilterVC: BaseTableVC{
                 break
                 
                 
+                
+            case "Neighbourhood":
+                selectedNeighbourwoodArray.append(cell.titlelbl.text ?? "")
+                print(selectedNeighbourwoodArray.joined(separator: "---"))
+                break
+                
+                
+            case "Near By Location's":
+                selectednearBylocationsArray.append(cell.titlelbl.text ?? "")
+                print(selectednearBylocationsArray.joined(separator: "---"))
+                break
+                
+                
+            case "Amenities":
+                selectedamenitiesArray.append(cell.titlelbl.text ?? "")
+                print(selectedamenitiesArray.joined(separator: "---"))
+                break
+                
+                
+                
+                
             default:
                 break
             }
@@ -801,6 +814,33 @@ class FilterVC: BaseTableVC{
                 break
                 
                 
+            case "Neighbourhood":
+                
+                if let index = selectedNeighbourwoodArray.firstIndex(of: cell.titlelbl.text ?? "") {
+                    airlinesFilterArray.remove(at: index)
+                }
+                print(airlinesFilterArray.joined(separator: "---"))
+                break
+                
+                
+            case "Near By Location's":
+                
+                if let index = selectednearBylocationsArray.firstIndex(of: cell.titlelbl.text ?? "") {
+                    airlinesFilterArray.remove(at: index)
+                }
+                print(airlinesFilterArray.joined(separator: "---"))
+                break
+                
+                
+            case "Amenities":
+                
+                if let index = selectedamenitiesArray.firstIndex(of: cell.titlelbl.text ?? "") {
+                    airlinesFilterArray.remove(at: index)
+                }
+                print(airlinesFilterArray.joined(separator: "---"))
+                break
+                
+                
                 
                 
             default:
@@ -887,11 +927,11 @@ class FilterVC: BaseTableVC{
                 filterModel.noOvernightFlight = noOvernightFlightFilterStr
                 filterModel.connectingFlights = connectingFlightsFilterArray
                 filterModel.connectingAirports = ConnectingAirportsFilterArray
-
                 
                 
                 
-//                delegate?.filtersByApplied(minpricerange:minpricerangefilter,maxpricerange: maxpricerangefilter,noofStopsArray: noOfStopsFilterArray, refundableTypeArray: refundablerTypeFilteArray, departureTime: departureTimeFilter,arrivalTime: arrivalTimeFilter, noOvernightFlight: noOvernightFlightFilterStr,airlinesFilterArray: airlinesFilterArray,connectingFlightsFilterArray: connectingFlightsFilterArray,ConnectingAirportsFilterArray: ConnectingAirportsFilterArray)
+                
+                //                delegate?.filtersByApplied(minpricerange:minpricerangefilter,maxpricerange: maxpricerangefilter,noofStopsArray: noOfStopsFilterArray, refundableTypeArray: refundablerTypeFilteArray, departureTime: departureTimeFilter,arrivalTime: arrivalTimeFilter, noOvernightFlight: noOvernightFlightFilterStr,airlinesFilterArray: airlinesFilterArray,connectingFlightsFilterArray: connectingFlightsFilterArray,ConnectingAirportsFilterArray: ConnectingAirportsFilterArray)
                 
                 
                 delegate?.filtersByApplied(minpricerange:filterModel.minPriceRange ?? 0.0,
@@ -925,7 +965,10 @@ class FilterVC: BaseTableVC{
             delegate?.hotelFilterByApplied(minpricerange: minpricerangefilter,
                                            maxpricerange: maxpricerangefilter,
                                            starRating: starRatingFilter,
-                                           refundableTypeArray: refundablerTypeFilteArray)
+                                           refundableTypeArray: refundablerTypeFilteArray,
+                                           nearByLocA: selectednearBylocationsArray,
+                                           niberhoodA: selectedNeighbourwoodArray,
+                                           aminitiesA: selectedamenitiesArray)
         }
         
         

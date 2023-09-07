@@ -145,6 +145,10 @@ class FasttrackSearchTVCell: TableViewCell, FastrackAirlineListViewModelDelegate
 
 
 extension FasttrackSearchTVCell:SelectCityViewModelProtocal {
+    func ShowCityList(response: [SelectCityModel]) {
+        
+    }
+    
     
     func ShowCityListMulticity(response: [SelectCityModel]) {
         
@@ -191,30 +195,7 @@ extension FasttrackSearchTVCell:SelectCityViewModelProtocal {
 extension FasttrackSearchTVCell {
     
     
-    //MARK: - INSURENCE
-    
-    func CallShowCityListAPI(str:String) {
-        payload["term"] = str
-        cityViewModel?.CallShowCityListAPI(dictParam: payload)
-    }
-    
-    func ShowCityList(response: [SelectCityModel]) {
-        cityList = response
-        
-        
-        if txtbool == true {
-            fromCityTVHeight.constant = CGFloat(cityList.count * 80)
-            DispatchQueue.main.async {[self] in
-                fromCityTV.reloadData()
-            }
-        }else {
-            toCityTVHeight.constant = CGFloat(cityList.count * 80)
-            DispatchQueue.main.async {[self] in
-                toCityTV.reloadData()
-            }
-        }
-        
-    }
+   
     
     //MARK: - FASTRACK
     
@@ -311,7 +292,7 @@ extension FasttrackSearchTVCell:UITableViewDelegate, UITableViewDataSource {
             
             if tableView == fromCityTV {
                 
-                fromTF.text = cityList[indexPath.row].label ?? ""
+                fromTF.text = airlineList[indexPath.row].label ?? ""
                 fromTF.resignFirstResponder()
                 
                 defaults.set(airlineList[indexPath.row].label ?? "", forKey: UserDefaultsKeys.frfromCity)
@@ -321,19 +302,19 @@ extension FasttrackSearchTVCell:UITableViewDelegate, UITableViewDataSource {
                 defaults.set(airlineList[indexPath.row].fast_track_id ?? "", forKey: UserDefaultsKeys.fromfstcode)
                 
                 fromCityTVHeight.constant = 0
+            }else {
+                
+                toTF.text = airlineList[indexPath.row].label ?? ""
+                toTF.resignFirstResponder()
+                
+                defaults.set(airlineList[indexPath.row].label ?? "", forKey: UserDefaultsKeys.frtoCity)
+                defaults.set(airlineList[indexPath.row].id ?? "", forKey: UserDefaultsKeys.frtolocid)
+                defaults.set("\(airlineList[indexPath.row].city ?? "") (\(airlineList[indexPath.row].code ?? ""))", forKey: UserDefaultsKeys.frtoairport)
+                defaults.set(airlineList[indexPath.row].city ?? "", forKey: UserDefaultsKeys.frtocityname)
+                defaults.set(airlineList[indexPath.row].fast_track_id ?? "", forKey: UserDefaultsKeys.tofstcode)
+                
+                toCityTVHeight.constant = 0
             }
-        }else {
-            
-            toTF.text = cityList[indexPath.row].label ?? ""
-            toTF.resignFirstResponder()
-            
-            defaults.set(airlineList[indexPath.row].label ?? "", forKey: UserDefaultsKeys.frtoCity)
-            defaults.set(airlineList[indexPath.row].id ?? "", forKey: UserDefaultsKeys.frtolocid)
-            defaults.set("\(airlineList[indexPath.row].city ?? "") (\(airlineList[indexPath.row].code ?? ""))", forKey: UserDefaultsKeys.frtoairport)
-            defaults.set(airlineList[indexPath.row].city ?? "", forKey: UserDefaultsKeys.frtocityname)
-            defaults.set(airlineList[indexPath.row].fast_track_id ?? "", forKey: UserDefaultsKeys.tofstcode)
-            
-            toCityTVHeight.constant = 0
         }
     }
     

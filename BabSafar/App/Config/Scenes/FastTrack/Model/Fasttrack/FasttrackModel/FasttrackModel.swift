@@ -13,13 +13,15 @@ struct FasttrackModel : Codable {
     let msg : String?
     let status : Int?
     let session_expiry_details : ISession_expiry_details?
-
+    let currency : String?
+    
     enum CodingKeys: String, CodingKey {
 
         case fasttrackdata = "fasttrackdata"
         case msg = "msg"
         case status = "status"
         case session_expiry_details = "session_expiry_details"
+        case currency = "currency"
     }
 
     init(from decoder: Decoder) throws {
@@ -28,6 +30,8 @@ struct FasttrackModel : Codable {
         msg = try values.decodeIfPresent(String.self, forKey: .msg)
         status = try values.decodeIfPresent(Int.self, forKey: .status)
         session_expiry_details = try values.decodeIfPresent(ISession_expiry_details.self, forKey: .session_expiry_details)
+        currency = try values.decodeIfPresent(String.self, forKey: .currency)
+
     }
 
 }

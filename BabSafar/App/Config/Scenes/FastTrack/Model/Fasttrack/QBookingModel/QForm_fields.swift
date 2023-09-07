@@ -1,8 +1,15 @@
-
+//
+//  QForm_fields.swift
+//  BabSafar
+//
+//  Created by FCI on 07/09/23.
+//
 
 import Foundation
-struct Form_fields : Codable {
-    let options : [Options]?
+
+
+struct QForm_fields : Codable {
+    let options : [QOptions]?
     let title : String?
     let max_characters : Int?
     let image_size_x : Int?
@@ -25,7 +32,7 @@ struct Form_fields : Codable {
 
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        options = try values.decodeIfPresent([Options].self, forKey: .options)
+        options = try values.decodeIfPresent([QOptions].self, forKey: .options)
         title = try values.decodeIfPresent(String.self, forKey: .title)
         max_characters = try values.decodeIfPresent(Int.self, forKey: .max_characters)
         image_size_x = try values.decodeIfPresent(Int.self, forKey: .image_size_x)

@@ -436,13 +436,14 @@ class AddDeatilsOfTravellerTVCell: TableViewCell {
         switch ageCategory {
         case .adult:
             
-            components.year = -100
-            dobDatePicker.minimumDate = calendar.date(byAdding: components, to: Date())
+            components.year = -12 // Allow selecting a date at least 12 years in the past
+            dobDatePicker.maximumDate = calendar.date(byAdding: components, to: Date())
+            
+//            components.year = -100
+//            dobDatePicker.minimumDate = calendar.date(byAdding: components, to: Date())
         case .child:
             components.year = -12
-            //components.year = -1
             dobDatePicker.minimumDate = calendar.date(byAdding: components, to: Date())
-            //  dobDatePicker.maximumDate = calendar.date(byAdding: components, to: Date())
         case .infant:
             components.year = -2
             dobDatePicker.minimumDate = calendar.date(byAdding: components, to: Date())
@@ -600,35 +601,7 @@ class AddDeatilsOfTravellerTVCell: TableViewCell {
         return tableView.indexPath(for: self)
     }
     
-    
-    
-    //    @IBAction func didTapOnMrBtnAction(_ sender: Any) {
-    //        self.mrRadioImg.image = UIImage(named: "radioSelected")?.withRenderingMode(.alwaysOriginal).withTintColor(HexColor("#254179"))
-    //        self.mrsRadioImg.image = UIImage(named: "radioUnselected")
-    //
-    //        if travelerArray.count <= indexposition {
-    //            travelerArray += Array(repeating: Traveler(), count: indexposition - travelerArray.count + 1)
-    //        }
-    //
-    //        // Update the gender property of the Traveler object at the specified index
-    //        travelerArray[indexposition].gender = "1"
-    //
-    //        delegate?.didTapOnMrBtnAction(cell: self)
-    //    }
-    
-    //    @IBAction func didTapOnMrsBtnAction(_ sender: Any) {
-    //        self.mrRadioImg.image = UIImage(named: "radioUnselected")
-    //        self.mrsRadioImg.image = UIImage(named: "radioSelected")?.withRenderingMode(.alwaysOriginal).withTintColor(HexColor("#254179"))
-    //
-    //        if travelerArray.count <= indexposition {
-    //            travelerArray += Array(repeating: Traveler(), count: indexposition - travelerArray.count + 1)
-    //        }
-    //
-    //        // Update the gender property of the Traveler object at the specified index
-    //        travelerArray[indexposition].gender = "2"
-    //        delegate?.didTapOnMrsBtnAction(cell: self)
-    //    }
-    
+ 
     
     @IBAction func didTapOnExpandAdultViewbtnAction(_ sender: Any) {
         delegate?.didTapOnExpandAdultViewbtnAction(cell: self)

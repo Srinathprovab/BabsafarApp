@@ -130,7 +130,7 @@ class SearchFlightsVC: BaseTableVC {
     //MARK: - nointernet
     @objc func nointernet() {
         guard let vc = NoInternetConnectionVC.newInstance.self else {return}
-        vc.modalPresentationStyle = .overCurrentContext
+        vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true)
     }
     

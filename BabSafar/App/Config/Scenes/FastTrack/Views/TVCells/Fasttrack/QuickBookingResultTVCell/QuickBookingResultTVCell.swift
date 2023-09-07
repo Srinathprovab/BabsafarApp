@@ -32,7 +32,7 @@ class QuickBookingResultTVCell: TableViewCell {
     
     override func updateUI() {
         titlelbl.text = cellInfo?.title ?? ""
-        pricelbl.text = cellInfo?.price ?? ""
+        setAttributedText(str1: cellInfo?.subTitle ?? "" , str2: cellInfo?.price ?? "", lbl: pricelbl)
     }
     
     @IBAction func didTapOnSelectBtnAction(_ sender: Any) {

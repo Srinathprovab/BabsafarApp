@@ -9,7 +9,7 @@ import UIKit
 import MapKit
 import GoogleMaps
 
-class MapViewVC: UIViewController {
+class MapViewVC: UIViewController, CLLocationManagerDelegate {
     
     
     @IBOutlet weak var nav: NavBar!
@@ -30,8 +30,10 @@ class MapViewVC: UIViewController {
         
         // Do any additional setup after loading the view.
         setupUI()
-        addMarkersToMap()
         
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
     }
     
     func setupUI() {
@@ -44,9 +46,22 @@ class MapViewVC: UIViewController {
         
     }
     
-    func addMarkersToMap() {
-        let gmsView = GMSMapView(frame: view.bounds)
-        googleMapView.addSubview(gmsView)
+    
+    @objc func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.last {
+            // Optionally, you can center the map on the user's location
+            let camera = GMSCameraPosition.camera(withLatitude: location.coordinate.latitude,
+                                                  longitude: location.coordinate.longitude,
+                                                  zoom: 12.0)
+            let gmsView = GMSMapView.map(withFrame: view.bounds, camera: camera)
+            googleMapView.addSubview(gmsView)
+            addMarkersToMap(gmsView)
+            
+            locationManager.stopUpdatingLocation() // You may want to stop updates after you have the user's location
+        }
+    }
+    
+    func addMarkersToMap(_ mapView: GMSMapView) {
         
         for index in 0..<latArray.count {
             if let latitude = Double(latArray[index]), let longitude = Double(longArray[index]) {
@@ -60,11 +75,11 @@ class MapViewVC: UIViewController {
                     marker.iconView = markerView
                 }
                 
-                marker.map = gmsView
+                marker.map = mapView
             }
         }
     }
-
+    
     
     
     @objc func backbtnAction() {

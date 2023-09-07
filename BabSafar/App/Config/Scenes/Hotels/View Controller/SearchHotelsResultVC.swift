@@ -392,6 +392,7 @@ extension SearchHotelsResultVC {
         hsearchid = String(response.search_id ?? 0)
         hbookingsource = response.booking_source ?? ""
         hotelSearchResult = response.data?.hotelSearchResult ?? []
+        hotel_filtersumry = response.filter_sumry
         
         response.data?.hotelSearchResult?.forEach({ i in
             latArray.append(i.latitude ?? "")
@@ -399,7 +400,19 @@ extension SearchHotelsResultVC {
             prices.append(i.price ?? "")
         })
         
-       
+        
+        response.filter_sumry?.loc?.forEach({ i in
+            nearBylocationsArray.append(i.v ?? "")
+        })
+        
+        response.filter_sumry?.near_by?.forEach({ i in
+            neighbourwoodArray.append(i.v ?? "")
+        })
+        
+        response.filter_sumry?.facility?.forEach({ i in
+            amenitiesArray.append(i.v ?? "")
+        })
+        
         
         
         DispatchQueue.main.async {[self] in
@@ -432,7 +445,7 @@ extension SearchHotelsResultVC {
                 cell.hotelImg.sd_setImage(with: URL(string: dict.image ?? ""), placeholderImage:UIImage(contentsOfFile:"placeholder.png"))
                 cell.ratingslbl.text = String(dict.star_rating ?? 0)
                 cell.locationlbl.text = dict.address
-            //    cell.kwdlbl.text = "\(dict.currency ?? ""):\(String(format: "%.2f", dict.price ?? ""))"
+                //    cell.kwdlbl.text = "\(dict.currency ?? ""):\(String(format: "%.2f", dict.price ?? ""))"
                 setAttributedText(str1: dict.currency ?? "", str2: dict.price ?? "", lbl: cell.kwdlbl)
                 cell.bookingsource = dict.booking_source ?? ""
                 cell.hotelid = String(dict.hotel_code ?? 0)
@@ -450,7 +463,7 @@ extension SearchHotelsResultVC {
                 cell.hotelImg.sd_setImage(with: URL(string: dict.image ?? ""), placeholderImage:UIImage(contentsOfFile:"placeholder.png"))
                 cell.ratingslbl.text = String(dict.star_rating ?? 0)
                 cell.locationlbl.text = dict.address
-              //  cell.kwdlbl.text = "\(dict.currency ?? ""):\()"
+                //  cell.kwdlbl.text = "\(dict.currency ?? ""):\()"
                 setAttributedText(str1: dict.currency ?? "", str2: dict.price ?? "", lbl: cell.kwdlbl)
                 cell.bookingsource = dict.booking_source ?? ""
                 cell.hotelid = String(dict.hotel_code ?? 0)
@@ -518,7 +531,8 @@ extension SearchHotelsResultVC {
 
 
 extension SearchHotelsResultVC:AppliedFilters{
-     
+    
+
     
     
     func filtersByApplied(minpricerange: Double, maxpricerange: Double, noofStopsArray: [String], refundableTypeArray: [String], departureTime: String, arrivalTime: String, noOvernightFlight: String, airlinesFilterArray: [String], connectingFlightsFilterArray: [String], ConnectingAirportsFilterArray: [String]) {
@@ -528,22 +542,26 @@ extension SearchHotelsResultVC:AppliedFilters{
     
     
     //MARK: - hotelFilterByApplied
-    func hotelFilterByApplied(minpricerange: Double, maxpricerange: Double, starRating: String, refundableTypeArray: [String]) {
-
+    func hotelFilterByApplied(minpricerange: Double, maxpricerange: Double, starRating: String, refundableTypeArray: [String], nearByLocA: [String], niberhoodA: [String], aminitiesA: [String]) {
+        
+        
         isSearchBool = true
         
         print("====minpricerange ==== \(minpricerange)")
         print("====maxpricerange ==== \(maxpricerange)")
         print(" ==== starRating === \(starRating)")
         print(" ==== refundableTypeArray === \n\(refundableTypeArray)")
+        print(" ==== nearByLocA === \n\(nearByLocA)")
+        print(" ==== niberhoodA === \n\(niberhoodA)")
+        print(" ==== aminitiesA === \n\(aminitiesA)")
         
         
-       
+        
         let filteredArray = hotelSearchResult.filter { i in
             guard let netPrice = Double(i.price ?? "0.0") else { return false }
             let ratingMatches = i.star_rating == Int(starRating) || starRating.isEmpty
             let refundableMatch = refundableTypeArray.isEmpty || refundableTypeArray.contains(i.refund ?? "")
-
+            
             
             
             return ratingMatches &&

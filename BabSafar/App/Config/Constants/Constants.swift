@@ -77,6 +77,7 @@ var roomsDetails = [[Rooms]]()
 var images = [Images]()
 var formatAmeArray = [Format_ame]()
 var formatDesc = [Format_desc]()
+var hotel_filtersumry : Filter_sumry?
 
 var hsearchid = String()
 var hbookingsource = String()
@@ -89,9 +90,9 @@ var chArray = [String]()
 var callapibool = Bool()
 
 
-var neighbourwoodArray = [Loc]()
-var amenitiesArray = [HFacility]()
-var nearBylocationsArray = [Near_by]()
+var neighbourwoodArray = [String]()
+var amenitiesArray = [String]()
+var nearBylocationsArray = [String]()
 
 
 //MARK: - FILTER RELATED VARIABLES
@@ -244,7 +245,10 @@ var adult18PriceArray = [String]()
 var child2_7Array = [String]()
 var terminalArray = [String]()
 var eproduct_details:EProduct_details?
+var qproduct_details:QProduct_details?
 
+var quickServiceA = [QuickService]()
+var addArrvialServiceBool = false
 //payment
 var billingCountryCode = String()
 

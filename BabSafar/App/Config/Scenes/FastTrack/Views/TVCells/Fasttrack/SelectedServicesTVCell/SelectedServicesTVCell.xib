@@ -10,6 +10,9 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <array key="Lato-Light.ttf">
+            <string>Lato-Light</string>
+        </array>
         <array key="Lato-Medium.ttf">
             <string>Lato-Medium</string>
         </array>
@@ -20,15 +23,15 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="208" id="KGk-i7-Jjw" customClass="SelectedServicesTVCell" customModule="BabSafar" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="473" height="391"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="72" id="KGk-i7-Jjw" customClass="SelectedServicesTVCell" customModule="BabSafar" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="477" height="255"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="473" height="391"/>
+                <rect key="frame" x="0.0" y="0.0" width="477" height="255"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e4J-Eb-Bac" customClass="BorderedView" customModule="BabSafar" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="0.0" width="473" height="391"/>
+                        <rect key="frame" x="0.0" y="0.0" width="477" height="255"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dep" translatesAutoresizingMaskIntoConstraints="NO" id="RMA-Uj-mqW">
                                 <rect key="frame" x="16" y="18" width="24" height="24"/>
@@ -38,7 +41,7 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tCe-J4-z3z">
-                                <rect key="frame" x="53" y="13" width="380" height="34"/>
+                                <rect key="frame" x="53" y="13.333333333333332" width="384" height="33.666666666666671"/>
                                 <string key="text">Departure from Dubai International Airport
 (DXB) - Dubai, UAE</string>
                                 <fontDescription key="fontDescription" name="Lato-Medium" family="Lato" pointSize="14"/>
@@ -46,10 +49,10 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a7i-Jl-n44" customClass="BorderedView" customModule="BabSafar" customModuleProvider="target">
-                                <rect key="frame" x="8" y="62" width="457" height="185"/>
+                                <rect key="frame" x="8" y="62" width="461" height="185"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0VN-Xb-jRe">
-                                        <rect key="frame" x="14" y="10" width="429" height="38.666666666666664"/>
+                                        <rect key="frame" x="14" y="10" width="353" height="38.666666666666664"/>
                                         <string key="text">Marhaba Lounge - Terminal 2 - 
 Departure from Dubai</string>
                                         <fontDescription key="fontDescription" name="Lato-Semibold" family="Lato" pointSize="16"/>
@@ -134,16 +137,16 @@ Departure from Dubai</string>
                                         </subviews>
                                     </stackView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OlG-pc-g71" customClass="BorderedView" customModule="BabSafar" customModuleProvider="target">
-                                        <rect key="frame" x="333" y="139" width="114" height="30"/>
+                                        <rect key="frame" x="381" y="10" width="70" height="30"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Change Selection" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="197-Xj-Qp1">
-                                                <rect key="frame" x="7.3333333333333144" y="7.3333333333333419" width="99.666666666666671" height="15.666666666666664"/>
-                                                <fontDescription key="fontDescription" name="Lato-Medium" family="Lato" pointSize="13"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cancel" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="197-Xj-Qp1">
+                                                <rect key="frame" x="14.666666666666686" y="6.3333333333333286" width="41" height="17"/>
+                                                <fontDescription key="fontDescription" name="Lato-Light" family="Lato" pointSize="14"/>
                                                 <color key="textColor" red="0.93333333333333335" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VUo-bT-dMV">
-                                                <rect key="frame" x="0.0" y="0.0" width="114" height="30"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="70" height="30"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain"/>
                                                 <connections>
@@ -155,7 +158,7 @@ Departure from Dubai</string>
                                         <constraints>
                                             <constraint firstAttribute="bottom" secondItem="VUo-bT-dMV" secondAttribute="bottom" id="ClI-lv-wdd"/>
                                             <constraint firstAttribute="trailing" secondItem="VUo-bT-dMV" secondAttribute="trailing" id="Cli-bt-kRz"/>
-                                            <constraint firstAttribute="width" constant="114" id="Kfq-xF-IKu"/>
+                                            <constraint firstAttribute="width" constant="70" id="Kfq-xF-IKu"/>
                                             <constraint firstItem="VUo-bT-dMV" firstAttribute="leading" secondItem="OlG-pc-g71" secondAttribute="leading" id="LQY-lS-gzJ"/>
                                             <constraint firstItem="197-Xj-Qp1" firstAttribute="centerX" secondItem="OlG-pc-g71" secondAttribute="centerX" id="Ny8-uZ-7eV"/>
                                             <constraint firstItem="VUo-bT-dMV" firstAttribute="top" secondItem="OlG-pc-g71" secondAttribute="top" id="YuR-Uk-gfR"/>
@@ -168,16 +171,67 @@ Departure from Dubai</string>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </view>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="bottom" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="dv4-pb-fqA">
+                                        <rect key="frame" x="361" y="136.66666666666666" width="90" height="33.333333333333343"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="KWD150.00" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XIt-ok-Isb">
+                                                <rect key="frame" x="0.0" y="0.0" width="90" height="19.333333333333332"/>
+                                                <fontDescription key="fontDescription" name="Lato-Semibold" family="Lato" pointSize="16"/>
+                                                <color key="textColor" name="AppTabSelectColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Price Per Person" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8fV-7T-Lhh">
+                                                <rect key="frame" x="18" y="21.333333333333343" width="72" height="12"/>
+                                                <fontDescription key="fontDescription" name="Lato-Medium" family="Lato" pointSize="10"/>
+                                                <color key="textColor" name="SubTitleColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Oo-MT-Gy2">
+                                        <rect key="frame" x="444" y="0.0" width="17" height="17"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="clear" translatesAutoresizingMaskIntoConstraints="NO" id="4BA-g6-VJy">
+                                                <rect key="frame" x="0.0" y="0.0" width="17" height="17"/>
+                                            </imageView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ilO-mn-jkh">
+                                                <rect key="frame" x="0.0" y="0.0" width="17" height="17"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain"/>
+                                                <connections>
+                                                    <action selector="didTapOnCloseBtnAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="uHu-vh-3Wv"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" name="IttenarySelectedColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="ilO-mn-jkh" secondAttribute="bottom" id="4W8-tg-E2b"/>
+                                            <constraint firstItem="4BA-g6-VJy" firstAttribute="leading" secondItem="4Oo-MT-Gy2" secondAttribute="leading" id="CCD-yp-2lx"/>
+                                            <constraint firstAttribute="height" constant="17" id="JSK-EC-oE7"/>
+                                            <constraint firstAttribute="trailing" secondItem="4BA-g6-VJy" secondAttribute="trailing" id="gtu-2a-92t"/>
+                                            <constraint firstItem="ilO-mn-jkh" firstAttribute="leading" secondItem="4Oo-MT-Gy2" secondAttribute="leading" id="heO-Kg-5jz"/>
+                                            <constraint firstAttribute="trailing" secondItem="ilO-mn-jkh" secondAttribute="trailing" id="j4E-u9-xbB"/>
+                                            <constraint firstItem="ilO-mn-jkh" firstAttribute="top" secondItem="4Oo-MT-Gy2" secondAttribute="top" id="mjL-SD-ZKY"/>
+                                            <constraint firstAttribute="width" constant="17" id="nVS-vQ-LgH"/>
+                                            <constraint firstAttribute="bottom" secondItem="4BA-g6-VJy" secondAttribute="bottom" id="qJN-zz-vtQ"/>
+                                            <constraint firstItem="4BA-g6-VJy" firstAttribute="top" secondItem="4Oo-MT-Gy2" secondAttribute="top" id="spo-ch-ygO"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="hwQ-h3-roB" secondAttribute="bottom" constant="5.3300000000000001" id="6mb-f5-O3S"/>
                                     <constraint firstItem="hwQ-h3-roB" firstAttribute="leading" secondItem="a7i-Jl-n44" secondAttribute="leading" constant="14" id="AZP-X0-wX9"/>
                                     <constraint firstAttribute="height" constant="185" id="Bc3-mi-D0t"/>
-                                    <constraint firstAttribute="trailing" secondItem="0VN-Xb-jRe" secondAttribute="trailing" constant="14" id="LTA-gl-OtI"/>
+                                    <constraint firstItem="4Oo-MT-Gy2" firstAttribute="top" secondItem="a7i-Jl-n44" secondAttribute="top" id="Kik-E9-JEm"/>
                                     <constraint firstAttribute="bottom" secondItem="hwQ-h3-roB" secondAttribute="bottom" constant="5.3300000000000001" id="RoB-e4-Kuq"/>
+                                    <constraint firstAttribute="trailing" secondItem="4Oo-MT-Gy2" secondAttribute="trailing" id="Ury-bI-lTl"/>
                                     <constraint firstItem="0VN-Xb-jRe" firstAttribute="leading" secondItem="a7i-Jl-n44" secondAttribute="leading" constant="14" id="cja-u1-jx9"/>
+                                    <constraint firstAttribute="trailing" secondItem="dv4-pb-fqA" secondAttribute="trailing" constant="10" id="dfl-R8-GkI"/>
                                     <constraint firstItem="0VN-Xb-jRe" firstAttribute="top" secondItem="a7i-Jl-n44" secondAttribute="top" constant="10" id="f5d-es-N7l"/>
-                                    <constraint firstAttribute="bottom" secondItem="OlG-pc-g71" secondAttribute="bottom" constant="16" id="lxB-zP-Ro9"/>
+                                    <constraint firstItem="OlG-pc-g71" firstAttribute="leading" secondItem="0VN-Xb-jRe" secondAttribute="trailing" constant="14" id="hhr-up-tzO"/>
+                                    <constraint firstAttribute="bottom" secondItem="dv4-pb-fqA" secondAttribute="bottom" constant="15" id="kw2-O9-mxz"/>
+                                    <constraint firstItem="VUo-bT-dMV" firstAttribute="top" secondItem="0VN-Xb-jRe" secondAttribute="top" id="s1J-bv-kGl"/>
                                     <constraint firstAttribute="trailing" secondItem="OlG-pc-g71" secondAttribute="trailing" constant="10" id="xqP-R4-BIF"/>
                                     <constraint firstItem="hwQ-h3-roB" firstAttribute="top" secondItem="0VN-Xb-jRe" secondAttribute="bottom" constant="14" id="zfG-8f-bls"/>
                                 </constraints>
@@ -193,95 +247,18 @@ Departure from Dubai</string>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="YK2-H5-n8y">
-                                <rect key="frame" x="16" y="277" width="441" height="48"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eg6-qp-j46" customClass="BorderedView" customModule="BabSafar" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="212.66666666666666" height="48"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add arrival Service" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LYa-CY-dUq">
-                                                <rect key="frame" x="40" y="14.333333333333313" width="132.33333333333334" height="19.333333333333329"/>
-                                                <fontDescription key="fontDescription" name="Lato-Semibold" family="Lato" pointSize="16"/>
-                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CwO-fX-isZ">
-                                                <rect key="frame" x="0.0" y="0.0" width="212.66666666666666" height="48"/>
-                                                <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="plain"/>
-                                                <connections>
-                                                    <action selector="didTapOnAddArrivalServiceBtnAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="UvS-Er-kgz"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                        <color key="backgroundColor" name="IttenarySelectedColor"/>
-                                        <constraints>
-                                            <constraint firstAttribute="trailing" secondItem="CwO-fX-isZ" secondAttribute="trailing" id="5AX-Hn-zkO"/>
-                                            <constraint firstAttribute="bottom" secondItem="CwO-fX-isZ" secondAttribute="bottom" id="9G1-Ft-UaB"/>
-                                            <constraint firstItem="CwO-fX-isZ" firstAttribute="leading" secondItem="eg6-qp-j46" secondAttribute="leading" id="NFR-LS-2au"/>
-                                            <constraint firstItem="LYa-CY-dUq" firstAttribute="centerY" secondItem="eg6-qp-j46" secondAttribute="centerY" id="aLT-JH-3VP"/>
-                                            <constraint firstItem="CwO-fX-isZ" firstAttribute="top" secondItem="eg6-qp-j46" secondAttribute="top" id="df6-aj-djg"/>
-                                            <constraint firstItem="LYa-CY-dUq" firstAttribute="centerX" secondItem="eg6-qp-j46" secondAttribute="centerX" id="if5-ax-mCp"/>
-                                            <constraint firstAttribute="height" constant="48" id="sII-Nl-ISO"/>
-                                        </constraints>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                <real key="value" value="8"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                    </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mvh-cJ-mpK" customClass="BorderedView" customModule="BabSafar" customModuleProvider="target">
-                                        <rect key="frame" x="228.66666666666663" y="0.0" width="212.33333333333337" height="48"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Checkout Now" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mDG-tx-0MZ">
-                                                <rect key="frame" x="53.33333333333335" y="14.333333333333313" width="105.66666666666669" height="19.333333333333329"/>
-                                                <fontDescription key="fontDescription" name="Lato-Semibold" family="Lato" pointSize="16"/>
-                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ows-b4-iq9">
-                                                <rect key="frame" x="0.0" y="0.0" width="212.33333333333334" height="48"/>
-                                                <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="plain"/>
-                                                <connections>
-                                                    <action selector="didTapOnCheckOutBtnAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="nhv-Jg-DQx"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                        <color key="backgroundColor" name="AppCalenderDateSelectColor"/>
-                                        <constraints>
-                                            <constraint firstItem="Ows-b4-iq9" firstAttribute="top" secondItem="mvh-cJ-mpK" secondAttribute="top" id="6ww-o6-f58"/>
-                                            <constraint firstItem="mDG-tx-0MZ" firstAttribute="centerY" secondItem="mvh-cJ-mpK" secondAttribute="centerY" id="DuG-iZ-Do6"/>
-                                            <constraint firstAttribute="trailing" secondItem="Ows-b4-iq9" secondAttribute="trailing" id="Gdi-vn-w1c"/>
-                                            <constraint firstItem="Ows-b4-iq9" firstAttribute="leading" secondItem="mvh-cJ-mpK" secondAttribute="leading" id="KYw-Kl-wt8"/>
-                                            <constraint firstAttribute="height" constant="48" id="Zwl-aO-qnj"/>
-                                            <constraint firstAttribute="bottom" secondItem="Ows-b4-iq9" secondAttribute="bottom" id="n54-8e-cWt"/>
-                                            <constraint firstItem="mDG-tx-0MZ" firstAttribute="centerX" secondItem="mvh-cJ-mpK" secondAttribute="centerX" id="rmn-jf-Yp8"/>
-                                        </constraints>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                <real key="value" value="8"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                    </view>
-                                </subviews>
-                            </stackView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="tCe-J4-z3z" secondAttribute="trailing" constant="40" id="3sJ-aN-CKd"/>
                             <constraint firstItem="a7i-Jl-n44" firstAttribute="top" secondItem="tCe-J4-z3z" secondAttribute="bottom" constant="15" id="49L-uc-lXB"/>
                             <constraint firstItem="a7i-Jl-n44" firstAttribute="leading" secondItem="e4J-Eb-Bac" secondAttribute="leading" constant="8" id="Dey-df-B3P"/>
-                            <constraint firstAttribute="trailing" secondItem="YK2-H5-n8y" secondAttribute="trailing" constant="16" id="GDM-J6-wTf"/>
                             <constraint firstItem="RMA-Uj-mqW" firstAttribute="top" secondItem="e4J-Eb-Bac" secondAttribute="top" constant="18" id="QAO-6P-UbC"/>
-                            <constraint firstAttribute="bottom" secondItem="YK2-H5-n8y" secondAttribute="bottom" constant="66" id="Tdc-0u-gdV"/>
-                            <constraint firstItem="YK2-H5-n8y" firstAttribute="top" secondItem="a7i-Jl-n44" secondAttribute="bottom" constant="30" id="XSW-dw-FBM"/>
-                            <constraint firstItem="YK2-H5-n8y" firstAttribute="leading" secondItem="e4J-Eb-Bac" secondAttribute="leading" constant="16" id="b9F-yY-Kug"/>
                             <constraint firstItem="tCe-J4-z3z" firstAttribute="leading" secondItem="RMA-Uj-mqW" secondAttribute="trailing" constant="13" id="baC-ea-Lep"/>
                             <constraint firstItem="tCe-J4-z3z" firstAttribute="centerY" secondItem="RMA-Uj-mqW" secondAttribute="centerY" id="fBr-qL-T9S"/>
                             <constraint firstAttribute="trailing" secondItem="a7i-Jl-n44" secondAttribute="trailing" constant="8" id="gNs-AH-l9v"/>
+                            <constraint firstAttribute="height" constant="255" id="ucR-Ct-VGV"/>
                             <constraint firstItem="RMA-Uj-mqW" firstAttribute="leading" secondItem="e4J-Eb-Bac" secondAttribute="leading" constant="16" id="uoV-cw-vKF"/>
-                            <constraint firstAttribute="height" constant="391" id="viZ-dW-mFd"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -299,21 +276,27 @@ Departure from Dubai</string>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="cancelView" destination="OlG-pc-g71" id="lT6-cQ-3XN"/>
+                <outlet property="closeBtn" destination="ilO-mn-jkh" id="Pex-SW-gV4"/>
+                <outlet property="closeView" destination="4Oo-MT-Gy2" id="unT-xs-KZC"/>
                 <outlet property="fromAirportNamelbl" destination="tCe-J4-z3z" id="ZP5-Ar-0T9"/>
                 <outlet property="logoImg" destination="RMA-Uj-mqW" id="evO-rj-6Xw"/>
+                <outlet property="priceView" destination="dv4-pb-fqA" id="kMG-qy-DxG"/>
+                <outlet property="pricelbl" destination="XIt-ok-Isb" id="Ubg-dm-eOD"/>
                 <outlet property="terminallbl" destination="0VN-Xb-jRe" id="LZ8-dp-P9b"/>
             </connections>
-            <point key="canvasLocation" x="127.48091603053435" y="97.535211267605632"/>
+            <point key="canvasLocation" x="130.53435114503816" y="145.42253521126761"/>
         </tableViewCell>
     </objects>
     <resources>
         <image name="chked1" width="20" height="20"/>
+        <image name="clear" width="17" height="17"/>
         <image name="dep" width="24" height="24"/>
         <namedColor name="AppBorderColor">
             <color red="0.90200001001358032" green="0.9100000262260437" blue="0.90600001811981201" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="AppCalenderDateSelectColor">
-            <color red="0.0" green="0.6589999794960022" blue="0.59600001573562622" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="AppTabSelectColor">
+            <color red="0.3919999897480011" green="0.15299999713897705" blue="0.43500000238418579" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="IttenarySelectedColor">
             <color red="0.3919999897480011" green="0.15299999713897705" blue="0.43500000238418579" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
