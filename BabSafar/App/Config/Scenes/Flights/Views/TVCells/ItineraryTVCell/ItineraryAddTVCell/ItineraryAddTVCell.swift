@@ -92,7 +92,7 @@ extension ItineraryAddTVCell:UITableViewDelegate,UITableViewDataSource {
                 cell.destTerminal1lbl.text = "Terminal: \(data.destination?.terminal ?? "0")"
             }
             
-            cell.timelbl.text = "Layover Duration\(data.destination?.city ?? "") (\(data.destination?.loc ?? "")) \(data.layOverDuration ?? "")"
+            cell.timelbl.text = "Layover Duration \(data.destination?.city ?? "") (\(data.destination?.loc ?? "")) \(data.layOverDuration ?? "")"
             
             if tableView.isLast(for: indexPath) {
                 cell.timeView.isHidden = true

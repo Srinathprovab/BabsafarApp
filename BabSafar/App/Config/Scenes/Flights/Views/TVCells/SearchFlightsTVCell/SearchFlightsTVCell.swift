@@ -35,7 +35,7 @@ class SearchFlightsTVCell: TableViewCell, SelectCityViewModelProtocal {
         
     }
     
-
+    
     @IBOutlet weak var holderView: UIView!
     @IBOutlet weak var fromView: UIView!
     @IBOutlet weak var fromlbl: UILabel!
@@ -283,7 +283,7 @@ class SearchFlightsTVCell: TableViewCell, SelectCityViewModelProtocal {
         setupViews(v: addTraverllersView, radius: 4, color: .WhiteColor)
         setupViews(v: addClassView, radius: 4, color: .WhiteColor)
         setuplabels(lbl: addTraverllerslbl, text: "Add Travellers", textcolor: .AppLabelColor, font: .LatoLight(size: 14), align: .left)
-        setuplabels(lbl: addClasslbl, text: "Add Class", textcolor: .AppLabelColor, font: .LatoLight(size: 14), align: .left)
+        setuplabels(lbl: addClasslbl, text: "Cabin Class", textcolor: .AppLabelColor, font: .LatoLight(size: 14), align: .left)
         setuplabels(lbl: addTraverllersValuelbl, text: "", textcolor: .AppLabelColor, font: .LatoSemibold(size: 16), align: .left)
         setuplabels(lbl: addClassValuelbl, text: "", textcolor: .AppLabelColor, font: .LatoSemibold(size: 16), align: .left)
         addTraverllersBtn.setTitle("", for: .normal)
@@ -594,7 +594,7 @@ extension SearchFlightsTVCell:UITableViewDelegate, UITableViewDataSource {
                 if let selectedJType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
                     if selectedJType == "circle" {
                         
-//                        defaults.set(cityList[indexPath.row].label ?? "", forKey: UserDefaultsKeys.rfromCity)
+                        //                        defaults.set(cityList[indexPath.row].label ?? "", forKey: UserDefaultsKeys.rfromCity)
                         //                        defaults.set(cityList[indexPath.row].id ?? "", forKey: UserDefaultsKeys.rfromlocid)
                         //                        defaults.set("\(cityList[indexPath.row].city ?? "") (\(cityList[indexPath.row].code ?? ""))", forKey: UserDefaultsKeys.rfromairport)
                         //                        defaults.set(cityList[indexPath.row].city ?? "", forKey: UserDefaultsKeys.rfromcityname)
@@ -624,10 +624,10 @@ extension SearchFlightsTVCell:UITableViewDelegate, UITableViewDataSource {
                 if let selectedJType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
                     if selectedJType == "circle" {
                         
-//                        defaults.set(cityList[indexPath.row].label ?? "", forKey: UserDefaultsKeys.rtoCity)
-//                        defaults.set(cityList[indexPath.row].id ?? "", forKey: UserDefaultsKeys.rtolocid)
-//                        defaults.set("\(cityList[indexPath.row].city ?? "") (\(cityList[indexPath.row].code ?? ""))", forKey: UserDefaultsKeys.rtoairport)
-//                        defaults.set(cityList[indexPath.row].city ?? "", forKey: UserDefaultsKeys.rtocityname)
+                        //                        defaults.set(cityList[indexPath.row].label ?? "", forKey: UserDefaultsKeys.rtoCity)
+                        //                        defaults.set(cityList[indexPath.row].id ?? "", forKey: UserDefaultsKeys.rtolocid)
+                        //                        defaults.set("\(cityList[indexPath.row].city ?? "") (\(cityList[indexPath.row].code ?? ""))", forKey: UserDefaultsKeys.rtoairport)
+                        //                        defaults.set(cityList[indexPath.row].city ?? "", forKey: UserDefaultsKeys.rtocityname)
                         
                         defaults.set(cityList[indexPath.row].label ?? "", forKey: UserDefaultsKeys.toCity)
                         defaults.set(cityList[indexPath.row].id ?? "", forKey: UserDefaultsKeys.tolocid)

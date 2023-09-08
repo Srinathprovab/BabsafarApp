@@ -95,7 +95,7 @@ extension BCFlightDetailsTVCell: UITableViewDelegate,UITableViewDataSource {
        
 
             
-            cell.layoverTimelbl.text = "Layover Duration \(data.to_airport_name ?? "") (\(data.to_airport_code ?? "")) \(data.layover ?? "")"
+            cell.layoverTimelbl.text = "Layover At \(data.to_airport_name ?? "") (\(data.to_airport_code ?? "")) \(data.layover ?? "")"
             
 //            if indexPath.row != 0 {
 //                cell.hideLayover()

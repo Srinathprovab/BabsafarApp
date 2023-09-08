@@ -209,9 +209,10 @@ class InsuranceVC: BaseTableVC {
     }
     
     func gotoInsurenceResultVC(input:[String:Any]) {
+        loderBool = true
+        callapibool = true
         guard let vc = InsurenceResultVC.newInstance.self else {return}
         vc.modalPresentationStyle = .fullScreen
-        callapibool = true
         vc.payload = input
         self.present(vc, animated: true)
     }

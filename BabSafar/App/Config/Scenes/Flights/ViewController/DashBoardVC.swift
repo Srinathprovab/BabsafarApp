@@ -146,7 +146,10 @@ class DashBoardVC: BaseTableVC, TopFlightDetailsViewModelDelegate, AllCountryCod
         
         adtArray.removeAll()
         chArray.removeAll()
+        
         adtArray.append("1")
+        adtArray.append("1")
+        
         chArray.append("0")
         
         DispatchQueue.main.async {
@@ -269,6 +272,7 @@ class DashBoardVC: BaseTableVC, TopFlightDetailsViewModelDelegate, AllCountryCod
     //MARK: TAP ON FLIGHT TAB
     override func didTapOnFlightBtnAction(cell: SelectModuleTabTVCell) {
         defaults.set("Flights", forKey: UserDefaultsKeys.dashboardTapSelected)
+        defaults.set("circle", forKey: UserDefaultsKeys.journeyType)
         gotoSearchFlightScreen()
     }
     
@@ -613,14 +617,14 @@ extension DashBoardVC {
             defaults.set("1", forKey: UserDefaultsKeys.adultCount)
             defaults.set("0", forKey: UserDefaultsKeys.childCount)
             defaults.set("0", forKey: UserDefaultsKeys.infantsCount)
-            let totaltraverlers = "\(defaults.string(forKey: UserDefaultsKeys.adultCount) ?? "1") Adults | \(defaults.string(forKey: UserDefaultsKeys.childCount) ?? "0") Children | \(defaults.string(forKey: UserDefaultsKeys.infantsCount) ?? "") Infants | \(defaults.string(forKey: UserDefaultsKeys.selectClass) ?? "")"
+            let totaltraverlers = "\(defaults.string(forKey: UserDefaultsKeys.adultCount) ?? "1") Adult | \(defaults.string(forKey: UserDefaultsKeys.childCount) ?? "0") Child | \(defaults.string(forKey: UserDefaultsKeys.infantsCount) ?? "") Infant | \(defaults.string(forKey: UserDefaultsKeys.selectClass) ?? "")"
             defaults.set(totaltraverlers, forKey: UserDefaultsKeys.travellerDetails)
             
             defaults.set("Economy", forKey: UserDefaultsKeys.rselectClass)
             defaults.set("1", forKey: UserDefaultsKeys.radultCount)
             defaults.set("0", forKey: UserDefaultsKeys.rchildCount)
             defaults.set("0", forKey: UserDefaultsKeys.rinfantsCount)
-            let totaltraverlers1 = "\(defaults.string(forKey: UserDefaultsKeys.radultCount) ?? "1") Adults | \(defaults.string(forKey: UserDefaultsKeys.rchildCount) ?? "") Children | \(defaults.string(forKey: UserDefaultsKeys.rinfantsCount) ?? "") Infants |\(defaults.string(forKey: UserDefaultsKeys.rselectClass) ?? "")"
+            let totaltraverlers1 = "\(defaults.string(forKey: UserDefaultsKeys.radultCount) ?? "1") Adult | \(defaults.string(forKey: UserDefaultsKeys.rchildCount) ?? "") Child | \(defaults.string(forKey: UserDefaultsKeys.rinfantsCount) ?? "") Infant |\(defaults.string(forKey: UserDefaultsKeys.rselectClass) ?? "")"
             defaults.set(totaltraverlers1, forKey: UserDefaultsKeys.rtravellerDetails)
             
             
@@ -628,34 +632,38 @@ extension DashBoardVC {
             defaults.set("1", forKey: UserDefaultsKeys.madultCount)
             defaults.set("0", forKey: UserDefaultsKeys.mchildCount)
             defaults.set("0", forKey: UserDefaultsKeys.minfantsCount)
-            let totaltraverlers3 = "\(defaults.string(forKey: UserDefaultsKeys.madultCount) ?? "1") Adults | \(defaults.string(forKey: UserDefaultsKeys.mchildCount) ?? "") Children | \(defaults.string(forKey: UserDefaultsKeys.minfantsCount) ?? "") Infants |\(defaults.string(forKey: UserDefaultsKeys.rselectClass) ?? "")"
+            let totaltraverlers3 = "\(defaults.string(forKey: UserDefaultsKeys.madultCount) ?? "1") Adult | \(defaults.string(forKey: UserDefaultsKeys.mchildCount) ?? "") Child | \(defaults.string(forKey: UserDefaultsKeys.minfantsCount) ?? "") Infants |\(defaults.string(forKey: UserDefaultsKeys.rselectClass) ?? "")"
             defaults.set(totaltraverlers3, forKey: UserDefaultsKeys.mtravellerDetails)
             
             
             
             //Hotel default Values
             defaults.set("1", forKey: UserDefaultsKeys.roomcount)
-            defaults.set("1", forKey: UserDefaultsKeys.hoteladultscount)
+            defaults.set("2", forKey: UserDefaultsKeys.hoteladultscount)
             defaults.set("0", forKey: UserDefaultsKeys.hotelchildcount)
-            defaults.set("\(defaults.string(forKey: UserDefaultsKeys.roomcount) ?? "") Rooms,\(defaults.string(forKey: UserDefaultsKeys.hoteladultscount) ?? "") Adults,\(defaults.string(forKey: UserDefaultsKeys.hotelchildcount) ?? "") Childreen", forKey: UserDefaultsKeys.selectPersons)
+            defaults.set("\(defaults.string(forKey: UserDefaultsKeys.roomcount) ?? "") Rooms,\(defaults.string(forKey: UserDefaultsKeys.hoteladultscount) ?? "") Adults,\(defaults.string(forKey: UserDefaultsKeys.hotelchildcount) ?? "") Child", forKey: UserDefaultsKeys.selectPersons)
             
             
+            
+            //Insurence default Values
             defaults.set("1", forKey: UserDefaultsKeys.iadultCount)
             defaults.set("0", forKey: UserDefaultsKeys.ichildCount)
             defaults.set("0", forKey: UserDefaultsKeys.infantsCount)
-            let totaltraverlers6 = "\(defaults.string(forKey: UserDefaultsKeys.iadultCount) ?? "1") Adults | \(defaults.string(forKey: UserDefaultsKeys.ichildCount) ?? "") Children | \(defaults.string(forKey: UserDefaultsKeys.infantsCount) ?? "") Infants "
+            let totaltraverlers6 = "\(defaults.string(forKey: UserDefaultsKeys.iadultCount) ?? "1") Adult | \(defaults.string(forKey: UserDefaultsKeys.ichildCount) ?? "") Child | \(defaults.string(forKey: UserDefaultsKeys.infantsCount) ?? "") Infants "
             defaults.set(totaltraverlers6, forKey: UserDefaultsKeys.itravellerDetails)
             
             defaults.set("1", forKey: UserDefaultsKeys.iradultCount)
             defaults.set("0", forKey: UserDefaultsKeys.irchildCount)
             defaults.set("0", forKey: UserDefaultsKeys.irinfantsCount)
-            let totaltraverlers7 = "\(defaults.string(forKey: UserDefaultsKeys.iradultCount) ?? "1") Adults | \(defaults.string(forKey: UserDefaultsKeys.irchildCount) ?? "") Children | \(defaults.string(forKey: UserDefaultsKeys.irinfantsCount) ?? "") Infants"
+            let totaltraverlers7 = "\(defaults.string(forKey: UserDefaultsKeys.iradultCount) ?? "1") Adult | \(defaults.string(forKey: UserDefaultsKeys.irchildCount) ?? "") Child | \(defaults.string(forKey: UserDefaultsKeys.irinfantsCount) ?? "") Infants"
             defaults.set(totaltraverlers7, forKey: UserDefaultsKeys.irtravellerDetails)
             
             
+            
+            //Fasttrack default Values
             defaults.set("1", forKey: UserDefaultsKeys.fradultCount)
             defaults.set("0", forKey: UserDefaultsKeys.frchildCount)
-            let totaltraverlers8 = "\(defaults.string(forKey: UserDefaultsKeys.fradultCount) ?? "1") Adults | \(defaults.string(forKey: UserDefaultsKeys.frchildCount) ?? "") Children"
+            let totaltraverlers8 = "\(defaults.string(forKey: UserDefaultsKeys.fradultCount) ?? "1") Adult | \(defaults.string(forKey: UserDefaultsKeys.frchildCount) ?? "") Child"
             defaults.set(totaltraverlers8, forKey: UserDefaultsKeys.frtravellerDetails)
             
             
@@ -749,39 +757,18 @@ extension DashBoardVC {
             
             defaults.set((userinfo["trip_type"] as? String) ?? "", forKey: UserDefaultsKeys.journeyType)
             
-            
-            if (userinfo["trip_type"] as? String ?? "") == "oneway" {
-                
-                defaults.set((userinfo["from_city_name"] as? String) ?? "" , forKey: UserDefaultsKeys.fromcityname)
-                defaults.set((userinfo["to_city_name"] as? String) ?? "" , forKey: UserDefaultsKeys.tocityname)
-                defaults.set((userinfo["from_city_loc"] as? String) ?? "" , forKey: UserDefaultsKeys.fromairport)
-                defaults.set((userinfo["to_city_name"] as? String) ?? "" , forKey: UserDefaultsKeys.toairport)
-                //  viewModel1?.CallSearchFlightAPI(dictParam: payload)
-                
-                defaults.set((userinfo["fromFlight"] as? String) ?? "" , forKey: UserDefaultsKeys.fromCity)
-                defaults.set((userinfo["toFlight"] as? String) ?? "" , forKey: UserDefaultsKeys.toCity)
-                
-                
-                
+            defaults.set((userinfo["from_city_name"] as? String) ?? "" , forKey: UserDefaultsKeys.fromcityname)
+            defaults.set((userinfo["to_city_name"] as? String) ?? "" , forKey: UserDefaultsKeys.tocityname)
+            defaults.set((userinfo["from_city_loc"] as? String) ?? "" , forKey: UserDefaultsKeys.fromairport)
+            defaults.set((userinfo["to_city_name"] as? String) ?? "" , forKey: UserDefaultsKeys.toairport)
+            defaults.set((userinfo["fromFlight"] as? String) ?? "" , forKey: UserDefaultsKeys.fromCity)
+            defaults.set((userinfo["toFlight"] as? String) ?? "" , forKey: UserDefaultsKeys.toCity)
+            if (userinfo["trip_type"] as? String) == "oneway" {
+                defaults.set((userinfo["travel_date"] as? String) ?? "" , forKey: UserDefaultsKeys.calDepDate)
+                defaults.set((userinfo["return_date"] as? String) ?? "" , forKey: UserDefaultsKeys.calRetDate)
             }else {
-//                defaults.set((userinfo["from_city_name"] as? String) ?? "" , forKey: UserDefaultsKeys.rfromcityname)
-//                defaults.set((userinfo["to_city_name"] as? String) ?? "" , forKey: UserDefaultsKeys.rtocityname)
-//                defaults.set((userinfo["from_city_loc"] as? String) ?? "" , forKey: UserDefaultsKeys.rfromairport)
-//                defaults.set((userinfo["to_city_loc"] as? String) ?? "" , forKey: UserDefaultsKeys.rtoairport)
-//                //   viewModel1?.CallRoundTRipSearchFlightAPI(dictParam: payload)
-//
-//                defaults.set((userinfo["fromFlight"] as? String) ?? "" , forKey: UserDefaultsKeys.rfromCity)
-//                defaults.set((userinfo["toFlight"] as? String) ?? "" , forKey: UserDefaultsKeys.rtoCity)
-                
-                defaults.set((userinfo["from_city_name"] as? String) ?? "" , forKey: UserDefaultsKeys.fromcityname)
-                defaults.set((userinfo["to_city_name"] as? String) ?? "" , forKey: UserDefaultsKeys.tocityname)
-                defaults.set((userinfo["from_city_loc"] as? String) ?? "" , forKey: UserDefaultsKeys.fromairport)
-                defaults.set((userinfo["to_city_name"] as? String) ?? "" , forKey: UserDefaultsKeys.toairport)
-                //  viewModel1?.CallSearchFlightAPI(dictParam: payload)
-                
-                defaults.set((userinfo["fromFlight"] as? String) ?? "" , forKey: UserDefaultsKeys.fromCity)
-                defaults.set((userinfo["toFlight"] as? String) ?? "" , forKey: UserDefaultsKeys.toCity)
-                
+                defaults.set((userinfo["travel_date"] as? String) ?? "" , forKey: UserDefaultsKeys.rcalDepDate)
+                defaults.set((userinfo["return_date"] as? String) ?? "" , forKey: UserDefaultsKeys.rcalRetDate)
             }
             
             
@@ -792,11 +779,11 @@ extension DashBoardVC {
     
     func gotoSearchFlightResultVC() {
         loderBool = true
+        callapibool = true
         self.tabBarController?.tabBar.isHidden = false
         guard let vc = SearchFlightResultVC.newInstance.self else {return}
         vc.modalPresentationStyle = .fullScreen
         vc.payload = self.payload
-        callapibool = true
         self.present(vc, animated: false)
     }
     

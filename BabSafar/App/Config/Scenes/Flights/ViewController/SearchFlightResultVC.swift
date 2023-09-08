@@ -226,18 +226,6 @@ class SearchFlightResultVC: BaseTableVC, UITextFieldDelegate {
     }
     
     
-    //    // MARK: - FILTER BY KWDPRICE
-    //
-    //    func minutesFromString(_ durationString: String) -> Double {
-    //        let components = durationString.split(separator: " ")
-    //        guard components.count == 2 else { return 0.0 }
-    //        let hours = Double(components[0].dropLast()) ?? 0.0
-    //        let minutes = Double(components[1].dropLast()) ?? 0.0
-    //        return hours * 60.0 + minutes
-    //    }
-    //
-    //
-    
     // MARK: - Oneway SearchFlightResultTVCell
     
     override func didTapOnFlightDetailsBtnAction(cell:SearchFlightResultTVCell){
@@ -649,7 +637,7 @@ extension SearchFlightResultVC: AppliedFilters{
         
     }
     
-  
+    
     
     func filtersByApplied(minpricerange: Double, maxpricerange: Double, noofStopsArray: [String], refundableTypeArray: [String], departureTime: String, arrivalTime: String, noOvernightFlight: String, airlinesFilterArray: [String], connectingFlightsFilterArray: [String], ConnectingAirportsFilterArray: [String]) {
         
@@ -665,8 +653,8 @@ extension SearchFlightResultVC: AppliedFilters{
         print(" ===== connectingFlightsFilterArray ====== \n\(connectingFlightsFilterArray)")
         print(" ===== ConnectingAirportsFilterArray ====== \n\(ConnectingAirportsFilterArray)")
         
-       
-       
+        
+        
         
         
         
@@ -721,27 +709,27 @@ extension SearchFlightResultVC: AppliedFilters{
                 
                 roundTripFilterdList(list: sortedArray ?? [[]])
             }else {
-
-                    if let flightList = MCJflightlist {
-                        let filteredList = flightList.filter { flight in
-                            guard let summary = flight.flight_details?.summary else { return false }
-                            let priceString = flight.price?.api_total_display_fare ?? 0.0 // Provide a default value if it's nil
-                            let doublePrice = Double(priceString) // Convert to Double or use a default value if conversion fails
-                            
-                            
-                            let priceRangeMatch = (doublePrice >= minpricerange && doublePrice <= maxpricerange)
-                            let noOfStopsMatch = noofStopsArray.isEmpty || summary.contains(where: { noofStopsArray.contains("\($0.no_of_stops ?? 0)") })
-                            let refundableMatch = refundableTypeArray.isEmpty || refundableTypeArray.contains(flight.fareType ?? "")
-                            let airlinesMatch = airlinesFilterArray.isEmpty || summary.contains(where: { airlinesFilterArray.contains($0.operator_name ?? "") })
-                            let connectingFlightsMatch = connectingFlightsFilterArray.isEmpty || summary.contains(where: { connectingFlightsFilterArray.contains($0.operator_name ?? "") })
-                            let connectingAirportsMatch = ConnectingAirportsFilterArray.isEmpty || summary.contains(where: { ConnectingAirportsFilterArray.contains($0.destination?.airport_name ?? "") })
-                            
-                            return priceRangeMatch && noOfStopsMatch && refundableMatch && airlinesMatch && connectingFlightsMatch && connectingAirportsMatch
-                        }
-
-                        multicityFilterdList(list: filteredList)
+                
+                if let flightList = MCJflightlist {
+                    let filteredList = flightList.filter { flight in
+                        guard let summary = flight.flight_details?.summary else { return false }
+                        let priceString = flight.price?.api_total_display_fare ?? 0.0 // Provide a default value if it's nil
+                        let doublePrice = Double(priceString) // Convert to Double or use a default value if conversion fails
+                        
+                        
+                        let priceRangeMatch = (doublePrice >= minpricerange && doublePrice <= maxpricerange)
+                        let noOfStopsMatch = noofStopsArray.isEmpty || summary.contains(where: { noofStopsArray.contains("\($0.no_of_stops ?? 0)") })
+                        let refundableMatch = refundableTypeArray.isEmpty || refundableTypeArray.contains(flight.fareType ?? "")
+                        let airlinesMatch = airlinesFilterArray.isEmpty || summary.contains(where: { airlinesFilterArray.contains($0.operator_name ?? "") })
+                        let connectingFlightsMatch = connectingFlightsFilterArray.isEmpty || summary.contains(where: { connectingFlightsFilterArray.contains($0.operator_name ?? "") })
+                        let connectingAirportsMatch = ConnectingAirportsFilterArray.isEmpty || summary.contains(where: { ConnectingAirportsFilterArray.contains($0.destination?.airport_name ?? "") })
+                        
+                        return priceRangeMatch && noOfStopsMatch && refundableMatch && airlinesMatch && connectingFlightsMatch && connectingAirportsMatch
                     }
-            
+                    
+                    multicityFilterdList(list: filteredList)
+                }
+                
             }
         }
         
@@ -1489,6 +1477,7 @@ extension SearchFlightResultVC: AppliedFilters{
                             k.flight_details?.summary.map({ l in
                                 kwdPriceArray.append(k.totalPrice_API ?? "")
                                 prices.append(k.totalPrice ?? "")
+                              //  prices.append("\(k.aPICurrencyType ?? "")\(k.totalPrice ?? "")")
                                 
                                 l.map { m in
                                     
@@ -1656,7 +1645,13 @@ extension SearchFlightResultVC:FlightListModelProtocal{
             defaults.set(response.data?.traceId, forKey: UserDefaultsKeys.traceId)
             
             
-            setuplabels(lbl: navView.lbl1, text: "\(defaults.string(forKey: UserDefaultsKeys.rfromcityname) ?? "") - \(defaults.string(forKey: UserDefaultsKeys.rtocityname) ?? "")", textcolor: .WhiteColor, font: .LatoSemibold(size: 18), align: .center)
+            //            setuplabels(lbl: navView.lbl1, text: "\(defaults.string(forKey: UserDefaultsKeys.rfromcityname) ?? "") - \(defaults.string(forKey: UserDefaultsKeys.rtocityname) ?? "")", textcolor: .WhiteColor, font: .LatoSemibold(size: 18), align: .center)
+            
+            
+            
+            setuplabels(lbl: navView.lbl1, text: "\(defaults.string(forKey: UserDefaultsKeys.fromcityname) ?? "") - \(defaults.string(forKey: UserDefaultsKeys.tocityname) ?? "")", textcolor: .WhiteColor, font: .LatoSemibold(size: 18), align: .center)
+            
+            
             
             setuplabels(lbl: datelbl, text: response.data?.search_params?.depature ?? "", textcolor: .AppLabelColor, font: .LatoRegular(size: 12), align: .center)
             
@@ -1738,7 +1733,7 @@ extension SearchFlightResultVC:FlightListModelProtocal{
 extension SearchFlightResultVC {
     
     func addObserver() {
-        
+        loderBool = false
         NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("offline"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(resultnil), name: NSNotification.Name("resultnil"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reload), name: Notification.Name("reload"), object: nil)

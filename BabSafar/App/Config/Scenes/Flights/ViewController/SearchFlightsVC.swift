@@ -122,7 +122,15 @@ class SearchFlightsVC: BaseTableVC {
                 }
             }
         }else {
-            setupRoundTrip()
+            if let journeyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
+                if journeyType == "oneway" {
+                    setupOneWay()
+                }else if journeyType == "circle"{
+                    setupRoundTrip()
+                }else {
+                    setupMulticity()
+                }
+            }
         }
     }
     
@@ -529,11 +537,11 @@ class SearchFlightsVC: BaseTableVC {
                     payload["direct_flight"] = "on"
                 }
                 
-                if defaults.string(forKey:UserDefaultsKeys.rfromCity) == "Select City" || defaults.string(forKey:UserDefaultsKeys.rfromCity) == nil{
+                if defaults.string(forKey:UserDefaultsKeys.fromCity) == "Select City" || defaults.string(forKey:UserDefaultsKeys.fromCity) == nil{
                     showToast(message: "Please Select From City")
-                }else if defaults.string(forKey:UserDefaultsKeys.rtoCity) == "Select City" || defaults.string(forKey:UserDefaultsKeys.rtoCity) == nil{
+                }else if defaults.string(forKey:UserDefaultsKeys.toCity) == "Select City" || defaults.string(forKey:UserDefaultsKeys.toCity) == nil{
                     showToast(message: "Please Select To City")
-                }else if defaults.string(forKey:UserDefaultsKeys.rtoCity) == defaults.string(forKey:UserDefaultsKeys.rfromCity) {
+                }else if defaults.string(forKey:UserDefaultsKeys.toCity) == defaults.string(forKey:UserDefaultsKeys.fromCity) {
                     showToast(message: "Please Select Different Citys")
                 }else if defaults.string(forKey:UserDefaultsKeys.rcalDepDate) == "+ Add Departure Date" || defaults.string(forKey:UserDefaultsKeys.rcalDepDate) == nil{
                     showToast(message: "Please Select Departure Date")
@@ -546,7 +554,7 @@ class SearchFlightsVC: BaseTableVC {
                     showToast(message: "Add Traveller")
                 }else if defaults.string(forKey:UserDefaultsKeys.rselectClass) == nil {
                     showToast(message: "Add Class")
-                }else if defaults.string(forKey:UserDefaultsKeys.rfromCity) == defaults.string(forKey:UserDefaultsKeys.rtoCity) {
+                }else if defaults.string(forKey:UserDefaultsKeys.fromCity) == defaults.string(forKey:UserDefaultsKeys.toCity) {
                     showToast(message: "Please Select Different Citys")
                 }else if checkDepartureAndReturnDates(payload, p1: "depature", p2: "return") == false {
                     showToast(message: "Invalid Date")
@@ -756,41 +764,22 @@ extension SearchFlightsVC {
             
             defaults.set((userinfo["trip_type"] as? String) ?? "", forKey: UserDefaultsKeys.journeyType)
             
+            defaults.set((userinfo["from_city_name"] as? String) ?? "" , forKey: UserDefaultsKeys.fromcityname)
+            defaults.set((userinfo["to_city_name"] as? String) ?? "" , forKey: UserDefaultsKeys.tocityname)
+            defaults.set((userinfo["from_city_loc"] as? String) ?? "" , forKey: UserDefaultsKeys.fromairport)
+            defaults.set((userinfo["to_city_name"] as? String) ?? "" , forKey: UserDefaultsKeys.toairport)
+            defaults.set((userinfo["fromFlight"] as? String) ?? "" , forKey: UserDefaultsKeys.fromCity)
+            defaults.set((userinfo["toFlight"] as? String) ?? "" , forKey: UserDefaultsKeys.toCity)
             
-            if (userinfo["trip_type"] as? String ?? "") == "oneway" {
-                
-                defaults.set((userinfo["from_city_name"] as? String) ?? "" , forKey: UserDefaultsKeys.fromcityname)
-                defaults.set((userinfo["to_city_name"] as? String) ?? "" , forKey: UserDefaultsKeys.tocityname)
-                defaults.set((userinfo["from_city_loc"] as? String) ?? "" , forKey: UserDefaultsKeys.fromairport)
-                defaults.set((userinfo["to_city_name"] as? String) ?? "" , forKey: UserDefaultsKeys.toairport)
-                //  viewModel1?.CallSearchFlightAPI(dictParam: payload)
-                
-                defaults.set((userinfo["fromFlight"] as? String) ?? "" , forKey: UserDefaultsKeys.fromCity)
-                defaults.set((userinfo["toFlight"] as? String) ?? "" , forKey: UserDefaultsKeys.toCity)
-                
-                
-                
+            
+            if (userinfo["trip_type"] as? String) == "oneway" {
+                defaults.set((userinfo["travel_date"] as? String) ?? "" , forKey: UserDefaultsKeys.calDepDate)
+                defaults.set((userinfo["return_date"] as? String) ?? "" , forKey: UserDefaultsKeys.calRetDate)
             }else {
-//                defaults.set((userinfo["from_city_name"] as? String) ?? "" , forKey: UserDefaultsKeys.rfromcityname)
-//                defaults.set((userinfo["to_city_name"] as? String) ?? "" , forKey: UserDefaultsKeys.rtocityname)
-//                defaults.set((userinfo["from_city_loc"] as? String) ?? "" , forKey: UserDefaultsKeys.rfromairport)
-//                defaults.set((userinfo["to_city_loc"] as? String) ?? "" , forKey: UserDefaultsKeys.rtoairport)
-//                //   viewModel1?.CallRoundTRipSearchFlightAPI(dictParam: payload)
-//
-//                defaults.set((userinfo["fromFlight"] as? String) ?? "" , forKey: UserDefaultsKeys.rfromCity)
-//                defaults.set((userinfo["toFlight"] as? String) ?? "" , forKey: UserDefaultsKeys.rtoCity)
-                
-                
-                defaults.set((userinfo["from_city_name"] as? String) ?? "" , forKey: UserDefaultsKeys.fromcityname)
-                defaults.set((userinfo["to_city_name"] as? String) ?? "" , forKey: UserDefaultsKeys.tocityname)
-                defaults.set((userinfo["from_city_loc"] as? String) ?? "" , forKey: UserDefaultsKeys.fromairport)
-                defaults.set((userinfo["to_city_name"] as? String) ?? "" , forKey: UserDefaultsKeys.toairport)
-                //  viewModel1?.CallSearchFlightAPI(dictParam: payload)
-                
-                defaults.set((userinfo["fromFlight"] as? String) ?? "" , forKey: UserDefaultsKeys.fromCity)
-                defaults.set((userinfo["toFlight"] as? String) ?? "" , forKey: UserDefaultsKeys.toCity)
-                
+                defaults.set((userinfo["travel_date"] as? String) ?? "" , forKey: UserDefaultsKeys.rcalDepDate)
+                defaults.set((userinfo["return_date"] as? String) ?? "" , forKey: UserDefaultsKeys.rcalRetDate)
             }
+            
             
             
             gotoSearchFlightResultVC(payload33: payload)

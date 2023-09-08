@@ -142,7 +142,7 @@ enum TVCellType {
     case ExploreResultTVCell
     case ExploreSummeryTVCell
     case ExploreLeadPassengerTVCell
-    
+    case FromLeadPassengerTVCell
     
 }
 

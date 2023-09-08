@@ -487,111 +487,119 @@ class ModifySearchFlightVC: BaseTableVC {
         
         
         if let journeyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
-            if journeyType == "oneway" {
-                
-                payload["trip_type"] = defaults.string(forKey:UserDefaultsKeys.journeyType)
-                payload["adult"] = defaults.string(forKey:UserDefaultsKeys.adultCount)
-                payload["child"] = defaults.string(forKey:UserDefaultsKeys.childCount)
-                payload["infant"] = defaults.string(forKey:UserDefaultsKeys.infantsCount)
-                payload["v_class"] = defaults.string(forKey:UserDefaultsKeys.selectClass)
-                payload["sector_type"] = "international"
-                payload["from"] = defaults.string(forKey:UserDefaultsKeys.fromCity)
-                payload["from_loc_id"] = defaults.string(forKey:UserDefaultsKeys.fromlocid)
-                payload["to"] = defaults.string(forKey:UserDefaultsKeys.toCity)
-                payload["to_loc_id"] = defaults.string(forKey:UserDefaultsKeys.tolocid)
-                payload["depature"] = defaults.string(forKey:UserDefaultsKeys.calDepDate)
-                payload["return"] = ""
-                payload["out_jrn"] = "All Times"
-                payload["ret_jrn"] = "All Times"
-                payload["carrier"] = ""
-                payload["psscarrier"] = "ALL"
-                payload["search_flight"] = "Search"
-                payload["user_id"] = defaults.string(forKey:UserDefaultsKeys.userid) ?? "0"
-                payload["currency"] = defaults.string(forKey:UserDefaultsKeys.selectedCurrency) ?? "KWD"
-                
-                if directFlightBool == false {
-                    payload["direct_flight"] = "on"
+            payload.removeAll()
+            loderBool = true
+            
+            
+            if let journeyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
+                if journeyType == "oneway" {
+                    
+                    payload["trip_type"] = defaults.string(forKey:UserDefaultsKeys.journeyType)
+                    payload["adult"] = defaults.string(forKey:UserDefaultsKeys.adultCount)
+                    payload["child"] = defaults.string(forKey:UserDefaultsKeys.childCount)
+                    payload["infant"] = defaults.string(forKey:UserDefaultsKeys.infantsCount)
+                    payload["v_class"] = defaults.string(forKey:UserDefaultsKeys.selectClass)
+                    payload["sector_type"] = "international"
+                    payload["from"] = defaults.string(forKey:UserDefaultsKeys.fromCity)
+                    payload["from_loc_id"] = defaults.string(forKey:UserDefaultsKeys.fromlocid)
+                    payload["to"] = defaults.string(forKey:UserDefaultsKeys.toCity)
+                    payload["to_loc_id"] = defaults.string(forKey:UserDefaultsKeys.tolocid)
+                    payload["depature"] = defaults.string(forKey:UserDefaultsKeys.calDepDate)
+                    payload["return"] = ""
+                    payload["out_jrn"] = "All Times"
+                    payload["ret_jrn"] = "All Times"
+                    payload["carrier"] = ""
+                    payload["psscarrier"] = "ALL"
+                    payload["search_flight"] = "Search"
+                    payload["user_id"] = defaults.string(forKey:UserDefaultsKeys.userid) ?? "0"
+                    payload["currency"] = defaults.string(forKey:UserDefaultsKeys.selectedCurrency) ?? "KWD"
+                    
+                    if directFlightBool == false {
+                        payload["direct_flight"] = "on"
+                    }
+                    
+                    
+                    if defaults.string(forKey:UserDefaultsKeys.fromCity) == "Select City" || defaults.string(forKey:UserDefaultsKeys.fromCity) == nil{
+                        showToast(message: "Please Select From City")
+                    }else if defaults.string(forKey:UserDefaultsKeys.toCity) == "Select City" || defaults.string(forKey:UserDefaultsKeys.toCity) == nil{
+                        showToast(message: "Please Select To City")
+                    }else if defaults.string(forKey:UserDefaultsKeys.toCity) == defaults.string(forKey:UserDefaultsKeys.fromCity) {
+                        showToast(message: "Please Select Different Citys")
+                    }else if defaults.string(forKey:UserDefaultsKeys.calDepDate) == "+ Add Departure Date" || defaults.string(forKey:UserDefaultsKeys.calDepDate) == nil{
+                        showToast(message: "Please Select Departure Date")
+                    }
+                    else if defaults.string(forKey:UserDefaultsKeys.travellerDetails) == "Add Details" {
+                        showToast(message: "Add Traveller")
+                    }else if defaults.string(forKey:UserDefaultsKeys.selectClass) == "Add Details" {
+                        showToast(message: "Add Class")
+                    }else if checkDepartureAndReturnDates1(payload, p1: "depature") == false {
+                        showToast(message: "Invalid Date")
+                    }else{
+                        gotoSearchFlightResultVC(payload33: payload)
+                    }
+                    
+                }else {
+                    
+                    
+                    payload["trip_type"] = defaults.string(forKey:UserDefaultsKeys.journeyType)
+                    payload["adult"] = defaults.string(forKey:UserDefaultsKeys.radultCount)
+                    payload["child"] = defaults.string(forKey:UserDefaultsKeys.rchildCount)
+                    payload["infant"] = defaults.string(forKey:UserDefaultsKeys.rinfantsCount)
+                    payload["v_class"] = defaults.string(forKey:UserDefaultsKeys.rselectClass)
+                    payload["sector_type"] = "international"
+                    //    payload["from"] = defaults.string(forKey:UserDefaultsKeys.rfromCity)
+                    //                payload["from_loc_id"] = defaults.string(forKey:UserDefaultsKeys.rfromlocid)
+                    //                payload["to"] = defaults.string(forKey:UserDefaultsKeys.rtoCity)
+                    //                payload["to_loc_id"] = defaults.string(forKey:UserDefaultsKeys.rtolocid)
+                    
+                    payload["from"] = defaults.string(forKey:UserDefaultsKeys.fromCity)
+                    payload["from_loc_id"] = defaults.string(forKey:UserDefaultsKeys.fromlocid)
+                    payload["to"] = defaults.string(forKey:UserDefaultsKeys.toCity)
+                    payload["to_loc_id"] = defaults.string(forKey:UserDefaultsKeys.tolocid)
+                    
+                    payload["depature"] = defaults.string(forKey:UserDefaultsKeys.rcalDepDate)
+                    payload["return"] = defaults.string(forKey:UserDefaultsKeys.rcalRetDate)
+                    payload["out_jrn"] = "All Times"
+                    payload["ret_jrn"] = "All Times"
+                    payload["carrier"] = ""
+                    payload["psscarrier"] = "ALL"
+                    payload["search_flight"] = "Search"
+                    payload["user_id"] = defaults.string(forKey:UserDefaultsKeys.userid) ?? "0"
+                    payload["currency"] = defaults.string(forKey:UserDefaultsKeys.selectedCurrency) ?? "KWD"
+                    
+                    if directFlightBool == false {
+                        payload["direct_flight"] = "on"
+                    }
+                    
+                    if defaults.string(forKey:UserDefaultsKeys.fromCity) == "Select City" || defaults.string(forKey:UserDefaultsKeys.fromCity) == nil{
+                        showToast(message: "Please Select From City")
+                    }else if defaults.string(forKey:UserDefaultsKeys.toCity) == "Select City" || defaults.string(forKey:UserDefaultsKeys.toCity) == nil{
+                        showToast(message: "Please Select To City")
+                    }else if defaults.string(forKey:UserDefaultsKeys.toCity) == defaults.string(forKey:UserDefaultsKeys.fromCity) {
+                        showToast(message: "Please Select Different Citys")
+                    }else if defaults.string(forKey:UserDefaultsKeys.rcalDepDate) == "+ Add Departure Date" || defaults.string(forKey:UserDefaultsKeys.rcalDepDate) == nil{
+                        showToast(message: "Please Select Departure Date")
+                    }else if defaults.string(forKey:UserDefaultsKeys.rcalRetDate) == "+ Add Departure Date" || defaults.string(forKey:UserDefaultsKeys.rcalRetDate) == nil{
+                        showToast(message: "Please Select Return Date")
+                    }else if defaults.string(forKey:UserDefaultsKeys.rcalDepDate) == defaults.string(forKey:UserDefaultsKeys.rcalRetDate) {
+                        showToast(message: "Please Select Different Dates")
+                    }
+                    else if defaults.string(forKey:UserDefaultsKeys.rtravellerDetails) == nil {
+                        showToast(message: "Add Traveller")
+                    }else if defaults.string(forKey:UserDefaultsKeys.rselectClass) == nil {
+                        showToast(message: "Add Class")
+                    }else if defaults.string(forKey:UserDefaultsKeys.fromCity) == defaults.string(forKey:UserDefaultsKeys.toCity) {
+                        showToast(message: "Please Select Different Citys")
+                    }else if checkDepartureAndReturnDates(payload, p1: "depature", p2: "return") == false {
+                        showToast(message: "Invalid Date")
+                    }else{
+                        gotoSearchFlightResultVC(payload33: payload)
+                    }
+                    
                 }
-                
-                
-                if defaults.string(forKey:UserDefaultsKeys.fromCity) == "Select City" || defaults.string(forKey:UserDefaultsKeys.fromCity) == nil{
-                    showToast(message: "Please Select From City")
-                }else if defaults.string(forKey:UserDefaultsKeys.toCity) == "Select City" || defaults.string(forKey:UserDefaultsKeys.toCity) == nil{
-                    showToast(message: "Please Select To City")
-                }else if defaults.string(forKey:UserDefaultsKeys.toCity) == defaults.string(forKey:UserDefaultsKeys.fromCity) {
-                    showToast(message: "Please Select Different Citys")
-                }else if defaults.string(forKey:UserDefaultsKeys.calDepDate) == "+ Add Departure Date" || defaults.string(forKey:UserDefaultsKeys.calDepDate) == nil{
-                    showToast(message: "Please Select Departure Date")
-                }
-                else if defaults.string(forKey:UserDefaultsKeys.travellerDetails) == "Add Details" {
-                    showToast(message: "Add Traveller")
-                }else if defaults.string(forKey:UserDefaultsKeys.selectClass) == "Add Details" {
-                    showToast(message: "Add Class")
-                }else if checkDepartureAndReturnDates1(payload, p1: "depature") == false {
-                    showToast(message: "Invalid Date")
-                }else{
-                    gotoSearchFlightResultVC(payload33: payload)
-                }
-                
-            }else {
-                
-                
-                payload["trip_type"] = defaults.string(forKey:UserDefaultsKeys.journeyType)
-                payload["adult"] = defaults.string(forKey:UserDefaultsKeys.radultCount)
-                payload["child"] = defaults.string(forKey:UserDefaultsKeys.rchildCount)
-                payload["infant"] = defaults.string(forKey:UserDefaultsKeys.rinfantsCount)
-                payload["v_class"] = defaults.string(forKey:UserDefaultsKeys.rselectClass)
-                payload["sector_type"] = "international"
-                //    payload["from"] = defaults.string(forKey:UserDefaultsKeys.rfromCity)
-                //                payload["from_loc_id"] = defaults.string(forKey:UserDefaultsKeys.rfromlocid)
-                //                payload["to"] = defaults.string(forKey:UserDefaultsKeys.rtoCity)
-                //                payload["to_loc_id"] = defaults.string(forKey:UserDefaultsKeys.rtolocid)
-                
-                payload["from"] = defaults.string(forKey:UserDefaultsKeys.fromCity)
-                payload["from_loc_id"] = defaults.string(forKey:UserDefaultsKeys.fromlocid)
-                payload["to"] = defaults.string(forKey:UserDefaultsKeys.toCity)
-                payload["to_loc_id"] = defaults.string(forKey:UserDefaultsKeys.tolocid)
-                
-                payload["depature"] = defaults.string(forKey:UserDefaultsKeys.rcalDepDate)
-                payload["return"] = defaults.string(forKey:UserDefaultsKeys.rcalRetDate)
-                payload["out_jrn"] = "All Times"
-                payload["ret_jrn"] = "All Times"
-                payload["carrier"] = ""
-                payload["psscarrier"] = "ALL"
-                payload["search_flight"] = "Search"
-                payload["user_id"] = defaults.string(forKey:UserDefaultsKeys.userid) ?? "0"
-                payload["currency"] = defaults.string(forKey:UserDefaultsKeys.selectedCurrency) ?? "KWD"
-                
-                if directFlightBool == false {
-                    payload["direct_flight"] = "on"
-                }
-                
-                if defaults.string(forKey:UserDefaultsKeys.rfromCity) == "Select City" || defaults.string(forKey:UserDefaultsKeys.rfromCity) == nil{
-                    showToast(message: "Please Select From City")
-                }else if defaults.string(forKey:UserDefaultsKeys.rtoCity) == "Select City" || defaults.string(forKey:UserDefaultsKeys.rtoCity) == nil{
-                    showToast(message: "Please Select To City")
-                }else if defaults.string(forKey:UserDefaultsKeys.rtoCity) == defaults.string(forKey:UserDefaultsKeys.rfromCity) {
-                    showToast(message: "Please Select Different Citys")
-                }else if defaults.string(forKey:UserDefaultsKeys.rcalDepDate) == "+ Add Departure Date" || defaults.string(forKey:UserDefaultsKeys.rcalDepDate) == nil{
-                    showToast(message: "Please Select Departure Date")
-                }else if defaults.string(forKey:UserDefaultsKeys.rcalRetDate) == "+ Add Departure Date" || defaults.string(forKey:UserDefaultsKeys.rcalRetDate) == nil{
-                    showToast(message: "Please Select Return Date")
-                }else if defaults.string(forKey:UserDefaultsKeys.rcalDepDate) == defaults.string(forKey:UserDefaultsKeys.rcalRetDate) {
-                    showToast(message: "Please Select Different Dates")
-                }
-                else if defaults.string(forKey:UserDefaultsKeys.rtravellerDetails) == nil {
-                    showToast(message: "Add Traveller")
-                }else if defaults.string(forKey:UserDefaultsKeys.rselectClass) == nil {
-                    showToast(message: "Add Class")
-                }else if defaults.string(forKey:UserDefaultsKeys.rfromCity) == defaults.string(forKey:UserDefaultsKeys.rtoCity) {
-                    showToast(message: "Please Select Different Citys")
-                }else if checkDepartureAndReturnDates(payload, p1: "depature", p2: "return") == false {
-                    showToast(message: "Invalid Date")
-                }else{
-                    gotoSearchFlightResultVC(payload33: payload)
-                }
-                
             }
+            
+            
         }
         
         

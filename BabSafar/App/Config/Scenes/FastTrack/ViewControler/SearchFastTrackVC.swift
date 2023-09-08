@@ -184,9 +184,10 @@ class SearchFastTrackVC: BaseTableVC {
     }
     
     func gotoFasttrackResultVC(input:[String:Any]) {
+        loderBool = true
+        callapibool = true
         guard let vc = FasttrackResultVC.newInstance.self else {return}
         vc.modalPresentationStyle = .fullScreen
-        callapibool = true
         vc.payload = input
         self.present(vc, animated: true)
     }

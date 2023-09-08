@@ -647,7 +647,7 @@ extension SearchHotelsResultVC:AppliedFilters{
 extension SearchHotelsResultVC {
     
     func addObserver() {
-        
+        loderBool = false
         NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("offline"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(resultnil), name: NSNotification.Name("resultnil"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reload), name: Notification.Name("reload"), object: nil)

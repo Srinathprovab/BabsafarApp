@@ -44,8 +44,12 @@ class SearchHotelsVC: BaseTableVC, TopFlightDetailsViewModelDelegate {
     
     func setInitalValues() {
         
+        adtArray.removeAll()
+        adtArray.append("1")
+        adtArray.append("1")
+        
         defaults.set("1", forKey: UserDefaultsKeys.roomcount)
-        defaults.set("1", forKey: UserDefaultsKeys.hoteladultscount)
+        defaults.set("2", forKey: UserDefaultsKeys.hoteladultscount)
         defaults.set("0", forKey: UserDefaultsKeys.hotelchildcount)
         
         defaults.set("Rooms \(defaults.string(forKey: UserDefaultsKeys.roomcount) ?? ""),Adults \(defaults.string(forKey: UserDefaultsKeys.hoteladultscount) ?? "")", forKey: UserDefaultsKeys.selectPersons)
@@ -212,10 +216,11 @@ class SearchHotelsVC: BaseTableVC, TopFlightDetailsViewModelDelegate {
     }
     
     func gotoSearchHotelsResultVC(){
+        loderBool = true
+        callapibool = true
         guard let vc = SearchHotelsResultVC.newInstance.self else {return}
         vc.modalPresentationStyle = .fullScreen
         vc.countrycode = self.countrycode
-        callapibool = true
         vc.payload = self.payload
         present(vc, animated: true)
     }

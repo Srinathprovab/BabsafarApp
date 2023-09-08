@@ -23,6 +23,8 @@ class FBookingDetailsVC: BaseTableVC, EBookingViewModelDelegate {
     var tablerow = [TableRow]()
     var passengerName = String()
     var flightNo = String()
+    var mobilno = String()
+    var ccode = String()
     var terminal = String()
     var depTime = String()
     var depDate = String()
@@ -80,7 +82,8 @@ class FBookingDetailsVC: BaseTableVC, EBookingViewModelDelegate {
                                          "ExploreLeadPassengerTVCell",
                                          "EmptyTVCell",
                                          "SpecialRequestTVCell",
-                                         "FasttrackFlightDeatilsTVCell"])
+                                         "FasttrackFlightDeatilsTVCell",
+                                         "FromLeadPassengerTVCell"])
         
         
         
@@ -110,11 +113,19 @@ class FBookingDetailsVC: BaseTableVC, EBookingViewModelDelegate {
             flightNo = tf.text ?? ""
             break
             
+            
+        case 444:
+            mobilno = tf.text ?? ""
+            break
+            
         default:
             break
         }
     }
     
+    
+    
+    //MARK: - ExploreLeadPassengerTVCell
     
     override func didTapOnAdultBtnAction(cell: ExploreLeadPassengerTVCell) {
         print(cell.adultlbl.text as Any)
@@ -148,6 +159,45 @@ class FBookingDetailsVC: BaseTableVC, EBookingViewModelDelegate {
     
     
     
+    
+    //MARK: - FromLeadPassengerTVCell
+    
+    override func didTapOnAdultBtnAction(cell: FromLeadPassengerTVCell) {
+        print(cell.adultlbl.text as Any)
+    }
+    
+    override func didTapOnChildBtnAction(cell: FromLeadPassengerTVCell) {
+        print(cell.childlbl.text as Any)
+    }
+    
+    override func donedatePicker(cell: FromLeadPassengerTVCell) {
+        print(cell.depDateTF.text as Any)
+        self.view.endEditing(true)
+    }
+    
+    override func cancelDatePicker(cell: FromLeadPassengerTVCell) {
+        self.view.endEditing(true)
+    }
+    
+    override func doneTimePicker(cell: FromLeadPassengerTVCell) {
+        print(cell.depTimeTF.text as Any)
+        self.view.endEditing(true)
+    }
+    
+    override func cancelTimePicker(cell: FromLeadPassengerTVCell) {
+        self.view.endEditing(true)
+    }
+    
+    override func didTapOnTerminalBtnAction(cell: FromLeadPassengerTVCell) {
+        
+    }
+    
+    override func didTapOnCountryCodeBtn(cell:FromLeadPassengerTVCell){
+        ccode = cell.countryCodeTF.text ?? ""
+    }
+    
+    
+    
     @IBAction func didTapOnProceedPaymentBtnAction(_ sender: Any) {
         paymentTap()
     }
@@ -176,6 +226,7 @@ extension FBookingDetailsVC {
         child2_7Array.removeAll()
         terminalArray.removeAll()
         adult18PriceArray.removeAll()
+        
         eproduct_details = response.product_details
         sku = response.product_details?.data?.from?.sku ?? ""
         totalprice = "\(response.product_details?.data?.from?.price ?? 0)"
@@ -210,9 +261,6 @@ extension FBookingDetailsVC {
             self.setupExploreTV()
         }
     }
-    
-    
-    
     
     
     func setupExploreTV() {
@@ -262,9 +310,39 @@ extension FBookingDetailsVC {
     
     func quickbookingDetails(response: QBookingModel) {
         holderView.isHidden = false
+        adult18Array.removeAll()
+        child2_7Array.removeAll()
+        terminalArray.removeAll()
+        adult18PriceArray.removeAll()
+        
         
         qproduct_details = response.product_details
         currency = response.product_details?.data?.from?.currency ?? ""
+        
+        
+        response.product_details?.data?.from?.form_fields?.forEach({ i in
+            if i.title == "Adult (18+ Years)" {
+                i.options?.forEach({ j in
+                    adult18Array.append(j.formatted_title ?? "")
+                    adult18PriceArray.append("\(j.price ?? 0)")
+                })
+            }
+            
+            if i.title == "Child (2-17 Years)" {
+                i.options?.forEach({ j in
+                    child2_7Array.append(j.formatted_title ?? "")
+                })
+            }
+            
+            
+            if i.title == "Terminal" {
+                i.options?.forEach({ j in
+                    terminalArray.append(j.formatted_title ?? "")
+                })
+            }
+            
+            
+        })
         
         DispatchQueue.main.async {
             self.setupQuickBookingTV()
@@ -278,6 +356,7 @@ extension FBookingDetailsVC {
         
         setupTotalAmount()
         tablerow.append(TableRow(cellType:.FasttrackFlightDeatilsTVCell))
+        tablerow.append(TableRow(cellType:.FromLeadPassengerTVCell))
         tablerow.append(TableRow(title:"",key: "quick",cellType:.ExploreSummeryTVCell))
         tablerow.append(TableRow(key:"explore",cellType:.SpecialRequestTVCell))
         tablerow.append(TableRow(height:50,bgColor: .AppHolderViewColor,cellType:.EmptyTVCell))
