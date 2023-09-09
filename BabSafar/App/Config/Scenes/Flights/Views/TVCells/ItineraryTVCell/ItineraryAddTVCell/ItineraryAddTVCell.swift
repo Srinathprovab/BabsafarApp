@@ -32,6 +32,7 @@ class ItineraryAddTVCell: TableViewCell {
    
     override func updateUI() {
         depFind = Int(cellInfo?.title ?? "") ?? 0
+        print("depFinddepFinddepFind ==== \(depFind)")
         fdetais = cellInfo?.moreData as! [FDFlightDetails]
         tvHeight.constant = CGFloat((fdetais.count * 250))
         additneraryTV.reloadData()
@@ -100,6 +101,37 @@ extension ItineraryAddTVCell:UITableViewDelegate,UITableViewDataSource {
             }
             
             cell.airwaysImg1.sd_setImage(with: URL(string: data.operator_image ?? ""), placeholderImage:UIImage(contentsOfFile:"placeholder.png"))
+            
+           
+               
+            
+            if let journeyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
+                if journeyType == "oneway" {
+                    if indexPath.row == 0 {
+                        cell.deplbl.isHidden = false
+                        cell.flightImg.isHidden = false
+                        cell.flightImg.image = UIImage(named: "dep")
+                        cell.deplbl.text = "Departure"
+                    }
+                    
+                }else {
+                    if indexPath.row == 0 {
+                        if depFind == indexPath.row {
+                            cell.deplbl.isHidden = false
+                            cell.flightImg.isHidden = false
+                            cell.deplbl.text = "Departure"
+                            cell.flightImg.image = UIImage(named: "dep")
+                        }else {
+                            cell.deplbl.isHidden = false
+                            cell.flightImg.isHidden = false
+                            cell.deplbl.text = "Return"
+                            cell.flightImg.image = UIImage(named: "arrival")?.withRenderingMode(.alwaysOriginal).withTintColor(.AppBtnColor)
+                        }
+                    }
+                }
+            }
+            
+            
             
             c = cell
         }

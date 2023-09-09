@@ -244,6 +244,7 @@
                 <outlet property="fareTypelbl" destination="3yf-90-ySC" id="pWW-OY-FIn"/>
                 <outlet property="noofGuestlbl" destination="pzK-Jr-18o" id="Kxc-5O-pFe"/>
                 <outlet property="pricelbl" destination="ogs-AV-3Ay" id="Hsl-Ud-zdP"/>
+                <outlet property="selectRoomBtnView" destination="GwB-EN-zOm" id="ryq-El-TpC"/>
             </connections>
             <point key="canvasLocation" x="208.3969465648855" y="135.56338028169014"/>
         </tableViewCell>

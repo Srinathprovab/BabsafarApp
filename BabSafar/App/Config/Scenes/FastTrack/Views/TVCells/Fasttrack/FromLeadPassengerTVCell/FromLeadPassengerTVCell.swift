@@ -347,7 +347,7 @@ extension FromLeadPassengerTVCell {
         }
         
         loadCountryNamesAndCode()
-        dropDown.show()
+       
         
     }
     
@@ -364,7 +364,10 @@ extension FromLeadPassengerTVCell {
             originArray.append(i.origin ?? "")
         }
         
-        
+        DispatchQueue.main.async {[self] in
+            dropDown.dataSource = countryNames
+        }
+        dropDown.show()
     }
 }
 

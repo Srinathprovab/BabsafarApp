@@ -215,6 +215,7 @@ class FilterVC: BaseTableVC{
     func setupFilterTVCells() {
         commonTableView.isScrollEnabled = true
         tablerow.removeAll()
+        
         tablerow.append(TableRow(title:"Price",cellType:.SliderTVCell))
         tablerow.append(TableRow(title:"Stops",data: stopsArray,cellType:.CheckBoxTVCell))
         tablerow.append(TableRow(title:"Refundable Type",data: refundableTypeArray,cellType:.CheckBoxTVCell))
@@ -235,10 +236,13 @@ class FilterVC: BaseTableVC{
     }
     
     func setupSortByTVCells() {
-        commonTableView.isScrollEnabled = false
+        
+        if screenHeight > 835{
+            commonTableView.isScrollEnabled = false
+        }
         tablerow.removeAll()
         
-        tablerow.append(TableRow(height: 2,bgColor: .WhiteColor,cellType:.EmptyTVCell))
+        tablerow.append(TableRow(title:"Price",key: "no",cellType:.SortbyTVCell))
         tablerow.append(TableRow(title:"Departure",key: "no",cellType:.SortbyTVCell))
         tablerow.append(TableRow(title:"Arrival Time",key: "no",cellType:.SortbyTVCell))
         tablerow.append(TableRow(title:"Duration",key: "no",cellType:.SortbyTVCell))
@@ -343,6 +347,8 @@ class FilterVC: BaseTableVC{
         
         if cell.titlelbl.text == "Price" {
             sortBy = .PriceLow
+            
+            
             
             if let cell2 = commonTableView.cellForRow(at: IndexPath(item: 1, section: 0)) as? SortbyTVCell {
                 resetSortBy(cell: cell2)

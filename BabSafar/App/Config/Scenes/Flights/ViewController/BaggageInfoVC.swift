@@ -164,9 +164,15 @@ class BaggageInfoVC: BaseTableVC, FlightDetailsViewModelProtocal, FDViewModelDel
         
         tablerow.removeAll()
         
-        fd.forEach { i in
-            tablerow.append(TableRow(title:"\(i.startIndex )",moreData:i,cellType:.ItineraryAddTVCell))
+//        fd.forEach { i in
+//            tablerow.append(TableRow(title:"\(i.startIndex)",moreData:i,cellType:.ItineraryAddTVCell))
+//        }
+        
+        for (index, element) in fd.enumerated() {
+            tablerow.append(TableRow(title: "\(index)", moreData: element, cellType: .ItineraryAddTVCell))
         }
+
+
         
         
         tablerow.append(TableRow(height:100,cellType:.EmptyTVCell))

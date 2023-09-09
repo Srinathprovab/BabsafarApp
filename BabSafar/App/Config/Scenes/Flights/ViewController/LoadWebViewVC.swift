@@ -38,7 +38,7 @@ class LoadWebViewVC: UIViewController, MobilsPaymentGatwayViewModelDelegate, Mob
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        loderBool = false
+        loderBool = true
         if screenHeight < 835 {
             navHeight.constant = 90
         }

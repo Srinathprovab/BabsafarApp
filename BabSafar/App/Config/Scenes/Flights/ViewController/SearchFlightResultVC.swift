@@ -1477,7 +1477,7 @@ extension SearchFlightResultVC: AppliedFilters{
                             k.flight_details?.summary.map({ l in
                                 kwdPriceArray.append(k.totalPrice_API ?? "")
                                 prices.append(k.totalPrice ?? "")
-                              //  prices.append("\(k.aPICurrencyType ?? "")\(k.totalPrice ?? "")")
+                             //   prices.append("\(k.aPICurrencyType ?? "")\(k.totalPrice ?? "")")
                                 
                                 l.map { m in
                                     
@@ -1733,7 +1733,7 @@ extension SearchFlightResultVC:FlightListModelProtocal{
 extension SearchFlightResultVC {
     
     func addObserver() {
-        loderBool = false
+       
         NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("offline"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(resultnil), name: NSNotification.Name("resultnil"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reload), name: Notification.Name("reload"), object: nil)

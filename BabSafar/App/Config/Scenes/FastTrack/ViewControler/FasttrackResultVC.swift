@@ -53,7 +53,7 @@ class FasttrackResultVC: BaseTableVC, FasttrackViewModelDelegate {
     
     
     override func viewWillAppear(_ animated: Bool) {
-        loderBool = false
+        
         addObserver()
 //        quickServiceA.removeAll()
         

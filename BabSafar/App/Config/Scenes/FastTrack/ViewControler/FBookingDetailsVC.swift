@@ -38,6 +38,7 @@ class FBookingDetailsVC: BaseTableVC, EBookingViewModelDelegate {
     var from_plan_code = String()
     var to_plan_code = String()
     var totalAmount = 0
+    var tapedserviceType = ""
     var vm:EBookingViewModel?
     
     override func viewWillAppear(_ animated: Bool) {
@@ -404,7 +405,10 @@ extension FBookingDetailsVC {
     
     @objc func closebtnindex(notify:NSNotification) {
         
-        let indexToRemove = (notify.object as? Int) ?? 0
+    
+        let info = notify.userInfo
+        tapedserviceType = (info?["type"] as? String) ?? ""
+        let indexToRemove = (info?["index"] as? Int) ?? 0
         
         if indexToRemove >= 0 && indexToRemove < quickServiceA.count {
             quickServiceA.remove(at: indexToRemove)

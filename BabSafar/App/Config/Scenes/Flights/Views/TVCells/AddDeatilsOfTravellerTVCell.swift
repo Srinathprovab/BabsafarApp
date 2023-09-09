@@ -610,6 +610,7 @@ class AddDeatilsOfTravellerTVCell: TableViewCell {
         }
         
         loadCountryNamesAndCode()
+        dropDown1.show()
         
     }
     
@@ -631,7 +632,7 @@ class AddDeatilsOfTravellerTVCell: TableViewCell {
             dropDown1.dataSource = countryNames
         }
         
-        dropDown1.show()
+      
         
     }
     

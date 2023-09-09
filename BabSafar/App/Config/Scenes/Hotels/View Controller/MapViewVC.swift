@@ -31,6 +31,9 @@ class MapViewVC: UIViewController, CLLocationManagerDelegate {
         // Do any additional setup after loading the view.
         setupUI()
         
+        print(latArray)
+        print(longArray)
+        
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
@@ -50,9 +53,8 @@ class MapViewVC: UIViewController, CLLocationManagerDelegate {
     @objc func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.last {
             // Optionally, you can center the map on the user's location
-            let camera = GMSCameraPosition.camera(withLatitude: location.coordinate.latitude,
-                                                  longitude: location.coordinate.longitude,
-                                                  zoom: 12.0)
+            let camera = GMSCameraPosition.camera(withLatitude: 29.36, longitude: 48.00, zoom: 10.7)
+
             let gmsView = GMSMapView.map(withFrame: view.bounds, camera: camera)
             googleMapView.addSubview(gmsView)
             addMarkersToMap(gmsView)
@@ -62,23 +64,27 @@ class MapViewVC: UIViewController, CLLocationManagerDelegate {
     }
     
     func addMarkersToMap(_ mapView: GMSMapView) {
-        
         for index in 0..<latArray.count {
             if let latitude = Double(latArray[index]), let longitude = Double(longArray[index]) {
                 let marker = GMSMarker()
                 marker.position = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
                 marker.title = "Location \(index + 1)"
-                
+
                 // Create a custom marker icon with an image
-                if let markerImage = UIImage(named: "loc")?.withRenderingMode(.alwaysOriginal).withTintColor(.red) {
+                if let markerImage = UIImage(named: "loc1")?.withRenderingMode(.alwaysOriginal).withTintColor(.AppBtnColor) {
                     let markerView = UIImageView(image: markerImage)
                     marker.iconView = markerView
+                } else {
+                    print("Error: Marker image not found or is nil.")
                 }
-                
+
                 marker.map = mapView
+            } else {
+                print("Error: Invalid latitude or longitude values at index \(index).")
             }
         }
     }
+
     
     
     

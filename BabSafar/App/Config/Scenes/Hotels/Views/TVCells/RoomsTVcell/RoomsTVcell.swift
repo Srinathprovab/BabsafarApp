@@ -34,7 +34,6 @@ class RoomsTVcell: TableViewCell, NewRoomTVCellDelegate {
     @IBOutlet weak var roomDetailsTV: UITableView!
     
     var delegate:RoomsTVcellDelegate?
-    var roomArray = ["Executive Studio","1 Deluxe"]
     var key = "rooms"
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -190,10 +189,11 @@ extension RoomsTVcell: UITableViewDataSource ,UITableViewDelegate {
                 cell.delegate = self
                 if indexPath.section < roomsDetails.count && indexPath.row < roomsDetails[indexPath.section].count {
                     
+                    cell.newRoomindexPath = IndexPath(row: indexPath.row, section: indexPath.section)
+
                     let section = indexPath.section
                     let data = roomsDetails[section]
                     cell.room = data
-                    
                     cell.tvheight.constant = CGFloat(cell.room.count * 101)
                     cell.roomInfoTV.reloadData()
                     

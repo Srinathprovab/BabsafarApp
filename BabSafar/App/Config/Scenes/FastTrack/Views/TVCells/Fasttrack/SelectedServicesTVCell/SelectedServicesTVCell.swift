@@ -25,6 +25,7 @@ class SelectedServicesTVCell: TableViewCell {
     @IBOutlet weak var cancelView: BorderedView!
     @IBOutlet weak var closeBtn: UIButton!
 
+    var tapedservicetype = ""
     var index = Int()
     var delegate:SelectedServicesTVCellDelegate?
     override func awakeFromNib() {
@@ -67,8 +68,10 @@ class SelectedServicesTVCell: TableViewCell {
     
     
     @IBAction func didTapOnCloseBtnAction(_ sender: Any) {
-        NotificationCenter.default.post(name: NSNotification.Name("closebtnindex"), object: index)
-
+        var userinfo = [String:Any]()
+        userinfo["type"] = tapedservicetype
+        userinfo["index"] = index
+        NotificationCenter.default.post(name: NSNotification.Name("closebtnindex"), object: index,userInfo: userinfo)
     }
     
 

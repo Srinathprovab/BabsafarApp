@@ -693,8 +693,6 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
         payload["device_source"] = "MOBILE(A)"
         
         
-        
-        
         if callpaymentbool == false {
             showToast(message: "Add Details")
         }else if fnameCharBool == false {
@@ -740,6 +738,7 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
         if response.status == false {
             showToast(message: response.message ?? "")
         }else {
+            TimerManager.shared.stopTimer()
             guard let vc = PaymentGatewayVC.newInstance.self else {return}
             vc.modalPresentationStyle = .fullScreen
             vc.payload = payload
@@ -958,7 +957,7 @@ extension BookingDetailsVC {
         bookNowlbl.text = "\(i?.api_currency ?? "")\(i?.grand_total ?? "")"
         grand_total_Price = i?.grand_total ?? ""
         
-        // let totalSeconds = abs(response.session_expiry_details?.session_start_time ?? 0)
+        TimerManager.shared.stopTimer()
         TimerManager.shared.totalTime = 900
         TimerManager.shared.startTimer()
         

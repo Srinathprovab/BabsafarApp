@@ -88,7 +88,7 @@ extension FasttrackFlightDeatilsTVCell : UITableViewDelegate,UITableViewDataSour
             cell.pricelbl.text = data.price
             cell.cancelView.isHidden = true
             cell.closeView.isHidden = false
-            
+            cell.tapedservicetype = data.serviceType
             
             ccell = cell
         }

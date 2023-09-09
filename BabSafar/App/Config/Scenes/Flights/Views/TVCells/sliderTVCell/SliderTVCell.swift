@@ -84,10 +84,10 @@ class SliderTVCell: TableViewCell, TTRangeSliderDelegate {
         
         rangeSlider.minValue = minValue
         rangeSlider.maxValue = maxValue
-        minValue1 = Double(minValue)
-        maxValue1 = Double(maxValue)
-        minlbl.text = "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? "")\(minValue)"
-        maxlbl.text = "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? "")\(maxValue)"
+        minValue1 = Double(minValue).rounded()
+        maxValue1 = Double(maxValue).rounded()
+        minlbl.text = "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? "") \(minValue1)"
+        maxlbl.text = "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? "") \(maxValue1)"
         
         
         // Set the thumbs to the minimum and maximum values
@@ -151,11 +151,11 @@ class SliderTVCell: TableViewCell, TTRangeSliderDelegate {
         let minLabelText = String(format: "%.1f", selectedMinimum)
         let maxLabelText = String(format: "%.1f", selectedMaximum)
         
-        minValue1 = Double(minLabelText) ?? 0.0
-        maxValue1 = Double(maxLabelText) ?? 0.0
+        minValue1 = Double(minLabelText)?.rounded() ?? 0.0
+        maxValue1 = Double(maxLabelText)?.rounded() ?? 0.0
         
-        minlbl.text = "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? "")\(minLabelText)"
-        maxlbl.text = "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? "")\(maxLabelText)"
+        minlbl.text = "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? "") \(minValue1)"
+        maxlbl.text = "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? "") \(maxValue1)"
         
         delegate?.didTapOnShowSliderBtn(cell: self)
     }

@@ -17,7 +17,7 @@ class HotelDetailsVC: BaseTableVC, HotelDetailsViewModelDelegate {
     @IBOutlet weak var bookNowBtn: UIButton!
     @IBOutlet weak var navHeight: NSLayoutConstraint!
     
-    
+    var selectedCell: NewRoomDetailsTVCell?
     var imgArray = ["img1","img2","img3","img4","img2","img1","img4","img3","img1","img2","img3","img4","img2","img1","img4","img3"]
     var tablerow = [TableRow]()
     static var newInstance: HotelDetailsVC? {
@@ -179,11 +179,43 @@ class HotelDetailsVC: BaseTableVC, HotelDetailsViewModelDelegate {
     //MARK: - didTapOnSelectRoomBtnAction
     
     override func didTapOnSelectRoomBtnAction(cell:NewRoomDetailsTVCell){
+        
+        
+        
+        
+        
+        // Check if a different cell was previously selected
+        if let previouslySelectedCell = selectedCell {
+            // Deselect the previously selected cell
+            previouslySelectedCell.isSelectedCell = false
+            previouslySelectedCell.updateButtonColor()
+        }
+        
+        // Select the tapped cell
+        cell.isSelectedCell = true
+        cell.updateButtonColor()
+        
+        // Update the selectedCell reference
+        selectedCell = cell
+        
+        
+        // Clear the selectedCellIndices array
+        selectedCellIndices.removeAll()
+        
+        // Append the indexPath of the tapped cell to the selectedCellIndices array
+        if let indexPath = selectedCell?.indexpathvalue {
+            selectedCellIndices.append(indexPath)
+        }
+        
+        
         bookNowView.isUserInteractionEnabled = true
         bookNowView.alpha = 1
         grandTotal = cell.pricelbl.text ?? ""
         setuplabels(lbl: bookNowlbl, text: cell.pricelbl.text ?? "" , textcolor: .WhiteColor, font: .LatoMedium(size: 18), align: .left)
         selectedrRateKeyArray = cell.ratekey
+        
+        
+        print(selectedCellIndices)
     }
     
     
@@ -262,6 +294,8 @@ extension HotelDetailsVC {
         vc.key = "nointernet"
         self.present(vc, animated: true)
     }
+    
+    
     
     
 }

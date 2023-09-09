@@ -84,7 +84,7 @@ Fahidi Metro </string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="KWD150.00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0zn-zS-eGV">
-                                <rect key="frame" x="255.5" y="225" width="90.5" height="30"/>
+                                <rect key="frame" x="255.5" y="225" width="90.5" height="25"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="90.5" id="nfy-Ow-m2F"/>
                                 </constraints>
@@ -93,13 +93,13 @@ Fahidi Metro </string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total Price For 2 Night" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tjj-nZ-Ba6">
-                                <rect key="frame" x="248" y="260" width="98" height="12"/>
+                                <rect key="frame" x="248" y="255" width="98" height="12"/>
                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="10"/>
                                 <color key="textColor" name="SubTitleColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qnd-gJ-NWc">
-                                <rect key="frame" x="5" y="279.5" width="120" height="20"/>
+                                <rect key="frame" x="5" y="277" width="120" height="20"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Terms &amp; Conditions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BEv-H4-aWJ">
                                         <rect key="frame" x="8.5" y="3" width="103.5" height="14"/>
@@ -129,16 +129,16 @@ Fahidi Metro </string>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vQL-06-Y9S" customClass="BorderedView" customModule="BabSafar" customModuleProvider="target">
-                                <rect key="frame" x="286" y="277" width="60" height="25"/>
+                                <rect key="frame" x="266" y="272" width="80" height="30"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Book Now" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YjP-xJ-OQO">
-                                        <rect key="frame" x="6.5" y="6.5" width="47" height="12"/>
-                                        <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="10"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Book Now" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YjP-xJ-OQO">
+                                        <rect key="frame" x="7" y="6.5" width="66" height="17"/>
+                                        <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="14"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ETh-gF-DEf">
-                                        <rect key="frame" x="0.0" y="0.0" width="60" height="25"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="80" height="30"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain"/>
                                         <connections>
@@ -151,8 +151,8 @@ Fahidi Metro </string>
                                     <constraint firstAttribute="bottom" secondItem="ETh-gF-DEf" secondAttribute="bottom" id="03C-Fl-cpo"/>
                                     <constraint firstAttribute="trailing" secondItem="ETh-gF-DEf" secondAttribute="trailing" id="A0A-Xw-LMn"/>
                                     <constraint firstItem="ETh-gF-DEf" firstAttribute="top" secondItem="vQL-06-Y9S" secondAttribute="top" id="AgA-1d-0Kq"/>
-                                    <constraint firstAttribute="height" constant="25" id="K0p-gc-6WP"/>
-                                    <constraint firstAttribute="width" constant="60" id="Mg5-vy-gdu"/>
+                                    <constraint firstAttribute="height" constant="30" id="K0p-gc-6WP"/>
+                                    <constraint firstAttribute="width" constant="80" id="Mg5-vy-gdu"/>
                                     <constraint firstItem="YjP-xJ-OQO" firstAttribute="centerX" secondItem="vQL-06-Y9S" secondAttribute="centerX" id="f0V-TX-jec"/>
                                     <constraint firstItem="ETh-gF-DEf" firstAttribute="leading" secondItem="vQL-06-Y9S" secondAttribute="leading" id="ghn-J5-bf4"/>
                                     <constraint firstItem="YjP-xJ-OQO" firstAttribute="centerY" secondItem="vQL-06-Y9S" secondAttribute="centerY" id="ifQ-Z7-n4K"/>
@@ -164,7 +164,7 @@ Fahidi Metro </string>
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ycE-4P-H9d" customClass="BorderedView" customModule="BabSafar" customModuleProvider="target">
-                                <rect key="frame" x="10" y="258" width="80" height="20"/>
+                                <rect key="frame" x="10" y="255.5" width="80" height="20"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Refundable" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gpq-QU-728">
                                         <rect key="frame" x="14.5" y="4" width="51" height="12"/>

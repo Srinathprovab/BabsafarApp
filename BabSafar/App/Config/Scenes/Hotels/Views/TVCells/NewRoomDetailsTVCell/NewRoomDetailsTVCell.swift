@@ -19,8 +19,16 @@ class NewRoomDetailsTVCell: UITableViewCell {
     @IBOutlet weak var fareTypelbl: UILabel!
     @IBOutlet weak var pricelbl: UILabel!
     @IBOutlet weak var bablbl: UILabel!
+    @IBOutlet weak var selectRoomBtnView: BorderedView!
     
-    
+    var isSelectedCell: Bool = false {
+        didSet {
+            updateButtonColor()
+        }
+    }
+    private var unselectedBackgroundColor: UIColor = .AppBtnColor
+
+    var indexpathvalue : IndexPath?
     var fareTypeString = String()
     var CancellationPolicyAmount = String()
     var CancellationPolicyFromDate = String()
@@ -30,6 +38,8 @@ class NewRoomDetailsTVCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+        selectRoomBtnView.backgroundColor = .AppBtnColor
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -37,6 +47,13 @@ class NewRoomDetailsTVCell: UITableViewCell {
         
         // Configure the view for the selected state
     }
+    
+    
+    
+    func updateButtonColor() {
+        selectRoomBtnView.backgroundColor = isSelectedCell ? .AppCalenderDateSelectColor : unselectedBackgroundColor
+    }
+    
     
     
     
