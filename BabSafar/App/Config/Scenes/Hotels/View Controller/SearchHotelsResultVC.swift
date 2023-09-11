@@ -341,6 +341,30 @@ class SearchHotelsResultVC: BaseTableVC, UITextFieldDelegate, HotelSearchViewMod
         present(vc, animated: true)
     }
     
+    
+    
+    func setAttributedText1(str1:String,str2:String,lbl:UILabel)  {
+        
+        let atter1 = [NSAttributedString.Key.foregroundColor:UIColor.AppTabSelectColor,
+                      NSAttributedString.Key.font:UIFont.LatoBold(size: 12)] as [NSAttributedString.Key : Any]
+        let atter2 = [NSAttributedString.Key.foregroundColor:UIColor.AppTabSelectColor,
+                      NSAttributedString.Key.font:UIFont.LatoBold(size: 18)] as [NSAttributedString.Key : Any]
+        
+        let atterStr1 = NSMutableAttributedString(string: str1, attributes: atter1)
+        let atterStr2 = NSMutableAttributedString(string: str2, attributes: atter2)
+        
+        
+        let combination = NSMutableAttributedString()
+        combination.append(atterStr1)
+        combination.append(atterStr2)
+        
+        lbl.attributedText = combination
+        
+    }
+    
+    
+    
+    
     @IBAction func didTapOnMapViewBtnAction(_ sender: Any) {
         guard let vc = MapViewVC.newInstance.self else {return}
         vc.modalPresentationStyle = .fullScreen
@@ -446,7 +470,7 @@ extension SearchHotelsResultVC {
                 cell.ratingslbl.text = String(dict.star_rating ?? 0)
                 cell.locationlbl.text = dict.address
                 //    cell.kwdlbl.text = "\(dict.currency ?? ""):\(String(format: "%.2f", dict.price ?? ""))"
-                setAttributedText(str1: dict.currency ?? "", str2: dict.price ?? "", lbl: cell.kwdlbl)
+                setAttributedText1(str1: dict.currency ?? "", str2: dict.price ?? "", lbl: cell.kwdlbl)
                 cell.bookingsource = dict.booking_source ?? ""
                 cell.hotelid = String(dict.hotel_code ?? 0)
                 cell.lat = dict.latitude ?? ""
@@ -464,7 +488,7 @@ extension SearchHotelsResultVC {
                 cell.ratingslbl.text = String(dict.star_rating ?? 0)
                 cell.locationlbl.text = dict.address
                 //  cell.kwdlbl.text = "\(dict.currency ?? ""):\()"
-                setAttributedText(str1: dict.currency ?? "", str2: dict.price ?? "", lbl: cell.kwdlbl)
+                setAttributedText1(str1: dict.currency ?? "", str2: dict.price ?? "", lbl: cell.kwdlbl)
                 cell.bookingsource = dict.booking_source ?? ""
                 cell.hotelid = String(dict.hotel_code ?? 0)
                 cell.lat = dict.latitude ?? ""

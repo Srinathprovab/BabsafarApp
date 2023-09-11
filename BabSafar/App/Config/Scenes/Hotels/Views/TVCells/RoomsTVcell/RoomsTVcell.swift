@@ -33,6 +33,9 @@ class RoomsTVcell: TableViewCell, NewRoomTVCellDelegate {
     @IBOutlet weak var amenitiesBtn: UIButton!
     @IBOutlet weak var roomDetailsTV: UITableView!
     
+    
+    
+    var selectedCell: NewRoomDetailsTVCell?
     var delegate:RoomsTVcellDelegate?
     var key = "rooms"
     override func awakeFromNib() {
@@ -67,9 +70,9 @@ class RoomsTVcell: TableViewCell, NewRoomTVCellDelegate {
         hotelsDetailsUL.backgroundColor = .WhiteColor
         amenitiesUL.backgroundColor = .WhiteColor
         
-        setuplabels(lbl: roomslbl, text: "Rooms", textcolor: .AppTabSelectColor, font: .LatoRegular(size: 14), align: .center)
-        setuplabels(lbl: hotelsDetailslbl, text: "Hotels Details", textcolor: .AppLabelColor.withAlphaComponent(0.5), font: .LatoRegular(size: 14), align: .center)
-        setuplabels(lbl: amenitieslbl, text: "Amenities", textcolor: .AppLabelColor.withAlphaComponent(0.5), font: .LatoRegular(size: 14), align: .center)
+        setuplabels(lbl: roomslbl, text: "Rooms", textcolor: .AppTabSelectColor, font: .LatoBold(size: 16), align: .center)
+        setuplabels(lbl: hotelsDetailslbl, text: "Hotels Details", textcolor: .AppLabelColor.withAlphaComponent(0.5), font: .LatoBold(size: 16), align: .center)
+        setuplabels(lbl: amenitieslbl, text: "Amenities", textcolor: .AppLabelColor.withAlphaComponent(0.5), font: .LatoBold(size: 16), align: .center)
         
         roomsBtn.setTitle("", for: .normal)
         hotelsDetailsBtn.setTitle("", for: .normal)
@@ -89,9 +92,9 @@ class RoomsTVcell: TableViewCell, NewRoomTVCellDelegate {
     
     func setuTV() {
         roomDetailsTV.register(UINib(nibName: "NewRoomTVCell", bundle: nil), forCellReuseIdentifier: "rooms")
-        roomDetailsTV.register(UINib(nibName: "TitleLabelTVCell", bundle: nil), forCellReuseIdentifier: "cell1")
-        roomDetailsTV.register(UINib(nibName: "TitleLabelTVCell", bundle: nil), forCellReuseIdentifier: "cell2")
-        roomDetailsTV.register(UINib(nibName: "TitleLabelTVCell", bundle: nil), forCellReuseIdentifier: "cell3")
+        roomDetailsTV.register(UINib(nibName: "TitleLabelTVCell", bundle: nil), forCellReuseIdentifier: "hdetails")
+//        roomDetailsTV.register(UINib(nibName: "TitleLabelTVCell", bundle: nil), forCellReuseIdentifier: "cell2")
+//        roomDetailsTV.register(UINib(nibName: "TitleLabelTVCell", bundle: nil), forCellReuseIdentifier: "cell3")
         roomDetailsTV.register(UINib(nibName: "AmenitiesTVCell", bundle: nil), forCellReuseIdentifier: "amenities")
         
         
@@ -124,6 +127,9 @@ class RoomsTVcell: TableViewCell, NewRoomTVCellDelegate {
         roomsUL.backgroundColor = .WhiteColor
         amenitieslbl.textColor = .AppLabelColor.withAlphaComponent(0.5)
         amenitiesUL.backgroundColor = .WhiteColor
+        
+        
+        print(formatDesc.count)
         
         delegate?.didTapOnHotelsDetailsBtn(cell:self)
     }
@@ -160,21 +166,25 @@ extension RoomsTVcell: UITableViewDataSource ,UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
         if self.key == "rooms" {
             return roomsDetails.count
-        }else if self.key == "hotels details"{
-            return formatDesc.count
-        }else {
+        }
+//        else if self.key == "hotels details"{
+//            return formatDesc.count
+//        }
+        else {
             return 1
         }
-           
+        
         
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if self.key == "rooms" {
             return roomsDetails[section].count
-        }else if self.key == "hotels details"{
+        }
+        else if self.key == "hotels details"{
             return formatDesc.count
-        }else {
+        }
+        else {
             return 1
         }
         
@@ -189,8 +199,8 @@ extension RoomsTVcell: UITableViewDataSource ,UITableViewDelegate {
                 cell.delegate = self
                 if indexPath.section < roomsDetails.count && indexPath.row < roomsDetails[indexPath.section].count {
                     
-                    cell.newRoomindexPath = IndexPath(row: indexPath.row, section: indexPath.section)
-
+                    //  cell.newRoomindexPath = IndexPath(row: indexPath.row, section: indexPath.section)
+                    
                     let section = indexPath.section
                     let data = roomsDetails[section]
                     cell.room = data
@@ -205,9 +215,9 @@ extension RoomsTVcell: UITableViewDataSource ,UITableViewDelegate {
                 ccell = cell
             }
         }else if self.key == "hotels details"{
-            if let cell = tableView.dequeueReusableCell(withIdentifier: "cell3") as? TitleLabelTVCell {
+            if let cell = tableView.dequeueReusableCell(withIdentifier: "hdetails") as? TitleLabelTVCell {
                 cell.selectionStyle = .none
-                cell.hotelNamelbl.attributedText = formatDesc[indexPath.row].heading?.htmlToAttributedString
+                cell.hotelNamelbl.attributedText = "\(formatDesc[indexPath.row].heading ?? "")".htmlToAttributedString
                 cell.locationlbl.attributedText = formatDesc[indexPath.row].content?.htmlToAttributedString
                 cell.setupHotelDetails()
                 ccell = cell
@@ -228,37 +238,6 @@ extension RoomsTVcell: UITableViewDataSource ,UITableViewDelegate {
         return ccell
     }
     
-    
-    
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//
-//        if self.key == "rooms" {
-//            if let cell = tableView.cellForRow(at: indexPath) as? RoomDetailsTVCell {
-//
-//                if indexPath.section < roomsDetails.count && indexPath.row < roomsDetails[indexPath.section].count {
-//                    selectedrRateKeyArray = cell.ratekey
-//                } else {
-//                    print("Index out of range")
-//                }
-//
-//                print(selectedrRateKeyArray)
-//                cell.radioImg.image = UIImage(named: "radioSelected")
-//                NotificationCenter.default.post(name: NSNotification.Name("showBookNowBtn"), object: nil)
-//
-//            }
-//        }
-//
-//    }
-//
-//
-//    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-//        if self.key == "rooms" {
-//            if let cell = tableView.cellForRow(at: indexPath) as? RoomDetailsTVCell {
-//                cell.radioImg.image = UIImage(named: "radioUnselected")
-//            }
-//        }
-//
-//    }
-    
+  
     
 }

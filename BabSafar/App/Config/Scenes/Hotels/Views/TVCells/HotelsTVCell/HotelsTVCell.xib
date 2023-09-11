@@ -23,15 +23,15 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="213" id="KGk-i7-Jjw" customClass="HotelsTVCell" customModule="BabSafar" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="371" height="320"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="229" id="KGk-i7-Jjw" customClass="HotelsTVCell" customModule="BabSafar" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="371" height="336"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="371" height="320"/>
+                <rect key="frame" x="0.0" y="0.0" width="371" height="336"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lmt-nr-OOh" customClass="BorderedView" customModule="BabSafar" customModuleProvider="target">
-                        <rect key="frame" x="10" y="10" width="351" height="305"/>
+                        <rect key="frame" x="10" y="10" width="351" height="321"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="city" translatesAutoresizingMaskIntoConstraints="NO" id="NOF-Dc-Pnq">
                                 <rect key="frame" x="6" y="6" width="339" height="180"/>
@@ -39,7 +39,7 @@
                                     <constraint firstAttribute="height" constant="180" id="fE1-OK-Jon"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gHI-Ar-zNd">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gHI-Ar-zNd">
                                 <rect key="frame" x="10" y="196" width="297" height="19.5"/>
                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="16"/>
                                 <nil key="textColor"/>
@@ -75,8 +75,8 @@
                                     <constraint firstAttribute="height" constant="15" id="lZg-2O-yiA"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vXb-aM-agc">
-                                <rect key="frame" x="35" y="224" width="175" height="29"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vXb-aM-agc">
+                                <rect key="frame" x="35" y="225.5" width="175" height="29"/>
                                 <string key="text">Bur Dubai, Dubai | 700 m from Al 
 Fahidi Metro </string>
                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
@@ -84,7 +84,7 @@ Fahidi Metro </string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="KWD150.00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0zn-zS-eGV">
-                                <rect key="frame" x="255.5" y="225" width="90.5" height="25"/>
+                                <rect key="frame" x="255.5" y="236.5" width="90.5" height="19.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="90.5" id="nfy-Ow-m2F"/>
                                 </constraints>
@@ -93,13 +93,13 @@ Fahidi Metro </string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total Price For 2 Night" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tjj-nZ-Ba6">
-                                <rect key="frame" x="248" y="255" width="98" height="12"/>
+                                <rect key="frame" x="248" y="261" width="98" height="12"/>
                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="10"/>
                                 <color key="textColor" name="SubTitleColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qnd-gJ-NWc">
-                                <rect key="frame" x="5" y="277" width="120" height="20"/>
+                                <rect key="frame" x="5" y="291" width="120" height="20"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Terms &amp; Conditions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BEv-H4-aWJ">
                                         <rect key="frame" x="8.5" y="3" width="103.5" height="14"/>
@@ -129,7 +129,7 @@ Fahidi Metro </string>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vQL-06-Y9S" customClass="BorderedView" customModule="BabSafar" customModuleProvider="target">
-                                <rect key="frame" x="266" y="272" width="80" height="30"/>
+                                <rect key="frame" x="266" y="278" width="80" height="30"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Book Now" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YjP-xJ-OQO">
                                         <rect key="frame" x="7" y="6.5" width="66" height="17"/>
@@ -164,7 +164,7 @@ Fahidi Metro </string>
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ycE-4P-H9d" customClass="BorderedView" customModule="BabSafar" customModuleProvider="target">
-                                <rect key="frame" x="10" y="255.5" width="80" height="20"/>
+                                <rect key="frame" x="10" y="269.5" width="80" height="20"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Refundable" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gpq-QU-728">
                                         <rect key="frame" x="14.5" y="4" width="51" height="12"/>
@@ -190,25 +190,25 @@ Fahidi Metro </string>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="XVV-Jc-xdJ" firstAttribute="top" secondItem="gHI-Ar-zNd" secondAttribute="top" id="3r6-0q-rvB"/>
+                            <constraint firstItem="vXb-aM-agc" firstAttribute="top" secondItem="iXw-PS-N0r" secondAttribute="top" id="4sI-Dg-3tb"/>
                             <constraint firstItem="0zn-zS-eGV" firstAttribute="leading" secondItem="vXb-aM-agc" secondAttribute="trailing" constant="45.5" id="64T-WH-h7j"/>
                             <constraint firstAttribute="trailing" secondItem="0zn-zS-eGV" secondAttribute="trailing" constant="5" id="6fk-PC-b2p"/>
                             <constraint firstItem="NOF-Dc-Pnq" firstAttribute="leading" secondItem="lmt-nr-OOh" secondAttribute="leading" constant="6" id="7Mu-d7-Qna"/>
-                            <constraint firstAttribute="bottom" secondItem="vQL-06-Y9S" secondAttribute="bottom" constant="3" id="Fte-am-r6v"/>
                             <constraint firstItem="qnd-gJ-NWc" firstAttribute="leading" secondItem="lmt-nr-OOh" secondAttribute="leading" constant="5" id="J2O-Vt-aAh"/>
                             <constraint firstItem="gHI-Ar-zNd" firstAttribute="leading" secondItem="lmt-nr-OOh" secondAttribute="leading" constant="10" id="NYU-A6-Twu"/>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="321" id="OB6-R2-i7x"/>
                             <constraint firstAttribute="trailing" secondItem="XVV-Jc-xdJ" secondAttribute="trailing" constant="10" id="QTb-wC-y6V"/>
-                            <constraint firstItem="vXb-aM-agc" firstAttribute="top" secondItem="gHI-Ar-zNd" secondAttribute="bottom" constant="8.5" id="Yuc-Xy-75N"/>
-                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="305" id="ZB7-QE-BXd"/>
+                            <constraint firstAttribute="bottom" secondItem="qnd-gJ-NWc" secondAttribute="bottom" constant="10" id="aFo-12-n9G"/>
+                            <constraint firstItem="vQL-06-Y9S" firstAttribute="bottom" secondItem="BEv-H4-aWJ" secondAttribute="bottom" id="bOZ-4X-EHG"/>
                             <constraint firstItem="iXw-PS-N0r" firstAttribute="leading" secondItem="lmt-nr-OOh" secondAttribute="leading" constant="10" id="czj-Zt-CK9"/>
-                            <constraint firstItem="0zn-zS-eGV" firstAttribute="top" secondItem="XVV-Jc-xdJ" secondAttribute="bottom" constant="5" id="fC0-gS-G2C"/>
                             <constraint firstAttribute="trailing" secondItem="NOF-Dc-Pnq" secondAttribute="trailing" constant="6" id="h2b-aE-O9z"/>
                             <constraint firstItem="ycE-4P-H9d" firstAttribute="leading" secondItem="iXw-PS-N0r" secondAttribute="leading" id="kfR-qd-Zgb"/>
                             <constraint firstItem="vQL-06-Y9S" firstAttribute="top" secondItem="tjj-nZ-Ba6" secondAttribute="bottom" constant="5" id="lYV-KI-Wyn"/>
                             <constraint firstItem="XVV-Jc-xdJ" firstAttribute="leading" secondItem="gHI-Ar-zNd" secondAttribute="trailing" constant="10" id="lc7-W1-TwF"/>
+                            <constraint firstItem="ycE-4P-H9d" firstAttribute="top" secondItem="iXw-PS-N0r" secondAttribute="bottom" constant="29" id="mBl-Jf-cxU"/>
                             <constraint firstItem="gHI-Ar-zNd" firstAttribute="top" secondItem="NOF-Dc-Pnq" secondAttribute="bottom" constant="10" id="mXa-Xr-BSh"/>
                             <constraint firstItem="vXb-aM-agc" firstAttribute="leading" secondItem="iXw-PS-N0r" secondAttribute="trailing" constant="10" id="qJd-4x-CGj"/>
                             <constraint firstItem="tjj-nZ-Ba6" firstAttribute="top" secondItem="0zn-zS-eGV" secondAttribute="bottom" constant="5" id="qjK-ld-M2I"/>
-                            <constraint firstItem="qnd-gJ-NWc" firstAttribute="centerY" secondItem="vQL-06-Y9S" secondAttribute="centerY" id="tDc-lZ-lDo"/>
                             <constraint firstItem="qnd-gJ-NWc" firstAttribute="top" secondItem="ycE-4P-H9d" secondAttribute="bottom" constant="1.5" id="teU-q0-Vt9"/>
                             <constraint firstItem="NOF-Dc-Pnq" firstAttribute="top" secondItem="lmt-nr-OOh" secondAttribute="top" constant="6" id="uhX-cj-EUl"/>
                             <constraint firstAttribute="trailing" secondItem="tjj-nZ-Ba6" secondAttribute="trailing" constant="5" id="v6I-4h-hJL"/>
@@ -251,7 +251,7 @@ Fahidi Metro </string>
                 <outlet property="refundableView" destination="qnd-gJ-NWc" id="IUZ-EK-AyX"/>
                 <outlet property="termsAndConditionlbl" destination="BEv-H4-aWJ" id="VtN-CN-XtE"/>
             </connections>
-            <point key="canvasLocation" x="174.63768115942031" y="174.10714285714286"/>
+            <point key="canvasLocation" x="174.63768115942031" y="179.46428571428569"/>
         </tableViewCell>
     </objects>
     <resources>

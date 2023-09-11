@@ -95,6 +95,7 @@ var amenitiesArray = [String]()
 var nearBylocationsArray = [String]()
 
 var selectedCellIndices: [IndexPath] = [] // Keep track of selected cell indices
+var selectedCellStates: [IndexPath: Bool] = [:]
 
 
 

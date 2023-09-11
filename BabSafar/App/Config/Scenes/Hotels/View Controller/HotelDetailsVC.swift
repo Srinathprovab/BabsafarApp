@@ -17,6 +17,7 @@ class HotelDetailsVC: BaseTableVC, HotelDetailsViewModelDelegate {
     @IBOutlet weak var bookNowBtn: UIButton!
     @IBOutlet weak var navHeight: NSLayoutConstraint!
     
+    
     var selectedCell: NewRoomDetailsTVCell?
     var imgArray = ["img1","img2","img3","img4","img2","img1","img4","img3","img1","img2","img3","img4","img2","img1","img4","img3"]
     var tablerow = [TableRow]()
@@ -39,7 +40,7 @@ class HotelDetailsVC: BaseTableVC, HotelDetailsViewModelDelegate {
     
     //MARK: - Loading function
     override func viewWillAppear(_ animated: Bool) {
-        
+        selectedCellStates = [:]
         addObserver()
         
         if screenHeight < 835 {
@@ -181,6 +182,11 @@ class HotelDetailsVC: BaseTableVC, HotelDetailsViewModelDelegate {
     override func didTapOnSelectRoomBtnAction(cell:NewRoomDetailsTVCell){
         
         
+        // Toggle the selected state
+        cell.isSelectedCell.toggle()
+        
+        // Update the button color
+        cell.updateButtonColor()
         
         
         
@@ -198,14 +204,6 @@ class HotelDetailsVC: BaseTableVC, HotelDetailsViewModelDelegate {
         // Update the selectedCell reference
         selectedCell = cell
         
-        
-        // Clear the selectedCellIndices array
-        selectedCellIndices.removeAll()
-        
-        // Append the indexPath of the tapped cell to the selectedCellIndices array
-        if let indexPath = selectedCell?.indexpathvalue {
-            selectedCellIndices.append(indexPath)
-        }
         
         
         bookNowView.isUserInteractionEnabled = true

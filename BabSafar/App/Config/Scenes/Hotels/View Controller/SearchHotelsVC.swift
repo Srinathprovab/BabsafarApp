@@ -95,6 +95,10 @@ class SearchHotelsVC: BaseTableVC, TopFlightDetailsViewModelDelegate {
     func setupUI() {
         nav.titlelbl.text = "Search Hotels"
         nav.backBtn.addTarget(self, action: #selector(didTapOnBackBtn(_:)), for: .touchUpInside)
+        commonTableView.layer.borderWidth = 1
+        commonTableView.layer.borderColor = UIColor.AppBorderColor.cgColor
+        commonTableView.layer.cornerRadius = 10
+        commonTableView.clipsToBounds = true
         commonTableView.registerTVCells(["SearchHotelTVCell",
                                          "EmptyTVCell",
                                          "TopCityTVCell"])

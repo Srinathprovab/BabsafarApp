@@ -130,7 +130,7 @@ class InsurenceSearchTVCell: TableViewCell, FastrackAirlineListViewModelDelegate
     func setupTextField(tf:UITextField) {
         tf.tag = 1
         tf.textColor = .AppLabelColor
-        tf.font = .LatoSemibold(size: 16)
+        tf.font = .LatoSemibold(size: 18)
         tf.delegate = self
         tf.addTarget(self, action: #selector(textFiledEditingChanged(_:)), for: .editingChanged)
         tf.setLeftPaddingPoints(2)

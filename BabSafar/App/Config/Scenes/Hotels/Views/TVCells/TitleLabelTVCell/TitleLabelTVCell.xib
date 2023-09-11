@@ -27,15 +27,8 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7ei-IS-vv4">
-                                <rect key="frame" x="15" y="46" width="15" height="15"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="15" id="JPF-an-3rQ"/>
-                                    <constraint firstAttribute="height" constant="15" id="X5w-fh-qVb"/>
-                                </constraints>
-                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LRS-pn-q9C">
-                                <rect key="frame" x="45" y="43" width="367" height="21"/>
+                                <rect key="frame" x="20" y="43" width="392" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -43,15 +36,14 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="LRS-pn-q9C" firstAttribute="leading" secondItem="dbI-2a-jQ4" secondAttribute="leading" constant="20" id="BTj-UF-ZPE"/>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="70" id="EBC-gh-Omj"/>
                             <constraint firstItem="LvN-rn-oTi" firstAttribute="top" secondItem="dbI-2a-jQ4" secondAttribute="top" constant="15" id="ECE-OP-3AY"/>
                             <constraint firstAttribute="trailing" secondItem="LRS-pn-q9C" secondAttribute="trailing" constant="15" id="Fsk-ys-KMh"/>
+                            <constraint firstItem="LRS-pn-q9C" firstAttribute="top" secondItem="LvN-rn-oTi" secondAttribute="bottom" constant="7" id="J87-CP-U3v"/>
                             <constraint firstAttribute="trailing" secondItem="LvN-rn-oTi" secondAttribute="trailing" constant="15" id="KKr-Go-yZt"/>
                             <constraint firstItem="LvN-rn-oTi" firstAttribute="leading" secondItem="dbI-2a-jQ4" secondAttribute="leading" constant="15" id="Tk6-7w-5Kk"/>
                             <constraint firstAttribute="bottom" secondItem="LRS-pn-q9C" secondAttribute="bottom" constant="6" id="XAy-Y5-2u6"/>
-                            <constraint firstItem="LRS-pn-q9C" firstAttribute="leading" secondItem="7ei-IS-vv4" secondAttribute="trailing" constant="15" id="Y3a-3Q-bKa"/>
-                            <constraint firstItem="7ei-IS-vv4" firstAttribute="top" secondItem="LvN-rn-oTi" secondAttribute="bottom" constant="10" id="mLX-BQ-DsZ"/>
-                            <constraint firstItem="7ei-IS-vv4" firstAttribute="leading" secondItem="dbI-2a-jQ4" secondAttribute="leading" constant="15" id="tXV-z3-HaY"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -66,8 +58,6 @@
             <connections>
                 <outlet property="holderView" destination="dbI-2a-jQ4" id="xBG-WK-wjx"/>
                 <outlet property="hotelNamelbl" destination="LvN-rn-oTi" id="fle-3Q-mvy"/>
-                <outlet property="imgWidth" destination="JPF-an-3rQ" id="HRu-3c-4SI"/>
-                <outlet property="locImg" destination="7ei-IS-vv4" id="YCE-ue-QfO"/>
                 <outlet property="locationlbl" destination="LRS-pn-q9C" id="ZwU-V5-Iq9"/>
             </connections>
             <point key="canvasLocation" x="215.21739130434784" y="103.79464285714285"/>

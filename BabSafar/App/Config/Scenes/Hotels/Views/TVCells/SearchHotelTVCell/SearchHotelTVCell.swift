@@ -108,8 +108,9 @@ class SearchHotelTVCell: TableViewCell, HotelCitySearchViewModelDelegate {
     func setupUI() {
         
         
-        holderView.backgroundColor = .WhiteColor
-        holderView.addCornerRadiusWithShadow(color: .clear, borderColor: .AppBorderColor, cornerRadius: 10)
+       // holderView.backgroundColor = .WhiteColor
+       // holderView.addCornerRadiusWithShadow(color: .clear, borderColor: .AppBorderColor, cornerRadius: 10)
+
         locationCityView.backgroundColor = HexColor("#FCFCFC")
         locationCityView.addCornerRadiusWithShadow(color: .clear, borderColor: .AppBorderColor, cornerRadius: 4)
         checkoutView.backgroundColor = HexColor("#FCFCFC")
@@ -121,13 +122,13 @@ class SearchHotelTVCell: TableViewCell, HotelCitySearchViewModelDelegate {
         searchHotelsBtnView.backgroundColor = HexColor("#EC441E")
         searchHotelsBtnView.addCornerRadiusWithShadow(color: .clear, borderColor: .clear, cornerRadius: 4)
         setuplabels(lbl: locationCityTitlelbl, text: "Location/City", textcolor: .AppLabelColor, font: .LatoLight(size: 12), align: .left)
-        setuplabels(lbl: locationCitylbl, text: defaults.string(forKey: UserDefaultsKeys.locationcity) ?? "Add City", textcolor: .AppLabelColor, font: .LatoSemibold(size: 14), align: .left)
+        setuplabels(lbl: locationCitylbl, text: defaults.string(forKey: UserDefaultsKeys.locationcity) ?? "Add City", textcolor: .AppLabelColor, font: .LatoSemibold(size: 18), align: .left)
         setuplabels(lbl: checkinTitlelbl, text: "Check-In", textcolor: .AppLabelColor, font: .LatoLight(size: 12), align: .left)
-        setuplabels(lbl: checkinlbl, text: defaults.string(forKey: UserDefaultsKeys.checkin) ?? "Add Check In Date", textcolor: .AppLabelColor, font: .LatoSemibold(size: 14), align: .left)
+        setuplabels(lbl: checkinlbl, text: defaults.string(forKey: UserDefaultsKeys.checkin) ?? "Add Check In Date", textcolor: .AppLabelColor, font: .LatoSemibold(size: 18), align: .left)
         setuplabels(lbl: checkoutTitlelbl, text: "Check - Out", textcolor: .AppLabelColor, font: .LatoLight(size: 12), align: .left)
-        setuplabels(lbl: checkoutlbl, text: defaults.string(forKey: UserDefaultsKeys.checkout) ?? "Add Check Out Date", textcolor: .AppLabelColor, font: .LatoSemibold(size: 14), align: .left)
+        setuplabels(lbl: checkoutlbl, text: defaults.string(forKey: UserDefaultsKeys.checkout) ?? "Add Check Out Date", textcolor: .AppLabelColor, font: .LatoSemibold(size: 18), align: .left)
         setuplabels(lbl: addRoomsTitlelbl, text: "Rooms & Guests", textcolor: .AppLabelColor, font: .LatoLight(size: 12), align: .left)
-        setuplabels(lbl: addRoomsValuelbl, text: "\(defaults.string(forKey: UserDefaultsKeys.selectPersons) ?? "")", textcolor: .AppLabelColor, font: .LatoSemibold(size: 14), align: .left)
+        setuplabels(lbl: addRoomsValuelbl, text: "\(defaults.string(forKey: UserDefaultsKeys.selectPersons) ?? "")", textcolor: .AppLabelColor, font: .LatoSemibold(size: 18), align: .left)
         setuplabels(lbl: searchHotellbl, text: "Search Hotels", textcolor: .WhiteColor, font: .LatoSemibold(size: 18), align: .center)
         checkinBtn.setTitle("", for: .normal)
         checkoutBtn.setTitle("", for: .normal)
@@ -157,7 +158,7 @@ class SearchHotelTVCell: TableViewCell, HotelCitySearchViewModelDelegate {
         nationalityView.addCornerRadiusWithShadow(color: .clear, borderColor: .AppBorderColor, cornerRadius: 4)
         nationalityView.backgroundColor = HexColor("#FCFCFC")
         setuplabels(lbl: nationalitylbl, text: "Nationality", textcolor: .AppLabelColor, font: .LatoLight(size: 12), align: .left)
-        setuplabels(lbl: nationalityValuelbl, text: "Select Nationality", textcolor: .AppLabelColor, font: .LatoSemibold(size: 14), align: .left)
+        setuplabels(lbl: nationalityValuelbl, text: "Select Nationality", textcolor: .AppLabelColor, font: .LatoSemibold(size: 18), align: .left)
         nationalityBtn.setTitle("", for: .normal)
         nationalityBtn.addTarget(self, action: #selector(didTapOnNatinalityButtonAction(_:)), for: .touchUpInside)
         

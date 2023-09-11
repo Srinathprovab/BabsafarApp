@@ -24,7 +24,8 @@ class NewRoomTVCell: TableViewCell, NewRoomDetailsTVCellDelegate {
     @IBOutlet weak var titlelbl: UILabel!
     @IBOutlet weak var topView: BorderedView!
     
-     var newRoomindexPath: IndexPath?
+    
+    var newRoomindexPath: IndexPath?
     var room = [Rooms]()
     var delegate:NewRoomTVCellDelegate?
     override func awakeFromNib() {
@@ -42,6 +43,7 @@ class NewRoomTVCell: TableViewCell, NewRoomDetailsTVCellDelegate {
     
     
     func setuTV() {
+        
         roomInfoTV.register(UINib(nibName: "NewRoomDetailsTVCell", bundle: nil), forCellReuseIdentifier: "cell")
         roomInfoTV.delegate = self
         roomInfoTV.dataSource = self
@@ -69,6 +71,29 @@ class NewRoomTVCell: TableViewCell, NewRoomDetailsTVCellDelegate {
     }
     
     func didTapOnSelectRoomBtnAction(cell: NewRoomDetailsTVCell) {
+        
+        
+        if let indexPath = roomInfoTV.indexPath(for: cell) {
+            // Toggle the selected state
+            selectedCellStates[indexPath] = !selectedCellStates[indexPath, default: false]
+            
+            // Update the button color
+            cell.updateButtonColor()
+            
+            // Deselect the previously selected cell, if any
+            for (index, isSelected) in selectedCellStates {
+                if index != indexPath && isSelected {
+                    selectedCellStates[index] = false
+                    if let previouslySelectedCell = roomInfoTV.cellForRow(at: index) as? NewRoomDetailsTVCell {
+                        previouslySelectedCell.updateButtonColor()
+                    }
+                }
+            }
+            
+            
+        }
+        
+        
         delegate?.didTapOnSelectRoomBtnAction(cell: cell)
     }
     
@@ -121,17 +146,11 @@ extension NewRoomTVCell: UITableViewDataSource ,UITableViewDelegate {
             }
             
             
+            // Set the selected state based on isSelectedCell property
+            cell.isSelectedCell = selectedCellIndices.contains(indexPath)
             
-            // Set the initial background color of the selectRoomBtnView
-            //  cell.selectRoomBtnView.backgroundColor = cell.isSelectedCell ? .AppCalenderDateSelectColor : .AppBtnColor
-            
-            // Check if the current cell's index is in the selectedCellIndices array
-            if selectedCellIndices.contains(indexPath) {
-                cell.isSelectedCell = true
-            } else {
-                cell.isSelectedCell = false
-            }
-            
+            //            // Set the selected state based on selectedCellStates dictionary
+            //            cell.isSelectedCell = selectedCellStates[indexPath, default: false]
             
             
             cell.ratekey = data.rateKey ?? ""

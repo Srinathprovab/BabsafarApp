@@ -52,8 +52,8 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="102.33333333333333" height="32"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Quick Booking" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LkT-Gl-Ofr">
-                                                                <rect key="frame" x="12.333333333333329" y="8.6666666666666572" width="77.333333333333329" height="14.666666666666664"/>
-                                                                <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
+                                                                <rect key="frame" x="6" y="7.6666666666666572" width="90.333333333333329" height="17"/>
+                                                                <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
@@ -86,8 +86,8 @@
                                                         <rect key="frame" x="107.33333333333331" y="0.0" width="102.66666666666669" height="32"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Explore" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PBL-SM-ZPg">
-                                                                <rect key="frame" x="31.333333333333343" y="8.6666666666666572" width="40" height="14.666666666666664"/>
-                                                                <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
+                                                                <rect key="frame" x="27.999999999999996" y="7.6666666666666572" width="46.666666666666657" height="17"/>
+                                                                <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>

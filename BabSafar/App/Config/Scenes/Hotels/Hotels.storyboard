@@ -46,18 +46,20 @@
                                         </constraints>
                                     </view>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="dAq-vz-hzd">
-                                        <rect key="frame" x="0.0" y="150" width="393" height="702"/>
+                                        <rect key="frame" x="16" y="160" width="361" height="435"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="435" id="x6m-DE-vmh"/>
+                                        </constraints>
                                     </tableView>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="dAq-vz-hzd" secondAttribute="trailing" constant="16" id="JFd-Wr-a76"/>
                                     <constraint firstAttribute="trailing" secondItem="dSp-J2-kI3" secondAttribute="trailing" id="X95-E2-Ypc"/>
-                                    <constraint firstItem="dAq-vz-hzd" firstAttribute="top" secondItem="ZWj-we-Y3Y" secondAttribute="top" constant="150" id="aVg-I1-WwS"/>
-                                    <constraint firstAttribute="trailing" secondItem="dAq-vz-hzd" secondAttribute="trailing" id="ewX-wZ-tSu"/>
+                                    <constraint firstItem="dAq-vz-hzd" firstAttribute="top" secondItem="dSp-J2-kI3" secondAttribute="bottom" constant="-160" id="bzH-kD-LQK"/>
                                     <constraint firstItem="dSp-J2-kI3" firstAttribute="top" secondItem="ZWj-we-Y3Y" secondAttribute="top" id="iOF-4M-SZ7"/>
-                                    <constraint firstItem="dAq-vz-hzd" firstAttribute="leading" secondItem="ZWj-we-Y3Y" secondAttribute="leading" id="jtH-n6-QuV"/>
-                                    <constraint firstAttribute="bottom" secondItem="dAq-vz-hzd" secondAttribute="bottom" id="o4a-X9-CY5"/>
+                                    <constraint firstItem="dAq-vz-hzd" firstAttribute="leading" secondItem="ZWj-we-Y3Y" secondAttribute="leading" constant="16" id="lui-4w-pUd"/>
                                     <constraint firstItem="dSp-J2-kI3" firstAttribute="leading" secondItem="ZWj-we-Y3Y" secondAttribute="leading" id="wlW-S2-94t"/>
                                 </constraints>
                             </view>
@@ -75,12 +77,11 @@
                         <outlet property="commonTableView" destination="dAq-vz-hzd" id="daa-Fq-El5"/>
                         <outlet property="holderView" destination="ZWj-we-Y3Y" id="n9c-27-eBG"/>
                         <outlet property="nav" destination="dSp-J2-kI3" id="ldr-25-K5d"/>
-                        <outlet property="tableViewTopConstraint" destination="aVg-I1-WwS" id="aZB-1M-uSx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="102.89855072463769" y="79.6875"/>
+            <point key="canvasLocation" x="101.5267175572519" y="79.577464788732399"/>
         </scene>
         <!--Add Rooms GuestsVC-->
         <scene sceneID="Tqg-ae-rHa">

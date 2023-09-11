@@ -12,9 +12,9 @@ class TitleLabelTVCell: TableViewCell {
     
     @IBOutlet weak var holderView: UIView!
     @IBOutlet weak var hotelNamelbl: UILabel!
-    @IBOutlet weak var locImg: UIImageView!
+  //  @IBOutlet weak var locImg: UIImageView!
     @IBOutlet weak var locationlbl: UILabel!
-    @IBOutlet weak var imgWidth: NSLayoutConstraint!
+  //  @IBOutlet weak var imgWidth: NSLayoutConstraint!
     
     
     var key = ""
@@ -41,7 +41,7 @@ class TitleLabelTVCell: TableViewCell {
         holderView.backgroundColor = HexColor("#E6E8E7")
         setuplabels(lbl: hotelNamelbl, text: "", textcolor: .AppLabelColor, font: .LatoRegular(size: 18), align: .left)
         setuplabels(lbl: locationlbl, text: "", textcolor: .SubTitleColor, font: .LatoRegular(size: 14), align: .left)
-        locImg.image = UIImage(named: "loc")?.withRenderingMode(.alwaysOriginal).withTintColor(HexColor("#A3A3A3"))
+   //     locImg.image = UIImage(named: "loc")?.withRenderingMode(.alwaysOriginal).withTintColor(HexColor("#A3A3A3"))
         locationlbl.numberOfLines = 0
         
        
@@ -50,8 +50,8 @@ class TitleLabelTVCell: TableViewCell {
     
     func setupHotelDetails() {
         holderView.backgroundColor = .WhiteColor
-        imgWidth.constant = 0
-        locImg.isHidden = true
+//        imgWidth.constant = 0
+//        locImg.isHidden = true
         hotelNamelbl.font = UIFont.LatoMedium(size: 14)
         locationlbl.textColor = HexColor("#5B5B5B")
         locationlbl.font = UIFont.LatoRegular(size: 14)
