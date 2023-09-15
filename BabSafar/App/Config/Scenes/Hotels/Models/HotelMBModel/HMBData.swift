@@ -20,7 +20,7 @@ struct HMBData : Codable {
     let converted_currency_rate : Int?
     let room_paxes_details : [Room_paxes_details]?
     let token : String?
-   // let pre_booking_cancellation_policy : String?
+    let user_specification : [String]?
     let currency_obj : Currency_obj?
     let traveller_details : String?
     let unformatted_total_price : Double?
@@ -46,7 +46,7 @@ struct HMBData : Codable {
         case converted_currency_rate = "converted_currency_rate"
         case room_paxes_details = "room_paxes_details"
         case token = "token"
-   //     case pre_booking_cancellation_policy = "pre_booking_cancellation_policy"
+        case user_specification = "user_specification"
         case currency_obj = "currency_obj"
         case traveller_details = "traveller_details"
         case unformatted_total_price = "unformatted_total_price"
@@ -72,7 +72,7 @@ struct HMBData : Codable {
         converted_currency_rate = try values.decodeIfPresent(Int.self, forKey: .converted_currency_rate)
         room_paxes_details = try values.decodeIfPresent([Room_paxes_details].self, forKey: .room_paxes_details)
         token = try values.decodeIfPresent(String.self, forKey: .token)
-  //      pre_booking_cancellation_policy = try values.decodeIfPresent(String.self, forKey: .pre_booking_cancellation_policy)
+        user_specification = try values.decodeIfPresent([String].self, forKey: .user_specification)
         currency_obj = try values.decodeIfPresent(Currency_obj.self, forKey: .currency_obj)
         traveller_details = try values.decodeIfPresent(String.self, forKey: .traveller_details)
         unformatted_total_price = try values.decodeIfPresent(Double.self, forKey: .unformatted_total_price)

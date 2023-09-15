@@ -420,7 +420,7 @@ class TravellerEconomyVC: BaseTableVC {
             }
         }
         
-        NotificationCenter.default.post(name: Notification.Name("reload"), object: nil)
+        NotificationCenter.default.post(name: Notification.Name("calreloadTV"), object: nil)
         dismiss(animated: false)
     }
     
@@ -480,7 +480,7 @@ class TravellerEconomyVC: BaseTableVC {
                             
                             
                             
-                            NotificationCenter.default.post(name: Notification.Name("reload"), object: nil)
+                            NotificationCenter.default.post(name: Notification.Name("reloadTV"), object: nil)
                             dismiss(animated: false)
                             
                             
@@ -503,7 +503,7 @@ class TravellerEconomyVC: BaseTableVC {
                             
                             
                             
-                            NotificationCenter.default.post(name: Notification.Name("reload"), object: nil)
+                            NotificationCenter.default.post(name: Notification.Name("reloadTV"), object: nil)
                             dismiss(animated: false)
                             
                         }
@@ -526,7 +526,7 @@ class TravellerEconomyVC: BaseTableVC {
                     
                     
                     
-                    NotificationCenter.default.post(name: Notification.Name("reload"), object: nil)
+                    NotificationCenter.default.post(name: Notification.Name("reloadTV"), object: nil)
                     dismiss(animated: false)
                     
                     
@@ -539,7 +539,7 @@ class TravellerEconomyVC: BaseTableVC {
                     let totaltraverlers = "\(adultsCount + childCount + infantsCount) Passengers"
                     defaults.set(totaltraverlers, forKey: UserDefaultsKeys.visatravellerDetails)
                     
-                    NotificationCenter.default.post(name: Notification.Name("reloadvisavc"), object: nil)
+                    NotificationCenter.default.post(name: Notification.Name("reloadTV"), object: nil)
                     dismiss(animated: false)
                     
                 }else {

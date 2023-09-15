@@ -168,7 +168,7 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="+ Add Date " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="otQ-aP-qob">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="752" text="+ Add Date " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="otQ-aP-qob">
                                                 <rect key="frame" x="16" y="30.666666666666657" width="175.66666666666666" height="21.666666666666671"/>
                                                 <fontDescription key="fontDescription" name="Lato-Semibold" family="Lato" pointSize="18"/>
                                                 <nil key="textColor"/>
@@ -187,6 +187,7 @@
                                         <constraints>
                                             <constraint firstItem="otQ-aP-qob" firstAttribute="leading" secondItem="sqD-1v-bJn" secondAttribute="leading" constant="16" id="6ke-gV-F2D"/>
                                             <constraint firstItem="otQ-aP-qob" firstAttribute="top" secondItem="yL6-6E-C7D" secondAttribute="bottom" constant="10" id="EJE-jn-dQ9"/>
+                                            <constraint firstAttribute="bottom" secondItem="otQ-aP-qob" secondAttribute="bottom" constant="7.6699999999999999" id="Mte-mk-Gvk"/>
                                             <constraint firstAttribute="trailing" secondItem="otQ-aP-qob" secondAttribute="trailing" constant="5" id="TV3-BX-7uO"/>
                                             <constraint firstAttribute="bottom" secondItem="ug3-Gl-Oms" secondAttribute="bottom" id="UWV-FQ-7wD"/>
                                             <constraint firstAttribute="trailing" secondItem="ug3-Gl-Oms" secondAttribute="trailing" id="WkM-j7-f3k"/>
@@ -205,7 +206,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bG3-o0-NoL">
                                         <rect key="frame" x="204.66666666666663" y="0.0" width="196.33333333333337" height="60"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Return" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3BO-iR-hrV">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="752" text="Return" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3BO-iR-hrV">
                                                 <rect key="frame" x="16" y="5.9999999999999991" width="35" height="14.666666666666664"/>
                                                 <fontDescription key="fontDescription" name="Lato-Light" family="Lato" pointSize="12"/>
                                                 <nil key="textColor"/>
@@ -269,6 +270,7 @@
                                             <constraint firstAttribute="trailing" secondItem="z8n-Zj-Npr" secondAttribute="trailing" id="dAI-oW-ijs"/>
                                             <constraint firstAttribute="trailing" secondItem="RNq-hv-7KO" secondAttribute="trailing" constant="5" id="lYu-hd-Mcr"/>
                                             <constraint firstAttribute="bottom" secondItem="kIN-C5-FpX" secondAttribute="bottom" id="nLP-4o-Qud"/>
+                                            <constraint firstAttribute="bottom" secondItem="RNq-hv-7KO" secondAttribute="bottom" constant="7.6699999999999999" id="qs8-D4-ZaM"/>
                                             <constraint firstAttribute="height" constant="60" id="suV-zy-ueS"/>
                                         </constraints>
                                         <userDefinedRuntimeAttributes>

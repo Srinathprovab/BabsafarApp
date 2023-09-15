@@ -95,7 +95,6 @@ class HotelDetailsVC: BaseTableVC, HotelDetailsViewModelDelegate {
         navView.editBtnView.isHidden = true
         
         bookNowView.backgroundColor = .AppBtnColor
-        setuplabels(lbl: bookNowlbl, text: kwdprice , textcolor: .WhiteColor, font: .LatoMedium(size: 18), align: .left)
         setuplabels(lbl: kwdlbl, text: "Book Now", textcolor: .WhiteColor, font: .LatoMedium(size: 18), align: .right)
         bookNowBtn.setTitle("", for: .normal)
         bookNowBtn.addTarget(self, action: #selector(didTapOnBookNowBtn(_:)), for: .touchUpInside)
@@ -116,7 +115,12 @@ class HotelDetailsVC: BaseTableVC, HotelDetailsViewModelDelegate {
                                  cellType:.HotelImagesTVCell))
         
         
-        tablerow.append(TableRow(moreData:roomsDetails,cellType:.RoomsTVcell))
+        tablerow.append(TableRow(title:hotelDetails?.latitude ?? "",
+                                 subTitle: hotelDetails?.longitude ?? "",
+                                 buttonTitle: hotelDetails?.location ?? "",
+                                 moreData:roomsDetails,
+                                 cellType:.RoomsTVcell))
+        
         tablerow.append(TableRow(height:50,cellType:.EmptyTVCell))
         
         commonTVData = tablerow
@@ -180,7 +184,8 @@ class HotelDetailsVC: BaseTableVC, HotelDetailsViewModelDelegate {
     //MARK: - didTapOnSelectRoomBtnAction
     
     override func didTapOnSelectRoomBtnAction(cell:NewRoomDetailsTVCell){
-        
+        selectedrRateKeyArray.removeAll()
+        bookNowlbl.isHidden = false
         
         // Toggle the selected state
         cell.isSelectedCell.toggle()
@@ -210,7 +215,14 @@ class HotelDetailsVC: BaseTableVC, HotelDetailsViewModelDelegate {
         bookNowView.alpha = 1
         grandTotal = cell.pricelbl.text ?? ""
         setuplabels(lbl: bookNowlbl, text: cell.pricelbl.text ?? "" , textcolor: .WhiteColor, font: .LatoMedium(size: 18), align: .left)
-        selectedrRateKeyArray = cell.ratekey
+        selectedrRateKeyArray.append(cell.ratekey)
+        setAttributedTextnew(str1: "\(cell.currency ):",
+                             str2: "\(cell.exactprice )",
+                             lbl: bookNowlbl,
+                             str1font: .LatoBold(size: 12),
+                             str2font: .LatoBold(size: 18),
+                             str1Color: .WhiteColor,
+                             str2Color: .WhiteColor)
         
         
         print(selectedCellIndices)
@@ -247,8 +259,7 @@ extension HotelDetailsVC {
         formatDesc = response.hotel_details?.format_desc ?? []
         img = response.hotel_details?.image ?? ""
         
-        
-        
+        bookNowlbl.isHidden = true
         
         DispatchQueue.main.async {[self] in
             setuptv()

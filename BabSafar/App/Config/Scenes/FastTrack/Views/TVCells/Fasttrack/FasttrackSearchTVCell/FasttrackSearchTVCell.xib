@@ -162,7 +162,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ePP-xj-4FZ">
                                         <rect key="frame" x="0.0" y="0.0" width="196.66666666666666" height="60"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Departure " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UeU-2f-yIw">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="Departure " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UeU-2f-yIw">
                                                 <rect key="frame" x="16.000000000000004" y="5.9999999999999991" width="56.333333333333343" height="14.666666666666664"/>
                                                 <fontDescription key="fontDescription" name="Lato-Light" family="Lato" pointSize="12"/>
                                                 <nil key="textColor"/>
@@ -190,6 +190,7 @@
                                             <constraint firstItem="U1l-1l-6QI" firstAttribute="leading" secondItem="ePP-xj-4FZ" secondAttribute="leading" id="64R-NA-teg"/>
                                             <constraint firstItem="vhX-xk-bSV" firstAttribute="top" secondItem="UeU-2f-yIw" secondAttribute="bottom" constant="10" id="GTf-S3-912"/>
                                             <constraint firstAttribute="trailing" secondItem="vhX-xk-bSV" secondAttribute="trailing" constant="5" id="L91-S7-J3B"/>
+                                            <constraint firstAttribute="bottom" secondItem="vhX-xk-bSV" secondAttribute="bottom" constant="6.3300000000000001" id="MOn-p4-uXP"/>
                                             <constraint firstItem="U1l-1l-6QI" firstAttribute="top" secondItem="ePP-xj-4FZ" secondAttribute="top" id="Z5i-Gh-m9p"/>
                                             <constraint firstAttribute="trailing" secondItem="U1l-1l-6QI" secondAttribute="trailing" id="eE0-wa-l6E"/>
                                             <constraint firstItem="UeU-2f-yIw" firstAttribute="top" secondItem="ePP-xj-4FZ" secondAttribute="top" constant="6" id="fpO-6O-B7c"/>
@@ -205,7 +206,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ghn-8q-6zg">
                                         <rect key="frame" x="204.66666666666663" y="0.0" width="196.33333333333337" height="60"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Return" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ycy-zD-L3U">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="752" text="Return" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ycy-zD-L3U">
                                                 <rect key="frame" x="16" y="5.9999999999999991" width="35" height="14.666666666666664"/>
                                                 <fontDescription key="fontDescription" name="Lato-Light" family="Lato" pointSize="12"/>
                                                 <nil key="textColor"/>
@@ -231,6 +232,7 @@
                                             <constraint firstItem="zv4-wi-N2c" firstAttribute="leading" secondItem="ghn-8q-6zg" secondAttribute="leading" constant="16" id="3nw-E2-sOe"/>
                                             <constraint firstAttribute="trailing" secondItem="zv4-wi-N2c" secondAttribute="trailing" constant="5" id="8ff-KI-eNX"/>
                                             <constraint firstItem="Ycy-zD-L3U" firstAttribute="leading" secondItem="ghn-8q-6zg" secondAttribute="leading" constant="16" id="9JT-9b-wB5"/>
+                                            <constraint firstAttribute="bottom" secondItem="zv4-wi-N2c" secondAttribute="bottom" constant="7.6699999999999999" id="IKF-lu-AUr"/>
                                             <constraint firstAttribute="height" constant="60" id="f9u-L5-bE5"/>
                                             <constraint firstItem="5SL-m8-ema" firstAttribute="leading" secondItem="ghn-8q-6zg" secondAttribute="leading" id="ibM-tI-yb2"/>
                                             <constraint firstAttribute="trailing" secondItem="5SL-m8-ema" secondAttribute="trailing" id="s2B-mC-cQd"/>

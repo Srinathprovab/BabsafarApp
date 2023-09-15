@@ -232,7 +232,7 @@ extension FBookingDetailsVC {
         sku = response.product_details?.data?.from?.sku ?? ""
         totalprice = "\(response.product_details?.data?.from?.price ?? 0)"
         currency = response.product_details?.data?.from?.currency ?? ""
-        setAttributedText(str1: "\(currency):", str2: totalprice)
+        setAttributedText(str1: "\(currency)", str2: totalprice)
         
         response.product_details?.data?.from?.form_fields?.forEach({ i in
             if i.title == "Adults (18+ Years)" {
@@ -483,7 +483,7 @@ extension FBookingDetailsVC {
             })
         }
         
-        setAttributedText(str1: "\(currency):", str2: "\(totalAmount)")
+        setAttributedText(str1: "\(currency)", str2: "\(totalAmount)")
         
         
     }

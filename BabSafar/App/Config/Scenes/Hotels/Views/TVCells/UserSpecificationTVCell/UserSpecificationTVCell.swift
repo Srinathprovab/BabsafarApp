@@ -17,13 +17,7 @@ class UserSpecificationTVCell: TableViewCell, UITextViewDelegate {
     
     let placeholderText = "Enter your remarks..."
     let placeholderColor = UIColor.lightGray
-    var specificationArray = ["If Possible Please Provide Non-Smoking Rooms",
-                              "Please Note Early Airrival",
-                              "Please Note Late Arrival",
-                              "Please Note Late Check Out",
-                              "If Possible Please Provide Adjoining Rooms",
-                              "Please Provide Inter- Connecting Cooms",
-                              "Please Note Passengers Are Honeyooners"]
+    var specificationArray = userspecification
     var SelectedSpecificationArray = [String]()
     override func awakeFromNib() {
         super.awakeFromNib()

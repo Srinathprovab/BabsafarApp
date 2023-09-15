@@ -124,7 +124,7 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
         if screenHeight < 835 {
             navheight.constant = 90
         }
-        bookNowlbl.text = totalPrice1
+      //  bookNowlbl.text = totalPrice1
         tablerow.removeAll()
         checkOptionCountArray.removeAll()
         
@@ -245,7 +245,7 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
         
         tablerow.append(TableRow(cellType:.ContactInformationTVCell))
         tablerow.append(TableRow(cellType:.UsePromoCodesTVCell))
-        tablerow.append(TableRow(price:bookNowlbl.text ?? "",cellType:.PriceSummaryTVCell))
+        tablerow.append(TableRow(price:grand_total_Price,cellType:.PriceSummaryTVCell))
         tablerow.append(TableRow(title:"I Accept T&C and Privacy Policy",cellType:.AcceptTermsAndConditionTVCell))
         tablerow.append(TableRow(height:50, bgColor:.AppHolderViewColor,cellType:.EmptyTVCell))
         
@@ -437,23 +437,6 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
     }
     
     
-    //MARK: - DELETING COREDATA OBJECT
-    func deleteAllRecords() {
-        
-        if details.count > 0 {
-            for object in details as! [NSManagedObject] {
-                context.delete(object )
-            }
-        }
-        
-        
-        do {
-            try context.save()
-        } catch {
-            print ("There was an error")
-        }
-        
-    }
     
     
     //MARK: - did Tap On T&C Action
@@ -564,17 +547,7 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
                     // Textfield is not empty
                 }
                 
-                
-                //                if cell.nationalityTF.text?.isEmpty == true {
-                //                    // Textfield is empty
-                //                    cell.nationalityView.layer.borderColor = UIColor.red.cgColor
-                //                    callpaymentbool = false
-                //                } else {
-                //                    // Textfield is not empty
-                //                }
-                
-                
-                
+            
                 if cell.passportnoTF.text?.isEmpty == true {
                     // Textfield is empty
                     cell.passportnoView.layer.borderColor = UIColor.red.cgColor
@@ -954,8 +927,16 @@ extension BookingDetailsVC {
         sub_total_child = i?.sub_total_child ?? "0"
         sub_total_infant = i?.sub_total_infant ?? "0"
         
-        bookNowlbl.text = "\(i?.api_currency ?? "")\(i?.grand_total ?? "")"
         grand_total_Price = i?.grand_total ?? ""
+        
+        setAttributedTextnew(str1: "\(i?.api_currency ?? ""):",
+                             str2: "\(i?.grand_total ?? "")",
+                             lbl: bookNowlbl,
+                             str1font: .LatoBold(size: 12),
+                             str2font: .LatoBold(size: 18),
+                             str1Color: .WhiteColor,
+                             str2Color: .WhiteColor)
+        
         
         TimerManager.shared.stopTimer()
         TimerManager.shared.totalTime = 900
@@ -986,7 +967,17 @@ extension BookingDetailsVC {
         NotificationCenter.default.addObserver(self, selector: #selector(resultnil), name: NSNotification.Name("resultnil"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reload), name: Notification.Name("reload"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadAfterLogin), name: NSNotification.Name("reloadAfterLogin"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadTV), name: Notification.Name("reloadTV"), object: nil)
+
     }
+    
+    
+    @objc func reloadTV() {
+        DispatchQueue.main.async {[self] in
+            commonTableView.reloadData()
+        }
+    }
+    
     
     
     @objc func reload() {

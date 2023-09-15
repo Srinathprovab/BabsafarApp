@@ -50,12 +50,12 @@ class HotelSearchViewModel {
         let parms = NSDictionary(dictionary:dictParam)
         print("Parameters = \(parms)")
         
-        self.view?.showLoader()
+   //     self.view?.showLoader()
         
         ServiceManager.postOrPutApiCall(endPoint: "general/\(ApiEndpoints.ajaxHotelSearch_pagination)",urlParams: parms as? Dictionary<String, String> , parameters: parms as NSDictionary, resultType: HotelSearchModel.self, p:dictParam) { sucess, result, errorMessage in
             
             DispatchQueue.main.async {
-                self.view?.hideLoader()
+           //     self.view?.hideLoader()
                 if sucess {
                     guard let response = result else {return}
                     self.view.hoteSearchPagenationResult(response: response)

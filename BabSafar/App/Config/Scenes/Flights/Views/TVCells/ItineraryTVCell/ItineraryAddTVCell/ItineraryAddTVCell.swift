@@ -97,7 +97,6 @@ extension ItineraryAddTVCell:UITableViewDelegate,UITableViewDataSource {
             
             if tableView.isLast(for: indexPath) {
                 cell.timeView.isHidden = true
-              
             }
             
             cell.airwaysImg1.sd_setImage(with: URL(string: data.operator_image ?? ""), placeholderImage:UIImage(contentsOfFile:"placeholder.png"))

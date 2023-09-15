@@ -52,6 +52,7 @@ class BaggageInfoVC: BaseTableVC, FlightDetailsViewModelProtocal, FDViewModelDel
     
     
     
+    
     override func viewWillAppear(_ animated: Bool) {
         
         addObserver()
@@ -82,7 +83,14 @@ class BaggageInfoVC: BaseTableVC, FlightDetailsViewModelProtocal, FDViewModelDel
         
         if callapibool == true {
             holderView.isHidden = true
-            callApi()
+            
+            
+            DispatchQueue.main.async {
+                self.callApi()
+            }
+
+            
+           
         }
     }
     
@@ -115,6 +123,8 @@ class BaggageInfoVC: BaseTableVC, FlightDetailsViewModelProtocal, FDViewModelDel
         
         setupViews(v: BookNowBtnView, radius: 0, color: .AppBtnColor)
         setuplabels(lbl: bookNowlbl, text: "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? ""):", textcolor: .WhiteColor, font: .LatoBold(size: 18), align: .left)
+        
+        
         setuplabels(lbl: kwdlbl, text: "Book Now", textcolor: .WhiteColor, font: .LatoBold(size: 18), align: .right)
         bookNowBtn.setTitle("", for: .normal)
         dropupimg.image = UIImage(named: "dropup")?.withRenderingMode(.alwaysOriginal).withTintColor(.WhiteColor)
@@ -163,10 +173,7 @@ class BaggageInfoVC: BaseTableVC, FlightDetailsViewModelProtocal, FDViewModelDel
     func setupItineraryOneWayTVCell() {
         
         tablerow.removeAll()
-        
-//        fd.forEach { i in
-//            tablerow.append(TableRow(title:"\(i.startIndex)",moreData:i,cellType:.ItineraryAddTVCell))
-//        }
+
         
         for (index, element) in fd.enumerated() {
             tablerow.append(TableRow(title: "\(index)", moreData: element, cellType: .ItineraryAddTVCell))
@@ -183,16 +190,30 @@ class BaggageInfoVC: BaseTableVC, FlightDetailsViewModelProtocal, FDViewModelDel
     
     
     func setupFareRulesOneWayTVCell() {
-        self.commonTableView.estimatedRowHeight = 500
-        self.commonTableView.rowHeight = 40
         
         tablerow.removeAll()
         
-        fareRulehtml.forEach { i in
-            tablerow.append(TableRow(title:i.rule_heading,subTitle: i.rule_content?.htmlToString,cellType:.FareRulesTVCell))
+        
+        if fareRulesData.count > 0 {
+            
+            self.commonTableView.estimatedRowHeight = 500
+            self.commonTableView.rowHeight = 40
+            TableViewHelper.EmptyMessage(message: "", tableview: commonTableView, vc: self)
+
+            
+            fareRulesData.forEach { i in
+                tablerow.append(TableRow(title:i.rule_heading,subTitle: i.rule_content?.htmlToString,cellType:.FareRulesTVCell))
+            }
+        
+            
+            
+        }else {
+            
+            
+            TableViewHelper.EmptyMessage(message: "No Data Found", tableview: commonTableView, vc: self)
         }
         
-        
+       
         
         commonTVData = tablerow
         commonTableView.reloadData()
@@ -253,6 +274,9 @@ class BaggageInfoVC: BaseTableVC, FlightDetailsViewModelProtocal, FDViewModelDel
     func setupBaggageInfoOneWayTVCell() {
         
         tablerow.removeAll()
+        
+        TableViewHelper.EmptyMessage(message: "", tableview: commonTableView, vc: self)
+
         jSummary.forEach { j in
             tablerow.append(TableRow(title:"\(j.from_city ?? "")-\(j.to_city ?? "")",
                                      subTitle: j.cabin_baggage ?? "",
@@ -298,7 +322,7 @@ class BaggageInfoVC: BaseTableVC, FlightDetailsViewModelProtocal, FDViewModelDel
     
     
     @IBAction func didTapOnMoveToTopTapBtn(_ sender: Any) {
-        commonTableView.scrollToRow(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
+      //  commonTableView.scrollToRow(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
     }
     
     @IBAction func didTapOnShowChatWindow(_ sender: Any) {
@@ -334,7 +358,16 @@ extension BaggageInfoVC {
         jd = response.journeySummary ?? []
         fareRulehtml = response.fareRulehtml ?? []
         totalprice = "\(response.priceDetails?.api_currency ?? "") : \(response.priceDetails?.grand_total ?? "")"
-        self.bookNowlbl.text = totalprice
+      //  self.bookNowlbl.text = totalprice
+        
+        setAttributedTextnew(str1: "\(response.priceDetails?.api_currency ?? "")",
+                             str2: "\(response.priceDetails?.grand_total ?? "")",
+                             lbl: bookNowlbl,
+                             str1font: .LatoBold(size: 12),
+                             str2font: .LatoBold(size: 18),
+                             str1Color: .WhiteColor,
+                             str2Color: .WhiteColor)
+        
         grandTotal = totalprice
         farerulerefkey = response.fare_rule_ref_key ?? ""
         farerulesrefcontent = response.farerulesref_content ?? ""
@@ -355,14 +388,14 @@ extension BaggageInfoVC {
         
         
         DispatchQueue.main.async {[self] in
+            callFareRulesAPI()
+        }
+        
+        
+        DispatchQueue.main.async {[self] in
             setupTVCells()
         }
-        
-        let seconds = 0.60
-        DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
-            self.callFareRulesAPI()
-        }
-        
+
         
     }
     
@@ -371,6 +404,8 @@ extension BaggageInfoVC {
     
     //MARK: - callFareRulesAPI
     func callFareRulesAPI() {
+        
+        
         payload.removeAll()
         payload["fare_rule_ref_key"] = farerulerefkey
         payload["farerulesref_content"] = farerulesrefcontent
@@ -380,16 +415,19 @@ extension BaggageInfoVC {
     func fareRulesDetails(response: FareRulesModel) {
         
         fareRulesData = response.data ?? []
+        
         DispatchQueue.main.async {[self] in
             setupTVCells()
         }
+
+        
     }
     
     
     
     func scrollToFirstRow() {
-        let indexPath = IndexPath(row: 0, section: 0)
-        self.commonTableView.scrollToRow(at: indexPath, at: .top, animated: true)
+//        let indexPath = IndexPath(row: 0, section: 0)
+//        self.commonTableView.scrollToRow(at: indexPath, at: .top, animated: true)
     }
     
     
@@ -420,7 +458,6 @@ extension BaggageInfoVC:UICollectionViewDelegate,UICollectionViewDataSource,UICo
         if let cell = collectionView.cellForItem(at: indexPath) as? ItineraryCVCell {
             cell.holderView.backgroundColor = .IttenarySelectedColor
             cell.titlelbl.textColor = .WhiteColor
-            commonTableView.scrollToRow(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
             defaults.set(indexPath.row, forKey: UserDefaultsKeys.itinerarySelectedIndex)
             
             
@@ -496,8 +533,17 @@ extension BaggageInfoVC {
         NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("offline"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(resultnil), name: NSNotification.Name("resultnil"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reload), name: Notification.Name("reload"), object: nil)
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadTV), name: Notification.Name("reloadTV"), object: nil)
+
     }
+    
+    
+    @objc func reloadTV() {
+        DispatchQueue.main.async {[self] in
+            commonTableView.reloadData()
+        }
+    }
+    
     
     
     @objc func reload() {

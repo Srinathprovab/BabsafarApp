@@ -263,7 +263,7 @@ class Calvc: UIViewController {
                         }else {
                             defaults.set(calstartDate, forKey: UserDefaultsKeys.calDepDate)
                             keyStr = "select"
-                            NotificationCenter.default.post(name: Notification.Name("reload"), object: nil)
+                            NotificationCenter.default.post(name: Notification.Name("calreloadTV"), object: nil)
                             dismiss(animated: false)
                         }
                         
@@ -276,7 +276,7 @@ class Calvc: UIViewController {
                             defaults.set(calstartDate, forKey: UserDefaultsKeys.rcalDepDate)
                             defaults.set(calendDate, forKey: UserDefaultsKeys.rcalRetDate)
                             keyStr = "select1"
-                            NotificationCenter.default.post(name: Notification.Name("reload"), object: nil)
+                            NotificationCenter.default.post(name: Notification.Name("calreloadTV"), object: nil)
                             dismiss(animated: false)
                         }
                     }else {
@@ -299,7 +299,7 @@ class Calvc: UIViewController {
                             showToast(message: "Please Select Date")
                         }else {
                             defaults.set(calstartDate, forKey: UserDefaultsKeys.icalDepDate)
-                            NotificationCenter.default.post(name: Notification.Name("reload"), object: nil)
+                            NotificationCenter.default.post(name: Notification.Name("reloadTV"), object: nil)
                             dismiss(animated: false)
                             
                         }
@@ -312,7 +312,7 @@ class Calvc: UIViewController {
                         }else{
                             defaults.set(calstartDate, forKey: UserDefaultsKeys.ircalDepDate)
                             defaults.set(calendDate, forKey: UserDefaultsKeys.ircalRetDate)
-                            NotificationCenter.default.post(name: Notification.Name("reload"), object: nil)
+                            NotificationCenter.default.post(name: Notification.Name("reloadTV"), object: nil)
                             dismiss(animated: false)
                         }
                     }
@@ -330,7 +330,7 @@ class Calvc: UIViewController {
                     defaults.set(calstartDate, forKey: UserDefaultsKeys.frcalDepDate)
                     defaults.set(calendDate, forKey: UserDefaultsKeys.frcalRetDate)
                     
-                    NotificationCenter.default.post(name: Notification.Name("reload"), object: nil)
+                    NotificationCenter.default.post(name: Notification.Name("reloadTV"), object: nil)
                     dismiss(animated: false)
                 }
                 

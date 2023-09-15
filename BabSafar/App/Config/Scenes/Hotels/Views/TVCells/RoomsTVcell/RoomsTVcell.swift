@@ -6,6 +6,9 @@
 //
 
 import UIKit
+import CoreLocation
+import GoogleMaps
+
 
 protocol RoomsTVcellDelegate {
     func didTapOnRoomsBtn(cell:RoomsTVcell)
@@ -23,18 +26,29 @@ class RoomsTVcell: TableViewCell, NewRoomTVCellDelegate {
     @IBOutlet weak var roomslbl: UILabel!
     @IBOutlet weak var roomsUL: UIView!
     @IBOutlet weak var roomsBtn: UIButton!
+    
+    @IBOutlet weak var googleMapView: UIView!
+    @IBOutlet weak var mapView: UIView!
+    @IBOutlet weak var maplbl: UILabel!
+    @IBOutlet weak var mapUL: UIView!
+    @IBOutlet weak var mapBtn: UIButton!
+    
     @IBOutlet weak var hotelsDetailsView: UIView!
     @IBOutlet weak var hotelsDetailslbl: UILabel!
     @IBOutlet weak var hotelsDetailsUL: UIView!
     @IBOutlet weak var hotelsDetailsBtn: UIButton!
+    
     @IBOutlet weak var amenitiesView: UIView!
     @IBOutlet weak var amenitieslbl: UILabel!
     @IBOutlet weak var amenitiesUL: UIView!
     @IBOutlet weak var amenitiesBtn: UIButton!
     @IBOutlet weak var roomDetailsTV: UITableView!
     
+    var latString = ""
+    var longString = ""
+    var locname = ""
     
-    
+    let locationManager = CLLocationManager()
     var selectedCell: NewRoomDetailsTVCell?
     var delegate:RoomsTVcellDelegate?
     var key = "rooms"
@@ -42,6 +56,7 @@ class RoomsTVcell: TableViewCell, NewRoomTVCellDelegate {
         super.awakeFromNib()
         // Initialization code
         setupUI()
+        setupMapView()
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -52,6 +67,11 @@ class RoomsTVcell: TableViewCell, NewRoomTVCellDelegate {
     
     
     override func updateUI() {
+        
+        latString = cellInfo?.title ?? ""
+        longString = cellInfo?.subTitle ?? ""
+        locname = cellInfo?.buttonTitle ?? ""
+        
         roomDetailsTV.reloadData()
     }
     
@@ -62,21 +82,33 @@ class RoomsTVcell: TableViewCell, NewRoomTVCellDelegate {
         holderView.layer.borderColor = UIColor.WhiteColor.cgColor
         setupViews(v: roomsView, radius: 0, color: .WhiteColor)
         roomsView.layer.borderColor = UIColor.WhiteColor.cgColor
+        
+        setupViews(v: mapView, radius: 0, color: .WhiteColor)
+        mapView.layer.borderColor = UIColor.WhiteColor.cgColor
+        
         setupViews(v: hotelsDetailsView, radius: 0, color: .WhiteColor)
         hotelsDetailsView.layer.borderColor = UIColor.WhiteColor.cgColor
+        
         setupViews(v: amenitiesView, radius: 0, color: .WhiteColor)
         amenitiesView.layer.borderColor = UIColor.WhiteColor.cgColor
+        
         roomsUL.backgroundColor = .AppTabSelectColor
+        mapUL.backgroundColor = .WhiteColor
         hotelsDetailsUL.backgroundColor = .WhiteColor
         amenitiesUL.backgroundColor = .WhiteColor
         
-        setuplabels(lbl: roomslbl, text: "Rooms", textcolor: .AppTabSelectColor, font: .LatoBold(size: 16), align: .center)
-        setuplabels(lbl: hotelsDetailslbl, text: "Hotels Details", textcolor: .AppLabelColor.withAlphaComponent(0.5), font: .LatoBold(size: 16), align: .center)
-        setuplabels(lbl: amenitieslbl, text: "Amenities", textcolor: .AppLabelColor.withAlphaComponent(0.5), font: .LatoBold(size: 16), align: .center)
+        setuplabels(lbl: roomslbl, text: "Rooms", textcolor: .AppTabSelectColor, font: .LatoBold(size: 14), align: .center)
+        setuplabels(lbl: maplbl, text: "Map", textcolor: .AppLabelColor.withAlphaComponent(0.5), font: .LatoBold(size: 14), align: .center)
+
+        setuplabels(lbl: hotelsDetailslbl, text: "Hotels Details", textcolor: .AppLabelColor.withAlphaComponent(0.5), font: .LatoBold(size: 14), align: .center)
+        setuplabels(lbl: amenitieslbl, text: "Amenities", textcolor: .AppLabelColor.withAlphaComponent(0.5), font: .LatoBold(size: 14), align: .center)
         
         roomsBtn.setTitle("", for: .normal)
+        mapBtn.setTitle("", for: .normal)
         hotelsDetailsBtn.setTitle("", for: .normal)
         amenitiesBtn.setTitle("", for: .normal)
+        
+        googleMapView.isHidden = true
         
         setuTV()
     }
@@ -93,8 +125,6 @@ class RoomsTVcell: TableViewCell, NewRoomTVCellDelegate {
     func setuTV() {
         roomDetailsTV.register(UINib(nibName: "NewRoomTVCell", bundle: nil), forCellReuseIdentifier: "rooms")
         roomDetailsTV.register(UINib(nibName: "TitleLabelTVCell", bundle: nil), forCellReuseIdentifier: "hdetails")
-//        roomDetailsTV.register(UINib(nibName: "TitleLabelTVCell", bundle: nil), forCellReuseIdentifier: "cell2")
-//        roomDetailsTV.register(UINib(nibName: "TitleLabelTVCell", bundle: nil), forCellReuseIdentifier: "cell3")
         roomDetailsTV.register(UINib(nibName: "AmenitiesTVCell", bundle: nil), forCellReuseIdentifier: "amenities")
         
         
@@ -109,8 +139,14 @@ class RoomsTVcell: TableViewCell, NewRoomTVCellDelegate {
     
     
     @IBAction func didTapOnRoomsBtn(_ sender: Any) {
+        googleMapView.isHidden = true
+        roomDetailsTV.isHidden = false
         roomslbl.textColor = .AppTabSelectColor
         roomsUL.backgroundColor = .AppTabSelectColor
+        
+        maplbl.textColor = .AppLabelColor.withAlphaComponent(0.5)
+        mapUL.backgroundColor = .WhiteColor
+        
         hotelsDetailslbl.textColor = .AppLabelColor.withAlphaComponent(0.5)
         hotelsDetailsUL.backgroundColor = .WhiteColor
         amenitieslbl.textColor = .AppLabelColor.withAlphaComponent(0.5)
@@ -121,29 +157,50 @@ class RoomsTVcell: TableViewCell, NewRoomTVCellDelegate {
     
     
     @IBAction func didTapOnHotelsDetailsBtn(_ sender: Any) {
+        googleMapView.isHidden = true
+        roomDetailsTV.isHidden = false
         hotelsDetailslbl.textColor = .AppTabSelectColor
         hotelsDetailsUL.backgroundColor = .AppTabSelectColor
         roomslbl.textColor = .AppLabelColor.withAlphaComponent(0.5)
         roomsUL.backgroundColor = .WhiteColor
         amenitieslbl.textColor = .AppLabelColor.withAlphaComponent(0.5)
         amenitiesUL.backgroundColor = .WhiteColor
+        maplbl.textColor = .AppLabelColor.withAlphaComponent(0.5)
+        mapUL.backgroundColor = .WhiteColor
         
-        
-        print(formatDesc.count)
-        
+       
         delegate?.didTapOnHotelsDetailsBtn(cell:self)
     }
     
     
     @IBAction func didTapOnAmenitiesBtn(_ sender: Any) {
+        googleMapView.isHidden = true
+        roomDetailsTV.isHidden = false
         amenitieslbl.textColor = .AppTabSelectColor
         amenitiesUL.backgroundColor = .AppTabSelectColor
         roomslbl.textColor = .AppLabelColor.withAlphaComponent(0.5)
         roomsUL.backgroundColor = .WhiteColor
         hotelsDetailslbl.textColor = .AppLabelColor.withAlphaComponent(0.5)
         hotelsDetailsUL.backgroundColor = .WhiteColor
+        maplbl.textColor = .AppLabelColor.withAlphaComponent(0.5)
+        mapUL.backgroundColor = .WhiteColor
         
         delegate?.didTapOnAmenitiesBtn(cell:self)
+    }
+    
+    @IBAction func didTapOnMapBtnAction(_ sender: Any) {
+        googleMapView.isHidden = false
+        roomDetailsTV.isHidden = true
+        amenitieslbl.textColor = .AppLabelColor.withAlphaComponent(0.5)
+        amenitiesUL.backgroundColor = .WhiteColor
+        roomslbl.textColor = .AppLabelColor.withAlphaComponent(0.5)
+        roomsUL.backgroundColor = .WhiteColor
+        hotelsDetailslbl.textColor = .AppLabelColor.withAlphaComponent(0.5)
+        hotelsDetailsUL.backgroundColor = .WhiteColor
+        maplbl.textColor = .AppTabSelectColor
+        mapUL.backgroundColor = .AppTabSelectColor
+        
+      //  delegate?.didTapOnAmenitiesBtn(cell:self)
     }
     
     
@@ -240,4 +297,50 @@ extension RoomsTVcell: UITableViewDataSource ,UITableViewDelegate {
     
   
     
+}
+
+
+
+extension RoomsTVcell:CLLocationManagerDelegate {
+    
+    func setupMapView(){
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+    }
+    
+    @objc func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.last {
+            // Optionally, you can center the map on the user's location
+            let camera = GMSCameraPosition.camera(withLatitude: 29.36, longitude: 48.00, zoom: 10.7)
+
+            let gmsView = GMSMapView.map(withFrame: googleMapView.bounds, camera: camera)
+            googleMapView.addSubview(gmsView)
+            addMarkersToMap(gmsView)
+            
+            locationManager.stopUpdatingLocation() // You may want to stop updates after you have the user's location
+        }
+    }
+    
+    func addMarkersToMap(_ mapView: GMSMapView) {
+       
+            if let latitude = Double(latString), let longitude = Double(longString) {
+                let marker = GMSMarker()
+                marker.position = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+                marker.title = locname
+
+                // Create a custom marker icon with an image
+                if let markerImage = UIImage(named: "loc1")?.withRenderingMode(.alwaysOriginal).withTintColor(.AppBtnColor) {
+                    let markerView = UIImageView(image: markerImage)
+                    marker.iconView = markerView
+                } else {
+                    print("Error: Marker image not found or is nil.")
+                }
+
+                marker.map = mapView
+            } else {
+                print("Error: Invalid latitude or longitude values at index \(index).")
+            }
+        
+    }
 }

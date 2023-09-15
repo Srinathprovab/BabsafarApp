@@ -151,7 +151,13 @@ extension PaymentGatewayVC {
     
     func sucerBookingSucess(response: secureBooingModel) {
         BASE_URL = BASE_URL1
-        gotoBookingSucessVC(url: response.url ?? "")
+        
+        if response.status == 1 {
+            gotoBookingSucessVC(url: response.url ?? "")
+        }else {
+            
+        }
+        
     }
     
     

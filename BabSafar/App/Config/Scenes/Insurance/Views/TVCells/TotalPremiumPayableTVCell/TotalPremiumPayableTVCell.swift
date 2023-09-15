@@ -33,7 +33,15 @@ class TotalPremiumPayableTVCell: TableViewCell {
     
     
     override func updateUI() {
-        pricelbl.text = cellInfo?.title ?? ""
+      //  pricelbl.text = cellInfo?.title ?? ""
+        
+        setAttributedTextnew(str1: "\(cellInfo?.subTitle ?? "")",
+                             str2: "\(cellInfo?.title ?? "")",
+                             lbl: pricelbl,
+                             str1font: .LatoBold(size: 12),
+                             str2font: .LatoBold(size: 18),
+                             str1Color: .IttenarySelectedColor,
+                             str2Color: .IttenarySelectedColor)
         
         tvheight.constant = CGFloat(selectedPlanContent.count * 100)
         plancontentTV.reloadData()

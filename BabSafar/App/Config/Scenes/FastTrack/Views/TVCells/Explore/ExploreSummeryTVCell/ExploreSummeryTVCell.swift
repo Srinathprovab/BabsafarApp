@@ -74,32 +74,32 @@ class ExploreSummeryTVCell: TableViewCell {
             }
             
             
-            setAttributedText(str1: "\(qproduct_details?.data?.from?.currency ?? ""):", str2: "\(qproduct_details?.data?.from?.price ?? 0)", lbl: pricelbl1)
+            setAttributedText(str1: "\(qproduct_details?.data?.from?.currency ?? "")", str2: "\(qproduct_details?.data?.from?.price ?? 0)", lbl: pricelbl1)
             
-            setAttributedText(str1: "\(qproduct_details?.data?.to?.currency ?? ""):", str2: "\(qproduct_details?.data?.to?.price ?? 0)", lbl: arrivalPricelbl)
+            setAttributedText(str1: "\(qproduct_details?.data?.to?.currency ?? "")", str2: "\(qproduct_details?.data?.to?.price ?? 0)", lbl: arrivalPricelbl)
             
            
             
-            setAttributedText(str1: "\(qproduct_details?.data?.from?.currency ?? ""):", str2: "\(totalAmount )", lbl: subTotallbl)
+            setAttributedText(str1: "\(qproduct_details?.data?.from?.currency ?? "")", str2: "\(totalAmount )", lbl: subTotallbl)
             
-            setAttributedText(str1: "\(qproduct_details?.data?.from?.currency ?? ""):", str2: "\(qproduct_details?.data?.from?.discount ?? 0)", lbl: totalDiscountlbl)
+            setAttributedText(str1: "\(qproduct_details?.data?.from?.currency ?? "")", str2: "\(qproduct_details?.data?.from?.discount ?? 0)", lbl: totalDiscountlbl)
             
           
             
-            setAttributedText(str1: "\(qproduct_details?.data?.from?.currency ?? ""):", str2: "\(totalAmount )", lbl: totalAmountlbl)
+            setAttributedText(str1: "\(qproduct_details?.data?.from?.currency ?? "")", str2: "\(totalAmount )", lbl: totalAmountlbl)
             
         }else {
             arrivalView.isHidden = true
             arrivalViewHeight.constant = 38
             titlelbl.text = eproduct_details?.data?.from?.sku ?? ""
-            setAttributedText(str1: "\(eproduct_details?.data?.from?.currency ?? ""):", str2: "\(qproduct_details?.data?.from?.price ?? 0)", lbl: pricelbl1)
+            setAttributedText(str1: "\(eproduct_details?.data?.from?.currency ?? "")", str2: "\(qproduct_details?.data?.from?.price ?? 0)", lbl: pricelbl1)
             
             
-            setAttributedText(str1: "\(eproduct_details?.data?.from?.currency ?? ""):", str2: "\(eproduct_details?.data?.from?.price ?? 0)", lbl: subTotallbl)
+            setAttributedText(str1: "\(eproduct_details?.data?.from?.currency ?? "")", str2: "\(eproduct_details?.data?.from?.price ?? 0)", lbl: subTotallbl)
             
-            setAttributedText(str1: "\(eproduct_details?.data?.from?.currency ?? ""):", str2: "\(eproduct_details?.data?.from?.price ?? 0)", lbl: totalDiscountlbl)
+            setAttributedText(str1: "\(eproduct_details?.data?.from?.currency ?? "")", str2: "\(eproduct_details?.data?.from?.price ?? 0)", lbl: totalDiscountlbl)
             
-            setAttributedText(str1: "\(eproduct_details?.data?.from?.currency ?? ""):", str2: "\(eproduct_details?.data?.from?.price ?? 0)", lbl: totalAmountlbl)
+            setAttributedText(str1: "\(eproduct_details?.data?.from?.currency ?? "")", str2: "\(eproduct_details?.data?.from?.price ?? 0)", lbl: totalAmountlbl)
         }
     }
     

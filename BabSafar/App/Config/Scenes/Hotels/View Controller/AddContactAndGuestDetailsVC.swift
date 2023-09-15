@@ -24,6 +24,10 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
     @IBOutlet weak var subtitlelbl: UILabel!
     
     
+    var callpaymenthotelbool = Bool()
+    var fnameCharBool = true
+    var lnameCharBool = true
+    var hoteltotalprice = ""
     var hotelSearchData :HSearchData?
     var kwdprice = String()
     var mobile = String()
@@ -96,7 +100,9 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
         payload.removeAll()
         TimerManager.shared.sessionStop()
         
-        payload["rateKey"] = selectedrRateKeyArray
+        let selectedrRateKeyArrayString = "[\"" + selectedrRateKeyArray.joined(separator: "\",\"") + "\"]"
+        
+        payload["rateKey"] = selectedrRateKeyArrayString
         payload["search_id"] = hsearchid
         payload["booking_source"] = hbookingsource
         payload["token"] = htoken
@@ -114,7 +120,7 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
         childCount = Int(defaults.string(forKey: UserDefaultsKeys.hotelchildcount) ?? "0") ?? 0
         holderView.isHidden = false
         
-        
+        userspecification = response.data?.user_specification ?? []
         prebookingcancellationpolicy = response.data?.pre_booking_cancellation_policy
         hotelSearchData = response.data?.search_data
         hbookingDetails = response.data?.hotel_details
@@ -123,6 +129,16 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
         bookingsource = response.data?.booking_source ?? ""
         token = response.data?.token ?? ""
         price = "\(response.data?.total_price ?? "")"
+        hoteltotalprice = "\(response.data?.hotel_total_price ?? 0.0)"
+        
+        setAttributedTextnew(str1: "\(response.data?.currency_obj?.to_currency ?? "")",
+                             str2: "\(response.data?.total_price ?? "")",
+                             lbl: bookNowlbl,
+                             str1font: .LatoBold(size: 12),
+                             str2font: .LatoBold(size: 18),
+                             str1Color: .WhiteColor,
+                             str2Color: .WhiteColor)
+        
         
         //   let totalSeconds = abs(response.session_expiry_details?.session_start_time ?? 0)
         TimerManager.shared.totalTime = 900
@@ -149,8 +165,7 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
         nav.titlelbl.text = "Booking Confirmed"
         nav.backBtn.addTarget(self, action: #selector(didTapOnBackBtn(_:)), for: .touchUpInside)
         bookNowView.backgroundColor = .AppBtnColor
-        
-        setuplabels(lbl: bookNowlbl, text: grandTotal, textcolor: .WhiteColor, font: .LatoMedium(size: 18), align: .left)
+       
         setuplabels(lbl: kwdlbl, text: "Pay Now", textcolor: .WhiteColor, font: .LatoMedium(size: 18), align: .right)
         bookNowBtn.setTitle("", for: .normal)
         bookNowBtn.addTarget(self, action: #selector(didTapOnBookNowBtn(_:)), for: .touchUpInside)
@@ -234,7 +249,7 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
         
         tablerow.append(TableRow(title:hbookingDetails?.name,
                                  subTitle: hbookingDetails?.address,
-                                 price: "\(roompaxesdetails?.first?.currency ?? ""):\(roompaxesdetails?.first?.net ?? "")",
+                                 price: hoteltotalprice,
                                  text: convertDateFormat(inputDate: hbookingDetails?.checkIn ?? "", f1: "yyyy-MM-dd", f2: "dd MMM yyyy"),
                                  headerText: "Room:\(roompaxesdetails?.first?.no_of_rooms ?? 0) \(roompaxesdetails?.first?.room_name ?? "")",
                                  buttonTitle:convertDateFormat(inputDate: hbookingDetails?.checkOut ?? "", f1: "yyyy-MM-dd", f2: "dd MMM yyyy"),
@@ -381,9 +396,7 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
         payload.removeAll()
         
         
-        var callpaymenthotelbool = true
-        var fnameCharBool = true
-        var lnameCharBool = true
+        
         let positionsCount = commonTableView.numberOfRows(inSection: 0)
         for position in 0..<positionsCount {
             // Fetch the cell for the given position
@@ -396,7 +409,8 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
                     callpaymenthotelbool = false
                     
                 } else {
-                    // Textfield is not empty
+                    
+                    callpaymenthotelbool = true
                 }
                 
                 if cell.fnameTF.text?.isEmpty == true {
@@ -407,7 +421,7 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
                     cell.fnameView.layer.borderColor = UIColor.red.cgColor
                     fnameCharBool = false
                 } else {
-                    // Textfield is not empty
+                    callpaymenthotelbool = true
                 }
                 
                 if cell.lnameTF.text?.isEmpty == true {
@@ -418,7 +432,8 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
                     cell.lnameView.layer.borderColor = UIColor.red.cgColor
                     lnameCharBool = false
                 } else {
-                    // Textfield is not empty
+                    
+                    callpaymenthotelbool = true
                 }
                 
             }

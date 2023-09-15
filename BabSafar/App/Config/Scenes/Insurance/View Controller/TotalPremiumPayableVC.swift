@@ -60,7 +60,7 @@ class TotalPremiumPayableVC: BaseTableVC, InsurancePreprocessBookingViewModelDel
     func setupTV() {
         tablerow.removeAll()
         
-        tablerow.append(TableRow(title:iplanprice,cellType:.TotalPremiumPayableTVCell))
+        tablerow.append(TableRow(title:iplanexactprice,subTitle: iplancurrency,cellType:.TotalPremiumPayableTVCell))
         tablerow.append(TableRow(height:100,cellType:.EmptyTVCell))
         
         commonTVData = tablerow

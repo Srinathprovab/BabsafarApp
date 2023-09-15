@@ -12,7 +12,6 @@ class SearchHotelsVC: BaseTableVC, TopFlightDetailsViewModelDelegate {
     
     @IBOutlet weak var holderView: UIView!
     @IBOutlet weak var nav: NavBar!
-    @IBOutlet weak var tableViewTopConstraint: NSLayoutConstraint!
     
     var tablerow = [TableRow]()
     static var newInstance: SearchHotelsVC? {
@@ -30,13 +29,8 @@ class SearchHotelsVC: BaseTableVC, TopFlightDetailsViewModelDelegate {
     
     
     override func viewWillAppear(_ animated: Bool) {
-        if screenHeight < 835 {
-            tableViewTopConstraint.constant = 110
-        }
+        addObserver()
         setInitalValues()
-        
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("nointernet"), object: nil)
         
     }
     
@@ -45,8 +39,10 @@ class SearchHotelsVC: BaseTableVC, TopFlightDetailsViewModelDelegate {
     func setInitalValues() {
         
         adtArray.removeAll()
-        adtArray.append("1")
-        adtArray.append("1")
+        chArray.removeAll()
+        
+        adtArray.append("2")
+        chArray.append("0")
         
         defaults.set("1", forKey: UserDefaultsKeys.roomcount)
         defaults.set("2", forKey: UserDefaultsKeys.hoteladultscount)
@@ -57,12 +53,7 @@ class SearchHotelsVC: BaseTableVC, TopFlightDetailsViewModelDelegate {
     }
     
     
-    //MARK: - nointernet
-    @objc func nointernet() {
-        guard let vc = NoInternetConnectionVC.newInstance.self else {return}
-        vc.modalPresentationStyle = .overCurrentContext
-        self.present(vc, animated: true)
-    }
+  
     
     //MARK: CALL TOP FLIGHT HOTEL DETAILS API FUNCTION
     func callTopFlightsHotelsDetailsAPI() {
@@ -99,17 +90,15 @@ class SearchHotelsVC: BaseTableVC, TopFlightDetailsViewModelDelegate {
         commonTableView.layer.borderColor = UIColor.AppBorderColor.cgColor
         commonTableView.layer.cornerRadius = 10
         commonTableView.clipsToBounds = true
+        commonTableView.isScrollEnabled = false
         commonTableView.registerTVCells(["SearchHotelTVCell",
                                          "EmptyTVCell",
                                          "TopCityTVCell"])
         
-        NotificationCenter.default.addObserver(self, selector: #selector(methodOfReceivedNotification(notification:)), name: Notification.Name("reload"), object: nil)
+        
         setuptv()
     }
     
-    @objc func methodOfReceivedNotification(notification: Notification) {
-        commonTableView.reloadData()
-    }
     
     func setuptv() {
         
@@ -164,9 +153,6 @@ class SearchHotelsVC: BaseTableVC, TopFlightDetailsViewModelDelegate {
         payload["adult"] = adtArray
         payload["child"] = chArray
         
-        
-        
-        
         for roomIndex in 0..<totalRooms {
             if let numChildren = Int(chArray[roomIndex]), numChildren > 0 {
                 var childAges: [String] = Array(repeating: "0", count: numChildren)
@@ -184,6 +170,7 @@ class SearchHotelsVC: BaseTableVC, TopFlightDetailsViewModelDelegate {
         payload["language"] = "english"
         payload["search_source"] = "postman"
         payload["currency"] = defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? "KWD"
+        payload["user_id"] = defaults.string(forKey: UserDefaultsKeys.userid) ?? "0"
         
         if defaults.string(forKey: UserDefaultsKeys.locationcity) == "Add City" || defaults.string(forKey: UserDefaultsKeys.locationcity) == nil{
             showToast(message: "Enter Hotel or City ")
@@ -209,7 +196,7 @@ class SearchHotelsVC: BaseTableVC, TopFlightDetailsViewModelDelegate {
                 
                 print(jsonStringData)
                 
-
+                
             }catch{
                 print(error.localizedDescription)
             }
@@ -256,6 +243,43 @@ class SearchHotelsVC: BaseTableVC, TopFlightDetailsViewModelDelegate {
     
     override func btnAction(cell: ButtonTVCell) {
         // gotoSearchHotelsResultVC()
+    }
+    
+    
+}
+
+extension SearchHotelsVC {
+    
+    func addObserver() {
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("offline"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(resultnil), name: NSNotification.Name("resultnil"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reload), name: Notification.Name("reloadTV"), object: nil)
+        
+    }
+    
+    
+    @objc func reload() {
+        DispatchQueue.main.async {[self] in
+            commonTableView.reloadData()
+        }
+    }
+    
+    //MARK: - resultnil
+    @objc func resultnil() {
+        guard let vc = NoInternetConnectionVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.key = "noresult"
+        self.present(vc, animated: true)
+    }
+    
+    
+    //MARK: - nointernet
+    @objc func nointernet() {
+        guard let vc = NoInternetConnectionVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.key = "nointernet"
+        self.present(vc, animated: true)
     }
     
     

@@ -68,7 +68,7 @@ class MapViewVC: UIViewController, CLLocationManagerDelegate {
             if let latitude = Double(latArray[index]), let longitude = Double(longArray[index]) {
                 let marker = GMSMarker()
                 marker.position = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-                marker.title = "Location \(index + 1)"
+            //    marker.title = "Location \(index + 1)"
 
                 // Create a custom marker icon with an image
                 if let markerImage = UIImage(named: "loc1")?.withRenderingMode(.alwaysOriginal).withTintColor(.AppBtnColor) {

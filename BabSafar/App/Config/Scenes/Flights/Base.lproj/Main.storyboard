@@ -361,10 +361,7 @@
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A69-46-8sT">
-                                                                <rect key="frame" x="0.0" y="0.0" width="120" height="61"/>
-                                                                <constraints>
-                                                                    <constraint firstAttribute="width" constant="120" id="Eoh-tZ-cN5"/>
-                                                                </constraints>
+                                                                <rect key="frame" x="0.0" y="0.0" width="393" height="61"/>
                                                                 <state key="normal" title="Button"/>
                                                                 <buttonConfiguration key="configuration" style="plain"/>
                                                                 <connections>
@@ -377,10 +374,11 @@
                                                             <constraint firstItem="mhz-Wh-CMA" firstAttribute="leading" secondItem="Y6W-QQ-1Fv" secondAttribute="leading" constant="30" id="Hon-db-fR0"/>
                                                             <constraint firstAttribute="trailing" secondItem="5Wv-68-ifv" secondAttribute="trailing" constant="30" id="MUL-6T-7d9"/>
                                                             <constraint firstItem="mhz-Wh-CMA" firstAttribute="centerY" secondItem="Y6W-QQ-1Fv" secondAttribute="centerY" id="NKY-bc-CSv"/>
-                                                            <constraint firstItem="A69-46-8sT" firstAttribute="leading" secondItem="Y6W-QQ-1Fv" secondAttribute="leading" id="dOg-93-S32"/>
-                                                            <constraint firstAttribute="bottom" secondItem="A69-46-8sT" secondAttribute="bottom" id="jCC-JG-uTH"/>
-                                                            <constraint firstItem="A69-46-8sT" firstAttribute="top" secondItem="Y6W-QQ-1Fv" secondAttribute="top" id="mDe-3R-9fE"/>
+                                                            <constraint firstAttribute="trailing" secondItem="A69-46-8sT" secondAttribute="trailing" id="Va2-hr-qYy"/>
+                                                            <constraint firstItem="A69-46-8sT" firstAttribute="leading" secondItem="Y6W-QQ-1Fv" secondAttribute="leading" id="ie6-bm-eQM"/>
+                                                            <constraint firstItem="A69-46-8sT" firstAttribute="top" secondItem="Y6W-QQ-1Fv" secondAttribute="top" id="mDg-rq-Wqa"/>
                                                             <constraint firstItem="5Wv-68-ifv" firstAttribute="centerY" secondItem="Y6W-QQ-1Fv" secondAttribute="centerY" id="uGv-ev-zp8"/>
+                                                            <constraint firstAttribute="bottom" secondItem="A69-46-8sT" secondAttribute="bottom" id="uWb-hk-Pxo"/>
                                                         </constraints>
                                                     </view>
                                                 </subviews>
@@ -444,7 +442,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7bT-2s-w4j" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="389.85507246376812" y="1431.6964285714284"/>
+            <point key="canvasLocation" x="388.54961832061065" y="1431.6901408450706"/>
         </scene>
         <!--FilterVC-->
         <scene sceneID="hga-vy-FY4">
@@ -1182,10 +1180,7 @@
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZAO-wr-9Oh">
-                                                                <rect key="frame" x="0.0" y="0.0" width="120" height="61"/>
-                                                                <constraints>
-                                                                    <constraint firstAttribute="width" constant="120" id="lzZ-Bh-UWb"/>
-                                                                </constraints>
+                                                                <rect key="frame" x="0.0" y="0.0" width="393" height="61"/>
                                                                 <state key="normal" title="Button"/>
                                                                 <buttonConfiguration key="configuration" style="plain"/>
                                                                 <connections>
@@ -1196,12 +1191,13 @@
                                                         </subviews>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
+                                                            <constraint firstItem="ZAO-wr-9Oh" firstAttribute="leading" secondItem="EMF-Wi-baq" secondAttribute="leading" id="61n-hf-AdN"/>
                                                             <constraint firstItem="qin-Kc-wvO" firstAttribute="centerY" secondItem="EMF-Wi-baq" secondAttribute="centerY" id="7CB-2c-nu0"/>
                                                             <constraint firstItem="aoe-f9-sC4" firstAttribute="centerY" secondItem="EMF-Wi-baq" secondAttribute="centerY" id="8gb-Tf-1UK"/>
-                                                            <constraint firstItem="ZAO-wr-9Oh" firstAttribute="leading" secondItem="EMF-Wi-baq" secondAttribute="leading" id="Bk2-08-7PE"/>
+                                                            <constraint firstAttribute="bottom" secondItem="ZAO-wr-9Oh" secondAttribute="bottom" id="ERA-NM-ca9"/>
                                                             <constraint firstAttribute="trailing" secondItem="aoe-f9-sC4" secondAttribute="trailing" constant="30" id="FDl-c8-Xe6"/>
-                                                            <constraint firstItem="ZAO-wr-9Oh" firstAttribute="top" secondItem="EMF-Wi-baq" secondAttribute="top" id="gOn-NP-zE4"/>
-                                                            <constraint firstAttribute="bottom" secondItem="ZAO-wr-9Oh" secondAttribute="bottom" id="j9B-5c-7em"/>
+                                                            <constraint firstItem="ZAO-wr-9Oh" firstAttribute="top" secondItem="EMF-Wi-baq" secondAttribute="top" id="Qaw-Av-StP"/>
+                                                            <constraint firstAttribute="trailing" secondItem="ZAO-wr-9Oh" secondAttribute="trailing" id="vfH-Az-viZ"/>
                                                             <constraint firstItem="qin-Kc-wvO" firstAttribute="leading" secondItem="EMF-Wi-baq" secondAttribute="leading" constant="30" id="xdh-JR-V1U"/>
                                                         </constraints>
                                                     </view>
@@ -1271,7 +1267,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bX1-1I-cAb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1944.9275362318842" y="1431.6964285714284"/>
+            <point key="canvasLocation" x="1944.2748091603053" y="1431.6901408450706"/>
         </scene>
         <!--Add Traveller DetailsVC-->
         <scene sceneID="sIN-Qs-yb8">
@@ -3631,7 +3627,7 @@
             <color red="0.3919999897480011" green="0.15299999713897705" blue="0.43500000238418579" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="CommonButtonColor">
-            <color red="0.94499999284744263" green="0.28999999165534973" blue="0.082000002264976501" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.90980392156862744" green="0.16470588235294117" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="WhiteColor">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

@@ -207,6 +207,7 @@ extension BookingConfirmedVC {
         
         tablerow.append(TableRow(title:"Booking Confirmed",
                                  subTitle: bookingId,
+                                 key: "flight",
                                  text: bookedDate,
                                  buttonTitle: bookingRefrence,
                                  tempText: pnrNo,
@@ -291,6 +292,7 @@ extension BookingConfirmedVC {
         
         tablerow.append(TableRow(title:"Booking Confirmed",
                                  subTitle: bookingId,
+                                 key: "hotel",
                                  text: bookedDate,
                                  buttonTitle: bookingRefrence,
                                  tempText: pnrNo,
@@ -395,6 +397,7 @@ extension BookingConfirmedVC {
         
         tablerow.append(TableRow(title:"Booking Confirmed",
                                  subTitle: bookingId,
+                                 key: "insurence",
                                  text: bookedDate,
                                  buttonTitle: bookingRefrence,
                                  tempText: pnrNo,

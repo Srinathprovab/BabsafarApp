@@ -83,7 +83,7 @@ var hsearchid = String()
 var hbookingsource = String()
 var htoken = String()
 var htokenkey = String()
-var selectedrRateKeyArray = String()
+var selectedrRateKeyArray = [String]()
 
 var adtArray = [String]()
 var chArray = [String]()
@@ -128,8 +128,7 @@ var jd = [JourneySummary]()
 var fareRulehtml = [FareRulehtml]()
 
 var FlightList :[[J_flight_list]]?
-var RTFlightList :[[RTJ_flight_list]]?
-var MCJflightlist :[MCJ_flight_list]?
+var MCJflightlist :[[MCJ_flight_list]]?
 var MBfd :[[MBdetails]]?
 var hotelSearchResult = [HotelSearchResult]()
 var mbSummery = [Summary]()
@@ -143,7 +142,7 @@ var bookingRefrence = String()
 var bookingId = String()
 var flightSelectedIndex = Int()
 var prebookingcancellationpolicy : Pre_booking_cancellation_policy?
-
+var userspecification = [String]()
 
 var countrylist = [All_country_code_list]()
 var totalprice = String()
@@ -223,13 +222,15 @@ var frequent_flyersArray = [Frequent_flyers]()
 var totalRooms = 0
 var totalAdults = 0
 var totalChildren = 0
-
+var oldjournyType = ""
 
 //Insurence
 var itotalPax = ""
 var isearchid = ""
 var iplancode = ""
 var iplanTitle = ""
+var iplanexactprice = ""
+var iplancurrency = ""
 var ibookingsource = ""
 var iplandetails = ""
 var iplanprice = ""

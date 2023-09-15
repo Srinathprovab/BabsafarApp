@@ -386,31 +386,54 @@ class ServiceManager {
                     case .success(let data):
                        
                         
-                        do{
+//                        do{
+//
+//
+//                            let jsonData = try JSONSerialization.data(withJSONObject: resp.value as Any,options: [])
+//                            if let jsonResponse = try? JSONDecoder().decode(T.self, from: jsonData) {
+//
+//
+//
+//                                completionHandler(true, jsonResponse, nil)
+//                            }
+//
+//                            else {
+//
+//                                NotificationCenter.default.post(name: NSNotification.Name("resultnil"), object: nil)
+//                                completionHandler(false, nil, ApiError.somthingwentwrong.message)
+//                            }
+//
+//
+//
+//                        }catch {
+//
+//
+//                            completionHandler(false, nil, ApiError.unknown.message)
+//                            print("JSONSerialization error")
+//                        }
+                        
+                        
+                        
+                        
+                        
+                        do {
+                            let jsonData = try JSONSerialization.data(withJSONObject: resp.value as Any, options: [])
                             
-                            
-                            let jsonData = try JSONSerialization.data(withJSONObject: resp.value as Any,options: [])
-                            if let jsonResponse = try? JSONDecoder().decode(T.self, from: jsonData) {
-                                
-                                
-                             
+                            do {
+                                let jsonResponse = try JSONDecoder().decode(T.self, from: jsonData)
                                 completionHandler(true, jsonResponse, nil)
-                            }
-                            
-                            else {
-                                
+                            } catch let decodingError {
+                                print("JSON Decoding Error: \(decodingError)")
                                 NotificationCenter.default.post(name: NSNotification.Name("resultnil"), object: nil)
                                 completionHandler(false, nil, ApiError.somthingwentwrong.message)
                             }
-                            
-                            
-                            
-                        }catch {
-                            
-                            
+                        } catch let serializationError {
+                            print("JSON Serialization Error: \(serializationError)")
+                            NotificationCenter.default.post(name: NSNotification.Name("resultnil"), object: nil)
                             completionHandler(false, nil, ApiError.unknown.message)
-                            print("JSONSerialization error")
                         }
+
+                        
                         
                         
                         break

@@ -823,30 +823,28 @@ class FilterVC: BaseTableVC{
             case "Neighbourhood":
                 
                 if let index = selectedNeighbourwoodArray.firstIndex(of: cell.titlelbl.text ?? "") {
-                    airlinesFilterArray.remove(at: index)
+                    selectedNeighbourwoodArray.remove(at: index)
                 }
-                print(airlinesFilterArray.joined(separator: "---"))
+                print(selectedNeighbourwoodArray.joined(separator: "---"))
                 break
                 
                 
             case "Near By Location's":
                 
                 if let index = selectednearBylocationsArray.firstIndex(of: cell.titlelbl.text ?? "") {
-                    airlinesFilterArray.remove(at: index)
+                    selectednearBylocationsArray.remove(at: index)
                 }
-                print(airlinesFilterArray.joined(separator: "---"))
+                print(selectednearBylocationsArray.joined(separator: "---"))
                 break
                 
                 
             case "Amenities":
                 
                 if let index = selectedamenitiesArray.firstIndex(of: cell.titlelbl.text ?? "") {
-                    airlinesFilterArray.remove(at: index)
+                    selectedamenitiesArray.remove(at: index)
                 }
-                print(airlinesFilterArray.joined(separator: "---"))
+                print(selectedamenitiesArray.joined(separator: "---"))
                 break
-                
-                
                 
                 
             default:

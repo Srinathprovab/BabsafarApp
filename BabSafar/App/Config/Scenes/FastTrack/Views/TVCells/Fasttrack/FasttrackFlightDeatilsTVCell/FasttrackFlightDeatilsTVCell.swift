@@ -90,6 +90,8 @@ extension FasttrackFlightDeatilsTVCell : UITableViewDelegate,UITableViewDataSour
             cell.closeView.isHidden = false
             cell.tapedservicetype = data.serviceType
             
+           
+            
             ccell = cell
         }
         return ccell

@@ -27,7 +27,8 @@ class InsurenceResultTVCell: TableViewCell {
     @IBOutlet weak var holderView: UIView!
     
     var isExpanded = false
-    
+    var exactprice = ""
+    var currency = ""
     var row = Int()
     var plancode = ""
     var plandetails = ""
@@ -51,7 +52,11 @@ class InsurenceResultTVCell: TableViewCell {
     
     override func updateUI() {
         titlelbl.text = cellInfo?.title ?? ""
-        pricelbl.text = "\(cellInfo?.text ?? ""):\(cellInfo?.headerText ?? "")"
+      //  pricelbl.text = "\(cellInfo?.text ?? ""):\(cellInfo?.headerText ?? "")"
+        
+        
+       
+        
         paxCountlbl.text = "For \(cellInfo?.buttonTitle ?? "") Pax"
        
         if cellInfo?.key == "bc" {

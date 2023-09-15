@@ -36,7 +36,7 @@ class MultiCityTripFlightResultTVCell: TableViewCell {
     var taxes = String()
     var APICurrencyType = String()
     var kwdPrice = String()
-    var mflight_details : MCFlight_details?
+    var mflight_details : Flight_details?
     var displayPrice = String()
     
     
@@ -58,7 +58,7 @@ class MultiCityTripFlightResultTVCell: TableViewCell {
         
         selectedResult = cellInfo?.TotalQuestions ?? ""
         taxes = cellInfo?.questionBase ?? ""
-        self.mflight_details = cellInfo?.moreData as? MCFlight_details
+        self.mflight_details = cellInfo?.moreData as? Flight_details
         arrayCount = self.mflight_details?.summary?.count ?? 0
         tvHeight.constant = CGFloat((arrayCount * 110))
         displayPrice = cellInfo?.headerText ?? ""

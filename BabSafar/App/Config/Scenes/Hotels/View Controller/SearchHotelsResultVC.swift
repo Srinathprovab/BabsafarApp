@@ -386,7 +386,8 @@ extension SearchHotelsResultVC {
             print(theJSONText ?? "")
             payload1["search_params"] = theJSONText
             payload1["offset"] = "0"
-            payload1["limit"] = "20"
+            payload1["limit"] = "1000"
+            
             viewModel?.CallHotelSearchAPI(dictParam: payload1)
             
         }catch let error as NSError{
@@ -395,9 +396,7 @@ extension SearchHotelsResultVC {
         
     }
     
-    
-    
-    
+
     
     func hoteSearchResult(response: HotelSearchModel) {
         latArray.removeAll()
@@ -416,7 +415,7 @@ extension SearchHotelsResultVC {
         hsearchid = String(response.search_id ?? 0)
         hbookingsource = response.booking_source ?? ""
         hotelSearchResult = response.data?.hotelSearchResult ?? []
-        hotel_filtersumry = response.filter_sumry
+        //   hotel_filtersumry = response.filter_sumry
         
         response.data?.hotelSearchResult?.forEach({ i in
             latArray.append(i.latitude ?? "")
@@ -442,6 +441,7 @@ extension SearchHotelsResultVC {
         DispatchQueue.main.async {[self] in
             commonTableView.reloadData()
         }
+        
     }
     
     
@@ -469,16 +469,23 @@ extension SearchHotelsResultVC {
                 cell.hotelImg.sd_setImage(with: URL(string: dict.image ?? ""), placeholderImage:UIImage(contentsOfFile:"placeholder.png"))
                 cell.ratingslbl.text = String(dict.star_rating ?? 0)
                 cell.locationlbl.text = dict.address
-                //    cell.kwdlbl.text = "\(dict.currency ?? ""):\(String(format: "%.2f", dict.price ?? ""))"
                 setAttributedText1(str1: dict.currency ?? "", str2: dict.price ?? "", lbl: cell.kwdlbl)
                 cell.bookingsource = dict.booking_source ?? ""
                 cell.hotelid = String(dict.hotel_code ?? 0)
                 cell.lat = dict.latitude ?? ""
                 cell.long = dict.longitude ?? ""
-                cell.hotelDesc = dict.hotel_desc
+                //  cell.hotelDesc = dict.hotel_desc
                 cell.perNightlbl.text = "Total Price For 2 Night"
                 cell.faretypelbl.text = dict.refund ?? ""
-                cell.facilityArray = dict.facility ?? []
+                cell.setAttributedString1(str1:dict.currency ?? "", str2: dict.price ?? "")
+                
+                if let facilities = dict.facility, !facilities.isEmpty {
+                    cell.facilityArray = facilities
+                } else {
+                    // Handle the case when facility is empty or nil
+                    print("Facility array is empty or nil")
+                }
+                
                 ccell = cell
             }else{
                 let dict = hotelSearchResult[indexPath.row]
@@ -487,15 +494,24 @@ extension SearchHotelsResultVC {
                 cell.hotelImg.sd_setImage(with: URL(string: dict.image ?? ""), placeholderImage:UIImage(contentsOfFile:"placeholder.png"))
                 cell.ratingslbl.text = String(dict.star_rating ?? 0)
                 cell.locationlbl.text = dict.address
-                //  cell.kwdlbl.text = "\(dict.currency ?? ""):\()"
                 setAttributedText1(str1: dict.currency ?? "", str2: dict.price ?? "", lbl: cell.kwdlbl)
                 cell.bookingsource = dict.booking_source ?? ""
                 cell.hotelid = String(dict.hotel_code ?? 0)
                 cell.lat = dict.latitude ?? ""
                 cell.long = dict.longitude ?? ""
-                cell.hotelDesc = dict.hotel_desc
+                //    cell.hotelDesc = dict.hotel_desc
                 cell.perNightlbl.text = "Total Price For 2 Night"
-                cell.facilityArray = dict.facility ?? []
+                cell.setAttributedString1(str1:dict.currency ?? "", str2: dict.price ?? "")
+
+                if let facilities = dict.facility, !facilities.isEmpty {
+                    cell.facilityArray = facilities
+                } else {
+                    // Handle the case when facility is empty or nil
+                    print("Facility array is empty or nil")
+                }
+                
+                
+                
                 cell.faretypelbl.text = dict.refund ?? ""
                 ccell = cell
             }
@@ -522,7 +538,7 @@ extension SearchHotelsResultVC {
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let lastRowIndex = tableView.numberOfRows(inSection: 0) - 1
         if indexPath.row == lastRowIndex && !isLoadingData {
-            callHotelSearchPaginationAPI()
+           // callHotelSearchPaginationAPI()
         }
     }
     
@@ -536,13 +552,27 @@ extension SearchHotelsResultVC {
         payload["limit"] = "5"
         payload["no_of_nights"] = "1"
         
-        // viewModel?.CallHotelSearchPagenationAPI(dictParam: payload)
+      //  viewModel?.CallHotelSearchPagenationAPI(dictParam: payload)
         
     }
     
     func hoteSearchPagenationResult(response: HotelSearchModel) {
         
         hotelSearchResult = response.data?.hotelSearchResult ?? []
+        
+        if let newResults = response.data?.hotelSearchResult, !newResults.isEmpty {
+            // Append the new data to the existing data
+            hotelSearchResult.append(contentsOf: newResults)
+            DispatchQueue.main.async {
+                self.commonTableView.reloadData()
+            }
+        } else {
+            // No more items to load, update UI accordingly
+            print("No more items to load.")
+            // You can show a message or hide a loading indicator here
+        }
+        
+        
         DispatchQueue.main.async {[self] in
             commonTableView.reloadData()
         }
@@ -613,10 +643,16 @@ extension SearchHotelsResultVC:AppliedFilters{
         switch sortBy {
             
         case .PriceLow:
-            print("PriceLow")
+           
             isSearchBool = true
             
-            filtered = hotelSearchResult.sorted { $0.price ?? "0" < $1.price ?? "0" }
+            // Sort the hotelSearchResult array by price in ascending order
+             filtered = hotelSearchResult.sorted { (item1, item2) in
+                let price1 = Double(item1.price ?? "0") ?? 0
+                let price2 = Double(item2.price ?? "0") ?? 0
+                return price1 < price2
+            }
+            
             
             DispatchQueue.main.async {[self] in
                 commonTableView.reloadData()
@@ -625,9 +661,15 @@ extension SearchHotelsResultVC:AppliedFilters{
             
             
         case .PriceHigh:
-            print("PriceHigh")
+           
             isSearchBool = true
-            filtered = hotelSearchResult.sorted { $0.price ?? "0" > $1.price ?? "0" }
+            // Sort the hotelSearchResult array by price in ascending order
+             filtered = hotelSearchResult.sorted { (item1, item2) in
+                let price1 = Double(item1.price ?? "0") ?? 0
+                let price2 = Double(item2.price ?? "0") ?? 0
+                return price1 > price2
+            }
+            
             DispatchQueue.main.async {[self] in
                 commonTableView.reloadData()
             }
@@ -671,7 +713,7 @@ extension SearchHotelsResultVC:AppliedFilters{
 extension SearchHotelsResultVC {
     
     func addObserver() {
-       
+        
         NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("offline"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(resultnil), name: NSNotification.Name("resultnil"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reload), name: Notification.Name("reload"), object: nil)

@@ -44,10 +44,15 @@ class NewHotelPriceSummeryTVCell: TableViewCell {
         roomTypelbl.text = cellInfo?.headerText ?? ""
         adultsCountlbl.text = "No Of Adults: \(cellInfo?.TotalQuestions ?? "")"
         childCountlbl.text = "No Of Children: \(cellInfo?.questionBase ?? "")"
-        pricelbl.text = cellInfo?.price ?? ""
         
       
-        
+        setAttributedTextnew(str1: "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? "")",
+                             str2: "\(cellInfo?.price ?? "" )",
+                             lbl: pricelbl,
+                             str1font: .LatoBold(size: 12),
+                             str2font: .LatoBold(size: 18),
+                             str1Color: .IttenarySelectedColor,
+                             str2Color: .IttenarySelectedColor)
         
     }
     

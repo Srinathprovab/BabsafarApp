@@ -44,7 +44,15 @@ class PriceSummaryTVCell: TableViewCell {
     
     override func updateUI() {
         self.key =  cellInfo?.key ?? ""
-        totalPaymentValuelbl.text = cellInfo?.price ?? ""
+        
+        
+        setAttributedTextnew(str1: "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? "")",
+                             str2: String(format: "%.2f", Double(cellInfo?.price ?? "") ?? 0.0),
+                             lbl: totalPaymentValuelbl,
+                             str1font: .LatoBold(size: 12),
+                             str2font: .LatoBold(size: 18),
+                             str1Color: .IttenarySelectedColor,
+                             str2Color: .IttenarySelectedColor)
         
         if let selectedTab = defaults.string(forKey: UserDefaultsKeys.dashboardTapSelected){
             
@@ -90,14 +98,13 @@ class PriceSummaryTVCell: TableViewCell {
     }
     
     func setupUI(){
-       
+        
         setupViews(v: holderView, radius: 4, color: .WhiteColor)
         setupViews(v: ulView, radius: 0, color: .clear)
         
         psImg.image = UIImage(named:"pricesummery")?.withRenderingMode(.alwaysOriginal)
         setupLabels(lbl: titlelbl, text: "Price Summary", textcolor: .AppLabelColor, font: .LatoSemibold(size: 16))
-        setupLabels(lbl: totalPaymentlbl, text: "Total Trip Cost", textcolor: .AppLabelColor, font: .LatoBold(size: 16))
-        setupLabels(lbl: totalPaymentValuelbl, text: "", textcolor: .AppLabelColor, font: .LatoBold(size: 16))
+        setupLabels(lbl: totalPaymentlbl, text: "Total Trip Cost", textcolor: .IttenarySelectedColor, font: .LatoBold(size: 18))
         
     }
     
@@ -154,20 +161,101 @@ extension PriceSummaryTVCell :UITableViewDataSource,UITableViewDelegate {
             
             if indexPath.row == 0 {
                 cell.adultCountlbl.text = "Traveller x \(adultsCount)(Adult)"
-                cell.adultKWDlbl.text = "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? ""):\(AdultsTotalPrice)"
-                cell.fareKWDlbl.text = "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? ""):\(Adults_Base_Price)"
-                cell.taxesKWDlbl.text = "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? ""):\(Adults_Tax_Price)"
+                
+                //                cell.adultKWDlbl.text = "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? ""):\(String(format: "%.2f", Double(AdultsTotalPrice) ?? 0.0))"
+                //                cell.fareKWDlbl.text = "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? ""):\(String(format: "%.2f", Double(Adults_Base_Price) ?? 0.0))"
+                //                cell.taxesKWDlbl.text = "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? ""):\(String(format: "%.2f", Double(Adults_Tax_Price) ?? 0.0))"
+                
+                setAttributedTextnew(str1: "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? "")",
+                                     str2: String(format: "%.2f", Double(AdultsTotalPrice) ?? 0.0),
+                                     lbl: cell.adultKWDlbl,
+                                     str1font: .LatoBold(size: 12),
+                                     str2font: .LatoBold(size: 16),
+                                     str1Color: .AppLabelColor,
+                                     str2Color: .AppLabelColor)
+                
+                setAttributedTextnew(str1: "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? "")",
+                                     str2: String(format: "%.2f", Double(Adults_Base_Price) ?? 0.0),
+                                     lbl: cell.fareKWDlbl,
+                                     str1font: .LatoBold(size: 12),
+                                     str2font: .LatoBold(size: 16),
+                                     str1Color: .AppLabelColor,
+                                     str2Color: .AppLabelColor)
+                
+                
+                setAttributedTextnew(str1: "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? "")",
+                                     str2: String(format: "%.2f", Double(Adults_Tax_Price) ?? 0.0),
+                                     lbl: cell.taxesKWDlbl,
+                                     str1font: .LatoBold(size: 12),
+                                     str2font: .LatoBold(size: 16),
+                                     str1Color: .AppLabelColor,
+                                     str2Color: .AppLabelColor)
+                
+                
             }else if indexPath.row == 1 {
                 cell.adultCountlbl.text = "Traveller x \(childCount)(Child)"
-                cell.adultKWDlbl.text = "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? ""):\(ChildTotalPrice)"
-                cell.fareKWDlbl.text = "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? ""):\(Childs_Base_Price)"
-                cell.taxesKWDlbl.text = "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? ""):\(Childs_Tax_Price)"
+                //                cell.adultKWDlbl.text = "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? ""):\(String(format: "%.2f", Double(ChildTotalPrice) ?? 0.0))"
+                //                cell.fareKWDlbl.text = "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? ""):\(String(format: "%.2f", Double(Childs_Base_Price) ?? 0.0))"
+                //                cell.taxesKWDlbl.text = "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? ""):\(String(format: "%.2f", Double(Childs_Tax_Price) ?? 0.0))"
+                
+                
+                setAttributedTextnew(str1: "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? "")",
+                                     str2: String(format: "%.2f", Double(ChildTotalPrice) ?? 0.0),
+                                     lbl: cell.adultKWDlbl,
+                                     str1font: .LatoBold(size: 12),
+                                     str2font: .LatoBold(size: 16),
+                                     str1Color: .AppLabelColor,
+                                     str2Color: .AppLabelColor)
+                
+                setAttributedTextnew(str1: "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? "")",
+                                     str2: String(format: "%.2f", Double(Childs_Base_Price) ?? 0.0),
+                                     lbl: cell.fareKWDlbl,
+                                     str1font: .LatoBold(size: 12),
+                                     str2font: .LatoBold(size: 16),
+                                     str1Color: .AppLabelColor,
+                                     str2Color: .AppLabelColor)
+                
+                
+                setAttributedTextnew(str1: "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? "")",
+                                     str2: String(format: "%.2f", Double(Childs_Tax_Price) ?? 0.0),
+                                     lbl: cell.taxesKWDlbl,
+                                     str1font: .LatoBold(size: 12),
+                                     str2font: .LatoBold(size: 16),
+                                     str1Color: .AppLabelColor,
+                                     str2Color: .AppLabelColor)
                 
             }else {
                 cell.adultCountlbl.text = "Traveller x \(infantsCount)(Infanta)"
-                cell.adultKWDlbl.text = "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? ""):\(InfantTotalPrice)"
-                cell.fareKWDlbl.text = "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? ""):\(Infants_Base_Price)"
-                cell.taxesKWDlbl.text = "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? ""):\(Infants_Tax_Price)"
+                //                cell.adultKWDlbl.text = "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? ""):\(String(format: "%.2f", Double(InfantTotalPrice) ?? 0.0))"
+                //                cell.fareKWDlbl.text = "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? ""):\(String(format: "%.2f", Double(Infants_Base_Price) ?? 0.0))"
+                //                cell.taxesKWDlbl.text = "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? ""):\(String(format: "%.2f", Double(Infants_Tax_Price) ?? 0.0))"
+                
+                
+                setAttributedTextnew(str1: "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? "")",
+                                     str2: String(format: "%.2f", Double(InfantTotalPrice) ?? 0.0),
+                                     lbl: cell.adultKWDlbl,
+                                     str1font: .LatoBold(size: 12),
+                                     str2font: .LatoBold(size: 16),
+                                     str1Color: .AppLabelColor,
+                                     str2Color: .AppLabelColor)
+                
+                setAttributedTextnew(str1: "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? "")",
+                                     str2: String(format: "%.2f", Double(Infants_Base_Price) ?? 0.0),
+                                     lbl: cell.fareKWDlbl,
+                                     str1font: .LatoBold(size: 12),
+                                     str2font: .LatoBold(size: 16),
+                                     str1Color: .AppLabelColor,
+                                     str2Color: .AppLabelColor)
+                
+                
+                setAttributedTextnew(str1: "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? "")",
+                                     str2: String(format: "%.2f", Double(Infants_Tax_Price) ?? 0.0),
+                                     lbl: cell.taxesKWDlbl,
+                                     str1font: .LatoBold(size: 12),
+                                     str2font: .LatoBold(size: 16),
+                                     str1Color: .AppLabelColor,
+                                     str2Color: .AppLabelColor)
+                
             }
             
             

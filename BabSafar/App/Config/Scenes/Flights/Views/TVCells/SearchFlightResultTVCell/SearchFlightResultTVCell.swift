@@ -57,6 +57,8 @@ class SearchFlightResultTVCell: TableViewCell {
     
     @IBOutlet weak var similarBtn: UIButton!
     @IBOutlet weak var similarimg: UIImageView!
+    
+    
     var displayPrice = String()
     var delegate:SearchFlightResultTVCellDelegate?
     var selectedResult = String()

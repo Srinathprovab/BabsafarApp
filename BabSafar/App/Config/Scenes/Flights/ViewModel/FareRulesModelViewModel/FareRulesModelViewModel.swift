@@ -31,10 +31,10 @@ class FareRulesModelViewModel {
         ServiceManager.postOrPutApiCall(endPoint: "ajax/\(ApiEndpoints.getfarerules)" , parameters: parms, resultType: FareRulesModel.self, p:dictParam) { sucess, result, errorMessage in
             
             DispatchQueue.main.async {
-                self.view?.hideLoader()
+               // self.view?.hideLoader()
                 if sucess {
                     guard let response = result else {return}
-                //    self.view.fareRulesDetails(response: response)
+                    self.view.fareRulesDetails(response: response)
                 } else {
                     // Show alert
                     self.view.showToast(message: errorMessage ?? "")

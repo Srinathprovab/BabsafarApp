@@ -434,7 +434,7 @@ extension SelectFromCityVC {
                         }
                     }
                     
-                    NotificationCenter.default.post(name: NSNotification.Name("reload"), object: nil)
+                    NotificationCenter.default.post(name: NSNotification.Name("reloadTV"), object: nil)
                     NotificationCenter.default.post(name: NSNotification.Name("fromSelectCityVC"), object: nil)
                     
                     
@@ -461,7 +461,7 @@ extension SelectFromCityVC {
                     defaults.set(cell.cityname, forKey: UserDefaultsKeys.locationcityname)
                     
                     
-                    NotificationCenter.default.post(name: NSNotification.Name("reload"), object: nil)
+                    NotificationCenter.default.post(name: NSNotification.Name("reloadTV"), object: nil)
                     self.gotoSearchHotelsVC()
                 }
             }

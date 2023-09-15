@@ -27,6 +27,8 @@ class HotelsTVCell: TableViewCell {
     @IBOutlet weak var termsAndConditionlbl: UILabel!
     @IBOutlet weak var refundableBtn: UIButton!
     @IBOutlet weak var faretypelbl: UILabel!
+    @IBOutlet weak var markupPricelbl: UILabel!
+    
     
     var bookingsource = String()
     var hotelid = String()
@@ -57,8 +59,10 @@ class HotelsTVCell: TableViewCell {
         self.hotelImg.sd_setImage(with: URL(string: cellInfo?.image ?? ""), placeholderImage:UIImage(contentsOfFile:"placeholder.png"))
         ratingslbl.text = cellInfo?.subTitle
         locationlbl.text = cellInfo?.buttonTitle
-        //   refundablelbl.text = cellInfo?.headerText
         kwdlbl.text = cellInfo?.text
+        
+        
+        setAttributedString1(str1: "\(cellInfo?.text ?? ""):", str2: "\(cellInfo?.price ?? "")")
     }
     
     
@@ -112,6 +116,26 @@ class HotelsTVCell: TableViewCell {
         delegate?.didTapOnTermsAndConditionBtn(cell: self)
     }
     
+    
+    
+    
+    func setAttributedString1(str1:String,str2:String) {
+        
+        let atter1 = [NSAttributedString.Key.foregroundColor:UIColor.IttenarySelectedColor,NSAttributedString.Key.font:UIFont.LatoBold(size: 10),NSAttributedString.Key.strikethroughStyle: NSUnderlineStyle.single.rawValue] as [NSAttributedString.Key : Any]
+        let atter2 = [NSAttributedString.Key.foregroundColor:UIColor.IttenarySelectedColor,NSAttributedString.Key.font:UIFont.LatoBold(size: 14),NSAttributedString.Key.strikethroughStyle: NSUnderlineStyle.single.rawValue] as [NSAttributedString.Key : Any]
+        
+        let atterStr1 = NSMutableAttributedString(string: str1, attributes: atter1)
+        let atterStr2 = NSMutableAttributedString(string: str2, attributes: atter2)
+        
+        
+        let combination = NSMutableAttributedString()
+        combination.append(atterStr1)
+        combination.append(atterStr2)
+        
+        
+        markupPricelbl.attributedText = combination
+        
+    }
     
     
     @IBAction func didTapOnBookNowBtnAction(_ sender: Any) {

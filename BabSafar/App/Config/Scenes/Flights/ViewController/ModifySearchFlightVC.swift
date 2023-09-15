@@ -46,26 +46,35 @@ class ModifySearchFlightVC: BaseTableVC {
     var moreoptionBool = true
     var calDepDate: String!
     var calRetDate: String!
-    
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        
-    }
+    var key = ""
+   
+  
     
     override func viewWillAppear(_ animated: Bool) {
         //  CallShowCityListAPI(str: "")
         
         NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("nointernet"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadTV), name: Notification.Name("reloadTV"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadTV), name: Notification.Name("calreloadTV"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reload(notification:)), name: NSNotification.Name("reload"), object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(fromSelectCityVC), name: NSNotification.Name("fromSelectCityVC"), object: nil)
         
-        
         setupIntialUI()
+        
+       
+        if key == "edit" {
+            setupIntialUI()
+        }else {
+            setupRoundTrip()
+            DispatchQueue.main.async {
+                self.gotoCalenderVC(key: "ret", titleStr: "Ruturn Date")
+            }
+        }
         
     }
     
+    
+   
     @objc func fromSelectCityVC() {
         keyStr = "select"
     }
@@ -114,7 +123,6 @@ class ModifySearchFlightVC: BaseTableVC {
     
     @objc func reload(notification: NSNotification){
         commonTableView.reloadData()
-        //  setupIntialUI()
     }
     
     override func viewDidLoad() {
@@ -164,8 +172,6 @@ class ModifySearchFlightVC: BaseTableVC {
     func setupTV() {
         tablerow.removeAll()
         tablerow.append(TableRow(cellType:.SearchFlightsTVCell))
-        //        tablerow.append(TableRow(title:"Top International Destinations",key: "flights",cellType:.TopCityTVCell))
-        //        tablerow.append(TableRow(height:80,cellType:.EmptyTVCell))
         commonTVData = tablerow
         commonTableView.reloadData()
     }
@@ -200,6 +206,7 @@ class ModifySearchFlightVC: BaseTableVC {
     
     
     @IBAction func backBtnAction(_ sender: Any) {
+        defaults.set(oldjournyType, forKey: UserDefaultsKeys.journeyType)
         dismiss(animated: true)
     }
     
@@ -320,7 +327,6 @@ class ModifySearchFlightVC: BaseTableVC {
     
     override func didTapOnDepartureBtnAction(cell: SearchFlightsTVCell) {
         gotoCalenderVC(key: "dep", titleStr: "Departure Date")
-        
     }
     
     override func didTapOnReturnBtnAction(cell: SearchFlightsTVCell) {

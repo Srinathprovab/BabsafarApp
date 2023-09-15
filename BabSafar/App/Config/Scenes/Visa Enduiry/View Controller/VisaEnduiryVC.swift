@@ -94,7 +94,7 @@ class VisaEnduiryVC: BaseTableVC, AllCountryCodeListViewModelDelegate, VisaEnqui
     
     
     func setupUI() {
-        nav.titlelbl.text = "Visa Enduiry"
+        nav.titlelbl.text = "Visa Enquiry"
         nav.backBtn.addTarget(self, action: #selector(didTapOnBackBtn(_:)), for: .touchUpInside)
         commonTableView.registerTVCells(["LabelTVCell",
                                          "TextfieldTVCell",

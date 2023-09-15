@@ -63,7 +63,7 @@ class SearchFlightsVC: BaseTableVC {
         
         //  frontView.isHidden = true
         NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("nointernet"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadTV), name: Notification.Name("reloadTV"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadTV), name: Notification.Name("calreloadTV"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reload(notification:)), name: NSNotification.Name("reload"), object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(fromSelectCityVC), name: NSNotification.Name("fromSelectCityVC"), object: nil)
@@ -99,9 +99,7 @@ class SearchFlightsVC: BaseTableVC {
         let totaltraverlers1 = "\(defaults.string(forKey: UserDefaultsKeys.radultCount) ?? "1") Adults | \(defaults.string(forKey: UserDefaultsKeys.rchildCount) ?? "") Children | \(defaults.string(forKey: UserDefaultsKeys.rinfantsCount) ?? "") Infants |\(defaults.string(forKey: UserDefaultsKeys.rselectClass) ?? "")"
         defaults.set(totaltraverlers1, forKey: UserDefaultsKeys.rtravellerDetails)
         
-        deleteAllRecords(str: "1")
-        deleteAllRecords(str: "2")
-        deleteAllRecords(str: "3")
+        
     }
     
     @objc func fromSelectCityVC() {
@@ -144,7 +142,7 @@ class SearchFlightsVC: BaseTableVC {
     
     
     @objc func reloadTV() {
-        setupIntialUI()
+        commonTableView.reloadData()
     }
     
     
@@ -408,6 +406,7 @@ class SearchFlightsVC: BaseTableVC {
     }
     
     override func addTraverllersBtnAction(cell: SearchFlightsTVCell){
+        callapibool = false
         gotoTravellerEconomyVC(str: "traveller")
     }
     
@@ -683,48 +682,6 @@ class SearchFlightsVC: BaseTableVC {
     }
     
     
-    
-    //MARK: - DELETING COREDATA OBJECT
-    func deleteAllRecords(str:String) {
-        
-        if str == "1" {
-            
-            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "PassengerDetails")
-            do {
-                let records = try context.fetch(fetchRequest)
-                if records.count > 1 {
-                    for i in 1..<records.count {
-                        context.delete(records[i] as! NSManagedObject)
-                    }
-                    try context.save()
-                }
-            } catch {
-                print("Error deleting records: \(error)")
-            }
-            
-        }else {
-            
-            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "PassengerDetails")
-            fetchRequest.predicate = NSPredicate(format: "passengerType = %@", "\(str)")
-            let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
-            
-            
-            do {
-                let result = try context.execute(deleteRequest) as? NSBatchDeleteResult
-                let deletedObjectIDs = result?.result as? [NSManagedObjectID] ?? []
-                NSManagedObjectContext.mergeChanges(fromRemoteContextSave: [NSDeletedObjectsKey: deletedObjectIDs], into: [context])
-            } catch let error as NSError {
-                print(error)
-            }
-            
-            do {
-                try context.save()
-            } catch {
-                print ("There was an error")
-            }
-        }
-        
-    }
     
     
 }

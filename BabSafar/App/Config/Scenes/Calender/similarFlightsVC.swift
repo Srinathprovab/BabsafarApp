@@ -19,27 +19,24 @@ class similarFlightsVC: BaseTableVC {
         return vc
     }
     var similarflightList = [[J_flight_list]]()
-    var similarflightListCircle = [[RTJ_flight_list]]()
-    var similarflightListMulticity = [MCJ_flight_list]()
+    var similarflightListMulticity = [[MCJ_flight_list]]()
     var tablerow = [TableRow]()
     
     
     
     override func viewWillAppear(_ animated: Bool) {
         
-        //  tvheight.constant = CGFloat(similarflightList.count * 200)
-        commonTableView.registerTVCells(["SearchFlightResultTVCell",
-                                         "RoundTripFlightResultTVCell",
-                                         "MultiCityTripFlightResultTVCell"])
         
-        //MARK: - Journey Type Check
-        let journyType = defaults.string(forKey: UserDefaultsKeys.journeyType)
-        if journyType == "oneway" {
-            setupTVCells()
-        }else if journyType == "circle" {
-            setupRoundTripTVCell()
-        }else {
-            setupMulticityTVCell()
+        //  tvheight.constant = CGFloat(similarflightList.count * 200)
+        commonTableView.registerTVCells(["NewFlightSearchResultTVCell"])
+        
+        
+        if let journeyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
+            if journeyType == "multicity" {
+                setupMulticityTVCells()
+            }else {
+                setupTVCells()
+            }
         }
         
     }
@@ -57,60 +54,23 @@ class similarFlightsVC: BaseTableVC {
         flightsFoundlbl.text = "\(similarflightList.count ) Flights Found"
         tablerow.removeAll()
         
+        
+        var updatedUniqueList: [[J_flight_list]] = []
+        updatedUniqueList = getUniqueElements_oneway(inputArray: similarflightList)
+        
         similarflightList.forEach({ i in
             i.forEach { j in
-                j.flight_details?.summary?.forEach({ k in
-                    tablerow.append(TableRow(
-                        title:"\(k.operator_name ?? "") (\(k.operator_code ?? "") \(k.flight_number ?? ""))",
-                        subTitle: String(format: "%.2f", j.price?.api_total_display_fare ?? ""),
-                        price: j.aPICurrencyType,
-                        Weight_Allowance: k.weight_Allowance,
-                        key:"oneway",
-                        text: k.origin?.time,
-                        headerText: k.destination?.time,
-                        buttonTitle: "\(k.destination?.city ?? "") (\(k.destination?.loc ?? ""))",
-                        errormsg: String(format: "%.2f", j.price?.api_total_display_fare_withoutmarkup ?? ""),
-                        key1:j.fareType,
-                        image: k.operator_image,
-                        tempText:"\(k.origin?.city ?? "") (\(k.origin?.loc ?? ""))",
-                        questionType:(k.duration),
-                        TotalQuestions: j.selectedResult,
-                        cellType:.SearchFlightResultTVCell,
-                        shareLink: "similar",
-                        questionBase: "\(String(k.no_of_stops ?? 0))"
-                        
-                    ))
-                    
-                })
-            }
-        })
-        
-        
-        commonTVData = tablerow
-        commonTableView.reloadData()
-    }
-    
-    
-    func setupRoundTripTVCell() {
-        flightsFoundlbl.text = "\(similarflightListCircle.count ) Flights Found"
-        
-        tablerow.removeAll()
-        
-        similarflightListCircle.forEach({ i in
-            
-            i.forEach { k in
-                tablerow.append(TableRow(title:String(format: "%.2f", k.price?.api_total_display_fare ?? ""),
-                                         price:k.aPICurrencyType,
-                                         key: "circle",
-                                         headerText:String(format: "%.2f", k.price?.api_total_display_fare_withoutmarkup ?? ""),
-                                         errormsg:String(k.flight_details?.summary?.first?.no_of_stops ?? 0),
-                                         key1:k.fareType ?? "",
-                                         moreData:k.flight_details,
-                                         questionType:k.aPICurrencyType,
-                                         TotalQuestions: k.selectedResult,
-                                         cellType:.RoundTripFlightResultTVCell,
-                                         shareLink: "similar",
-                                         questionBase: k.taxes))
+                
+                tablerow.append(TableRow(title:"\(j.price?.api_total_display_fare_withoutmarkup ?? 0.0)",
+                                         subTitle: j.fareType ?? "",
+                                         price: "\(j.price?.api_total_display_fare ?? 0.0)",
+                                         key: "similar",
+                                         text: j.selectedResult ?? "",
+                                         buttonTitle: j.aPICurrencyType ?? "",
+                                         moreData: j.flight_details?.summary ?? [],
+                                         cellType:.NewFlightSearchResultTVCell))
+                
+                
             }
         })
         
@@ -121,25 +81,26 @@ class similarFlightsVC: BaseTableVC {
     
     
     
-    
-    func setupMulticityTVCell() {
+    func setupMulticityTVCells() {
         flightsFoundlbl.text = "\(similarflightListMulticity.count ) Flights Found"
         tablerow.removeAll()
         
-        
-        similarflightListMulticity.forEach { k in
-            tablerow.append(TableRow(title:String(format: "%.2f", k.price?.api_total_display_fare ?? ""),
-                                     price:k.aPICurrencyType,
-                                     headerText:String(format: "%.2f", k.price?.api_total_display_fare ?? ""),
-                                     key1:k.fareType ?? "",
-                                     moreData:k.flight_details,
-                                     TotalQuestions: k.selectedResult,
-                                     cellType:.MultiCityTripFlightResultTVCell,
-                                     shareLink: "similar",
-                                     questionBase: k.taxes))
-            
-            
-        }
+    
+        similarflightListMulticity.forEach({ i in
+            i.forEach { j in
+                
+                tablerow.append(TableRow(title:"\(j.price?.api_total_display_fare_withoutmarkup ?? 0.0)",
+                                         subTitle: j.fareType ?? "",
+                                         price: "\(j.price?.api_total_display_fare ?? 0.0)",
+                                         key: "similar",
+                                         text: j.selectedResult ?? "",
+                                         buttonTitle: j.aPICurrencyType ?? "",
+                                         moreData: j.flight_details?.summary ?? [],
+                                         cellType:.NewFlightSearchResultTVCell))
+                
+                
+            }
+        })
         
         
         commonTVData = tablerow
@@ -149,59 +110,13 @@ class similarFlightsVC: BaseTableVC {
     
     
     
-    // MARK: - Oneway SearchFlightResultTVCell
     
-    override func didTapOnFlightDetailsBtnAction(cell:SearchFlightResultTVCell){
-        flightSelectedIndex = Int(cell.indexPath?.row ?? 0 )
+    //MARK: - didTapOnFlightDetailsBtnAction NewFlightSearchResultTVCell
+    override func didTapOnFlightDetailsBtnAction(cell: NewFlightSearchResultTVCell) {
         defaults.set(cell.selectedResult, forKey: UserDefaultsKeys.selectedResult)
         gotoBaggageInfoVC()
     }
     
-    
-    override func didTapOnBookNowBtn(cell:SearchFlightResultTVCell){
-        flightSelectedIndex = Int(cell.indexPath?.row ?? 0 )
-        defaults.set(cell.selectedResult, forKey: UserDefaultsKeys.selectedResult)
-        totalprice = cell.kwdPricelbl.text ?? ""
-        gotoBookingDetailsVC()
-    }
-    
-    
-    
-    // MARK: - RoundTripFlightResultTVCell
-    override func didTapOnFlightDetailsBtn(cell:RoundTripFlightResultTVCell){
-        flightSelectedIndex = Int(cell.indexPath?.row ?? 0 )
-        defaults.set(cell.selectedResult, forKey: UserDefaultsKeys.selectedResult)
-        gotoBaggageInfoVC()
-    }
-    
-    
-    override func didTapOnBookNowBtn(cell:RoundTripFlightResultTVCell){
-        flightSelectedIndex = Int(cell.indexPath?.row ?? 0 )
-        defaults.set(cell.selectedResult, forKey: UserDefaultsKeys.selectedResult)
-        totalprice = cell.totalPrice
-        gotoBookingDetailsVC()
-    }
-    
-    
-    
-    // MARK: - MultiCityTripFlightResultTVCell
-    override func didTapOnFlightDetailsBtnAction(cell:MultiCityTripFlightResultTVCell){
-        defaults.set(cell.selectedResult, forKey: UserDefaultsKeys.selectedResult)
-        defaults.set(cell.indexPath?.row ?? 0, forKey: UserDefaultsKeys.selectdFlightcellIndex)
-        gotoBaggageInfoVC()
-    }
-    
-    
-    override func didTapOnBookNowBtnAction(cell:MultiCityTripFlightResultTVCell){
-        flightSelectedIndex = Int(cell.indexPath?.row ?? 0 )
-        defaults.set(cell.selectedResult, forKey: UserDefaultsKeys.selectedResult)
-        totalprice = cell.totalPrice
-        gotoBookingDetailsVC()
-    }
-    
-    
-    
-    // MARK: - gotoBaggageInfoVC
     func gotoBaggageInfoVC() {
         guard let vc = BaggageInfoVC.newInstance.self else {return}
         vc.modalPresentationStyle = .overCurrentContext
@@ -211,7 +126,14 @@ class similarFlightsVC: BaseTableVC {
     }
     
     
-    // MARK: - gotoBookingDetailsVC
+    
+    //MARK: - didTapOnBookNowBtnAction NewFlightSearchResultTVCell
+    override func didTapOnBookNowBtnAction(cell: NewFlightSearchResultTVCell) {
+        defaults.set(cell.selectedResult, forKey: UserDefaultsKeys.selectedResult)
+        totalprice = cell.pricelbl.text ?? ""
+        gotoBookingDetailsVC()
+    }
+    
     func gotoBookingDetailsVC() {
         guard let vc = BookingDetailsVC.newInstance.self else {return}
         vc.modalPresentationStyle = .fullScreen
@@ -221,9 +143,39 @@ class similarFlightsVC: BaseTableVC {
         present(vc, animated: true)
     }
     
+    
+    
+    
+    
     @IBAction func didTapOnCloseBtnAction(_ sender: Any) {
         dismiss(animated: false)
     }
     
     
+}
+
+
+extension similarFlightsVC {
+    
+    
+    //MARK: - Function to get unique elements based on totalPrice oneway
+    func getUniqueElements_oneway(inputArray: [[J_flight_list]]) -> [[J_flight_list]] {
+        var uniqueElements: [[J_flight_list]] = []
+        var uniquePrices: Set<String> = []
+        
+        for array in inputArray {
+            var uniqueArray: [J_flight_list] = []
+            for item in array {
+                if !uniquePrices.contains("\(item.flight_details?.summary?.first?.flight_number ?? "")") {
+                    uniquePrices.insert("\(item.flight_details?.summary?.first?.flight_number ?? "")")
+                    uniqueArray.append(item)
+                }
+            }
+            if !uniqueArray.isEmpty {
+                uniqueElements.append(uniqueArray)
+            }
+        }
+        
+        return uniqueElements
+    }
 }

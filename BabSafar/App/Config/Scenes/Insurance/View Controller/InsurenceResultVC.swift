@@ -162,11 +162,21 @@ extension InsurenceResultVC:InsurenceViewModelDelegate, UITableViewDelegate,UITa
                 
                 let data = availablePlans[section][row]
                 cell.titlelbl.text = data.planTitle ?? ""
-                cell.pricelbl.text = "\(data.currency ?? ""):\(data.price?.total_fare_api ?? "0.0")"
+                cell.exactprice = data.price?.total_fare_api ?? "0.0"
+                cell.currency = data.currency ?? ""
                 cell.logo.sd_setImage(with: URL(string: data.plan_image ?? "" ), placeholderImage:UIImage(contentsOfFile:"placeholder.png"))
                 cell.plancode = data.planCode ?? ""
                 cell.plandetails = data.plan_details_token ?? ""
                 cell.planContent = data.planContent ?? []
+                
+                
+                setAttributedTextnew(str1: "\(data.currency ?? "")",
+                                     str2: "\(data.price?.total_fare_api ?? "0.0")",
+                                     lbl: cell.pricelbl,
+                                     str1font: .LatoBold(size: 12),
+                                     str2font: .LatoBold(size: 18),
+                                     str1Color: .IttenarySelectedColor,
+                                     str2Color: .IttenarySelectedColor)
                 
                 
                 // Check if the current indexPath is the one that should be expanded
@@ -205,6 +215,8 @@ extension InsurenceResultVC:InsurenceViewModelDelegate, UITableViewDelegate,UITa
         iplancode = cell.plancode
         iplandetails = cell.plandetails
         iplanprice = cell.pricelbl.text ?? ""
+        iplanexactprice = cell.exactprice
+        iplancurrency = cell.currency
         selectedPlanContent = cell.planContent
         gotoTotalPremiumPayableVC()
     }

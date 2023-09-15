@@ -142,41 +142,17 @@ class DashBoardVC: BaseTableVC, TopFlightDetailsViewModelDelegate, AllCountryCod
     }
     
     
-    func callApi() {
-        
-        adtArray.removeAll()
-        chArray.removeAll()
-        
-        adtArray.append("1")
-        adtArray.append("1")
-        
-        chArray.append("0")
-        
+    func callApi() {        
         DispatchQueue.main.async {
             self.callTopFlightsHotelsDetailsAPI()
         }
         
     }
     
-    //MARK: - nointernet
-    @objc func nointernet() {
-        guard let vc = NoInternetConnectionVC.newInstance.self else {return}
-        vc.modalPresentationStyle = .overCurrentContext
-        self.present(vc, animated: true)
-    }
+  
     
     
-    @objc func reloadTV() {
-        callApi()
-    }
-    
-    
-    
-    //MARK: - RELOAD TABLE VIEW
-    @objc func reload(notification: Notification) {
-        commonTableView.reloadData()
-    }
-    
+  
     
     //MARK: CALL TOP FLIGHT HOTEL DETAILS API FUNCTION
     func callTopFlightsHotelsDetailsAPI() {
@@ -585,6 +561,8 @@ extension DashBoardVC: UIGestureRecognizerDelegate {
 
 
 extension DashBoardVC {
+    
+    
     func addObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("nointernet"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadTV), name: Notification.Name("reloadTV"), object: nil)
@@ -592,12 +570,7 @@ extension DashBoardVC {
         
         NotificationCenter.default.addObserver(self, selector: #selector(topcity(notification:)), name: Notification.Name("topcity"), object: nil)
         
-        //      NotificationCenter.default.addObserver(self, selector: #selector(tophotel(notification:)), name: Notification.Name("tophotel"), object: nil)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(somthingwentwrong(notification:)), name: Notification.Name("somthingwentwrong"), object: nil)
-        
-        
-        
+      
         if !UserDefaults.standard.bool(forKey: "ExecuteOnce") {
             
             defaults.set("+965", forKey: UserDefaultsKeys.mobilecountrycode)
@@ -675,13 +648,25 @@ extension DashBoardVC {
     
     
     
-    
-    @objc func somthingwentwrong(notification: Notification) {
-        // loadView1.isHidden = true
-        self.tabBarController?.tabBar.isHidden = false
-        loderBool = false
-        
+    //MARK: - RELOAD TABLE VIEW
+    @objc func reload(notification: Notification) {
+        commonTableView.reloadData()
     }
+    
+    
+    //MARK: - nointernet
+    @objc func nointernet() {
+        guard let vc = NoInternetConnectionVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .overCurrentContext
+        self.present(vc, animated: true)
+    }
+    
+    
+    @objc func reloadTV() {
+        //callApi()
+        commonTableView.reloadData()
+    }
+    
     
     
     //MARK: - tophotel Search
@@ -820,3 +805,7 @@ extension DashBoardVC {
         
     }
 }
+
+
+
+

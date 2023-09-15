@@ -62,8 +62,16 @@ class PaymentGatewayVC: UIViewController, updatePaymentFlightViewModelDelegate {
         super.viewDidLoad()
         payButton.isEnabled = false
         
-        kwdpricelbl.text = grandTotalamount
+       // kwdpricelbl.text = grandTotalamount
         invoiceValue = Double(grand_total_Price ?? "0.0") ?? 0.0
+        
+        setAttributedTextnew(str1: "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? "")",
+                             str2: "\(grand_total_Price ?? "")",
+                             lbl: kwdpricelbl,
+                             str1font: .LatoBold(size: 12),
+                             str2font: .LatoBold(size: 18),
+                             str1Color: .WhiteColor,
+                             str2Color: .WhiteColor)
         
         
         setCardInfo()

@@ -21,6 +21,9 @@ class NewRoomDetailsTVCell: UITableViewCell {
     @IBOutlet weak var bablbl: UILabel!
     @IBOutlet weak var selectRoomBtnView: BorderedView!
     
+    
+    var currency = ""
+    var exactprice = ""
     var isSelectedCell: Bool = false {
         didSet {
             updateButtonColor()

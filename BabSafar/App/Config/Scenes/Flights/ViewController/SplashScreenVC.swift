@@ -29,6 +29,26 @@ func setAttributedText(str1:String,str2:String,lbl:UILabel)  {
 }
 
 
+func setAttributedTextnew(str1:String,str2:String,lbl:UILabel,str1font:UIFont,str2font:UIFont,str1Color:UIColor,str2Color:UIColor)  {
+    
+    let atter1 = [NSAttributedString.Key.foregroundColor:str1Color,
+                  NSAttributedString.Key.font:str1font] as [NSAttributedString.Key : Any]
+    let atter2 = [NSAttributedString.Key.foregroundColor:str2Color,
+                  NSAttributedString.Key.font:str2font] as [NSAttributedString.Key : Any]
+    
+    let atterStr1 = NSMutableAttributedString(string: str1, attributes: atter1)
+    let atterStr2 = NSMutableAttributedString(string: str2, attributes: atter2)
+    
+    
+    let combination = NSMutableAttributedString()
+    combination.append(atterStr1)
+    combination.append(atterStr2)
+    
+    lbl.attributedText = combination
+    
+}
+
+
 //MARK: - INITIAL SETUP LABELS
 func setuplabels(lbl:UILabel,text:String,textcolor:UIColor,font:UIFont,align:NSTextAlignment) {
     lbl.text = text

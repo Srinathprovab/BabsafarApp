@@ -122,7 +122,17 @@ extension NewRoomTVCell: UITableViewDataSource ,UITableViewDelegate {
             
             let data = room[indexPath.row]
             self.titlelbl.text = data.name ?? ""
-            cell.pricelbl.text = "\(data.currency ?? ""):\(data.net ?? "")"
+            
+            setAttributedTextnew(str1: "\(data.currency ?? "")",
+                                 str2: "\(data.net ?? "")",
+                                 lbl: cell.pricelbl,
+                                 str1font: .LatoBold(size: 12),
+                                 str2font: .LatoBold(size: 18),
+                                 str1Color: .IttenarySelectedColor,
+                                 str2Color: .IttenarySelectedColor)
+            
+            cell.exactprice = data.net ?? ""
+            cell.currency = data.currency ?? ""
             cell.indexpathvalue = newRoomindexPath
             
             if data.refund == true {
