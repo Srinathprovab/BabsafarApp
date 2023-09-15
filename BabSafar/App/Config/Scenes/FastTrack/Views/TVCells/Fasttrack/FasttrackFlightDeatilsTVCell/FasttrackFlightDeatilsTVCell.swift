@@ -85,11 +85,18 @@ extension FasttrackFlightDeatilsTVCell : UITableViewDelegate,UITableViewDataSour
             cell.fromAirportNamelbl.text = data.airportname
             cell.terminallbl.text = data.title
             cell.priceView.isHidden = false
-            cell.pricelbl.text = data.price
             cell.cancelView.isHidden = true
             cell.closeView.isHidden = false
             cell.tapedservicetype = data.serviceType
             
+            
+            setAttributedTextnew(str1: "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? "")",
+                                 str2: data.price,
+                                 lbl: cell.pricelbl,
+                                 str1font: .LatoBold(size: 12),
+                                 str2font: .LatoBold(size: 18),
+                                 str1Color: .IttenarySelectedColor,
+                                 str2Color: .IttenarySelectedColor)
            
             
             ccell = cell

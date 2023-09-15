@@ -43,7 +43,16 @@ class ExploreResultTVCell: TableViewCell {
             pricelbl.isHidden = false
             pricelbl.text = cellInfo?.subTitle
             titlelbl.text = cellInfo?.title
-            setAttributedText(str1: cellInfo?.text ?? "", str2: cellInfo?.headerText ?? "")
+            
+            setAttributedTextnew(str1: cellInfo?.text ?? "",
+                                 str2: cellInfo?.headerText ?? "",
+                                 lbl: pricelbl,
+                                 str1font: .LatoBold(size: 12),
+                                 str2font: .LatoBold(size: 18),
+                                 str1Color: .IttenarySelectedColor,
+                                 str2Color: .IttenarySelectedColor)
+        
+            
         }else{
             booknowView.isHidden = false
             pricelbl.isHidden = true
@@ -61,25 +70,3 @@ class ExploreResultTVCell: TableViewCell {
 
 
 
-extension ExploreResultTVCell {
-    
-    func setAttributedText(str1:String,str2:String)  {
-        
-        let atter1 = [NSAttributedString.Key.foregroundColor:UIColor.AppTabSelectColor,
-                      NSAttributedString.Key.font:UIFont.LatoBold(size: 12)] as [NSAttributedString.Key : Any]
-        let atter2 = [NSAttributedString.Key.foregroundColor:UIColor.AppTabSelectColor,
-                      NSAttributedString.Key.font:UIFont.LatoBold(size: 16)] as [NSAttributedString.Key : Any]
-        
-        let atterStr1 = NSMutableAttributedString(string: str1, attributes: atter1)
-        let atterStr2 = NSMutableAttributedString(string: str2, attributes: atter2)
-        
-        
-        let combination = NSMutableAttributedString()
-        combination.append(atterStr1)
-        combination.append(atterStr2)
-        
-        pricelbl.attributedText = combination
-        
-    }
-    
-}

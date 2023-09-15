@@ -558,10 +558,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lnt-5B-Wg2">
-                                                <rect key="frame" x="186" y="0.0" width="167" height="45"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="167" id="ihX-pV-dWr"/>
-                                                </constraints>
+                                                <rect key="frame" x="0.0" y="0.0" width="353" height="45"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain"/>
                                                 <connections>
@@ -571,14 +568,15 @@
                                         </subviews>
                                         <color key="backgroundColor" name="AppBtnColor"/>
                                         <constraints>
+                                            <constraint firstItem="Lnt-5B-Wg2" firstAttribute="leading" secondItem="dTf-Y8-2mq" secondAttribute="leading" id="5RE-5h-971"/>
+                                            <constraint firstItem="Lnt-5B-Wg2" firstAttribute="top" secondItem="dTf-Y8-2mq" secondAttribute="top" id="BKI-up-Orl"/>
                                             <constraint firstItem="55G-PW-rN7" firstAttribute="leading" secondItem="dTf-Y8-2mq" secondAttribute="leading" constant="20" id="DPs-Lv-Eyq"/>
-                                            <constraint firstAttribute="bottom" secondItem="Lnt-5B-Wg2" secondAttribute="bottom" id="GNh-iu-rGj"/>
+                                            <constraint firstAttribute="trailing" secondItem="Lnt-5B-Wg2" secondAttribute="trailing" id="FKk-Hc-Ore"/>
+                                            <constraint firstAttribute="bottom" secondItem="Lnt-5B-Wg2" secondAttribute="bottom" id="G4b-4k-u2M"/>
                                             <constraint firstItem="IWZ-BM-igQ" firstAttribute="centerY" secondItem="55G-PW-rN7" secondAttribute="centerY" id="Sdq-aM-z5y"/>
                                             <constraint firstAttribute="trailing" secondItem="IWZ-BM-igQ" secondAttribute="trailing" constant="20" id="V4W-P2-gdO"/>
                                             <constraint firstAttribute="height" constant="45" id="lFj-SI-lfN"/>
-                                            <constraint firstItem="Lnt-5B-Wg2" firstAttribute="top" secondItem="dTf-Y8-2mq" secondAttribute="top" id="lTq-yE-UuZ"/>
                                             <constraint firstItem="55G-PW-rN7" firstAttribute="centerY" secondItem="dTf-Y8-2mq" secondAttribute="centerY" id="nQv-Du-Bt4"/>
-                                            <constraint firstAttribute="trailing" secondItem="Lnt-5B-Wg2" secondAttribute="trailing" id="shb-JR-mZv"/>
                                         </constraints>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -962,7 +960,7 @@
     <resources>
         <image name="baner" width="360" height="300"/>
         <image name="close2" width="24" height="24"/>
-        <image name="dep" width="24" height="24"/>
+        <image name="dep" width="20" height="20"/>
         <image name="edit1" width="18.333333969116211" height="18"/>
         <image name="filter1" width="20" height="20"/>
         <image name="leftarrow" width="8.3333330154418945" height="14.666666984558105"/>

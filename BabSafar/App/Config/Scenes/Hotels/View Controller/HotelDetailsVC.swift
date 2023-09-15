@@ -216,7 +216,7 @@ class HotelDetailsVC: BaseTableVC, HotelDetailsViewModelDelegate {
         grandTotal = cell.pricelbl.text ?? ""
         setuplabels(lbl: bookNowlbl, text: cell.pricelbl.text ?? "" , textcolor: .WhiteColor, font: .LatoMedium(size: 18), align: .left)
         selectedrRateKeyArray.append(cell.ratekey)
-        setAttributedTextnew(str1: "\(cell.currency ):",
+        setAttributedTextnew(str1: "\(cell.currency )",
                              str2: "\(cell.exactprice )",
                              lbl: bookNowlbl,
                              str1font: .LatoBold(size: 12),

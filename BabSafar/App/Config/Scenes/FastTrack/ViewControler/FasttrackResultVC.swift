@@ -119,7 +119,7 @@ class FasttrackResultVC: BaseTableVC, FasttrackViewModelDelegate {
             
            
             let quickService = QuickService(serviceType: "dep",
-                                            price: cell.pricelbl.text ?? "",
+                                            price: cell.exactprice,
                                             title: terminal,
                                             logoimg: "dep",
                                             airportname:  airportNamelbl.text ?? "")
@@ -129,7 +129,7 @@ class FasttrackResultVC: BaseTableVC, FasttrackViewModelDelegate {
         } else {
             
                 let quickService = QuickService(serviceType: "arrival",
-                                                price: cell.pricelbl.text ?? "",
+                                                price: cell.exactprice,
                                                 title: terminal,
                                                 logoimg: "arrival",
                                                 airportname: airportNamelbl.text ?? "")
@@ -229,13 +229,14 @@ extension FasttrackResultVC {
         if key == "dep" {
             fromList.forEach { i in
                 tablerow.append(TableRow(title:i.sku,
-                                         subTitle: "\(currency):",
+                                         subTitle: "\(currency)",
                                          price: "\(i.price ?? 0)",
                                          cellType:.QuickBookingResultTVCell))
             }
         }else {
             toList.forEach { i in
                 tablerow.append(TableRow(title:i.sku,
+                                         subTitle: "\(currency)",
                                          price: "\(i.price ?? 0)",
                                          cellType:.QuickBookingResultTVCell))
             }

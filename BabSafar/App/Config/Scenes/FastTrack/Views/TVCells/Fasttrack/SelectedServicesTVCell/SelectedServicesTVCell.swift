@@ -45,8 +45,15 @@ class SelectedServicesTVCell: TableViewCell {
         logoImg.image = UIImage(named: cellInfo?.image ?? "")?.withRenderingMode(.alwaysOriginal)
         fromAirportNamelbl.text = cellInfo?.title ?? ""
         terminallbl.text = cellInfo?.subTitle ?? ""
-        setAttributedText(str1: cellInfo?.price ?? "", str2: cellInfo?.text ?? "", lbl: pricelbl)
         
+        
+        setAttributedTextnew(str1: cellInfo?.text ?? "",
+                             str2: cellInfo?.price ?? "",
+                             lbl: pricelbl,
+                             str1font: .LatoBold(size: 12),
+                             str2font: .LatoBold(size: 18),
+                             str1Color: .IttenarySelectedColor,
+                             str2Color: .IttenarySelectedColor)
     }
     
     

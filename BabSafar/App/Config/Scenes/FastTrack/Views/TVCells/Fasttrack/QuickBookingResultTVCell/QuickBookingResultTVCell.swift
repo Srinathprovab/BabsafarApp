@@ -17,7 +17,7 @@ class QuickBookingResultTVCell: TableViewCell {
     @IBOutlet weak var pricelbl: UILabel!
     
     
-   
+   var exactprice = ""
     var delegate:QuickBookingResultTVCellDelegate?
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -32,7 +32,14 @@ class QuickBookingResultTVCell: TableViewCell {
     
     override func updateUI() {
         titlelbl.text = cellInfo?.title ?? ""
-        setAttributedText(str1: cellInfo?.subTitle ?? "" , str2: cellInfo?.price ?? "", lbl: pricelbl)
+        exactprice = cellInfo?.price ?? ""
+        setAttributedTextnew(str1: cellInfo?.subTitle ?? "",
+                             str2: cellInfo?.price ?? "",
+                             lbl: pricelbl,
+                             str1font: .LatoBold(size: 12),
+                             str2font: .LatoBold(size: 18),
+                             str1Color: .IttenarySelectedColor,
+                             str2Color: .IttenarySelectedColor)
     }
     
     @IBAction func didTapOnSelectBtnAction(_ sender: Any) {

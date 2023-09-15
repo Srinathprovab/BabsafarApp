@@ -929,7 +929,7 @@ extension BookingDetailsVC {
         
         grand_total_Price = i?.grand_total ?? ""
         
-        setAttributedTextnew(str1: "\(i?.api_currency ?? ""):",
+        setAttributedTextnew(str1: "\(i?.api_currency ?? "")",
                              str2: "\(i?.grand_total ?? "")",
                              lbl: bookNowlbl,
                              str1font: .LatoBold(size: 12),
