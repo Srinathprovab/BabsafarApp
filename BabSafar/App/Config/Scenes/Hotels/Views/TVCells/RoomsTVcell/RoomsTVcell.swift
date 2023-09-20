@@ -67,12 +67,16 @@ class RoomsTVcell: TableViewCell, NewRoomTVCellDelegate {
     
     
     override func updateUI() {
+        NotificationCenter.default.addObserver(self, selector: #selector(gotoroom), name: Notification.Name("gotoroom"), object: nil)
         
         latString = cellInfo?.title ?? ""
         longString = cellInfo?.subTitle ?? ""
         locname = cellInfo?.buttonTitle ?? ""
-        
         roomDetailsTV.reloadData()
+    }
+    
+    @objc func gotoroom(){
+        roomtaped()
     }
     
     
@@ -139,6 +143,10 @@ class RoomsTVcell: TableViewCell, NewRoomTVCellDelegate {
     
     
     @IBAction func didTapOnRoomsBtn(_ sender: Any) {
+        roomtaped()
+    }
+    
+    func roomtaped() {
         googleMapView.isHidden = true
         roomDetailsTV.isHidden = false
         roomslbl.textColor = .AppTabSelectColor
@@ -151,6 +159,8 @@ class RoomsTVcell: TableViewCell, NewRoomTVCellDelegate {
         hotelsDetailsUL.backgroundColor = .WhiteColor
         amenitieslbl.textColor = .AppLabelColor.withAlphaComponent(0.5)
         amenitiesUL.backgroundColor = .WhiteColor
+        
+        NotificationCenter.default.post(name: NSNotification.Name("roomtapbool"), object: true)
         
         delegate?.didTapOnRoomsBtn(cell:self)
     }
@@ -168,6 +178,7 @@ class RoomsTVcell: TableViewCell, NewRoomTVCellDelegate {
         maplbl.textColor = .AppLabelColor.withAlphaComponent(0.5)
         mapUL.backgroundColor = .WhiteColor
         
+        NotificationCenter.default.post(name: NSNotification.Name("roomtapbool"), object: false)
        
         delegate?.didTapOnHotelsDetailsBtn(cell:self)
     }
@@ -184,7 +195,8 @@ class RoomsTVcell: TableViewCell, NewRoomTVCellDelegate {
         hotelsDetailsUL.backgroundColor = .WhiteColor
         maplbl.textColor = .AppLabelColor.withAlphaComponent(0.5)
         mapUL.backgroundColor = .WhiteColor
-        
+        NotificationCenter.default.post(name: NSNotification.Name("roomtapbool"), object: false)
+
         delegate?.didTapOnAmenitiesBtn(cell:self)
     }
     
@@ -199,7 +211,9 @@ class RoomsTVcell: TableViewCell, NewRoomTVCellDelegate {
         hotelsDetailsUL.backgroundColor = .WhiteColor
         maplbl.textColor = .AppTabSelectColor
         mapUL.backgroundColor = .AppTabSelectColor
-        
+        hotelDetailsTapBool = false
+        NotificationCenter.default.post(name: NSNotification.Name("roomtapbool"), object: false)
+
       //  delegate?.didTapOnAmenitiesBtn(cell:self)
     }
     
@@ -309,18 +323,20 @@ extension RoomsTVcell:CLLocationManagerDelegate {
         locationManager.startUpdatingLocation()
     }
     
+
     @objc func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.last {
-            // Optionally, you can center the map on the user's location
-            let camera = GMSCameraPosition.camera(withLatitude: 29.36, longitude: 48.00, zoom: 10.7)
+            // Center the map on Dubai's coordinates
+            let camera = GMSCameraPosition.camera(withLatitude: Double(latString) ?? 0.0, longitude: Double(longString) ?? 0.0, zoom: 10.9)
 
             let gmsView = GMSMapView.map(withFrame: googleMapView.bounds, camera: camera)
             googleMapView.addSubview(gmsView)
             addMarkersToMap(gmsView)
-            
+
             locationManager.stopUpdatingLocation() // You may want to stop updates after you have the user's location
         }
     }
+
     
     func addMarkersToMap(_ mapView: GMSMapView) {
        
@@ -330,7 +346,7 @@ extension RoomsTVcell:CLLocationManagerDelegate {
                 marker.title = locname
 
                 // Create a custom marker icon with an image
-                if let markerImage = UIImage(named: "loc1")?.withRenderingMode(.alwaysOriginal).withTintColor(.AppBtnColor) {
+                if let markerImage = UIImage(named: "customhotel")?.withRenderingMode(.alwaysOriginal).withTintColor(.AppBtnColor) {
                     let markerView = UIImageView(image: markerImage)
                     marker.iconView = markerView
                 } else {

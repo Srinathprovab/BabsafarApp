@@ -55,6 +55,7 @@ class SearchHotelTVCell: TableViewCell, HotelCitySearchViewModelDelegate {
     @IBOutlet weak var nationalityTf: UITextField!
     
     
+    
     var isSearchBool = Bool()
     var searchText = String()
     var filterdcountrylist = [All_country_code_list]()
@@ -119,7 +120,7 @@ class SearchHotelTVCell: TableViewCell, HotelCitySearchViewModelDelegate {
         checkinView.addCornerRadiusWithShadow(color: .clear, borderColor: .AppBorderColor, cornerRadius: 4)
         addRoomsBtnView.backgroundColor = HexColor("#FCFCFC")
         addRoomsBtnView.addCornerRadiusWithShadow(color: .clear, borderColor: .AppBorderColor, cornerRadius: 4)
-        searchHotelsBtnView.backgroundColor = HexColor("#EC441E")
+        searchHotelsBtnView.backgroundColor = .AppBtnColor
         searchHotelsBtnView.addCornerRadiusWithShadow(color: .clear, borderColor: .clear, cornerRadius: 4)
         setuplabels(lbl: locationCityTitlelbl, text: "Location/City", textcolor: .AppLabelColor, font: .LatoLight(size: 12), align: .left)
         setuplabels(lbl: locationCitylbl, text: defaults.string(forKey: UserDefaultsKeys.locationcity) ?? "Add City", textcolor: .AppLabelColor, font: .LatoSemibold(size: 18), align: .left)
@@ -348,6 +349,14 @@ class SearchHotelTVCell: TableViewCell, HotelCitySearchViewModelDelegate {
     }
     
     
+    
+    @IBAction func didTapOnClearTFBtnAction(_ sender: Any) {
+        cityTF.text = ""
+        locationCitylbl.text = ""
+        cityTF.becomeFirstResponder()
+    }
+    
+    
 }
 
 extension SearchHotelTVCell:UITableViewDelegate,UITableViewDataSource {
@@ -370,7 +379,7 @@ extension SearchHotelTVCell:UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath) as? FromCityTVCell {
             
-            //cityTF.resignFirstResponder()
+           // cityTF.resignFirstResponder()
             cityTF.text = ""
             locationCitylbl.text = hotelList[indexPath.row].value ?? ""
             locationCitylbl.textColor = .AppLabelColor

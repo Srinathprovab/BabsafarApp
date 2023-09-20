@@ -16,9 +16,9 @@ struct MCJ_flight_list : Codable {
     let access_key : String?
     let adults_Base_Price : Int?
     let basePrice_Breakdown : String?
-  //  let adults_Tax_Price : Int?
+    //  let adults_Tax_Price : Int?
     //  let baggageAllowance : [[String]]?
-    let refundable : String?
+    //  let refundable : String?
     let fareType : String?
     let basePrice : String?
     let trip_type : String?
@@ -37,7 +37,6 @@ struct MCJ_flight_list : Codable {
     let taxes : String?
     let myMarkup : Int?
     let taxPrice_Breakdown : String?
-    
     let selectedResult : String?
     let totalPrice_API : String?
     let farerulesref_Provider : [[String]]?
@@ -53,9 +52,9 @@ struct MCJ_flight_list : Codable {
         case access_key = "access_key"
         case adults_Base_Price = "Adults_Base_Price"
         case basePrice_Breakdown = "BasePrice_Breakdown"
-     //   case adults_Tax_Price = "Adults_Tax_Price"
+        //   case adults_Tax_Price = "Adults_Tax_Price"
         //      case baggageAllowance = "BaggageAllowance"
-        case refundable = "Refundable"
+        //   case refundable = "Refundable"
         case fareType = "FareType"
         case basePrice = "BasePrice"
         case trip_type = "trip_type"
@@ -74,7 +73,6 @@ struct MCJ_flight_list : Codable {
         case taxes = "Taxes"
         case myMarkup = "MyMarkup"
         case taxPrice_Breakdown = "TaxPrice_Breakdown"
-       
         case selectedResult = "selectedResult"
         case totalPrice_API = "TotalPrice_API"
         case farerulesref_Provider = "Farerulesref_Provider"
@@ -91,9 +89,9 @@ struct MCJ_flight_list : Codable {
         access_key = try values.decodeIfPresent(String.self, forKey: .access_key)
         adults_Base_Price = try values.decodeIfPresent(Int.self, forKey: .adults_Base_Price)
         basePrice_Breakdown = try values.decodeIfPresent(String.self, forKey: .basePrice_Breakdown)
-     //   adults_Tax_Price = try values.decodeIfPresent(Int.self, forKey: .adults_Tax_Price)
+        //   adults_Tax_Price = try values.decodeIfPresent(Int.self, forKey: .adults_Tax_Price)
         //       baggageAllowance = try values.decodeIfPresent([[String]].self, forKey: .baggageAllowance)
-        refundable = try values.decodeIfPresent(String.self, forKey: .refundable)
+        //    refundable = try values.decodeIfPresent(String.self, forKey: .refundable)
         fareType = try values.decodeIfPresent(String.self, forKey: .fareType)
         basePrice = try values.decodeIfPresent(String.self, forKey: .basePrice)
         trip_type = try values.decodeIfPresent(String.self, forKey: .trip_type)

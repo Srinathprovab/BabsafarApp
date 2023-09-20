@@ -19,6 +19,35 @@ class InsurancePreprocessBookingViewModel {
     init(_ view: InsurancePreprocessBookingViewModelDelegate) {
         self.view = view
     }
+    
+    
+    
+    
+    
+//    func CALL_TOTALPREMIMUM_API(dictParam: [String: Any]){
+//        let parms = NSDictionary(dictionary:dictParam)
+//        print("Parameters = \(parms)")
+//
+//        self.view?.showLoader()
+//
+//        ServiceManager.postOrPutApiCall(endPoint: ApiEndpoints.insurance_pre_process_booking, parameters: parms, resultType: TotalPremiumModel.self, p:dictParam) { sucess, result, errorMessage in
+//
+//            DispatchQueue.main.async {
+//                self.view?.hideLoader()
+//                if sucess {
+//                    guard let response = result else {return}
+//                    self.view.insurencePaymentshow(response: response)
+//                } else {
+//                   
+//                    self.view.showToast(message: errorMessage ?? "")
+//                }
+//            }
+//        }
+//    }
+    
+    
+    
+    
 
 
     func CALL_MOBILE_PRE_PROCESS_BOOKING_API(dictParam: [String: Any]){

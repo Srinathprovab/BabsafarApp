@@ -37,7 +37,7 @@ class Calvc: UIViewController {
     var celltag = Int()
     var depDay = String()
     var retDay = String()
-    
+    var isvcfrom = ""
     
     override func viewWillDisappear(_ animated: Bool) {
         callapibool = false
@@ -46,7 +46,6 @@ class Calvc: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         
         self.celltag = Int(defaults.string(forKey: UserDefaultsKeys.cellTag) ?? "0") ?? 0
-        
         NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("nointernet"), object: nil)
         
     }
@@ -286,8 +285,14 @@ class Calvc: UIViewController {
                         }else{
                             defaults.set(calstartDate, forKey: UserDefaultsKeys.mcaldate)
                             depatureDatesArray[self.celltag] = calstartDate
-                            gotoSearchFlightsVC()
+                          
+                            if isvcfrom == "modify" {
+                                gotoModifySearchFlightsVC()
+                            }else {
+                                gotoSearchFlightsVC()
+                            }
                         }
+                        
                     }
                 }
                 
@@ -345,7 +350,8 @@ class Calvc: UIViewController {
                     defaults.set(calstartDate, forKey: UserDefaultsKeys.checkin)
                     defaults.set(calendDate, forKey: UserDefaultsKeys.checkout)
                     
-                    gotoSearchHotelsVC()
+                    NotificationCenter.default.post(name: Notification.Name("reloadTV"), object: nil)
+                    dismiss(animated: false)
                 }
                 
             }
@@ -359,6 +365,13 @@ class Calvc: UIViewController {
         vc.modalPresentationStyle = .overCurrentContext
         keyStr = "select"
         vc.isfromVc = "cal"
+        self.present(vc, animated: false)
+    }
+    
+    func gotoModifySearchFlightsVC() {
+        guard let vc = ModifySearchFlightVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .overCurrentContext
+        keyStr = "select"
         self.present(vc, animated: false)
     }
     

@@ -7,7 +7,8 @@
 
 import UIKit
 
-class TotalPremiumPayableVC: BaseTableVC, InsurancePreprocessBookingViewModelDelegate {
+class TotalPremiumPayableVC: BaseTableVC, TotalPremiumViewModelDelegate {
+   
     
     
     @IBOutlet weak var holderView: UIView!
@@ -15,7 +16,7 @@ class TotalPremiumPayableVC: BaseTableVC, InsurancePreprocessBookingViewModelDel
     var price = String()
     var payload = [String:Any]()
     var tablerow = [TableRow]()
-    var vm:InsurancePreprocessBookingViewModel?
+    var vm:TotalPremiumViewModel?
     static var newInstance: TotalPremiumPayableVC? {
         let storyboard = UIStoryboard(name: Storyboard.Insurance.name,
                                       bundle: nil)
@@ -39,7 +40,7 @@ class TotalPremiumPayableVC: BaseTableVC, InsurancePreprocessBookingViewModelDel
         
         // Do any additional setup after loading the view.
         setupUI()
-        vm = InsurancePreprocessBookingViewModel(self)
+        vm = TotalPremiumViewModel(self)
     }
     
     
@@ -60,7 +61,9 @@ class TotalPremiumPayableVC: BaseTableVC, InsurancePreprocessBookingViewModelDel
     func setupTV() {
         tablerow.removeAll()
         
-        tablerow.append(TableRow(title:iplanexactprice,subTitle: iplancurrency,cellType:.TotalPremiumPayableTVCell))
+        tablerow.append(TableRow(title:iplanexactprice,
+                                 subTitle: iplancurrency,
+                                 cellType:.TotalPremiumPayableTVCell))
         tablerow.append(TableRow(height:100,cellType:.EmptyTVCell))
         
         commonTVData = tablerow
@@ -100,16 +103,19 @@ extension TotalPremiumPayableVC {
         payload["booking_source"] = ibookingsource
         payload["plan_details"] = iplandetails
         
-        vm?.CALL_MOBILE_PRE_PROCESS_BOOKING_API(dictParam: payload)
+        vm?.CALL_TOTALPREMIMUM_API(dictParam: payload)
     }
     
-    func insurencePaymentshow(response: InsurancePreprocessBookingModel) {
+    
+    func totalPremimumDetails(response: TotalPremiumModel) {
+        
         holderView.isHidden = false
-      //  price = "\(response.currencyCode ?? ""):\(response.selected_package?.price?.total_fare_api ?? "0.0")"
+        
         DispatchQueue.main.async {
             self.setupTV()
         }
     }
+    
     
 }
 

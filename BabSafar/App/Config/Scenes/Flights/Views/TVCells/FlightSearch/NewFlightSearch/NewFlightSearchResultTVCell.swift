@@ -32,7 +32,8 @@ class NewFlightSearchResultTVCell: TableViewCell {
     var displayPrice = String()
     var delegate:NewFlightSearchResultTVCellDelegate?
     var selectedResult = String()
-    var similarList = [[J_flight_list]]()
+    var newsimilarList = [[J_flight_list]]()
+    var newsimilarListMulticity = [[MCJ_flight_list]]()
     var flightSummery = [Summary]()
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -52,12 +53,6 @@ class NewFlightSearchResultTVCell: TableViewCell {
     
     override func updateUI() {
         setAttributedString1(str1: "\(cellInfo?.buttonTitle ?? ""):", str2: String(format: "%.2f", Double(cellInfo?.title ?? "") ?? 0.0))
-        faretypelbl.text = cellInfo?.subTitle
-        flightSummery = cellInfo?.moreData as? [Summary] ?? []
-        selectedResult = cellInfo?.text ?? ""
-        displayPrice = cellInfo?.price ?? ""
-        
-        
         setAttributedTextnew(str1: cellInfo?.buttonTitle ?? "",
                              str2: String(format: "%.2f", Double(cellInfo?.price ?? "") ?? 0.0),
                              lbl: pricelbl,
@@ -66,8 +61,13 @@ class NewFlightSearchResultTVCell: TableViewCell {
                              str1Color: .IttenarySelectedColor,
                              str2Color: .IttenarySelectedColor)
         
+        faretypelbl.text = cellInfo?.subTitle
+        flightSummery = cellInfo?.moreData as? [Summary] ?? []
+        selectedResult = cellInfo?.text ?? ""
+        displayPrice = cellInfo?.price ?? ""
         
-       
+        
+        
         if let selectedJourneyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
             if selectedJourneyType != "oneway" {
                 addReturnView.isHidden = true
@@ -82,16 +82,37 @@ class NewFlightSearchResultTVCell: TableViewCell {
         
         
         
+        
         if let similarList1 = cellInfo?.data as? [[J_flight_list]] {
+            newsimilarList = similarList1
+            let similarListCount = similarList1.count
             
-            if (similarList1.count - 1) != 0  {
-                setuplabels(lbl: moreSimlarOptionlbl, text: "More similar options(\(similarList1.count))", textcolor: .WhiteColor, font: .LatoRegular(size: 10), align: .right)
+            // Debugging: Print the count of similarList1
+            print("Similar List Count: \(similarListCount)")
+            
+            if similarListCount > 1 {
+                setuplabels(lbl: moreSimlarOptionlbl, text: "More similar options(\(similarListCount))", textcolor: .WhiteColor, font: .LatoRegular(size: 14), align: .right)
                 showSimilarlbl()
-            }else {
+            } else {
                 hideSimilarlbl()
             }
+        } else if let similarList1 = cellInfo?.data as? [[MCJ_flight_list]] {
+            newsimilarListMulticity = similarList1
+            let similarListCount = similarList1.count
             
+            // Debugging: Print the count of similarList1
+            print("Similar List Count: \(similarListCount)")
+            
+            if similarListCount > 1 {
+                setuplabels(lbl: moreSimlarOptionlbl, text: "More similar options(\(similarListCount))", textcolor: .WhiteColor, font: .LatoRegular(size: 14), align: .right)
+                showSimilarlbl()
+            } else {
+                hideSimilarlbl()
+            }
+        } else {
+            hideSimilarlbl() // Handle the case when cellInfo?.data is not a valid [[J_flight_list]]
         }
+        
         
         updateHeight()
     }

@@ -94,6 +94,7 @@ extension InsurenceResultVC:InsurenceViewModelDelegate, UITableViewDelegate,UITa
     
     func insurenceList(response: InsurenceModel) {
         
+        loderBool = false
         if response.status == 1 {
             holderView.isHidden = false
             citylbl.text = "\(response.data?.col_x?.search_params?.from_loc_country ?? "")(\(response.data?.col_x?.search_params?.from_loc ?? "")) - \(response.data?.col_x?.search_params?.to_loc_country ?? "")(\(response.data?.col_x?.search_params?.to_loc ?? ""))"
@@ -177,16 +178,6 @@ extension InsurenceResultVC:InsurenceViewModelDelegate, UITableViewDelegate,UITa
                                      str2font: .LatoBold(size: 18),
                                      str1Color: .IttenarySelectedColor,
                                      str2Color: .IttenarySelectedColor)
-                
-                
-                // Check if the current indexPath is the one that should be expanded
-//                if indexPath == expandedIndexPath {
-//                    cell.isExpanded = true
-//                    cell.show()
-//                } else {
-//                    cell.isExpanded = false
-//                    cell.hide()
-//                }
                 
                 
             } else {

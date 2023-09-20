@@ -386,7 +386,7 @@ extension SearchHotelsResultVC {
             print(theJSONText ?? "")
             payload1["search_params"] = theJSONText
             payload1["offset"] = "0"
-            payload1["limit"] = "1000"
+            payload1["limit"] = "10"
             
             viewModel?.CallHotelSearchAPI(dictParam: payload1)
             
@@ -499,7 +499,6 @@ extension SearchHotelsResultVC {
                 cell.hotelid = String(dict.hotel_code ?? 0)
                 cell.lat = dict.latitude ?? ""
                 cell.long = dict.longitude ?? ""
-                //    cell.hotelDesc = dict.hotel_desc
                 cell.perNightlbl.text = "Total Price For 2 Night"
                 cell.setAttributedString1(str1:dict.currency ?? "", str2: dict.price ?? "")
 
@@ -513,6 +512,10 @@ extension SearchHotelsResultVC {
                 
                 
                 cell.faretypelbl.text = dict.refund ?? ""
+                if dict.refund != "Refundable" {
+                    cell.changeFareTypeColor()
+                }
+                
                 ccell = cell
             }
         }

@@ -28,7 +28,7 @@ class HotelsTVCell: TableViewCell {
     @IBOutlet weak var refundableBtn: UIButton!
     @IBOutlet weak var faretypelbl: UILabel!
     @IBOutlet weak var markupPricelbl: UILabel!
-    
+    @IBOutlet weak var refundView: BorderedView!
     
     var bookingsource = String()
     var hotelid = String()
@@ -85,6 +85,10 @@ class HotelsTVCell: TableViewCell {
         v.layer.borderColor = UIColor.lightGray.withAlphaComponent(0.4).cgColor
     }
     
+    
+    func changeFareTypeColor(){
+        faretypelbl.textColor = .AppBtnColor
+    }
     
     
     

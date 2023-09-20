@@ -621,7 +621,7 @@ extension DashBoardVC {
             //Insurence default Values
             defaults.set("1", forKey: UserDefaultsKeys.iadultCount)
             defaults.set("0", forKey: UserDefaultsKeys.ichildCount)
-            defaults.set("0", forKey: UserDefaultsKeys.infantsCount)
+            defaults.set("0", forKey: UserDefaultsKeys.iinfantsCount)
             let totaltraverlers6 = "\(defaults.string(forKey: UserDefaultsKeys.iadultCount) ?? "1") Adult | \(defaults.string(forKey: UserDefaultsKeys.ichildCount) ?? "") Child | \(defaults.string(forKey: UserDefaultsKeys.infantsCount) ?? "") Infants "
             defaults.set(totaltraverlers6, forKey: UserDefaultsKeys.itravellerDetails)
             

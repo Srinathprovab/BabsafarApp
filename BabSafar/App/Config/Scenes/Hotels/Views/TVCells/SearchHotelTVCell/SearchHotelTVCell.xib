@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -65,6 +66,36 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Utz-Xc-MDT">
+                                        <rect key="frame" x="419" y="0.0" width="20" height="20"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="close9" translatesAutoresizingMaskIntoConstraints="NO" id="elB-bB-tBP">
+                                                <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
+                                                <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            </imageView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kow-dL-f45">
+                                                <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain"/>
+                                                <connections>
+                                                    <action selector="didTapOnClearTFBtnAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="lBv-0g-MmF"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" name="AppTabSelectColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="20" id="5Sn-Tc-pva"/>
+                                            <constraint firstAttribute="width" constant="20" id="EJI-bl-6ig"/>
+                                            <constraint firstItem="kow-dL-f45" firstAttribute="leading" secondItem="Utz-Xc-MDT" secondAttribute="leading" id="JEw-BJ-erx"/>
+                                            <constraint firstAttribute="bottom" secondItem="elB-bB-tBP" secondAttribute="bottom" id="KiM-Bv-QIf"/>
+                                            <constraint firstAttribute="trailing" secondItem="elB-bB-tBP" secondAttribute="trailing" id="Wau-RO-GrU"/>
+                                            <constraint firstItem="elB-bB-tBP" firstAttribute="leading" secondItem="Utz-Xc-MDT" secondAttribute="leading" id="bHe-Ng-Zzc"/>
+                                            <constraint firstItem="elB-bB-tBP" firstAttribute="top" secondItem="Utz-Xc-MDT" secondAttribute="top" id="hoy-Le-PbI"/>
+                                            <constraint firstAttribute="trailing" secondItem="kow-dL-f45" secondAttribute="trailing" id="u4S-K6-rUv"/>
+                                            <constraint firstAttribute="bottom" secondItem="kow-dL-f45" secondAttribute="bottom" id="voN-Rc-4B3"/>
+                                            <constraint firstItem="kow-dL-f45" firstAttribute="top" secondItem="Utz-Xc-MDT" secondAttribute="top" id="vq7-8m-0F7"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
@@ -77,7 +108,9 @@
                                     <constraint firstItem="DlF-SO-7Ff" firstAttribute="leading" secondItem="8RF-ks-cJQ" secondAttribute="leading" constant="16" id="l4l-3d-HhW"/>
                                     <constraint firstItem="h6S-vI-SA6" firstAttribute="leading" secondItem="8RF-ks-cJQ" secondAttribute="leading" id="nVA-F5-fed"/>
                                     <constraint firstAttribute="height" constant="60" id="o91-W3-eBo"/>
+                                    <constraint firstAttribute="trailing" secondItem="Utz-Xc-MDT" secondAttribute="trailing" id="oSN-fR-L6D"/>
                                     <constraint firstAttribute="trailing" secondItem="DlF-SO-7Ff" secondAttribute="trailing" constant="16" id="oxM-oI-MFb"/>
+                                    <constraint firstItem="Utz-Xc-MDT" firstAttribute="top" secondItem="8RF-ks-cJQ" secondAttribute="top" id="sP2-Tl-jql"/>
                                     <constraint firstItem="D9w-fF-r0j" firstAttribute="top" secondItem="EvQ-x5-VL8" secondAttribute="bottom" constant="10" id="sSe-hM-Zc3"/>
                                     <constraint firstItem="h6S-vI-SA6" firstAttribute="top" secondItem="8RF-ks-cJQ" secondAttribute="top" id="tz9-0G-s5Z"/>
                                     <constraint firstAttribute="trailing" secondItem="h6S-vI-SA6" secondAttribute="trailing" id="unf-VB-9WI"/>
@@ -358,7 +391,11 @@
     </objects>
     <resources>
         <image name="baner" width="360" height="300"/>
+        <image name="close9" width="17" height="17"/>
         <image name="down" width="11.333333015441895" height="6.6666665077209473"/>
+        <namedColor name="AppTabSelectColor">
+            <color red="0.3919999897480011" green="0.15299999713897705" blue="0.43500000238418579" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

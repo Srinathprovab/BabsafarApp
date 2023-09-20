@@ -144,13 +144,26 @@ class InsuranceVC: BaseTableVC {
         
         
         if let cell = commonTableView.cellForRow(at: IndexPath(item: 0, section: 0)) as? InsurenceSearchTVCell {
-            
+            payload.removeAll()
             
             if let journeyType = defaults.string(forKey: UserDefaultsKeys.InsurenceJourneyType) {
                 if journeyType == "oneway" {
                     
                     
-                    payload.removeAll()
+//                trip_type:oneway
+//                adult:1
+//                child:0
+//                infant:0
+//                from:Kuwait,Kuwait,Kuwait International Airport(KWI)
+//                from_loc_id:3945
+//                to:Cairo,Egypt,Cairo International Airport(CAI)
+//                to_loc_id:1119
+//                departure_date:29-09-2023
+//                user_id:0
+//                //search_source:Postman
+//                arrival_date:
+                    
+                   
                     payload["trip_type"] = defaults.string(forKey: UserDefaultsKeys.InsurenceJourneyType)
                     payload["adult"] = defaults.string(forKey: UserDefaultsKeys.iadultCount)
                     payload["child"] = defaults.string(forKey: UserDefaultsKeys.ichildCount)

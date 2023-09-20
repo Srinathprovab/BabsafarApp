@@ -88,7 +88,7 @@ var selectedrRateKeyArray = [String]()
 var adtArray = [String]()
 var chArray = [String]()
 var callapibool = Bool()
-
+var hotelDetailsTapBool = true
 
 var neighbourwoodArray = [String]()
 var amenitiesArray = [String]()
@@ -235,7 +235,7 @@ var ibookingsource = ""
 var iplandetails = ""
 var iplanprice = ""
 var selectedPlanContent = [PlanContent]()
-var searchInputs:PreBookingSearch_params?
+var searchInputs:Search_data?
 var mobilenoMaxLengthBool = false
 var plan_details_token = String()
 

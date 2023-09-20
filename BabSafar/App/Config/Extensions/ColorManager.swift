@@ -27,7 +27,7 @@ extension UIColor {
     
     public static var AppBtnColor: UIColor {
         get {
-            return HexColor("#e82a5e")
+            return HexColor("#E82A5E")
         }
     }
     

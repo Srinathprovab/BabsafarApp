@@ -253,18 +253,18 @@ extension PersonalDetailsVC {
     
     func insurencePaymentshow(response: InsurancePreprocessBookingModel) {
         holderView.isHidden = false
-        searchInputs = response.search_params
+        searchInputs = response.search_data
         totalFare = String(format: "%.2f", response.total_fare!)
         baseFare = String(format: "%.2f", response.base_fare!)
-        tax = "\(response.tax ?? 0)"
-        
+       
         plan_code = response.selected_package?.planCode ?? ""
         plan_ssrcode = response.selected_package?.sSRFeeCode ?? ""
         token = iplandetails
         app_reference = response.app_reference ?? ""
-        price =  String(format: "%.2f", response.total_fare ?? "")
-        grandTotal = "\(response.fare_breakdown?.currencyCode ?? ""):\(String(format: "%.2f", response.total_fare ?? ""))"
-       
+        
+        price =  "\(response.currencyCode ?? "")\(String(format: "%.2f", response.total_fare ?? ""))"
+        grandTotal = "\(response.currencyCode ?? "")\(String(format: "%.2f", response.total_fare ?? ""))"
+        tax = "\(response.currencyCode ?? "")\(String(format: "%.2f", Double(response.tax ?? 0)))"
         
         DispatchQueue.main.async {
             self.setupTV()

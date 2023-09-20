@@ -49,9 +49,9 @@ class HotelDetailsVC: BaseTableVC, HotelDetailsViewModelDelegate {
         
         if callapibool == true{
             
-            bookNowView.isUserInteractionEnabled = false
-            bookNowView.alpha = 0.5
-            
+//            bookNowView.isUserInteractionEnabled = false
+//            bookNowView.alpha = 0.5
+//
             holderView.isHidden = true
             callAPI()
         }
@@ -137,6 +137,21 @@ class HotelDetailsVC: BaseTableVC, HotelDetailsViewModelDelegate {
     
     //MARK: - didTapOnBookNowBtn
     @objc func didTapOnBookNowBtn(_ sender: UIButton) {
+        
+        if hotelDetailsTapBool == true {
+            if selectedrRateKeyArray.isEmpty == false {
+                gotoAddContactAndGuestDetailsVC()
+            }else {
+                showToast(message: "Select Room")
+            }
+        }else {
+            NotificationCenter.default.post(name: NSNotification.Name("gotoroom"), object: false)
+        }
+        
+    }
+    
+    
+    func gotoAddContactAndGuestDetailsVC(){
         guard let vc = AddContactAndGuestDetailsVC.newInstance.self else {return}
         vc.modalPresentationStyle = .fullScreen
         callapibool = true
@@ -148,6 +163,7 @@ class HotelDetailsVC: BaseTableVC, HotelDetailsViewModelDelegate {
     //MARK: - didTapOnRoomsBtn
     override func didTapOnRoomsBtn(cell: RoomsTVcell) {
         cell.key = "rooms"
+        hotelDetailsTapBool = true
         cell.roomDetailsTV.reloadData()
     }
     
@@ -155,6 +171,7 @@ class HotelDetailsVC: BaseTableVC, HotelDetailsViewModelDelegate {
     //MARK: - didTapOnHotelsDetailsBtn
     override func didTapOnHotelsDetailsBtn(cell: RoomsTVcell) {
         cell.key = "hotels details"
+        hotelDetailsTapBool = false
         cell.roomDetailsTV.reloadData()
     }
     
@@ -164,6 +181,7 @@ class HotelDetailsVC: BaseTableVC, HotelDetailsViewModelDelegate {
     //MARK: - didTapOnAmenitiesBtn
     override func didTapOnAmenitiesBtn(cell: RoomsTVcell) {
         cell.key = "amenities"
+        hotelDetailsTapBool = false
         cell.roomDetailsTV.reloadData()
     }
     
@@ -225,7 +243,7 @@ class HotelDetailsVC: BaseTableVC, HotelDetailsViewModelDelegate {
                              str2Color: .WhiteColor)
         
         
-        print(selectedCellIndices)
+        
     }
     
     
@@ -255,7 +273,7 @@ extension HotelDetailsVC {
         hotelDetails = response.hotel_details
         roomsDetails = response.hotel_details?.rooms ?? [[]]
         images = response.hotel_details?.images ?? []
-        formatAmeArray = response.hotel_details?.format_ame ?? []
+      //  formatAmeArray = response.hotel_details?.fac
         formatDesc = response.hotel_details?.format_desc ?? []
         img = response.hotel_details?.image ?? ""
         
@@ -277,9 +295,21 @@ extension HotelDetailsVC {
         NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("offline"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(resultnil), name: NSNotification.Name("resultnil"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reload), name: Notification.Name("reload"), object: nil)
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(roomtapbool), name: Notification.Name("roomtapbool"), object: nil)
+
     }
     
+    
+    
+    @objc func roomtapbool(notify:NSNotification) {
+        if let tapbool = notify.object as? Bool {
+            if tapbool == true {
+                kwdlbl.text = "Book Now"
+            }else {
+                kwdlbl.text = "Select Now"
+            }
+        }
+    }
     
     @objc func reload() {
         DispatchQueue.main.async {[self] in

@@ -84,7 +84,6 @@ class FasttrackSearchTVCell: TableViewCell, FastrackAirlineListViewModelDelegate
         setupView(v: depDateView)
         setupView(v: returnView)
         setupView(v: addPassengerView)
-        setupView(v: searchView)
         setupTextField(tf: fromTF)
         setupTextField(tf: toTF)
     }

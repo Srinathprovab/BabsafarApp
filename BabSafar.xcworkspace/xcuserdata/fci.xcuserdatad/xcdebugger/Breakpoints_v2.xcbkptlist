@@ -20,5 +20,53 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F80A2B2F-51EC-437D-92B1-5B6AA1B269C3"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BabSafar/App/Config/Scenes/Flights/ViewController/SearchFlightResultVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "531"
+            endingLineNumber = "531"
+            landmarkName = "filtersByApplied(minpricerange:maxpricerange:noofStopsArray:refundableTypeArray:departureTime:arrivalTime:noOvernightFlight:airlinesFilterArray:connectingFlightsFilterArray:ConnectingAirportsFilterArray:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "F80A2B2F-51EC-437D-92B1-5B6AA1B269C3 - 9e1217c5677ce3e3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BabSafar.SearchFlightResultVC.filtersByApplied(minpricerange: Swift.Double, maxpricerange: Swift.Double, noofStopsArray: Swift.Array&lt;Swift.String&gt;, refundableTypeArray: Swift.Array&lt;Swift.String&gt;, departureTime: Swift.String, arrivalTime: Swift.String, noOvernightFlight: Swift.String, airlinesFilterArray: Swift.Array&lt;Swift.String&gt;, connectingFlightsFilterArray: Swift.Array&lt;Swift.String&gt;, ConnectingAirportsFilterArray: Swift.Array&lt;Swift.String&gt;) -&gt; ()"
+                  moduleName = "BabSafar"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/fci/Desktop/provab%20projects/BabSafar/BabSafar/App/Config/Scenes/Flights/ViewController/SearchFlightResultVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "531"
+                  endingLineNumber = "531"
+                  offsetFromSymbolStart = "5997">
+               </Location>
+               <Location
+                  uuid = "F80A2B2F-51EC-437D-92B1-5B6AA1B269C3 - e2ae399ad4391325"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Array&lt;Swift.Array&lt;BabSafar.MCJ_flight_list&gt;&gt;) -&gt; Swift.Array&lt;Swift.Array&lt;BabSafar.MCJ_flight_list&gt;&gt; in BabSafar.SearchFlightResultVC.filtersByApplied(minpricerange: Swift.Double, maxpricerange: Swift.Double, noofStopsArray: Swift.Array&lt;Swift.String&gt;, refundableTypeArray: Swift.Array&lt;Swift.String&gt;, departureTime: Swift.String, arrivalTime: Swift.String, noOvernightFlight: Swift.String, airlinesFilterArray: Swift.Array&lt;Swift.String&gt;, connectingFlightsFilterArray: Swift.Array&lt;Swift.String&gt;, ConnectingAirportsFilterArray: Swift.Array&lt;Swift.String&gt;) -&gt; ()"
+                  moduleName = "BabSafar"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/fci/Desktop/provab%20projects/BabSafar/BabSafar/App/Config/Scenes/Flights/ViewController/SearchFlightResultVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "532"
+                  endingLineNumber = "532"
+                  offsetFromSymbolStart = "167">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

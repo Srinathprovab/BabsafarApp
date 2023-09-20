@@ -52,12 +52,12 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RxZ-Gh-Bmf">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RxZ-Gh-Bmf" customClass="BorderedView" customModule="BabSafar" customModuleProvider="target">
                                 <rect key="frame" x="204" y="150" width="75" height="30"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w8a-Bt-JUi">
-                                        <rect key="frame" x="18.333333333333346" y="6.6666666666666572" width="38.333333333333343" height="17"/>
-                                        <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="14"/>
+                                        <rect key="frame" x="15.666666666666654" y="5.3333333333333428" width="43.666666666666657" height="19.333333333333332"/>
+                                        <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -70,7 +70,7 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" name="AppBtnColor"/>
+                                <color key="backgroundColor" name="CommonButtonColor"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="VQv-b1-QOr" secondAttribute="trailing" id="7Zx-Uh-VvG"/>
                                     <constraint firstAttribute="bottom" secondItem="VQv-b1-QOr" secondAttribute="bottom" id="Fed-XG-4FX"/>
@@ -85,10 +85,13 @@
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                         <integer key="value" value="4"/>
                                     </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="4"/>
+                                    </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="KWD150.00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zbH-pA-qxX">
-                                <rect key="frame" x="372.66666666666669" y="107" width="90.333333333333314" height="19.666666666666671"/>
+                                <rect key="frame" x="372.66666666666669" y="107.33333333333333" width="90.333333333333314" height="18.666666666666671"/>
                                 <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
                                 <color key="textColor" name="AppTabSelectColor"/>
                                 <nil key="highlightedColor"/>
@@ -96,17 +99,17 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xPC-lN-XJm">
                                 <rect key="frame" x="151.66666666666666" y="56.333333333333329" width="179.99999999999997" height="32"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FULL BENEFITS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lJL-jc-luf">
-                                        <rect key="frame" x="39.666666666666679" y="7.3333333333333428" width="100.33333333333331" height="17"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Full Benefits" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lJL-jc-luf">
+                                        <rect key="frame" x="51.333333333333336" y="7.3333333333333428" width="77.333333333333314" height="17"/>
                                         <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="14"/>
-                                        <color key="textColor" name="AppLabelColor"/>
+                                        <color key="textColor" name="AppCalenderDateSelectColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="down" translatesAutoresizingMaskIntoConstraints="NO" id="wd1-yD-pqa">
-                                        <rect key="frame" x="145.00000000000003" y="11" width="10" height="10"/>
+                                        <rect key="frame" x="133.66666666666666" y="13.333333333333343" width="10" height="5"/>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="10" id="VM3-Lv-21Q"/>
+                                            <constraint firstAttribute="height" constant="5" id="VM3-Lv-21Q"/>
                                             <constraint firstAttribute="width" constant="10" id="aI4-tw-iX5"/>
                                         </constraints>
                                     </imageView>
@@ -118,14 +121,24 @@
                                             <action selector="didTapOnKeyBenifitsBtnAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="6Bw-nv-rqf"/>
                                         </connections>
                                     </button>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f3L-f0-xwf">
+                                        <rect key="frame" x="51.333333333333336" y="26.333333333333343" width="77.333333333333314" height="1"/>
+                                        <color key="backgroundColor" name="AppCalenderDateSelectColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="GpH-1w-yhb"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" name="WhiteColor"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="u6D-Of-58X" secondAttribute="trailing" id="1rR-1t-7tD"/>
                                     <constraint firstItem="wd1-yD-pqa" firstAttribute="leading" secondItem="lJL-jc-luf" secondAttribute="trailing" constant="5" id="8Vn-sf-JCR"/>
+                                    <constraint firstItem="f3L-f0-xwf" firstAttribute="top" secondItem="lJL-jc-luf" secondAttribute="bottom" constant="2" id="95M-ZF-pIU"/>
                                     <constraint firstAttribute="bottom" secondItem="u6D-Of-58X" secondAttribute="bottom" id="Baf-xm-Y2V"/>
                                     <constraint firstItem="u6D-Of-58X" firstAttribute="top" secondItem="xPC-lN-XJm" secondAttribute="top" id="KTU-JU-Tn4"/>
+                                    <constraint firstItem="f3L-f0-xwf" firstAttribute="trailing" secondItem="lJL-jc-luf" secondAttribute="trailing" id="XVT-Eh-JxR"/>
                                     <constraint firstItem="u6D-Of-58X" firstAttribute="leading" secondItem="xPC-lN-XJm" secondAttribute="leading" id="drI-La-Qrm"/>
+                                    <constraint firstItem="f3L-f0-xwf" firstAttribute="leading" secondItem="lJL-jc-luf" secondAttribute="leading" id="eMV-mV-aLd"/>
                                     <constraint firstItem="wd1-yD-pqa" firstAttribute="centerY" secondItem="lJL-jc-luf" secondAttribute="centerY" id="fUH-bH-Ljh"/>
                                     <constraint firstItem="lJL-jc-luf" firstAttribute="centerX" secondItem="xPC-lN-XJm" secondAttribute="centerX" id="nFQ-7I-Lcw"/>
                                     <constraint firstAttribute="width" constant="180" id="vDQ-rZ-Fqa"/>
@@ -206,17 +219,17 @@
     <resources>
         <image name="ae" width="190" height="120"/>
         <image name="down" width="11.333333015441895" height="6.6666665077209473"/>
-        <namedColor name="AppBtnColor">
-            <color red="0.92500001192092896" green="0.2669999897480011" blue="0.11800000071525574" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="AppLabelColor">
-            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="AppCalenderDateSelectColor">
+            <color red="0.0" green="0.6589999794960022" blue="0.59600001573562622" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="AppTabSelectColor">
             <color red="0.3919999897480011" green="0.15299999713897705" blue="0.43500000238418579" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="BorderColor">
             <color red="0.76899999380111694" green="0.76899999380111694" blue="0.76899999380111694" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="CommonButtonColor">
+            <color red="0.9100000262260437" green="0.16500000655651093" blue="0.36899998784065247" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="SubTitleColor">
             <color red="0.60000002384185791" green="0.59600001573562622" blue="0.59600001573562622" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

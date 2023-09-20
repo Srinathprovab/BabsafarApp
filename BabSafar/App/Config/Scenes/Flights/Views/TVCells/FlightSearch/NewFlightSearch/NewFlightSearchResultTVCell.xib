@@ -34,13 +34,13 @@
                                 <rect key="frame" x="0.0" y="174" width="493" height="22"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1 More similar options" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="luW-sS-vBR">
-                                        <rect key="frame" x="187.66666666666666" y="3.3333333333333419" width="117.99999999999997" height="15.666666666666664"/>
-                                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
+                                        <rect key="frame" x="178" y="2.6666666666666572" width="137.33333333333337" height="17"/>
+                                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="similar" translatesAutoresizingMaskIntoConstraints="NO" id="7J1-2g-REm">
-                                        <rect key="frame" x="310.66666666666669" y="3.6666666666666572" width="15" height="15"/>
+                                        <rect key="frame" x="320.33333333333331" y="3.6666666666666572" width="15" height="15"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="15" id="1Zd-or-uuw"/>
                                             <constraint firstAttribute="height" constant="15" id="L5i-y5-OxG"/>
@@ -137,8 +137,8 @@
                                 <rect key="frame" x="408" y="129" width="75" height="25"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Book Now" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U8T-eQ-S5s">
-                                        <rect key="frame" x="9.3333333333333108" y="5.3333333333333419" width="56.666666666666657" height="14.666666666666664"/>
-                                        <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="12"/>
+                                        <rect key="frame" x="4.6666666666666856" y="4" width="66" height="17"/>
+                                        <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="14"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -181,16 +181,16 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tBi-Sp-ISh" customClass="BorderedView" customModule="BabSafar" customModuleProvider="target">
-                                <rect key="frame" x="403" y="42" width="80" height="25"/>
+                                <rect key="frame" x="393" y="42" width="90" height="25"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Flight Details" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1GP-hk-arV">
-                                        <rect key="frame" x="4.6666666666666856" y="5.3333333333333348" width="70.666666666666671" height="14.666666666666664"/>
-                                        <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="12"/>
+                                        <rect key="frame" x="4" y="4" width="82.333333333333329" height="17"/>
+                                        <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="14"/>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jz2-Ik-vms">
-                                        <rect key="frame" x="0.0" y="0.0" width="80" height="25"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="90" height="25"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain"/>
                                         <connections>
@@ -200,7 +200,7 @@
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="0.80000000000000004" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="80" id="0R9-s4-7eF"/>
+                                    <constraint firstAttribute="width" constant="90" id="0R9-s4-7eF"/>
                                     <constraint firstAttribute="bottom" secondItem="jz2-Ik-vms" secondAttribute="bottom" id="2as-xB-olR"/>
                                     <constraint firstAttribute="trailing" secondItem="jz2-Ik-vms" secondAttribute="trailing" id="4hw-9d-bQ9"/>
                                     <constraint firstItem="jz2-Ik-vms" firstAttribute="top" secondItem="tBi-Sp-ISh" secondAttribute="top" id="CcM-yx-QdD"/>
@@ -216,7 +216,7 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Refundable" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TzD-di-vl1">
-                                <rect key="frame" x="407.66666666666669" y="25" width="75.333333333333314" height="12"/>
+                                <rect key="frame" x="397" y="25" width="86" height="12"/>
                                 <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="10"/>
                                 <color key="textColor" red="0.18431372549019609" green="0.6588235294117647" blue="0.015686274509803921" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>

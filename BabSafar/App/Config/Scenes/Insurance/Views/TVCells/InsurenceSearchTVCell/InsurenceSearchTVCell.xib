@@ -333,7 +333,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z9y-OM-IRV">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z9y-OM-IRV" customClass="BorderedView" customModule="BabSafar" customModuleProvider="target">
                                 <rect key="frame" x="16" y="330" width="401" height="60"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7pH-wC-e68">
@@ -351,7 +351,7 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" name="AppBtnColor"/>
+                                <color key="backgroundColor" name="CommonButtonColor"/>
                                 <constraints>
                                     <constraint firstItem="7pH-wC-e68" firstAttribute="centerY" secondItem="z9y-OM-IRV" secondAttribute="centerY" id="3of-62-Qgs"/>
                                     <constraint firstAttribute="bottom" secondItem="gvm-be-lLg" secondAttribute="bottom" id="84Q-9O-sWr"/>
@@ -364,6 +364,9 @@
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                         <integer key="value" value="4"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="4"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
@@ -442,11 +445,11 @@
         <image name="clear" width="17" height="17"/>
         <image name="close9" width="17" height="17"/>
         <image name="downnew" width="24" height="24"/>
-        <namedColor name="AppBtnColor">
-            <color red="0.92500001192092896" green="0.2669999897480011" blue="0.11800000071525574" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <namedColor name="AppHolderViewColor">
             <color red="0.94499999284744263" green="0.95300000905990601" blue="0.94900000095367432" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="CommonButtonColor">
+            <color red="0.90980392156862744" green="0.16470588235294117" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="IttenarySelectedColor">
             <color red="0.3919999897480011" green="0.15299999713897705" blue="0.43500000238418579" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
