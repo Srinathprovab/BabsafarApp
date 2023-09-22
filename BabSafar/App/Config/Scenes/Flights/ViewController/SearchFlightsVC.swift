@@ -173,7 +173,7 @@ class SearchFlightsVC: BaseTableVC {
         setupViews(v: oneWayView, radius: 18, color: .WhiteColor)
         setupViews(v: roundTripView, radius: 18, color: .WhiteColor)
         setupViews(v: multiCityView, radius: 18, color: .WhiteColor)
-        //   multiCityView.isHidden = true
+        multiCityView.isHidden = true
         setuplabels(lbl:titlelbl,text: "Search Flights", textcolor: .WhiteColor, font: .LatoMedium(size: 20), align: .center)
         setuplabels(lbl:oneWaylbl,text: "One Way", textcolor: .WhiteColor, font: .LatoRegular(size: 14), align: .center)
         setuplabels(lbl:roundTriplbl,text: "Round Trip", textcolor: .AppLabelColor, font: .LatoRegular(size: 14), align: .center)

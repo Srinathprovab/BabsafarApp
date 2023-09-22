@@ -134,16 +134,16 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="loA-mp-aN8" customClass="BorderedView" customModule="BabSafar" customModuleProvider="target">
-                                <rect key="frame" x="408" y="129" width="75" height="25"/>
+                                <rect key="frame" x="393" y="129" width="90" height="25"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Book Now" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U8T-eQ-S5s">
-                                        <rect key="frame" x="4.6666666666666856" y="4" width="66" height="17"/>
+                                        <rect key="frame" x="12" y="4" width="66" height="17"/>
                                         <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="14"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uSa-Wq-7pC">
-                                        <rect key="frame" x="0.0" y="0.0" width="75" height="25"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="90" height="25"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain"/>
                                         <connections>
@@ -159,7 +159,6 @@
                                     <constraint firstItem="U8T-eQ-S5s" firstAttribute="centerY" secondItem="loA-mp-aN8" secondAttribute="centerY" id="NLm-TT-kRw"/>
                                     <constraint firstAttribute="height" constant="25" id="XGH-r1-G5u"/>
                                     <constraint firstItem="uSa-Wq-7pC" firstAttribute="top" secondItem="loA-mp-aN8" secondAttribute="top" id="cyo-96-NVm"/>
-                                    <constraint firstAttribute="width" constant="75" id="eW2-PE-NrZ"/>
                                     <constraint firstAttribute="bottom" secondItem="uSa-Wq-7pC" secondAttribute="bottom" id="w17-iV-NoQ"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
@@ -240,6 +239,7 @@
                             <constraint firstAttribute="bottom" secondItem="cUF-YC-KFg" secondAttribute="bottom" id="q51-FS-6f0"/>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="196" id="sBy-ZY-AUI"/>
                             <constraint firstItem="C6W-em-MgQ" firstAttribute="top" secondItem="X7i-3a-Z6X" secondAttribute="top" id="uFC-On-lKr"/>
+                            <constraint firstItem="loA-mp-aN8" firstAttribute="leading" secondItem="tBi-Sp-ISh" secondAttribute="leading" id="uTp-6M-UEF"/>
                             <constraint firstItem="TzD-di-vl1" firstAttribute="leading" secondItem="1GP-hk-arV" secondAttribute="leading" id="ufC-5A-69U"/>
                             <constraint firstItem="cUF-YC-KFg" firstAttribute="top" secondItem="C6W-em-MgQ" secondAttribute="bottom" id="vrf-9B-R9t"/>
                             <constraint firstAttribute="trailing" secondItem="TzD-di-vl1" secondAttribute="trailing" constant="10" id="yio-dt-4cN"/>

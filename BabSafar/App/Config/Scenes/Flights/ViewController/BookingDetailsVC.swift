@@ -206,7 +206,10 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
         if defaults.bool(forKey: UserDefaultsKeys.loggedInStatus) == false {
             tablerow.append(TableRow(cellType:.TDetailsLoginTVCell))
         }
-        tablerow.append(TableRow(title:self.mbRefundable,subTitle: "",moreData: mbSummery,cellType:.BookFlightDetailsTVCell))
+        tablerow.append(TableRow(title:self.mbRefundable,
+                                 subTitle: "",
+                                 moreData: mbSummery,
+                                 cellType:.BookFlightDetailsTVCell))
         
         
         passengertypeArray.removeAll()
@@ -911,7 +914,7 @@ extension BookingDetailsVC {
         
         totalAmountforBooking = response.flight_data?[0].totalPrice ?? "0.0"
         mbSummery = response.flight_data?[0].flight_details?.summery ?? []
-        
+        mbRefundable = response.flight_data?[0].fareType ?? ""
         
         let i = response.pre_booking_params?.priceDetails
         Adults_Base_Price = String(i?.adultsBasePrice ?? "0.0")

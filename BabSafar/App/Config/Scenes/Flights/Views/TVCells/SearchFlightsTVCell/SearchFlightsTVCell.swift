@@ -177,9 +177,13 @@ class SearchFlightsTVCell: TableViewCell, SelectCityViewModelProtocal {
         
         if fromCitylbl.text?.isEmpty == true {
             fromTF.placeholder = "Origen"
+        }else {
+            fromTF.placeholder = ""
         }
         if toCitylbl.text?.isEmpty == true {
             toTF.placeholder = "Destination"
+        }else {
+            toTF.placeholder = ""
         }
     }
     
@@ -588,17 +592,18 @@ extension SearchFlightsTVCell:UITableViewDelegate, UITableViewDataSource {
                 fromTF.text = ""
                 fromTF.placeholder = ""
                 fromTF.resignFirstResponder()
-                toTF.placeholder = "Destination"
+                if tolbl.text?.isEmpty == true {
+                    toTF.placeholder = "Destination"
+                }else {
+                    toTF.placeholder = ""
+                }
+                
                 //toTF.becomeFirstResponder()
                 
                 if let selectedJType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
                     if selectedJType == "circle" {
                         
-                        //                        defaults.set(cityList[indexPath.row].label ?? "", forKey: UserDefaultsKeys.rfromCity)
-                        //                        defaults.set(cityList[indexPath.row].id ?? "", forKey: UserDefaultsKeys.rfromlocid)
-                        //                        defaults.set("\(cityList[indexPath.row].city ?? "") (\(cityList[indexPath.row].code ?? ""))", forKey: UserDefaultsKeys.rfromairport)
-                        //                        defaults.set(cityList[indexPath.row].city ?? "", forKey: UserDefaultsKeys.rfromcityname)
-                        
+                     
                         defaults.set(cityList[indexPath.row].label ?? "", forKey: UserDefaultsKeys.fromCity)
                         defaults.set(cityList[indexPath.row].id ?? "", forKey: UserDefaultsKeys.fromlocid)
                         defaults.set("\(cityList[indexPath.row].city ?? "") (\(cityList[indexPath.row].code ?? ""))", forKey: UserDefaultsKeys.fromairport)
@@ -624,11 +629,7 @@ extension SearchFlightsTVCell:UITableViewDelegate, UITableViewDataSource {
                 if let selectedJType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
                     if selectedJType == "circle" {
                         
-                        //                        defaults.set(cityList[indexPath.row].label ?? "", forKey: UserDefaultsKeys.rtoCity)
-                        //                        defaults.set(cityList[indexPath.row].id ?? "", forKey: UserDefaultsKeys.rtolocid)
-                        //                        defaults.set("\(cityList[indexPath.row].city ?? "") (\(cityList[indexPath.row].code ?? ""))", forKey: UserDefaultsKeys.rtoairport)
-                        //                        defaults.set(cityList[indexPath.row].city ?? "", forKey: UserDefaultsKeys.rtocityname)
-                        
+                      
                         defaults.set(cityList[indexPath.row].label ?? "", forKey: UserDefaultsKeys.toCity)
                         defaults.set(cityList[indexPath.row].id ?? "", forKey: UserDefaultsKeys.tolocid)
                         defaults.set("\(cityList[indexPath.row].city ?? "") (\(cityList[indexPath.row].code ?? ""))", forKey: UserDefaultsKeys.toairport)

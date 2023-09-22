@@ -153,7 +153,7 @@ class ModifySearchFlightVC: BaseTableVC {
         setuplabels(lbl:oneWaylbl,text: "One Way", textcolor: .WhiteColor, font: .LatoRegular(size: 14), align: .center)
         setuplabels(lbl:roundTriplbl,text: "Round Trip", textcolor: .AppLabelColor, font: .LatoRegular(size: 14), align: .center)
         setuplabels(lbl:multiCitylbl,text: "Multi City", textcolor: .AppLabelColor, font: .LatoRegular(size: 14), align: .center)
-        // multiCityView.isHidden = true
+        multiCityView.isHidden = true
         commonTableView.addCornerRadiusWithShadow(color: .clear, borderColor: .clear, cornerRadius: 10)
         
         if screenHeight > 835 {

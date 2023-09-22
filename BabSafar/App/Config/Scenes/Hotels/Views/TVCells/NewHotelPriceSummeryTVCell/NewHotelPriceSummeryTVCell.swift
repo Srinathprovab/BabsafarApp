@@ -47,7 +47,7 @@ class NewHotelPriceSummeryTVCell: TableViewCell {
         
       
         setAttributedTextnew(str1: "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? "")",
-                             str2: "\(cellInfo?.price ?? "" )",
+                             str2: String(format: "%.2f", Double(cellInfo?.price ?? "") ?? 0.0),
                              lbl: pricelbl,
                              str1font: .LatoBold(size: 12),
                              str2font: .LatoBold(size: 18),

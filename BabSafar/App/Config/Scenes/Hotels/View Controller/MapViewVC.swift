@@ -58,7 +58,7 @@ class MapViewVC: UIViewController, CLLocationManagerDelegate {
                 let averageLongitude = longArray.map { Double($0) ?? 0.0 }.reduce(0.0, +) / Double(longArray.count)
                 
                 // Set the camera to center on the average coordinates
-                let camera = GMSCameraPosition.camera(withLatitude: averageLatitude, longitude: averageLongitude, zoom: 10.9)
+                let camera = GMSCameraPosition.camera(withLatitude: averageLatitude, longitude: averageLongitude, zoom: 12.0)
 
                 let gmsView = GMSMapView.map(withFrame: view.bounds, camera: camera)
                 googleMapView.addSubview(gmsView)
@@ -78,7 +78,7 @@ class MapViewVC: UIViewController, CLLocationManagerDelegate {
             //    marker.title = "Location \(index + 1)"
 
                 // Create a custom marker icon with an image
-                if let markerImage = UIImage(named: "customhotel")?.withRenderingMode(.alwaysOriginal).withTintColor(.AppBtnColor) {
+                if let markerImage = UIImage(named: "loc1")?.withRenderingMode(.alwaysOriginal).withTintColor(.AppBtnColor) {
                     let markerView = UIImageView(image: markerImage)
                     marker.iconView = markerView
                 } else {

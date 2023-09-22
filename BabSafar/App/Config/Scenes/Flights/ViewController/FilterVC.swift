@@ -907,12 +907,7 @@ class FilterVC: BaseTableVC{
     
     override func btnAction(cell: ButtonTVCell) {
         
-        
-        
-        
         if let tabselect = defaults.object(forKey: UserDefaultsKeys.dashboardTapSelected) as? String, tabselect == "Flights" {
-            
-            
             if filterKey == "filter" {
                 
                 if minpricerangefilter.isZero == true && maxpricerangefilter.isZero == true{

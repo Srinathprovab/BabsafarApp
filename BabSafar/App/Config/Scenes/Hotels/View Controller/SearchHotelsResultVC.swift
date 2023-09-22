@@ -273,7 +273,7 @@ class SearchHotelsResultVC: BaseTableVC, UITextFieldDelegate, HotelSearchViewMod
         vc.modalPresentationStyle = .overCurrentContext
         vc.titlestr = titlestr
         vc.disc = hoteldesc
-        present(vc, animated: true)
+        present(vc, animated: false)
     }
     
     
@@ -386,7 +386,7 @@ extension SearchHotelsResultVC {
             print(theJSONText ?? "")
             payload1["search_params"] = theJSONText
             payload1["offset"] = "0"
-            payload1["limit"] = "10"
+            payload1["limit"] = "100"
             
             viewModel?.CallHotelSearchAPI(dictParam: payload1)
             

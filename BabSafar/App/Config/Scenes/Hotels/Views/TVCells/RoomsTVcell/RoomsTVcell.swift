@@ -327,7 +327,7 @@ extension RoomsTVcell:CLLocationManagerDelegate {
     @objc func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.last {
             // Center the map on Dubai's coordinates
-            let camera = GMSCameraPosition.camera(withLatitude: Double(latString) ?? 0.0, longitude: Double(longString) ?? 0.0, zoom: 10.9)
+            let camera = GMSCameraPosition.camera(withLatitude: Double(latString) ?? 0.0, longitude: Double(longString) ?? 0.0, zoom: 17.0)
 
             let gmsView = GMSMapView.map(withFrame: googleMapView.bounds, camera: camera)
             googleMapView.addSubview(gmsView)
@@ -346,7 +346,7 @@ extension RoomsTVcell:CLLocationManagerDelegate {
                 marker.title = locname
 
                 // Create a custom marker icon with an image
-                if let markerImage = UIImage(named: "customhotel")?.withRenderingMode(.alwaysOriginal).withTintColor(.AppBtnColor) {
+                if let markerImage = UIImage(named: "loc1")?.withRenderingMode(.alwaysOriginal).withTintColor(.AppBtnColor) {
                     let markerView = UIImageView(image: markerImage)
                     marker.iconView = markerView
                 } else {

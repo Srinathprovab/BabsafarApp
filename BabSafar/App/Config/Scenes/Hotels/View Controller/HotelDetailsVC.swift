@@ -64,9 +64,7 @@ class HotelDetailsVC: BaseTableVC, HotelDetailsViewModelDelegate {
         bookNowView.isUserInteractionEnabled = true
         bookNowView.alpha = 1
     }
-    
-    
-    
+
     
     //MARK: - Loading function
     override func viewDidLoad() {
@@ -117,7 +115,7 @@ class HotelDetailsVC: BaseTableVC, HotelDetailsViewModelDelegate {
         
         tablerow.append(TableRow(title:hotelDetails?.latitude ?? "",
                                  subTitle: hotelDetails?.longitude ?? "",
-                                 buttonTitle: hotelDetails?.location ?? "",
+                                 buttonTitle: hotelDetails?.name ?? "",
                                  moreData:roomsDetails,
                                  cellType:.RoomsTVcell))
         
@@ -131,8 +129,6 @@ class HotelDetailsVC: BaseTableVC, HotelDetailsViewModelDelegate {
         callapibool = false
         dismiss(animated: true)
     }
-    
-    
     
     
     //MARK: - didTapOnBookNowBtn
@@ -176,8 +172,6 @@ class HotelDetailsVC: BaseTableVC, HotelDetailsViewModelDelegate {
     }
     
     
-    
-    
     //MARK: - didTapOnAmenitiesBtn
     override func didTapOnAmenitiesBtn(cell: RoomsTVcell) {
         cell.key = "amenities"
@@ -211,8 +205,6 @@ class HotelDetailsVC: BaseTableVC, HotelDetailsViewModelDelegate {
         // Update the button color
         cell.updateButtonColor()
         
-        
-        
         // Check if a different cell was previously selected
         if let previouslySelectedCell = selectedCell {
             // Deselect the previously selected cell
@@ -226,8 +218,6 @@ class HotelDetailsVC: BaseTableVC, HotelDetailsViewModelDelegate {
         
         // Update the selectedCell reference
         selectedCell = cell
-        
-        
         
         bookNowView.isUserInteractionEnabled = true
         bookNowView.alpha = 1
@@ -273,7 +263,7 @@ extension HotelDetailsVC {
         hotelDetails = response.hotel_details
         roomsDetails = response.hotel_details?.rooms ?? [[]]
         images = response.hotel_details?.images ?? []
-      //  formatAmeArray = response.hotel_details?.fac
+        formatAmeArray = response.hotel_details?.format_ame ?? []
         formatDesc = response.hotel_details?.format_desc ?? []
         img = response.hotel_details?.image ?? ""
         
@@ -286,8 +276,6 @@ extension HotelDetailsVC {
     
 }
 
-
-
 extension HotelDetailsVC {
     
     func addObserver() {
@@ -298,8 +286,6 @@ extension HotelDetailsVC {
         NotificationCenter.default.addObserver(self, selector: #selector(roomtapbool), name: Notification.Name("roomtapbool"), object: nil)
 
     }
-    
-    
     
     @objc func roomtapbool(notify:NSNotification) {
         if let tapbool = notify.object as? Bool {
@@ -333,8 +319,5 @@ extension HotelDetailsVC {
         vc.key = "nointernet"
         self.present(vc, animated: true)
     }
-    
-    
-    
     
 }

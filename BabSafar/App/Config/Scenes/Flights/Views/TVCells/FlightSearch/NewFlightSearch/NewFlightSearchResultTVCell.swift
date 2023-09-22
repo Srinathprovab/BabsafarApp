@@ -67,6 +67,12 @@ class NewFlightSearchResultTVCell: TableViewCell {
         displayPrice = cellInfo?.price ?? ""
         
         
+        if faretypelbl.text == "Refundable" {
+            faretypelbl.textColor = .AppCalenderDateSelectColor
+        }else {
+            faretypelbl.textColor = .AppBtnColor
+        }
+        
         
         if let selectedJourneyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
             if selectedJourneyType != "oneway" {
@@ -79,6 +85,8 @@ class NewFlightSearchResultTVCell: TableViewCell {
         if cellInfo?.key == "similar" {
             hideSimilarlbl()
         }
+        
+        
         
         
         
@@ -228,12 +236,14 @@ extension NewFlightSearchResultTVCell {
     
     
     func hideSimilarlbl(){
+        bottomView.backgroundColor = .clear
         similarimg.isHidden = true
         similarBtn.isHidden = true
         moreSimlarOptionlbl.isHidden = true
     }
     
     func showSimilarlbl(){
+        bottomView.backgroundColor = .AppCalenderDateSelectColor
         similarimg.isHidden = false
         similarBtn.isHidden = false
         moreSimlarOptionlbl.isHidden = false

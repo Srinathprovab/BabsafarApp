@@ -97,6 +97,11 @@ class SearchHotelTVCell: TableViewCell, HotelCitySearchViewModelDelegate {
         filterdcountrylist = countrylist
         loadCountryNamesAndCode()
         
+        setuplabels(lbl: checkinlbl, text: defaults.string(forKey: UserDefaultsKeys.checkin) ?? "Add Check In Date", textcolor: .AppLabelColor, font: .LatoSemibold(size: 18), align: .left)
+
+        setuplabels(lbl: checkoutlbl, text: defaults.string(forKey: UserDefaultsKeys.checkout) ?? "Add Check Out Date", textcolor: .AppLabelColor, font: .LatoSemibold(size: 18), align: .left)
+
+        
         NotificationCenter.default.addObserver(self, selector: #selector(hotelrooms), name: Notification.Name("hotelrooms"), object: nil)
     }
     
@@ -125,9 +130,7 @@ class SearchHotelTVCell: TableViewCell, HotelCitySearchViewModelDelegate {
         setuplabels(lbl: locationCityTitlelbl, text: "Location/City", textcolor: .AppLabelColor, font: .LatoLight(size: 12), align: .left)
         setuplabels(lbl: locationCitylbl, text: defaults.string(forKey: UserDefaultsKeys.locationcity) ?? "Add City", textcolor: .AppLabelColor, font: .LatoSemibold(size: 18), align: .left)
         setuplabels(lbl: checkinTitlelbl, text: "Check-In", textcolor: .AppLabelColor, font: .LatoLight(size: 12), align: .left)
-        setuplabels(lbl: checkinlbl, text: defaults.string(forKey: UserDefaultsKeys.checkin) ?? "Add Check In Date", textcolor: .AppLabelColor, font: .LatoSemibold(size: 18), align: .left)
         setuplabels(lbl: checkoutTitlelbl, text: "Check - Out", textcolor: .AppLabelColor, font: .LatoLight(size: 12), align: .left)
-        setuplabels(lbl: checkoutlbl, text: defaults.string(forKey: UserDefaultsKeys.checkout) ?? "Add Check Out Date", textcolor: .AppLabelColor, font: .LatoSemibold(size: 18), align: .left)
         setuplabels(lbl: addRoomsTitlelbl, text: "Rooms & Guests", textcolor: .AppLabelColor, font: .LatoLight(size: 12), align: .left)
         setuplabels(lbl: addRoomsValuelbl, text: "\(defaults.string(forKey: UserDefaultsKeys.selectPersons) ?? "")", textcolor: .AppLabelColor, font: .LatoSemibold(size: 18), align: .left)
         setuplabels(lbl: searchHotellbl, text: "Search Hotels", textcolor: .WhiteColor, font: .LatoSemibold(size: 18), align: .center)

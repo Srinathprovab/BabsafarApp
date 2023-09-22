@@ -372,12 +372,6 @@ class SearchFlightResultVC: BaseTableVC, UITextFieldDelegate {
     }
     
     
-    
-    
-    
-    
-    
-    
     //MARK: - didTapOnMoveUpScreenBtn
     @IBAction func didTapOnMoveUpScreenBtn(_ sender: Any) {
         //        commonTableView.scrollToRow(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
@@ -588,9 +582,19 @@ extension SearchFlightResultVC: AppliedFilters{
             if let journytype = defaults.string(forKey: UserDefaultsKeys.journeyType) {
                 
                 if journytype == "multicity" {
-                    let sortedArray = MCJflightlist?.sorted(by: { Double($0.first?.totalPrice ?? "0.0") ?? 0.0 < Double($1.first?.totalPrice ?? "0.0") ?? 0.0 })
+//                    let sortedArray = MCJflightlist?.sorted(by: { Double($0.first?.totalPrice ?? "0.0") ?? 0.0 < Double($1.first?.totalPrice ?? "0.0") ?? 0.0 })
+//
+//                    multicityFilterdList(list: sortedArray ?? [[]])
                     
-                    multicityFilterdList(list: sortedArray ?? [[]])
+                    let filtered = MCJflightlist?.sorted { (item1, item2) in
+                        let price1 = item1.first?.price?.api_total_display_fare ?? 0.0
+                        let price2 = item2.first?.price?.api_total_display_fare ?? 0.0
+                       return price1 > price2
+                   }
+                    
+                
+                    multicityFilterdList(list: filtered ?? [[]])
+                    
                     
                     
                 }else {
@@ -608,9 +612,16 @@ extension SearchFlightResultVC: AppliedFilters{
             if let journytype = defaults.string(forKey: UserDefaultsKeys.journeyType) {
                 
                 if journytype == "multicity" {
-                    let sortedArray = MCJflightlist?.sorted(by: { Double($0.first?.totalPrice ?? "0.0") ?? 0.0 > Double($1.first?.totalPrice ?? "0.0") ?? 0.0 })
+//                    let sortedArray = MCJflightlist?.sorted(by: { Double($0.first?.totalPrice ?? "0.0") ?? 0.0 > Double($1.first?.totalPrice ?? "0.0") ?? 0.0 })
                     
-                    multicityFilterdList(list: sortedArray ?? [[]])
+                    let filtered = MCJflightlist?.sorted { (item1, item2) in
+                        let price1 = item1.first?.price?.api_total_display_fare ?? 0.0
+                        let price2 = item2.first?.price?.api_total_display_fare ?? 0.0
+                       return price1 > price2
+                   }
+                    
+                
+                    multicityFilterdList(list: filtered ?? [[]])
                     
                 }else {
                     let sortedArray = FlightList?.sorted(by: { Double($0.first?.totalPrice ?? "0.0") ?? 0.0 > Double($1.first?.totalPrice ?? "0.0") ?? 0.0 })
@@ -831,6 +842,7 @@ extension SearchFlightResultVC: AppliedFilters{
                         }
                         onewayFilterdList1(list: sortedArray)
                     }
+                    
                 }
             }
             
@@ -853,9 +865,9 @@ extension SearchFlightResultVC: AppliedFilters{
                         multicityFilterdList1(list: sortedArray)
                     }
                 }else {
+                    
+                    
                     if let flightList = FlightList {
-                        
-                        
                         let sortedArray = flightList.flatMap { $0 }.sorted { a, b in
                             let operator_name1 = a.flight_details?.summary?.first?.operator_name ?? ""
                             let operator_name2 = b.flight_details?.summary?.first?.operator_name ?? ""

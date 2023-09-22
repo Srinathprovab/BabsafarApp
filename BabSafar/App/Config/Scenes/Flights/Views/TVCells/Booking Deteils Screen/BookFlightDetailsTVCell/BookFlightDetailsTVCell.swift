@@ -16,8 +16,6 @@ class BookFlightDetailsTVCell: TableViewCell {
     @IBOutlet weak var holderView: UIView!
     @IBOutlet weak var detailsTV: UITableView!
     @IBOutlet weak var refundlbl: UILabel!
-//    @IBOutlet weak var kwdlbl: UILabel!
-//    @IBOutlet weak var perpersonlbl: UILabel!
     @IBOutlet weak var viewFlightDetailsBtnView: UIView!
     @IBOutlet weak var viewFlifgtDetailslbl: UILabel!
     @IBOutlet weak var viewFlifgtDetailsBtn: UIButton!
@@ -51,13 +49,6 @@ class BookFlightDetailsTVCell: TableViewCell {
         holderView.backgroundColor = .WhiteColor
         holderView.addCornerRadiusWithShadow(color: .clear, borderColor: .clear, cornerRadius: 5)
         setuplabels(lbl: refundlbl, text: "", textcolor: HexColor("#288419"), font: .LatoRegular(size: 14), align: .center)
-//        setuplabels(lbl: kwdlbl, text: "Refundable", textcolor: .RefundableColor, font: .LatoBold(size: 16), align: .right)
-//        setuplabels(lbl: perpersonlbl, text: "\(defaults.string(forKey: UserDefaultsKeys.selectClass) ?? "Economy")", textcolor: .AppLabelColor, font: .LatoRegular(size: 14), align: .right)
-//
-//
-//        perpersonlbl.isHidden = true
-//        kwdlbl.isHidden = true
-        
         viewFlightDetailsBtnView.backgroundColor = HexColor("#FFCC33")
         viewFlightDetailsBtnView.addCornerRadiusWithShadow(color: .clear, borderColor: .clear, cornerRadius: 5)
         setuplabels(lbl: viewFlifgtDetailslbl, text: "Flight Details", textcolor: .AppLabelColor, font: .LatoRegular(size: 16), align: .center)
@@ -112,11 +103,8 @@ extension BookFlightDetailsTVCell :UITableViewDataSource,UITableViewDelegate {
             
             if cellInfo?.title == "Refundable" {
                 setuplabels(lbl: refundlbl, text: "Refundable", textcolor: HexColor("#2FA804"), font: .LatoRegular(size: 14), align: .center)
-
-                
             }else {
                 setuplabels(lbl: refundlbl, text: "Non Refundable", textcolor: HexColor("#EC441E"), font: .LatoRegular(size: 14), align: .center)
-
             }
             
             

@@ -52,12 +52,7 @@ class InsurenceResultTVCell: TableViewCell {
     
     override func updateUI() {
         titlelbl.text = cellInfo?.title ?? ""
-      //  pricelbl.text = "\(cellInfo?.text ?? ""):\(cellInfo?.headerText ?? "")"
-        
-        
-       
-        
-        paxCountlbl.text = "For \(cellInfo?.buttonTitle ?? "") Pax"
+        paxCountlbl.text = "For \(cellInfo?.buttonTitle ?? "") Traveller"
        
         if cellInfo?.key == "bc" {
             bottomView.isHidden = true
@@ -83,7 +78,7 @@ class InsurenceResultTVCell: TableViewCell {
         bottomView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         bottomView.layer.cornerRadius = 10
         bottomView.clipsToBounds = true
-        paxCountlbl.text = "For \(itotalPax) Pax"
+        paxCountlbl.text = "For \(itotalPax) Traveller"
         planContentTV.isHidden = true
      //   setupTV()
         

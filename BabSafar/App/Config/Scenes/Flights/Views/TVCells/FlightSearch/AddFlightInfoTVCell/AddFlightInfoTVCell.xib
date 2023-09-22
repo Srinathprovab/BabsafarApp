@@ -41,20 +41,20 @@
                                 </constraints>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="airways" translatesAutoresizingMaskIntoConstraints="NO" id="tVQ-Et-Sk0">
-                                <rect key="frame" x="40" y="5" width="30" height="30"/>
+                                <rect key="frame" x="40" y="7.6666666666666679" width="25" height="25.000000000000004"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="30" id="gu8-fp-q9Y"/>
-                                    <constraint firstAttribute="height" constant="30" id="mIv-Rw-dKS"/>
+                                    <constraint firstAttribute="width" constant="25" id="gu8-fp-q9Y"/>
+                                    <constraint firstAttribute="height" constant="25" id="mIv-Rw-dKS"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Qatar Airways" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zZv-hd-rN6">
-                                <rect key="frame" x="78" y="11.666666666666666" width="81.333333333333314" height="16.666666666666671"/>
+                                <rect key="frame" x="73" y="11.666666666666666" width="81.333333333333314" height="16.666666666666671"/>
                                 <fontDescription key="fontDescription" name="Manrope-Regular" family="Manrope" pointSize="12"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="(QR10003)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J6y-sh-0QT">
-                                <rect key="frame" x="164.33333333333334" y="14" width="48.666666666666657" height="12"/>
+                                <rect key="frame" x="159.33333333333334" y="14" width="48.666666666666657" height="12"/>
                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="10"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -80,7 +80,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="eFn-0P-T6d">
-                                <rect key="frame" x="10" y="45" width="189.66666666666666" height="44"/>
+                                <rect key="frame" x="10" y="42.666666666666657" width="189.66666666666666" height="49"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="05:50" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cSw-PJ-lV1">
                                         <rect key="frame" x="0.0" y="0.0" width="46.333333333333336" height="22"/>
@@ -88,25 +88,31 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="dubai (dXB)" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ksm-X1-wDD">
-                                        <rect key="frame" x="0.0" y="27" width="68.333333333333329" height="17"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="dubai (dXB)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ksm-X1-wDD">
+                                        <rect key="frame" x="0.0" y="27.000000000000007" width="189.66666666666666" height="22"/>
                                         <fontDescription key="fontDescription" name="Manrope-Regular" family="Manrope" pointSize="12"/>
                                         <color key="textColor" red="0.50196078431372548" green="0.50196078431372548" blue="0.53725490196078429" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="ksm-X1-wDD" secondAttribute="trailing" id="GSD-9x-cBd"/>
+                                    <constraint firstItem="ksm-X1-wDD" firstAttribute="top" secondItem="cSw-PJ-lV1" secondAttribute="bottom" constant="5" id="b28-cL-ZTd"/>
+                                    <constraint firstAttribute="bottom" secondItem="ksm-X1-wDD" secondAttribute="bottom" id="eJ5-Xw-hPM"/>
+                                    <constraint firstItem="ksm-X1-wDD" firstAttribute="leading" secondItem="eFn-0P-T6d" secondAttribute="leading" id="uXb-nL-fif"/>
+                                </constraints>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="nFg-px-6i4">
-                                <rect key="frame" x="289.66666666666669" y="45" width="189.33333333333331" height="44"/>
+                                <rect key="frame" x="289.66666666666669" y="42.666666666666657" width="189.33333333333331" height="49"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="05:50" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oUi-4h-hFX">
-                                        <rect key="frame" x="0.0" y="0.0" width="189.33333333333334" height="22.333333333333332"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="189.33333333333334" height="27.333333333333332"/>
                                         <fontDescription key="fontDescription" name="Manrope-Semibold" family="Manrope" pointSize="16"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="dubai (dXB)" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZdL-Bs-KeM">
-                                        <rect key="frame" x="0.0" y="27.333333333333329" width="189.33333333333334" height="16.666666666666671"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="dubai (dXB)" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZdL-Bs-KeM">
+                                        <rect key="frame" x="0.0" y="32.333333333333336" width="189.33333333333334" height="16.666666666666664"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="16.666666666666671" id="tol-VK-ag0"/>
                                         </constraints>

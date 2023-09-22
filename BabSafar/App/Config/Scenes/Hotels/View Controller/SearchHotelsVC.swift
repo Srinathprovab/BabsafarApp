@@ -105,7 +105,6 @@ class SearchHotelsVC: BaseTableVC, TopFlightDetailsViewModelDelegate {
         tablerow.removeAll()
         tablerow.append(TableRow(cellType:.SearchHotelTVCell))
         tablerow.append(TableRow(height:16,cellType:.EmptyTVCell))
-        //  tablerow.append(TableRow(title:"Top International Hotels",key: "hotels",cellType:.TopCityTVCell))
         
         commonTVData = tablerow
         commonTableView.reloadData()
@@ -260,9 +259,7 @@ extension SearchHotelsVC {
     
     
     @objc func reload() {
-        DispatchQueue.main.async {[self] in
-            commonTableView.reloadData()
-        }
+        setuptv()
     }
     
     //MARK: - resultnil

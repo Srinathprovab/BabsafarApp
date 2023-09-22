@@ -240,7 +240,7 @@ extension ModifyInsuranceVC {
         
         NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("offline"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(resultnil), name: NSNotification.Name("resultnil"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(reload), name: Notification.Name("reload"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reload), name: Notification.Name("reloadTV"), object: nil)
         
         
     }
@@ -248,7 +248,7 @@ extension ModifyInsuranceVC {
     
     @objc func reload() {
         DispatchQueue.main.async {[self] in
-            setuptv()
+            commonTableView.reloadData()
         }
     }
     

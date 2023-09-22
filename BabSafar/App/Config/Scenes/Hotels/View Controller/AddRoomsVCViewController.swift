@@ -451,66 +451,7 @@ class AddRoomsVCViewController: UIViewController, UITableViewDelegate, UITableVi
             }
             
             
-            
-            
-            
-            
-            
-            
-//            switch totalRooms {
-//            case 1:
-//                totalAdults = (cell.adultcount)
-//                totalChildren = (cell.childCount)
-//                adtArray.append("\(cell.adultcount)")
-//                chArray.append("\(cell.childCount)")
-//
-//                break
-//
-//            case 2:
-//                totalAdults = (cell.adultcount + cell.adultcount2)
-//                totalChildren = (cell.childCount + cell.childCount2)
-//                adtArray.append("\(cell.adultcount)")
-//                chArray.append("\(cell.childCount)")
-//
-//                adtArray.append("\(cell.adultcount2)")
-//                chArray.append("\(cell.childCount2)")
-//
-//
-//                break
-//
-//            case 3:
-//                totalAdults = (cell.adultcount + cell.adultcount2 + cell.adultcount3)
-//                totalChildren = (cell.childCount + cell.childCount2 + cell.childCount3)
-//                adtArray.append("\(cell.adultcount)")
-//                chArray.append("\(cell.childCount)")
-//
-//                adtArray.append("\(cell.adultcount2)")
-//                chArray.append("\(cell.childCount2)")
-//
-//                adtArray.append("\(cell.adultcount3)")
-//                chArray.append("\(cell.childCount3)")
-//
-//
-//                break
-//
-//            case 4:
-//                totalAdults = (cell.adultcount + cell.adultcount2 + cell.adultcount3 + cell.adultcount4)
-//                totalChildren = (cell.childCount + cell.childCount2 + cell.childCount3 + cell.childCount4)
-//                adtArray.append("\(cell.adultcount)")
-//                chArray.append("\(cell.childCount)")
-//
-//                adtArray.append("\(cell.adultcount2)")
-//                chArray.append("\(cell.childCount2)")
-//
-//                adtArray.append("\(cell.adultcount3)")
-//                chArray.append("\(cell.childCount3)")
-//
-//                adtArray.append("\(cell.adultcount4)")
-//                chArray.append("\(cell.childCount4)")
-//                break
-//            default:
-//                break
-//            }
+   
         }
         
 

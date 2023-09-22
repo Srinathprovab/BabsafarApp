@@ -170,7 +170,7 @@ class TravellerEconomyVC: BaseTableVC {
         if keyString == "traveller" {
             
             tableRow.append(TableRow(title:"Add Travellers ",key: "showbtn",cellType:.LabelTVCell))
-
+            
             if let journeyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
                 if journeyType == "oneway" {
                     
@@ -197,7 +197,7 @@ class TravellerEconomyVC: BaseTableVC {
         }else if keyString == "visa"{
             
             tableRow.append(TableRow(title:"Add Travellers ",key: "showbtn",cellType:.LabelTVCell))
-
+            
             tableRow.append(TableRow(title:"Adults",subTitle: "(12+)",text: defaults.string(forKey: UserDefaultsKeys.visaadultCount) ?? "1",cellType:.TravellerEconomyTVCell))
             tableRow.append(TableRow(title:"Child",subTitle: "(2-11)",text: defaults.string(forKey: UserDefaultsKeys.visachildCount) ?? "0",cellType:.TravellerEconomyTVCell))
             tableRow.append(TableRow(title:"Infant",subTitle: "(0-2)",text: defaults.string(forKey: UserDefaultsKeys.visainfantsCount) ?? "0",cellType:.TravellerEconomyTVCell))
@@ -205,7 +205,7 @@ class TravellerEconomyVC: BaseTableVC {
         }else if keyString == "insurence"{
             
             tableRow.append(TableRow(title:"Add Travellers ",key: "showbtn",cellType:.LabelTVCell))
-
+            
             if let journeyType = defaults.string(forKey: UserDefaultsKeys.InsurenceJourneyType) {
                 if journeyType == "oneway" {
                     tableRow.append(TableRow(title:"Adults",subTitle: "(12+)",text: defaults.string(forKey: UserDefaultsKeys.iadultCount) ?? "1",cellType:.TravellerEconomyTVCell))
@@ -227,7 +227,7 @@ class TravellerEconomyVC: BaseTableVC {
             
             
             tableRow.append(TableRow(title:"Add Travellers ",key: "showbtn",cellType:.LabelTVCell))
-
+            
             tableRow.append(TableRow(title:"Adults",subTitle: "(12+)",text: defaults.string(forKey: UserDefaultsKeys.fradultCount) ?? "1",cellType:.TravellerEconomyTVCell))
             tableRow.append(TableRow(title:"Child",subTitle: "(2-11)",text: defaults.string(forKey: UserDefaultsKeys.frchildCount) ?? "0",cellType:.TravellerEconomyTVCell))
             
@@ -277,8 +277,8 @@ class TravellerEconomyVC: BaseTableVC {
     }
     
     
-
-
+    
+    
     override func didTapOnIncrementButton(cell: TravellerEconomyTVCell) {
         if cell.titlelbl.text == "Infant" {
             // Increment the infant count if it's less than the number of adults
@@ -311,7 +311,7 @@ class TravellerEconomyVC: BaseTableVC {
         
         updateTotalTravelerCount()
     }
-
+    
     override func didTapOnDecrementButton(cell: TravellerEconomyTVCell) {
         if cell.titlelbl.text == "Infant" {
             // Decrement the infant count if it's greater than 0
@@ -326,8 +326,18 @@ class TravellerEconomyVC: BaseTableVC {
                 adultsCount -= 1
                 cell.count -= 1
                 cell.countlbl.text = "\(cell.count)"
+                
+                
+                
+                // Set child count to 0
+                if let infantCell = commonTableView.cellForRow(at: IndexPath(item: 3, section: 0)) as? TravellerEconomyTVCell {
+                    infantCell.count = 0
+                    infantCell.countlbl.text = "\(infantCell.count)"
+                    infantsCount = 0
+                }
+                
             }
-
+            
         } else {
             // Decrement children
             if cell.count > 0 {
@@ -338,19 +348,19 @@ class TravellerEconomyVC: BaseTableVC {
                 childCount = cell.count
             }
         }
-
+        
         updateTotalTravelerCount()
     }
     
     
-
-
+    
+    
     func updateTotalTravelerCount() {
         let totalTravelers = adultsCount + childCount + infantsCount
         print("Total Count === \(totalTravelers)")
         defaults.set(totalTravelers, forKey: UserDefaultsKeys.totalTravellerCount)
     }
-
+    
     
     
     override func didTapOnCloseBtn(cell: LabelTVCell) {
@@ -388,7 +398,7 @@ class TravellerEconomyVC: BaseTableVC {
                 }else {
                     let totaltraverlers = "\(defaults.string(forKey: UserDefaultsKeys.adultCount) ?? "") Adult | \(defaults.string(forKey: UserDefaultsKeys.childCount) ?? "") Child | \(defaults.string(forKey: UserDefaultsKeys.infantsCount) ?? "") Infant | \(defaults.string(forKey: UserDefaultsKeys.selectClass) ?? "")"
                     defaults.set(totaltraverlers, forKey: UserDefaultsKeys.travellerDetails)
-                   
+                    
                 }
                 
                 
@@ -401,10 +411,10 @@ class TravellerEconomyVC: BaseTableVC {
                 }else {
                     let totaltraverlers = "\(defaults.string(forKey: UserDefaultsKeys.radultCount) ?? "") Adult | \(defaults.string(forKey: UserDefaultsKeys.rchildCount) ?? "") Child | \(defaults.string(forKey: UserDefaultsKeys.rinfantsCount) ?? "") Infant |\(defaults.string(forKey: UserDefaultsKeys.rselectClass) ?? "")"
                     defaults.set(totaltraverlers, forKey: UserDefaultsKeys.rtravellerDetails)
-                   
+                    
                 }
                 
-               
+                
             }else{
                 
                 if adultsCount > 1 {
@@ -416,7 +426,7 @@ class TravellerEconomyVC: BaseTableVC {
                     defaults.set(totaltraverlers, forKey: UserDefaultsKeys.mtravellerDetails)
                 }
                 
-              
+                
             }
         }
         

@@ -41,6 +41,7 @@ class PersonalDetailsVC: BaseTableVC, InsurancePreprocessBookingViewModelDelegat
     var token = String()
     var app_reference = String()
     var price = ""
+    var currency = ""
     
     
     static var newInstance: PersonalDetailsVC? {
@@ -134,6 +135,7 @@ class PersonalDetailsVC: BaseTableVC, InsurancePreprocessBookingViewModelDelegat
         tablerow.append(TableRow(title:baseFare,
                                  subTitle: tax,
                                  buttonTitle: totalFare,
+                                 tempText: currency,
                                  cellType:.InsurenceFareSummaryTVCell))
         
         tablerow.append(TableRow(height:50, bgColor:.AppHolderViewColor,cellType:.EmptyTVCell))
@@ -262,9 +264,10 @@ extension PersonalDetailsVC {
         token = iplandetails
         app_reference = response.app_reference ?? ""
         
-        price =  "\(response.currencyCode ?? "")\(String(format: "%.2f", response.total_fare ?? ""))"
-        grandTotal = "\(response.currencyCode ?? "")\(String(format: "%.2f", response.total_fare ?? ""))"
-        tax = "\(response.currencyCode ?? "")\(String(format: "%.2f", Double(response.tax ?? 0)))"
+        currency = response.selected_package?.currency ?? ""
+        price =  "\(String(format: "%.2f", response.total_fare ?? ""))"
+        grandTotal = "\(String(format: "%.2f", response.total_fare ?? ""))"
+        tax = "\(String(format: "%.2f", Double(response.tax ?? 0)))"
         
         DispatchQueue.main.async {
             self.setupTV()
