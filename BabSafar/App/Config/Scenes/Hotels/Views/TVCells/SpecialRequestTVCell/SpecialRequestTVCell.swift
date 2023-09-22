@@ -55,6 +55,14 @@ class SpecialRequestTVCell: TableViewCell {
                                  str3: str3,
                                  str4: str4,
                                  str5: str5)
+        }else if cellInfo?.key == "flight" {
+            titlelbl.font = .LatoSemibold(size: 12)
+            specialRequestlbl.isHidden = true
+            setAttributedString2(str1: str1,
+                                 str2: str2,
+                                 str3: str3,
+                                 str4: str4,
+                                 str5: str5)
         }else {
             specialRequestlbl.isHidden = false
             setAttributedString(str1: "By booking this item, you agree to pay the total amount shown, which includes Service Fees, on the right and to the, ",
@@ -138,6 +146,43 @@ extension SpecialRequestTVCell {
 
 
 extension SpecialRequestTVCell {
+    
+    
+    
+    func setAttributedString2(str1:String,str2:String,str3:String,str4:String,str5:String) {
+        
+        let atter1 = [NSAttributedString.Key.foregroundColor:UIColor.errorLabelColor,NSAttributedString.Key.font:UIFont.LatoRegular(size: 12)] as [NSAttributedString.Key : Any]
+        
+        
+        
+        let atter2 : [NSAttributedString.Key: Any] = [NSAttributedString.Key.foregroundColor:UIColor.AppLabelColor,
+                                                      NSAttributedString.Key.font:UIFont.LatoRegular(size: 12),
+                                                      .underlineStyle: NSUnderlineStyle.single.rawValue]
+        
+        
+        let atterStr1 = NSMutableAttributedString(string: str1, attributes: atter1)
+        let atterStr2 = NSMutableAttributedString(string: str2, attributes: atter2)
+        let atterStr3 = NSMutableAttributedString(string: str3, attributes: atter1)
+        let atterStr4 = NSMutableAttributedString(string: str4, attributes: atter2)
+        let atterStr5 = NSMutableAttributedString(string: str5, attributes: atter1)
+        
+        
+        let combination = NSMutableAttributedString()
+        combination.append(atterStr1)
+        combination.append(atterStr2)
+        combination.append(atterStr3)
+        combination.append(atterStr4)
+        combination.append(atterStr5)
+        
+        titlelbl.attributedText = combination
+        
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(labelTapped1))
+        titlelbl.addGestureRecognizer(tapGesture)
+        titlelbl.isUserInteractionEnabled = true
+    }
+    
+    
     
     func setAttributedString1(str1:String,str2:String,str3:String,str4:String,str5:String) {
         

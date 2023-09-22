@@ -189,6 +189,7 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
                                          "SearchFlightResultTVCell",
                                          "ViewFlightDetailsBtnTVCell",
                                          "UsePromoCodesTVCell",
+                                         "SpecialRequestTVCell",
                                          "AddDeatilsOfTravellerTVCell",
                                          "AcceptTermsAndConditionTVCell",
                                          "TotalNoofTravellerTVCell",
@@ -249,9 +250,13 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
         tablerow.append(TableRow(cellType:.ContactInformationTVCell))
         tablerow.append(TableRow(cellType:.UsePromoCodesTVCell))
         tablerow.append(TableRow(price:grand_total_Price,cellType:.PriceSummaryTVCell))
-        tablerow.append(TableRow(title:"I Accept T&C and Privacy Policy",cellType:.AcceptTermsAndConditionTVCell))
-        tablerow.append(TableRow(height:50, bgColor:.AppHolderViewColor,cellType:.EmptyTVCell))
+//        tablerow.append(TableRow(title:"I Accept T&C and Privacy Policy",cellType:.AcceptTermsAndConditionTVCell))
+//        tablerow.append(TableRow(height:50, bgColor:.AppHolderViewColor,cellType:.EmptyTVCell))
         
+        
+        tablerow.append(TableRow(key:"flight",
+                                 cellType:.SpecialRequestTVCell))
+        tablerow.append(TableRow(height:50, bgColor:.AppHolderViewColor,cellType:.EmptyTVCell))
         
         commonTVData = tablerow
         commonTableView.reloadData()
@@ -444,52 +449,52 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
     
     //MARK: - did Tap On T&C Action
     
-    override func didTapOnTAndCAction(cell: AcceptTermsAndConditionTVCell) {
-        payload.removeAll()
-        BASE_URL = ""
-        payload["id"] = "3"
-        moreDeatilsViewModel?.CALL_GET_TERMSANDCONDITION_API(dictParam: payload, url: "https://provabdevelopment.com/pro_new/mobile/index.php/general/cms")
-    }
-    
-    func termsandcobditionDetails(response: AboutUsModel) {
-        gotoAboutUsVC(title: response.data?.page_title ?? "", desc: response.data?.page_description ?? "")
-    }
-    
-    func contactDetals(response: ContactUsModel) {
-        
-    }
-    
-    func aboutusDetails(response: AboutUsModel) {
-        
-    }
-    
-    
-    
-    //MARK: - did Tap On Privacy Policy Action
-    override func didTapOnPrivacyPolicyAction(cell: AcceptTermsAndConditionTVCell) {
-        payload.removeAll()
-        BASE_URL = ""
-        payload["id"] = "4"
-        moreDeatilsViewModel?.CALL_GET_PRIVICYPOLICY_API(dictParam: payload, url: "https://provabdevelopment.com/pro_new/mobile/index.php/general/cms")
-    }
-    
-    
-    func privacyPolicyDetails(response: AboutUsModel) {
-        gotoAboutUsVC(title: response.data?.page_title ?? "", desc: response.data?.page_description ?? "")
-    }
-    
-    
-    //MARK: - Load URLS of T&C And Privacy Policy
-    
-    func gotoAboutUsVC(title:String,desc:String) {
-        guard let vc = AboutUsVC.newInstance.self else {return}
-        vc.titleString = title
-        vc.key1 = "webviewhide"
-        vc.desc = desc
-        vc.modalPresentationStyle = .fullScreen
-        self.present(vc, animated: true)
-        
-    }
+//    override func didTapOnTAndCAction(cell: AcceptTermsAndConditionTVCell) {
+//        payload.removeAll()
+//        BASE_URL = ""
+//        payload["id"] = "3"
+//        moreDeatilsViewModel?.CALL_GET_TERMSANDCONDITION_API(dictParam: payload, url: "https://provabdevelopment.com/pro_new/mobile/index.php/general/cms")
+//    }
+//
+//    func termsandcobditionDetails(response: AboutUsModel) {
+//        gotoAboutUsVC(title: response.data?.page_title ?? "", desc: response.data?.page_description ?? "")
+//    }
+//
+//    func contactDetals(response: ContactUsModel) {
+//
+//    }
+//
+//    func aboutusDetails(response: AboutUsModel) {
+//
+//    }
+//
+//
+//
+//    //MARK: - did Tap On Privacy Policy Action
+//    override func didTapOnPrivacyPolicyAction(cell: AcceptTermsAndConditionTVCell) {
+//        payload.removeAll()
+//        BASE_URL = ""
+//        payload["id"] = "4"
+//        moreDeatilsViewModel?.CALL_GET_PRIVICYPOLICY_API(dictParam: payload, url: "https://provabdevelopment.com/pro_new/mobile/index.php/general/cms")
+//    }
+//
+//
+//    func privacyPolicyDetails(response: AboutUsModel) {
+//        gotoAboutUsVC(title: response.data?.page_title ?? "", desc: response.data?.page_description ?? "")
+//    }
+//
+//
+//    //MARK: - Load URLS of T&C And Privacy Policy
+//
+//    func gotoAboutUsVC(title:String,desc:String) {
+//        guard let vc = AboutUsVC.newInstance.self else {return}
+//        vc.titleString = title
+//        vc.key1 = "webviewhide"
+//        vc.desc = desc
+//        vc.modalPresentationStyle = .fullScreen
+//        self.present(vc, animated: true)
+//
+//    }
     
     
     
@@ -836,6 +841,59 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
     override func didTapOnFlyerProgramBtnAction(cell:AddDeatilsOfTravellerTVCell){
         print(cell.flyerProgramTF.text)
     }
+    
+    
+    
+    
+    //MARK: - did Tap On T&C Action
+    
+    override func didTapOnTAndCAction(cell: SpecialRequestTVCell) {
+        payload.removeAll()
+        BASE_URL = ""
+        payload["id"] = "3"
+        moreDeatilsViewModel?.CALL_GET_TERMSANDCONDITION_API(dictParam: payload, url: "https://provabdevelopment.com/pro_new/mobile/index.php/general/cms")
+    }
+    
+    func termsandcobditionDetails(response: AboutUsModel) {
+        gotoAboutUsVC(title: response.data?.page_title ?? "", desc: response.data?.page_description ?? "")
+    }
+    
+    func contactDetals(response: ContactUsModel) {
+        
+    }
+    
+    func aboutusDetails(response: AboutUsModel) {
+        
+    }
+    
+    
+    
+    //MARK: - did Tap On Privacy Policy Action
+    override func didTapOnPrivacyPolicyAction(cell: SpecialRequestTVCell) {
+        payload.removeAll()
+        BASE_URL = ""
+        payload["id"] = "4"
+        moreDeatilsViewModel?.CALL_GET_PRIVICYPOLICY_API(dictParam: payload, url: "https://provabdevelopment.com/pro_new/mobile/index.php/general/cms")
+    }
+    
+    
+    func privacyPolicyDetails(response: AboutUsModel) {
+        gotoAboutUsVC(title: response.data?.page_title ?? "", desc: response.data?.page_description ?? "")
+    }
+    
+    
+    //MARK: - Load URLS of T&C And Privacy Policy
+    
+    func gotoAboutUsVC(title:String,desc:String) {
+        guard let vc = AboutUsVC.newInstance.self else {return}
+        vc.titleString = title
+        vc.key1 = "webviewhide"
+        vc.desc = desc
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true)
+        
+    }
+    
     
 }
 

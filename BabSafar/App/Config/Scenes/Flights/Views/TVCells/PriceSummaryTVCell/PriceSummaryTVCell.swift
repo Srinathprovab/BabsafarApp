@@ -232,7 +232,7 @@ extension PriceSummaryTVCell :UITableViewDataSource,UITableViewDelegate {
                     
                 }else if adultsCount > 0 && childCount == 0 && infantsCount > 0{
                     
-                    cell.adultCountlbl.text = "Traveller x \(infantsCount)(Infanta)"
+                    cell.adultCountlbl.text = "Traveller x \(infantsCount)(Infant)"
                     
                     setAttributedTextnew(str1: "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? "")",
                                          str2: String(format: "%.2f", Double(InfantTotalPrice) ?? 0.0),
@@ -293,7 +293,7 @@ extension PriceSummaryTVCell :UITableViewDataSource,UITableViewDelegate {
                
                 
             }else {
-                cell.adultCountlbl.text = "Traveller x \(infantsCount)(Infanta)"
+                cell.adultCountlbl.text = "Traveller x \(infantsCount)(Infant)"
                
                 
                 setAttributedTextnew(str1: "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? "")",

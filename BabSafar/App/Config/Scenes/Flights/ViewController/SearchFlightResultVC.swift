@@ -255,7 +255,7 @@ class SearchFlightResultVC: BaseTableVC, UITextFieldDelegate {
     //MARK: - didTapOnPreviousDateBtnAction
     @IBAction func didTapOnPreviousDateBtnAction(_ sender: Any) {
         
-        
+        holderView.isHidden = true
         loderBool = true
         if let journeyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
             if journeyType == "oneway" {
@@ -314,7 +314,7 @@ class SearchFlightResultVC: BaseTableVC, UITextFieldDelegate {
     //MARK: - didTapOnNextDateBtnTapAction
     @IBAction func didTapOnNextDateBtnTapAction(_ sender: Any) {
         
-        
+        holderView.isHidden = true
         loderBool = true
         
         if let journeyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
