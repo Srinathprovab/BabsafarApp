@@ -330,10 +330,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e1d-5h-w4F">
-                                        <rect key="frame" x="299" y="5" width="75" height="35"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="75" id="fpG-BQ-W1n"/>
-                                        </constraints>
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="45"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain"/>
                                         <connections>
@@ -341,17 +338,18 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" red="0.94509803921568625" green="0.29019607843137252" blue="0.082352941176470587" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.90980392156862744" green="0.16470588235294117" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="z1t-eV-8ax" firstAttribute="centerY" secondItem="Ex7-oq-OLg" secondAttribute="centerY" id="1Yd-zE-2AA"/>
                                     <constraint firstAttribute="trailing" secondItem="gU5-qy-2iY" secondAttribute="trailing" constant="20" id="2kP-xI-lVc"/>
                                     <constraint firstAttribute="height" constant="45" id="Rq4-k7-5z3"/>
-                                    <constraint firstAttribute="bottom" secondItem="e1d-5h-w4F" secondAttribute="bottom" constant="5" id="Sm8-Oy-Bw8"/>
-                                    <constraint firstAttribute="trailing" secondItem="e1d-5h-w4F" secondAttribute="trailing" id="a4c-0O-RED"/>
-                                    <constraint firstItem="e1d-5h-w4F" firstAttribute="top" secondItem="U0d-0R-Z0J" secondAttribute="top" constant="5" id="dJo-iB-ys0"/>
+                                    <constraint firstAttribute="bottom" secondItem="e1d-5h-w4F" secondAttribute="bottom" id="TP1-Df-1cf"/>
+                                    <constraint firstItem="e1d-5h-w4F" firstAttribute="leading" secondItem="U0d-0R-Z0J" secondAttribute="leading" id="f15-RM-XcQ"/>
                                     <constraint firstItem="Ex7-oq-OLg" firstAttribute="leading" secondItem="U0d-0R-Z0J" secondAttribute="leading" constant="10" id="g3o-EP-w2W"/>
                                     <constraint firstItem="gU5-qy-2iY" firstAttribute="centerY" secondItem="U0d-0R-Z0J" secondAttribute="centerY" id="jOZ-bN-FgI"/>
                                     <constraint firstItem="Ex7-oq-OLg" firstAttribute="centerY" secondItem="U0d-0R-Z0J" secondAttribute="centerY" id="q9i-0E-jox"/>
+                                    <constraint firstAttribute="trailing" secondItem="e1d-5h-w4F" secondAttribute="trailing" id="t2J-1W-BG2"/>
+                                    <constraint firstItem="e1d-5h-w4F" firstAttribute="top" secondItem="U0d-0R-Z0J" secondAttribute="top" id="tRR-mw-kY2"/>
                                     <constraint firstItem="z1t-eV-8ax" firstAttribute="leading" secondItem="Ex7-oq-OLg" secondAttribute="trailing" constant="10" id="vcC-vS-ccw"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
@@ -404,7 +402,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rYZ-3U-tew" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1974" y="-447"/>
+            <point key="canvasLocation" x="1973.913043478261" y="-447.32142857142856"/>
         </scene>
         <!--Card Payment View Controller-->
         <scene sceneID="JzK-w3-HQW">

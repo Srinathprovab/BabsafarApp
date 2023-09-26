@@ -225,7 +225,7 @@ extension BookingConfirmedVC {
         tablerow.append(TableRow(title:"Lead Passenger",moreData:Customerdetails,cellType:.BookedTravelDetailsTVCell))
         tablerow.append(TableRow(height:35,cellType:.EmptyTVCell))
         tablerow.append(TableRow(title:"Thank you for booking with bab safar Your attraction voucher has been shared on the confirmed email.",key: "booked",cellType:.LabelTVCell))
-        tablerow.append(TableRow(title:"Download E - Ticket",key:"booked",cellType:.ButtonTVCell))
+       // tablerow.append(TableRow(title:"Download E - Ticket",key:"booked",cellType:.ButtonTVCell))
         tablerow.append(TableRow(height:60,cellType:.EmptyTVCell))
         
         commonTVData = tablerow
@@ -323,7 +323,7 @@ extension BookingConfirmedVC {
         
         tablerow.append(TableRow(title:"Thank you for booking with bab safar Your attraction voucher has been shared on the confirmed email.",key: "booked",cellType:.LabelTVCell))
         
-        tablerow.append(TableRow(title:"Download E - Ticket",key:"booked",cellType:.ButtonTVCell))
+       // tablerow.append(TableRow(title:"Download E - Ticket",key:"booked",cellType:.ButtonTVCell))
         tablerow.append(TableRow(height:60,cellType:.EmptyTVCell))
         
         commonTVData = tablerow
@@ -421,7 +421,7 @@ extension BookingConfirmedVC {
         
         tablerow.append(TableRow(title:"Thank you for booking with bab safar Your attraction voucher has been shared on the confirmed email.",key: "booked",cellType:.LabelTVCell))
         
-        tablerow.append(TableRow(title:"Download E - Ticket",key:"booked",cellType:.ButtonTVCell))
+      //  tablerow.append(TableRow(title:"Download E - Ticket",key:"booked",cellType:.ButtonTVCell))
         tablerow.append(TableRow(height:60,cellType:.EmptyTVCell))
         
         commonTVData = tablerow

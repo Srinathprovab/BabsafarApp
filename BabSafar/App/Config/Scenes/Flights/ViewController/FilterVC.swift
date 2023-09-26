@@ -20,6 +20,7 @@ struct FilterModel {
     var noOvernightFlight: String?
     var connectingFlights: [String] = []
     var connectingAirports: [String] = []
+    var luggage: [String] = []
 }
 
 
@@ -48,6 +49,7 @@ protocol AppliedFilters:AnyObject {
                           departureTime:String,arrivalTime:String,
                           noOvernightFlight:String,
                           airlinesFilterArray:[String],
+                          luggageFilterArray:[String],
                           connectingFlightsFilterArray:[String],
                           ConnectingAirportsFilterArray:[String])
     
@@ -86,7 +88,6 @@ class FilterVC: BaseTableVC{
     var starRatingFilter = String()
     var stopsArray = ["0 Stop","1 Stop","1+ Stop"]
     var refundableTypeArray = ["Refundable","Non Refundable"]
-    var luggageArray = ["Cabin Baggage","Checked Baggage"]
     var tablerow = [TableRow]()
     var filterKey = String()
     var noOverNightFlightArray = ["No"]
@@ -100,10 +101,13 @@ class FilterVC: BaseTableVC{
     var connectingFlightsFilterArray = [String]()
     var ConnectingAirportsFilterArray = [String]()
     
+    
+    var flightRefundablerTypeFilteArray = [String]()
     //MARK: - Hotels
     var selectedNeighbourwoodArray = [String]()
     var selectednearBylocationsArray = [String]()
     var selectedamenitiesArray = [String]()
+    var selectedLuggageArray = [String]()
     
     static var newInstance: FilterVC? {
         let storyboard = UIStoryboard(name: Storyboard.Main.name,
@@ -117,7 +121,7 @@ class FilterVC: BaseTableVC{
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
+        loadInitialValuesFromFilterModel()
         
         NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("nointernet"), object: nil)
     }
@@ -582,6 +586,12 @@ class FilterVC: BaseTableVC{
                         resetSortBy(cell: cell5)
                     }
                     
+                    
+                    DispatchQueue.main.async {[self] in
+                        resetFilter()
+                    }
+                    
+                    
                 }else {
                     if let cell1 = commonTableView.cellForRow(at: IndexPath(item: 0, section: 0)) as? SortbyTVCell {
                         resetSortBy(cell: cell1)
@@ -644,23 +654,26 @@ class FilterVC: BaseTableVC{
                     noOfStopsFilterArray.append("2")
                 }
                 
-                print(noOfStopsFilterArray.joined(separator: "---"))
                 break
                 
             case "Refundable Type":
                 
                 if cell.titlelbl.text == "Refundable" {
-                    refundablerTypeFilteArray.append("Refundable")
+                    flightRefundablerTypeFilteArray.append("Refundable")
                 }else {
-                    refundablerTypeFilteArray.append("Non Refundable")
+                    flightRefundablerTypeFilteArray.append("Non Refundable")
                 }
                 
-                print(refundablerTypeFilteArray)
                 break
                 
             case "Airlines":
                 airlinesFilterArray.append(cell.titlelbl.text ?? "")
-                print(airlinesFilterArray.joined(separator: "---"))
+                break
+                
+                
+            case "Luggage":
+                selectedLuggageArray.append(cell.titlelbl.text ?? "")
+                
                 break
                 
                 
@@ -671,13 +684,11 @@ class FilterVC: BaseTableVC{
                 
             case "Connecting Flights":
                 connectingFlightsFilterArray.append(cell.titlelbl.text ?? "")
-                print(connectingFlightsFilterArray.joined(separator: "---"))
                 break
                 
                 
             case "Connecting Airports":
                 ConnectingAirportsFilterArray.append(cell.titlelbl.text ?? "")
-                print(ConnectingAirportsFilterArray.joined(separator: "---"))
                 break
                 
                 
@@ -699,26 +710,22 @@ class FilterVC: BaseTableVC{
                     refundablerTypeFilteArray.append("Non Refundable")
                 }
                 
-                print(refundablerTypeFilteArray)
                 break
                 
                 
                 
             case "Neighbourhood":
                 selectedNeighbourwoodArray.append(cell.titlelbl.text ?? "")
-                print(selectedNeighbourwoodArray.joined(separator: "---"))
                 break
                 
                 
             case "Near By Location's":
                 selectednearBylocationsArray.append(cell.titlelbl.text ?? "")
-                print(selectednearBylocationsArray.joined(separator: "---"))
                 break
                 
                 
             case "Amenities":
                 selectedamenitiesArray.append(cell.titlelbl.text ?? "")
-                print(selectedamenitiesArray.joined(separator: "---"))
                 break
                 
                 
@@ -752,21 +759,19 @@ class FilterVC: BaseTableVC{
                         noOfStopsFilterArray.remove(at: index)
                     }
                 }
-                print(noOfStopsFilterArray.joined(separator: "---"))
                 break
                 
             case "Refundable Type":
                 
                 if cell.titlelbl.text == "Refundable" {
-                    if let index = refundablerTypeFilteArray.firstIndex(of: "Refundable") {
-                        refundablerTypeFilteArray.remove(at: index)
+                    if let index = flightRefundablerTypeFilteArray.firstIndex(of: "Refundable") {
+                        flightRefundablerTypeFilteArray.remove(at: index)
                     }
                 }else {
-                    if let index = refundablerTypeFilteArray.firstIndex(of: "Non Refundable") {
-                        refundablerTypeFilteArray.remove(at: index)
+                    if let index = flightRefundablerTypeFilteArray.firstIndex(of: "Non Refundable") {
+                        flightRefundablerTypeFilteArray.remove(at: index)
                     }
                 }
-                print(refundablerTypeFilteArray)
                 break
                 
                 
@@ -774,7 +779,19 @@ class FilterVC: BaseTableVC{
                 if let index = airlinesFilterArray.firstIndex(of: cell.titlelbl.text ?? "") {
                     airlinesFilterArray.remove(at: index)
                 }
-                print(airlinesFilterArray.joined(separator: "---"))
+                break
+                
+                
+            case "Luggage":
+                if let index = selectedLuggageArray.firstIndex(of: cell.titlelbl.text ?? "") {
+                    selectedLuggageArray.remove(at: index)
+                }
+                
+                if selectedLuggageArray.isEmpty == true {
+                    filterModel.luggage.removeAll()
+                }
+                
+                print(selectedLuggageArray.joined(separator: "---"))
                 break
                 
             case "No Overnight Flight":
@@ -785,7 +802,7 @@ class FilterVC: BaseTableVC{
                 if let index = connectingFlightsFilterArray.firstIndex(of: cell.titlelbl.text ?? "") {
                     connectingFlightsFilterArray.remove(at: index)
                 }
-                print(connectingFlightsFilterArray.joined(separator: "---"))
+                
                 break
                 
                 
@@ -793,7 +810,6 @@ class FilterVC: BaseTableVC{
                 if let index = ConnectingAirportsFilterArray.firstIndex(of: cell.titlelbl.text ?? "") {
                     ConnectingAirportsFilterArray.remove(at: index)
                 }
-                print(ConnectingAirportsFilterArray.joined(separator: "---"))
                 break
                 
                 
@@ -816,7 +832,6 @@ class FilterVC: BaseTableVC{
                         refundablerTypeFilteArray.remove(at: index)
                     }
                 }
-                print(refundablerTypeFilteArray)
                 break
                 
                 
@@ -825,7 +840,6 @@ class FilterVC: BaseTableVC{
                 if let index = selectedNeighbourwoodArray.firstIndex(of: cell.titlelbl.text ?? "") {
                     selectedNeighbourwoodArray.remove(at: index)
                 }
-                print(selectedNeighbourwoodArray.joined(separator: "---"))
                 break
                 
                 
@@ -834,7 +848,6 @@ class FilterVC: BaseTableVC{
                 if let index = selectednearBylocationsArray.firstIndex(of: cell.titlelbl.text ?? "") {
                     selectednearBylocationsArray.remove(at: index)
                 }
-                print(selectednearBylocationsArray.joined(separator: "---"))
                 break
                 
                 
@@ -843,7 +856,6 @@ class FilterVC: BaseTableVC{
                 if let index = selectedamenitiesArray.firstIndex(of: cell.titlelbl.text ?? "") {
                     selectedamenitiesArray.remove(at: index)
                 }
-                print(selectedamenitiesArray.joined(separator: "---"))
                 break
                 
                 
@@ -918,19 +930,39 @@ class FilterVC: BaseTableVC{
                 
                 filterModel.minPriceRange = minpricerangefilter
                 filterModel.maxPriceRange = maxpricerangefilter
-                filterModel.noOfStops = noOfStopsFilterArray
-                filterModel.refundableTypes = refundablerTypeFilteArray
-                filterModel.airlines = airlinesFilterArray
+//                filterModel.noOfStops = noOfStopsFilterArray
+//                filterModel.refundableTypes = flightRefundablerTypeFilteArray
+//                filterModel.airlines = airlinesFilterArray
                 filterModel.departureTime = departureTimeFilter
                 filterModel.arrivalTime = arrivalTimeFilter
-                filterModel.noOvernightFlight = noOvernightFlightFilterStr
-                filterModel.connectingFlights = connectingFlightsFilterArray
-                filterModel.connectingAirports = ConnectingAirportsFilterArray
+//                filterModel.noOvernightFlight = noOvernightFlightFilterStr
+//                filterModel.connectingFlights = connectingFlightsFilterArray
+//                filterModel.connectingAirports = ConnectingAirportsFilterArray
                 
+                if !noOfStopsFilterArray.isEmpty {
+                    filterModel.noOfStops = noOfStopsFilterArray
+                }
                 
+                if !flightRefundablerTypeFilteArray.isEmpty {
+                    filterModel.refundableTypes = flightRefundablerTypeFilteArray
+                }
                 
+                if !airlinesFilterArray.isEmpty {
+                    filterModel.airlines = airlinesFilterArray
+                }
                 
-                //                delegate?.filtersByApplied(minpricerange:minpricerangefilter,maxpricerange: maxpricerangefilter,noofStopsArray: noOfStopsFilterArray, refundableTypeArray: refundablerTypeFilteArray, departureTime: departureTimeFilter,arrivalTime: arrivalTimeFilter, noOvernightFlight: noOvernightFlightFilterStr,airlinesFilterArray: airlinesFilterArray,connectingFlightsFilterArray: connectingFlightsFilterArray,ConnectingAirportsFilterArray: ConnectingAirportsFilterArray)
+                if !connectingFlightsFilterArray.isEmpty {
+                    filterModel.connectingFlights = connectingFlightsFilterArray
+                }
+                
+                if !ConnectingAirportsFilterArray.isEmpty {
+                    filterModel.connectingAirports = ConnectingAirportsFilterArray
+                }
+                
+                if !selectedLuggageArray.isEmpty {
+                    filterModel.luggage = selectedLuggageArray
+                }
+                    
                 
                 
                 delegate?.filtersByApplied(minpricerange:filterModel.minPriceRange ?? 0.0,
@@ -941,6 +973,7 @@ class FilterVC: BaseTableVC{
                                            arrivalTime: filterModel.arrivalTime ?? "",
                                            noOvernightFlight: filterModel.noOvernightFlight ?? "",
                                            airlinesFilterArray: filterModel.airlines,
+                                           luggageFilterArray: filterModel.luggage,
                                            connectingFlightsFilterArray: filterModel.connectingFlights,
                                            ConnectingAirportsFilterArray: filterModel.connectingAirports)
                 
@@ -1018,5 +1051,62 @@ extension FilterVC {
             tableView.performBatchUpdates(nil)
         }
     }
+    
+}
+
+
+
+extension FilterVC {
+    
+    
+    
+    func loadInitialValuesFromFilterModel() {
+//        selectedLuggageArray.removeAll()
+//
+//        selectedLuggageArray = filterModel.luggage
+        
+        
+    }
+    
+    
+    
+    func resetFilter() {
+        // Reset all values in the FilterModel
+        
+        filterModel.minPriceRange = nil
+        filterModel.maxPriceRange = nil
+        filterModel.noOfStops = []
+        filterModel.refundableTypes = []
+        filterModel.airlines = []
+        filterModel.departureTime = nil
+        filterModel.arrivalTime = nil
+        filterModel.noOvernightFlight = nil
+        filterModel.connectingFlights = []
+        filterModel.connectingAirports = []
+       
+        
+        print("Before removeAll: \(filterModel.luggage)")
+        filterModel.luggage.removeAll()
+        print("After removeAll: \(filterModel.luggage)")
+
+        
+        // Deselect all cells in your checkOptionsTVCell table view
+        deselectAllCheckOptionsCells()
+        
+        // Reload the table view to reflect the changes
+        commonTableView.reloadData()
+    }
+    
+    func deselectAllCheckOptionsCells() {
+        // Iterate through the table view and deselect all cells
+        for section in 0..<commonTableView.numberOfSections {
+            for row in 0..<commonTableView.numberOfRows(inSection: section) {
+                if let cell = commonTableView.cellForRow(at: IndexPath(row: row, section: section)) as? checkOptionsTVCell {
+                    cell.unselected()
+                }
+            }
+        }
+    }
+    
     
 }

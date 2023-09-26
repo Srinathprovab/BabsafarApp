@@ -39,13 +39,21 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Passenger Details" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eYK-12-p0p">
+                                <rect key="frame" x="249.33333333333329" y="15.333333333333334" width="123.66666666666666" height="19.333333333333329"/>
+                                <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="16"/>
+                                <color key="textColor" name="AppCalenderDateSelectColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="htH-Ro-TaH" firstAttribute="leading" secondItem="icK-rc-F5U" secondAttribute="leading" constant="15" id="E6H-Fw-WnT"/>
                             <constraint firstItem="htH-Ro-TaH" firstAttribute="top" secondItem="icK-rc-F5U" secondAttribute="top" constant="10" id="Igq-Nv-tex"/>
                             <constraint firstAttribute="height" constant="50" id="JuO-3Q-c7T"/>
+                            <constraint firstAttribute="trailing" secondItem="eYK-12-p0p" secondAttribute="trailing" constant="10" id="KRL-Is-YRo"/>
                             <constraint firstAttribute="bottom" secondItem="htH-Ro-TaH" secondAttribute="bottom" constant="10" id="QTM-5t-q1i"/>
+                            <constraint firstItem="eYK-12-p0p" firstAttribute="centerY" secondItem="UCV-WX-zsz" secondAttribute="centerY" id="Xdz-qT-XtF"/>
                             <constraint firstItem="UCV-WX-zsz" firstAttribute="leading" secondItem="htH-Ro-TaH" secondAttribute="trailing" constant="15" id="otk-Ov-UKr"/>
                             <constraint firstItem="UCV-WX-zsz" firstAttribute="centerY" secondItem="htH-Ro-TaH" secondAttribute="centerY" id="wR4-O4-HRd"/>
                         </constraints>
@@ -74,6 +82,7 @@
             <connections>
                 <outlet property="holderView" destination="icK-rc-F5U" id="ngr-aT-GQR"/>
                 <outlet property="titlelbl" destination="UCV-WX-zsz" id="tz0-No-d9r"/>
+                <outlet property="totalNoOfTravellerCountlbl" destination="eYK-12-p0p" id="QAa-8F-pLJ"/>
             </connections>
             <point key="canvasLocation" x="6.8702290076335872" y="37.323943661971832"/>
         </tableViewCell>
@@ -82,6 +91,9 @@
         <image name="travel" width="26.333333969116211" height="25.333333969116211"/>
         <namedColor name="AppBorderColor">
             <color red="0.90200001001358032" green="0.9100000262260437" blue="0.90600001811981201" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="AppCalenderDateSelectColor">
+            <color red="0.0" green="0.6589999794960022" blue="0.59600001573562622" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="AppHolderViewColor">
             <color red="0.94499999284744263" green="0.95300000905990601" blue="0.94900000095367432" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

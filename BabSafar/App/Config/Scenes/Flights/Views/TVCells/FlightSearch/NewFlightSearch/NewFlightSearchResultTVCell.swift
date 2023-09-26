@@ -209,6 +209,7 @@ extension NewFlightSearchResultTVCell: UITableViewDelegate,UITableViewDataSource
             cell.fromCitylbl.text = "\(data.origin?.city ?? "")(\(data.origin?.loc ?? ""))"
             cell.toTimelbl.text = data.destination?.time ?? ""
             cell.toCitylbl.text = "\(data.destination?.city ?? "")(\(data.destination?.loc ?? ""))"
+            cell.cabinlbl.text = convertToDesiredFormat(data.weight_Allowance ?? "")
             
             if key == "circle" {
                 if tableView.isLast(for: indexPath) == true {
@@ -249,17 +250,7 @@ extension NewFlightSearchResultTVCell {
         moreSimlarOptionlbl.isHidden = false
     }
     
-    func convertToDesiredFormat(_ inputString: String) -> String {
-        if let number = Int(inputString.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()) {
-            if inputString.contains("Kilograms") {
-                return "\(number) kg"
-            } else if inputString.contains("NumberOfPieces") {
-                return "\(number) pc"
-            }
-        }
-        return "Invalid input format."
-    }
-    
+   
     
     func setAttributedString1(str1:String,str2:String) {
         

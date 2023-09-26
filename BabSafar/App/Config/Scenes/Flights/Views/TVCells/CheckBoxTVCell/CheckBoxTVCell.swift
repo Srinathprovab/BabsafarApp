@@ -71,9 +71,7 @@ class CheckBoxTVCell: TableViewCell {
         
         switch titlelbl.text {
         case "Stops":
-//            downBtn.isHidden = true
-//            downImg.isHidden = true
-            // expand()
+            
             break
             
         case "Airlines":
@@ -92,7 +90,6 @@ class CheckBoxTVCell: TableViewCell {
         
         
         expand()
-        
         checkOptionsTV.reloadData()
     }
     
@@ -161,10 +158,11 @@ class CheckBoxTVCell: TableViewCell {
 extension CheckBoxTVCell:UITableViewDataSource,UITableViewDelegate {
     
     
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return nameArray.count
     }
+    
+    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! checkOptionsTVCell
@@ -172,36 +170,248 @@ extension CheckBoxTVCell:UITableViewDataSource,UITableViewDelegate {
         cell.titlelbl.text = nameArray[indexPath.row]
         cell.filtertitle = self.titlelbl.text ?? ""
         
+        
+        // Check if this indexPath is in the selectedIndices array
         if selectedIndices.contains(indexPath) {
             cell.sele()
         } else {
             cell.unselected()
         }
+        
+        // Check the section title to determine which filter to apply
+        switch titlelbl.text {
+            
+            
+        case "Luggage":
+            if !filterModel.luggage.isEmpty {
+                // Check if the cell's title matches any value in the luggage array
+                if filterModel.luggage.contains(cell.titlelbl.text ?? "") {
+                    
+                    DispatchQueue.main.async {
+                        cell.sele()
+                        self.selectedIndices.append(indexPath)
+                    }
+                    print("Selected: \(cell.titlelbl.text ?? "")")
+                } else {
+                    
+                    DispatchQueue.main.async {
+                        cell.unselected() // Deselect the cell
+                        self.selectedIndices.append(indexPath)
+                    }
+                    print("Deselected: \(cell.titlelbl.text ?? "")")
+                }
+            }else {
+                DispatchQueue.main.async {
+                    cell.unselected() // Deselect the cell
+                }
+            }
+            
+            
+            
+            
+        case "Refundable Type":
+            if !filterModel.refundableTypes.isEmpty {
+                // Check if the cell's title matches any value in the luggage array
+                
+                
+                if filterModel.refundableTypes.contains(cell.titlelbl.text ?? "") {
+                    
+                    DispatchQueue.main.async {
+                        cell.sele()
+                        self.selectedIndices.append(indexPath)
+                    }
+                    print("Selected: \(cell.titlelbl.text ?? "")")
+                } else {
+                    
+                    DispatchQueue.main.async {
+                        cell.unselected() // Deselect the cell
+                    }
+                    print("Deselected: \(cell.titlelbl.text ?? "")")
+                }
+            }else {
+                DispatchQueue.main.async {
+                    cell.unselected() // Deselect the cell
+                }
+            }
+            
+        case "Stops":
+            
+            if !filterModel.noOfStops.isEmpty {
+                // Check if the cell's title matches any value in the luggage array
+                if let labelText = cell.titlelbl.text {
+                    let words = labelText.components(separatedBy: " ")
+                    
+                    // Check if any word in words exists in filterModel.noOfStops
+                    if words.contains(where: { stop in
+                        return filterModel.noOfStops.contains(stop)
+                    }) {
+                        DispatchQueue.main.async {
+                            cell.sele()
+                        }
+                        print("Selected: \(cell.titlelbl.text ?? "")")
+                    } else {
+                        DispatchQueue.main.async {
+                            cell.unselected() // Deselect the cell
+                        }
+                        print("Deselected: \(cell.titlelbl.text ?? "")")
+                    }
+                }
+            } else {
+                DispatchQueue.main.async {
+                    cell.unselected() // Deselect the cell
+                }
+            }
+            
+            
+            
+        case "Airlines":
+            if !filterModel.airlines.isEmpty {
+                // Check if the cell's title matches any value in the luggage array
+                if filterModel.airlines.contains(cell.titlelbl.text ?? "") {
+                    
+                    DispatchQueue.main.async {
+                        cell.sele()
+                    }
+                    print("Selected: \(cell.titlelbl.text ?? "")")
+                } else {
+                    
+                    DispatchQueue.main.async {
+                        cell.unselected() // Deselect the cell
+                    }
+                    print("Deselected: \(cell.titlelbl.text ?? "")")
+                }
+            }else {
+                DispatchQueue.main.async {
+                    cell.unselected() // Deselect the cell
+                }
+            }
+        case "Connecting Flights":
+            if !filterModel.connectingFlights.isEmpty {
+                // Check if the cell's title matches any value in the luggage array
+                if filterModel.connectingFlights.contains(cell.titlelbl.text ?? "") {
+                    
+                    DispatchQueue.main.async {
+                        cell.sele()
+                    }
+                    print("Selected: \(cell.titlelbl.text ?? "")")
+                } else {
+                    
+                    DispatchQueue.main.async {
+                        cell.unselected() // Deselect the cell
+                    }
+                    print("Deselected: \(cell.titlelbl.text ?? "")")
+                }
+            }else {
+                DispatchQueue.main.async {
+                    cell.unselected() // Deselect the cell
+                }
+            }
+            
+        case "Connecting Airports":
+            if !filterModel.connectingAirports.isEmpty {
+                // Check if the cell's title matches any value in the luggage array
+                if filterModel.connectingAirports.contains(cell.titlelbl.text ?? "") {
+                    
+                    DispatchQueue.main.async {
+                        cell.sele()
+                    }
+                    print("Selected: \(cell.titlelbl.text ?? "")")
+                } else {
+                    
+                    DispatchQueue.main.async {
+                        cell.unselected() // Deselect the cell
+                    }
+                    print("Deselected: \(cell.titlelbl.text ?? "")")
+                }
+            }else {
+                DispatchQueue.main.async {
+                    cell.unselected() // Deselect the cell
+                }
+            }
+        default:
+            break
+        }
+        
         return cell
     }
+    
+    
+    //    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    //        if let cell = tableView.cellForRow(at: indexPath) as? checkOptionsTVCell {
+    //
+    //            cell.sele()
+    //            selectedIndices.append(indexPath)
+    //            delegate?.didTapOnCheckBox(cell: cell)
+    //        }
+    //    }
+    //
+    //
+    //    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+    //        if let cell = tableView.cellForRow(at: indexPath) as? checkOptionsTVCell {
+    //            cell.unselected()
+    //            if let index = selectedIndices.firstIndex(of: indexPath) {
+    //                selectedIndices.remove(at: index)
+    //            }
+    //            delegate?.didTapOnDeselectCheckBox(cell: cell)
+    //        }
+    //    }
+    
+    
+    
+    
+    
+    //    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    //        if let cell = tableView.cellForRow(at: indexPath) as? checkOptionsTVCell {
+    //            if !selectedIndices.contains(indexPath) {
+    //                cell.sele()
+    //                selectedIndices.append(indexPath)
+    //                delegate?.didTapOnCheckBox(cell: cell)
+    //            }
+    //        }
+    //    }
+    //
+    //    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+    //        if let cell = tableView.cellForRow(at: indexPath) as? checkOptionsTVCell {
+    //            if let index = selectedIndices.firstIndex(of: indexPath) {
+    //                selectedIndices.remove(at: index)
+    //                cell.unselected()
+    //                delegate?.didTapOnDeselectCheckBox(cell: cell)
+    //            }
+    //        }
+    //    }
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath) as? checkOptionsTVCell {
             cell.sele()
             selectedIndices.append(indexPath)
+            
+            // Update your data source to reflect the selected state
+            // For example, if you're using filterModel:
+            filterModel.luggage.append(cell.titlelbl.text ?? "")
+            
             delegate?.didTapOnCheckBox(cell: cell)
         }
     }
-    
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath) as? checkOptionsTVCell {
             cell.unselected()
             if let index = selectedIndices.firstIndex(of: indexPath) {
                 selectedIndices.remove(at: index)
+                
+                // Update your data source to reflect the deselected state
+                // For example, if you're using filterModel:
+                if let deselectedItem = cell.titlelbl.text {
+                    filterModel.luggage.removeAll { $0 == deselectedItem }
+                }
             }
+            
             delegate?.didTapOnDeselectCheckBox(cell: cell)
         }
+        
+        
     }
-    
-    
-    
     
     
 }

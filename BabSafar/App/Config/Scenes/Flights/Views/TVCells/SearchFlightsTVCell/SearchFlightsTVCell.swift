@@ -26,7 +26,7 @@ protocol SearchFlightsTVCellDelegate {
     func addTraverllersBtnAction(cell: SearchFlightsTVCell)
     func addClassBtnAction(cell: SearchFlightsTVCell)
     func didTapOnCloseReturnView(cell: SearchFlightsTVCell)
-    
+    func editingTextField(tf:UITextField)
 }
 
 
@@ -100,10 +100,27 @@ class SearchFlightsTVCell: TableViewCell, SelectCityViewModelProtocal {
     @IBOutlet weak var fromCloseBtn: UIButton!
     @IBOutlet weak var toCloseBtn: UIButton!
     @IBOutlet weak var returnDateCloseBtn: UIButton!
+    @IBOutlet weak var airlineTF: UITextField!
+    
+    
+    var maxLength = 8
+    var isSearchBool = Bool()
+    var searchText = String()
+    var filterdcountrylist = [All_country_code_list]()
+    var countryNames = [String]()
+    var countrycodesArray = [String]()
+    var originArray = [String]()
+    var isocountrycodeArray = [String]()
+    
+    var nationalityCode = String()
+    let dropDown = DropDown()
+    var countryNameArray = [String]()
+    var isoCountryCode = String()
+    var billingCountryName = String()
     
     var cityViewModel: SelectCityViewModel?
     var payload = [String:Any]()
-    let dropDown = DropDown()
+    let airlineDropDown = DropDown()
     let dropDown1 = DropDown()
     var cityNameArray = [String]()
     var txtbool = Bool()
@@ -176,7 +193,7 @@ class SearchFlightsTVCell: TableViewCell, SelectCityViewModelProtocal {
         setuupLoadLabels(lbl: addClassValuelbl, str: "Add Details")
         
         if fromCitylbl.text?.isEmpty == true {
-            fromTF.placeholder = "Origen"
+            fromTF.placeholder = "Origin"
         }else {
             fromTF.placeholder = ""
         }
@@ -199,7 +216,7 @@ class SearchFlightsTVCell: TableViewCell, SelectCityViewModelProtocal {
     }
     
     func setupUI() {
-        
+        setupTF(txtField: airlineTF)
         swipeImage.image = UIImage(named: "swipe")
         dropdownImg.image = UIImage(named: "downarrow")
         moreOptionImg.image = UIImage(systemName: "plus")?.withRenderingMode(.alwaysOriginal).withTintColor(.AppTabSelectColor)
@@ -300,6 +317,23 @@ class SearchFlightsTVCell: TableViewCell, SelectCityViewModelProtocal {
         toCloseBtn.addTarget(self, action: #selector(didTapOnClearToTextField(_:)), for: .touchUpInside)
         returnDateCloseBtn.addTarget(self, action: #selector(didTapOnCloseReturnView(_:)), for: .touchUpInside)
         
+        
+        setupDropDown()
+        airlineTF.addTarget(self, action: #selector(searchTextChanged(textField:)), for: .editingChanged)
+        airlineTF.addTarget(self, action: #selector(searchTextBegin(textField:)), for: .editingDidBegin)
+    }
+    
+    func setupTF(txtField:UITextField) {
+        txtField.delegate = self
+        txtField.backgroundColor = .clear
+        txtField.setLeftPaddingPoints(20)
+        txtField.font = UIFont.ManropeMedium(size: 16)
+        txtField.addTarget(self, action: #selector(editingText(textField:)), for: .editingChanged)
+        txtField.isSecureTextEntry = false
+    }
+    
+    @objc func editingText(textField:UITextField) {
+        delegate?.editingTextField(tf: textField)
     }
     
     func setupViews(v:UIView,radius:CGFloat,color:UIColor) {
@@ -329,7 +363,7 @@ class SearchFlightsTVCell: TableViewCell, SelectCityViewModelProtocal {
     
     
     @objc func didTapOnClearFromTextField(_ sender:UIButton) {
-        fromTF.placeholder = "Origen"
+        fromTF.placeholder = "Origin"
         fromTF.becomeFirstResponder()
         fromCitylbl.text = ""
     }
@@ -472,7 +506,7 @@ class SearchFlightsTVCell: TableViewCell, SelectCityViewModelProtocal {
     
     override func textFieldDidBeginEditing(_ textField: UITextField) {
         if textField == fromTF {
-            fromTF.placeholder = "Origen"
+            fromTF.placeholder = "Origin"
             self.fromCitylbl.text = ""
             CallShowCityListAPI(str: textField.text ?? "")
             dropDown.show()
@@ -603,7 +637,7 @@ extension SearchFlightsTVCell:UITableViewDelegate, UITableViewDataSource {
                 if let selectedJType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
                     if selectedJType == "circle" {
                         
-                     
+                        
                         defaults.set(cityList[indexPath.row].label ?? "", forKey: UserDefaultsKeys.fromCity)
                         defaults.set(cityList[indexPath.row].id ?? "", forKey: UserDefaultsKeys.fromlocid)
                         defaults.set("\(cityList[indexPath.row].city ?? "") (\(cityList[indexPath.row].code ?? ""))", forKey: UserDefaultsKeys.fromairport)
@@ -629,7 +663,7 @@ extension SearchFlightsTVCell:UITableViewDelegate, UITableViewDataSource {
                 if let selectedJType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
                     if selectedJType == "circle" {
                         
-                      
+                        
                         defaults.set(cityList[indexPath.row].label ?? "", forKey: UserDefaultsKeys.toCity)
                         defaults.set(cityList[indexPath.row].id ?? "", forKey: UserDefaultsKeys.tolocid)
                         defaults.set("\(cityList[indexPath.row].city ?? "") (\(cityList[indexPath.row].code ?? ""))", forKey: UserDefaultsKeys.toairport)
@@ -652,4 +686,84 @@ extension SearchFlightsTVCell:UITableViewDelegate, UITableViewDataSource {
     
     
     
+}
+
+
+extension SearchFlightsTVCell {
+    
+    func setupDropDown() {
+        
+        dropDown.direction = .bottom
+        dropDown.backgroundColor = .WhiteColor
+        dropDown.anchorView = self.airlineView
+        dropDown.bottomOffset = CGPoint(x: 0, y: self.airlineView.frame.size.height + 10)
+        dropDown.selectionAction = { [weak self] (index: Int, item: String) in
+            
+            
+            self?.airlineValuelbl.text = self?.countryNames[index]
+            self?.airlineTF.text = ""
+            self?.airlineTF.resignFirstResponder()
+            self?.isoCountryCode = self?.isocountrycodeArray[index] ?? ""
+            self?.billingCountryName = self?.countryNames[index] ?? ""
+            self?.nationalityCode = self?.originArray[index] ?? ""
+            self?.airlinelbl.textColor = .AppLabelColor
+            
+          //  self?.delegate?.didTapOnCountryCodeBtnAction(cell: self!)
+            
+        }
+    }
+    
+    @objc func searchTextBegin(textField: UITextField) {
+        airlineTF.text = ""
+        airlineValuelbl.text = ""
+        filterdcountrylist.removeAll()
+        filterdcountrylist = countrylist
+        loadCountryNamesAndCode()
+        dropDown.show()
+    }
+    
+    
+    @objc func searchTextChanged(textField: UITextField) {
+        searchText = textField.text ?? ""
+        if searchText == "" {
+            isSearchBool = false
+            filterContentForSearchText(searchText)
+        }else {
+            isSearchBool = true
+            filterContentForSearchText(searchText)
+        }
+        
+        
+    }
+    
+    func filterContentForSearchText(_ searchText: String) {
+        print("Filterin with:", searchText)
+        
+        filterdcountrylist.removeAll()
+        filterdcountrylist = countrylist.filter { thing in
+            return "\(thing.name?.lowercased() ?? "")".contains(searchText.lowercased())
+        }
+        
+        loadCountryNamesAndCode()
+        dropDown.show()
+        
+    }
+    
+    func loadCountryNamesAndCode(){
+        countryNames.removeAll()
+        countrycodesArray.removeAll()
+        isocountrycodeArray.removeAll()
+        originArray.removeAll()
+        
+        filterdcountrylist.forEach { i in
+            countryNames.append(i.name ?? "")
+            countrycodesArray.append(i.country_code ?? "")
+            isocountrycodeArray.append(i.iso_country_code ?? "")
+            originArray.append(i.origin ?? "")
+        }
+        
+        DispatchQueue.main.async {[self] in
+            dropDown.dataSource = countryNames
+        }
+    }
 }

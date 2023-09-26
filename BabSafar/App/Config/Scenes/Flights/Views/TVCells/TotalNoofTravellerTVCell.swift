@@ -9,6 +9,7 @@ import UIKit
 
 class TotalNoofTravellerTVCell: TableViewCell {
 
+    @IBOutlet weak var totalNoOfTravellerCountlbl: UILabel!
     @IBOutlet weak var holderView: UIView!
     @IBOutlet weak var titlelbl: UILabel!
     override func awakeFromNib() {
@@ -25,6 +26,7 @@ class TotalNoofTravellerTVCell: TableViewCell {
     
     override func updateUI() {
         titlelbl.text = cellInfo?.title ?? ""
+        totalNoOfTravellerCountlbl.text = "No Of Traveller : \(cellInfo?.subTitle ?? "")"
     }
     
 }

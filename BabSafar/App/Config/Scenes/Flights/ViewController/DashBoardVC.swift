@@ -118,11 +118,10 @@ class DashBoardVC: BaseTableVC, TopFlightDetailsViewModelDelegate, AllCountryCod
     func setupUI() {
         
         hiddenView.isHidden = true
-        hiddenView.backgroundColor = .AppBtnColor
+      //  hiddenView.backgroundColor = .AppBtnColor
         hiddenView.addCornerRadiusWithShadow(color: .lightGray, borderColor: .clear, cornerRadius: 4)
         dropupimg.image = UIImage(named: "dropup")?.withRenderingMode(.alwaysOriginal).withTintColor(.WhiteColor)
         banerView.isHidden = true
-        //        loadView1.isHidden = true
         holderView.backgroundColor = .AppHolderViewColor
         banerImage.image = UIImage(named: "baner")
         banerImage.contentMode = .scaleAspectFill

@@ -158,6 +158,7 @@ class MyAccountVC: BaseTableVC, ProfileDetailsViewModelDelegate {
         profileImgView.backgroundColor = .WhiteColor
         changeProfileImgView.backgroundColor = .WhiteColor
         changeProfileImgView.addBottomBorderWithColor(color: .AppLabelColor, width: 0.8)
+        
         profileImgView.layer.borderWidth = 4
         profileImgView.layer.borderColor = UIColor.lightGray.withAlphaComponent(0.5).cgColor
         
@@ -167,7 +168,7 @@ class MyAccountVC: BaseTableVC, ProfileDetailsViewModelDelegate {
         profileImg.layer.cornerRadius = 45
         profileImg.clipsToBounds = true
         
-        profileImg.contentMode = .scaleToFill
+        
         changeProfileImgView.layer.cornerRadius = 20
         changeProfileImgView.clipsToBounds = true
         changeProfileBtn.setTitle("", for: .normal)

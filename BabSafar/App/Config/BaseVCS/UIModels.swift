@@ -108,8 +108,8 @@ enum TVCellType {
     case TotalNoofTravellerTVCell
     case TotalPremiumPayableTVCell
     case BCFlightDetailsTVCell
-    
     case NewFlightSearchResultTVCell
+    case RegisterUserTVCell
     
     //Hotels
     case SearchHotelTVCell

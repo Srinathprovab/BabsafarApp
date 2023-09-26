@@ -8,6 +8,20 @@
 import UIKit
 
 
+
+//MARK: - convertToDesiredFormat
+
+func convertToDesiredFormat(_ inputString: String) -> String {
+    if let number = Int(inputString.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()) {
+        if inputString.contains("Kilograms") {
+            return "\(number) kg"
+        } else if inputString.contains("NumberOfPieces") {
+            return "\(number) pc"
+        }
+    }
+    return "Invalid input format."
+}
+
 //MARK: - setAttributedText
 func setAttributedText(str1:String,str2:String,lbl:UILabel)  {
     
@@ -205,19 +219,6 @@ class TimerManager {
     private var backgroundTask: UIBackgroundTaskIdentifier = .invalid
     
     private init() {}
-    
-//    func startTimer() {
-//
-//
-//        endBackgroundTask() // End any existing background task (if any)
-//        backgroundTask = UIApplication.shared.beginBackgroundTask { [weak self] in
-//            self?.endBackgroundTask()
-//        }
-//
-//        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
-//
-//
-//    }
     
     func startTimer() {
         endBackgroundTask() // End any existing background task (if any)

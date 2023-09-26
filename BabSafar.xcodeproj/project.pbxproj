@@ -89,6 +89,8 @@
 		65204AF82939D6D7007964EA /* NoteTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65204AF62939D6D7007964EA /* NoteTVCell.xib */; };
 		65206D0C2925F12E00A2B381 /* TabSelectCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65206D0A2925F12E00A2B381 /* TabSelectCVCell.swift */; };
 		65206D0D2925F12E00A2B381 /* TabSelectCVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65206D0B2925F12E00A2B381 /* TabSelectCVCell.xib */; };
+		6522EF632AC2F14900437479 /* RegisterUserTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6522EF612AC2F14900437479 /* RegisterUserTVCell.swift */; };
+		6522EF642AC2F14900437479 /* RegisterUserTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6522EF622AC2F14900437479 /* RegisterUserTVCell.xib */; };
 		6523CD0D293F0F0E0017F8C5 /* MBModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6523CD0C293F0F0E0017F8C5 /* MBModel.swift */; };
 		6523CD0F293F0F980017F8C5 /* MBFlightData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6523CD0E293F0F980017F8C5 /* MBFlightData.swift */; };
 		6523CD11293F127E0017F8C5 /* MBFlightDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6523CD10293F127E0017F8C5 /* MBFlightDetails.swift */; };
@@ -795,6 +797,8 @@
 		65204AF62939D6D7007964EA /* NoteTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoteTVCell.xib; sourceTree = "<group>"; };
 		65206D0A2925F12E00A2B381 /* TabSelectCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabSelectCVCell.swift; sourceTree = "<group>"; };
 		65206D0B2925F12E00A2B381 /* TabSelectCVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TabSelectCVCell.xib; sourceTree = "<group>"; };
+		6522EF612AC2F14900437479 /* RegisterUserTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterUserTVCell.swift; sourceTree = "<group>"; };
+		6522EF622AC2F14900437479 /* RegisterUserTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RegisterUserTVCell.xib; sourceTree = "<group>"; };
 		6523CD0C293F0F0E0017F8C5 /* MBModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MBModel.swift; sourceTree = "<group>"; };
 		6523CD0E293F0F980017F8C5 /* MBFlightData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MBFlightData.swift; sourceTree = "<group>"; };
 		6523CD10293F127E0017F8C5 /* MBFlightDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MBFlightDetails.swift; sourceTree = "<group>"; };
@@ -1794,6 +1798,15 @@
 				65206D0B2925F12E00A2B381 /* TabSelectCVCell.xib */,
 			);
 			path = TabSelectCVCell;
+			sourceTree = "<group>";
+		};
+		6522EF602AC2F13100437479 /* RegisterUserTVCell */ = {
+			isa = PBXGroup;
+			children = (
+				6522EF612AC2F14900437479 /* RegisterUserTVCell.swift */,
+				6522EF622AC2F14900437479 /* RegisterUserTVCell.xib */,
+			);
+			path = RegisterUserTVCell;
 			sourceTree = "<group>";
 		};
 		6523CD0B293F0ED80017F8C5 /* MBModel */ = {
@@ -3001,6 +3014,7 @@
 		BF45B3602889062F00DAB201 /* TVCells */ = {
 			isa = PBXGroup;
 			children = (
+				6522EF602AC2F13100437479 /* RegisterUserTVCell */,
 				BF93D86E288817DC00D5C5F3 /* LabelTVCell */,
 				BF45B38B2889176900DAB201 /* LoignOrSignupBtnsTVCell */,
 				BF45B371288906D200DAB201 /* UnderLineTVCell */,
@@ -4433,6 +4447,7 @@
 				BF93D86828880E8000D5C5F3 /* TravellerEconomyTVCell.xib in Resources */,
 				65FCAD0B2994FD2500B3B8B4 /* SelectLanguageTVCell.xib in Resources */,
 				BF5E4668288FB3620056B7BB /* SortbyTVCell.xib in Resources */,
+				6522EF642AC2F14900437479 /* RegisterUserTVCell.xib in Resources */,
 				65A3D9792A9E1A3F00E26687 /* BCFlightDetailsTVCell.xib in Resources */,
 				BF566DEB2897EC0B0046FB95 /* RoomDetailsTVCell.xib in Resources */,
 				BF45B3862889139A00DAB201 /* manrope-light.otf in Resources */,
@@ -4905,6 +4920,7 @@
 				BF566DC928979B5C0046FB95 /* PopularFiltersTVCell.swift in Sources */,
 				BF94FCA9288690FC00778946 /* ColorManager.swift in Sources */,
 				BF8AA94A28992B3100D9DC80 /* SelectCityModel.swift in Sources */,
+				6522EF632AC2F14900437479 /* RegisterUserTVCell.swift in Sources */,
 				BF45B36F288906CB00DAB201 /* SignUpWithTVCell.swift in Sources */,
 				BF5B4A4F288ACCD0000DF4BF /* DropDownTVCell.swift in Sources */,
 				651C4234292CD2FE00762B2C /* ProfileDetailsViewModel.swift in Sources */,

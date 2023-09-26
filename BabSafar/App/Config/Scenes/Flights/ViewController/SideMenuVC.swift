@@ -31,7 +31,7 @@ class SideMenuVC: BaseTableVC, ProfileDetailsViewModelDelegate, LogoutViewModelD
             }
         }
         
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(callprofileapi), name: Notification.Name("reloadAfterLogin"), object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(callprofileapi), name: Notification.Name("callprofileapi"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("nointernet"), object: nil)

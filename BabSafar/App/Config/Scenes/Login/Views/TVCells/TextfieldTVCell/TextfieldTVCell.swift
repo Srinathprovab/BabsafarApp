@@ -57,7 +57,7 @@ class TextfieldTVCell: TableViewCell {
     
     override func prepareForReuse() {
         
-        txtField.text = cellInfo?.subTitle
+        
         countryCodeView.isHidden = true
         countryCodeBtnWidth.constant = 0
         dropDown.hide()
@@ -67,6 +67,7 @@ class TextfieldTVCell: TableViewCell {
     
     
     override func updateUI() {
+        txtField.text = cellInfo?.subTitle ?? ""
         btnHeight.constant = 0
         titlelbl.text = cellInfo?.title
         txtField.placeholder = cellInfo?.tempText
@@ -317,9 +318,6 @@ extension TextfieldTVCell {
         }
         
     }
-    
-    
-    
     
     
 }

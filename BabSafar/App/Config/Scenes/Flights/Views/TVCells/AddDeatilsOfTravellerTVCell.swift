@@ -219,7 +219,7 @@ class AddDeatilsOfTravellerTVCell: TableViewCell {
     
     func setupUI() {
         
-        setuplabels(lbl: titlelbl, text: "", textcolor: .AppLabelColor, font: .LatoRegular(size: 14), align: .left)
+        setuplabels(lbl: titlelbl, text: "", textcolor: .AppLabelColor, font: .LatoBold(size: 14), align: .left)
         dropdownimg.image = UIImage(named: "down")?.withRenderingMode(.alwaysOriginal).withTintColor(.AppLabelColor)
         
         contentView.backgroundColor = UIColor.AppHolderViewColor

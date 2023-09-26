@@ -107,7 +107,7 @@ class MultiCityFromTVCell: UITableViewCell,SelectCityViewModelProtocal,UITextFie
         fromTF.delegate = self
         fromTF.addTarget(self, action: #selector(textFiledEditingChanged(_:)), for: .editingChanged)
         fromTF.setLeftPaddingPoints(16)
-        fromTF.placeholder = "Origen"
+        fromTF.placeholder = "Origin"
         
         toTF.textAlignment = .center
         toTF.tag = 2
@@ -201,7 +201,7 @@ class MultiCityFromTVCell: UITableViewCell,SelectCityViewModelProtocal,UITextFie
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         if textField == fromTF {
-            fromTF.placeholder = "Origen"
+            fromTF.placeholder = "Origin"
             CallShowCityListAPI(str: textField.text ?? "")
         }else {
             toTF.placeholder = "Destination"

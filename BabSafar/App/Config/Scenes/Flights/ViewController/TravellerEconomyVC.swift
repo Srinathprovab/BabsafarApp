@@ -175,18 +175,18 @@ class TravellerEconomyVC: BaseTableVC {
                 if journeyType == "oneway" {
                     
                     
-                    tableRow.append(TableRow(title:"Adults",subTitle: "(12+)",text: defaults.string(forKey: UserDefaultsKeys.adultCount) ?? "1",cellType:.TravellerEconomyTVCell))
+                    tableRow.append(TableRow(title:"Adult",subTitle: "(12+)",text: defaults.string(forKey: UserDefaultsKeys.adultCount) ?? "1",cellType:.TravellerEconomyTVCell))
                     tableRow.append(TableRow(title:"Child",subTitle: "(2-11)",text: defaults.string(forKey: UserDefaultsKeys.childCount) ?? "0",cellType:.TravellerEconomyTVCell))
                     tableRow.append(TableRow(title:"Infant",subTitle: "(0-2)",text: defaults.string(forKey: UserDefaultsKeys.infantsCount) ?? "0",cellType:.TravellerEconomyTVCell))
                     
                     
                 }else if journeyType == "circle"{
-                    tableRow.append(TableRow(title:"Adults",subTitle: "(12+)",text: defaults.string(forKey: UserDefaultsKeys.radultCount) ?? "1",cellType:.TravellerEconomyTVCell))
+                    tableRow.append(TableRow(title:"Adult",subTitle: "(12+)",text: defaults.string(forKey: UserDefaultsKeys.radultCount) ?? "1",cellType:.TravellerEconomyTVCell))
                     tableRow.append(TableRow(title:"Child",subTitle: "(2-11)",text: defaults.string(forKey: UserDefaultsKeys.rchildCount) ?? "0",cellType:.TravellerEconomyTVCell))
                     tableRow.append(TableRow(title:"Infant",subTitle: "(0-2)",text: defaults.string(forKey: UserDefaultsKeys.rinfantsCount) ?? "0",cellType:.TravellerEconomyTVCell))
                 }else {
                     
-                    tableRow.append(TableRow(title:"Adults",subTitle: "(12+)",text: defaults.string(forKey: UserDefaultsKeys.madultCount) ?? "1",cellType:.TravellerEconomyTVCell))
+                    tableRow.append(TableRow(title:"Adult",subTitle: "(12+)",text: defaults.string(forKey: UserDefaultsKeys.madultCount) ?? "1",cellType:.TravellerEconomyTVCell))
                     tableRow.append(TableRow(title:"Child",subTitle: "(2-11)",text: defaults.string(forKey: UserDefaultsKeys.mchildCount) ?? "0",cellType:.TravellerEconomyTVCell))
                     tableRow.append(TableRow(title:"Infant",subTitle: "(0-2)",text: defaults.string(forKey: UserDefaultsKeys.minfantsCount) ?? "0",cellType:.TravellerEconomyTVCell))
                 }
@@ -198,7 +198,7 @@ class TravellerEconomyVC: BaseTableVC {
             
             tableRow.append(TableRow(title:"Add Travellers ",key: "showbtn",cellType:.LabelTVCell))
             
-            tableRow.append(TableRow(title:"Adults",subTitle: "(12+)",text: defaults.string(forKey: UserDefaultsKeys.visaadultCount) ?? "1",cellType:.TravellerEconomyTVCell))
+            tableRow.append(TableRow(title:"Adult",subTitle: "(12+)",text: defaults.string(forKey: UserDefaultsKeys.visaadultCount) ?? "1",cellType:.TravellerEconomyTVCell))
             tableRow.append(TableRow(title:"Child",subTitle: "(2-11)",text: defaults.string(forKey: UserDefaultsKeys.visachildCount) ?? "0",cellType:.TravellerEconomyTVCell))
             tableRow.append(TableRow(title:"Infant",subTitle: "(0-2)",text: defaults.string(forKey: UserDefaultsKeys.visainfantsCount) ?? "0",cellType:.TravellerEconomyTVCell))
             
@@ -208,13 +208,13 @@ class TravellerEconomyVC: BaseTableVC {
             
             if let journeyType = defaults.string(forKey: UserDefaultsKeys.InsurenceJourneyType) {
                 if journeyType == "oneway" {
-                    tableRow.append(TableRow(title:"Adults",subTitle: "(12+)",text: defaults.string(forKey: UserDefaultsKeys.iadultCount) ?? "1",cellType:.TravellerEconomyTVCell))
+                    tableRow.append(TableRow(title:"Adult",subTitle: "(12+)",text: defaults.string(forKey: UserDefaultsKeys.iadultCount) ?? "1",cellType:.TravellerEconomyTVCell))
                     tableRow.append(TableRow(title:"Child",subTitle: "(2-11)",text: defaults.string(forKey: UserDefaultsKeys.ichildCount) ?? "0",cellType:.TravellerEconomyTVCell))
                     tableRow.append(TableRow(title:"Infant",subTitle: "(0-2)",text: defaults.string(forKey: UserDefaultsKeys.iinfantsCount) ?? "0",cellType:.TravellerEconomyTVCell))
                     
                     
                 }else{
-                    tableRow.append(TableRow(title:"Adults",subTitle: "(12+)",text: defaults.string(forKey: UserDefaultsKeys.iradultCount) ?? "1",cellType:.TravellerEconomyTVCell))
+                    tableRow.append(TableRow(title:"Adult",subTitle: "(12+)",text: defaults.string(forKey: UserDefaultsKeys.iradultCount) ?? "1",cellType:.TravellerEconomyTVCell))
                     tableRow.append(TableRow(title:"Child",subTitle: "(2-11)",text: defaults.string(forKey: UserDefaultsKeys.irchildCount) ?? "0",cellType:.TravellerEconomyTVCell))
                     tableRow.append(TableRow(title:"Infant",subTitle: "(0-2)",text: defaults.string(forKey: UserDefaultsKeys.irinfantsCount) ?? "0",cellType:.TravellerEconomyTVCell))
                 }
@@ -228,7 +228,7 @@ class TravellerEconomyVC: BaseTableVC {
             
             tableRow.append(TableRow(title:"Add Travellers ",key: "showbtn",cellType:.LabelTVCell))
             
-            tableRow.append(TableRow(title:"Adults",subTitle: "(12+)",text: defaults.string(forKey: UserDefaultsKeys.fradultCount) ?? "1",cellType:.TravellerEconomyTVCell))
+            tableRow.append(TableRow(title:"Adult",subTitle: "(12+)",text: defaults.string(forKey: UserDefaultsKeys.fradultCount) ?? "1",cellType:.TravellerEconomyTVCell))
             tableRow.append(TableRow(title:"Child",subTitle: "(2-11)",text: defaults.string(forKey: UserDefaultsKeys.frchildCount) ?? "0",cellType:.TravellerEconomyTVCell))
             
             
@@ -260,7 +260,7 @@ class TravellerEconomyVC: BaseTableVC {
         
         roomCountArray.forEach { i in
             tableRow.append(TableRow(title:"Room \(i)",cellType:.LabelTVCell))
-            tableRow.append(TableRow(title:"Adults",subTitle: "(12+)",text: "\(defaults.string(forKey: UserDefaultsKeys.hadultCount) ?? "1")",cellType:.TravellerEconomyTVCell))
+            tableRow.append(TableRow(title:"Adult",subTitle: "(12+)",text: "\(defaults.string(forKey: UserDefaultsKeys.hadultCount) ?? "1")",cellType:.TravellerEconomyTVCell))
             tableRow.append(TableRow(title:"Child",subTitle: "(2-11)",text: "\(defaults.string(forKey: UserDefaultsKeys.hchildCount) ?? "0")",cellType:.TravellerEconomyTVCell))
         }
         
@@ -289,7 +289,7 @@ class TravellerEconomyVC: BaseTableVC {
             }
             
             
-        } else if cell.titlelbl.text == "Adults" {
+        } else if cell.titlelbl.text == "Adult" {
             // Increment adults, but don't exceed 9 travelers in total
             if (adultsCount + childCount) < 9 {
                 adultsCount += 1
@@ -320,7 +320,7 @@ class TravellerEconomyVC: BaseTableVC {
                 cell.count -= 1
                 cell.countlbl.text = "\(cell.count)"
             }
-        } else if cell.titlelbl.text == "Adults" {
+        } else if cell.titlelbl.text == "Adult" {
             // Decrement adults, but don't go below 1
             if adultsCount > 1 {
                 adultsCount -= 1

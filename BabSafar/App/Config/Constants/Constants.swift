@@ -51,6 +51,12 @@ public var screenHeight: CGFloat {
 }
 
 
+
+//Register
+var registrationModel:RegistrationModel?
+
+
+
 //MARK: - Travellers Details
 var adultTravllersArray = [TravellerData]()
 var childTravllersArray = [TravellerData]()
@@ -135,6 +141,8 @@ var mbSummery = [Summary]()
 var AirlinesArray = [String]()
 var ConnectingFlightsArray = [String]()
 var ConnectingAirportsArray = [String]()
+var luggageArray = [String]()
+
 
 var bookedDate = String()
 var pnrNo = String()

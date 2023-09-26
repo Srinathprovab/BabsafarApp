@@ -614,13 +614,13 @@
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="erd-hS-BQq">
-                                                <rect key="frame" x="16" y="6" width="473" height="21.5"/>
+                                                <rect key="frame" x="16" y="6" width="473" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CbW-n2-P5Y">
-                                                <rect key="frame" x="16" y="32.5" width="473" height="20.5"/>
+                                                <rect key="frame" x="16" y="31.5" width="473" height="21.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -633,16 +633,25 @@
                                                     <action selector="didTapOnairlineBtnAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="MyE-nT-07r"/>
                                                 </connections>
                                             </button>
+                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uLh-GI-ecS">
+                                                <rect key="frame" x="0.0" y="36.5" width="505" height="18.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstItem="TWO-oC-0km" firstAttribute="leading" secondItem="4PU-lP-wt1" secondAttribute="leading" id="1SQ-gv-fKZ"/>
+                                            <constraint firstAttribute="bottom" secondItem="uLh-GI-ecS" secondAttribute="bottom" constant="5" id="2qv-bM-RcP"/>
                                             <constraint firstAttribute="bottom" secondItem="TWO-oC-0km" secondAttribute="bottom" id="3UB-hv-GjF"/>
                                             <constraint firstAttribute="bottom" secondItem="CbW-n2-P5Y" secondAttribute="bottom" constant="7" id="7lv-Hg-BpY"/>
+                                            <constraint firstAttribute="trailing" secondItem="uLh-GI-ecS" secondAttribute="trailing" id="EGF-hy-oli"/>
                                             <constraint firstAttribute="height" constant="60" id="If0-Nx-tIv"/>
                                             <constraint firstItem="TWO-oC-0km" firstAttribute="top" secondItem="4PU-lP-wt1" secondAttribute="top" id="Myc-Nz-rTc"/>
                                             <constraint firstItem="CbW-n2-P5Y" firstAttribute="top" secondItem="erd-hS-BQq" secondAttribute="bottom" constant="5" id="RwS-RR-kla"/>
                                             <constraint firstItem="erd-hS-BQq" firstAttribute="leading" secondItem="4PU-lP-wt1" secondAttribute="leading" constant="16" id="XG2-x8-tqA"/>
+                                            <constraint firstItem="uLh-GI-ecS" firstAttribute="top" secondItem="erd-hS-BQq" secondAttribute="bottom" constant="10" id="Zg8-S9-ltu"/>
+                                            <constraint firstItem="uLh-GI-ecS" firstAttribute="leading" secondItem="4PU-lP-wt1" secondAttribute="leading" id="aJz-Ko-7gQ"/>
                                             <constraint firstAttribute="trailing" secondItem="CbW-n2-P5Y" secondAttribute="trailing" constant="16" id="cnG-2U-J8D"/>
                                             <constraint firstAttribute="trailing" secondItem="erd-hS-BQq" secondAttribute="trailing" constant="16" id="cyR-hw-4My"/>
                                             <constraint firstAttribute="trailing" secondItem="BF3-go-cfw" secondAttribute="trailing" constant="10" id="dLc-QB-5E9"/>
@@ -897,6 +906,7 @@
                 <outlet property="addTraverllersValuelbl" destination="TUy-aX-vgr" id="S0P-tN-uHg"/>
                 <outlet property="addTraverllersView" destination="P5h-VP-YWl" id="Qzf-n9-wCq"/>
                 <outlet property="addTraverllerslbl" destination="VYU-7X-LDz" id="Bci-np-EKT"/>
+                <outlet property="airlineTF" destination="uLh-GI-ecS" id="rrg-e2-Ra5"/>
                 <outlet property="airlineValuelbl" destination="CbW-n2-P5Y" id="FI2-aR-gJ2"/>
                 <outlet property="airlineView" destination="4PU-lP-wt1" id="61r-X3-5uu"/>
                 <outlet property="airlinelbl" destination="erd-hS-BQq" id="RuT-gr-qsp"/>

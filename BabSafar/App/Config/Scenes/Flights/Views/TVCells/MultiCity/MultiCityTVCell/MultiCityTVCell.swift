@@ -192,8 +192,8 @@ class MultiCityTVCell: TableViewCell,ButtonCVCellDelegate,MultiCityCVCellDelegat
             
         }else {
             
-            fromCityNameArray.append("Origen")
-            fromCityShortNameArray.append("Origen")
+            fromCityNameArray.append("Origin")
+            fromCityShortNameArray.append("Origin")
             toCityNameArray.append("Destination")
             toCityShortNameArray.append("Destination")
             depatureDatesArray.append(" Date")

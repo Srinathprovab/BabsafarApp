@@ -2661,11 +2661,11 @@
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dropup" translatesAutoresizingMaskIntoConstraints="NO" id="KS0-EQ-VMH">
-                                                <rect key="frame" x="17.666666666666686" y="19" width="15" height="12"/>
+                                                <rect key="frame" x="15" y="17.666666666666629" width="20" height="15"/>
                                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="15" id="hIn-Xp-zF8"/>
-                                                    <constraint firstAttribute="height" constant="12" id="uOf-r2-ZYY"/>
+                                                    <constraint firstAttribute="width" constant="20" id="hIn-Xp-zF8"/>
+                                                    <constraint firstAttribute="height" constant="15" id="uOf-r2-ZYY"/>
                                                 </constraints>
                                             </imageView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oBP-fu-cGO">
@@ -2677,7 +2677,7 @@
                                                 </connections>
                                             </button>
                                         </subviews>
-                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" name="CommonButtonColor"/>
                                         <constraints>
                                             <constraint firstAttribute="bottom" secondItem="oBP-fu-cGO" secondAttribute="bottom" id="2R3-fc-Coq"/>
                                             <constraint firstItem="KS0-EQ-VMH" firstAttribute="centerX" secondItem="dgl-eb-VAL" secondAttribute="centerX" id="KKx-x5-rrY"/>
@@ -3611,7 +3611,7 @@
         <image name="chevron-right-solid" width="320" height="512"/>
         <image name="chevron.up" catalog="system" width="128" height="70"/>
         <image name="city" width="340" height="185"/>
-        <image name="dropup" width="4" height="2.6666667461395264"/>
+        <image name="dropup" width="17.333333969116211" height="17.333333969116211"/>
         <image name="logosmall" width="26" height="26"/>
         <image name="menu" width="32" height="32"/>
         <image name="multiply" catalog="system" width="128" height="111"/>

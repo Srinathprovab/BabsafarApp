@@ -8,6 +8,16 @@
 import UIKit
 import Alamofire
 
+struct RegistrationModel {
+    var firstName: String?
+    var lastName: String?
+    var mobileNumber: String?
+    var emailAddress: String?
+    var password: String?
+    var confirmPassword: String?
+}
+
+
 class LoginVC: BaseTableVC, RegisterViewModelProtocal {
     
     
@@ -21,7 +31,6 @@ class LoginVC: BaseTableVC, RegisterViewModelProtocal {
         let vc = storyboard.instantiateViewController(withIdentifier: self.className()) as? LoginVC
         return vc
     }
-    
     
     var tablerow = [TableRow]()
     var loginKey = "login"
@@ -65,6 +74,7 @@ class LoginVC: BaseTableVC, RegisterViewModelProtocal {
                                          "TextfieldTVCell",
                                          "ButtonTVCell",
                                          "UnderLineTVCell",
+                                         "RegisterUserTVCell",
                                          "EmptyTVCell"])
         
         appendLoginTvcells()
@@ -93,27 +103,28 @@ class LoginVC: BaseTableVC, RegisterViewModelProtocal {
         
         if loginKey == "reg" {
             switch tf.tag {
-            case 1:
+            case 111:
                 fname = tf.text ?? ""
+                registrationModel?.firstName = fname
                 break
                 
-            case 2:
+            case 112:
                 lname = tf.text ?? ""
                 break
                 
-            case 11:
+            case 114:
                 email = tf.text ?? ""
                 break
                 
-            case 12:
+            case 113:
                 mobile = tf.text ?? ""
                 break
                 
-            case 5:
+            case 115:
                 pass = tf.text ?? ""
                 break
                 
-            case 6:
+            case 116:
                 cpass = tf.text ?? ""
                 break
             default:
@@ -174,6 +185,13 @@ class LoginVC: BaseTableVC, RegisterViewModelProtocal {
             callLoginAPI()
         }
     }
+    
+    //MARK: - Login or  Register Button Action
+    override func didTapOnCountryCodeBtnAction(cell: RegisterUserTVCell) {
+        
+    }
+    
+    
     
     
 }
@@ -247,9 +265,6 @@ extension LoginVC {
 //MARK: - Register Realted Stuff
 extension LoginVC {
     
-    
-    
-    
     func appendSignupTvcells() {
         
         if screenHeight < 835 {
@@ -260,19 +275,21 @@ extension LoginVC {
         commonTableView.isScrollEnabled = true
         tablerow.removeAll()
         
-        tablerow.append(TableRow(height:20,cellType:.EmptyTVCell))
-        tablerow.append(TableRow(key:"loginshowbtn",cellType:.LabelTVCell))
-        tablerow.append(TableRow(title:"First Name",subTitle: self.fname,key: "signup", text: "1", tempText: "First Name",cellType:.TextfieldTVCell))
-        tablerow.append(TableRow(title:"Last Name",subTitle: self.lname,key: "signup", text: "2", tempText: "Last Name",cellType:.TextfieldTVCell))
-        tablerow.append(TableRow(title:"Mobile Number",subTitle: self.mobile,key: "signup", text: "12", tempText: "+961",cellType:.TextfieldTVCell))
-        tablerow.append(TableRow(title:"Email address",subTitle: self.email,key: "signup", text: "11", tempText: "Address",cellType:.TextfieldTVCell))
-        tablerow.append(TableRow(title:"Password",subTitle: self.pass,key: "signuppwd", text: "5", tempText: "Password",cellType:.TextfieldTVCell))
-        tablerow.append(TableRow(title:"Conform Password",subTitle: self.cpass,key: "signuppwd", text: "6", tempText: "Password",cellType:.TextfieldTVCell))
-        
-        tablerow.append(TableRow(title:"Sign Up",key: "btn",cellType:.ButtonTVCell))
-        tablerow.append(TableRow(height:30,cellType:.EmptyTVCell))
-        tablerow.append(TableRow(title:"Login",subTitle: "If You Have An Account?",cellType:.UnderLineTVCell))
-        tablerow.append(TableRow(height:30,cellType:.EmptyTVCell))
+        tablerow.append(TableRow(height:20,
+                                 cellType:.EmptyTVCell))
+        tablerow.append(TableRow(key:"loginshowbtn",
+                                 cellType:.LabelTVCell))
+        tablerow.append(TableRow(cellType:.RegisterUserTVCell))
+        tablerow.append(TableRow(title:"Sign Up",
+                                 key: "btn",
+                                 cellType:.ButtonTVCell))
+        tablerow.append(TableRow(height:30,
+                                 cellType:.EmptyTVCell))
+        tablerow.append(TableRow(title:"Login",
+                                 subTitle: "If You Have An Account?",
+                                 cellType:.UnderLineTVCell))
+        tablerow.append(TableRow(height:30,
+                                 cellType:.EmptyTVCell))
         
         commonTVData = tablerow
         commonTableView.reloadData()
@@ -294,7 +311,7 @@ extension LoginVC {
         }else if email == "" {
             showToast(message: "Enter Email")
         }else if email.isValidEmail() == false {
-            showToast(message: "Enter Valid Email ID")
+            showToast(message: "Enter the Valid Email Address")
         }else if pass == "" {
             showToast(message: "Enter Password")
         }else if cpass == "" {
@@ -302,6 +319,8 @@ extension LoginVC {
         }else if pass != cpass {
             showToast(message: "Password not same")
         }else {
+            
+            
             payload["first_name"] = fname
             payload["last_name"] = lname
             payload["email"] = email

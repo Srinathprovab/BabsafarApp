@@ -86,12 +86,20 @@ class checkOptionsTVCell: TableViewCell {
     
     
     func sele() {
-        checkImg.image = UIImage(named: "chk")?.withRenderingMode(.alwaysOriginal)
+        if let image = UIImage(named: "chk")?.withRenderingMode(.alwaysOriginal) {
+            checkImg.image = image
+        } else {
+            print("Image not found or nil for 'chk'")
+        }
     }
     
     
     func unselected() {
-        checkImg.image = UIImage(named: "uncheck")?.withRenderingMode(.alwaysOriginal)
+        if let image = UIImage(named: "uncheck")?.withRenderingMode(.alwaysOriginal) {
+            checkImg.image = image
+        } else {
+            print("Image not found or nil for 'chk'")
+        }
     }
     
 }
