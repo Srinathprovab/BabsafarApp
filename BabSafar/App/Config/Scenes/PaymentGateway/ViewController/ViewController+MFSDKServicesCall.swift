@@ -73,7 +73,7 @@ extension PaymentGatewayVC {
             
         }else {
             
-           
+            
             
         }
         
@@ -82,7 +82,7 @@ extension PaymentGatewayVC {
             if selectedTap == "Flights" {
                 payload["app_ref"] = tmpFlightPreBookingId
                 payload["search_id"] = defaults.string(forKey: UserDefaultsKeys.searchid)
-                payload["payment_response"] = self.paymentResponse
+                payload["pg_req"] = self.paymentResponse
                 payload["InvoiceStatus"] = status
                 
                 self.vm?.CALL_UPDATE_PAYMENT_API(dictParam: payload, endpoint: "updatePayment")
@@ -91,28 +91,29 @@ extension PaymentGatewayVC {
                 payload["product"] = "VHCID1420613748"
                 payload["search_id"] = hotelSearchId
                 payload["book_id"] = tmpFlightPreBookingId
-                payload["payment_response"] = paymentResponse
-                
+                payload["pg_req"] = paymentResponse
+               
                 self.vm?.CALL_UPDATE_PAYMENT_API(dictParam: payload, endpoint: "success")
             } else {
                 payload["InvoiceStatus"] = "Paid"
                 payload["search_id"] = searchid
                 payload["app_ref"] = tmpFlightPreBookingId
-                payload["payment_response"] = paymentResponse
+                payload["pg_req"] = paymentResponse
+               
                 
                 self.vm?.CALL_UPDATE_PAYMENT_INSURENCE_API(dictParam: payload, endpoint: "updatePayment_insurance")
             }
         } else {
             // Handle the case where 'selectedTap' is not found in UserDefaults
         }
-
+        
         
     }
     
     
     func updatePaymentSucess(response: updatePaymentFlightModel) {
         
-       
+        
         
         if let selectedTap = defaults.object(forKey: UserDefaultsKeys.dashboardTapSelected) as? String {
             if selectedTap == "Flights" {
@@ -123,7 +124,7 @@ extension PaymentGatewayVC {
         } else {
             // Handle the case where 'selectedTap' is not found in UserDefaults
         }
-
+        
         
     }
     
