@@ -42,13 +42,13 @@
                                 <rect key="frame" x="12" y="35" width="439" height="60"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EvQ-x5-VL8">
-                                        <rect key="frame" x="16.000000000000004" y="5.9999999999999982" width="41.333333333333343" height="20.333333333333329"/>
+                                        <rect key="frame" x="16.000000000000004" y="5.9999999999999982" width="41.333333333333343" height="25.333333333333329"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D9w-fF-r0j">
-                                        <rect key="frame" x="16" y="36.333333333333329" width="407" height="20.333333333333329"/>
+                                        <rect key="frame" x="16" y="41.333333333333329" width="407" height="15.333333333333336"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -99,12 +99,14 @@
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="DlF-SO-7Ff" secondAttribute="bottom" constant="3.6699999999999999" id="5sw-pN-584"/>
                                     <constraint firstItem="D9w-fF-r0j" firstAttribute="leading" secondItem="8RF-ks-cJQ" secondAttribute="leading" constant="16" id="8lY-TE-Kww"/>
                                     <constraint firstItem="EvQ-x5-VL8" firstAttribute="top" secondItem="8RF-ks-cJQ" secondAttribute="top" constant="6" id="ATK-HS-tGF"/>
                                     <constraint firstAttribute="bottom" secondItem="h6S-vI-SA6" secondAttribute="bottom" id="Sdh-Qx-ufy"/>
                                     <constraint firstAttribute="trailing" secondItem="D9w-fF-r0j" secondAttribute="trailing" constant="16" id="TiR-tB-rPE"/>
                                     <constraint firstItem="EvQ-x5-VL8" firstAttribute="leading" secondItem="8RF-ks-cJQ" secondAttribute="leading" constant="16" id="UqU-WY-HMk"/>
-                                    <constraint firstItem="DlF-SO-7Ff" firstAttribute="top" secondItem="EvQ-x5-VL8" secondAttribute="bottom" constant="10" id="jDj-U6-woc"/>
+                                    <constraint firstAttribute="bottom" secondItem="D9w-fF-r0j" secondAttribute="bottom" constant="3.3300000000000001" id="fF8-w4-cSE"/>
+                                    <constraint firstItem="DlF-SO-7Ff" firstAttribute="top" secondItem="EvQ-x5-VL8" secondAttribute="bottom" constant="5" id="jDj-U6-woc"/>
                                     <constraint firstItem="DlF-SO-7Ff" firstAttribute="leading" secondItem="8RF-ks-cJQ" secondAttribute="leading" constant="16" id="l4l-3d-HhW"/>
                                     <constraint firstItem="h6S-vI-SA6" firstAttribute="leading" secondItem="8RF-ks-cJQ" secondAttribute="leading" id="nVA-F5-fed"/>
                                     <constraint firstAttribute="height" constant="60" id="o91-W3-eBo"/>

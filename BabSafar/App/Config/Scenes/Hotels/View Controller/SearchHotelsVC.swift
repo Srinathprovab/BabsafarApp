@@ -12,6 +12,7 @@ class SearchHotelsVC: BaseTableVC, TopFlightDetailsViewModelDelegate {
     
     @IBOutlet weak var holderView: UIView!
     @IBOutlet weak var nav: NavBar!
+    @IBOutlet weak var navHeight: NSLayoutConstraint!
     
     var tablerow = [TableRow]()
     static var newInstance: SearchHotelsVC? {
@@ -84,6 +85,9 @@ class SearchHotelsVC: BaseTableVC, TopFlightDetailsViewModelDelegate {
     
     
     func setupUI() {
+        if screenHeight < 835 {
+            navHeight.constant = 280
+        }
         nav.titlelbl.text = "Search Hotels"
         nav.backBtn.addTarget(self, action: #selector(didTapOnBackBtn(_:)), for: .touchUpInside)
         commonTableView.layer.borderWidth = 1

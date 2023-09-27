@@ -170,6 +170,7 @@
                         <outlet property="commonTableView" destination="Kdj-D0-fbc" id="SbV-tP-c90"/>
                         <outlet property="holderView" destination="Q1V-sg-tTQ" id="KPC-JY-ITm"/>
                         <outlet property="nav" destination="0mp-U1-ltq" id="C3P-A8-6cA"/>
+                        <outlet property="navHeight" destination="8a3-L6-EGz" id="ZFb-6f-bSV"/>
                         <outlet property="onewayView" destination="BNC-ad-QI6" id="7bA-n8-nJq"/>
                         <outlet property="onewaylbl" destination="iqW-Pm-Sgf" id="FB1-Cp-dOq"/>
                         <outlet property="roundTripView" destination="PQs-N5-ybW" id="fVq-O4-RZJ"/>
@@ -799,6 +800,7 @@
                         <outlet property="commonTableView" destination="5sc-Yt-81T" id="Bv0-eq-CyC"/>
                         <outlet property="holderView" destination="iiM-h0-KVv" id="NdH-W1-GUp"/>
                         <outlet property="nav" destination="fFp-xW-2b5" id="7d3-UP-UzL"/>
+                        <outlet property="navHeight" destination="OZg-wh-Ely" id="oXf-fz-iM8"/>
                         <outlet property="onewayView" destination="RYU-r2-hsz" id="JZ6-NZ-u4p"/>
                         <outlet property="onewaylbl" destination="myH-82-IjV" id="4go-ko-Qe0"/>
                         <outlet property="roundTripView" destination="uTo-F7-pdY" id="j4z-ij-ybG"/>

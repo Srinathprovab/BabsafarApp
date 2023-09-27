@@ -3330,11 +3330,11 @@
 			isa = PBXGroup;
 			children = (
 				BF56D0622893F6970092387D /* SearchHotelsVC.swift */,
+				BF566DC4289792680046FB95 /* ModifySearchHotelVC.swift */,
 				BF56D064289407290092387D /* SearchHotelsResultVC.swift */,
 				65D76D1B2A98C9C60064149B /* TermsPopupVC.swift */,
 				BF566DCB2897D17A0046FB95 /* HotelDetailsVC.swift */,
 				BF566DED2898044E0046FB95 /* AddContactAndGuestDetailsVC.swift */,
-				BF566DC4289792680046FB95 /* ModifySearchHotelVC.swift */,
 				BF8AA9372898E5CA00D9DC80 /* HotelBookingConfirmedVC.swift */,
 				65FBA467294DF6C500B92504 /* AddRoomsGuestsVC.swift */,
 				6524D52129E3D01C001621CB /* AddRoomsVCViewController.swift */,
@@ -4048,8 +4048,8 @@
 				BF94FCD62886916100778946 /* Flights */,
 				BF56D05B2893F5FF0092387D /* Hotels */,
 				BF56D0522893E6F60092387D /* Insurance */,
-				BF5CF3C2289393A40071BF9B /* Visa Enduiry */,
 				6501F1E02A964F6000504C54 /* FastTrack */,
+				BF5CF3C2289393A40071BF9B /* Visa Enduiry */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";

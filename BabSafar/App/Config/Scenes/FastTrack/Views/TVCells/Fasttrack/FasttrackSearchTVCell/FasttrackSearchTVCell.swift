@@ -292,7 +292,7 @@ extension FasttrackSearchTVCell:UITableViewDelegate, UITableViewDataSource {
             if tableView == fromCityTV {
                 
                 fromTF.text = airlineList[indexPath.row].label ?? ""
-                fromTF.resignFirstResponder()
+              //  fromTF.resignFirstResponder()
                 
                 defaults.set(airlineList[indexPath.row].label ?? "", forKey: UserDefaultsKeys.frfromCity)
                 defaults.set(airlineList[indexPath.row].id ?? "", forKey: UserDefaultsKeys.frfromlocid)
@@ -304,7 +304,7 @@ extension FasttrackSearchTVCell:UITableViewDelegate, UITableViewDataSource {
             }else {
                 
                 toTF.text = airlineList[indexPath.row].label ?? ""
-                toTF.resignFirstResponder()
+              // toTF.resignFirstResponder()
                 
                 defaults.set(airlineList[indexPath.row].label ?? "", forKey: UserDefaultsKeys.frtoCity)
                 defaults.set(airlineList[indexPath.row].id ?? "", forKey: UserDefaultsKeys.frtolocid)

@@ -102,11 +102,11 @@ extension InsurenceResultVC:InsurenceViewModelDelegate, UITableViewDelegate,UITa
             
             if let journeyType = defaults.string(forKey: UserDefaultsKeys.InsurenceJourneyType) {
                 if journeyType == "oneway" {
-                    datelbl.text = "\(response.data?.col_x?.search_params?.depature ?? "") | \(response.data?.col_x?.search_params?.adult_config ?? "") Adults,\(response.data?.col_x?.search_params?.child_config ?? "") Child,\(response.data?.col_x?.search_params?.infant_config ?? "") Infant"
+                    datelbl.text = "\(response.data?.col_x?.search_params?.depature ?? "") | \(response.data?.col_x?.search_params?.adult_config ?? "") Adult,\(response.data?.col_x?.search_params?.child_config ?? "") Child,\(response.data?.col_x?.search_params?.infant_config ?? "") Infant"
                     
                     
                 }else{
-                    datelbl.text = "\(response.data?.col_x?.search_params?.depature ?? "") to \(response.data?.col_x?.search_params?.arrival ?? "") | \(response.data?.col_x?.search_params?.adult_config ?? "") Adults,\(response.data?.col_x?.search_params?.child_config ?? "") Child,\(response.data?.col_x?.search_params?.infant_config ?? "") Infant"
+                    datelbl.text = "\(response.data?.col_x?.search_params?.depature ?? "") to \(response.data?.col_x?.search_params?.arrival ?? "") | \(response.data?.col_x?.search_params?.adult_config ?? "") Adult,\(response.data?.col_x?.search_params?.child_config ?? "") Child,\(response.data?.col_x?.search_params?.infant_config ?? "") Infant"
                     
                 }
             }

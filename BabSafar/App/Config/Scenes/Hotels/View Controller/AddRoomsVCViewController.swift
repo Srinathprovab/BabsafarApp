@@ -14,9 +14,7 @@ class AddRoomsVCViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBOutlet weak var closeBtn: UIButton!
     @IBOutlet weak var tv: UITableView!
     
-//    var totalRooms = Int()
-//    var totalAdults = Int()
-//    var totalChildren = Int()
+
     static var newInstance: AddRoomsVCViewController? {
         let storyboard = UIStoryboard(name: Storyboard.Hotels.name,
                                       bundle: nil)

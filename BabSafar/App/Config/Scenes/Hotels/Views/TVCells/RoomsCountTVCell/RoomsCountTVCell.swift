@@ -154,7 +154,7 @@ class RoomsCountTVCell: UITableViewCell {
     @IBOutlet weak var room4childageTapBtn2: UIButton!
     
     
-    var adultcount = 1
+    var adultcount = 2
     var childCount = Int()
     var adultcount2 = 1
     var childCount2 = Int()
@@ -323,8 +323,8 @@ class RoomsCountTVCell: UITableViewCell {
     
     func setupRoom1ChildageTapDropDown1() {
         
-        room1ChildageTapDropDown1.dataSource = ["1","2","3","4","5","6","7","8","9"]
-        room1ChildageTapDropDown1.direction = .any
+        room1ChildageTapDropDown1.dataSource = ["1","2","3","4","5","6","7","8","9","10","11"]
+        room1ChildageTapDropDown1.direction = .bottom
         room1ChildageTapDropDown1.backgroundColor = .WhiteColor
         room1ChildageTapDropDown1.anchorView = self.childage1View
         room1ChildageTapDropDown1.bottomOffset = CGPoint(x: 0, y: childage1View.frame.size.height + 10)
@@ -336,8 +336,8 @@ class RoomsCountTVCell: UITableViewCell {
     
     func setupRoom1ChildageTapDropDown2() {
         
-        room1ChildageTapDropDown2.dataSource = ["1","2","3","4","5","6","7","8","9"]
-        room1ChildageTapDropDown2.direction = .any
+        room1ChildageTapDropDown2.dataSource = ["1","2","3","4","5","6","7","8","9","10","11"]
+        room1ChildageTapDropDown2.direction = .bottom
         room1ChildageTapDropDown2.backgroundColor = .WhiteColor
         room1ChildageTapDropDown2.anchorView = self.childage2View
         room1ChildageTapDropDown2.bottomOffset = CGPoint(x: 0, y: childage2View.frame.size.height + 10)
@@ -359,8 +359,8 @@ class RoomsCountTVCell: UITableViewCell {
     
     func setupRoom2ChildageTapDropDown1() {
         
-        room2ChildageTapDropDown1.dataSource = ["1","2","3","4","5","6","7","8","9"]
-        room2ChildageTapDropDown1.direction = .any
+        room2ChildageTapDropDown1.dataSource = ["1","2","3","4","5","6","7","8","9","10","11"]
+        room2ChildageTapDropDown1.direction = .bottom
         room2ChildageTapDropDown1.backgroundColor = .WhiteColor
         room2ChildageTapDropDown1.anchorView = self.r2childage1View
         room2ChildageTapDropDown1.bottomOffset = CGPoint(x: 0, y: r2childage1View.frame.size.height + 10)
@@ -372,8 +372,8 @@ class RoomsCountTVCell: UITableViewCell {
     
     func setupRoom2ChildageTapDropDown2() {
         
-        room2ChildageTapDropDown2.dataSource = ["1","2","3","4","5","6","7","8","9"]
-        room2ChildageTapDropDown2.direction = .any
+        room2ChildageTapDropDown2.dataSource = ["1","2","3","4","5","6","7","8","9","10","11"]
+        room2ChildageTapDropDown2.direction = .bottom
         room2ChildageTapDropDown2.backgroundColor = .WhiteColor
         room2ChildageTapDropDown2.anchorView = self.r2childage2View
         room2ChildageTapDropDown2.bottomOffset = CGPoint(x: 0, y: r2childage2View.frame.size.height + 10)
@@ -397,7 +397,7 @@ class RoomsCountTVCell: UITableViewCell {
     func setupRoom3ChildageTapDropDown1() {
         
         room3ChildageTapDropDown1.dataSource = ["1","2","3","4","5","6","7","8","9"]
-        room3ChildageTapDropDown1.direction = .any
+        room3ChildageTapDropDown1.direction = .bottom
         room3ChildageTapDropDown1.backgroundColor = .WhiteColor
         room3ChildageTapDropDown1.anchorView = self.r3childage1View
         room3ChildageTapDropDown1.bottomOffset = CGPoint(x: 0, y: r3childage1View.frame.size.height + 10)
@@ -410,7 +410,7 @@ class RoomsCountTVCell: UITableViewCell {
     func setupRoom3ChildageTapDropDown2() {
         
         room3ChildageTapDropDown2.dataSource = ["1","2","3","4","5","6","7","8","9"]
-        room3ChildageTapDropDown2.direction = .any
+        room3ChildageTapDropDown2.direction = .bottom
         room3ChildageTapDropDown2.backgroundColor = .WhiteColor
         room3ChildageTapDropDown2.anchorView = self.r3childage2View
         room3ChildageTapDropDown2.bottomOffset = CGPoint(x: 0, y: r3childage2View.frame.size.height + 10)
@@ -434,7 +434,7 @@ class RoomsCountTVCell: UITableViewCell {
     func setupRoom4ChildageTapDropDown1() {
         
         room4ChildageTapDropDown1.dataSource = ["1","2","3","4","5","6","7","8","9"]
-        room4ChildageTapDropDown1.direction = .any
+        room4ChildageTapDropDown1.direction = .bottom
         room4ChildageTapDropDown1.backgroundColor = .WhiteColor
         room4ChildageTapDropDown1.anchorView = self.r4childage1View
         room4ChildageTapDropDown1.bottomOffset = CGPoint(x: 0, y: r4childage1View.frame.size.height + 10)
@@ -447,7 +447,7 @@ class RoomsCountTVCell: UITableViewCell {
     func setupRoom4ChildageTapDropDown2() {
         
         room4ChildageTapDropDown2.dataSource = ["1","2","3","4","5","6","7","8","9"]
-        room4ChildageTapDropDown2.direction = .any
+        room4ChildageTapDropDown2.direction = .bottom
         room4ChildageTapDropDown2.backgroundColor = .WhiteColor
         room4ChildageTapDropDown2.anchorView = self.r4childage2View
         room4ChildageTapDropDown2.bottomOffset = CGPoint(x: 0, y: r4childage2View.frame.size.height + 10)
@@ -463,13 +463,13 @@ class RoomsCountTVCell: UITableViewCell {
     func setupUI1() {
         
         setuplabels(lbl: titlelbl1, text: "Room 1", textcolor: .SubTitleColor, font: .LatoRegular(size: 16), align: .left)
-        setuplabels(lbl: adultslbl1, text: "Adults", textcolor: .AppLabelColor, font: .LatoRegular(size: 18), align: .left)
+        setuplabels(lbl: adultslbl1, text: "Adult", textcolor: .AppLabelColor, font: .LatoRegular(size: 18), align: .left)
         setuplabels(lbl: adultsSubtitlelbl1, text: "+12 yrs", textcolor: .SubTitleColor, font: .LatoRegular(size: 14), align: .left)
-        setuplabels(lbl: adultsCountlbl1, text: "1", textcolor: HexColor("#27272A"), font: .LatoRegular(size: 18), align: .center)
+        setuplabels(lbl: adultsCountlbl1, text: "2", textcolor: HexColor("#27272A"), font: .LatoRegular(size: 18), align: .center)
         aIncrementBtn1.setTitle("", for: .normal)
         aDecrementBtn1.setTitle("", for: .normal)
         
-        setuplabels(lbl: childrenlbl1, text: "Children", textcolor: .AppLabelColor, font: .LatoRegular(size: 18), align: .left)
+        setuplabels(lbl: childrenlbl1, text: "Child", textcolor: .AppLabelColor, font: .LatoRegular(size: 18), align: .left)
         setuplabels(lbl: childrenSubtitlelbl1, text: "+2-12 yrs", textcolor: .SubTitleColor, font: .LatoRegular(size: 13), align: .left)
         setuplabels(lbl: childrenCountlbl1, text: "0", textcolor: .AppLabelColor, font: .LatoRegular(size: 18), align: .center)
         cIncrementBtn1.setTitle("", for: .normal)
@@ -486,13 +486,13 @@ class RoomsCountTVCell: UITableViewCell {
     func setupUI2() {
         
         setuplabels(lbl: titlelbl2, text: "Room 2", textcolor: .SubTitleColor, font: .LatoRegular(size: 16), align: .left)
-        setuplabels(lbl: adultslbl2, text: "Adults", textcolor: .AppLabelColor, font: .LatoRegular(size: 18), align: .left)
+        setuplabels(lbl: adultslbl2, text: "Adult", textcolor: .AppLabelColor, font: .LatoRegular(size: 18), align: .left)
         setuplabels(lbl: adultsSubtitlelbl2, text: "+12 yrs", textcolor: .SubTitleColor, font: .LatoRegular(size: 14), align: .left)
         setuplabels(lbl: adultsCountlbl2, text: "1", textcolor: HexColor("#27272A"), font: .LatoRegular(size: 18), align: .center)
         aIncrementBtn1.setTitle("", for: .normal)
         aDecrementBtn1.setTitle("", for: .normal)
         
-        setuplabels(lbl: childrenlbl2, text: "Children", textcolor: .AppLabelColor, font: .LatoRegular(size: 18), align: .left)
+        setuplabels(lbl: childrenlbl2, text: "Child", textcolor: .AppLabelColor, font: .LatoRegular(size: 18), align: .left)
         setuplabels(lbl: childrenSubtitlelbl2, text: "+2-12 yrs", textcolor: .SubTitleColor, font: .LatoRegular(size: 13), align: .left)
         setuplabels(lbl: childrenCountlbl2, text: "0", textcolor: .AppLabelColor, font: .LatoRegular(size: 18), align: .center)
         cIncrementBtn1.setTitle("", for: .normal)
@@ -509,13 +509,13 @@ class RoomsCountTVCell: UITableViewCell {
     func setupUI3() {
         
         setuplabels(lbl: titlelbl3, text: "Room 3", textcolor: .SubTitleColor, font: .LatoRegular(size: 16), align: .left)
-        setuplabels(lbl: adultslbl3, text: "Adults", textcolor: .AppLabelColor, font: .LatoRegular(size: 18), align: .left)
+        setuplabels(lbl: adultslbl3, text: "Adult", textcolor: .AppLabelColor, font: .LatoRegular(size: 18), align: .left)
         setuplabels(lbl: adultsSubtitlelbl3, text: "+12 yrs", textcolor: .SubTitleColor, font: .LatoRegular(size: 14), align: .left)
         setuplabels(lbl: adultsCountlbl3, text: "1", textcolor: HexColor("#27272A"), font: .LatoRegular(size: 18), align: .center)
         aIncrementBtn1.setTitle("", for: .normal)
         aDecrementBtn1.setTitle("", for: .normal)
         
-        setuplabels(lbl: childrenlbl3, text: "Children", textcolor: .AppLabelColor, font: .LatoRegular(size: 18), align: .left)
+        setuplabels(lbl: childrenlbl3, text: "Child", textcolor: .AppLabelColor, font: .LatoRegular(size: 18), align: .left)
         setuplabels(lbl: childrenSubtitlelbl3, text: "+2-12 yrs", textcolor: .SubTitleColor, font: .LatoRegular(size: 13), align: .left)
         setuplabels(lbl: childrenCountlbl3, text: "0", textcolor: .AppLabelColor, font: .LatoRegular(size: 18), align: .center)
         cIncrementBtn1.setTitle("", for: .normal)
@@ -532,13 +532,13 @@ class RoomsCountTVCell: UITableViewCell {
     func setupUI4() {
         
         setuplabels(lbl: titlelbl4, text: "Room 4", textcolor: .SubTitleColor, font: .LatoRegular(size: 16), align: .left)
-        setuplabels(lbl: adultslbl4, text: "Adults", textcolor: .AppLabelColor, font: .LatoRegular(size: 18), align: .left)
+        setuplabels(lbl: adultslbl4, text: "Adult", textcolor: .AppLabelColor, font: .LatoRegular(size: 18), align: .left)
         setuplabels(lbl: adultsSubtitlelbl4, text: "+12 yrs", textcolor: .SubTitleColor, font: .LatoRegular(size: 14), align: .left)
         setuplabels(lbl: adultsCountlbl4, text: "1", textcolor: HexColor("#27272A"), font: .LatoRegular(size: 18), align: .center)
         aIncrementBtn1.setTitle("", for: .normal)
         aDecrementBtn1.setTitle("", for: .normal)
         
-        setuplabels(lbl: childrenlbl4, text: "Children", textcolor: .AppLabelColor, font: .LatoRegular(size: 18), align: .left)
+        setuplabels(lbl: childrenlbl4, text: "Child", textcolor: .AppLabelColor, font: .LatoRegular(size: 18), align: .left)
         setuplabels(lbl: childrenSubtitlelbl4, text: "+2-12 yrs", textcolor: .SubTitleColor, font: .LatoRegular(size: 13), align: .left)
         setuplabels(lbl: childrenCountlbl4, text: "0", textcolor: .AppLabelColor, font: .LatoRegular(size: 18), align: .center)
         cIncrementBtn1.setTitle("", for: .normal)

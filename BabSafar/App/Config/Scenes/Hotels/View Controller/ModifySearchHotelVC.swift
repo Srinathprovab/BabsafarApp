@@ -25,14 +25,7 @@ class ModifySearchHotelVC: BaseTableVC {
     
     
     override func viewWillAppear(_ animated: Bool) {
-        NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("nointernet"), object: nil)
-    }
-    
-    //MARK: - nointernet
-    @objc func nointernet() {
-        guard let vc = NoInternetConnectionVC.newInstance.self else {return}
-        vc.modalPresentationStyle = .overCurrentContext
-        self.present(vc, animated: true)
+       addObserver()
     }
     
     
@@ -45,8 +38,15 @@ class ModifySearchHotelVC: BaseTableVC {
     
     
     func setupUI() {
+        
         self.view.backgroundColor = .black.withAlphaComponent(0.4)
-        commonTableView.registerTVCells(["ButtonTVCell","CommonFromCityTVCell","EmptyTVCell","LabelTVCell"])
+        commonTableView.registerTVCells(["SearchHotelTVCell",
+                                         "EmptyTVCell",
+                                         "ButtonTVCell",
+                                         "EmptyTVCell",
+                                         "LabelTVCell",
+                                         "TopCityTVCell"])
+        
         commonTableView.layer.cornerRadius = 10
         commonTableView.clipsToBounds = true
         commonTableView.layer.borderWidth = 1
@@ -67,23 +67,9 @@ class ModifySearchHotelVC: BaseTableVC {
         
         tablerow.append(TableRow(height:50,cellType:.EmptyTVCell))
         tablerow.append(TableRow(title:"Modify",key: "modifyhotel",cellType:.LabelTVCell))
-        tablerow.append(TableRow(height:20,cellType:.EmptyTVCell))
         
-        
-        tablerow.append(TableRow(title:"Location/City",subTitle: defaults.string(forKey: UserDefaultsKeys.locationcity) ?? "Add City",key:"search", image: "",cellType:.CommonFromCityTVCell))
-        
-        tablerow.append(TableRow(title:"Check-In",subTitle: defaults.string(forKey: UserDefaultsKeys.checkin) ?? "Add Check In Date",key:"dual", text:"Check-On", tempText: defaults.string(forKey: UserDefaultsKeys.checkout) ?? "Add Check Out Date",cellType:.CommonFromCityTVCell))
-        
-        tablerow.append(TableRow(title:"Rooms & Guests",subTitle: "\(defaults.string(forKey: UserDefaultsKeys.roomcount) ?? "Add") Rooms ,\(defaults.string(forKey: UserDefaultsKeys.hoteladultscount) ?? "0") Adults,\(defaults.string(forKey: UserDefaultsKeys.hotelchildcount) ?? "0") Childrens",key:"dual1", image: "downarrow",cellType:.CommonFromCityTVCell))
-        
-        
-        
-        
-        
-        tablerow.append(TableRow(height:20,cellType:.EmptyTVCell))
-        tablerow.append(TableRow(title:"Search Hotels",cellType:.ButtonTVCell))
-        tablerow.append(TableRow(height:50,cellType:.EmptyTVCell))
-        
+        tablerow.append(TableRow(cellType:.SearchHotelTVCell))
+        tablerow.append(TableRow(height:16,cellType:.EmptyTVCell))
         
         commonTVData = tablerow
         commonTableView.reloadData()
@@ -94,54 +80,24 @@ class ModifySearchHotelVC: BaseTableVC {
         dismiss(animated: true)
     }
     
-    override func viewBtnAction(cell: CommonFromCityTVCell) {
-        print(cell.subtitlelbl.text as Any)
-        switch cell.titlelbl.text {
-        case "Location/City":
-            gotoFromCitySearchVC()
-            break
-        case "Rooms & Guests":
-            gotoAddAdultEconomyVC()
-            break
-        default:
-            break
-        }
+    
+    override func didTapOnSearchHotelCityBtn(cell:SearchHotelTVCell){
+        gotoFromCitySearchVC()
     }
     
-    override func didTapOnDual1Btn(cell:CommonFromCityTVCell){
-        gotoCalenderVC()
-    }
-    override func didTapOnDual2Btn(cell:CommonFromCityTVCell){
+    override func didTapOnCheckinBtn(cell: SearchHotelTVCell) {
         gotoCalenderVC()
     }
     
-    
-    
-    func gotoFromCitySearchVC() {
-        guard let vc = SelectFromCityVC.newInstance.self else {return}
-        vc.modalPresentationStyle = .overCurrentContext
-        self.present(vc, animated: true)
+    override func didTapOnCheckoutBtn(cell: SearchHotelTVCell) {
+        gotoCalenderVC()
     }
     
-    func gotoAddAdultEconomyVC() {
-        guard let vc = TravellerEconomyVC.newInstance.self else {return}
-        vc.modalPresentationStyle = .overCurrentContext
-        vc.keyString = "hotels"
-        self.present(vc, animated: true)
+    override func didTapOnAddRoomsAndGuestBtn(cell: SearchHotelTVCell) {
+        gotoAddAdultEconomyVC()
     }
     
-    func gotoCalenderVC() {
-        guard let vc = Calvc.newInstance.self else {return}
-        vc.modalPresentationStyle = .overCurrentContext
-        self.present(vc, animated: true)
-    }
-    
-    override func didTapOnSelectCountryCodeList(cell:SearchHotelTVCell){
-        self.countrycode = cell.countryCode
-    }
-    
-    
-    override func btnAction(cell: ButtonTVCell) {
+    override func didTapOnSearchHotelBtn(cell: SearchHotelTVCell) {
         
         payload.removeAll()
         payload["city"] = defaults.string(forKey: UserDefaultsKeys.locationcity)
@@ -206,18 +162,79 @@ class ModifySearchHotelVC: BaseTableVC {
         }
     }
     
-    
     func gotoSearchHotelsResultVC(){
+        loderBool = true
+        callapibool = true
         guard let vc = SearchHotelsResultVC.newInstance.self else {return}
         vc.modalPresentationStyle = .fullScreen
         vc.countrycode = self.countrycode
-        callapibool = true
         vc.payload = self.payload
         present(vc, animated: true)
     }
     
     
+    func gotoFromCitySearchVC() {
+        guard let vc = SelectFromCityVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .overCurrentContext
+        self.present(vc, animated: true)
+    }
+    
+    func gotoAddAdultEconomyVC() {
+        //        guard let vc = AddRoomsGuestsVC.newInstance.self else {return}
+        guard let vc = AddRoomsVCViewController.newInstance.self else {return}
+        vc.modalPresentationStyle = .overCurrentContext
+        self.present(vc, animated: true)
+    }
+    
+    func gotoCalenderVC() {
+        guard let vc = Calvc.newInstance.self else {return}
+        vc.modalPresentationStyle = .overCurrentContext
+        self.present(vc, animated: true)
+    }
+    
+    override func didTapOnSelectCountryCodeList(cell:SearchHotelTVCell){
+        self.countrycode = cell.countryCode
+    }
+    
+    
+    override func btnAction(cell: ButtonTVCell) {
+        // gotoSearchHotelsResultVC()
+    }
+    
+    
 }
 
-
-
+extension ModifySearchHotelVC {
+    
+    func addObserver() {
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("offline"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(resultnil), name: NSNotification.Name("resultnil"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reload), name: Notification.Name("reloadTV"), object: nil)
+        
+    }
+    
+    
+    @objc func reload() {
+        setuptv()
+    }
+    
+    //MARK: - resultnil
+    @objc func resultnil() {
+        guard let vc = NoInternetConnectionVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.key = "noresult"
+        self.present(vc, animated: true)
+    }
+    
+    
+    //MARK: - nointernet
+    @objc func nointernet() {
+        guard let vc = NoInternetConnectionVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.key = "nointernet"
+        self.present(vc, animated: true)
+    }
+    
+    
+}

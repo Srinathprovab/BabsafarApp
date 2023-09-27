@@ -356,6 +356,11 @@ class SearchHotelTVCell: TableViewCell, HotelCitySearchViewModelDelegate {
     @IBAction func didTapOnClearTFBtnAction(_ sender: Any) {
         cityTF.text = ""
         locationCitylbl.text = ""
+        
+        defaults.set("Add City", forKey: UserDefaultsKeys.locationcity)
+        defaults.set("", forKey: UserDefaultsKeys.locationcityid)
+        defaults.set("", forKey: UserDefaultsKeys.locationcityname)
+        
         cityTF.becomeFirstResponder()
     }
     
@@ -382,14 +387,16 @@ extension SearchHotelTVCell:UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath) as? FromCityTVCell {
             
-           // cityTF.resignFirstResponder()
-            cityTF.text = ""
+          
             locationCitylbl.text = hotelList[indexPath.row].value ?? ""
             locationCitylbl.textColor = .AppLabelColor
             
             defaults.set(hotelList[indexPath.row].value ?? "", forKey: UserDefaultsKeys.locationcity)
             defaults.set(hotelList[indexPath.row].id ?? "", forKey: UserDefaultsKeys.locationcityid)
             defaults.set(hotelList[indexPath.row].label ?? "", forKey: UserDefaultsKeys.locationcityname)
+            
+          //   cityTF.resignFirstResponder()
+             cityTF.text = ""
             
             updateHeight(height: 0)
         }

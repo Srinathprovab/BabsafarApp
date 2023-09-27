@@ -25,7 +25,7 @@ class TravellerDetailsTVCell: TableViewCell {
     
     
     override func updateUI() {
-        totalnooftravellerlbl.text = "Total No Of Traveller : \(cellInfo?.title ?? "")"
+        totalnooftravellerlbl.text = "Total No. Of Traveller : \(cellInfo?.title ?? "")"
     }
     
     

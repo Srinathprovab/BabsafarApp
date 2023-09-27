@@ -16,6 +16,7 @@ class InsuranceVC: BaseTableVC {
     @IBOutlet weak var roundTripView: UIView!
     @IBOutlet weak var onewaylbl: UILabel!
     @IBOutlet weak var roundtriplbl: UILabel!
+    @IBOutlet weak var navHeight: NSLayoutConstraint!
     
     
     var payload = [String:Any]()
@@ -44,6 +45,10 @@ class InsuranceVC: BaseTableVC {
     
     
     func setupUI() {
+        if screenHeight < 835 {
+            navHeight.constant = 280
+        }
+        
         nav.titlelbl.text = "Insurance"
         nav.backBtn.addTarget(self, action: #selector(didTapOnBackBtn(_:)), for: .touchUpInside)
         commonTableView.registerTVCells(["InsurenceSearchTVCell",
@@ -180,10 +185,10 @@ class InsuranceVC: BaseTableVC {
                     payload["adult"] = defaults.string(forKey: UserDefaultsKeys.iradultCount)
                     payload["child"] = defaults.string(forKey: UserDefaultsKeys.irchildCount)
                     payload["infant"] = defaults.string(forKey: UserDefaultsKeys.irinfantsCount)
-                    payload["from"] = defaults.string(forKey: UserDefaultsKeys.irfromCity)
-                    payload["from_loc_id"] = defaults.string(forKey: UserDefaultsKeys.irfromlocid)
-                    payload["to"] = defaults.string(forKey: UserDefaultsKeys.irtoCity)
-                    payload["to_loc_id"] = defaults.string(forKey: UserDefaultsKeys.irtolocid)
+                    payload["from"] = defaults.string(forKey: UserDefaultsKeys.ifromCity)
+                    payload["from_loc_id"] = defaults.string(forKey: UserDefaultsKeys.ifromlocid)
+                    payload["to"] = defaults.string(forKey: UserDefaultsKeys.itoCity)
+                    payload["to_loc_id"] = defaults.string(forKey: UserDefaultsKeys.itolocid)
                     payload["departure_date"] = defaults.string(forKey: UserDefaultsKeys.ircalDepDate)
                     payload["arrival_date"] = defaults.string(forKey: UserDefaultsKeys.ircalRetDate)
                     payload["user_id"] = defaults.string(forKey: UserDefaultsKeys.userid) ?? "0"

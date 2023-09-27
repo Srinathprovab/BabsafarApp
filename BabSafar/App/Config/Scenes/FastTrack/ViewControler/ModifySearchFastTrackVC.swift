@@ -17,10 +17,11 @@ class ModifySearchFastTrackVC: BaseTableVC {
     @IBOutlet weak var quickbookinglbl: UILabel!
     @IBOutlet weak var explorelbl: UILabel!
     @IBOutlet weak var tvheight: NSLayoutConstraint!
+    @IBOutlet weak var navHeight: NSLayoutConstraint!
     
     var payload = [String:Any]()
     var tablerow = [TableRow]()
-    
+    var fasttrackJournyType = String()
     static var newInstance: ModifySearchFastTrackVC? {
         let storyboard = UIStoryboard(name: Storyboard.FastTrack.name,
                                       bundle: nil)
@@ -47,6 +48,9 @@ class ModifySearchFastTrackVC: BaseTableVC {
     
     
     func setupUI() {
+        if screenHeight < 835 {
+            navHeight.constant = 280
+        }
         nav.titlelbl.text = "Fasttrack"
         nav.backBtn.addTarget(self, action: #selector(didTapOnBackBtn(_:)), for: .touchUpInside)
         commonTableView.registerTVCells(["FasttrackSearchTVCell",
@@ -57,7 +61,17 @@ class ModifySearchFastTrackVC: BaseTableVC {
         commonTableView.clipsToBounds = true
         commonTableView.layer.borderWidth = 1
         commonTableView.layer.borderColor = UIColor.AppBorderColor.cgColor
-        quick()
+        
+        
+        
+        
+        if let fastracktabselect = defaults.string(forKey: UserDefaultsKeys.fasttrackJournyType) {
+            if fastracktabselect == "quick" {
+                quick()
+            }else {
+                explore()
+            }
+        }
         
     }
     
@@ -65,12 +79,14 @@ class ModifySearchFastTrackVC: BaseTableVC {
     
     
     @objc func didTapOnBackBtn(_ sender:UIButton) {
+        defaults.set(fasttrackJournyType, forKey: UserDefaultsKeys.fasttrackJournyType)
         dismiss(animated: false)
     }
     
     
     
     func quick() {
+        fasttrackJournyType = "quick"
         defaults.set("quick", forKey: UserDefaultsKeys.fasttrackJournyType)
         quickbookingView.backgroundColor = HexColor("#D7B912")
         exploreView.backgroundColor = HexColor("#F1F1F1")
@@ -83,6 +99,7 @@ class ModifySearchFastTrackVC: BaseTableVC {
     }
     
     func explore() {
+        fasttrackJournyType = "explore"
         defaults.set("explore", forKey: UserDefaultsKeys.fasttrackJournyType)
         quickbookingView.backgroundColor = HexColor("#F1F1F1")
         exploreView.backgroundColor = HexColor("#D7B912")
@@ -154,9 +171,8 @@ class ModifySearchFastTrackVC: BaseTableVC {
     //MARK: - didTapOnSearchInsurenceBtnAction FasttrackSearchTVCell
     override func didTapOnSearchInsurenceBtnAction(cell: FasttrackSearchTVCell) {
         
-        
         payload.removeAll()
-        payload["airport_fst_code"] = "1"
+        //  payload["airport_fst_code"] = "1"
         payload["from"] = defaults.string(forKey: UserDefaultsKeys.frfromCity)
         payload["from_loc_id"] = defaults.string(forKey: UserDefaultsKeys.frfromlocid)
         payload["from_fst_code"] = defaults.string(forKey: UserDefaultsKeys.fromfstcode)

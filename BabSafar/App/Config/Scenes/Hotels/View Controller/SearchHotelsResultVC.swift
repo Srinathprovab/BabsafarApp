@@ -118,7 +118,10 @@ class SearchHotelsResultVC: BaseTableVC, UITextFieldDelegate, HotelSearchViewMod
         navView.titlelbl.text = ""
         
         setuplabels(lbl: navView.lbl1, text: defaults.string(forKey: UserDefaultsKeys.locationcity) ?? "", textcolor: .WhiteColor, font: .LatoMedium(size: 18), align: .center)
-        setuplabels(lbl: navView.lbl2, text: "Checkin:\(defaults.string(forKey: UserDefaultsKeys.checkin) ?? "") | Checkout:\(defaults.string(forKey: UserDefaultsKeys.checkout) ?? "")", textcolor: .WhiteColor, font: .LatoLight(size: 14), align: .center)
+        setuplabels(lbl: navView.lbl2, text: "Checkin:\(defaults.string(forKey: UserDefaultsKeys.checkin) ?? "") | Checkout:\(defaults.string(forKey: UserDefaultsKeys.checkout) ?? "")", textcolor: .WhiteColor, font: .LatoBold(size: 14), align: .center)
+        
+        
+      
         
         
         navView.editBtnView.isHidden = true
@@ -474,10 +477,17 @@ extension SearchHotelsResultVC {
                 cell.hotelid = String(dict.hotel_code ?? 0)
                 cell.lat = dict.latitude ?? ""
                 cell.long = dict.longitude ?? ""
-                //  cell.hotelDesc = dict.hotel_desc
+                
                 cell.perNightlbl.text = "Total Price For 2 Night"
                 cell.faretypelbl.text = dict.refund ?? ""
                 cell.setAttributedString1(str1:dict.currency ?? "", str2: dict.price ?? "")
+                
+                if let hotel_desc = dict.hotel_shortdesc{
+                    cell.hotelDescLabel = hotel_desc
+                } else {
+                    // Handle the case when facility is empty or nil
+                    print("Facility array is empty or nil")
+                }
                 
                 if let facilities = dict.facility, !facilities.isEmpty {
                     cell.facilityArray = facilities
@@ -501,7 +511,16 @@ extension SearchHotelsResultVC {
                 cell.long = dict.longitude ?? ""
                 cell.perNightlbl.text = "Total Price For 2 Night"
                 cell.setAttributedString1(str1:dict.currency ?? "", str2: dict.price ?? "")
-
+               
+                
+                
+                if let hotel_desc = dict.hotel_shortdesc{
+                    cell.hotelDescLabel = hotel_desc
+                } else {
+                    // Handle the case when facility is empty or nil
+                    print("Facility array is empty or nil")
+                }
+                
                 if let facilities = dict.facility, !facilities.isEmpty {
                     cell.facilityArray = facilities
                 } else {

@@ -157,7 +157,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wcm-vV-KcX" customClass="BorderedView" customModule="BabSafar" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="158.66666666666666" height="40"/>
                                         <subviews>
-                                            <textField opaque="NO" tag="55" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="PNR No" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wDB-r6-BLv">
+                                            <textField opaque="NO" tag="55" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="PNR Number" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wDB-r6-BLv">
                                                 <rect key="frame" x="0.0" y="0.0" width="158.66666666666666" height="40"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <textInputTraits key="textInputTraits"/>
@@ -326,8 +326,8 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Daparture Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kXi-6d-ZS4">
-                                <rect key="frame" x="195" y="194.33333333333334" width="82" height="14.666666666666657"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Departure Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kXi-6d-ZS4">
+                                <rect key="frame" x="195" y="194.33333333333334" width="82.666666666666686" height="14.666666666666657"/>
                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>

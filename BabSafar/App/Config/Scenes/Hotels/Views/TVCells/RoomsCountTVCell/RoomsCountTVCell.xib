@@ -577,8 +577,8 @@
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gpP-es-CWP">
                                                         <rect key="frame" x="359" y="6.3333333333333144" width="28" height="28"/>
                                                         <subviews>
-                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="multiply" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="QwE-7C-02Z">
-                                                                <rect key="frame" x="4" y="7.6666666666666643" width="20" height="13.000000000000004"/>
+                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="close2" translatesAutoresizingMaskIntoConstraints="NO" id="QwE-7C-02Z">
+                                                                <rect key="frame" x="4" y="4" width="20" height="20"/>
                                                                 <color key="tintColor" red="0.3921568627" green="0.1529411765" blue="0.43529411759999997" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="20" id="PYh-3R-SRV"/>
@@ -937,8 +937,8 @@
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dC9-Xj-9mQ">
                                                         <rect key="frame" x="359" y="6.3333333333333712" width="28" height="28"/>
                                                         <subviews>
-                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="multiply" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="f6w-Ja-31f">
-                                                                <rect key="frame" x="4" y="7.6666666666666643" width="20" height="13.000000000000004"/>
+                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="close2" translatesAutoresizingMaskIntoConstraints="NO" id="f6w-Ja-31f">
+                                                                <rect key="frame" x="4" y="4" width="20" height="20"/>
                                                                 <color key="tintColor" red="0.3921568627" green="0.1529411765" blue="0.43529411759999997" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="20" id="7r9-uy-Dte"/>
@@ -1297,8 +1297,8 @@
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ozy-dt-90c">
                                                         <rect key="frame" x="359" y="6.3333333333333712" width="28" height="28"/>
                                                         <subviews>
-                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="multiply" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="6xz-2B-WX9">
-                                                                <rect key="frame" x="4" y="7.6666666666666643" width="20" height="13.000000000000004"/>
+                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="close2" translatesAutoresizingMaskIntoConstraints="NO" id="6xz-2B-WX9">
+                                                                <rect key="frame" x="4" y="4" width="20" height="20"/>
                                                                 <color key="tintColor" red="0.3921568627" green="0.1529411765" blue="0.43529411759999997" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="20" id="u3e-oq-gkj"/>
@@ -1600,9 +1600,9 @@
         </tableViewCell>
     </objects>
     <resources>
+        <image name="close2" width="24" height="24"/>
         <image name="decr" width="28" height="28"/>
         <image name="incr" width="28" height="28"/>
-        <image name="multiply" catalog="system" width="128" height="111"/>
         <namedColor name="NavBackColor">
             <color red="0.0" green="0.20000000298023224" blue="0.60000002384185791" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

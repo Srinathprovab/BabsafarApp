@@ -175,6 +175,7 @@
                         <outlet property="explorelbl" destination="PBL-SM-ZPg" id="Lhj-iQ-ooL"/>
                         <outlet property="holderView" destination="AqO-MR-L9j" id="2dA-T4-ydt"/>
                         <outlet property="nav" destination="rRs-xq-Eme" id="fCl-fG-uze"/>
+                        <outlet property="navHeight" destination="iGJ-QG-Drv" id="jIB-9e-Oh9"/>
                         <outlet property="quickbookingView" destination="SkI-0I-h1c" id="rW9-iN-Jy5"/>
                         <outlet property="quickbookinglbl" destination="LkT-Gl-Ofr" id="Cf5-Ez-bPx"/>
                         <outlet property="tvheight" destination="gxb-xa-5X1" id="gft-xp-rtI"/>
@@ -947,6 +948,7 @@
                         <outlet property="explorelbl" destination="EtY-JE-u0i" id="4fM-fu-uq7"/>
                         <outlet property="holderView" destination="SE1-8Y-h8H" id="fUU-ta-zhb"/>
                         <outlet property="nav" destination="PKi-33-C8h" id="snw-jH-Nt3"/>
+                        <outlet property="navHeight" destination="6Of-a8-Rpf" id="Wqy-pT-cJ4"/>
                         <outlet property="quickbookingView" destination="gq8-7R-Fql" id="KnD-vt-20I"/>
                         <outlet property="quickbookinglbl" destination="rMp-7V-ygA" id="0PQ-wM-SN6"/>
                         <outlet property="tvheight" destination="gyH-sb-FjT" id="0BN-F2-2nH"/>

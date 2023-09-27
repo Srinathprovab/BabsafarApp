@@ -17,6 +17,7 @@ class SearchFastTrackVC: BaseTableVC {
     @IBOutlet weak var quickbookinglbl: UILabel!
     @IBOutlet weak var explorelbl: UILabel!
     @IBOutlet weak var tvheight: NSLayoutConstraint!
+    @IBOutlet weak var navHeight: NSLayoutConstraint!
     
     var payload = [String:Any]()
     var tablerow = [TableRow]()
@@ -44,6 +45,9 @@ class SearchFastTrackVC: BaseTableVC {
     
     
     func setupUI() {
+        if screenHeight < 835 {
+            navHeight.constant = 280
+        }
         nav.titlelbl.text = "Fasttrack"
         nav.backBtn.addTarget(self, action: #selector(didTapOnBackBtn(_:)), for: .touchUpInside)
         commonTableView.registerTVCells(["FasttrackSearchTVCell",
@@ -154,10 +158,9 @@ class SearchFastTrackVC: BaseTableVC {
     
     //MARK: - didTapOnSearchInsurenceBtnAction FasttrackSearchTVCell
     override func didTapOnSearchInsurenceBtnAction(cell: FasttrackSearchTVCell) {
-        
-        
+  
         payload.removeAll()
-        payload["airport_fst_code"] = "1"
+      //  payload["airport_fst_code"] = "1"
         payload["from"] = defaults.string(forKey: UserDefaultsKeys.frfromCity)
         payload["from_loc_id"] = defaults.string(forKey: UserDefaultsKeys.frfromlocid)
         payload["from_fst_code"] = defaults.string(forKey: UserDefaultsKeys.fromfstcode)

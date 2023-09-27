@@ -16,7 +16,7 @@ class ModifyInsuranceVC: BaseTableVC {
     @IBOutlet weak var roundTripView: UIView!
     @IBOutlet weak var onewaylbl: UILabel!
     @IBOutlet weak var roundtriplbl: UILabel!
-    
+    @IBOutlet weak var navHeight: NSLayoutConstraint!
     
     var payload = [String:Any]()
     var tablerow = [TableRow]()
@@ -47,6 +47,9 @@ class ModifyInsuranceVC: BaseTableVC {
     
     
     func setupUI() {
+        if screenHeight < 835 {
+            navHeight.constant = 280
+        }
         nav.titlelbl.text = "Insurance"
         nav.backBtn.addTarget(self, action: #selector(didTapOnBackBtn(_:)), for: .touchUpInside)
         commonTableView.registerTVCells(["InsurenceSearchTVCell",
