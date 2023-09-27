@@ -11,7 +11,7 @@ protocol FilterDepartureTVCellDelegate {
     func didTapOnDropDownBtn(cell:FilterDepartureTVCell)
     
     func didTapOnTimeBtn(cell:FilterDepartureTVCell)
-
+    
 }
 
 class FilterDepartureTVCell: TableViewCell {
@@ -71,6 +71,78 @@ class FilterDepartureTVCell: TableViewCell {
     
     override func updateUI() {
         titlelbl.text = cellInfo?.title
+        
+        
+        if titlelbl.text == "Departure Time"{
+            
+            switch filterModel.departureTime {
+            case "12AM - 6AM":
+                tapOnTimeOneBtn()
+                break
+                
+                
+            case "6AM - 12PM":
+                tapOnTime2Btn()
+                break
+                
+                
+            case "12PM - 6PM":
+                tapOnTime3Btn()
+                break
+                
+                
+            case "6PM - 12AM":
+                tapOnTime4Btn()
+                break
+                
+                
+            case "":
+                reset()
+                break
+                
+                
+            default:
+                
+                break
+            }
+            
+            
+        }else {
+            
+            switch filterModel.arrivalTime {
+            case "12AM - 6AM":
+                tapOnTimeOneBtn()
+                break
+                
+                
+            case "6AM - 12PM":
+                tapOnTime2Btn()
+                break
+                
+                
+            case "12PM - 6PM":
+                tapOnTime3Btn()
+                break
+                
+                
+            case "6PM - 12AM":
+                tapOnTime4Btn()
+                break
+                
+            case "":
+                reset()
+                break
+                
+                
+                
+            default:
+                
+                break
+            }
+        }
+        
+        
+        
     }
     
     
@@ -131,7 +203,11 @@ class FilterDepartureTVCell: TableViewCell {
     
     
     @IBAction func didTapOnTimeOneBtn(_ sender: Any) {
-        
+        tapOnTimeOneBtn()
+    }
+    
+    
+    func tapOnTimeOneBtn(){
         timeView1.backgroundColor = .AppCalenderDateSelectColor
         img1.image = UIImage(named: "mor1")?.withRenderingMode(.alwaysOriginal).withTintColor(.WhiteColor)
         time1lbl.textColor = .WhiteColor
@@ -150,11 +226,14 @@ class FilterDepartureTVCell: TableViewCell {
         
         timeString = time1lbl.text ?? ""
         delegate?.didTapOnTimeBtn(cell: self)
-        
     }
     
     
     @IBAction func didTapOnTime2Btn(_ sender: Any) {
+        tapOnTime2Btn()
+    }
+    
+    func tapOnTime2Btn(){
         timeView1.backgroundColor = .WhiteColor
         img1.image = UIImage(named: "mor1")?.withRenderingMode(.alwaysOriginal).withTintColor(.AppLabelColor)
         time1lbl.textColor = .AppLabelColor
@@ -173,11 +252,16 @@ class FilterDepartureTVCell: TableViewCell {
         
         timeString = time2lbl.text ?? ""
         delegate?.didTapOnTimeBtn(cell: self)
-
+        
     }
     
+    
     @IBAction func didTapOnTime3Btn(_ sender: Any) {
-        
+        tapOnTime3Btn()
+    }
+    
+    
+    func tapOnTime3Btn(){
         timeView1.backgroundColor = .WhiteColor
         img1.image = UIImage(named: "mor1")?.withRenderingMode(.alwaysOriginal).withTintColor(.AppLabelColor)
         time1lbl.textColor = .AppLabelColor
@@ -196,11 +280,15 @@ class FilterDepartureTVCell: TableViewCell {
         
         timeString = time3lbl.text ?? ""
         delegate?.didTapOnTimeBtn(cell: self)
-
     }
     
+    
     @IBAction func didTapOnTime4Btn(_ sender: Any) {
-        
+        tapOnTime4Btn()
+    }
+    
+    
+    func tapOnTime4Btn(){
         timeView1.backgroundColor = .WhiteColor
         img1.image = UIImage(named: "mor1")?.withRenderingMode(.alwaysOriginal).withTintColor(.AppLabelColor)
         time1lbl.textColor = .AppLabelColor
@@ -219,8 +307,22 @@ class FilterDepartureTVCell: TableViewCell {
         
         timeString = time4lbl.text ?? ""
         delegate?.didTapOnTimeBtn(cell: self)
-
         
+    }
+    
+    
+    
+    func reset(){
+        
+        setupViews(v: timeView1, radius: 0, color: .WhiteColor)
+        setupViews(v: timeView2, radius: 0, color: .WhiteColor)
+        setupViews(v: timeView3, radius: 0, color: .WhiteColor)
+        setupViews(v: timeView4, radius: 0, color: .WhiteColor)
+        
+        setupLabels(lbl: time1lbl, text: "12AM - 6AM", textcolor: .AppLabelColor, font: .LatoRegular(size: 12))
+        setupLabels(lbl: time2lbl, text: "6AM - 12PM", textcolor: .AppLabelColor, font: .LatoRegular(size: 12))
+        setupLabels(lbl: time3lbl, text: "12PM - 6PM", textcolor: .AppLabelColor, font: .LatoRegular(size: 12))
+        setupLabels(lbl: time4lbl, text: "6PM - 12AM", textcolor: .AppLabelColor, font: .LatoRegular(size: 12))
     }
     
     

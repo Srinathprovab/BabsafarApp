@@ -31,6 +31,7 @@ class SortbyTVCell: TableViewCell {
         super.awakeFromNib()
         // Initialization code
         setupUI()
+        
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -40,23 +41,104 @@ class SortbyTVCell: TableViewCell {
     }
     
     override func updateUI() {
+        
         titlelbl.text = cellInfo?.title
         
         if cellInfo?.key == "airline" {
             setuplabels(lbl: lowtoHighlbl, text: "A-Z", textcolor: .AppLabelColor, font: .LatoRegular(size: 14), align: .center)
             setuplabels(lbl: hightoLowhlbl, text: "Z-A", textcolor: .AppLabelColor, font: .LatoRegular(size: 14), align: .center)
         }
+        
+        switch sortBy {
+            
+            //Price
+        case .PriceLow:
+            if titlelbl.text == "Price" {
+                lowtoheigh()
+            }
+            break
+            
+        case .PriceHigh:
+            
+            if titlelbl.text == "Price" {
+                heightolow()
+            }
+            break
+            
+            //Departure
+        case .DepartureLow:
+            if titlelbl.text == "Departure" {
+                lowtoheigh()
+            }
+            break
+            
+        case .DepartureHigh:
+            
+            if titlelbl.text == "Departure" {
+                heightolow()
+            }
+            break
+            
+            
+            //Arrival Time
+        case .ArrivalLow:
+            if titlelbl.text == "Arrival Time" {
+                lowtoheigh()
+            }
+            break
+            
+        case .ArrivalHigh:
+            
+            if titlelbl.text == "Arrival Time" {
+                heightolow()
+            }
+            break
+            
+            
+            
+            //Duration
+        case .DurationLow:
+            if titlelbl.text == "Duration" {
+                lowtoheigh()
+            }
+            break
+            
+        case .DurationHigh:
+            
+            if titlelbl.text == "Duration" {
+                heightolow()
+            }
+            break
+            
+            
+            
+            //Airlines Names Sort
+        case .airlinessortatoz:
+            if titlelbl.text == "Airlines" {
+                lowtoheigh()
+            }
+            break
+            
+        case .airlinessortztoa:
+            
+            if titlelbl.text == "Airlines" {
+                heightolow()
+            }
+            break
+            
+            
+        default:
+            break
+        }
+        
     }
     
     
     func setupUI() {
         holderView.backgroundColor = .WhiteColor
         setupViews(v: buttonsView, radius: 4, color: .WhiteColor)
-        setupViews(v: lowtoHighView, radius: 4, color: .WhiteColor)
-        setupViews(v: hightoLowView, radius: 4, color: .WhiteColor)
         setuplabels(lbl: titlelbl, text: "", textcolor: .AppLabelColor, font: .LatoMedium(size: 17), align: .left)
-        setuplabels(lbl: lowtoHighlbl, text: "Low to High", textcolor: .AppLabelColor, font: .LatoRegular(size: 14), align: .center)
-        setuplabels(lbl: hightoLowhlbl, text: "High to Low", textcolor: .AppLabelColor, font: .LatoRegular(size: 14), align: .center)
+        setupinitallyvalues()
         lowtoHighBtn.setTitle("", for: .normal)
         hightoLowBtn.setTitle("", for: .normal)
         
@@ -71,6 +153,30 @@ class SortbyTVCell: TableViewCell {
     }
     
     
+    func setupinitallyvalues(){
+        setupViews(v: lowtoHighView, radius: 4, color: .WhiteColor)
+        setupViews(v: hightoLowView, radius: 4, color: .WhiteColor)
+        setuplabels(lbl: lowtoHighlbl, text: "Low to High", textcolor: .AppLabelColor, font: .LatoRegular(size: 14), align: .center)
+        setuplabels(lbl: hightoLowhlbl, text: "High to Low", textcolor: .AppLabelColor, font: .LatoRegular(size: 14), align: .center)
+    }
+    
+    
+    func lowtoheigh(){
+        self.lowtoHighlbl.textColor = .WhiteColor
+        self.lowtoHighView.backgroundColor = .AppCalenderDateSelectColor
+        self.hightoLowhlbl.textColor = .AppLabelColor
+        self.hightoLowView.backgroundColor = .WhiteColor
+    }
+    
+    
+    func heightolow(){
+        self.lowtoHighlbl.textColor = .AppLabelColor
+        self.lowtoHighView.backgroundColor = .WhiteColor
+        self.hightoLowhlbl.textColor = .WhiteColor
+        self.hightoLowView.backgroundColor = .AppCalenderDateSelectColor
+    }
+    
+    
     @IBAction func didTapOnLowtoHighBtn(_ sender: Any) {
         delegate?.didTapOnLowtoHighBtn(cell: self)
     }
@@ -82,3 +188,6 @@ class SortbyTVCell: TableViewCell {
     
     
 }
+
+
+

@@ -9,7 +9,7 @@ import UIKit
 
 
 
-struct FilterModel {
+struct FlightFilterModel {
     var minPriceRange: Double?
     var maxPriceRange: Double?
     var noOfStops: [String] = []
@@ -17,11 +17,13 @@ struct FilterModel {
     var airlines: [String] = []
     var departureTime: String?
     var arrivalTime: String?
-    var noOvernightFlight: String?
+    var noOvernightFlight: [String] = []
     var connectingFlights: [String] = []
     var connectingAirports: [String] = []
     var luggage: [String] = []
 }
+
+
 
 
 enum SortParameter {
@@ -47,7 +49,7 @@ protocol AppliedFilters:AnyObject {
                           noofStopsArray:[String],
                           refundableTypeArray:[String],
                           departureTime:String,arrivalTime:String,
-                          noOvernightFlight:String,
+                          noOvernightFlight:[String],
                           airlinesFilterArray:[String],
                           luggageFilterArray:[String],
                           connectingFlightsFilterArray:[String],
@@ -82,7 +84,6 @@ class FilterVC: BaseTableVC{
     
     //MARK: - Flights
     weak var delegate: AppliedFilters?
-    var sortBy: SortParameter = .nothing
     var minpricerangefilter = Double()
     var maxpricerangefilter = Double()
     var starRatingFilter = String()
@@ -92,7 +93,7 @@ class FilterVC: BaseTableVC{
     var filterKey = String()
     var noOverNightFlightArray = ["No"]
     var paymentTypeArray = ["Refundable","Non Refundable"]
-    var noOvernightFlightFilterStr = String()
+    var noOvernightFlightFilterStr = [String]()
     var noOfStopsFilterArray = [String]()
     var refundablerTypeFilteArray = [String]()
     var departureTimeFilter = String()
@@ -121,8 +122,7 @@ class FilterVC: BaseTableVC{
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        loadInitialValuesFromFilterModel()
-        
+        addObserver()
         NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("nointernet"), object: nil)
     }
     
@@ -349,9 +349,10 @@ class FilterVC: BaseTableVC{
         cell.hightoLowhlbl.textColor = .AppLabelColor
         cell.hightoLowView.backgroundColor = .WhiteColor
         
+        
+        
         if cell.titlelbl.text == "Price" {
             sortBy = .PriceLow
-            
             
             
             if let cell2 = commonTableView.cellForRow(at: IndexPath(item: 1, section: 0)) as? SortbyTVCell {
@@ -370,6 +371,7 @@ class FilterVC: BaseTableVC{
             }
         }else if cell.titlelbl.text == "Departure" {
             sortBy = .DepartureLow
+            
             if let cell1 = commonTableView.cellForRow(at: IndexPath(item: 0, section: 0)) as? SortbyTVCell {
                 resetSortBy(cell: cell1)
             }
@@ -385,6 +387,7 @@ class FilterVC: BaseTableVC{
             }
         }else if cell.titlelbl.text == "Arrival Time" {
             sortBy = .ArrivalLow
+            
             if let cell1 = commonTableView.cellForRow(at: IndexPath(item: 0, section: 0)) as? SortbyTVCell {
                 resetSortBy(cell: cell1)
             }
@@ -405,6 +408,7 @@ class FilterVC: BaseTableVC{
             
         }else if cell.titlelbl.text == "Duration"{
             sortBy = .DurationLow
+            
             if let cell1 = commonTableView.cellForRow(at: IndexPath(item: 0, section: 0)) as? SortbyTVCell {
                 resetSortBy(cell: cell1)
             }
@@ -421,6 +425,7 @@ class FilterVC: BaseTableVC{
             }
         }else {
             sortBy = .airlinessortatoz
+            
             if let cell1 = commonTableView.cellForRow(at: IndexPath(item: 0, section: 0)) as? SortbyTVCell {
                 resetSortBy(cell: cell1)
             }
@@ -465,6 +470,7 @@ class FilterVC: BaseTableVC{
             }
         }else if cell.titlelbl.text == "Departure" {
             sortBy = .DepartureHigh
+            
             if let cell1 = commonTableView.cellForRow(at: IndexPath(item: 0, section: 0)) as? SortbyTVCell {
                 resetSortBy(cell: cell1)
             }
@@ -480,6 +486,7 @@ class FilterVC: BaseTableVC{
             }
         }else if cell.titlelbl.text == "Arrival Time" {
             sortBy = .ArrivalHigh
+            
             if let cell1 = commonTableView.cellForRow(at: IndexPath(item: 0, section: 0)) as? SortbyTVCell {
                 resetSortBy(cell: cell1)
             }
@@ -501,6 +508,7 @@ class FilterVC: BaseTableVC{
             
         }else if cell.titlelbl.text == "Duration"{
             sortBy = .DurationHigh
+            
             if let cell1 = commonTableView.cellForRow(at: IndexPath(item: 0, section: 0)) as? SortbyTVCell {
                 resetSortBy(cell: cell1)
             }
@@ -517,6 +525,7 @@ class FilterVC: BaseTableVC{
             }
         }else {
             sortBy = .airlinessortztoa
+            
             if let cell1 = commonTableView.cellForRow(at: IndexPath(item: 0, section: 0)) as? SortbyTVCell {
                 resetSortBy(cell: cell1)
             }
@@ -555,57 +564,13 @@ class FilterVC: BaseTableVC{
     @IBAction func didTapOnResetBtn(_ sender: Any) {
         sortBy = .nothing
         if filterKey == "filter" {
-            //            if let tabSelected = defaults.string(forKey: UserDefaultsKeys.dashboardTapSelected) {
-            //                if tabSelected == "Flights" {
-            //
-            //                }else {
-            //
-            //                }
-            //            }
-            
-            resetFilterValues()
-            
-        }else {
-            if let tabSelected = defaults.string(forKey: UserDefaultsKeys.dashboardTapSelected) {
-                if tabSelected == "Flights" {
-                    if let cell1 = commonTableView.cellForRow(at: IndexPath(item: 0, section: 0)) as? SortbyTVCell {
-                        resetSortBy(cell: cell1)
-                    }
-                    if let cell2 = commonTableView.cellForRow(at: IndexPath(item: 1, section: 0)) as? SortbyTVCell {
-                        resetSortBy(cell: cell2)
-                    }
-                    
-                    if let cell3 = commonTableView.cellForRow(at: IndexPath(item: 2, section: 0)) as? SortbyTVCell {
-                        resetSortBy(cell: cell3)
-                    }
-                    if let cell4 = commonTableView.cellForRow(at: IndexPath(item: 3, section: 0)) as? SortbyTVCell {
-                        resetSortBy(cell: cell4)
-                    }
-                    
-                    if let cell5 = commonTableView.cellForRow(at: IndexPath(item: 4, section: 0)) as? SortbyTVCell {
-                        resetSortBy(cell: cell5)
-                    }
-                    
-                    
-                    DispatchQueue.main.async {[self] in
-                        resetFilter()
-                    }
-                    
-                    
-                }else {
-                    if let cell1 = commonTableView.cellForRow(at: IndexPath(item: 0, section: 0)) as? SortbyTVCell {
-                        resetSortBy(cell: cell1)
-                    }
-                    if let cell2 = commonTableView.cellForRow(at: IndexPath(item: 1, section: 0)) as? SortbyTVCell {
-                        resetSortBy(cell: cell2)
-                    }
-                    
-                    
-                    
-                }
+            DispatchQueue.main.async {[self] in
+                resetFilter()
             }
-            
-            
+        }else {
+            DispatchQueue.main.async {[self] in
+                resetFlightSortFilter()
+            }
         }
     }
     
@@ -673,12 +638,11 @@ class FilterVC: BaseTableVC{
                 
             case "Luggage":
                 selectedLuggageArray.append(cell.titlelbl.text ?? "")
-                
                 break
                 
                 
             case "No Overnight Flight":
-                noOvernightFlightFilterStr = "12AM - 4AM"
+                noOvernightFlightFilterStr.append(cell.titlelbl.text ?? "")
                 break
                 
                 
@@ -795,7 +759,10 @@ class FilterVC: BaseTableVC{
                 break
                 
             case "No Overnight Flight":
-                noOvernightFlightFilterStr = ""
+                
+                if let index = noOvernightFlightFilterStr.firstIndex(of: cell.titlelbl.text ?? "") {
+                    noOvernightFlightFilterStr.remove(at: index)
+                }
                 break
                 
             case "Connecting Flights":
@@ -930,14 +897,20 @@ class FilterVC: BaseTableVC{
                 
                 filterModel.minPriceRange = minpricerangefilter
                 filterModel.maxPriceRange = maxpricerangefilter
-//                filterModel.noOfStops = noOfStopsFilterArray
-//                filterModel.refundableTypes = flightRefundablerTypeFilteArray
-//                filterModel.airlines = airlinesFilterArray
-                filterModel.departureTime = departureTimeFilter
-                filterModel.arrivalTime = arrivalTimeFilter
-//                filterModel.noOvernightFlight = noOvernightFlightFilterStr
-//                filterModel.connectingFlights = connectingFlightsFilterArray
-//                filterModel.connectingAirports = ConnectingAirportsFilterArray
+                
+                
+                if noOvernightFlightFilterStr.isEmpty == false {
+                    filterModel.noOvernightFlight = noOvernightFlightFilterStr
+                }
+                
+                if departureTimeFilter.isEmpty == false {
+                    filterModel.departureTime = departureTimeFilter
+                }
+                
+                if arrivalTimeFilter.isEmpty == false {
+                    filterModel.arrivalTime = arrivalTimeFilter
+                }
+                
                 
                 if !noOfStopsFilterArray.isEmpty {
                     filterModel.noOfStops = noOfStopsFilterArray
@@ -961,8 +934,10 @@ class FilterVC: BaseTableVC{
                 
                 if !selectedLuggageArray.isEmpty {
                     filterModel.luggage = selectedLuggageArray
+                }else {
+                    filterModel.luggage.removeAll()
                 }
-                    
+                
                 
                 
                 delegate?.filtersByApplied(minpricerange:filterModel.minPriceRange ?? 0.0,
@@ -971,7 +946,7 @@ class FilterVC: BaseTableVC{
                                            refundableTypeArray: filterModel.refundableTypes,
                                            departureTime:  filterModel.departureTime ?? "",
                                            arrivalTime: filterModel.arrivalTime ?? "",
-                                           noOvernightFlight: filterModel.noOvernightFlight ?? "",
+                                           noOvernightFlight: filterModel.noOvernightFlight,
                                            airlinesFilterArray: filterModel.airlines,
                                            luggageFilterArray: filterModel.luggage,
                                            connectingFlightsFilterArray: filterModel.connectingFlights,
@@ -1002,9 +977,6 @@ class FilterVC: BaseTableVC{
                                            niberhoodA: selectedNeighbourwoodArray,
                                            aminitiesA: selectedamenitiesArray)
         }
-        
-        
-        
         
         dismiss(animated: true)
     }
@@ -1058,18 +1030,6 @@ extension FilterVC {
 
 extension FilterVC {
     
-    
-    
-    func loadInitialValuesFromFilterModel() {
-//        selectedLuggageArray.removeAll()
-//
-//        selectedLuggageArray = filterModel.luggage
-        
-        
-    }
-    
-    
-    
     func resetFilter() {
         // Reset all values in the FilterModel
         
@@ -1078,17 +1038,16 @@ extension FilterVC {
         filterModel.noOfStops = []
         filterModel.refundableTypes = []
         filterModel.airlines = []
-        filterModel.departureTime = nil
-        filterModel.arrivalTime = nil
-        filterModel.noOvernightFlight = nil
+        
         filterModel.connectingFlights = []
         filterModel.connectingAirports = []
-       
-        
-        print("Before removeAll: \(filterModel.luggage)")
         filterModel.luggage.removeAll()
-        print("After removeAll: \(filterModel.luggage)")
-
+        
+        filterModel.departureTime = ""
+        departureTimeFilter = ""
+        filterModel.arrivalTime = ""
+        arrivalTimeFilter = ""
+        filterModel.noOvernightFlight = []
         
         // Deselect all cells in your checkOptionsTVCell table view
         deselectAllCheckOptionsCells()
@@ -1109,4 +1068,59 @@ extension FilterVC {
     }
     
     
+    func resetFlightSortFilter() {
+        
+        if let tabSelected = defaults.string(forKey: UserDefaultsKeys.dashboardTapSelected) {
+            if tabSelected == "Flights" {
+                if let cell1 = commonTableView.cellForRow(at: IndexPath(item: 0, section: 0)) as? SortbyTVCell {
+                    resetSortBy(cell: cell1)
+                }
+                if let cell2 = commonTableView.cellForRow(at: IndexPath(item: 1, section: 0)) as? SortbyTVCell {
+                    resetSortBy(cell: cell2)
+                }
+                
+                if let cell3 = commonTableView.cellForRow(at: IndexPath(item: 2, section: 0)) as? SortbyTVCell {
+                    resetSortBy(cell: cell3)
+                }
+                if let cell4 = commonTableView.cellForRow(at: IndexPath(item: 3, section: 0)) as? SortbyTVCell {
+                    resetSortBy(cell: cell4)
+                }
+                
+                if let cell5 = commonTableView.cellForRow(at: IndexPath(item: 4, section: 0)) as? SortbyTVCell {
+                    resetSortBy(cell: cell5)
+                }
+                
+                
+            }else {
+                if let cell1 = commonTableView.cellForRow(at: IndexPath(item: 0, section: 0)) as? SortbyTVCell {
+                    resetSortBy(cell: cell1)
+                }
+                if let cell2 = commonTableView.cellForRow(at: IndexPath(item: 1, section: 0)) as? SortbyTVCell {
+                    resetSortBy(cell: cell2)
+                }
+            }
+        }
+    }
+    
+    
+}
+
+
+
+extension FilterVC {
+    func addObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(resetallFilters), name: Notification.Name("resetallFilters"), object: nil)
+    }
+    
+    @objc func resetallFilters() {
+       
+        DispatchQueue.main.async {
+            self.resetFilter()
+        }
+        
+        DispatchQueue.main.async {
+            sortBy = .nothing
+        }
+        
+    }
 }

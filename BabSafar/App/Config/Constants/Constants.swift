@@ -109,8 +109,8 @@ var selectedCellStates: [IndexPath: Bool] = [:]
 var filterTap = String()
 var filterPrice = String()
 var prices = [String]()
-var filterModel = FilterModel()
-
+var filterModel = FlightFilterModel()
+var sortBy: SortParameter = .nothing
 
 
 //MARK: - Profile details 

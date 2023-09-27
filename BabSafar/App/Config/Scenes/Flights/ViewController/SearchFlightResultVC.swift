@@ -483,55 +483,21 @@ class SearchFlightResultVC: BaseTableVC, UITextFieldDelegate {
             showToast(message: "No Flights Found")
         }
     }
-    
-    
-    
-    
-    
-    
-    
+
     
 }
 
 
 
 extension SearchFlightResultVC: AppliedFilters{
-    
-//    func convertToDesiredFormat(_ input: String) -> String {
-//        if input.contains("1 pc") {
-//            // Handle "1PC" format
-//            return "NumberOfPieces 1"
-//        } else {
-//            // Handle other formats (e.g., "10 Kilograms" to "10 kg")
-//            let components = input.split(separator: " ")
-//
-//            if components.count == 2 {
-//                let value = components[0] // Extract the numeric value (e.g., "10")
-//                let unit = components[1] // Extract the unit (e.g., "Kilograms")
-//
-//                // Convert the unit to a shorter format if needed
-//                var unitShort = unit
-//                if unit == "Kilograms" {
-//                    unitShort = "kg"
-//                } // Add more conversions as needed
-//
-//                // Combine the value and the unit in the desired format
-//                return "\(value) \(unitShort)"
-//            }
-//        }
-//
-//        // Return the original input if the format is not as expected
-//        return input
-//    }
 
     
     func hotelFilterByApplied(minpricerange: Double, maxpricerange: Double, starRating: String, refundableTypeArray: [String], nearByLocA: [String], niberhoodA: [String], aminitiesA: [String]) {
         
     }
     
-    
-    
-    func filtersByApplied(minpricerange: Double, maxpricerange: Double, noofStopsArray: [String], refundableTypeArray: [String], departureTime: String, arrivalTime: String, noOvernightFlight: String, airlinesFilterArray: [String], luggageFilterArray: [String], connectingFlightsFilterArray: [String], ConnectingAirportsFilterArray: [String]) {
+
+    func filtersByApplied(minpricerange: Double, maxpricerange: Double, noofStopsArray: [String], refundableTypeArray: [String], departureTime: String, arrivalTime: String, noOvernightFlight: [String], airlinesFilterArray: [String], luggageFilterArray: [String], connectingFlightsFilterArray: [String], ConnectingAirportsFilterArray: [String]) {
       
     
         
@@ -928,6 +894,8 @@ extension SearchFlightResultVC: AppliedFilters{
             
             
             
+        }else if sortBy == .nothing{
+            onewayFilterdList(list: FlightList ?? [[]])
         }
         
         
@@ -1141,7 +1109,7 @@ extension SearchFlightResultVC:FlightListModelProtocal{
         
         if response.status == 1 {
             
-            
+           
             
             self.holderView.isHidden = false
             loderBool = false

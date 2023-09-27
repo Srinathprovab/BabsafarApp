@@ -182,6 +182,33 @@ extension CheckBoxTVCell:UITableViewDataSource,UITableViewDelegate {
         switch titlelbl.text {
             
             
+        case "No Overnight Flight":
+            
+            
+            if !filterModel.noOvernightFlight.isEmpty {
+                // Check if the cell's title matches any value in the luggage array
+                if filterModel.noOvernightFlight.contains(cell.titlelbl.text ?? "") {
+                    
+                    DispatchQueue.main.async {
+                        cell.sele()
+                        self.selectedIndices.append(indexPath)
+                    }
+                    print("Selected: \(cell.titlelbl.text ?? "")")
+                } else {
+                    
+                    DispatchQueue.main.async {
+                        cell.unselected() // Deselect the cell
+                        self.selectedIndices.append(indexPath)
+                    }
+                    print("Deselected: \(cell.titlelbl.text ?? "")")
+                }
+            }else {
+                DispatchQueue.main.async {
+                    cell.unselected() // Deselect the cell
+                }
+            }
+            
+            
         case "Luggage":
             if !filterModel.luggage.isEmpty {
                 // Check if the cell's title matches any value in the luggage array

@@ -434,7 +434,7 @@ class ModifySearchFlightVC: BaseTableVC {
     override func didTapOnSearchFlightBtnAction(cell: SearchFlightsTVCell) {
         payload.removeAll()
         loderBool = true
-        
+        NotificationCenter.default.post(name: NSNotification.Name("resetallFilters"), object: nil)
         
         if let journeyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
             if journeyType == "oneway" {
@@ -492,10 +492,7 @@ class ModifySearchFlightVC: BaseTableVC {
                 payload["infant"] = defaults.string(forKey:UserDefaultsKeys.rinfantsCount)
                 payload["v_class"] = defaults.string(forKey:UserDefaultsKeys.rselectClass)
                 payload["sector_type"] = "international"
-                //    payload["from"] = defaults.string(forKey:UserDefaultsKeys.rfromCity)
-                //                payload["from_loc_id"] = defaults.string(forKey:UserDefaultsKeys.rfromlocid)
-                //                payload["to"] = defaults.string(forKey:UserDefaultsKeys.rtoCity)
-                //                payload["to_loc_id"] = defaults.string(forKey:UserDefaultsKeys.rtolocid)
+               
                 
                 payload["from"] = defaults.string(forKey:UserDefaultsKeys.fromCity)
                 payload["from_loc_id"] = defaults.string(forKey:UserDefaultsKeys.fromlocid)
