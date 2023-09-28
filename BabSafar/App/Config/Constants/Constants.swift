@@ -111,6 +111,8 @@ var filterPrice = String()
 var prices = [String]()
 var filterModel = FlightFilterModel()
 var sortBy: SortParameter = .nothing
+var hotelfiltermodel = HotelFilterModel()
+var mapModelArray: [MapModel] = []
 
 
 //MARK: - Profile details 

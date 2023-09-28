@@ -389,7 +389,7 @@ extension SearchHotelsResultVC {
             print(theJSONText ?? "")
             payload1["search_params"] = theJSONText
             payload1["offset"] = "0"
-            payload1["limit"] = "100"
+            payload1["limit"] = "10"
             
             viewModel?.CallHotelSearchAPI(dictParam: payload1)
             
@@ -424,7 +424,18 @@ extension SearchHotelsResultVC {
             latArray.append(i.latitude ?? "")
             longArray.append(i.longitude ?? "")
             prices.append(i.price ?? "")
+            
         })
+        
+        response.data?.hotelSearchResult?.forEach { i in
+            let mapModel = MapModel(
+                longitude: i.longitude ?? "",
+                latitude: i.latitude ?? "",
+                hotelname: i.name ?? ""
+            )
+            mapModelArray.append(mapModel)
+        }
+
         
         
         response.filter_sumry?.loc?.forEach({ i in

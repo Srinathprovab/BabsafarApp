@@ -24,6 +24,16 @@ struct FlightFilterModel {
 }
 
 
+struct HotelFilterModel {
+    var minPriceRange =  Double()
+    var maxPriceRange =  Double()
+    var starRating = String()
+    var refundableTypes: [String] = []
+    var nearByLocA: [String] = []
+    var niberhoodA: [String] = []
+    var aminitiesA: [String] = []
+}
+
 
 
 enum SortParameter {
@@ -969,13 +979,40 @@ class FilterVC: BaseTableVC{
                 maxpricerangefilter = Double(pricesFloat.max() ?? 0.0)
             }
             
-            delegate?.hotelFilterByApplied(minpricerange: minpricerangefilter,
-                                           maxpricerange: maxpricerangefilter,
-                                           starRating: starRatingFilter,
-                                           refundableTypeArray: refundablerTypeFilteArray,
-                                           nearByLocA: selectednearBylocationsArray,
-                                           niberhoodA: selectedNeighbourwoodArray,
-                                           aminitiesA: selectedamenitiesArray)
+            
+            hotelfiltermodel.minPriceRange = minpricerangefilter
+            hotelfiltermodel.maxPriceRange = maxpricerangefilter
+            
+            if starRatingFilter.isEmpty == false {
+                hotelfiltermodel.starRating = starRatingFilter
+            }
+    
+            
+            if !refundablerTypeFilteArray.isEmpty {
+                hotelfiltermodel.refundableTypes = refundablerTypeFilteArray
+            }
+            
+            if !selectednearBylocationsArray.isEmpty {
+                hotelfiltermodel.nearByLocA = selectednearBylocationsArray
+            }
+            
+            if !selectedNeighbourwoodArray.isEmpty {
+                hotelfiltermodel.niberhoodA = selectedNeighbourwoodArray
+            }
+            
+            if !selectedamenitiesArray.isEmpty {
+                hotelfiltermodel.aminitiesA = selectedamenitiesArray
+            }
+        
+            
+            
+            delegate?.hotelFilterByApplied(minpricerange:  hotelfiltermodel.minPriceRange,
+                                           maxpricerange:  hotelfiltermodel.maxPriceRange,
+                                           starRating:  hotelfiltermodel.starRating,
+                                           refundableTypeArray: hotelfiltermodel.refundableTypes,
+                                           nearByLocA: hotelfiltermodel.nearByLocA,
+                                           niberhoodA: hotelfiltermodel.niberhoodA,
+                                           aminitiesA: hotelfiltermodel.aminitiesA)
         }
         
         dismiss(animated: true)
