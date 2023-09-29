@@ -103,7 +103,7 @@ class RoomsTVcell: TableViewCell, NewRoomTVCellDelegate {
         
         setuplabels(lbl: roomslbl, text: "Rooms", textcolor: .AppTabSelectColor, font: .LatoBold(size: 14), align: .center)
         setuplabels(lbl: maplbl, text: "Map", textcolor: .AppLabelColor.withAlphaComponent(0.5), font: .LatoBold(size: 14), align: .center)
-
+        
         setuplabels(lbl: hotelsDetailslbl, text: "Hotels Details", textcolor: .AppLabelColor.withAlphaComponent(0.5), font: .LatoBold(size: 14), align: .center)
         setuplabels(lbl: amenitieslbl, text: "Amenities", textcolor: .AppLabelColor.withAlphaComponent(0.5), font: .LatoBold(size: 14), align: .center)
         
@@ -179,7 +179,7 @@ class RoomsTVcell: TableViewCell, NewRoomTVCellDelegate {
         mapUL.backgroundColor = .WhiteColor
         
         NotificationCenter.default.post(name: NSNotification.Name("roomtapbool"), object: false)
-       
+        
         delegate?.didTapOnHotelsDetailsBtn(cell:self)
     }
     
@@ -196,7 +196,7 @@ class RoomsTVcell: TableViewCell, NewRoomTVCellDelegate {
         maplbl.textColor = .AppLabelColor.withAlphaComponent(0.5)
         mapUL.backgroundColor = .WhiteColor
         NotificationCenter.default.post(name: NSNotification.Name("roomtapbool"), object: false)
-
+        
         delegate?.didTapOnAmenitiesBtn(cell:self)
     }
     
@@ -213,8 +213,8 @@ class RoomsTVcell: TableViewCell, NewRoomTVCellDelegate {
         mapUL.backgroundColor = .AppTabSelectColor
         hotelDetailsTapBool = false
         NotificationCenter.default.post(name: NSNotification.Name("roomtapbool"), object: false)
-
-      //  delegate?.didTapOnAmenitiesBtn(cell:self)
+        
+        //  delegate?.didTapOnAmenitiesBtn(cell:self)
     }
     
     
@@ -238,9 +238,9 @@ extension RoomsTVcell: UITableViewDataSource ,UITableViewDelegate {
         if self.key == "rooms" {
             return roomsDetails.count
         }
-//        else if self.key == "hotels details"{
-//            return formatDesc.count
-//        }
+        //        else if self.key == "hotels details"{
+        //            return formatDesc.count
+        //        }
         else {
             return 1
         }
@@ -309,7 +309,7 @@ extension RoomsTVcell: UITableViewDataSource ,UITableViewDelegate {
         return ccell
     }
     
-  
+    
     
 }
 
@@ -323,40 +323,45 @@ extension RoomsTVcell:CLLocationManagerDelegate {
         locationManager.startUpdatingLocation()
     }
     
-
+    
     @objc func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.last {
             // Center the map on Dubai's coordinates
             let camera = GMSCameraPosition.camera(withLatitude: Double(latString) ?? 0.0, longitude: Double(longString) ?? 0.0, zoom: 17.0)
-
+            
             let gmsView = GMSMapView.map(withFrame: googleMapView.bounds, camera: camera)
             googleMapView.addSubview(gmsView)
             addMarkersToMap(gmsView)
-
+            
             locationManager.stopUpdatingLocation() // You may want to stop updates after you have the user's location
         }
     }
-
+    
     
     func addMarkersToMap(_ mapView: GMSMapView) {
-       
-            if let latitude = Double(latString), let longitude = Double(longString) {
-                let marker = GMSMarker()
-                marker.position = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-                marker.title = locname
-
-                // Create a custom marker icon with an image
-                if let markerImage = UIImage(named: "loc1")?.withRenderingMode(.alwaysOriginal).withTintColor(.AppBtnColor) {
-                    let markerView = UIImageView(image: markerImage)
-                    marker.iconView = markerView
-                } else {
-                    print("Error: Marker image not found or is nil.")
-                }
-
-                marker.map = mapView
+        
+        if let latitude = Double(latString), let longitude = Double(longString) {
+            let marker = GMSMarker()
+            marker.position = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+            marker.title = locname
+            
+            // Create a custom marker icon with an image
+            if let markerImage = UIImage(named: "loc1")?.withRenderingMode(.alwaysOriginal).withTintColor(.AppBtnColor) {
+                let markerView = UIImageView(image: markerImage)
+                marker.iconView = markerView
             } else {
-                print("Error: Invalid latitude or longitude values at index \(index).")
+                print("Error: Marker image not found or is nil.")
             }
+            
+            marker.map = mapView
+            
+            
+            // Select the marker to show its title by default
+            mapView.selectedMarker = marker
+            
+        } else {
+            print("Error: Invalid latitude or longitude values at index \(index).")
+        }
         
     }
 }

@@ -507,6 +507,49 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
         var callpaymentbool = true
         var fnameCharBool = true
         var lnameCharBool = true
+        
+        
+        for traveler in travelerArray {
+            
+            if traveler.firstName == nil  || traveler.firstName?.isEmpty == true{
+                callpaymentbool = false
+                
+            }
+            
+            if (traveler.firstName?.count ?? 0) <= 3 {
+                fnameCharBool = false
+            }
+            
+            if traveler.lastName == nil || traveler.firstName?.isEmpty == true{
+                callpaymentbool = false
+            }
+            
+            if (traveler.lastName?.count ?? 0) <= 3 {
+                lnameCharBool = false
+            }
+            
+            if traveler.dob == nil || traveler.dob?.isEmpty == true{
+                callpaymentbool = false
+            }
+           
+            if traveler.passportno == nil || traveler.passportno?.isEmpty == true{
+                callpaymentbool = false
+            }
+            
+            if traveler.passportIssuingCountry == nil || traveler.passportIssuingCountry?.isEmpty == true{
+                callpaymentbool = false
+            }
+            
+            if traveler.passportExpireDate == nil || traveler.passportExpireDate?.isEmpty == true{
+                callpaymentbool = false
+            }
+            
+            
+            // Continue checking other fields
+        }
+        
+        
+        
         let positionsCount = commonTableView.numberOfRows(inSection: 0)
         for position in 0..<positionsCount {
             // Fetch the cell for the given position

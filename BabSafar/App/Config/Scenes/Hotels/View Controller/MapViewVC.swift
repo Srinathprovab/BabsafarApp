@@ -74,27 +74,27 @@ class MapViewVC: UIViewController, CLLocationManagerDelegate {
     //    }
     
     
-    //    func addMarkersToMap(_ mapView: GMSMapView) {
-    //        for index in 0..<latArray.count {
-    //            if let latitude = Double(latArray[index]), let longitude = Double(longArray[index]) {
-    //                let marker = GMSMarker()
-    //                marker.position = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-    //            //    marker.title = "Location \(index + 1)"
-    //
-    //                // Create a custom marker icon with an image
-    //                if let markerImage = UIImage(named: "loc1")?.withRenderingMode(.alwaysOriginal).withTintColor(.AppBtnColor) {
-    //                    let markerView = UIImageView(image: markerImage)
-    //                    marker.iconView = markerView
-    //                } else {
-    //                    print("Error: Marker image not found or is nil.")
-    //                }
-    //
-    //                marker.map = mapView
-    //            } else {
-    //                print("Error: Invalid latitude or longitude values at index \(index).")
-    //            }
-    //        }
-    //    }
+//        func addMarkersToMap(_ mapView: GMSMapView) {
+//            for index in 0..<latArray.count {
+//                if let latitude = Double(latArray[index]), let longitude = Double(longArray[index]) {
+//                    let marker = GMSMarker()
+//                    marker.position = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+//                //    marker.title = "Location \(index + 1)"
+//
+//                    // Create a custom marker icon with an image
+//                    if let markerImage = UIImage(named: "loc1")?.withRenderingMode(.alwaysOriginal).withTintColor(.AppBtnColor) {
+//                        let markerView = UIImageView(image: markerImage)
+//                        marker.iconView = markerView
+//                    } else {
+//                        print("Error: Marker image not found or is nil.")
+//                    }
+//
+//                    marker.map = mapView
+//                } else {
+//                    print("Error: Invalid latitude or longitude values at index \(index).")
+//                }
+//            }
+//        }
     
     
     
@@ -128,8 +128,19 @@ class MapViewVC: UIViewController, CLLocationManagerDelegate {
                 marker.title = mapModel.hotelname
                 // Customize the marker as needed
                 
+                // Create a custom marker icon with an image
+                if let markerImage = UIImage(named: "loc1")?.withRenderingMode(.alwaysOriginal).withTintColor(.AppBtnColor) {
+                    let markerView = UIImageView(image: markerImage)
+                    marker.iconView = markerView
+                } else {
+                    print("Error: Marker image not found or is nil.")
+                }
+                
                 // Add the marker to the map
                 marker.map = mapView
+                
+                mapView.selectedMarker = marker
+                
             } else {
                 print("Error: Invalid latitude or longitude values in mapModel.")
             }

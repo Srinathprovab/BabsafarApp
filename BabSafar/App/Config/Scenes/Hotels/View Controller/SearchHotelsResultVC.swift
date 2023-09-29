@@ -49,9 +49,7 @@ class SearchHotelsResultVC: BaseTableVC, UITextFieldDelegate, HotelSearchViewMod
         let vc = storyboard.instantiateViewController(withIdentifier: self.className()) as? SearchHotelsResultVC
         return vc
     }
-    
-    
-    
+
     
     override func viewWillAppear(_ animated: Bool) {
         addObserver()
@@ -75,8 +73,6 @@ class SearchHotelsResultVC: BaseTableVC, UITextFieldDelegate, HotelSearchViewMod
         
         NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("nointernet"), object: nil)
     }
-    
-    
     
     
     override func viewDidLoad() {
@@ -109,8 +105,6 @@ class SearchHotelsResultVC: BaseTableVC, UITextFieldDelegate, HotelSearchViewMod
         }
     }
     
-    
-    
     func setupUI() {
         navView.titlelbl.text = ""
         navView.filterBtnView.isHidden = false
@@ -119,9 +113,6 @@ class SearchHotelsResultVC: BaseTableVC, UITextFieldDelegate, HotelSearchViewMod
         
         setuplabels(lbl: navView.lbl1, text: defaults.string(forKey: UserDefaultsKeys.locationcity) ?? "", textcolor: .WhiteColor, font: .LatoMedium(size: 18), align: .center)
         setuplabels(lbl: navView.lbl2, text: "Checkin:\(defaults.string(forKey: UserDefaultsKeys.checkin) ?? "") | Checkout:\(defaults.string(forKey: UserDefaultsKeys.checkout) ?? "")", textcolor: .WhiteColor, font: .LatoBold(size: 14), align: .center)
-        
-        
-      
         
         
         navView.editBtnView.isHidden = true
@@ -366,8 +357,6 @@ class SearchHotelsResultVC: BaseTableVC, UITextFieldDelegate, HotelSearchViewMod
     }
     
     
-    
-    
     @IBAction func didTapOnMapViewBtnAction(_ sender: Any) {
         guard let vc = MapViewVC.newInstance.self else {return}
         vc.modalPresentationStyle = .fullScreen
@@ -405,7 +394,7 @@ extension SearchHotelsResultVC {
         latArray.removeAll()
         longArray.removeAll()
         prices.removeAll()
-        
+        mapModelArray.removeAll()
         
         navView.isHidden = false
         filterBtnView.isHidden = false
