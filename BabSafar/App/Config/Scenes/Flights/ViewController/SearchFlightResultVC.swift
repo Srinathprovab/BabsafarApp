@@ -1119,8 +1119,8 @@ extension SearchFlightResultVC:FlightListModelProtocal{
             holderView.backgroundColor = .AppHolderViewColor
             FlightList = response.data?.j_flight_list
             defaults.set(response.data?.search_id, forKey: UserDefaultsKeys.searchid)
-            defaults.set(response.data?.booking_source, forKey: UserDefaultsKeys.bookingsource)
-            defaults.set(response.data?.booking_source_key, forKey: UserDefaultsKeys.bookingsourcekey)
+//            defaults.set(response.data?.booking_source, forKey: UserDefaultsKeys.bookingsource)
+//            defaults.set(response.data?.booking_source_key, forKey: UserDefaultsKeys.bookingsourcekey)
             defaults.set(response.data?.traceId, forKey: UserDefaultsKeys.traceId)
             
             
@@ -1389,8 +1389,8 @@ extension SearchFlightResultVC {
                         j.map { k in
                             
                             k.flight_details?.summary.map({ l in
-                                kwdPriceArray.append(k.totalPrice_API ?? "")
-                                prices.append(k.totalPrice ?? "")
+                                kwdPriceArray.append("\(k.totalPrice_API ?? 0.0)")
+                                prices.append("\(k.totalPrice ?? 0.0)")
                                 
                                 l.map { m in
                                     

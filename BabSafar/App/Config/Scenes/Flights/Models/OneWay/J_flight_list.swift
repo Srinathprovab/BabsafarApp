@@ -1,144 +1,115 @@
 
 import Foundation
 struct J_flight_list : Codable {
-    
-    //	let airPricingSolution_Key : String?
-    //	let completeItinerary : String?
-    //	let connections : String?
-    let totalPrice : String?
-    let basePrice : String?
-    let taxes : String?
-    let totalPrice_API : String?
-    let aPICurrencyType : String?
-    //	let sITECurrencyType : String?
-    //	let myMarkup : String?
-    //	let myMarkup_cal : String?
-    //	let aMarkup : String?
-    //	let aMarkup_cal : String?
-    //	let basePrice_Breakdown : String?
-    //	let taxPrice_Breakdown : String?
-    //	let admin_markup_amount : Int?
-    //	let agent_markup_amount : Int?
-    let refundable : Bool?
-    //	let platingCarrier : String?
-    let fareType : String?
-    //	let all_Passenger : String?
-    //	let adults : Int?
-    //	let adults_Base_Price : String?
-    //	let adults_Tax_Price : String?
-    //	let travelTime : String?
-    //	let airSegment_Key : String?
-    //	let baggageAllowance : [[String]]?
-    //	let baggage_allow_data : [[Baggage_allow_data]]?
-    let flight_details : Flight_details?
-    let price : Price?
-    //	let fare : [Fare]?
+    let infants_Base_Price : Double?
+    let totalPrice : Double?
+    let booking_source : String?
     let access_key : String?
+    let adults_Base_Price : Double?
+    let adults_Tax_Price : Double?
+    let baggageAllowance : [[String]]?
+    let booking_source_key : String?
+    let refundable : Bool?
+    let childs_Total_Price : Double?
+    let infants : Int?
+    let fareType : String?
+    let childs : Int?
+    let infants_Tax_Price : Double?
+    let basePrice : Double?
+    let adults_Total_Price : Double?
+    let childs_Base_Price : Double?
+    let infants_Total_Price : Double?
+    let aMarkup_cal : String?
+    let childs_Tax_Price : Double?
+    let myMarkup_cal : String?
+    let price : Price?
+    let sITECurrencyType : String?
+    let all_Passenger : String?
+    let flight_details : Flight_details?
+    let adults : Int?
+    let aMarkup : String?
+    let taxes : Double?
+    let myMarkup : String?
+    let fare : [Fare]?
+    let airlineRemark : String?
     let selectedResult : String?
-    //    let adults_Base_Price : String?
-    //    let childs_Base_Price : String?
-    //    let infants_Base_Price : String?
-    //    let adults_Tax_Price : String?
-    //    let childs_Tax_Price : String?
-    //    let infants_Tax_Price : String?
-    
-    //  let rreturn : Return?
-    //  let onward : Onward?
-    
+    let totalPrice_API : Double?
+    let aPICurrencyType : String?
+
     enum CodingKeys: String, CodingKey {
-        
-        //		case airPricingSolution_Key = "AirPricingSolution_Key"
-        //		case completeItinerary = "CompleteItinerary"
-        //		case connections = "Connections"
+
+        case infants_Base_Price = "Infants_Base_Price"
         case totalPrice = "TotalPrice"
+        case booking_source = "booking_source"
+        case access_key = "access_key"
+        case adults_Base_Price = "Adults_Base_Price"
+        case adults_Tax_Price = "Adults_Tax_Price"
+        case baggageAllowance = "BaggageAllowance"
+        case booking_source_key = "booking_source_key"
+        case refundable = "Refundable"
+        case childs_Total_Price = "Childs_Total_Price"
+        case infants = "Infants"
+        case fareType = "FareType"
+        case childs = "Childs"
+        case infants_Tax_Price = "Infants_Tax_Price"
         case basePrice = "BasePrice"
+        case adults_Total_Price = "Adults_Total_Price"
+        case childs_Base_Price = "Childs_Base_Price"
+        case infants_Total_Price = "Infants_Total_Price"
+        case aMarkup_cal = "aMarkup_cal"
+        case childs_Tax_Price = "Childs_Tax_Price"
+        case myMarkup_cal = "myMarkup_cal"
+        case price = "price"
+        case sITECurrencyType = "SITECurrencyType"
+        case all_Passenger = "All_Passenger"
+        case flight_details = "flight_details"
+        case adults = "Adults"
+        case aMarkup = "aMarkup"
         case taxes = "Taxes"
+        case myMarkup = "MyMarkup"
+        case fare = "fare"
+        case airlineRemark = "AirlineRemark"
+        case selectedResult = "selectedResult"
         case totalPrice_API = "TotalPrice_API"
         case aPICurrencyType = "APICurrencyType"
-        //		case sITECurrencyType = "SITECurrencyType"
-        //		case myMarkup = "MyMarkup"
-        //		case myMarkup_cal = "myMarkup_cal"
-        //		case aMarkup = "aMarkup"
-        //		case aMarkup_cal = "aMarkup_cal"
-        //		case basePrice_Breakdown = "BasePrice_Breakdown"
-        //		case taxPrice_Breakdown = "TaxPrice_Breakdown"
-        //		case admin_markup_amount = "admin_markup_amount"
-        //		case agent_markup_amount = "agent_markup_amount"
-        case refundable = "Refundable"
-        //		case platingCarrier = "PlatingCarrier"
-        case fareType = "FareType"
-        //		case all_Passenger = "All_Passenger"
-        //		case adults = "Adults"
-        //		case adults_Base_Price = "Adults_Base_Price"
-        //		case adults_Tax_Price = "Adults_Tax_Price"
-        //		case travelTime = "TravelTime"
-        //		case airSegment_Key = "AirSegment_Key"
-        //		case baggageAllowance = "BaggageAllowance"
-        //		case baggage_allow_data = "Baggage_allow_data"
-        case flight_details = "flight_details"
-        case price = "price"
-        //		case fare = "fare"
-        case access_key = "access_key"
-        case selectedResult = "selectedResult"
-        //        case adults_Base_Price = "Adults_Base_Price"
-        //        case childs_Base_Price = "Childs_Base_Price"
-        //        case infants_Base_Price = "Infants_Base_Price"
-        //        case adults_Tax_Price = "Adults_Tax_Price"
-        //        case childs_Tax_Price = "Childs_Tax_Price"
-        //        case infants_Tax_Price = "Infants_Tax_Price"
-        
-        
-        //   case rreturn = "return"
-        //   case onward = "onward"
-        
     }
-    
+
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        //		airPricingSolution_Key = try values.decodeIfPresent(String.self, forKey: .airPricingSolution_Key)
-        //		completeItinerary = try values.decodeIfPresent(String.self, forKey: .completeItinerary)
-        //		connections = try values.decodeIfPresent(String.self, forKey: .connections)
-        totalPrice = try values.decodeIfPresent(String.self, forKey: .totalPrice)
-        basePrice = try values.decodeIfPresent(String.self, forKey: .basePrice)
-        taxes = try values.decodeIfPresent(String.self, forKey: .taxes)
-        totalPrice_API = try values.decodeIfPresent(String.self, forKey: .totalPrice_API)
-        aPICurrencyType = try values.decodeIfPresent(String.self, forKey: .aPICurrencyType)
-        //		sITECurrencyType = try values.decodeIfPresent(String.self, forKey: .sITECurrencyType)
-        //		myMarkup = try values.decodeIfPresent(String.self, forKey: .myMarkup)
-        //		myMarkup_cal = try values.decodeIfPresent(String.self, forKey: .myMarkup_cal)
-        //		aMarkup = try values.decodeIfPresent(String.self, forKey: .aMarkup)
-        //		aMarkup_cal = try values.decodeIfPresent(String.self, forKey: .aMarkup_cal)
-        //		basePrice_Breakdown = try values.decodeIfPresent(String.self, forKey: .basePrice_Breakdown)
-        //		taxPrice_Breakdown = try values.decodeIfPresent(String.self, forKey: .taxPrice_Breakdown)
-        //		admin_markup_amount = try values.decodeIfPresent(Int.self, forKey: .admin_markup_amount)
-        //		agent_markup_amount = try values.decodeIfPresent(Int.self, forKey: .agent_markup_amount)
-        refundable = try values.decodeIfPresent(Bool.self, forKey: .refundable)
-        //		platingCarrier = try values.decodeIfPresent(String.self, forKey: .platingCarrier)
-        fareType = try values.decodeIfPresent(String.self, forKey: .fareType)
-        //		all_Passenger = try values.decodeIfPresent(String.self, forKey: .all_Passenger)
-        //		adults = try values.decodeIfPresent(Int.self, forKey: .adults)
-        //		adults_Base_Price = try values.decodeIfPresent(String.self, forKey: .adults_Base_Price)
-        //		adults_Tax_Price = try values.decodeIfPresent(String.self, forKey: .adults_Tax_Price)
-        //		travelTime = try values.decodeIfPresent(String.self, forKey: .travelTime)
-        //		airSegment_Key = try values.decodeIfPresent(String.self, forKey: .airSegment_Key)
-        //		baggageAllowance = try values.decodeIfPresent([[String]].self, forKey: .baggageAllowance)
-        //		baggage_allow_data = try values.decodeIfPresent([[Baggage_allow_data]].self, forKey: .baggage_allow_data)
-        flight_details = try values.decodeIfPresent(Flight_details.self, forKey: .flight_details)
-        price = try values.decodeIfPresent(Price.self, forKey: .price)
-        //		fare = try values.decodeIfPresent([Fare].self, forKey: .fare)
+        infants_Base_Price = try values.decodeIfPresent(Double.self, forKey: .infants_Base_Price)
+        totalPrice = try values.decodeIfPresent(Double.self, forKey: .totalPrice)
+        booking_source = try values.decodeIfPresent(String.self, forKey: .booking_source)
         access_key = try values.decodeIfPresent(String.self, forKey: .access_key)
+        adults_Base_Price = try values.decodeIfPresent(Double.self, forKey: .adults_Base_Price)
+        adults_Tax_Price = try values.decodeIfPresent(Double.self, forKey: .adults_Tax_Price)
+        baggageAllowance = try values.decodeIfPresent([[String]].self, forKey: .baggageAllowance)
+        booking_source_key = try values.decodeIfPresent(String.self, forKey: .booking_source_key)
+        refundable = try values.decodeIfPresent(Bool.self, forKey: .refundable)
+        childs_Total_Price = try values.decodeIfPresent(Double.self, forKey: .childs_Total_Price)
+        infants = try values.decodeIfPresent(Int.self, forKey: .infants)
+        fareType = try values.decodeIfPresent(String.self, forKey: .fareType)
+        childs = try values.decodeIfPresent(Int.self, forKey: .childs)
+        infants_Tax_Price = try values.decodeIfPresent(Double.self, forKey: .infants_Tax_Price)
+        basePrice = try values.decodeIfPresent(Double.self, forKey: .basePrice)
+        adults_Total_Price = try values.decodeIfPresent(Double.self, forKey: .adults_Total_Price)
+        childs_Base_Price = try values.decodeIfPresent(Double.self, forKey: .childs_Base_Price)
+        infants_Total_Price = try values.decodeIfPresent(Double.self, forKey: .infants_Total_Price)
+        aMarkup_cal = try values.decodeIfPresent(String.self, forKey: .aMarkup_cal)
+        childs_Tax_Price = try values.decodeIfPresent(Double.self, forKey: .childs_Tax_Price)
+        myMarkup_cal = try values.decodeIfPresent(String.self, forKey: .myMarkup_cal)
+        price = try values.decodeIfPresent(Price.self, forKey: .price)
+        sITECurrencyType = try values.decodeIfPresent(String.self, forKey: .sITECurrencyType)
+        all_Passenger = try values.decodeIfPresent(String.self, forKey: .all_Passenger)
+        flight_details = try values.decodeIfPresent(Flight_details.self, forKey: .flight_details)
+        adults = try values.decodeIfPresent(Int.self, forKey: .adults)
+        aMarkup = try values.decodeIfPresent(String.self, forKey: .aMarkup)
+        taxes = try values.decodeIfPresent(Double.self, forKey: .taxes)
+        myMarkup = try values.decodeIfPresent(String.self, forKey: .myMarkup)
+        fare = try values.decodeIfPresent([Fare].self, forKey: .fare)
+        airlineRemark = try values.decodeIfPresent(String.self, forKey: .airlineRemark)
         selectedResult = try values.decodeIfPresent(String.self, forKey: .selectedResult)
-        
-        
-        //     rreturn = try values.decodeIfPresent(Return.self, forKey: .rreturn)
-        //    onward = try values.decodeIfPresent(Onward.self, forKey: .onward)
-        //        adults_Base_Price = try values.decodeIfPresent(String.self, forKey: .adults_Base_Price)
-        //        childs_Base_Price = try values.decodeIfPresent(String.self, forKey: .childs_Base_Price)
-        //        infants_Base_Price = try values.decodeIfPresent(String.self, forKey: .infants_Base_Price)
-        //        adults_Tax_Price = try values.decodeIfPresent(String.self, forKey: .adults_Tax_Price)
-        //        childs_Tax_Price = try values.decodeIfPresent(String.self, forKey: .childs_Tax_Price)
-        //        infants_Tax_Price = try values.decodeIfPresent(String.self, forKey: .infants_Tax_Price)
-        
+        totalPrice_API = try values.decodeIfPresent(Double.self, forKey: .totalPrice_API)
+        aPICurrencyType = try values.decodeIfPresent(String.self, forKey: .aPICurrencyType)
     }
-    
+
 }

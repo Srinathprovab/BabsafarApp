@@ -55,6 +55,46 @@ class PopularFiltersTVCell: TableViewCell {
     }
     
     
+    override func updateUI() {
+        
+        switch hotelfiltermodel.starRating {
+        case "1":
+            tapononeStar()
+            break
+            
+            
+        case "2":
+            tapon2Star()
+            break
+            
+            
+        case "3":
+            tapon3Star()
+            break
+            
+            
+        case "4":
+            tapon4Star()
+            break
+            
+            
+        case "5":
+            tapon5Star()
+            break
+            
+            
+        case "":
+            reset()
+            break
+            
+            
+        default:
+            
+            break
+        }
+    }
+    
+    
     func setupUI() {
         
         
@@ -102,6 +142,11 @@ class PopularFiltersTVCell: TableViewCell {
     
     @IBAction func didTapOnOneRatingViewBtn(_ sender: Any) {
         
+        tapononeStar()
+    }
+    
+    
+    func tapononeStar() {
         oneImg.image = UIImage(named: "ratingselect")
         twoImg.image = UIImage(named: "ratingunselect")
         threeImg.image = UIImage(named: "ratingunselect")
@@ -116,6 +161,11 @@ class PopularFiltersTVCell: TableViewCell {
     }
     
     @IBAction func didTapOnTwoRatingViewBtn(_ sender: Any) {
+        tapon2Star()
+    }
+    
+    
+    func tapon2Star() {
         oneImg.image = UIImage(named: "ratingunselect")
         twoImg.image = UIImage(named: "ratingselect")
         threeImg.image = UIImage(named: "ratingunselect")
@@ -130,6 +180,10 @@ class PopularFiltersTVCell: TableViewCell {
     }
     
     @IBAction func didTapOnThreeatingViewBtn(_ sender: Any) {
+        tapon3Star()
+    }
+    
+    func tapon3Star() {
         oneImg.image = UIImage(named: "ratingunselect")
         twoImg.image = UIImage(named: "ratingunselect")
         threeImg.image = UIImage(named: "ratingselect")
@@ -144,6 +198,10 @@ class PopularFiltersTVCell: TableViewCell {
     }
     
     @IBAction func didTapOnFouratingViewBtn(_ sender: Any) {
+        tapon4Star()
+    }
+    
+    func tapon4Star() {
         oneImg.image = UIImage(named: "ratingunselect")
         twoImg.image = UIImage(named: "ratingunselect")
         threeImg.image = UIImage(named: "ratingunselect")
@@ -158,6 +216,10 @@ class PopularFiltersTVCell: TableViewCell {
     }
     
     @IBAction func didTapOnFivetingViewBtn(_ sender: Any) {
+        tapon5Star()
+    }
+    
+    func tapon5Star() {
         oneImg.image = UIImage(named: "ratingunselect")
         twoImg.image = UIImage(named: "ratingunselect")
         threeImg.image = UIImage(named: "ratingunselect")
@@ -169,6 +231,31 @@ class PopularFiltersTVCell: TableViewCell {
         fourRatingView.layer.borderColor = UIColor.AppBorderColor.cgColor
         fiveRatingView.layer.borderColor = UIColor.AppTabSelectColor.cgColor
         delegate?.didTapOnFivetingViewBtn(cell: self)
+    }
+    
+    
+    
+    
+    func reset(){
+        
+        setupViews(v: oneRatingView, radius: 2, color: .WhiteColor)
+        setupViews(v: twoRatingView, radius: 2, color: .WhiteColor)
+        setupViews(v: threeRatingView, radius: 2, color: .WhiteColor)
+        setupViews(v: fourRatingView, radius: 2, color: .WhiteColor)
+        setupViews(v: fiveRatingView, radius: 2, color: .WhiteColor)
+        
+        setupLabels(lbl: titlelbl, text: "Star Ratings", textcolor: .AppLabelColor, font: .LatoMedium(size: 17))
+        setupLabels(lbl: onelbl, text: "1", textcolor: .AppLabelColor, font: .LatoRegular(size: 14))
+        setupLabels(lbl: twolbl, text: "2", textcolor: .AppLabelColor, font: .LatoRegular(size: 14))
+        setupLabels(lbl: threelbl, text: "3", textcolor: .AppLabelColor, font: .LatoRegular(size: 14))
+        setupLabels(lbl: fourlbl, text: "4", textcolor: .AppLabelColor, font: .LatoRegular(size: 14))
+        setupLabels(lbl: fivelbl, text: "5", textcolor: .AppLabelColor, font: .LatoRegular(size: 14))
+        
+        oneImg.image = UIImage(named: "ratingunselect")
+        twoImg.image = UIImage(named: "ratingunselect")
+        threeImg.image = UIImage(named: "ratingunselect")
+        fourImg.image = UIImage(named: "ratingunselect")
+        fiveImg.image = UIImage(named: "ratingunselect")
     }
     
 }

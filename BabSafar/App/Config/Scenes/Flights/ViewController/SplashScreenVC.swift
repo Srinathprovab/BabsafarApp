@@ -176,8 +176,10 @@ class SplashScreenVC: UIViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 7.0, execute: {
             self.gotodashBoardScreen()
             
-            //                                    defaults.set("Flights", forKey: UserDefaultsKeys.dashboardTapSelected)
-            //                                    self.gotoBookingConfirmedVC(url: "https://provabdevelopment.com/pro_new/mobile/index.php/voucher/flight/BAS-F-TP-0906-4921/PTBSID0000000016")
+            //defaults.set("Insurence", forKey: UserDefaultsKeys.dashboardTapSelected)
+            //  self.gotoBookingConfirmedVC(url: "https://provabdevelopment.com/pro_new/mobile/index.php/voucher/flight/BAS-F-TP-0906-4921/PTBSID0000000016")
+            // self.gotoBookingConfirmedVC(url: "https://provabdevelopment.com/pro_new/mobile/index.php/voucher/insurance/BAS-I-TP-24080937-73571/PTBSID00000000077/show_voucher/CONFIRMED")
+            
         })
     }
     
@@ -230,7 +232,7 @@ class TimerManager {
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
         RunLoop.current.add(timer!, forMode: .common)
     }
-
+    
     
     @objc func updateTimer() {
         if totalTime != 0 {
@@ -254,7 +256,7 @@ class TimerManager {
         timer?.invalidate()
         timer = nil
     }
-
+    
     
     private func endBackgroundTask() {
         guard backgroundTask != .invalid else { return }

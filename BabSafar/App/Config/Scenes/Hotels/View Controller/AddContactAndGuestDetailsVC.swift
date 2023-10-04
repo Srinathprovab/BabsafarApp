@@ -397,6 +397,33 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
         
         
         
+        
+        for traveler in travelerArray {
+            
+            if traveler.firstName == nil  || traveler.firstName?.isEmpty == true{
+                callpaymenthotelbool = false
+                
+            }
+            
+            if (traveler.firstName?.count ?? 0) <= 3 {
+                callpaymenthotelbool = false
+            }
+            
+            if traveler.lastName == nil || traveler.firstName?.isEmpty == true{
+                callpaymenthotelbool = false
+            }
+            
+            if (traveler.lastName?.count ?? 0) <= 3 {
+                callpaymenthotelbool = false
+            }
+            
+           
+            
+            
+            // Continue checking other fields
+        }
+        
+        
         let positionsCount = commonTableView.numberOfRows(inSection: 0)
         for position in 0..<positionsCount {
             // Fetch the cell for the given position

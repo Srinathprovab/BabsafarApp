@@ -415,7 +415,7 @@ extension BookingConfirmedVC {
                                  cellType:.InsurenceResultTVCell))
         
         
-        tablerow.append(TableRow(title:"Guest Details",cellType:.LabelTVCell))
+        tablerow.append(TableRow(title:"Passenger Details",cellType:.LabelTVCell))
         tablerow.append(TableRow(title:"Lead Guest",moreData:iCustomerdetails,cellType:.BookedTravelDetailsTVCell))
         tablerow.append(TableRow(height:35,cellType:.EmptyTVCell))
         

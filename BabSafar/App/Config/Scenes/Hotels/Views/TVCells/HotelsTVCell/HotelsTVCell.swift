@@ -54,6 +54,12 @@ class HotelsTVCell: TableViewCell {
         // Configure the view for the selected state
     }
     
+    
+    
+    override func prepareForReuse() {
+        faretypelbl.textColor = .AppCalenderDateSelectColor
+    }
+    
     override func updateUI() {
         hotelNamelbl.text = cellInfo?.title ?? ""
         self.hotelImg.sd_setImage(with: URL(string: cellInfo?.image ?? ""), placeholderImage:UIImage(contentsOfFile:"placeholder.png"))

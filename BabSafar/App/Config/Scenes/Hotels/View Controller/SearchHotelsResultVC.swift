@@ -49,7 +49,7 @@ class SearchHotelsResultVC: BaseTableVC, UITextFieldDelegate, HotelSearchViewMod
         let vc = storyboard.instantiateViewController(withIdentifier: self.className()) as? SearchHotelsResultVC
         return vc
     }
-
+    
     
     override func viewWillAppear(_ animated: Bool) {
         addObserver()
@@ -258,11 +258,11 @@ class SearchHotelsResultVC: BaseTableVC, UITextFieldDelegate, HotelSearchViewMod
     
     //MARK: - didTapOnTermsAndConditionBtn HotelsTVCell
     override func didTapOnTermsAndConditionBtn(cell: HotelsTVCell) {
-        goToTermsPopupVC(titlestr: cell.hotelNamelbl.text ?? "", hoteldesc: cell.hotelDescLabel)
+        goToTermsPopupVC(titlestr: cell.hotelNamelbl.text ?? "", hoteldesc: cell.hotelDesc!)
     }
     
     
-    func goToTermsPopupVC(titlestr:String,hoteldesc:String) {
+    func goToTermsPopupVC(titlestr:String,hoteldesc:Hotel_desc) {
         guard let vc = TermsPopupVC.newInstance.self else {return}
         vc.modalPresentationStyle = .overCurrentContext
         vc.titlestr = titlestr
@@ -388,7 +388,7 @@ extension SearchHotelsResultVC {
         
     }
     
-
+    
     
     func hoteSearchResult(response: HotelSearchModel) {
         latArray.removeAll()
@@ -424,7 +424,7 @@ extension SearchHotelsResultVC {
             )
             mapModelArray.append(mapModel)
         }
-
+        
         
         
         response.filter_sumry?.loc?.forEach({ i in
@@ -479,14 +479,13 @@ extension SearchHotelsResultVC {
                 cell.long = dict.longitude ?? ""
                 
                 cell.perNightlbl.text = "Total Price For 2 Night"
-                cell.faretypelbl.text = dict.refund ?? ""
                 cell.setAttributedString1(str1:dict.currency ?? "", str2: dict.price ?? "")
                 
-                if let hotel_desc = dict.hotel_shortdesc{
-                    cell.hotelDescLabel = hotel_desc
+                if let hotel_desc = dict.hotel_desc{
+                    cell.hotelDesc = hotel_desc
                 } else {
                     // Handle the case when facility is empty or nil
-                    print("Facility array is empty or nil")
+                    print("hotel_desc array is empty or nil")
                 }
                 
                 if let facilities = dict.facility, !facilities.isEmpty {
@@ -494,6 +493,12 @@ extension SearchHotelsResultVC {
                 } else {
                     // Handle the case when facility is empty or nil
                     print("Facility array is empty or nil")
+                }
+                
+                
+                cell.faretypelbl.text = dict.refund ?? ""
+                if cell.faretypelbl.text == "Non Refundable" {
+                    cell.faretypelbl.textColor = .AppBtnColor
                 }
                 
                 ccell = cell
@@ -511,14 +516,14 @@ extension SearchHotelsResultVC {
                 cell.long = dict.longitude ?? ""
                 cell.perNightlbl.text = "Total Price For 2 Night"
                 cell.setAttributedString1(str1:dict.currency ?? "", str2: dict.price ?? "")
-               
                 
                 
-                if let hotel_desc = dict.hotel_shortdesc{
-                    cell.hotelDescLabel = hotel_desc
+                
+                if let hotel_desc = dict.hotel_desc{
+                    cell.hotelDesc = hotel_desc
                 } else {
                     // Handle the case when facility is empty or nil
-                    print("Facility array is empty or nil")
+                    print("hotel_desc array is empty or nil")
                 }
                 
                 if let facilities = dict.facility, !facilities.isEmpty {
@@ -531,8 +536,8 @@ extension SearchHotelsResultVC {
                 
                 
                 cell.faretypelbl.text = dict.refund ?? ""
-                if dict.refund != "Refundable" {
-                    cell.changeFareTypeColor()
+                if cell.faretypelbl.text == "Non Refundable" {
+                    cell.faretypelbl.textColor = .AppBtnColor
                 }
                 
                 ccell = cell
@@ -560,7 +565,7 @@ extension SearchHotelsResultVC {
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let lastRowIndex = tableView.numberOfRows(inSection: 0) - 1
         if indexPath.row == lastRowIndex && !isLoadingData {
-           // callHotelSearchPaginationAPI()
+            // callHotelSearchPaginationAPI()
         }
     }
     
@@ -574,7 +579,7 @@ extension SearchHotelsResultVC {
         payload["limit"] = "5"
         payload["no_of_nights"] = "1"
         
-      //  viewModel?.CallHotelSearchPagenationAPI(dictParam: payload)
+        //  viewModel?.CallHotelSearchPagenationAPI(dictParam: payload)
         
     }
     
@@ -607,56 +612,63 @@ extension SearchHotelsResultVC {
 
 
 extension SearchHotelsResultVC:AppliedFilters{
-   
+    
     
     
     func filtersByApplied(minpricerange: Double, maxpricerange: Double, noofStopsArray: [String], refundableTypeArray: [String], departureTime: String, arrivalTime: String, noOvernightFlight: [String], airlinesFilterArray: [String], luggageFilterArray: [String], connectingFlightsFilterArray: [String], ConnectingAirportsFilterArray: [String]) {
-      
-    
-    
+        
+        
+        
         
     }
     
     
     
     //MARK: - hotelFilterByApplied
+    
     func hotelFilterByApplied(minpricerange: Double, maxpricerange: Double, starRating: String, refundableTypeArray: [String], nearByLocA: [String], niberhoodA: [String], aminitiesA: [String]) {
         
-        
+        // Set the filter flag to true
         isSearchBool = true
         
-        print("====minpricerange ==== \(minpricerange)")
-        print("====maxpricerange ==== \(maxpricerange)")
-        print(" ==== starRating === \(starRating)")
-        print(" ==== refundableTypeArray === \n\(refundableTypeArray)")
+        // Print filter parameters for debugging
+        print("Min Price Range: \(minpricerange)")
+        print("Max Price Range: \(maxpricerange)")
+        print("Star Rating: \(starRating)")
+        print("Refundable Types: \(refundableTypeArray)")
         print(" ==== nearByLocA === \n\(nearByLocA)")
         print(" ==== niberhoodA === \n\(niberhoodA)")
         print(" ==== aminitiesA === \n\(aminitiesA)")
         
         
-        
-        let filteredArray = hotelSearchResult.filter { i in
-            guard let netPrice = Double(i.price ?? "0.0") else { return false }
-            let ratingMatches = i.star_rating == Int(starRating) || starRating.isEmpty
-            let refundableMatch = refundableTypeArray.isEmpty || refundableTypeArray.contains(i.refund ?? "")
+        // Filter the hotels based on the specified criteria
+        let filteredArray = hotelSearchResult.filter { hotel in
+            guard let netPrice = Double(hotel.price ?? "0.0") else { return false }
             
+            // Check if the hotel's star rating matches the selected star rating or is empty
+            let ratingMatches = starRating.isEmpty || String(hotel.star_rating ?? 0) == starRating
             
+            // Check if the hotel's refund type matches any selected refundable types or the array is empty
+            let refundableMatch = refundableTypeArray.isEmpty || refundableTypeArray.contains(hotel.refund ?? "")
             
-            return ratingMatches &&
-            netPrice >= minpricerange &&
-            netPrice <= maxpricerange && refundableMatch
+            // Check if the hotel's price falls within the specified range
+            let priceInRange = netPrice >= minpricerange && netPrice <= maxpricerange
+            
+            return ratingMatches && refundableMatch && priceInRange
         }
         
+        // Update the filtered results
         filtered = filteredArray
-        if filtered.count == 0{
+        
+        // Display a message if no hotels match the criteria
+        if filtered.count == 0 {
             TableViewHelper.EmptyMessage(message: "No Data Found", tableview: commonTableView, vc: self)
-        }else {
+        } else {
             TableViewHelper.EmptyMessage(message: "", tableview: commonTableView, vc: self)
         }
         
-        DispatchQueue.main.async {[self] in
-            commonTableView.reloadData()
-        }
+        // Reload the table view with the filtered results
+        commonTableView.reloadData()
     }
     
     
@@ -667,11 +679,11 @@ extension SearchHotelsResultVC:AppliedFilters{
         switch sortBy {
             
         case .PriceLow:
-           
+            
             isSearchBool = true
             
             // Sort the hotelSearchResult array by price in ascending order
-             filtered = hotelSearchResult.sorted { (item1, item2) in
+            filtered = hotelSearchResult.sorted { (item1, item2) in
                 let price1 = Double(item1.price ?? "0") ?? 0
                 let price2 = Double(item2.price ?? "0") ?? 0
                 return price1 < price2
@@ -685,10 +697,10 @@ extension SearchHotelsResultVC:AppliedFilters{
             
             
         case .PriceHigh:
-           
+            
             isSearchBool = true
             // Sort the hotelSearchResult array by price in ascending order
-             filtered = hotelSearchResult.sorted { (item1, item2) in
+            filtered = hotelSearchResult.sorted { (item1, item2) in
                 let price1 = Double(item1.price ?? "0") ?? 0
                 let price2 = Double(item2.price ?? "0") ?? 0
                 return price1 > price2
@@ -725,10 +737,6 @@ extension SearchHotelsResultVC:AppliedFilters{
             break
         }
     }
-    
-    
-    
-    
     
 }
 

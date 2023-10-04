@@ -73,6 +73,11 @@ class TitleLblTVCell: TableViewCell {
             //  holderView.addCornerRadiusWithShadow(color: .clear, borderColor: .AppBorderColor, cornerRadius: 8)
         }
         
+        
+        
+        if cellInfo?.key == "hoteldisc" {
+            tripcost()
+        }
     }
     
     

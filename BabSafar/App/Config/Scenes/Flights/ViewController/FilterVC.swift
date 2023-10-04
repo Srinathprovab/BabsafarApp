@@ -25,8 +25,8 @@ struct FlightFilterModel {
 
 
 struct HotelFilterModel {
-    var minPriceRange =  Double()
-    var maxPriceRange =  Double()
+    var minPriceRange: Double?
+    var maxPriceRange: Double?
     var starRating = String()
     var refundableTypes: [String] = []
     var nearByLocA: [String] = []
@@ -119,6 +119,7 @@ class FilterVC: BaseTableVC{
     var selectednearBylocationsArray = [String]()
     var selectedamenitiesArray = [String]()
     var selectedLuggageArray = [String]()
+    var hotelRefundablerTypeFilteArray = [String]()
     
     static var newInstance: FilterVC? {
         let storyboard = UIStoryboard(name: Storyboard.Main.name,
@@ -134,6 +135,9 @@ class FilterVC: BaseTableVC{
     override func viewWillAppear(_ animated: Bool) {
         addObserver()
         NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("nointernet"), object: nil)
+        
+        
+        
     }
     
     //MARK: - nointernet
@@ -573,15 +577,25 @@ class FilterVC: BaseTableVC{
     
     @IBAction func didTapOnResetBtn(_ sender: Any) {
         sortBy = .nothing
-        if filterKey == "filter" {
-            DispatchQueue.main.async {[self] in
-                resetFilter()
-            }
-        }else {
-            DispatchQueue.main.async {[self] in
-                resetFlightSortFilter()
+        
+        if let tabselect = defaults.object(forKey: UserDefaultsKeys.dashboardTapSelected) as? String  {
+            if tabselect == "Flights" {
+                if filterKey == "filter" {
+                    DispatchQueue.main.async {[self] in
+                        resetFilter()
+                    }
+                }else {
+                    DispatchQueue.main.async {[self] in
+                        resetFlightSortFilter()
+                    }
+                }
+            }else {
+                resetHotelFilter()
             }
         }
+        
+        
+        
     }
     
     
@@ -679,9 +693,9 @@ class FilterVC: BaseTableVC{
             case "Booking Type":
                 
                 if cell.titlelbl.text == "Refundable" {
-                    refundablerTypeFilteArray.append("Refundable")
+                    hotelRefundablerTypeFilteArray.append("Refundable")
                 }else {
-                    refundablerTypeFilteArray.append("Non Refundable")
+                    hotelRefundablerTypeFilteArray.append("Non Refundable")
                 }
                 
                 break
@@ -801,12 +815,12 @@ class FilterVC: BaseTableVC{
             case "Booking Type":
                 
                 if cell.titlelbl.text == "Refundable" {
-                    if let index = refundablerTypeFilteArray.firstIndex(of: "Refundable") {
-                        refundablerTypeFilteArray.remove(at: index)
+                    if let index = hotelRefundablerTypeFilteArray.firstIndex(of: "Refundable") {
+                        hotelRefundablerTypeFilteArray.remove(at: index)
                     }
                 }else {
-                    if let index = refundablerTypeFilteArray.firstIndex(of: "Non Refundable") {
-                        refundablerTypeFilteArray.remove(at: index)
+                    if let index = hotelRefundablerTypeFilteArray.firstIndex(of: "Non Refundable") {
+                        hotelRefundablerTypeFilteArray.remove(at: index)
                     }
                 }
                 break
@@ -899,14 +913,22 @@ class FilterVC: BaseTableVC{
         if let tabselect = defaults.object(forKey: UserDefaultsKeys.dashboardTapSelected) as? String, tabselect == "Flights" {
             if filterKey == "filter" {
                 
-                if minpricerangefilter.isZero == true && maxpricerangefilter.isZero == true{
-                    let pricesFloat = prices.compactMap { Float($0) }
-                    minpricerangefilter = Double(pricesFloat.min() ?? 0.0)
-                    maxpricerangefilter = Double(pricesFloat.max() ?? 0.0)
+//                if minpricerangefilter.isZero == true && maxpricerangefilter.isZero == true{
+//                    let pricesFloat = prices.compactMap { Float($0) }
+//                    minpricerangefilter = Double(pricesFloat.min() ?? 0.0)
+//                    maxpricerangefilter = Double(pricesFloat.max() ?? 0.0)
+//                }
+//
+//                filterModel.minPriceRange = minpricerangefilter
+//                filterModel.maxPriceRange = maxpricerangefilter
+                
+                if minpricerangefilter != 0.0 {
+                    hotelfiltermodel.minPriceRange = minpricerangefilter
                 }
                 
-                filterModel.minPriceRange = minpricerangefilter
-                filterModel.maxPriceRange = maxpricerangefilter
+                if maxpricerangefilter != 0.0 {
+                    hotelfiltermodel.maxPriceRange = maxpricerangefilter
+                }
                 
                 
                 if noOvernightFlightFilterStr.isEmpty == false {
@@ -937,6 +959,7 @@ class FilterVC: BaseTableVC{
                 if !connectingFlightsFilterArray.isEmpty {
                     filterModel.connectingFlights = connectingFlightsFilterArray
                 }
+                
                 
                 if !ConnectingAirportsFilterArray.isEmpty {
                     filterModel.connectingAirports = ConnectingAirportsFilterArray
@@ -973,28 +996,40 @@ class FilterVC: BaseTableVC{
             
         }else {
             
-            if minpricerangefilter.isZero == true && maxpricerangefilter.isZero == true{
-                let pricesFloat = prices.compactMap { Float($0) }
-                minpricerangefilter = Double(pricesFloat.min() ?? 0.0)
-                maxpricerangefilter = Double(pricesFloat.max() ?? 0.0)
+            
+//            if minpricerangefilter.isZero == true && maxpricerangefilter.isZero == true{
+//                let pricesFloat = prices.compactMap { Float($0) }
+//                minpricerangefilter = Double(pricesFloat.min() ?? 0.0)
+//                maxpricerangefilter = Double(pricesFloat.max() ?? 0.0)
+//            }
+            
+            
+//            hotelfiltermodel.minPriceRange = minpricerangefilter
+//            hotelfiltermodel.maxPriceRange = maxpricerangefilter
+            
+            
+            if minpricerangefilter != 0.0 {
+                hotelfiltermodel.minPriceRange = minpricerangefilter
+            }
+            
+            if maxpricerangefilter != 0.0 {
+                hotelfiltermodel.maxPriceRange = maxpricerangefilter
             }
             
             
-            hotelfiltermodel.minPriceRange = minpricerangefilter
-            hotelfiltermodel.maxPriceRange = maxpricerangefilter
-            
-            if starRatingFilter.isEmpty == false {
+            if !starRatingFilter.isEmpty {
                 hotelfiltermodel.starRating = starRatingFilter
             }
-    
             
-            if !refundablerTypeFilteArray.isEmpty {
-                hotelfiltermodel.refundableTypes = refundablerTypeFilteArray
+            
+            if !hotelRefundablerTypeFilteArray.isEmpty {
+                hotelfiltermodel.refundableTypes = hotelRefundablerTypeFilteArray
             }
             
             if !selectednearBylocationsArray.isEmpty {
                 hotelfiltermodel.nearByLocA = selectednearBylocationsArray
             }
+            
             
             if !selectedNeighbourwoodArray.isEmpty {
                 hotelfiltermodel.niberhoodA = selectedNeighbourwoodArray
@@ -1003,11 +1038,11 @@ class FilterVC: BaseTableVC{
             if !selectedamenitiesArray.isEmpty {
                 hotelfiltermodel.aminitiesA = selectedamenitiesArray
             }
-        
             
             
-            delegate?.hotelFilterByApplied(minpricerange:  hotelfiltermodel.minPriceRange,
-                                           maxpricerange:  hotelfiltermodel.maxPriceRange,
+            
+            delegate?.hotelFilterByApplied(minpricerange:  hotelfiltermodel.minPriceRange ?? 0.0,
+                                           maxpricerange:  hotelfiltermodel.maxPriceRange ?? 0.0,
                                            starRating:  hotelfiltermodel.starRating,
                                            refundableTypeArray: hotelfiltermodel.refundableTypes,
                                            nearByLocA: hotelfiltermodel.nearByLocA,
@@ -1070,21 +1105,33 @@ extension FilterVC {
     func resetFilter() {
         // Reset all values in the FilterModel
         
-        filterModel.minPriceRange = nil
-        filterModel.maxPriceRange = nil
+        let pricesFloat = prices.compactMap { Float($0) }
+        hotelfiltermodel.minPriceRange = Double(pricesFloat.min() ?? 0.0)
+        hotelfiltermodel.maxPriceRange = Double(pricesFloat.max() ?? 0.0)
+        if let cell = commonTableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? SliderTVCell {
+            cell.setupUI()
+        }
+        
+        
         filterModel.noOfStops = []
         filterModel.refundableTypes = []
         filterModel.airlines = []
-        
         filterModel.connectingFlights = []
         filterModel.connectingAirports = []
         filterModel.luggage.removeAll()
-        
-        filterModel.departureTime = ""
-        departureTimeFilter = ""
-        filterModel.arrivalTime = ""
-        arrivalTimeFilter = ""
         filterModel.noOvernightFlight = []
+        filterModel.departureTime = ""
+        filterModel.arrivalTime = ""
+        
+        noOfStopsFilterArray.removeAll()
+        flightRefundablerTypeFilteArray.removeAll()
+        airlinesFilterArray.removeAll()
+        connectingFlightsFilterArray.removeAll()
+        ConnectingAirportsFilterArray.removeAll()
+        selectedLuggageArray.removeAll()
+        departureTimeFilter = ""
+        arrivalTimeFilter = ""
+        
         
         // Deselect all cells in your checkOptionsTVCell table view
         deselectAllCheckOptionsCells()
@@ -1140,6 +1187,36 @@ extension FilterVC {
     }
     
     
+    
+    
+    func resetHotelFilter() {
+        // Reset all values in the FilterModel
+        
+        let pricesFloat = prices.compactMap { Float($0) }
+        hotelfiltermodel.minPriceRange = Double(pricesFloat.min() ?? 0.0)
+        hotelfiltermodel.maxPriceRange = Double(pricesFloat.max() ?? 0.0)
+        if let cell = commonTableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? SliderTVCell {
+            cell.setupUI()
+        }
+        
+        hotelfiltermodel.refundableTypes.removeAll()
+        hotelfiltermodel.aminitiesA.removeAll()
+        hotelfiltermodel.nearByLocA.removeAll()
+        hotelfiltermodel.niberhoodA.removeAll()
+        hotelfiltermodel.starRating = ""
+        
+        starRatingFilter = ""
+        hotelRefundablerTypeFilteArray.removeAll()
+        selectednearBylocationsArray.removeAll()
+        selectedNeighbourwoodArray.removeAll()
+        selectedamenitiesArray.removeAll()
+        
+        // Deselect all cells in your checkOptionsTVCell table view
+        deselectAllCheckOptionsCells()
+        
+        // Reload the table view to reflect the changes
+        commonTableView.reloadData()
+    }
 }
 
 
@@ -1147,10 +1224,12 @@ extension FilterVC {
 extension FilterVC {
     func addObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(resetallFilters), name: Notification.Name("resetallFilters"), object: nil)
+        
+        loadinitiallHotelFilterValues()
     }
     
     @objc func resetallFilters() {
-       
+        
         DispatchQueue.main.async {
             self.resetFilter()
         }
@@ -1159,5 +1238,38 @@ extension FilterVC {
             sortBy = .nothing
         }
         
+    }
+    
+    
+    
+    
+    func loadinitiallFlightFilterValues(){
+        if !filterModel.refundableTypes.isEmpty {
+            flightRefundablerTypeFilteArray = filterModel.refundableTypes
+        }
+        
+        if !filterModel.refundableTypes.isEmpty {
+            flightRefundablerTypeFilteArray = filterModel.refundableTypes
+        }
+       
+    }
+    
+    
+    func loadinitiallHotelFilterValues(){
+        if !hotelfiltermodel.refundableTypes.isEmpty {
+            hotelRefundablerTypeFilteArray = hotelfiltermodel.refundableTypes
+        }
+        
+        if !hotelfiltermodel.aminitiesA.isEmpty {
+            selectedamenitiesArray = hotelfiltermodel.aminitiesA
+        }
+        
+        if !hotelfiltermodel.nearByLocA.isEmpty {
+            selectednearBylocationsArray = hotelfiltermodel.nearByLocA
+        }
+        
+        if !hotelfiltermodel.niberhoodA.isEmpty {
+            selectedNeighbourwoodArray = hotelfiltermodel.niberhoodA
+        }
     }
 }

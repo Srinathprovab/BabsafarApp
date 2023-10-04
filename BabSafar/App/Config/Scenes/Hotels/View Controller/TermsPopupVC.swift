@@ -15,7 +15,7 @@ class TermsPopupVC: BaseTableVC {
     
     
     var titlestr = String()
-    var disc = String()
+    var disc:Hotel_desc?
     var tablerow = [TableRow]()
     
     static var newInstance: TermsPopupVC? {
@@ -27,7 +27,6 @@ class TermsPopupVC: BaseTableVC {
     
     override func viewWillAppear(_ animated: Bool) {
         print(titlestr)
-        print(disc)
     }
     
     override func viewDidLoad() {
@@ -42,7 +41,10 @@ class TermsPopupVC: BaseTableVC {
     func setupTV() {
         tablerow.removeAll()
         
-        tablerow.append(TableRow(title:disc,cellType:.HotelDesclblTVCell))
+        tablerow.append(TableRow(moreData: disc,
+                                 cellType:.HotelDesclblTVCell))
+        
+        
         commonTVData = tablerow
         commonTableView.reloadData()
     }

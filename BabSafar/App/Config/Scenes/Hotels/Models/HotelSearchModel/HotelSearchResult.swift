@@ -3,7 +3,7 @@
 import Foundation
 struct HotelSearchResult : Codable {
     let booking_source : String?
-    //  let hotel_desc : Hotel_desc?
+    let hotel_desc : Hotel_desc?
     let currency : String?
     //   let dis_mar : Dis_mar?
     let city_code : String?
@@ -40,7 +40,7 @@ struct HotelSearchResult : Codable {
     enum CodingKeys: String, CodingKey {
         
         case booking_source = "booking_source"
-        //    case hotel_desc = "hotel_desc"
+        case hotel_desc = "hotel_desc"
         case currency = "currency"
         //       case dis_mar = "dis_mar"
         case city_code = "city_code"
@@ -78,7 +78,7 @@ struct HotelSearchResult : Codable {
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         booking_source = try values.decodeIfPresent(String.self, forKey: .booking_source)
-        //    hotel_desc = try values.decodeIfPresent(Hotel_desc.self, forKey: .hotel_desc)
+        hotel_desc = try values.decodeIfPresent(Hotel_desc.self, forKey: .hotel_desc)
         currency = try values.decodeIfPresent(String.self, forKey: .currency)
         //       dis_mar = try values.decodeIfPresent(Dis_mar.self, forKey: .dis_mar)
         city_code = try values.decodeIfPresent(String.self, forKey: .city_code)

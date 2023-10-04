@@ -247,6 +247,8 @@ extension CheckBoxTVCell:UITableViewDataSource,UITableViewDelegate {
                     DispatchQueue.main.async {
                         cell.sele()
                         self.selectedIndices.append(indexPath)
+                        self.checkOptionsTV.selectRow(at: indexPath, animated: true, scrollPosition: .none)
+                        
                     }
                     print("Selected: \(cell.titlelbl.text ?? "")")
                 } else {
@@ -272,6 +274,7 @@ extension CheckBoxTVCell:UITableViewDataSource,UITableViewDelegate {
                     DispatchQueue.main.async {
                         cell.sele()
                         self.selectedIndices.append(indexPath)
+                        self.checkOptionsTV.selectRow(at: indexPath, animated: true, scrollPosition: .none)
                     }
                     print("Selected: \(cell.titlelbl.text ?? "")")
                 } else {
@@ -301,6 +304,7 @@ extension CheckBoxTVCell:UITableViewDataSource,UITableViewDelegate {
                     DispatchQueue.main.async {
                         cell.sele()
                         self.selectedIndices.append(indexPath)
+                        self.checkOptionsTV.selectRow(at: indexPath, animated: true, scrollPosition: .none)
                     }
                     print("Selected: \(cell.titlelbl.text ?? "")")
                 } else {
@@ -329,6 +333,8 @@ extension CheckBoxTVCell:UITableViewDataSource,UITableViewDelegate {
                     }) {
                         DispatchQueue.main.async {
                             cell.sele()
+                            self.selectedIndices.append(indexPath)
+                            self.checkOptionsTV.selectRow(at: indexPath, animated: true, scrollPosition: .none)
                         }
                         print("Selected: \(cell.titlelbl.text ?? "")")
                     } else {
@@ -353,6 +359,8 @@ extension CheckBoxTVCell:UITableViewDataSource,UITableViewDelegate {
                     
                     DispatchQueue.main.async {
                         cell.sele()
+                        self.selectedIndices.append(indexPath)
+                        self.checkOptionsTV.selectRow(at: indexPath, animated: true, scrollPosition: .none)
                     }
                     print("Selected: \(cell.titlelbl.text ?? "")")
                 } else {
@@ -374,6 +382,8 @@ extension CheckBoxTVCell:UITableViewDataSource,UITableViewDelegate {
                     
                     DispatchQueue.main.async {
                         cell.sele()
+                        self.selectedIndices.append(indexPath)
+                        self.checkOptionsTV.selectRow(at: indexPath, animated: true, scrollPosition: .none)
                     }
                     print("Selected: \(cell.titlelbl.text ?? "")")
                 } else {
@@ -396,6 +406,8 @@ extension CheckBoxTVCell:UITableViewDataSource,UITableViewDelegate {
                     
                     DispatchQueue.main.async {
                         cell.sele()
+                        self.selectedIndices.append(indexPath)
+                        self.checkOptionsTV.selectRow(at: indexPath, animated: true, scrollPosition: .none)
                     }
                     print("Selected: \(cell.titlelbl.text ?? "")")
                 } else {
@@ -438,6 +450,7 @@ extension CheckBoxTVCell:UITableViewDataSource,UITableViewDelegate {
                     DispatchQueue.main.async {
                         cell.sele()
                         self.selectedIndices.append(indexPath)
+                        self.checkOptionsTV.selectRow(at: indexPath, animated: true, scrollPosition: .none)
                     }
                     print("Selected: \(cell.titlelbl.text ?? "")")
                 } else {
@@ -465,6 +478,7 @@ extension CheckBoxTVCell:UITableViewDataSource,UITableViewDelegate {
                     DispatchQueue.main.async {
                         cell.sele()
                         self.selectedIndices.append(indexPath)
+                        self.checkOptionsTV.selectRow(at: indexPath, animated: true, scrollPosition: .none)
                     }
                     print("Selected: \(cell.titlelbl.text ?? "")")
                 } else {
@@ -492,6 +506,7 @@ extension CheckBoxTVCell:UITableViewDataSource,UITableViewDelegate {
                     DispatchQueue.main.async {
                         cell.sele()
                         self.selectedIndices.append(indexPath)
+                        self.checkOptionsTV.selectRow(at: indexPath, animated: true, scrollPosition: .none)
                     }
                     print("Selected: \(cell.titlelbl.text ?? "")")
                 } else {
@@ -519,6 +534,7 @@ extension CheckBoxTVCell:UITableViewDataSource,UITableViewDelegate {
                     DispatchQueue.main.async {
                         cell.sele()
                         self.selectedIndices.append(indexPath)
+                        self.checkOptionsTV.selectRow(at: indexPath, animated: true, scrollPosition: .none)
                     }
                     print("Selected: \(cell.titlelbl.text ?? "")")
                 } else {
