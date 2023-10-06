@@ -54,9 +54,7 @@ class SliderTVCell: TableViewCell, TTRangeSliderDelegate {
             downImg.isHidden = true
             expand()
         }
-        
-        
-        
+    
     }
     
     func setupUI() {

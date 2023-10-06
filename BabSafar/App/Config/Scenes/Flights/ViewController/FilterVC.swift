@@ -103,6 +103,7 @@ class FilterVC: BaseTableVC{
     var filterKey = String()
     var noOverNightFlightArray = ["No"]
     var paymentTypeArray = ["Refundable","Non Refundable"]
+    
     var noOvernightFlightFilterStr = [String]()
     var noOfStopsFilterArray = [String]()
     var refundablerTypeFilteArray = [String]()
@@ -111,9 +112,8 @@ class FilterVC: BaseTableVC{
     var airlinesFilterArray = [String]()
     var connectingFlightsFilterArray = [String]()
     var ConnectingAirportsFilterArray = [String]()
-    
-    
     var flightRefundablerTypeFilteArray = [String]()
+    
     //MARK: - Hotels
     var selectedNeighbourwoodArray = [String]()
     var selectednearBylocationsArray = [String]()
@@ -135,9 +135,7 @@ class FilterVC: BaseTableVC{
     override func viewWillAppear(_ animated: Bool) {
         addObserver()
         NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("nointernet"), object: nil)
-        
-        
-        
+    
     }
     
     //MARK: - nointernet
@@ -913,21 +911,14 @@ class FilterVC: BaseTableVC{
         if let tabselect = defaults.object(forKey: UserDefaultsKeys.dashboardTapSelected) as? String, tabselect == "Flights" {
             if filterKey == "filter" {
                 
-//                if minpricerangefilter.isZero == true && maxpricerangefilter.isZero == true{
-//                    let pricesFloat = prices.compactMap { Float($0) }
-//                    minpricerangefilter = Double(pricesFloat.min() ?? 0.0)
-//                    maxpricerangefilter = Double(pricesFloat.max() ?? 0.0)
-//                }
-//
-//                filterModel.minPriceRange = minpricerangefilter
-//                filterModel.maxPriceRange = maxpricerangefilter
+
                 
                 if minpricerangefilter != 0.0 {
-                    hotelfiltermodel.minPriceRange = minpricerangefilter
+                    filterModel.minPriceRange = minpricerangefilter
                 }
                 
                 if maxpricerangefilter != 0.0 {
-                    hotelfiltermodel.maxPriceRange = maxpricerangefilter
+                    filterModel.maxPriceRange = maxpricerangefilter
                 }
                 
                 
@@ -996,16 +987,6 @@ class FilterVC: BaseTableVC{
             
         }else {
             
-            
-//            if minpricerangefilter.isZero == true && maxpricerangefilter.isZero == true{
-//                let pricesFloat = prices.compactMap { Float($0) }
-//                minpricerangefilter = Double(pricesFloat.min() ?? 0.0)
-//                maxpricerangefilter = Double(pricesFloat.max() ?? 0.0)
-//            }
-            
-            
-//            hotelfiltermodel.minPriceRange = minpricerangefilter
-//            hotelfiltermodel.maxPriceRange = maxpricerangefilter
             
             
             if minpricerangefilter != 0.0 {

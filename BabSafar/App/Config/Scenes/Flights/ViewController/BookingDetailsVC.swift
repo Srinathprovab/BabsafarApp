@@ -218,6 +218,7 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
         tablerow.append(TableRow(title:"Traveller Details",
                                  subTitle: defaults.string(forKey: UserDefaultsKeys.totalTravellerCount),
                                  cellType:.TotalNoofTravellerTVCell))
+        
         for i in 1...adultsCount {
             positionsCount += 1
             passengertypeArray.append("Adult")
@@ -1041,7 +1042,7 @@ extension BookingDetailsVC {
         
         
         TimerManager.shared.stopTimer()
-        TimerManager.shared.totalTime = 900
+        TimerManager.shared.setTotalTime(900)
         TimerManager.shared.startTimer()
         
         DispatchQueue.main.async {
@@ -1113,7 +1114,7 @@ extension BookingDetailsVC {
     
     //MARK: - updateTimer
     func updateTimer() {
-        let totalTime = TimerManager.shared.totalTime
+        let totalTime = TimerManager.shared.getTotalTime()
         let minutes =  totalTime / 60
         let seconds = totalTime % 60
         let formattedTime = String(format: "%02d:%02d", minutes, seconds)
