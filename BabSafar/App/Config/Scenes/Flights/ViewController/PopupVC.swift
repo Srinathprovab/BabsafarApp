@@ -33,7 +33,7 @@ class PopupVC: UIViewController {
         self.view.backgroundColor = .black.withAlphaComponent(0.4)
         holderView.backgroundColor = .WhiteColor
         holderView.addCornerRadiusWithShadow(color: .clear, borderColor: .clear, cornerRadius: 5)
-        setuplabels(lbl: titlelbl, text: "Your Session Expired", textcolor: .AppLabelColor, font: .LatoRegular(size: 16), align: .center)
+        setuplabels(lbl: titlelbl, text: "Your session expired. Your booking wont be completed. Please search again.", textcolor: .AppLabelColor, font: .LatoRegular(size: 16), align: .center)
         searchBtnView.addCornerRadiusWithShadow(color: .clear, borderColor: .clear, cornerRadius: 5)
         searchBtnView.backgroundColor = .AppBtnColor
         setuplabels(lbl: searchlbl, text: "Search Again", textcolor: .WhiteColor, font: .LatoBold(size: 15), align: .center)

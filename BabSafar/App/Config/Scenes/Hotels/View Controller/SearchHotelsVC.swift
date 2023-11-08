@@ -145,7 +145,7 @@ class SearchHotelsVC: BaseTableVC, TopFlightDetailsViewModelDelegate {
     }
     
     override func didTapOnSearchHotelBtn(cell: SearchHotelTVCell) {
-        
+        NotificationCenter.default.post(name: NSNotification.Name("resetallFilters"), object: nil)
         payload.removeAll()
         payload["city"] = defaults.string(forKey: UserDefaultsKeys.locationcity)
         payload["hotel_destination"] = defaults.string(forKey: UserDefaultsKeys.locationcityid)
@@ -212,6 +212,7 @@ class SearchHotelsVC: BaseTableVC, TopFlightDetailsViewModelDelegate {
     func gotoSearchHotelsResultVC(){
         loderBool = true
         callapibool = true
+        defaults.set(false, forKey: "hoteltfilteronce")
         guard let vc = SearchHotelsResultVC.newInstance.self else {return}
         vc.modalPresentationStyle = .fullScreen
         vc.countrycode = self.countrycode

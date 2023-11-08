@@ -73,73 +73,73 @@ class FilterDepartureTVCell: TableViewCell {
         titlelbl.text = cellInfo?.title
         
         
-        if titlelbl.text == "Departure Time"{
+    //    if titlelbl.text == "Departure Time"{
             
-            switch filterModel.departureTime {
-            case "12AM - 6AM":
-                tapOnTimeOneBtn()
-                break
-                
-                
-            case "6AM - 12PM":
-                tapOnTime2Btn()
-                break
-                
-                
-            case "12PM - 6PM":
-                tapOnTime3Btn()
-                break
-                
-                
-            case "6PM - 12AM":
-                tapOnTime4Btn()
-                break
-                
-                
-            case "":
-                reset()
-                break
-                
-                
-            default:
-                
-                break
-            }
+//            switch filterModel.departureTime {
+//            case "12AM - 6AM":
+//                tapOnTimeOneBtn()
+//                break
+//
+//
+//            case "6AM - 12PM":
+//                tapOnTime2Btn()
+//                break
+//
+//
+//            case "12PM - 6PM":
+//                tapOnTime3Btn()
+//                break
+//
+//
+//            case "6PM - 12AM":
+//                tapOnTime4Btn()
+//                break
+//
+//
+//            case "":
+//                reset()
+//                break
+//
+//
+//            default:
+//
+//                break
+//            }
             
             
-        }else {
-            
-            switch filterModel.arrivalTime {
-            case "12AM - 6AM":
-                tapOnTimeOneBtn()
-                break
-                
-                
-            case "6AM - 12PM":
-                tapOnTime2Btn()
-                break
-                
-                
-            case "12PM - 6PM":
-                tapOnTime3Btn()
-                break
-                
-                
-            case "6PM - 12AM":
-                tapOnTime4Btn()
-                break
-                
-            case "":
-                reset()
-                break
-                
-                
-                
-            default:
-                
-                break
-            }
-        }
+//        }else {
+//
+//            switch filterModel.arrivalTime {
+//            case "12AM - 6AM":
+//                tapOnTimeOneBtn()
+//                break
+//
+//
+//            case "6AM - 12PM":
+//                tapOnTime2Btn()
+//                break
+//
+//
+//            case "12PM - 6PM":
+//                tapOnTime3Btn()
+//                break
+//
+//
+//            case "6PM - 12AM":
+//                tapOnTime4Btn()
+//                break
+//
+//            case "":
+//                reset()
+//                break
+//
+//
+//
+//            default:
+//
+//                break
+//            }
+//        }
         
         
         

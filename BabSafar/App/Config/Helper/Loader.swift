@@ -16,17 +16,7 @@ class Loader {
             
             
             if loderBool == false {
-                //                DispatchQueue.main.async {
-                //
-                //                    let loadingMBProgress = MBProgressHUD.showAdded(to: view, animated: true)
-                //                    loadingMBProgress.mode = MBProgressHUDMode.indeterminate
-                //                    loadingMBProgress.contentColor = HexColor("#EC441E")
-                //                    loadingMBProgress.bezelView.style = .solidColor
-                //                    loadingMBProgress.bezelView.color = UIColor.clear
-                //                    loadingMBProgress.bezelView.tintColor = UIColor.clear
-                //                    loadingMBProgress.bezelView.blurEffectStyle = .dark
-                //                    loadingMBProgress.show(animated: true)
-                //                }
+               
                 DispatchQueue.main.async {
                     ProgressHUD.animationType = .lineSpinFade
                     ProgressHUD.colorAnimation = .AppBtnColor

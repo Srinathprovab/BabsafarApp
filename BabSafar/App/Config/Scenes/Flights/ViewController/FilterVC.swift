@@ -15,8 +15,8 @@ struct FlightFilterModel {
     var noOfStops: [String] = []
     var refundableTypes: [String] = []
     var airlines: [String] = []
-    var departureTime: String?
-    var arrivalTime: String?
+    var departureTime: [String] = []
+    var arrivalTime: [String] = []
     var noOvernightFlight: [String] = []
     var connectingFlights: [String] = []
     var connectingAirports: [String] = []
@@ -58,7 +58,8 @@ protocol AppliedFilters:AnyObject {
                           maxpricerange:Double,
                           noofStopsArray:[String],
                           refundableTypeArray:[String],
-                          departureTime:String,arrivalTime:String,
+                          departureTime:[String],
+                          arrivalTime:[String],
                           noOvernightFlight:[String],
                           airlinesFilterArray:[String],
                           luggageFilterArray:[String],
@@ -97,8 +98,9 @@ class FilterVC: BaseTableVC{
     var minpricerangefilter = Double()
     var maxpricerangefilter = Double()
     var starRatingFilter = String()
-    var stopsArray = ["0 Stop","1 Stop","1+ Stop"]
-    var refundableTypeArray = ["Refundable","Non Refundable"]
+    var stopsArray = ["0 Stop","1 Stop","2 Stop"]
+   
+    var departurnTimeArray = ["12 am - 6 am","06 am - 12 pm","12 pm - 06 pm","06 pm - 12 am"]
     var tablerow = [TableRow]()
     var filterKey = String()
     var noOverNightFlightArray = ["No"]
@@ -107,8 +109,8 @@ class FilterVC: BaseTableVC{
     var noOvernightFlightFilterStr = [String]()
     var noOfStopsFilterArray = [String]()
     var refundablerTypeFilteArray = [String]()
-    var departureTimeFilter = String()
-    var arrivalTimeFilter = String()
+    var departureTimeFilter = [String]()
+    var arrivalTimeFilter = [String]()
     var airlinesFilterArray = [String]()
     var connectingFlightsFilterArray = [String]()
     var ConnectingAirportsFilterArray = [String]()
@@ -135,7 +137,7 @@ class FilterVC: BaseTableVC{
     override func viewWillAppear(_ animated: Bool) {
         addObserver()
         NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("nointernet"), object: nil)
-    
+        
     }
     
     //MARK: - nointernet
@@ -234,10 +236,17 @@ class FilterVC: BaseTableVC{
         
         tablerow.append(TableRow(title:"Price",cellType:.SliderTVCell))
         tablerow.append(TableRow(title:"Stops",data: stopsArray,cellType:.CheckBoxTVCell))
-        tablerow.append(TableRow(title:"Refundable Type",data: refundableTypeArray,cellType:.CheckBoxTVCell))
+        tablerow.append(TableRow(title:"Refundable Type",data: faretypeArray,cellType:.CheckBoxTVCell))
+        
         tablerow.append(TableRow(title:"Luggage",data: luggageArray,cellType:.CheckBoxTVCell))
-        tablerow.append(TableRow(title:"Departure Time",cellType:.FilterDepartureTVCell))
-        tablerow.append(TableRow(title:"Arrival Time",cellType:.FilterDepartureTVCell))
+//        tablerow.append(TableRow(title:"Departure Time",cellType:.FilterDepartureTVCell))
+//        tablerow.append(TableRow(title:"Arrival Time",cellType:.FilterDepartureTVCell))
+        
+        
+        tablerow.append(TableRow(title:"Departurn Time",key:"time", data: departurnTimeArray,cellType:.CheckBoxTVCell))
+        tablerow.append(TableRow(title:"Arrival Time",key:"time", data: departurnTimeArray,cellType:.CheckBoxTVCell))
+        
+        
         tablerow.append(TableRow(title:"No Overnight Flight",data: noOverNightFlightArray,cellType:.CheckBoxTVCell))
         tablerow.append(TableRow(title:"Airlines",data: AirlinesArray,cellType:.CheckBoxTVCell))
         tablerow.append(TableRow(title:"Connecting Flights",data: ConnectingFlightsArray,cellType:.CheckBoxTVCell))
@@ -629,97 +638,105 @@ class FilterVC: BaseTableVC{
     
     override func didTapOnCheckBox(cell:checkOptionsTVCell){
         
-        if let tabselect = defaults.object(forKey: UserDefaultsKeys.dashboardTapSelected) as? String, tabselect == "Flights" {
+        if let tabselect = defaults.object(forKey: UserDefaultsKeys.dashboardTapSelected) as? String{
             
-            switch cell.filtertitle {
-            case "Stops":
-                if cell.titlelbl.text == "0 Stop" {
-                    noOfStopsFilterArray.append("0")
-                }else if cell.titlelbl.text == "1 Stop" {
-                    noOfStopsFilterArray.append("1")
-                }else {
-                    noOfStopsFilterArray.append("2")
+            if tabselect == "Flights"  {
+                
+                
+                switch cell.filtertitle {
+                    
+                    
+                case "Departurn Time":
+                    departureTimeFilter.append(cell.titlelbl.text ?? "")
+                    break
+                    
+                case "Arrival Time":
+                    arrivalTimeFilter.append(cell.titlelbl.text ?? "")
+                    break
+                    
+                    
+                case "Stops":
+                    if cell.titlelbl.text == "0 Stop" {
+                        noOfStopsFilterArray.append("0")
+                    }else if cell.titlelbl.text == "1 Stop" {
+                        noOfStopsFilterArray.append("1")
+                    }else {
+                        noOfStopsFilterArray.append("2")
+                    }
+                    
+                    break
+                    
+                case "Refundable Type":
+                    
+                   
+                    flightRefundablerTypeFilteArray.append(cell.titlelbl.text ?? "")
+                    
+                    break
+                    
+                case "Airlines":
+                    airlinesFilterArray.append(cell.titlelbl.text ?? "")
+                    break
+                    
+                    
+                case "Luggage":
+                    selectedLuggageArray.append(cell.titlelbl.text ?? "")
+                    break
+                    
+                    
+                case "No Overnight Flight":
+                    noOvernightFlightFilterStr.append(cell.titlelbl.text ?? "")
+                    break
+                    
+                    
+                case "Connecting Flights":
+                    connectingFlightsFilterArray.append(cell.titlelbl.text ?? "")
+                    break
+                    
+                    
+                case "Connecting Airports":
+                    ConnectingAirportsFilterArray.append(cell.titlelbl.text ?? "")
+                    break
+                    
+                    
+                    
+                default:
+                    break
                 }
+            }else {
                 
-                break
-                
-            case "Refundable Type":
-                
-                if cell.titlelbl.text == "Refundable" {
-                    flightRefundablerTypeFilteArray.append("Refundable")
-                }else {
-                    flightRefundablerTypeFilteArray.append("Non Refundable")
+                switch cell.filtertitle {
+                    
+                    
+                case "Booking Type":
+                   
+                    hotelRefundablerTypeFilteArray.append(cell.titlelbl.text ?? "")
+                    
+                    break
+                    
+                    
+                    
+                case "Neighbourhood":
+                    selectedNeighbourwoodArray.append(cell.titlelbl.text ?? "")
+                    break
+                    
+                    
+                case "Near By Location's":
+                    selectednearBylocationsArray.append(cell.titlelbl.text ?? "")
+                    break
+                    
+                    
+                case "Amenities":
+                    selectedamenitiesArray.append(cell.titlelbl.text ?? "")
+                    break
+                    
+                    
+                    
+                    
+                default:
+                    break
                 }
-                
-                break
-                
-            case "Airlines":
-                airlinesFilterArray.append(cell.titlelbl.text ?? "")
-                break
-                
-                
-            case "Luggage":
-                selectedLuggageArray.append(cell.titlelbl.text ?? "")
-                break
-                
-                
-            case "No Overnight Flight":
-                noOvernightFlightFilterStr.append(cell.titlelbl.text ?? "")
-                break
-                
-                
-            case "Connecting Flights":
-                connectingFlightsFilterArray.append(cell.titlelbl.text ?? "")
-                break
-                
-                
-            case "Connecting Airports":
-                ConnectingAirportsFilterArray.append(cell.titlelbl.text ?? "")
-                break
-                
-                
-                
-            default:
-                break
             }
             
-        }else {
-            
-            switch cell.filtertitle {
-                
-                
-            case "Booking Type":
-                
-                if cell.titlelbl.text == "Refundable" {
-                    hotelRefundablerTypeFilteArray.append("Refundable")
-                }else {
-                    hotelRefundablerTypeFilteArray.append("Non Refundable")
-                }
-                
-                break
-                
-                
-                
-            case "Neighbourhood":
-                selectedNeighbourwoodArray.append(cell.titlelbl.text ?? "")
-                break
-                
-                
-            case "Near By Location's":
-                selectednearBylocationsArray.append(cell.titlelbl.text ?? "")
-                break
-                
-                
-            case "Amenities":
-                selectedamenitiesArray.append(cell.titlelbl.text ?? "")
-                break
-                
-                
-                
-                
-            default:
-                break
-            }
             
         }
         
@@ -728,146 +745,164 @@ class FilterVC: BaseTableVC{
     
     override func didTapOnDeselectCheckBox(cell: checkOptionsTVCell) {
         
-        if let tabselect = defaults.object(forKey: UserDefaultsKeys.dashboardTapSelected) as? String, tabselect == "Flights" {
-            switch cell.filtertitle {
-            case "Stops":
-                
-                if cell.titlelbl.text == "0 Stop" {
-                    if let index = noOfStopsFilterArray.firstIndex(of: "0") {
-                        noOfStopsFilterArray.remove(at: index)
-                    }
-                }else if cell.titlelbl.text == "1 Stop" {
-                    if let index = noOfStopsFilterArray.firstIndex(of: "1") {
-                        noOfStopsFilterArray.remove(at: index)
-                    }
-                }else {
-                    if let index = noOfStopsFilterArray.firstIndex(of: "2") {
-                        noOfStopsFilterArray.remove(at: index)
-                    }
-                }
-                break
-                
-            case "Refundable Type":
-                
-                if cell.titlelbl.text == "Refundable" {
-                    if let index = flightRefundablerTypeFilteArray.firstIndex(of: "Refundable") {
-                        flightRefundablerTypeFilteArray.remove(at: index)
-                    }
-                }else {
-                    if let index = flightRefundablerTypeFilteArray.firstIndex(of: "Non Refundable") {
-                        flightRefundablerTypeFilteArray.remove(at: index)
-                    }
-                }
-                break
-                
-                
-            case "Airlines":
-                if let index = airlinesFilterArray.firstIndex(of: cell.titlelbl.text ?? "") {
-                    airlinesFilterArray.remove(at: index)
-                }
-                break
-                
-                
-            case "Luggage":
-                if let index = selectedLuggageArray.firstIndex(of: cell.titlelbl.text ?? "") {
-                    selectedLuggageArray.remove(at: index)
-                }
-                
-                if selectedLuggageArray.isEmpty == true {
-                    filterModel.luggage.removeAll()
-                }
-                
-                print(selectedLuggageArray.joined(separator: "---"))
-                break
-                
-            case "No Overnight Flight":
-                
-                if let index = noOvernightFlightFilterStr.firstIndex(of: cell.titlelbl.text ?? "") {
-                    noOvernightFlightFilterStr.remove(at: index)
-                }
-                break
-                
-            case "Connecting Flights":
-                if let index = connectingFlightsFilterArray.firstIndex(of: cell.titlelbl.text ?? "") {
-                    connectingFlightsFilterArray.remove(at: index)
-                }
-                
-                break
-                
-                
-            case "Connecting Airports":
-                if let index = ConnectingAirportsFilterArray.firstIndex(of: cell.titlelbl.text ?? "") {
-                    ConnectingAirportsFilterArray.remove(at: index)
-                }
-                break
-                
-                
-                
-            default:
-                break
-            }
-        }else {
-            switch cell.filtertitle {
-                
-                
-            case "Booking Type":
-                
-                if cell.titlelbl.text == "Refundable" {
-                    if let index = hotelRefundablerTypeFilteArray.firstIndex(of: "Refundable") {
-                        hotelRefundablerTypeFilteArray.remove(at: index)
-                    }
-                }else {
-                    if let index = hotelRefundablerTypeFilteArray.firstIndex(of: "Non Refundable") {
-                        hotelRefundablerTypeFilteArray.remove(at: index)
-                    }
-                }
-                break
-                
-                
-            case "Neighbourhood":
-                
-                if let index = selectedNeighbourwoodArray.firstIndex(of: cell.titlelbl.text ?? "") {
-                    selectedNeighbourwoodArray.remove(at: index)
-                }
-                break
-                
-                
-            case "Near By Location's":
-                
-                if let index = selectednearBylocationsArray.firstIndex(of: cell.titlelbl.text ?? "") {
-                    selectednearBylocationsArray.remove(at: index)
-                }
-                break
-                
-                
-            case "Amenities":
-                
-                if let index = selectedamenitiesArray.firstIndex(of: cell.titlelbl.text ?? "") {
-                    selectedamenitiesArray.remove(at: index)
-                }
-                break
-                
-                
-            default:
-                break
-            }
-        }
-    }
-    
-    
-    override func didTapOnTimeBtn(cell:FilterDepartureTVCell){
-        switch cell.titlelbl.text {
-        case "Departure Time":
-            departureTimeFilter = cell.timeString
-            break
+        if let tabselect = defaults.object(forKey: UserDefaultsKeys.dashboardTapSelected) as? String{
             
-        case "Arrival Time":
-            arrivalTimeFilter = cell.timeString
-            break
-        default:
-            break
+            
+            if tabselect == "Flights"  {
+                
+                switch cell.filtertitle {
+                    
+                    
+                case "Departurn Time":
+                    if let index = departureTimeFilter.firstIndex(of: cell.titlelbl.text ?? "") {
+                        departureTimeFilter.remove(at: index)
+                    }
+                    break
+                    
+                case "Arrival Time":
+                    if let index = arrivalTimeFilter.firstIndex(of: cell.titlelbl.text ?? "") {
+                        arrivalTimeFilter.remove(at: index)
+                    }
+                    break
+                    
+                    
+                case "Stops":
+                    
+                    if cell.titlelbl.text == "0 Stop" {
+                       
+                        if let index = noOfStopsFilterArray.firstIndex(of: "0") {
+                            noOfStopsFilterArray.remove(at: index)
+                        }
+                    }else if cell.titlelbl.text == "1 Stop" {
+                        if let index = noOfStopsFilterArray.firstIndex(of: "1") {
+                            noOfStopsFilterArray.remove(at: index)
+                        }
+                    }else {
+                        if let index = noOfStopsFilterArray.firstIndex(of: "2") {
+                            noOfStopsFilterArray.remove(at: index)
+                        }
+                    }
+                    
+                    
+                    
+                    break
+                    
+                case "Refundable Type":
+                    
+                    if let index = flightRefundablerTypeFilteArray.firstIndex(of: cell.titlelbl.text ?? "") {
+                        flightRefundablerTypeFilteArray.remove(at: index)
+                    }
+                    
+                    
+                    break
+                    
+                    
+                case "Airlines":
+                    if let index = airlinesFilterArray.firstIndex(of: cell.titlelbl.text ?? "") {
+                        airlinesFilterArray.remove(at: index)
+                    }
+                    break
+                    
+                    
+                case "Luggage":
+                    if let index = selectedLuggageArray.firstIndex(of: cell.titlelbl.text ?? "") {
+                        selectedLuggageArray.remove(at: index)
+                    }
+                    
+                    if selectedLuggageArray.isEmpty == true {
+                        filterModel.luggage.removeAll()
+                    }
+                    
+                    print(selectedLuggageArray.joined(separator: "---"))
+                    break
+                    
+                case "No Overnight Flight":
+                    
+                    if let index = noOvernightFlightFilterStr.firstIndex(of: cell.titlelbl.text ?? "") {
+                        noOvernightFlightFilterStr.remove(at: index)
+                    }
+                    break
+                    
+                case "Connecting Flights":
+                    if let index = connectingFlightsFilterArray.firstIndex(of: cell.titlelbl.text ?? "") {
+                        connectingFlightsFilterArray.remove(at: index)
+                    }
+                    
+                    break
+                    
+                    
+                case "Connecting Airports":
+                    if let index = ConnectingAirportsFilterArray.firstIndex(of: cell.titlelbl.text ?? "") {
+                        ConnectingAirportsFilterArray.remove(at: index)
+                    }
+                    break
+                    
+                    
+                    
+                default:
+                    break
+                }
+            }else {
+                
+                
+                switch cell.filtertitle {
+                    
+                    
+                case "Booking Type":
+                    
+                    if let index = hotelRefundablerTypeFilteArray.firstIndex(of: cell.titlelbl.text ?? "") {
+                        hotelRefundablerTypeFilteArray.remove(at: index)
+                    }
+                    break
+                    
+                    
+                case "Neighbourhood":
+                    
+                    if let index = selectedNeighbourwoodArray.firstIndex(of: cell.titlelbl.text ?? "") {
+                        selectedNeighbourwoodArray.remove(at: index)
+                    }
+                    break
+                    
+                    
+                case "Near By Location's":
+                    
+                    if let index = selectednearBylocationsArray.firstIndex(of: cell.titlelbl.text ?? "") {
+                        selectednearBylocationsArray.remove(at: index)
+                    }
+                    break
+                    
+                    
+                case "Amenities":
+                    
+                    if let index = selectedamenitiesArray.firstIndex(of: cell.titlelbl.text ?? "") {
+                        selectedamenitiesArray.remove(at: index)
+                    }
+                    break
+                    
+                    
+                default:
+                    break
+                }
+            }
+            
+            
         }
     }
+    
+    
+//    override func didTapOnTimeBtn(cell:FilterDepartureTVCell){
+//        switch cell.titlelbl.text {
+//        case "Departure Time":
+//            departureTimeFilter = cell.timeString
+//            break
+//
+//        case "Arrival Time":
+//            arrivalTimeFilter = cell.timeString
+//            break
+//        default:
+//            break
+//        }
+//    }
     
     
     
@@ -908,127 +943,164 @@ class FilterVC: BaseTableVC{
     
     override func btnAction(cell: ButtonTVCell) {
         
-        if let tabselect = defaults.object(forKey: UserDefaultsKeys.dashboardTapSelected) as? String, tabselect == "Flights" {
-            if filterKey == "filter" {
+        if let tabselect = defaults.object(forKey: UserDefaultsKeys.dashboardTapSelected) as? String {
+            let pricesFloat = prices.compactMap { Float($0) }
+            
+            if tabselect == "Flights" {
                 
-
-                
-                if minpricerangefilter != 0.0 {
-                    filterModel.minPriceRange = minpricerangefilter
-                }
-                
-                if maxpricerangefilter != 0.0 {
-                    filterModel.maxPriceRange = maxpricerangefilter
-                }
-                
-                
-                if noOvernightFlightFilterStr.isEmpty == false {
-                    filterModel.noOvernightFlight = noOvernightFlightFilterStr
-                }
-                
-                if departureTimeFilter.isEmpty == false {
-                    filterModel.departureTime = departureTimeFilter
-                }
-                
-                if arrivalTimeFilter.isEmpty == false {
-                    filterModel.arrivalTime = arrivalTimeFilter
-                }
-                
-                
-                if !noOfStopsFilterArray.isEmpty {
-                    filterModel.noOfStops = noOfStopsFilterArray
-                }
-                
-                if !flightRefundablerTypeFilteArray.isEmpty {
-                    filterModel.refundableTypes = flightRefundablerTypeFilteArray
-                }
-                
-                if !airlinesFilterArray.isEmpty {
-                    filterModel.airlines = airlinesFilterArray
-                }
-                
-                if !connectingFlightsFilterArray.isEmpty {
-                    filterModel.connectingFlights = connectingFlightsFilterArray
-                }
-                
-                
-                if !ConnectingAirportsFilterArray.isEmpty {
-                    filterModel.connectingAirports = ConnectingAirportsFilterArray
-                }
-                
-                if !selectedLuggageArray.isEmpty {
-                    filterModel.luggage = selectedLuggageArray
+                if filterKey == "filter" {
+                        
+                        if minpricerangefilter != 0.0 {
+                            filterModel.minPriceRange = minpricerangefilter
+                        }else {
+                            filterModel.minPriceRange = Double(pricesFloat.min() ?? 0.0)
+                        }
+                        
+                        if maxpricerangefilter != 0.0 {
+                            filterModel.maxPriceRange = maxpricerangefilter
+                        }else {
+                            filterModel.maxPriceRange = Double(pricesFloat.max() ?? 0.0)
+                        }
+                        
+                        
+                        if noOvernightFlightFilterStr.isEmpty == false {
+                            filterModel.noOvernightFlight = noOvernightFlightFilterStr
+                        }else {
+                            filterModel.noOvernightFlight.removeAll()
+                        }
+                        
+                    if departureTimeFilter.isEmpty == false {
+                        filterModel.departureTime = departureTimeFilter
+                    }else {
+                        filterModel.departureTime.removeAll()
+                    }
+                    
+                    if arrivalTimeFilter.isEmpty == false {
+                        filterModel.arrivalTime = arrivalTimeFilter
+                    }else {
+                        filterModel.arrivalTime.removeAll()
+                    }
+                        
+                        
+                        if !noOfStopsFilterArray.isEmpty {
+                            filterModel.noOfStops = noOfStopsFilterArray
+                        }else {
+                            filterModel.noOfStops.removeAll()
+                        }
+                        
+                        if !flightRefundablerTypeFilteArray.isEmpty {
+                            filterModel.refundableTypes = flightRefundablerTypeFilteArray
+                        }else {
+                            filterModel.refundableTypes.removeAll()
+                        }
+                        
+                        if !airlinesFilterArray.isEmpty {
+                            filterModel.airlines = airlinesFilterArray
+                        }else {
+                            filterModel.airlines.removeAll()
+                        }
+                        
+                        if !connectingFlightsFilterArray.isEmpty {
+                            filterModel.connectingFlights = connectingFlightsFilterArray
+                        }else {
+                            filterModel.connectingFlights.removeAll()
+                        }
+                        
+                        
+                        if !ConnectingAirportsFilterArray.isEmpty {
+                            filterModel.connectingAirports = ConnectingAirportsFilterArray
+                        }else {
+                            filterModel.connectingAirports.removeAll()
+                        }
+                        
+                        if !selectedLuggageArray.isEmpty {
+                            filterModel.luggage = selectedLuggageArray
+                        }else {
+                            filterModel.luggage.removeAll()
+                        }
+                        
+                        
+                        
+                        delegate?.filtersByApplied(minpricerange:filterModel.minPriceRange ?? 0.0,
+                                                   maxpricerange: filterModel.maxPriceRange ?? 0.0,
+                                                   noofStopsArray:  filterModel.noOfStops,
+                                                   refundableTypeArray: filterModel.refundableTypes,
+                                                   departureTime:  filterModel.departureTime ,
+                                                   arrivalTime: filterModel.arrivalTime ,
+                                                   noOvernightFlight: filterModel.noOvernightFlight,
+                                                   airlinesFilterArray: filterModel.airlines,
+                                                   luggageFilterArray: filterModel.luggage,
+                                                   connectingFlightsFilterArray: filterModel.connectingFlights,
+                                                   ConnectingAirportsFilterArray: filterModel.connectingAirports)
+                        
+                    
                 }else {
-                    filterModel.luggage.removeAll()
+                    delegate?.filtersSortByApplied(sortBy: sortBy)
                 }
-                
-                
-                
-                delegate?.filtersByApplied(minpricerange:filterModel.minPriceRange ?? 0.0,
-                                           maxpricerange: filterModel.maxPriceRange ?? 0.0,
-                                           noofStopsArray:  filterModel.noOfStops,
-                                           refundableTypeArray: filterModel.refundableTypes,
-                                           departureTime:  filterModel.departureTime ?? "",
-                                           arrivalTime: filterModel.arrivalTime ?? "",
-                                           noOvernightFlight: filterModel.noOvernightFlight,
-                                           airlinesFilterArray: filterModel.airlines,
-                                           luggageFilterArray: filterModel.luggage,
-                                           connectingFlightsFilterArray: filterModel.connectingFlights,
-                                           ConnectingAirportsFilterArray: filterModel.connectingAirports)
-                
-                
             }else {
-                delegate?.filtersSortByApplied(sortBy: sortBy)
+                
+                    
+                    
+                    if minpricerangefilter != 0.0 {
+                        hotelfiltermodel.minPriceRange = minpricerangefilter
+                    }else {
+                        hotelfiltermodel.minPriceRange = Double(pricesFloat.min() ?? 0.0)
+                    }
+                    
+                    if maxpricerangefilter != 0.0 {
+                        hotelfiltermodel.maxPriceRange = maxpricerangefilter
+                    }else {
+                        hotelfiltermodel.maxPriceRange = Double(pricesFloat.max() ?? 0.0)
+                    }
+                    
+                    
+                    if !starRatingFilter.isEmpty {
+                        hotelfiltermodel.starRating = starRatingFilter
+                    }else {
+                        hotelfiltermodel.starRating = ""
+                    }
+                    
+                    
+                    if !hotelRefundablerTypeFilteArray.isEmpty {
+                        hotelfiltermodel.refundableTypes = hotelRefundablerTypeFilteArray
+                    }else {
+                        hotelfiltermodel.refundableTypes.removeAll()
+                    }
+                    
+                    if !selectednearBylocationsArray.isEmpty {
+                        hotelfiltermodel.nearByLocA = selectednearBylocationsArray
+                    }else {
+                        hotelfiltermodel.nearByLocA.removeAll()
+                    }
+                    
+                    
+                    if !selectedNeighbourwoodArray.isEmpty {
+                        hotelfiltermodel.niberhoodA = selectedNeighbourwoodArray
+                    }else {
+                        hotelfiltermodel.niberhoodA.removeAll()
+                    }
+                    
+                    if !selectedamenitiesArray.isEmpty {
+                        hotelfiltermodel.aminitiesA = selectedamenitiesArray
+                    }else {
+                        hotelfiltermodel.aminitiesA.removeAll()
+                    }
+                    
+                    
+                    
+                    delegate?.hotelFilterByApplied(minpricerange:  hotelfiltermodel.minPriceRange ?? 0.0,
+                                                   maxpricerange:  hotelfiltermodel.maxPriceRange ?? 0.0,
+                                                   starRating:  hotelfiltermodel.starRating,
+                                                   refundableTypeArray: hotelfiltermodel.refundableTypes,
+                                                   nearByLocA: hotelfiltermodel.nearByLocA,
+                                                   niberhoodA: hotelfiltermodel.niberhoodA,
+                                                   aminitiesA: hotelfiltermodel.aminitiesA)
+                
             }
             
             
             
             
-            
-        }else {
-            
-            
-            
-            if minpricerangefilter != 0.0 {
-                hotelfiltermodel.minPriceRange = minpricerangefilter
-            }
-            
-            if maxpricerangefilter != 0.0 {
-                hotelfiltermodel.maxPriceRange = maxpricerangefilter
-            }
-            
-            
-            if !starRatingFilter.isEmpty {
-                hotelfiltermodel.starRating = starRatingFilter
-            }
-            
-            
-            if !hotelRefundablerTypeFilteArray.isEmpty {
-                hotelfiltermodel.refundableTypes = hotelRefundablerTypeFilteArray
-            }
-            
-            if !selectednearBylocationsArray.isEmpty {
-                hotelfiltermodel.nearByLocA = selectednearBylocationsArray
-            }
-            
-            
-            if !selectedNeighbourwoodArray.isEmpty {
-                hotelfiltermodel.niberhoodA = selectedNeighbourwoodArray
-            }
-            
-            if !selectedamenitiesArray.isEmpty {
-                hotelfiltermodel.aminitiesA = selectedamenitiesArray
-            }
-            
-            
-            
-            delegate?.hotelFilterByApplied(minpricerange:  hotelfiltermodel.minPriceRange ?? 0.0,
-                                           maxpricerange:  hotelfiltermodel.maxPriceRange ?? 0.0,
-                                           starRating:  hotelfiltermodel.starRating,
-                                           refundableTypeArray: hotelfiltermodel.refundableTypes,
-                                           nearByLocA: hotelfiltermodel.nearByLocA,
-                                           niberhoodA: hotelfiltermodel.niberhoodA,
-                                           aminitiesA: hotelfiltermodel.aminitiesA)
         }
         
         dismiss(animated: true)
@@ -1086,13 +1158,16 @@ extension FilterVC {
     func resetFilter() {
         // Reset all values in the FilterModel
         
+       
+        
         let pricesFloat = prices.compactMap { Float($0) }
-        hotelfiltermodel.minPriceRange = Double(pricesFloat.min() ?? 0.0)
-        hotelfiltermodel.maxPriceRange = Double(pricesFloat.max() ?? 0.0)
+        filterModel.minPriceRange = Double((pricesFloat.min() ?? prices.compactMap { Float($0) }.min()) ?? 0.0)
+        filterModel.maxPriceRange = Double((pricesFloat.max() ?? prices.compactMap { Float($0) }.max()) ?? 0.0)
         if let cell = commonTableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? SliderTVCell {
             cell.setupUI()
         }
-        
+        minpricerangefilter = filterModel.minPriceRange ?? 0.0
+        maxpricerangefilter = filterModel.maxPriceRange ?? 0.0
         
         filterModel.noOfStops = []
         filterModel.refundableTypes = []
@@ -1101,8 +1176,8 @@ extension FilterVC {
         filterModel.connectingAirports = []
         filterModel.luggage.removeAll()
         filterModel.noOvernightFlight = []
-        filterModel.departureTime = ""
-        filterModel.arrivalTime = ""
+        filterModel.departureTime.removeAll()
+        filterModel.arrivalTime.removeAll()
         
         noOfStopsFilterArray.removeAll()
         flightRefundablerTypeFilteArray.removeAll()
@@ -1110,8 +1185,8 @@ extension FilterVC {
         connectingFlightsFilterArray.removeAll()
         ConnectingAirportsFilterArray.removeAll()
         selectedLuggageArray.removeAll()
-        departureTimeFilter = ""
-        arrivalTimeFilter = ""
+        departureTimeFilter.removeAll()
+        arrivalTimeFilter.removeAll()
         
         
         // Deselect all cells in your checkOptionsTVCell table view
@@ -1168,17 +1243,121 @@ extension FilterVC {
     }
     
     
+}
+
+
+
+extension FilterVC {
+    func addObserver() {
+        
+        if let tabSelected = defaults.string(forKey: UserDefaultsKeys.dashboardTapSelected) {
+            if tabSelected == "Flights" {
+                loadinitiallFlightFilterValues()
+            }else {
+                loadinitiallHotelFilterValues()
+            }
+        }
+    }
+    
+    
+    
+    func loadinitiallFlightFilterValues(){
+        
+        if !UserDefaults.standard.bool(forKey: "flightfilteronce") {
+            resetFilter()
+           defaults.set(true, forKey: "flightfilteronce")
+        }
+        
+        
+        if filterModel.minPriceRange != 0.0 {
+            minpricerangefilter = filterModel.minPriceRange ?? Double(prices.compactMap { Float($0) }.min()!)
+        }
+        
+        if filterModel.maxPriceRange != 0.0 {
+            maxpricerangefilter = filterModel.maxPriceRange ?? Double(prices.compactMap { Float($0) }.max()!)
+        }
+        
+        
+        if !filterModel.noOfStops.isEmpty {
+            noOfStopsFilterArray = filterModel.noOfStops
+        }
+        
+        if !filterModel.refundableTypes.isEmpty {
+            flightRefundablerTypeFilteArray = filterModel.refundableTypes
+        }
+        
+        if !filterModel.airlines.isEmpty {
+            airlinesFilterArray = filterModel.airlines
+        }
+        
+        
+        if !filterModel.connectingFlights.isEmpty {
+            connectingFlightsFilterArray = filterModel.connectingFlights
+        }
+        
+        if !filterModel.connectingAirports.isEmpty {
+            ConnectingAirportsFilterArray = filterModel.connectingAirports
+        }
+        
+        if !filterModel.luggage.isEmpty {
+            luggageArray = filterModel.luggage
+        }
+        
+        
+        if !filterModel.noOvernightFlight.isEmpty {
+            noOverNightFlightArray = filterModel.noOvernightFlight
+        }
+        
+    }
+    
+    
+    func loadinitiallHotelFilterValues(){
+        
+        if !UserDefaults.standard.bool(forKey: "hoteltfilteronce") {
+            resetHotelFilter()
+            defaults.set(true, forKey: "hoteltfilteronce")
+        }
+        
+        
+        if hotelfiltermodel.minPriceRange != 0.0 {
+            minpricerangefilter = hotelfiltermodel.minPriceRange ?? Double(prices.compactMap { Float($0) }.min()!)
+        }
+        
+        if hotelfiltermodel.maxPriceRange != 0.0 {
+            maxpricerangefilter = hotelfiltermodel.maxPriceRange ?? Double(prices.compactMap { Float($0) }.max()!)
+        }
+        
+     
+        
+        if !hotelfiltermodel.refundableTypes.isEmpty {
+            hotelRefundablerTypeFilteArray = hotelfiltermodel.refundableTypes
+        }
+        
+        if !hotelfiltermodel.aminitiesA.isEmpty {
+            selectedamenitiesArray = hotelfiltermodel.aminitiesA
+        }
+        
+        if !hotelfiltermodel.nearByLocA.isEmpty {
+            selectednearBylocationsArray = hotelfiltermodel.nearByLocA
+        }
+        
+        if !hotelfiltermodel.niberhoodA.isEmpty {
+            selectedNeighbourwoodArray = hotelfiltermodel.niberhoodA
+        }
+    }
     
     
     func resetHotelFilter() {
         // Reset all values in the FilterModel
         
         let pricesFloat = prices.compactMap { Float($0) }
-        hotelfiltermodel.minPriceRange = Double(pricesFloat.min() ?? 0.0)
-        hotelfiltermodel.maxPriceRange = Double(pricesFloat.max() ?? 0.0)
+        hotelfiltermodel.minPriceRange = Double((pricesFloat.min() ?? prices.compactMap { Float($0) }.min()) ?? 0.0)
+        hotelfiltermodel.maxPriceRange = Double((pricesFloat.max() ?? prices.compactMap { Float($0) }.max()) ?? 0.0)
         if let cell = commonTableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? SliderTVCell {
             cell.setupUI()
         }
+        minpricerangefilter = hotelfiltermodel.minPriceRange ?? 0.0
+        maxpricerangefilter = hotelfiltermodel.maxPriceRange ?? 0.0
         
         hotelfiltermodel.refundableTypes.removeAll()
         hotelfiltermodel.aminitiesA.removeAll()
@@ -1197,60 +1376,5 @@ extension FilterVC {
         
         // Reload the table view to reflect the changes
         commonTableView.reloadData()
-    }
-}
-
-
-
-extension FilterVC {
-    func addObserver() {
-        NotificationCenter.default.addObserver(self, selector: #selector(resetallFilters), name: Notification.Name("resetallFilters"), object: nil)
-        
-        loadinitiallHotelFilterValues()
-    }
-    
-    @objc func resetallFilters() {
-        
-        DispatchQueue.main.async {
-            self.resetFilter()
-        }
-        
-        DispatchQueue.main.async {
-            sortBy = .nothing
-        }
-        
-    }
-    
-    
-    
-    
-    func loadinitiallFlightFilterValues(){
-        if !filterModel.refundableTypes.isEmpty {
-            flightRefundablerTypeFilteArray = filterModel.refundableTypes
-        }
-        
-        if !filterModel.refundableTypes.isEmpty {
-            flightRefundablerTypeFilteArray = filterModel.refundableTypes
-        }
-       
-    }
-    
-    
-    func loadinitiallHotelFilterValues(){
-        if !hotelfiltermodel.refundableTypes.isEmpty {
-            hotelRefundablerTypeFilteArray = hotelfiltermodel.refundableTypes
-        }
-        
-        if !hotelfiltermodel.aminitiesA.isEmpty {
-            selectedamenitiesArray = hotelfiltermodel.aminitiesA
-        }
-        
-        if !hotelfiltermodel.nearByLocA.isEmpty {
-            selectednearBylocationsArray = hotelfiltermodel.nearByLocA
-        }
-        
-        if !hotelfiltermodel.niberhoodA.isEmpty {
-            selectedNeighbourwoodArray = hotelfiltermodel.niberhoodA
-        }
     }
 }

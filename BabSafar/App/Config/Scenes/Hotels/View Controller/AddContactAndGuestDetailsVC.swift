@@ -141,8 +141,8 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
         
         
         //   let totalSeconds = abs(response.session_expiry_details?.session_start_time ?? 0)
-        TimerManager.shared.setTotalTime(900)
-        TimerManager.shared.startTimer()
+        TimerManager.shared.stopTimer()
+        TimerManager.shared.startTimer(time: 900)
         
         DispatchQueue.main.async {[self] in
             setuptv()
@@ -272,7 +272,7 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
     }
     
     func updateTimer() {
-        let totalTime = TimerManager.shared.getTotalTime()
+        let totalTime = TimerManager.shared.totalTime
         let minutes =  totalTime / 60
         let seconds = totalTime % 60
         let formattedTime = String(format: "%02d:%02d", minutes, seconds)
@@ -683,7 +683,7 @@ extension AddContactAndGuestDetailsVC {
     
     @objc func updatetimer(notificatio:UNNotification) {
         
-        let totalTime = TimerManager.shared.getTotalTime()
+        let totalTime = TimerManager.shared.totalTime
         let minutes =  totalTime / 60
         let seconds = totalTime % 60
         let formattedTime = String(format: "%02d:%02d", minutes, seconds)

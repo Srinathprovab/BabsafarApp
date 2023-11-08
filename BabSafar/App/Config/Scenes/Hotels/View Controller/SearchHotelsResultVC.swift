@@ -258,15 +258,15 @@ class SearchHotelsResultVC: BaseTableVC, UITextFieldDelegate, HotelSearchViewMod
     
     //MARK: - didTapOnTermsAndConditionBtn HotelsTVCell
     override func didTapOnTermsAndConditionBtn(cell: HotelsTVCell) {
-        goToTermsPopupVC(titlestr: cell.hotelNamelbl.text ?? "", hoteldesc: cell.hotelDesc!)
+        goToTermsPopupVC(titlestr: cell.hotelNamelbl.text ?? "", hoteldesc: cell.hotel_DescLabel)
     }
     
     
-    func goToTermsPopupVC(titlestr:String,hoteldesc:Hotel_desc) {
+    func goToTermsPopupVC(titlestr:String,hoteldesc:String) {
         guard let vc = TermsPopupVC.newInstance.self else {return}
         vc.modalPresentationStyle = .overCurrentContext
         vc.titlestr = titlestr
-        vc.disc = hoteldesc
+        vc.hotel_desc = hoteldesc
         present(vc, animated: false)
     }
     
@@ -405,18 +405,14 @@ extension SearchHotelsResultVC {
         
         hotelSearchId = String(response.search_id ?? 0)
         hsearchid = String(response.search_id ?? 0)
-        hbookingsource = response.booking_source ?? ""
+        hbookingsource = response.data?.hotelSearchResult?[0].booking_source ?? ""
         hotelSearchResult = response.data?.hotelSearchResult ?? []
         //   hotel_filtersumry = response.filter_sumry
         
-        response.data?.hotelSearchResult?.forEach({ i in
-            latArray.append(i.latitude ?? "")
-            longArray.append(i.longitude ?? "")
-            prices.append(i.price ?? "")
-            
-        })
+       
         
         response.data?.hotelSearchResult?.forEach { i in
+            prices.append(i.price ?? "")
             let mapModel = MapModel(
                 longitude: i.longitude ?? "",
                 latitude: i.latitude ?? "",
@@ -427,18 +423,18 @@ extension SearchHotelsResultVC {
         
         
         
-        response.filter_sumry?.loc?.forEach({ i in
-            nearBylocationsArray.append(i.v ?? "")
-        })
-        
-        response.filter_sumry?.near_by?.forEach({ i in
-            neighbourwoodArray.append(i.v ?? "")
-        })
-        
-        response.filter_sumry?.facility?.forEach({ i in
-            amenitiesArray.append(i.v ?? "")
-        })
-        
+        //        response.filter_sumry?.loc?.forEach({ i in
+        //            nearBylocationsArray.append(i.v ?? "")
+        //        })
+        //
+        //        response.filter_sumry?.near_by?.forEach({ i in
+        //            neighbourwoodArray.append(i.v ?? "")
+        //        })
+        //
+        //        response.filter_sumry?.facility?.forEach({ i in
+        //            amenitiesArray.append(i.v ?? "")
+        //        })
+        //
         
         
         DispatchQueue.main.async {[self] in
@@ -470,23 +466,25 @@ extension SearchHotelsResultVC {
                 
                 cell.hotelNamelbl.text = dict.name
                 cell.hotelImg.sd_setImage(with: URL(string: dict.image ?? ""), placeholderImage:UIImage(contentsOfFile:"placeholder.png"))
-                cell.ratingslbl.text = String(dict.star_rating ?? 0)
+                cell.ratingslbl.text = String(dict.star_rating ?? "0")
                 cell.locationlbl.text = dict.address
                 setAttributedText1(str1: dict.currency ?? "", str2: dict.price ?? "", lbl: cell.kwdlbl)
                 cell.bookingsource = dict.booking_source ?? ""
-                cell.hotelid = String(dict.hotel_code ?? 0)
+                cell.hotelid = String(dict.hotel_code ?? "0")
                 cell.lat = dict.latitude ?? ""
                 cell.long = dict.longitude ?? ""
                 
                 cell.perNightlbl.text = "Total Price For 2 Night"
                 cell.setAttributedString1(str1:dict.currency ?? "", str2: dict.price ?? "")
                 
-                if let hotel_desc = dict.hotel_desc{
-                    cell.hotelDesc = hotel_desc
-                } else {
-                    // Handle the case when facility is empty or nil
-                    print("hotel_desc array is empty or nil")
-                }
+                
+                cell.hotel_DescLabel = dict.hotel_desc ?? "bbbbb"
+//                if let hotel_desc = dict.hotel_desc{
+//                    cell.hotelDescLabel = hotel_desc
+//                } else {
+//                    // Handle the case when facility is empty or nil
+//                    print("hotel_desc array is empty or nil")
+//                }
                 
                 if let facilities = dict.facility, !facilities.isEmpty {
                     cell.facilityArray = facilities
@@ -507,24 +505,24 @@ extension SearchHotelsResultVC {
                 
                 cell.hotelNamelbl.text = dict.name
                 cell.hotelImg.sd_setImage(with: URL(string: dict.image ?? ""), placeholderImage:UIImage(contentsOfFile:"placeholder.png"))
-                cell.ratingslbl.text = String(dict.star_rating ?? 0)
+                cell.ratingslbl.text = String(dict.star_rating ?? "0")
                 cell.locationlbl.text = dict.address
                 setAttributedText1(str1: dict.currency ?? "", str2: dict.price ?? "", lbl: cell.kwdlbl)
                 cell.bookingsource = dict.booking_source ?? ""
-                cell.hotelid = String(dict.hotel_code ?? 0)
+                cell.hotelid = String(dict.hotel_code ?? "0")
                 cell.lat = dict.latitude ?? ""
                 cell.long = dict.longitude ?? ""
                 cell.perNightlbl.text = "Total Price For 2 Night"
                 cell.setAttributedString1(str1:dict.currency ?? "", str2: dict.price ?? "")
                 
                 
-                
-                if let hotel_desc = dict.hotel_desc{
-                    cell.hotelDesc = hotel_desc
-                } else {
-                    // Handle the case when facility is empty or nil
-                    print("hotel_desc array is empty or nil")
-                }
+                cell.hotel_DescLabel = dict.hotel_desc ?? "bbbbb"
+//                if let hotel_desc = dict.hotel_desc{
+//                    cell.hotelDescLabel = hotel_desc
+//                } else {
+//                    // Handle the case when facility is empty or nil
+//                    print("hotel_desc array is empty or nil")
+//                }
                 
                 if let facilities = dict.facility, !facilities.isEmpty {
                     cell.facilityArray = facilities
@@ -565,7 +563,7 @@ extension SearchHotelsResultVC {
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let lastRowIndex = tableView.numberOfRows(inSection: 0) - 1
         if indexPath.row == lastRowIndex && !isLoadingData {
-            // callHotelSearchPaginationAPI()
+            callHotelSearchPaginationAPI()
         }
     }
     
@@ -575,17 +573,27 @@ extension SearchHotelsResultVC {
         payload.removeAll()
         payload["booking_source"] = hbookingsource
         payload["search_id"] = hsearchid
-        payload["offset"] = "41"
-        payload["limit"] = "5"
+        payload["offset"] = "2"
+        payload["limit"] = "10"
         payload["no_of_nights"] = "1"
         
-        //  viewModel?.CallHotelSearchPagenationAPI(dictParam: payload)
+        viewModel?.CallHotelSearchPagenationAPI(dictParam: payload)
         
     }
     
     func hoteSearchPagenationResult(response: HotelSearchModel) {
         
-        hotelSearchResult = response.data?.hotelSearchResult ?? []
+       
+        response.data?.hotelSearchResult?.forEach { i in
+            prices.append(i.price ?? "")
+            let mapModel = MapModel(
+                longitude: i.longitude ?? "",
+                latitude: i.latitude ?? "",
+                hotelname: i.name ?? ""
+            )
+            mapModelArray.append(mapModel)
+        }
+        
         
         if let newResults = response.data?.hotelSearchResult, !newResults.isEmpty {
             // Append the new data to the existing data
@@ -600,9 +608,7 @@ extension SearchHotelsResultVC {
         }
         
         
-        DispatchQueue.main.async {[self] in
-            commonTableView.reloadData()
-        }
+        
         
     }
     
@@ -615,7 +621,7 @@ extension SearchHotelsResultVC:AppliedFilters{
     
     
     
-    func filtersByApplied(minpricerange: Double, maxpricerange: Double, noofStopsArray: [String], refundableTypeArray: [String], departureTime: String, arrivalTime: String, noOvernightFlight: [String], airlinesFilterArray: [String], luggageFilterArray: [String], connectingFlightsFilterArray: [String], ConnectingAirportsFilterArray: [String]) {
+    func filtersByApplied(minpricerange: Double, maxpricerange: Double, noofStopsArray: [String], refundableTypeArray: [String], departureTime: [String], arrivalTime: [String], noOvernightFlight: [String], airlinesFilterArray: [String], luggageFilterArray: [String], connectingFlightsFilterArray: [String], ConnectingAirportsFilterArray: [String]) {
         
         
         
@@ -646,7 +652,7 @@ extension SearchHotelsResultVC:AppliedFilters{
             guard let netPrice = Double(hotel.price ?? "0.0") else { return false }
             
             // Check if the hotel's star rating matches the selected star rating or is empty
-            let ratingMatches = starRating.isEmpty || String(hotel.star_rating ?? 0) == starRating
+            let ratingMatches = starRating.isEmpty || String(hotel.star_rating ?? "0") == starRating
             
             // Check if the hotel's refund type matches any selected refundable types or the array is empty
             let refundableMatch = refundableTypeArray.isEmpty || refundableTypeArray.contains(hotel.refund ?? "")

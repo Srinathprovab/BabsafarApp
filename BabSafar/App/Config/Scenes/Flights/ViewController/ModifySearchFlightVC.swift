@@ -434,7 +434,6 @@ class ModifySearchFlightVC: BaseTableVC {
     override func didTapOnSearchFlightBtnAction(cell: SearchFlightsTVCell) {
         payload.removeAll()
         loderBool = true
-        NotificationCenter.default.post(name: NSNotification.Name("resetallFilters"), object: nil)
         
         if let journeyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
             if journeyType == "oneway" {
@@ -549,6 +548,7 @@ class ModifySearchFlightVC: BaseTableVC {
     func gotoSearchFlightResultVC(payload33:[String:Any]) {
         guard let vc = SearchFlightResultVC.newInstance.self else {return}
         vc.modalPresentationStyle = .fullScreen
+        defaults.set(false, forKey: "flightfilteronce")
         vc.isFromVc = "searchvc"
         callapibool = true
         vc.payload = payload33

@@ -49,7 +49,7 @@ class SearchFlightResultVC: BaseTableVC, UITextFieldDelegate {
     }
     
     
-    
+    let dateFormatter = DateFormatter()
     var isfromVc = String()
     var tablerow = [TableRow]()
     var kwdPriceArray = [String]()
@@ -69,7 +69,7 @@ class SearchFlightResultVC: BaseTableVC, UITextFieldDelegate {
     override func viewWillAppear(_ animated: Bool) {
         BASE_URL = BASE_URL1
         addObserver()
-        
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
         if callapibool == true {
             holderView.isHidden = true
             callAPI()
@@ -107,7 +107,7 @@ class SearchFlightResultVC: BaseTableVC, UITextFieldDelegate {
                                               "NewFlightSearchResultTVCell",
                                               "MultiCityTripFlightResultTVCell"])
         
-        setupRefreshControl()
+        // setupRefreshControl()
         
         navView.isHidden = true
         cvHolderView.isHidden = true
@@ -219,6 +219,7 @@ class SearchFlightResultVC: BaseTableVC, UITextFieldDelegate {
     override func didTapOnFlightDetailsBtnAction(cell:MultiCityTripFlightResultTVCell){
         defaults.set(cell.indexPath?.row ?? 0, forKey: UserDefaultsKeys.selectdFlightcellIndex)
         defaults.set(cell.selectedResult, forKey: UserDefaultsKeys.selectedResult)
+        
         gotoBaggageInfoVC()
     }
     
@@ -390,6 +391,12 @@ class SearchFlightResultVC: BaseTableVC, UITextFieldDelegate {
     //MARK: - didTapOnFlightDetailsBtnAction NewFlightSearchResultTVCell
     override func didTapOnFlightDetailsBtnAction(cell: NewFlightSearchResultTVCell) {
         defaults.set(cell.selectedResult, forKey: UserDefaultsKeys.selectedResult)
+        
+        
+        defaults.set(cell.bsource, forKey: UserDefaultsKeys.bookingsource)
+        defaults.set(cell.bsourcekey, forKey: UserDefaultsKeys.bookingsourcekey)
+        defaults.set(cell.faretypelbl.text, forKey: UserDefaultsKeys.selectedFareType)
+        
         gotoBaggageInfoVC()
     }
     
@@ -407,6 +414,12 @@ class SearchFlightResultVC: BaseTableVC, UITextFieldDelegate {
     override func didTapOnBookNowBtnAction(cell: NewFlightSearchResultTVCell) {
         defaults.set(cell.selectedResult, forKey: UserDefaultsKeys.selectedResult)
         totalprice = cell.pricelbl.text ?? ""
+        
+        
+        defaults.set(cell.bsource, forKey: UserDefaultsKeys.bookingsource)
+        defaults.set(cell.bsourcekey, forKey: UserDefaultsKeys.bookingsourcekey)
+        defaults.set(cell.faretypelbl.text, forKey: UserDefaultsKeys.selectedFareType)
+        
         gotoBookingDetailsVC()
     }
     
@@ -483,23 +496,48 @@ class SearchFlightResultVC: BaseTableVC, UITextFieldDelegate {
             showToast(message: "No Flights Found")
         }
     }
-
+    
     
 }
 
 
 
 extension SearchFlightResultVC: AppliedFilters{
-
+    
+    
     
     func hotelFilterByApplied(minpricerange: Double, maxpricerange: Double, starRating: String, refundableTypeArray: [String], nearByLocA: [String], niberhoodA: [String], aminitiesA: [String]) {
         
     }
     
-
-    func filtersByApplied(minpricerange: Double, maxpricerange: Double, noofStopsArray: [String], refundableTypeArray: [String], departureTime: String, arrivalTime: String, noOvernightFlight: [String], airlinesFilterArray: [String], luggageFilterArray: [String], connectingFlightsFilterArray: [String], ConnectingAirportsFilterArray: [String]) {
-      
     
+    // Create a function to check if a given time string is within a time range
+    func isTimeInRange(time: String, range: String) -> Bool {
+        guard let departureDate = dateFormatter.date(from: time) else {
+            return false
+        }
+        
+        let calendar = Calendar.current
+        let hour = calendar.component(.hour, from: departureDate)
+        
+        switch range {
+        case "12 am - 6 am":
+            return hour >= 0 && hour < 6
+        case "06 am - 12 pm":
+            return hour >= 6 && hour < 12
+        case "12 pm - 06 pm":
+            return hour >= 12 && hour < 18
+        case "06 pm - 12 am":
+            return hour >= 18 && hour < 24
+        default:
+            return false
+        }
+    }
+    
+    
+    func filtersByApplied(minpricerange: Double, maxpricerange: Double, noofStopsArray: [String], refundableTypeArray: [String], departureTime: [String], arrivalTime: [String], noOvernightFlight: [String], airlinesFilterArray: [String], luggageFilterArray: [String], connectingFlightsFilterArray: [String], ConnectingAirportsFilterArray: [String]) {
+        
+        
         
         
         print(" ===== minpricerange ====== \n\(minpricerange)")
@@ -533,6 +571,8 @@ extension SearchFlightResultVC: AppliedFilters{
                         let luggageMatch = airlinesFilterArray.isEmpty || summary.contains(where: { luggageFilterArray.contains(convertToDesiredFormat($0.weight_Allowance ?? "")) }) == true
                         
                         let connectingFlightsMatch = connectingFlightsFilterArray.isEmpty || summary.contains(where: { connectingFlightsFilterArray.contains($0.operator_name ?? "") }) == true
+                        
+                        
                         let ConnectingAirportsMatch = connectingFlightsFilterArray.isEmpty || summary.contains(where: { connectingFlightsFilterArray.contains($0.destination?.airport_name ?? "") }) == true
                         
                         
@@ -549,23 +589,89 @@ extension SearchFlightResultVC: AppliedFilters{
                         
                         guard let summary = j.first?.flight_details?.summary else { return false }
                         guard let price = j.first?.price?.api_total_display_fare else { return false }
+                        guard let details = j.first?.flight_details?.details else { return false }
                         
                         let priceRangeMatch = ((Double(price) ) >= minpricerange && (Double(price) ) <= maxpricerange)
                         let noOfStopsMatch = noofStopsArray.isEmpty || summary.contains(where: { noofStopsArray.contains("\($0.no_of_stops ?? 0)") }) == true
                         let refundableMatch = refundableTypeArray.isEmpty || refundableTypeArray.contains(j.first?.fareType ?? "")
                         let airlinesMatch = airlinesFilterArray.isEmpty || summary.contains(where: { airlinesFilterArray.contains($0.operator_name ?? "") }) == true
-                        let connectingFlightsMatch = connectingFlightsFilterArray.isEmpty || summary.contains(where: { connectingFlightsFilterArray.contains($0.operator_name ?? "") }) == true
-                        let ConnectingAirportsMatch = connectingFlightsFilterArray.isEmpty || summary.contains(where: { connectingFlightsFilterArray.contains($0.destination?.airport_name ?? "") }) == true
+                        
+                        
+                        
+                        let connectingFlightsMatch = flight.contains { flight in
+                            if connectingFlightsFilterArray.isEmpty {
+                                return true // Return true for all flights if 'connectingAirportsFA' is empty
+                            }
+                            
+                            
+                            for summaryArray in details {
+                                if summaryArray.contains(where: { flightDetail in
+                                    let operatorname = flightDetail.operator_name ?? ""
+                                    return connectingFlightsFilterArray.contains("\(operatorname)")
+                                }) {
+                                    return true // Return true for this flight if it contains a matching airport
+                                }
+                            }
+                            
+                            
+                            return false // Return false if no matching airport is found in this flight
+                        }
+                        
+                        
+                        
+                        let ConnectingAirportsMatch = flight.contains { flight in
+                            if ConnectingAirportsFilterArray.isEmpty {
+                                return true // Return true for all flights if 'connectingAirportsFA' is empty
+                            }
+                            
+                            
+                            for summaryArray in details {
+                                if summaryArray.contains(where: { flightDetail in
+                                    let airportName = flightDetail.destination?.airport_name ?? ""
+                                    return ConnectingAirportsFilterArray.contains("\(airportName)")
+                                }) {
+                                    return true // Return true for this flight if it contains a matching airport
+                                }
+                            }
+                            
+                            
+                            return false // Return false if no matching airport is found in this flight
+                        }
+                        
+                        
+                        
+                        
+                        
+                        let depMatch = departureTime.isEmpty || summary.first?.origin?.datetime.flatMap { departureDateTime in
+                            return departureTime.contains { departureTimeRange in
+                                let timeIsInRange = isTimeInRange(time: departureDateTime, range: String(departureTimeRange))
+                                return timeIsInRange
+                            }
+                        } ?? false
+                        
+                        
+                        // Filter by arrival time
+                        let arrMatch = arrivalTime.isEmpty || summary.first?.destination?.datetime.flatMap { arrivalDateTime in
+                            return arrivalTime.contains { arrivalTimeRange in
+                                let timeIsInRange = isTimeInRange(time: arrivalDateTime, range: String(arrivalTimeRange)) // Convert Character to String
+                                return timeIsInRange
+                            }
+                        } ?? false
+                        
+                        
                         
                         let luggageMatch = luggageFilterArray.isEmpty || summary.contains(where: {
                             let formattedWeight = convertToDesiredFormat($0.weight_Allowance ?? "")
                             return luggageFilterArray.contains(formattedWeight)
                         }) == true
-
                         
-                        return priceRangeMatch && noOfStopsMatch && refundableMatch && airlinesMatch && connectingFlightsMatch && ConnectingAirportsMatch && luggageMatch
+                        
+                        
+                        return priceRangeMatch && noOfStopsMatch && refundableMatch && airlinesMatch && connectingFlightsMatch && luggageMatch && depMatch && arrMatch && ConnectingAirportsMatch
                     }
                 }
+                
+                
                 
                 
                 onewayFilterdList(list: sortedArray ?? [[]])
@@ -587,27 +693,27 @@ extension SearchFlightResultVC: AppliedFilters{
             if let journytype = defaults.string(forKey: UserDefaultsKeys.journeyType) {
                 
                 if journytype == "multicity" {
-
+                    
                     let filtered = MCJflightlist?.sorted { (item1, item2) in
                         let price1 = item1.first?.price?.api_total_display_fare ?? 0.0
                         let price2 = item2.first?.price?.api_total_display_fare ?? 0.0
-                       return price1 < price2
-                   }
+                        return price1 < price2
+                    }
                     
-                
+                    
                     multicityFilterdList(list: filtered ?? [[]])
                     
                     
                     
                 }else {
-
+                    
                     let filtered = FlightList?.sorted { (item1, item2) in
                         let price1 = item1.first?.price?.api_total_display_fare ?? 0.0
                         let price2 = item2.first?.price?.api_total_display_fare ?? 0.0
-                       return price1 < price2
-                   }
+                        return price1 < price2
+                    }
                     
-                
+                    
                     onewayFilterdList(list: filtered ?? [[]])
                     
                     
@@ -621,25 +727,25 @@ extension SearchFlightResultVC: AppliedFilters{
             if let journytype = defaults.string(forKey: UserDefaultsKeys.journeyType) {
                 
                 if journytype == "multicity" {
-
+                    
                     let filtered = MCJflightlist?.sorted { (item1, item2) in
                         let price1 = item1.first?.price?.api_total_display_fare ?? 0.0
                         let price2 = item2.first?.price?.api_total_display_fare ?? 0.0
-                       return price1 > price2
-                   }
+                        return price1 > price2
+                    }
                     
-                
+                    
                     multicityFilterdList(list: filtered ?? [[]])
                     
                 }else {
-
+                    
                     let filtered = FlightList?.sorted { (item1, item2) in
                         let price1 = item1.first?.price?.api_total_display_fare ?? 0.0
                         let price2 = item2.first?.price?.api_total_display_fare ?? 0.0
-                       return price1 > price2
-                   }
+                        return price1 > price2
+                    }
                     
-                
+                    
                     onewayFilterdList(list: filtered ?? [[]])
                     
                 }
@@ -930,6 +1036,8 @@ extension SearchFlightResultVC: AppliedFilters{
                     row.append(TableRow(title:"\(j.price?.api_total_display_fare_withoutmarkup ?? 0.0)",
                                         subTitle: j.fareType ?? "",
                                         price: "\(j.price?.api_total_display_fare ?? 0.0)",
+                                        bookingsource: j.booking_source,
+                                        bookingsourcekey: j.booking_source_key,
                                         key: "oneway",
                                         text: j.selectedResult ?? "",
                                         buttonTitle: j.aPICurrencyType ?? "",
@@ -962,9 +1070,11 @@ extension SearchFlightResultVC: AppliedFilters{
         list.forEach { j in
             let similarFlights1 = similar(fare: Double(String(format: "%.2f", j.price?.api_total_display_fare ?? "")) ?? 0.0)
             
-            tablerow.append(TableRow(title:String(format: "%.2f", j.price?.api_total_display_fare_withoutmarkup ?? ""),
+            tablerow.append(TableRow(title:"\(j.price?.api_total_display_fare_withoutmarkup ?? 0.0)",
                                      subTitle: j.fareType ?? "",
-                                     price: String(format: "%.2f", j.price?.api_total_display_fare ?? ""),
+                                     price: "\(j.price?.api_total_display_fare ?? 0.0)",
+                                     bookingsource: j.booking_source,
+                                     bookingsourcekey: j.booking_source_key,
                                      key: "oneway",
                                      text: j.selectedResult ?? "",
                                      buttonTitle: j.aPICurrencyType ?? "",
@@ -1023,12 +1133,16 @@ extension SearchFlightResultVC: AppliedFilters{
                     row.append(TableRow(title:"\(j.price?.api_total_display_fare_withoutmarkup ?? 0.0)",
                                         subTitle: j.fareType ?? "",
                                         price: "\(j.price?.api_total_display_fare ?? 0.0)",
+                                        //                                        bookingsource: j.booking_source,
+                                        //                                        bookingsourcekey: j.booking_source_key,
                                         key: "oneway",
                                         text: j.selectedResult ?? "",
                                         buttonTitle: j.aPICurrencyType ?? "",
                                         data: similarFlights1,
                                         moreData: j.flight_details?.summary ?? [],
                                         cellType:.NewFlightSearchResultTVCell))
+                    
+                    
                     
                     // Append the row to tablerow
                     tablerow.append(contentsOf: row)
@@ -1052,9 +1166,11 @@ extension SearchFlightResultVC: AppliedFilters{
         list.forEach { j in
             let similarFlights1 = similar(fare: Double(String(format: "%.2f", j.price?.api_total_display_fare ?? "")) ?? 0.0)
             
-            tablerow.append(TableRow(title:String(format: "%.2f", j.price?.api_total_display_fare_withoutmarkup ?? ""),
+            tablerow.append(TableRow(title:"\(j.price?.api_total_display_fare_withoutmarkup ?? 0.0)",
                                      subTitle: j.fareType ?? "",
-                                     price: String(format: "%.2f", j.price?.api_total_display_fare ?? ""),
+                                     price: "\(j.price?.api_total_display_fare ?? 0.0)",
+                                     //                                     bookingsource: j.booking_source,
+                                     //                                     bookingsourcekey: j.booking_source_key,
                                      key: "oneway",
                                      text: j.selectedResult ?? "",
                                      buttonTitle: j.aPICurrencyType ?? "",
@@ -1109,7 +1225,7 @@ extension SearchFlightResultVC:FlightListModelProtocal{
         
         if response.status == 1 {
             
-           
+            
             
             self.holderView.isHidden = false
             loderBool = false
@@ -1119,8 +1235,6 @@ extension SearchFlightResultVC:FlightListModelProtocal{
             holderView.backgroundColor = .AppHolderViewColor
             FlightList = response.data?.j_flight_list
             defaults.set(response.data?.search_id, forKey: UserDefaultsKeys.searchid)
-//            defaults.set(response.data?.booking_source, forKey: UserDefaultsKeys.bookingsource)
-//            defaults.set(response.data?.booking_source_key, forKey: UserDefaultsKeys.bookingsourcekey)
             defaults.set(response.data?.traceId, forKey: UserDefaultsKeys.traceId)
             
             
@@ -1155,6 +1269,7 @@ extension SearchFlightResultVC:FlightListModelProtocal{
             
             DispatchQueue.main.async {[self] in
                 setInputs()
+                appendPriceAndDate()
             }
         }else {
             
@@ -1195,6 +1310,7 @@ extension SearchFlightResultVC:FlightListModelProtocal{
             
             DispatchQueue.main.async {[self] in
                 setInputs()
+                appendPriceAndDate()
             }
             
         }else {
@@ -1211,7 +1327,6 @@ extension SearchFlightResultVC:FlightListModelProtocal{
     func setInputs(){
         
         setUpNav()
-        appendPriceAndDate()
         setupTV()
     }
     
@@ -1357,12 +1472,14 @@ extension SearchFlightResultVC {
         if let journeyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
             if journeyType == "multicity" {
                 MCJflightlist.map { i in
+                    
                     i.map { j in
+                        
                         j.map { k in
-                            
+                            faretypeArray.append(k.fareType ?? "")
                             k.flight_details?.summary.map({ l in
-                                kwdPriceArray.append(k.totalPrice_API ?? "")
-                                prices.append(k.totalPrice ?? "")
+                                
+                                prices.append("\(k.price?.api_total_display_fare ?? 0.0)")
                                 
                                 l.map { m in
                                     
@@ -1386,11 +1503,9 @@ extension SearchFlightResultVC {
             }else {
                 FlightList.map { i in
                     i.map { j in
+                        
                         j.map { k in
-                            
                             k.flight_details?.summary.map({ l in
-                                kwdPriceArray.append("\(k.totalPrice_API ?? 0.0)")
-                                prices.append("\(k.totalPrice ?? 0.0)")
                                 
                                 l.map { m in
                                     
@@ -1398,20 +1513,43 @@ extension SearchFlightResultVC {
                                     dateFormatter.dateFormat = "dd MMM yyyy"
                                     if let date = dateFormatter.date(from: "\(m.origin?.date ?? "")"){
                                         dateFormatter.dateFormat = "dd MMM"
-                                        let resultString = dateFormatter.string(from: date)
+                                        _ = dateFormatter.string(from: date)
                                         dateArray.append(dateFormatter.string(from: date))
                                     }
                                     
+                                    faretypeArray.append(k.fareType ?? "")
+                                    prices.append("\(k.price?.api_total_display_fare ?? 0.0)")
                                     AirlinesArray.append(m.operator_name ?? "")
-                                    ConnectingFlightsArray.append(m.operator_name ?? "")
-                                    ConnectingAirportsArray.append(m.destination?.airport_name ?? "")
-                                    luggageArray.append(convertToDesiredFormat(m.weight_Allowance ?? ""))
+                                    
+                                    if m.weight_Allowance != nil || m.weight_Allowance?.isEmpty == false {
+                                        luggageArray.append(convertToDesiredFormat(m.weight_Allowance ?? ""))
+                                    }
+                                    
+                                    
+                                    //                                    ConnectingFlightsArray.append(m.operator_name ?? "")
+                                    //                                    ConnectingAirportsArray.append(m.destination?.airport_name ?? "")
+                                    
                                     
                                 }
                             })
+                            
+                            k.flight_details?.details?.forEach({ a in
+                                a.forEach { b in
+                                    ConnectingFlightsArray.append(b.operator_name ?? "")
+                                    ConnectingAirportsArray.append(b.destination?.airport_name ?? "")
+                                }
+                            })
+                            
+                            
+                            
                         }
+                        
+                        
                     }
                 }
+                
+                
+                
             }
         }
         
@@ -1419,7 +1557,7 @@ extension SearchFlightResultVC {
         
         
         
-        kwdPriceArray = kwdPriceArray.unique()
+        faretypeArray = faretypeArray.unique()
         dateArray = dateArray.unique()
         AirlinesArray = AirlinesArray.unique()
         ConnectingFlightsArray = ConnectingFlightsArray.unique()

@@ -12,7 +12,7 @@ protocol SendUsMessageTVCellDelegate {
     func didTapOnSubmitBtn(cell:SendUsMessageTVCell)
     func didTapOnCountryCodeSelectBtn(cell:SendUsMessageTVCell)
     func textViewDidChange(textView:UITextView)
-
+    
 }
 
 class SendUsMessageTVCell: TableViewCell, UITextViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
@@ -81,9 +81,9 @@ class SendUsMessageTVCell: TableViewCell, UITextViewDelegate, UIPickerViewDataSo
         countryCodePicker.dataSource = self
         countryCodePicker.delegate = self
         countryCodeTF.inputView = countryCodePicker
-      //  countryCodeTF.text = countrylist[0].country_code
+        //  countryCodeTF.text = countrylist[0].country_code
         
-      
+        
     }
     
     func setupdescView() {
@@ -136,40 +136,7 @@ class SendUsMessageTVCell: TableViewCell, UITextViewDelegate, UIPickerViewDataSo
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return "\(countrylist[row].name ?? "")   \(countrylist[row].country_code ?? "")"
-      }
-    
-    
-    
-//    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
-//
-//        var returnLabel: UIView!
-//        var pickerLabel: UILabel!
-//        var pickerLabel2: UILabel!
-//
-//        if view == nil {
-//            returnLabel = UIView(frame: CGRectMake(0, 0, pickerView.frame.size.width, 60.0))
-//            pickerLabel = UILabel(frame: CGRectMake(0, 0, returnLabel.frame.size.width, 60.0 / 2))
-//            pickerLabel2 = UILabel(frame: CGRectMake(0, 60.0 / 2, returnLabel.frame.size.width, 60.0 / 2))
-//            returnLabel.addSubview(pickerLabel)
-//            returnLabel.addSubview(pickerLabel2)
-//        }
-//
-//        // title
-//        let titleData = countrylist
-//        let myTitle = NSAttributedString(string: titleData[row].name ?? "",
-//                                         attributes: [NSAttributedString.Key.font:UIFont.LatoRegular(size: 18),
-//                                                      NSAttributedString.Key.foregroundColor:UIColor.AppLabelColor])
-//        pickerLabel.attributedText = myTitle
-//        pickerLabel.textAlignment = .left
-//
-//        // subtitle
-//        let mySubtitleTitle = NSAttributedString(string: titleData[row].country_code ?? "",
-//                                                 attributes: [NSAttributedString.Key.font:UIFont.LatoRegular(size: 18),
-//                                                              NSAttributedString.Key.foregroundColor:UIColor.AppLabelColor])
-//        pickerLabel2.attributedText = mySubtitleTitle
-//        pickerLabel2.textAlignment = .left
-//        return returnLabel
-//    }
+    }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         self.countryCodeTF.text = countrylist[row].name ?? ""

@@ -30,6 +30,8 @@ class NewFlightSearchResultTVCell: TableViewCell {
     
     var key = ""
     var displayPrice = String()
+    var bsource = String()
+    var bsourcekey = String()
     var delegate:NewFlightSearchResultTVCellDelegate?
     var selectedResult = String()
     var newsimilarList = [[J_flight_list]]()
@@ -66,6 +68,8 @@ class NewFlightSearchResultTVCell: TableViewCell {
         selectedResult = cellInfo?.text ?? ""
         displayPrice = cellInfo?.price ?? ""
         
+        bsource = cellInfo?.bookingsource ?? ""
+        bsourcekey = cellInfo?.bookingsourcekey ?? ""
         
         if faretypelbl.text == "Refundable" {
             faretypelbl.textColor = .AppCalenderDateSelectColor
@@ -163,8 +167,6 @@ class NewFlightSearchResultTVCell: TableViewCell {
     }
     
     
-    
-    
 }
 
 
@@ -209,7 +211,13 @@ extension NewFlightSearchResultTVCell: UITableViewDelegate,UITableViewDataSource
             cell.fromCitylbl.text = "\(data.origin?.city ?? "")(\(data.origin?.loc ?? ""))"
             cell.toTimelbl.text = data.destination?.time ?? ""
             cell.toCitylbl.text = "\(data.destination?.city ?? "")(\(data.destination?.loc ?? ""))"
-            cell.cabinlbl.text = convertToDesiredFormat(data.weight_Allowance ?? "")
+            
+            
+            if data.weight_Allowance == "" || data.weight_Allowance == nil {
+                cell.cabinlbl.text = "0Kg"
+            }else {
+                cell.cabinlbl.text = convertToDesiredFormat(data.weight_Allowance ?? "")
+            }
             
             if key == "circle" {
                 if tableView.isLast(for: indexPath) == true {
@@ -250,7 +258,7 @@ extension NewFlightSearchResultTVCell {
         moreSimlarOptionlbl.isHidden = false
     }
     
-   
+    
     
     func setAttributedString1(str1:String,str2:String) {
         

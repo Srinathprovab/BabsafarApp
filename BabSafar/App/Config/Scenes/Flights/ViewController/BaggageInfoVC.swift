@@ -388,7 +388,7 @@ extension BaggageInfoVC {
         
         
         DispatchQueue.main.async {[self] in
-            callFareRulesAPI()
+           // callFareRulesAPI()
         }
         
         
@@ -409,6 +409,7 @@ extension BaggageInfoVC {
         payload.removeAll()
         payload["fare_rule_ref_key"] = farerulerefkey
         payload["farerulesref_content"] = farerulesrefcontent
+        
         fareruleViewModel?.CALL_GET_FARE_RULES_API(dictParam: payload)
     }
     

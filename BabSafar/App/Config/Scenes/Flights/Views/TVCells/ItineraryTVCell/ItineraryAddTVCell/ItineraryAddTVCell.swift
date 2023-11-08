@@ -32,7 +32,6 @@ class ItineraryAddTVCell: TableViewCell {
    
     override func updateUI() {
         depFind = Int(cellInfo?.title ?? "") ?? 0
-        print("depFinddepFinddepFind ==== \(depFind)")
         fdetais = cellInfo?.moreData as! [FDFlightDetails]
         tvHeight.constant = CGFloat((fdetais.count * 250))
         additneraryTV.reloadData()

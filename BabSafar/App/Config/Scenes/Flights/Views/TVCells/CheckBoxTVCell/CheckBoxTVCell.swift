@@ -33,6 +33,7 @@ class CheckBoxTVCell: TableViewCell {
     @IBOutlet weak var showMoreBtn: UIButton!
     
     
+    var timeArray = ["time1","time2","time3","time4"]
     var b = true
     var nameArray = [String]()
     var tvheight = CGFloat()
@@ -70,14 +71,7 @@ class CheckBoxTVCell: TableViewCell {
         tvHeight.constant = CGFloat(nameArray.count * 50)
         
         switch titlelbl.text {
-        case "Stops":
-            
-            break
-            
-        case "Airlines":
-            //   showMoreBtn.isHidden = false
-            break
-            
+        
             
         case "multicity":
             titlelbl.text = ""
@@ -108,6 +102,7 @@ class CheckBoxTVCell: TableViewCell {
         btnlbl.text = "+ Show More"
         btnlbl.textColor = .AppTabSelectColor
         btnlbl.font = UIFont.LatoRegular(size: 18)
+        btnlbl.isHidden = true
         
         downBtn.setTitle("", for: .normal)
         downBtn.addTarget(self, action: #selector(didTapOnCheckBoxDropDownBtn(_:)), for: .touchUpInside)
@@ -155,77 +150,63 @@ class CheckBoxTVCell: TableViewCell {
 }
 
 
-extension CheckBoxTVCell:UITableViewDataSource,UITableViewDelegate {
-    
-    
+
+extension CheckBoxTVCell: UITableViewDataSource, UITableViewDelegate {
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return nameArray.count
     }
-    
-    
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! checkOptionsTVCell
         cell.selectionStyle = .none
         cell.titlelbl.text = nameArray[indexPath.row]
         cell.filtertitle = self.titlelbl.text ?? ""
-        
-        
+
         // Check if this indexPath is in the selectedIndices array
         if selectedIndices.contains(indexPath) {
-            cell.sele()
+            cell.checkImg.image = UIImage(named: "chk")?.withRenderingMode(.alwaysOriginal)
         } else {
-            cell.unselected()
+            cell.checkImg.image = UIImage(named: "uncheck")?.withRenderingMode(.alwaysOriginal)
         }
-        
-        
+
+        // Explicitly set the cell's appearance here
+        cell.setSelected(selectedIndices.contains(indexPath), animated: false)
+
         if let tabselect = defaults.string(forKey: UserDefaultsKeys.dashboardTapSelected) {
             if tabselect == "Flights" {
                 showSelectedFlightsFilterValues(cell: cell, indexPath: indexPath)
-            }else {
+            } else {
                 showSelectedHotelFilterValues(cell: cell, indexPath: indexPath)
             }
         }
-        
-        
+
         return cell
     }
-    
-    
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath) as? checkOptionsTVCell {
-            cell.sele()
-            selectedIndices.append(indexPath)
-            
-            // Update your data source to reflect the selected state
-            // For example, if you're using filterModel:
-            filterModel.luggage.append(cell.titlelbl.text ?? "")
-            
+            if !selectedIndices.contains(indexPath) {
+                selectedIndices.append(indexPath)
+                cell.checkImg.image = UIImage(named: "chk")?.withRenderingMode(.alwaysOriginal)
+            }
             delegate?.didTapOnCheckBox(cell: cell)
         }
     }
-    
+
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath) as? checkOptionsTVCell {
-            cell.unselected()
             if let index = selectedIndices.firstIndex(of: indexPath) {
                 selectedIndices.remove(at: index)
-                
-                // Update your data source to reflect the deselected state
-                // For example, if you're using filterModel:
-                if let deselectedItem = cell.titlelbl.text {
-                    filterModel.luggage.removeAll { $0 == deselectedItem }
-                }
+                cell.checkImg.image = UIImage(named: "uncheck")?.withRenderingMode(.alwaysOriginal)
             }
-            
             delegate?.didTapOnDeselectCheckBox(cell: cell)
         }
-        
-        
     }
-    
-    
+}
+
+
+extension CheckBoxTVCell {
     
     //MARK: - showSelectedFlightsFilterValues checkOptionsTVCell
     
@@ -235,6 +216,63 @@ extension CheckBoxTVCell:UITableViewDataSource,UITableViewDelegate {
         
         // Check the section title to determine which filter to apply
         switch titlelbl.text {
+            
+            
+        case "Departurn Time":
+            if !filterModel.departureTime.isEmpty {
+                // Check if the cell's title matches any value in the luggage array
+                
+                
+                if filterModel.departureTime.contains(cell.titlelbl.text ?? "") {
+                    
+                    DispatchQueue.main.async {
+                        cell.checkImg.image = UIImage(named: "chk")?.withRenderingMode(.alwaysOriginal)
+                        self.selectedIndices.append(indexPath)
+                        self.checkOptionsTV.selectRow(at: indexPath, animated: true, scrollPosition: .none)
+                    }
+                    print("Selected: \(cell.titlelbl.text ?? "")")
+                } else {
+                    
+                    DispatchQueue.main.async {
+                        cell.checkImg.image = UIImage(named: "uncheck")?.withRenderingMode(.alwaysOriginal)
+                    }
+                    print("Deselected: \(cell.titlelbl.text ?? "")")
+                }
+            }else {
+                DispatchQueue.main.async {
+                    cell.unselected() // Deselect the cell
+                }
+            }
+            
+            
+            
+        case "Arrival Time":
+            if !filterModel.arrivalTime.isEmpty {
+                // Check if the cell's title matches any value in the luggage array
+                
+                
+                if filterModel.arrivalTime.contains(cell.titlelbl.text ?? "") {
+                    
+                    DispatchQueue.main.async {
+                        cell.checkImg.image = UIImage(named: "chk")?.withRenderingMode(.alwaysOriginal)
+                        self.selectedIndices.append(indexPath)
+                        self.checkOptionsTV.selectRow(at: indexPath, animated: true, scrollPosition: .none)
+                    }
+                    print("Selected: \(cell.titlelbl.text ?? "")")
+                } else {
+                    
+                    DispatchQueue.main.async {
+                        cell.checkImg.image = UIImage(named: "uncheck")?.withRenderingMode(.alwaysOriginal)
+                    }
+                    print("Deselected: \(cell.titlelbl.text ?? "")")
+                }
+            }else {
+                DispatchQueue.main.async {
+                    cell.unselected() // Deselect the cell
+                }
+            }
+            
+            
             
             
         case "No Overnight Flight":

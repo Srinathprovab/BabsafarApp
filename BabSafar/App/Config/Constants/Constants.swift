@@ -113,7 +113,8 @@ var filterModel = FlightFilterModel()
 var sortBy: SortParameter = .nothing
 var hotelfiltermodel = HotelFilterModel()
 var mapModelArray: [MapModel] = []
-
+var faretypeArray = [String]()
+var directFlightBool = true
 
 //MARK: - Profile details 
 var pdetails:ProfileDetails?
@@ -348,6 +349,7 @@ struct UserDefaultsKeys {
     static var searchid = "search_id"
     static var accesskey = "access_key"
     static var bookingsource = "booking_source"
+    static var selectedFareType = "fare_type"
     static var bookingsourcekey = "booking_source_key"
     static var selectedResult = "selectedResult"
     static var selectdFlightcellIndex = "selectdFlightcellIndex"

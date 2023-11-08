@@ -54,7 +54,7 @@ class SliderTVCell: TableViewCell, TTRangeSliderDelegate {
             downImg.isHidden = true
             expand()
         }
-    
+        
     }
     
     func setupUI() {
@@ -68,11 +68,10 @@ class SliderTVCell: TableViewCell, TTRangeSliderDelegate {
         setuplabels(lbl: maxlbl, text: "", textcolor: .AppLabelColor, font: .LatoSemibold(size: 16), align: .center)
         rangeSlider.isHidden = true
         rangeSlider.backgroundColor = .WhiteColor
-  
+        
+        
         setupInitivalues()
-
-        rangeSlider.minValue = prices.compactMap { Float($0) }.min() ?? 0.0
-        rangeSlider.maxValue = prices.compactMap { Float($0) }.max() ?? 100.0
+        
         
         
         // rangeSlider.step = 10
@@ -92,32 +91,57 @@ class SliderTVCell: TableViewCell, TTRangeSliderDelegate {
         
     }
     
-    
     func setupInitivalues() {
-        // Check if filterModel has values for minPriceRange and maxPriceRange
-        if let minPrice = hotelfiltermodel.minPriceRange, let maxPrice = hotelfiltermodel.maxPriceRange {
-            // Set the slider values manually
-            rangeSlider.selectedMinimum = Float(minPrice)
-            rangeSlider.selectedMaximum = Float(maxPrice)
-            minValue = Float(minPrice)
-            maxValue = Float(maxPrice)
-        } else {
-            // If no values are available in hotelfiltermodel, set default values
-            let pricesFloat = prices.compactMap { Float($0) }
-            minValue = pricesFloat.min() ?? 0.0
-            maxValue = pricesFloat.max() ?? 100.0 // Set default max value
-            // Set the thumbs to the default values
-            rangeSlider.selectedMinimum = minValue
-            rangeSlider.selectedMaximum = maxValue
+        if let selectedTap = defaults.object(forKey: UserDefaultsKeys.dashboardTapSelected) as? String {
+            if selectedTap == "Flights" {
+                if let minPrice = filterModel.minPriceRange, let maxPrice = filterModel.maxPriceRange {
+                    // Both minPrice and maxPrice have values in filterModel
+                    minValue = Float(minPrice)
+                    maxValue = Float(maxPrice)
+                    
+                    
+                    rangeSlider.minValue = prices.compactMap { Float($0) }.min()!
+                    rangeSlider.maxValue = prices.compactMap { Float($0) }.max()!
+                    
+                    // Set the thumbs to the values
+                    rangeSlider.selectedMinimum = minValue
+                    rangeSlider.selectedMaximum = maxValue
+                    
+                    //  Update the slider's appearance
+                    rangeSlider.setNeedsDisplay()
+                }
+                
+                
+            } else {
+                if let minPrice = hotelfiltermodel.minPriceRange, let maxPrice = hotelfiltermodel.maxPriceRange {
+                    // Both minPrice and maxPrice have values in filterModel
+                    minValue = Float(minPrice)
+                    maxValue = Float(maxPrice)
+                    
+                    
+                    rangeSlider.minValue = prices.compactMap { Float($0) }.min()!
+                    rangeSlider.maxValue = prices.compactMap { Float($0) }.max()!
+                    
+                    // Set the thumbs to the values
+                    rangeSlider.selectedMinimum = minValue
+                    rangeSlider.selectedMaximum = maxValue
+                    
+                    //  Update the slider's appearance
+                    rangeSlider.setNeedsDisplay()
+                }
+                
+            }
         }
-
+        
         // Update labels and other UI elements as needed
         minValue1 = Double(String(format: "%.2f", Double(minValue))) ?? 0.0
         maxValue1 = Double(String(format: "%.2f", Double(maxValue))) ?? 100.0 // Update the default max value here
         minlbl.text = "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? "") \(minValue1)"
         maxlbl.text = "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? "") \(maxValue1)"
-
+        
+        
     }
+    
     
     
     func setupViews(v:UIView,radius:CGFloat,color:UIColor) {

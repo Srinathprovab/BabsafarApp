@@ -16,6 +16,7 @@ class TermsPopupVC: BaseTableVC {
     
     var titlestr = String()
     var disc:Hotel_desc?
+    var hotel_desc = String()
     var tablerow = [TableRow]()
     
     static var newInstance: TermsPopupVC? {
@@ -27,6 +28,7 @@ class TermsPopupVC: BaseTableVC {
     
     override func viewWillAppear(_ animated: Bool) {
         print(titlestr)
+        
     }
     
     override func viewDidLoad() {

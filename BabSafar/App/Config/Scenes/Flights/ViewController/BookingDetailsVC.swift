@@ -81,8 +81,6 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
     var grand_total_Price = String()
     
     
-    
-    
     //MARK: -  LOADING FUNCTIONS
     
     
@@ -124,7 +122,7 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
         if screenHeight < 835 {
             navheight.constant = 90
         }
-      //  bookNowlbl.text = totalPrice1
+        //  bookNowlbl.text = totalPrice1
         tablerow.removeAll()
         checkOptionCountArray.removeAll()
         
@@ -248,7 +246,7 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
         }
         
         
-      
+        
         
         tablerow.append(TableRow(cellType:.ContactInformationTVCell))
         tablerow.append(TableRow(cellType:.UsePromoCodesTVCell))
@@ -266,8 +264,10 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
     
     
     @objc func didTapOnBackButton(_ sender:UIButton) {
-        callapibool = false
-        dismiss(animated: true)
+        //        callapibool = false
+        //        dismiss(animated: true)
+        
+        searchWithsameInputs()
     }
     
     func gotoPopupScreen() {
@@ -304,7 +304,7 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
     }
     
     
-   
+    
     
     
     //MARK: - didTapOnInsureSkipButton TravelInsuranceTVCell
@@ -448,52 +448,52 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
     
     //MARK: - did Tap On T&C Action
     
-//    override func didTapOnTAndCAction(cell: AcceptTermsAndConditionTVCell) {
-//        payload.removeAll()
-//        BASE_URL = ""
-//        payload["id"] = "3"
-//        moreDeatilsViewModel?.CALL_GET_TERMSANDCONDITION_API(dictParam: payload, url: "https://provabdevelopment.com/pro_new/mobile/index.php/general/cms")
-//    }
-//
-//    func termsandcobditionDetails(response: AboutUsModel) {
-//        gotoAboutUsVC(title: response.data?.page_title ?? "", desc: response.data?.page_description ?? "")
-//    }
-//
-//    func contactDetals(response: ContactUsModel) {
-//
-//    }
-//
-//    func aboutusDetails(response: AboutUsModel) {
-//
-//    }
-//
-//
-//
-//    //MARK: - did Tap On Privacy Policy Action
-//    override func didTapOnPrivacyPolicyAction(cell: AcceptTermsAndConditionTVCell) {
-//        payload.removeAll()
-//        BASE_URL = ""
-//        payload["id"] = "4"
-//        moreDeatilsViewModel?.CALL_GET_PRIVICYPOLICY_API(dictParam: payload, url: "https://provabdevelopment.com/pro_new/mobile/index.php/general/cms")
-//    }
-//
-//
-//    func privacyPolicyDetails(response: AboutUsModel) {
-//        gotoAboutUsVC(title: response.data?.page_title ?? "", desc: response.data?.page_description ?? "")
-//    }
-//
-//
-//    //MARK: - Load URLS of T&C And Privacy Policy
-//
-//    func gotoAboutUsVC(title:String,desc:String) {
-//        guard let vc = AboutUsVC.newInstance.self else {return}
-//        vc.titleString = title
-//        vc.key1 = "webviewhide"
-//        vc.desc = desc
-//        vc.modalPresentationStyle = .fullScreen
-//        self.present(vc, animated: true)
-//
-//    }
+    //    override func didTapOnTAndCAction(cell: AcceptTermsAndConditionTVCell) {
+    //        payload.removeAll()
+    //        BASE_URL = ""
+    //        payload["id"] = "3"
+    //        moreDeatilsViewModel?.CALL_GET_TERMSANDCONDITION_API(dictParam: payload, url: "https://provabdevelopment.com/pro_new/mobile/index.php/general/cms")
+    //    }
+    //
+    //    func termsandcobditionDetails(response: AboutUsModel) {
+    //        gotoAboutUsVC(title: response.data?.page_title ?? "", desc: response.data?.page_description ?? "")
+    //    }
+    //
+    //    func contactDetals(response: ContactUsModel) {
+    //
+    //    }
+    //
+    //    func aboutusDetails(response: AboutUsModel) {
+    //
+    //    }
+    //
+    //
+    //
+    //    //MARK: - did Tap On Privacy Policy Action
+    //    override func didTapOnPrivacyPolicyAction(cell: AcceptTermsAndConditionTVCell) {
+    //        payload.removeAll()
+    //        BASE_URL = ""
+    //        payload["id"] = "4"
+    //        moreDeatilsViewModel?.CALL_GET_PRIVICYPOLICY_API(dictParam: payload, url: "https://provabdevelopment.com/pro_new/mobile/index.php/general/cms")
+    //    }
+    //
+    //
+    //    func privacyPolicyDetails(response: AboutUsModel) {
+    //        gotoAboutUsVC(title: response.data?.page_title ?? "", desc: response.data?.page_description ?? "")
+    //    }
+    //
+    //
+    //    //MARK: - Load URLS of T&C And Privacy Policy
+    //
+    //    func gotoAboutUsVC(title:String,desc:String) {
+    //        guard let vc = AboutUsVC.newInstance.self else {return}
+    //        vc.titleString = title
+    //        vc.key1 = "webviewhide"
+    //        vc.desc = desc
+    //        vc.modalPresentationStyle = .fullScreen
+    //        self.present(vc, animated: true)
+    //
+    //    }
     
     
     
@@ -532,7 +532,7 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
             if traveler.dob == nil || traveler.dob?.isEmpty == true{
                 callpaymentbool = false
             }
-           
+            
             if traveler.passportno == nil || traveler.passportno?.isEmpty == true{
                 callpaymentbool = false
             }
@@ -597,7 +597,7 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
                     // Textfield is not empty
                 }
                 
-            
+                
                 if cell.passportnoTF.text?.isEmpty == true {
                     // Textfield is empty
                     cell.passportnoView.layer.borderColor = UIColor.red.cgColor
@@ -638,7 +638,7 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
         //   let nationalityArray = travelerArray.compactMap({$0.nationality})
         let passportIssuingCountryArray = travelerArray.compactMap({$0.passportIssuingCountry})
         let passportExpireDateArray = travelerArray.compactMap({$0.passportExpireDate})
-       // let passengertypeArray = travelerArray.compactMap({$0.passengertype})
+        // let passengertypeArray = travelerArray.compactMap({$0.passengertype})
         
         
         // Convert arrays to string representations
@@ -774,7 +774,7 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
         
     }
     
-
+    
     
     
     func mobilePreBookingModelDetails(response: MobilePreBookingModel) {
@@ -992,7 +992,7 @@ extension BookingDetailsVC {
         payload["selectedResult"] = defaults.string(forKey: UserDefaultsKeys.selectedResult)
         payload["booking_source"] = defaults.string(forKey: UserDefaultsKeys.bookingsourcekey)
         payload["user_id"] = defaults.string(forKey: UserDefaultsKeys.userid) ?? 0
-        payload["traceId"] = defaults.string(forKey: UserDefaultsKeys.traceId) ?? 0
+        // payload["traceId"] = defaults.string(forKey: UserDefaultsKeys.traceId) ?? 0
         mbviewmodel?.CALLPREPROCESSINGBOOKINGAPI(dictParam: payload)
     }
     
@@ -1012,9 +1012,14 @@ extension BookingDetailsVC {
         appreference = response.pre_booking_params?.transaction_id ?? ""
         frequent_flyersArray = response.frequent_flyers ?? []
         
-        totalAmountforBooking = response.flight_data?[0].totalPrice ?? "0.0"
-        mbSummery = response.flight_data?[0].flight_details?.summery ?? []
-        mbRefundable = response.flight_data?[0].fareType ?? ""
+        DispatchQueue.main.async {
+            mbSummery = response.flight_data?[0].flightDetails?.summery ?? []
+        }
+        
+        
+        mbRefundable = defaults.string(forKey: UserDefaultsKeys.selectedFareType) ?? "Non Refundable"
+        
+        
         
         let i = response.pre_booking_params?.priceDetails
         Adults_Base_Price = String(i?.adultsBasePrice ?? "0.0")
@@ -1031,6 +1036,7 @@ extension BookingDetailsVC {
         sub_total_infant = i?.sub_total_infant ?? "0"
         
         grand_total_Price = i?.grand_total ?? ""
+        totalAmountforBooking = i?.grand_total ?? ""
         
         setAttributedTextnew(str1: "\(i?.api_currency ?? "")",
                              str2: "\(i?.grand_total ?? "")",
@@ -1042,8 +1048,8 @@ extension BookingDetailsVC {
         
         
         TimerManager.shared.stopTimer()
-        TimerManager.shared.setTotalTime(900)
-        TimerManager.shared.startTimer()
+        TimerManager.shared.startTimer(time: 900)
+        
         
         DispatchQueue.main.async {
             self.setupTV()
@@ -1071,7 +1077,7 @@ extension BookingDetailsVC {
         NotificationCenter.default.addObserver(self, selector: #selector(reload), name: Notification.Name("reload"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadAfterLogin), name: NSNotification.Name("reloadAfterLogin"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadTV), name: Notification.Name("reloadTV"), object: nil)
-
+        
     }
     
     
@@ -1114,7 +1120,7 @@ extension BookingDetailsVC {
     
     //MARK: - updateTimer
     func updateTimer() {
-        let totalTime = TimerManager.shared.getTotalTime()
+        let totalTime = TimerManager.shared.totalTime
         let minutes =  totalTime / 60
         let seconds = totalTime % 60
         let formattedTime = String(format: "%02d:%02d", minutes, seconds)
@@ -1125,4 +1131,132 @@ extension BookingDetailsVC {
     
     
     
+}
+
+
+extension BookingDetailsVC {
+    
+    func searchWithsameInputs() {
+        payload.removeAll()
+        loderBool = true
+        
+        
+        if let journeyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
+            if journeyType == "oneway" {
+                
+                payload["trip_type"] = defaults.string(forKey:UserDefaultsKeys.journeyType)
+                payload["adult"] = defaults.string(forKey:UserDefaultsKeys.adultCount)
+                payload["child"] = defaults.string(forKey:UserDefaultsKeys.childCount)
+                payload["infant"] = defaults.string(forKey:UserDefaultsKeys.infantsCount)
+                payload["v_class"] = defaults.string(forKey:UserDefaultsKeys.selectClass)
+                payload["sector_type"] = "international"
+                payload["from"] = defaults.string(forKey:UserDefaultsKeys.fromCity)
+                payload["from_loc_id"] = defaults.string(forKey:UserDefaultsKeys.fromlocid)
+                payload["to"] = defaults.string(forKey:UserDefaultsKeys.toCity)
+                payload["to_loc_id"] = defaults.string(forKey:UserDefaultsKeys.tolocid)
+                payload["depature"] = defaults.string(forKey:UserDefaultsKeys.calDepDate)
+                payload["return"] = ""
+                payload["out_jrn"] = "All Times"
+                payload["ret_jrn"] = "All Times"
+                payload["carrier"] = ""
+                payload["psscarrier"] = "ALL"
+                payload["search_flight"] = "Search"
+                payload["user_id"] = defaults.string(forKey:UserDefaultsKeys.userid) ?? "0"
+                payload["currency"] = defaults.string(forKey:UserDefaultsKeys.selectedCurrency) ?? "KWD"
+                
+                if directFlightBool == false {
+                    payload["direct_flight"] = "on"
+                }
+                
+                
+                if defaults.string(forKey:UserDefaultsKeys.fromCity) == "Select City" || defaults.string(forKey:UserDefaultsKeys.fromCity) == nil{
+                    showToast(message: "Please Select From City")
+                }else if defaults.string(forKey:UserDefaultsKeys.toCity) == "Select City" || defaults.string(forKey:UserDefaultsKeys.toCity) == nil{
+                    showToast(message: "Please Select To City")
+                }else if defaults.string(forKey:UserDefaultsKeys.toCity) == defaults.string(forKey:UserDefaultsKeys.fromCity) {
+                    showToast(message: "Please Select Different Citys")
+                }else if defaults.string(forKey:UserDefaultsKeys.calDepDate) == "+ Add Departure Date" || defaults.string(forKey:UserDefaultsKeys.calDepDate) == nil{
+                    showToast(message: "Please Select Departure Date")
+                }
+                else if defaults.string(forKey:UserDefaultsKeys.travellerDetails) == "Add Details" {
+                    showToast(message: "Add Traveller")
+                }else if defaults.string(forKey:UserDefaultsKeys.selectClass) == "Add Details" {
+                    showToast(message: "Add Class")
+                }else if checkDepartureAndReturnDates1(payload, p1: "depature") == false {
+                    showToast(message: "Invalid Date")
+                }else{
+                    gotoSearchFlightResultVC(payload33: payload)
+                }
+                
+            }else {
+                
+                
+                payload["trip_type"] = defaults.string(forKey:UserDefaultsKeys.journeyType)
+                payload["adult"] = defaults.string(forKey:UserDefaultsKeys.radultCount)
+                payload["child"] = defaults.string(forKey:UserDefaultsKeys.rchildCount)
+                payload["infant"] = defaults.string(forKey:UserDefaultsKeys.rinfantsCount)
+                payload["v_class"] = defaults.string(forKey:UserDefaultsKeys.rselectClass)
+                payload["sector_type"] = "international"
+                
+                payload["from"] = defaults.string(forKey:UserDefaultsKeys.fromCity)
+                payload["from_loc_id"] = defaults.string(forKey:UserDefaultsKeys.fromlocid)
+                payload["to"] = defaults.string(forKey:UserDefaultsKeys.toCity)
+                payload["to_loc_id"] = defaults.string(forKey:UserDefaultsKeys.tolocid)
+                
+                payload["depature"] = defaults.string(forKey:UserDefaultsKeys.rcalDepDate)
+                payload["return"] = defaults.string(forKey:UserDefaultsKeys.rcalRetDate)
+                payload["out_jrn"] = "All Times"
+                payload["ret_jrn"] = "All Times"
+                payload["carrier"] = ""
+                payload["psscarrier"] = "ALL"
+                payload["search_flight"] = "Search"
+                payload["user_id"] = defaults.string(forKey:UserDefaultsKeys.userid) ?? "0"
+                payload["currency"] = defaults.string(forKey:UserDefaultsKeys.selectedCurrency) ?? "KWD"
+                
+                if directFlightBool == false {
+                    payload["direct_flight"] = "on"
+                }
+                
+                if defaults.string(forKey:UserDefaultsKeys.fromCity) == "Select City" || defaults.string(forKey:UserDefaultsKeys.fromCity) == nil{
+                    showToast(message: "Please Select From City")
+                }else if defaults.string(forKey:UserDefaultsKeys.toCity) == "Select City" || defaults.string(forKey:UserDefaultsKeys.toCity) == nil{
+                    showToast(message: "Please Select To City")
+                }else if defaults.string(forKey:UserDefaultsKeys.toCity) == defaults.string(forKey:UserDefaultsKeys.fromCity) {
+                    showToast(message: "Please Select Different Citys")
+                }else if defaults.string(forKey:UserDefaultsKeys.rcalDepDate) == "+ Add Departure Date" || defaults.string(forKey:UserDefaultsKeys.rcalDepDate) == nil{
+                    showToast(message: "Please Select Departure Date")
+                }else if defaults.string(forKey:UserDefaultsKeys.rcalRetDate) == "+ Add Departure Date" || defaults.string(forKey:UserDefaultsKeys.rcalRetDate) == nil{
+                    showToast(message: "Please Select Return Date")
+                }else if defaults.string(forKey:UserDefaultsKeys.rcalDepDate) == defaults.string(forKey:UserDefaultsKeys.rcalRetDate) {
+                    showToast(message: "Please Select Different Dates")
+                }
+                else if defaults.string(forKey:UserDefaultsKeys.rtravellerDetails) == nil {
+                    showToast(message: "Add Traveller")
+                }else if defaults.string(forKey:UserDefaultsKeys.rselectClass) == nil {
+                    showToast(message: "Add Class")
+                }else if defaults.string(forKey:UserDefaultsKeys.fromCity) == defaults.string(forKey:UserDefaultsKeys.toCity) {
+                    showToast(message: "Please Select Different Citys")
+                }else if checkDepartureAndReturnDates(payload, p1: "depature", p2: "return") == false {
+                    showToast(message: "Invalid Date")
+                }else{
+                    gotoSearchFlightResultVC(payload33: payload)
+                }
+                
+            }
+        }
+        
+        
+    }
+    
+    
+    
+    func gotoSearchFlightResultVC(payload33:[String:Any]) {
+        guard let vc = SearchFlightResultVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .fullScreen
+        defaults.set(false, forKey: "flightfilteronce")
+        vc.isFromVc = "searchvc"
+        callapibool = true
+        vc.payload = payload33
+        self.present(vc, animated: true)
+    }
 }

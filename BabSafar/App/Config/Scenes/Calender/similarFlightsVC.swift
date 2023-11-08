@@ -114,6 +114,10 @@ class similarFlightsVC: BaseTableVC {
     //MARK: - didTapOnFlightDetailsBtnAction NewFlightSearchResultTVCell
     override func didTapOnFlightDetailsBtnAction(cell: NewFlightSearchResultTVCell) {
         defaults.set(cell.selectedResult, forKey: UserDefaultsKeys.selectedResult)
+        
+        defaults.set(cell.bsource, forKey: UserDefaultsKeys.bookingsource)
+        defaults.set(cell.bsourcekey, forKey: UserDefaultsKeys.bookingsourcekey)
+        
         gotoBaggageInfoVC()
     }
     

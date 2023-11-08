@@ -36,6 +36,7 @@ class HotelsTVCell: TableViewCell {
     var lat = String()
     var long = String()
     var hotelDesc :Hotel_desc?
+    var hotel_DescLabel = String()
     var facilityArray = [HFacility]()
     var hotelDescLabel = String()
     var delegate:HotelsTVCellelegate?

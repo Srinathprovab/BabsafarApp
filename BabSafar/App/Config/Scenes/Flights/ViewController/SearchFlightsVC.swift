@@ -45,7 +45,7 @@ class SearchFlightsVC: BaseTableVC {
     var c2 = String()
     var checkBoxArray = ["Return journey from another location"," Direct flights only"]
     var checkBool = true
-    var directFlightBool = true
+  
     var selectArray = [String]()
     var selectArray1 = [String]()
     var moreoptionBool = true
@@ -454,7 +454,7 @@ class SearchFlightsVC: BaseTableVC {
     override func didTapOnSearchFlightBtnAction(cell: SearchFlightsTVCell) {
         payload.removeAll()
         loderBool = true
-        NotificationCenter.default.post(name: NSNotification.Name("resetallFilters"), object: nil)
+       
         
         if let journeyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
             if journeyType == "oneway" {
@@ -568,6 +568,7 @@ class SearchFlightsVC: BaseTableVC {
     func gotoSearchFlightResultVC(payload33:[String:Any]) {
         guard let vc = SearchFlightResultVC.newInstance.self else {return}
         vc.modalPresentationStyle = .fullScreen
+        defaults.set(false, forKey: "flightfilteronce")
         vc.isFromVc = "searchvc"
         callapibool = true
         vc.payload = payload33
