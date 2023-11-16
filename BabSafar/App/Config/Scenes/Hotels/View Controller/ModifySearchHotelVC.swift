@@ -98,6 +98,8 @@ class ModifySearchHotelVC: BaseTableVC {
     }
     
     override func didTapOnSearchHotelBtn(cell: SearchHotelTVCell) {
+        
+        
         NotificationCenter.default.post(name: NSNotification.Name("resetallFilters"), object: nil)
         payload.removeAll()
         payload["city"] = defaults.string(forKey: UserDefaultsKeys.locationcity)

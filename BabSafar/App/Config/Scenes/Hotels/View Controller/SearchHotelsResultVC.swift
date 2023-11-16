@@ -11,7 +11,6 @@ import DropDown
 class SearchHotelsResultVC: BaseTableVC, UITextFieldDelegate, HotelSearchViewModelDelegate {
     
     
-    
     @IBOutlet weak var holderView: UIView!
     @IBOutlet weak var navView: NavBar!
     @IBOutlet weak var navHeight: NSLayoutConstraint!
@@ -23,24 +22,19 @@ class SearchHotelsResultVC: BaseTableVC, UITextFieldDelegate, HotelSearchViewMod
     @IBOutlet weak var filterImg: UIImageView!
     @IBOutlet weak var filterlbl: UILabel!
     @IBOutlet weak var filterBtn: UIButton!
-    //    @IBOutlet weak var dropupimg: UIImageView!
-    //    @IBOutlet weak var moveUpBtn: UIButton!
-    //    @IBOutlet weak var hiddenView: UIView!
-    
-    
-    
+   
     let dropDown = DropDown()
     var lastContentOffset: CGFloat = 0
     var tablerow = [TableRow]()
     var filtered = [HotelSearchResult]()
     var isSearchBool = false
     var searchText = String()
-    let refreshControl = UIRefreshControl()
     var isvcfrom = String()
     var payload = [String:Any]()
     var payload1 = [String:Any]()
     var countrycode = String()
     var isLoadingData = false
+    var bsDataArray = [ABSData]()
     var viewModel:HotelSearchViewModel?
     
     static var newInstance: SearchHotelsResultVC? {
@@ -56,7 +50,7 @@ class SearchHotelsResultVC: BaseTableVC, UITextFieldDelegate, HotelSearchViewMod
         
         if callapibool == true{
             holderView.isHidden = true
-            callAPI()
+            callActiveBookingSourceAPI()
         }
     }
     
@@ -80,32 +74,16 @@ class SearchHotelsResultVC: BaseTableVC, UITextFieldDelegate, HotelSearchViewMod
         
         // Do any additional setup after loading the view.
         setupinitialView()
-        setupRefreshControl()
         viewModel = HotelSearchViewModel(self)
         //setuptv()
         
     }
     
     //MARK: - setupRefreshControl
-    func setupRefreshControl(){
-        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
-        refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
-        commonTableView.addSubview(refreshControl) // not required when using UITableViewController
-    }
-    
-    
-    @objc func refresh(_ sender: AnyObject) {
-        // Code to refresh table v
-        isSearchBool = false
-        commonTableView.reloadData()
-        let seconds = 2.0
-        DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
-            // Put your code which should be executed with a delay here
-            self.refreshControl.endRefreshing()
-        }
-    }
-    
+   
     func setupUI() {
+        
+     //   self.holderView.backgroundColor = .appb
         navView.titlelbl.text = ""
         navView.filterBtnView.isHidden = false
         navView.backBtn.addTarget(self, action: #selector(didTapOnBackBtn(_:)), for: .touchUpInside)
@@ -367,8 +345,24 @@ class SearchHotelsResultVC: BaseTableVC, UITextFieldDelegate, HotelSearchViewMod
 
 extension SearchHotelsResultVC {
     
+   
+    func callActiveBookingSourceAPI() {
+        viewModel?.CALL_GET_ACTIVE_BOOKING_SOURCE_API(dictParam: [:])
+    }
     
-    func callAPI() {
+    func activebookingSourceResult(response: ActiveBookingSourceModel) {
+        
+        bsDataArray = response.data ?? []
+        let seconds = 1.0
+        DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {[self] in
+            callHotelPreSearchAPI()
+        }
+    }
+    
+    
+    
+    
+    func callHotelPreSearchAPI() {
         
         loderBool = true
         do {
@@ -377,15 +371,39 @@ extension SearchHotelsResultVC {
             let theJSONText = NSString(data: arrJson, encoding: String.Encoding.utf8.rawValue)
             print(theJSONText ?? "")
             payload1["search_params"] = theJSONText
-            payload1["offset"] = "0"
-            payload1["limit"] = "10"
+           
             
-            viewModel?.CallHotelSearchAPI(dictParam: payload1)
+            viewModel?.CallHotelPreSearchAPI(dictParam: payload1)
             
         }catch let error as NSError{
             print(error.description)
         }
         
+    }
+    
+    func hoteSearchPreResult(response: HotelSearchNewModel) {
+        
+        bsDataArray.forEach { i in
+            
+            let seconds = 1.0
+            DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {[self] in
+                callHotelSearchAPI(bookingsource: i.source_id ?? "",
+                                      searchid: "\(response.search_id ?? 0)")
+            }
+            
+        }
+       
+    }
+    
+    
+    func callHotelSearchAPI(bookingsource:String,searchid:String){
+        payload.removeAll()
+        payload["offset"] = "0"
+        payload["limit"] = "10"
+        payload["booking_source"] = bookingsource
+        payload["search_id"] = searchid
+        
+        viewModel?.CallHotelSearchAPI(dictParam: payload)
     }
     
     
@@ -395,6 +413,7 @@ extension SearchHotelsResultVC {
         longArray.removeAll()
         prices.removeAll()
         mapModelArray.removeAll()
+        hotelSearchResult.removeAll()
         
         navView.isHidden = false
         filterBtnView.isHidden = false
@@ -403,13 +422,13 @@ extension SearchHotelsResultVC {
         loderBool = false
         holderView.isHidden = false
         
-        hotelSearchId = String(response.search_id ?? 0)
-        hsearchid = String(response.search_id ?? 0)
+        hotelSearchId = (response.search_id ?? "0")
+        hsearchid = (response.search_id ?? "0")
         hbookingsource = response.data?.hotelSearchResult?[0].booking_source ?? ""
         hotelSearchResult = response.data?.hotelSearchResult ?? []
         //   hotel_filtersumry = response.filter_sumry
+       // hotelSearchResult.append(response.data?.hotelSearchResult ?? [])
         
-       
         
         response.data?.hotelSearchResult?.forEach { i in
             prices.append(i.price ?? "")
@@ -466,7 +485,7 @@ extension SearchHotelsResultVC {
                 
                 cell.hotelNamelbl.text = dict.name
                 cell.hotelImg.sd_setImage(with: URL(string: dict.image ?? ""), placeholderImage:UIImage(contentsOfFile:"placeholder.png"))
-                cell.ratingslbl.text = String(dict.star_rating ?? "0")
+                cell.ratingslbl.text = String(dict.star_rating ?? 0)
                 cell.locationlbl.text = dict.address
                 setAttributedText1(str1: dict.currency ?? "", str2: dict.price ?? "", lbl: cell.kwdlbl)
                 cell.bookingsource = dict.booking_source ?? ""
@@ -479,12 +498,12 @@ extension SearchHotelsResultVC {
                 
                 
                 cell.hotel_DescLabel = dict.hotel_desc ?? "bbbbb"
-//                if let hotel_desc = dict.hotel_desc{
-//                    cell.hotelDescLabel = hotel_desc
-//                } else {
-//                    // Handle the case when facility is empty or nil
-//                    print("hotel_desc array is empty or nil")
-//                }
+                //                if let hotel_desc = dict.hotel_desc{
+                //                    cell.hotelDescLabel = hotel_desc
+                //                } else {
+                //                    // Handle the case when facility is empty or nil
+                //                    print("hotel_desc array is empty or nil")
+                //                }
                 
                 if let facilities = dict.facility, !facilities.isEmpty {
                     cell.facilityArray = facilities
@@ -505,7 +524,7 @@ extension SearchHotelsResultVC {
                 
                 cell.hotelNamelbl.text = dict.name
                 cell.hotelImg.sd_setImage(with: URL(string: dict.image ?? ""), placeholderImage:UIImage(contentsOfFile:"placeholder.png"))
-                cell.ratingslbl.text = String(dict.star_rating ?? "0")
+                cell.ratingslbl.text = String(dict.star_rating ?? 0)
                 cell.locationlbl.text = dict.address
                 setAttributedText1(str1: dict.currency ?? "", str2: dict.price ?? "", lbl: cell.kwdlbl)
                 cell.bookingsource = dict.booking_source ?? ""
@@ -517,12 +536,12 @@ extension SearchHotelsResultVC {
                 
                 
                 cell.hotel_DescLabel = dict.hotel_desc ?? "bbbbb"
-//                if let hotel_desc = dict.hotel_desc{
-//                    cell.hotelDescLabel = hotel_desc
-//                } else {
-//                    // Handle the case when facility is empty or nil
-//                    print("hotel_desc array is empty or nil")
-//                }
+                //                if let hotel_desc = dict.hotel_desc{
+                //                    cell.hotelDescLabel = hotel_desc
+                //                } else {
+                //                    // Handle the case when facility is empty or nil
+                //                    print("hotel_desc array is empty or nil")
+                //                }
                 
                 if let facilities = dict.facility, !facilities.isEmpty {
                     cell.facilityArray = facilities
@@ -583,7 +602,7 @@ extension SearchHotelsResultVC {
     
     func hoteSearchPagenationResult(response: HotelSearchModel) {
         
-       
+        
         response.data?.hotelSearchResult?.forEach { i in
             prices.append(i.price ?? "")
             let mapModel = MapModel(
@@ -652,7 +671,7 @@ extension SearchHotelsResultVC:AppliedFilters{
             guard let netPrice = Double(hotel.price ?? "0.0") else { return false }
             
             // Check if the hotel's star rating matches the selected star rating or is empty
-            let ratingMatches = starRating.isEmpty || String(hotel.star_rating ?? "0") == starRating
+            let ratingMatches = starRating.isEmpty || String(hotel.star_rating ?? 0) == starRating
             
             // Check if the hotel's refund type matches any selected refundable types or the array is empty
             let refundableMatch = refundableTypeArray.isEmpty || refundableTypeArray.contains(hotel.refund ?? "")
@@ -760,9 +779,7 @@ extension SearchHotelsResultVC {
     
     
     @objc func reload() {
-        DispatchQueue.main.async {[self] in
-            callAPI()
-        }
+        commonTableView.reloadData()
     }
     
     //MARK: - resultnil

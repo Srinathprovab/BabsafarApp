@@ -261,7 +261,7 @@ class AddDeatilsOfTravellerTVCell: TableViewCell {
         setupView(v: passportnoView)
         setupView(v: issuecountryView)
         setupView(v: passportexpireView)
-       
+        
         passportIssuingCountryTF.addTarget(self, action: #selector(searchTextChanged(textField:)), for: .editingChanged)
         
     }
@@ -278,7 +278,7 @@ class AddDeatilsOfTravellerTVCell: TableViewCell {
     
     
     @objc func didTapOnPassportIssuingCountrySelectBtnAction(_ sender:UIButton) {
-       // dropDown1.show()
+        // dropDown1.show()
     }
     
     @objc func didTapOnPassportNationalitySelectBtnAction(_ sender:UIButton) {
@@ -407,7 +407,7 @@ class AddDeatilsOfTravellerTVCell: TableViewCell {
             self?.issuecountryView.layer.borderColor = UIColor.AppBorderColor.cgColor
             self?.passportExpireDateTF.becomeFirstResponder()
             
-          //  self?.delegate?.didTapOnSelectIssuingCountryBtn(cell: self!)
+            //  self?.delegate?.didTapOnSelectIssuingCountryBtn(cell: self!)
         }
         
     }
@@ -530,9 +530,9 @@ class AddDeatilsOfTravellerTVCell: TableViewCell {
                 showdobDatePicker()
             }
         }
-       
+        
         else if textField == passportIssuingCountryTF {
-           loadCountryNamesAndCode()
+            loadCountryNamesAndCode()
         }
     }
     
@@ -632,7 +632,7 @@ class AddDeatilsOfTravellerTVCell: TableViewCell {
             dropDown1.dataSource = countryNames
         }
         
-      
+        
         
     }
     
@@ -657,10 +657,32 @@ class AddDeatilsOfTravellerTVCell: TableViewCell {
 extension AddDeatilsOfTravellerTVCell {
     override func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
-        let currentString: NSString = (textField.text ?? "") as NSString
-        let newString: NSString =  currentString.replacingCharacters(in: range, with: string) as NSString
         
-        return newString.length <= maxLength
+        if textField == passportnoTF {
+            
+            // Define a character set that includes numbers and alphabets
+            let allowedCharacterSet = CharacterSet(charactersIn: "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz")
+            
+            // Check if the replacementString contains only allowed characters
+            if string.rangeOfCharacter(from: allowedCharacterSet.inverted) != nil {
+                return false // Reject the change
+            }
+            
+            // Make sure the combined text (current text + replacement) doesn't exceed a certain length
+            let currentText = textField.text ?? ""
+            let updatedText = (currentText as NSString).replacingCharacters(in: range, with: string)
+            return updatedText.count <= maxLength
+            
+        }else {
+            
+            let currentString: NSString = (textField.text ?? "") as NSString
+            let newString: NSString =  currentString.replacingCharacters(in: range, with: string) as NSString
+            
+            return newString.length <= maxLength
+        }
+        
+        
+        
     }
     
     func setAttributedText(str1:String,str2:String)  {
