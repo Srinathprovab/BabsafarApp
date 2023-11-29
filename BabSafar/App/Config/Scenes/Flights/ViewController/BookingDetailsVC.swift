@@ -716,24 +716,25 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
         payload["device_source"] = "MOBILE(A)"
         
         
+        // Check additional conditions
         if callpaymentbool == false {
             showToast(message: "Add Details")
-        }else if fnameCharBool == false {
-            showToast(message: "First Name Should More Than 3 Chars")
-        }else if lnameCharBool == false {
-            showToast(message: "Last Name Should More Than 3 Chars")
+        }else if passportExpireDateBool == false {
+            showToast(message: "Invalid expiry. Passport expires within the next 3 months.")
+        }else if !fnameCharBool {
+            showToast(message: "First name should have more than 3 characters")
+        }else if !lnameCharBool {
+            showToast(message: "Last name should have more than 3 characters")
         }else if payemail == "" {
             showToast(message: "Enter Email Address")
         }else if payemail.isValidEmail() == false {
             showToast(message: "Enter Valid Email Addreess")
         }else if paymobile == "" {
             showToast(message: "Enter Mobile No")
-        }else if paymobile.isValidMobileNumber() == false {
-            showToast(message: "Enter Valid Mobile No")
-        }else if callpaymentbool == false {
-            showToast(message: "Add Details")
         }else if paymobilecountrycode == "" {
             showToast(message: "Enter Country Code")
+        }else if mobilenoMaxLengthBool == false {
+            showToast(message: "Enter Valid Mobile No")
         }else if checkTermsAndCondationStatus == false {
             showToast(message: "Please Accept T&C and Privacy Policy")
         }else {
@@ -1078,6 +1079,14 @@ extension BookingDetailsVC {
         NotificationCenter.default.addObserver(self, selector: #selector(reloadAfterLogin), name: NSNotification.Name("reloadAfterLogin"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadTV), name: Notification.Name("reloadTV"), object: nil)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(passportexpiry), name: NSNotification.Name("passportexpiry"), object: nil)
+        
+    }
+    
+    
+    @objc func passportexpiry(notify:NSNotification) {
+        passportExpireDateBool = false
+        showToast(message: (notify.object as? String) ?? "")
     }
     
     

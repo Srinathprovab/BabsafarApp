@@ -75,7 +75,7 @@ var travelerArray: [Traveler] = []
 var ageCategory: AgeCategory = .adult
 var latArray = [String]()
 var longArray = [String]()
-
+var passportExpireDateBool = false
 
 //MARK: - Hotel
 var hotelSearchId = String()

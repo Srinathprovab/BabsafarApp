@@ -69,7 +69,7 @@ class SearchFlightResultVC: BaseTableVC, UITextFieldDelegate {
     override func viewWillAppear(_ animated: Bool) {
         BASE_URL = BASE_URL1
         addObserver()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
+        dateFormatter.dateFormat = "HH:mm"
         if callapibool == true {
             holderView.isHidden = true
             callAPI()
@@ -516,10 +516,10 @@ extension SearchFlightResultVC: AppliedFilters{
         guard let departureDate = dateFormatter.date(from: time) else {
             return false
         }
-        
+
         let calendar = Calendar.current
         let hour = calendar.component(.hour, from: departureDate)
-        
+
         switch range {
         case "12 am - 6 am":
             return hour >= 0 && hour < 6
@@ -533,6 +533,7 @@ extension SearchFlightResultVC: AppliedFilters{
             return false
         }
     }
+
     
     
     func filtersByApplied(minpricerange: Double, maxpricerange: Double, noofStopsArray: [String], refundableTypeArray: [String], departureTime: [String], arrivalTime: [String], noOvernightFlight: [String], airlinesFilterArray: [String], luggageFilterArray: [String], connectingFlightsFilterArray: [String], ConnectingAirportsFilterArray: [String]) {
@@ -540,17 +541,17 @@ extension SearchFlightResultVC: AppliedFilters{
         
         
         
-        print(" ===== minpricerange ====== \n\(minpricerange)")
-        print(" ===== maxpricerange ====== \n\(maxpricerange)")
-        print(" ===== noofStopsArray ====== \n\(noofStopsArray.joined(separator: ","))")
-        print(" ===== refundableTypeArray ====== \n\(refundableTypeArray)")
-        print(" ===== airlinesFilterArray ====== \n\(airlinesFilterArray.joined(separator: ","))")
-        print(" ===== departureTime ====== \n\(departureTime)")
-        print(" ===== arrivalTime ====== \n\(arrivalTime)")
-        print(" ===== noOvernightFlight ====== \n\(noOvernightFlight)")
-        print(" ===== connectingFlightsFilterArray ====== \n\(connectingFlightsFilterArray)")
-        print(" ===== ConnectingAirportsFilterArray ====== \n\(ConnectingAirportsFilterArray)")
-        print(" ===== luggageFilterArray ====== \n\(luggageFilterArray)")
+//        print(" ===== minpricerange ====== \n\(minpricerange)")
+//        print(" ===== maxpricerange ====== \n\(maxpricerange)")
+//        print(" ===== noofStopsArray ====== \n\(noofStopsArray.joined(separator: ","))")
+//        print(" ===== refundableTypeArray ====== \n\(refundableTypeArray)")
+//        print(" ===== airlinesFilterArray ====== \n\(airlinesFilterArray.joined(separator: ","))")
+//        print(" ===== departureTime ====== \n\(departureTime)")
+//        print(" ===== arrivalTime ====== \n\(arrivalTime)")
+//        print(" ===== noOvernightFlight ====== \n\(noOvernightFlight)")
+//        print(" ===== connectingFlightsFilterArray ====== \n\(connectingFlightsFilterArray)")
+//        print(" ===== ConnectingAirportsFilterArray ====== \n\(ConnectingAirportsFilterArray)")
+//        print(" ===== luggageFilterArray ====== \n\(luggageFilterArray)")
         
         if let journytype = defaults.string(forKey: UserDefaultsKeys.journeyType) {
             
@@ -642,7 +643,7 @@ extension SearchFlightResultVC: AppliedFilters{
                         
                         
                         
-                        let depMatch = departureTime.isEmpty || summary.first?.origin?.datetime.flatMap { departureDateTime in
+                        let depMatch = departureTime.isEmpty || summary.first?.origin?.time.flatMap { departureDateTime in
                             return departureTime.contains { departureTimeRange in
                                 let timeIsInRange = isTimeInRange(time: departureDateTime, range: String(departureTimeRange))
                                 return timeIsInRange
@@ -651,7 +652,7 @@ extension SearchFlightResultVC: AppliedFilters{
                         
                         
                         // Filter by arrival time
-                        let arrMatch = arrivalTime.isEmpty || summary.first?.destination?.datetime.flatMap { arrivalDateTime in
+                        let arrMatch = arrivalTime.isEmpty || summary.first?.destination?.time.flatMap { arrivalDateTime in
                             return arrivalTime.contains { arrivalTimeRange in
                                 let timeIsInRange = isTimeInRange(time: arrivalDateTime, range: String(arrivalTimeRange)) // Convert Character to String
                                 return timeIsInRange
