@@ -180,6 +180,11 @@ extension CheckBoxTVCell: UITableViewDataSource, UITableViewDelegate {
                 showSelectedHotelFilterValues(cell: cell, indexPath: indexPath)
             }
         }
+        
+        
+        if cellInfo?.key == "time" {
+            
+        }
 
         return cell
     }

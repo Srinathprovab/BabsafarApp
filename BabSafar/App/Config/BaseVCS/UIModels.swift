@@ -110,6 +110,7 @@ enum TVCellType {
     case BCFlightDetailsTVCell
     case NewFlightSearchResultTVCell
     case RegisterUserTVCell
+    case DepartureTimeTVCell
     
     //Hotels
     case SearchHotelTVCell
