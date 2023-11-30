@@ -239,12 +239,12 @@ class FilterVC: BaseTableVC{
         tablerow.append(TableRow(title:"Refundable Type",data: faretypeArray,cellType:.CheckBoxTVCell))
         
         tablerow.append(TableRow(title:"Luggage",data: luggageArray,cellType:.CheckBoxTVCell))
-//        tablerow.append(TableRow(title:"Departure Time",cellType:.FilterDepartureTVCell))
-//        tablerow.append(TableRow(title:"Arrival Time",cellType:.FilterDepartureTVCell))
+        tablerow.append(TableRow(title:"Departure Time",cellType:.FilterDepartureTVCell))
+        tablerow.append(TableRow(title:"Arrival Time",cellType:.FilterDepartureTVCell))
         
         
-        tablerow.append(TableRow(title:"Departurn Time",key:"time", data: departurnTimeArray,cellType:.CheckBoxTVCell))
-        tablerow.append(TableRow(title:"Arrival Time",key:"time", data: departurnTimeArray,cellType:.CheckBoxTVCell))
+//        tablerow.append(TableRow(title:"Departurn Time",key:"time", data: departurnTimeArray,cellType:.CheckBoxTVCell))
+//        tablerow.append(TableRow(title:"Arrival Time",key:"time", data: departurnTimeArray,cellType:.CheckBoxTVCell))
         
         
         tablerow.append(TableRow(title:"No Overnight Flight",data: noOverNightFlightArray,cellType:.CheckBoxTVCell))
@@ -890,19 +890,66 @@ class FilterVC: BaseTableVC{
     }
     
     
-//    override func didTapOnTimeBtn(cell:FilterDepartureTVCell){
-//        switch cell.titlelbl.text {
-//        case "Departure Time":
-//            departureTimeFilter = cell.timeString
-//            break
-//
-//        case "Arrival Time":
-//            arrivalTimeFilter = cell.timeString
-//            break
-//        default:
-//            break
-//        }
-//    }
+    override func didTapOnTimeBtn(cell:FilterDepartureTVCell){
+        
+        
+        switch cell.titlelbl.text {
+        case "Departure Time":
+        
+            
+            switch cell.timeString {
+                
+            case "12AM - 6AM":
+                departureTimeFilter.append("12 am - 6 am")
+                break
+                
+            case "6AM - 12PM":
+                departureTimeFilter.append("06 am - 12 pm")
+                break
+                
+            case "12PM - 6PM":
+                departureTimeFilter.append("12 pm - 06 pm")
+                break
+                
+                
+            case "6PM - 12AM":
+                departureTimeFilter.append("06 pm - 12 am")
+                break
+           
+            default:
+                break
+            }
+            break
+
+        case "Arrival Time":
+            
+            switch cell.timeString {
+                
+            case "12AM - 6AM":
+                arrivalTimeFilter.append("12 am - 6 am")
+                break
+                
+            case "6AM - 12PM":
+                arrivalTimeFilter.append("06 am - 12 pm")
+                break
+                
+            case "12PM - 6PM":
+                arrivalTimeFilter.append("12 pm - 06 pm")
+                break
+                
+                
+            case "6PM - 12AM":
+                arrivalTimeFilter.append("06 pm - 12 am")
+                break
+           
+            default:
+                break
+            }
+            break
+        default:
+            break
+        }
+    }
     
     
     

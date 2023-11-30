@@ -541,17 +541,17 @@ extension SearchFlightResultVC: AppliedFilters{
         
         
         
-//        print(" ===== minpricerange ====== \n\(minpricerange)")
-//        print(" ===== maxpricerange ====== \n\(maxpricerange)")
-//        print(" ===== noofStopsArray ====== \n\(noofStopsArray.joined(separator: ","))")
-//        print(" ===== refundableTypeArray ====== \n\(refundableTypeArray)")
-//        print(" ===== airlinesFilterArray ====== \n\(airlinesFilterArray.joined(separator: ","))")
-//        print(" ===== departureTime ====== \n\(departureTime)")
-//        print(" ===== arrivalTime ====== \n\(arrivalTime)")
-//        print(" ===== noOvernightFlight ====== \n\(noOvernightFlight)")
-//        print(" ===== connectingFlightsFilterArray ====== \n\(connectingFlightsFilterArray)")
-//        print(" ===== ConnectingAirportsFilterArray ====== \n\(ConnectingAirportsFilterArray)")
-//        print(" ===== luggageFilterArray ====== \n\(luggageFilterArray)")
+        print(" ===== minpricerange ====== \n\(minpricerange)")
+        print(" ===== maxpricerange ====== \n\(maxpricerange)")
+        print(" ===== noofStopsArray ====== \n\(noofStopsArray.joined(separator: ","))")
+        print(" ===== refundableTypeArray ====== \n\(refundableTypeArray)")
+        print(" ===== airlinesFilterArray ====== \n\(airlinesFilterArray.joined(separator: ","))")
+        print(" ===== departureTime ====== \n\(departureTime)")
+        print(" ===== arrivalTime ====== \n\(arrivalTime)")
+        print(" ===== noOvernightFlight ====== \n\(noOvernightFlight)")
+        print(" ===== connectingFlightsFilterArray ====== \n\(connectingFlightsFilterArray)")
+        print(" ===== ConnectingAirportsFilterArray ====== \n\(ConnectingAirportsFilterArray)")
+        print(" ===== luggageFilterArray ====== \n\(luggageFilterArray)")
         
         if let journytype = defaults.string(forKey: UserDefaultsKeys.journeyType) {
             

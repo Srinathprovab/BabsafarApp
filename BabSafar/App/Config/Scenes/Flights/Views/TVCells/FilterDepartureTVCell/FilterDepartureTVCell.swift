@@ -72,76 +72,27 @@ class FilterDepartureTVCell: TableViewCell {
     override func updateUI() {
         titlelbl.text = cellInfo?.title
         
+//        switch range {
+//        case "12 am - 6 am":
+//            return hour >= 0 && hour < 6
+//        case "06 am - 12 pm":
+//            return hour >= 6 && hour < 12
+//        case "12 pm - 06 pm":
+//            return hour >= 12 && hour < 18
+//        case "06 pm - 12 am":
+//            return hour >= 18
         
-    //    if titlelbl.text == "Departure Time"{
-            
-//            switch filterModel.departureTime {
-//            case "12AM - 6AM":
-//                tapOnTimeOneBtn()
-//                break
-//
-//
-//            case "6AM - 12PM":
-//                tapOnTime2Btn()
-//                break
-//
-//
-//            case "12PM - 6PM":
-//                tapOnTime3Btn()
-//                break
-//
-//
-//            case "6PM - 12AM":
-//                tapOnTime4Btn()
-//                break
-//
-//
-//            case "":
-//                reset()
-//                break
-//
-//
-//            default:
-//
-//                break
-//            }
-            
-            
-//        }else {
-//
-//            switch filterModel.arrivalTime {
-//            case "12AM - 6AM":
-//                tapOnTimeOneBtn()
-//                break
-//
-//
-//            case "6AM - 12PM":
-//                tapOnTime2Btn()
-//                break
-//
-//
-//            case "12PM - 6PM":
-//                tapOnTime3Btn()
-//                break
-//
-//
-//            case "6PM - 12AM":
-//                tapOnTime4Btn()
-//                break
-//
-//            case "":
-//                reset()
-//                break
-//
-//
-//
-//            default:
-//
-//                break
-//            }
-//        }
-        
-        
+        filterModel.departureTime.forEach { i in
+            if i == "12 am - 6 am" {
+                tapOnTimeOneBtn()
+            }else if i == "06 am - 12 pm" {
+                tapOnTime2Btn()
+            }else if i == "12 pm - 06 pm" {
+                tapOnTime3Btn()
+            }else {
+                tapOnTime4Btn()
+            }
+        }
         
     }
     
@@ -212,17 +163,17 @@ class FilterDepartureTVCell: TableViewCell {
         img1.image = UIImage(named: "mor1")?.withRenderingMode(.alwaysOriginal).withTintColor(.WhiteColor)
         time1lbl.textColor = .WhiteColor
         
-        timeView2.backgroundColor = .WhiteColor
-        img2.image = UIImage(named: "mor2")
-        time2lbl.textColor = .AppLabelColor
-        
-        timeView3.backgroundColor = .WhiteColor
-        img3.image = UIImage(named: "mor3")
-        time3lbl.textColor = .AppLabelColor
-        
-        timeView4.backgroundColor = .WhiteColor
-        img4.image = UIImage(named: "mor4")
-        time4lbl.textColor = .AppLabelColor
+//        timeView2.backgroundColor = .WhiteColor
+//        img2.image = UIImage(named: "mor2")
+//        time2lbl.textColor = .AppLabelColor
+//
+//        timeView3.backgroundColor = .WhiteColor
+//        img3.image = UIImage(named: "mor3")
+//        time3lbl.textColor = .AppLabelColor
+//
+//        timeView4.backgroundColor = .WhiteColor
+//        img4.image = UIImage(named: "mor4")
+//        time4lbl.textColor = .AppLabelColor
         
         timeString = time1lbl.text ?? ""
         delegate?.didTapOnTimeBtn(cell: self)
@@ -234,21 +185,21 @@ class FilterDepartureTVCell: TableViewCell {
     }
     
     func tapOnTime2Btn(){
-        timeView1.backgroundColor = .WhiteColor
-        img1.image = UIImage(named: "mor1")?.withRenderingMode(.alwaysOriginal).withTintColor(.AppLabelColor)
-        time1lbl.textColor = .AppLabelColor
+//        timeView1.backgroundColor = .WhiteColor
+//        img1.image = UIImage(named: "mor1")?.withRenderingMode(.alwaysOriginal).withTintColor(.AppLabelColor)
+//        time1lbl.textColor = .AppLabelColor
         
         timeView2.backgroundColor = .AppCalenderDateSelectColor
         img2.image = UIImage(named: "mor2")?.withRenderingMode(.alwaysOriginal).withTintColor(.WhiteColor)
         time2lbl.textColor = .WhiteColor
         
-        timeView3.backgroundColor = .WhiteColor
-        img3.image = UIImage(named: "mor3")
-        time3lbl.textColor = .AppLabelColor
-        
-        timeView4.backgroundColor = .WhiteColor
-        img4.image = UIImage(named: "mor4")
-        time4lbl.textColor = .AppLabelColor
+//        timeView3.backgroundColor = .WhiteColor
+//        img3.image = UIImage(named: "mor3")
+//        time3lbl.textColor = .AppLabelColor
+//
+//        timeView4.backgroundColor = .WhiteColor
+//        img4.image = UIImage(named: "mor4")
+//        time4lbl.textColor = .AppLabelColor
         
         timeString = time2lbl.text ?? ""
         delegate?.didTapOnTimeBtn(cell: self)
@@ -262,21 +213,21 @@ class FilterDepartureTVCell: TableViewCell {
     
     
     func tapOnTime3Btn(){
-        timeView1.backgroundColor = .WhiteColor
-        img1.image = UIImage(named: "mor1")?.withRenderingMode(.alwaysOriginal).withTintColor(.AppLabelColor)
-        time1lbl.textColor = .AppLabelColor
-        
-        timeView2.backgroundColor = .WhiteColor
-        img2.image = UIImage(named: "mor2")
-        time2lbl.textColor = .AppLabelColor
+//        timeView1.backgroundColor = .WhiteColor
+//        img1.image = UIImage(named: "mor1")?.withRenderingMode(.alwaysOriginal).withTintColor(.AppLabelColor)
+//        time1lbl.textColor = .AppLabelColor
+//
+//        timeView2.backgroundColor = .WhiteColor
+//        img2.image = UIImage(named: "mor2")
+//        time2lbl.textColor = .AppLabelColor
         
         timeView3.backgroundColor = .AppCalenderDateSelectColor
         img3.image = UIImage(named: "mor3")?.withRenderingMode(.alwaysOriginal).withTintColor(.WhiteColor)
         time3lbl.textColor = .WhiteColor
         
-        timeView4.backgroundColor = .WhiteColor
-        img4.image = UIImage(named: "mor4")
-        time4lbl.textColor = .AppLabelColor
+//        timeView4.backgroundColor = .WhiteColor
+//        img4.image = UIImage(named: "mor4")
+//        time4lbl.textColor = .AppLabelColor
         
         timeString = time3lbl.text ?? ""
         delegate?.didTapOnTimeBtn(cell: self)
@@ -289,17 +240,17 @@ class FilterDepartureTVCell: TableViewCell {
     
     
     func tapOnTime4Btn(){
-        timeView1.backgroundColor = .WhiteColor
-        img1.image = UIImage(named: "mor1")?.withRenderingMode(.alwaysOriginal).withTintColor(.AppLabelColor)
-        time1lbl.textColor = .AppLabelColor
-        
-        timeView2.backgroundColor = .WhiteColor
-        img2.image = UIImage(named: "mor2")
-        time2lbl.textColor = .AppLabelColor
-        
-        timeView3.backgroundColor = .WhiteColor
-        img3.image = UIImage(named: "mor3")
-        time3lbl.textColor = .AppLabelColor
+//        timeView1.backgroundColor = .WhiteColor
+//        img1.image = UIImage(named: "mor1")?.withRenderingMode(.alwaysOriginal).withTintColor(.AppLabelColor)
+//        time1lbl.textColor = .AppLabelColor
+//        
+//        timeView2.backgroundColor = .WhiteColor
+//        img2.image = UIImage(named: "mor2")
+//        time2lbl.textColor = .AppLabelColor
+//        
+//        timeView3.backgroundColor = .WhiteColor
+//        img3.image = UIImage(named: "mor3")
+//        time3lbl.textColor = .AppLabelColor
         
         timeView4.backgroundColor = .AppCalenderDateSelectColor
         img4.image = UIImage(named: "mor4")?.withRenderingMode(.alwaysOriginal).withTintColor(.WhiteColor)

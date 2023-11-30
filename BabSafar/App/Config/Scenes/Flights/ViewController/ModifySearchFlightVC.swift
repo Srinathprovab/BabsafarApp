@@ -48,7 +48,7 @@ class ModifySearchFlightVC: BaseTableVC {
     var calRetDate: String!
     var key = ""
     var fromdataArray = [[String:Any]]()
-  
+    
     
     override func viewWillAppear(_ animated: Bool) {
         //  CallShowCityListAPI(str: "")
@@ -61,7 +61,7 @@ class ModifySearchFlightVC: BaseTableVC {
         
         setupIntialUI()
         
-       
+        
         if key == "edit" {
             setupIntialUI()
         }else {
@@ -74,7 +74,7 @@ class ModifySearchFlightVC: BaseTableVC {
     }
     
     
-   
+    
     @objc func fromSelectCityVC() {
         keyStr = "select"
     }
@@ -93,7 +93,7 @@ class ModifySearchFlightVC: BaseTableVC {
                 }
             }
         }else {
-          //  setupRoundTrip()
+            //  setupRoundTrip()
             if let journeyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
                 if journeyType == "oneway" {
                     setupOneWay()
@@ -491,7 +491,7 @@ class ModifySearchFlightVC: BaseTableVC {
                 payload["infant"] = defaults.string(forKey:UserDefaultsKeys.rinfantsCount)
                 payload["v_class"] = defaults.string(forKey:UserDefaultsKeys.rselectClass)
                 payload["sector_type"] = "international"
-               
+                
                 
                 payload["from"] = defaults.string(forKey:UserDefaultsKeys.fromCity)
                 payload["from_loc_id"] = defaults.string(forKey:UserDefaultsKeys.fromlocid)
@@ -654,12 +654,7 @@ class ModifySearchFlightVC: BaseTableVC {
             
         }
         
-        
-        
     }
-    
-    
-    
     
 }
 
