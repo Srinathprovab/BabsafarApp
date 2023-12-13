@@ -450,7 +450,7 @@ class AddDeatilsOfTravellerTVCell: TableViewCell {
                 }
                 
             }else {
-                if let newdate = formatter.date(from: defaults.string(forKey: UserDefaultsKeys.rcalRetDate) ?? "") {
+                if let newdate = formatter.date(from: defaults.string(forKey: UserDefaultsKeys.calRetDate) ?? "") {
                     components.year = -12 // Allow selecting a date at least 12 years in the past
                     let twelveYearsLater = calendar.date(byAdding: components, to: newdate)
                     if let adultcount = defaults.string(forKey: UserDefaultsKeys.adultCount) {
@@ -483,7 +483,7 @@ class AddDeatilsOfTravellerTVCell: TableViewCell {
                 
                 
             }else {
-                if let newdate = formatter.date(from: defaults.string(forKey: UserDefaultsKeys.rcalRetDate) ?? "") {
+                if let newdate = formatter.date(from: defaults.string(forKey: UserDefaultsKeys.calRetDate) ?? "") {
                     
                     components.year = -2 // Allow selecting a date at least 2 years in the past
                     dobDatePicker.maximumDate = calendar.date(byAdding: components, to: newdate)
@@ -514,7 +514,7 @@ class AddDeatilsOfTravellerTVCell: TableViewCell {
                 
                 
             }else {
-                if let newdate = formatter.date(from: defaults.string(forKey: UserDefaultsKeys.rcalRetDate) ?? "") {
+                if let newdate = formatter.date(from: defaults.string(forKey: UserDefaultsKeys.calRetDate) ?? "") {
                     
                     
                     components1.day = +1

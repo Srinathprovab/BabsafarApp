@@ -486,10 +486,10 @@ class ModifySearchFlightVC: BaseTableVC {
                 
                 
                 payload["trip_type"] = defaults.string(forKey:UserDefaultsKeys.journeyType)
-                payload["adult"] = defaults.string(forKey:UserDefaultsKeys.radultCount)
-                payload["child"] = defaults.string(forKey:UserDefaultsKeys.rchildCount)
-                payload["infant"] = defaults.string(forKey:UserDefaultsKeys.rinfantsCount)
-                payload["v_class"] = defaults.string(forKey:UserDefaultsKeys.rselectClass)
+                payload["adult"] = defaults.string(forKey:UserDefaultsKeys.adultCount)
+                payload["child"] = defaults.string(forKey:UserDefaultsKeys.childCount)
+                payload["infant"] = defaults.string(forKey:UserDefaultsKeys.infantsCount)
+                payload["v_class"] = defaults.string(forKey:UserDefaultsKeys.selectClass)
                 payload["sector_type"] = "international"
                 
                 
@@ -498,8 +498,8 @@ class ModifySearchFlightVC: BaseTableVC {
                 payload["to"] = defaults.string(forKey:UserDefaultsKeys.toCity)
                 payload["to_loc_id"] = defaults.string(forKey:UserDefaultsKeys.tolocid)
                 
-                payload["depature"] = defaults.string(forKey:UserDefaultsKeys.rcalDepDate)
-                payload["return"] = defaults.string(forKey:UserDefaultsKeys.rcalRetDate)
+                payload["depature"] = defaults.string(forKey:UserDefaultsKeys.calDepDate)
+                payload["return"] = defaults.string(forKey:UserDefaultsKeys.calRetDate)
                 payload["out_jrn"] = "All Times"
                 payload["ret_jrn"] = "All Times"
                 payload["carrier"] = ""
@@ -518,16 +518,16 @@ class ModifySearchFlightVC: BaseTableVC {
                     showToast(message: "Please Select To City")
                 }else if defaults.string(forKey:UserDefaultsKeys.toCity) == defaults.string(forKey:UserDefaultsKeys.fromCity) {
                     showToast(message: "Please Select Different Citys")
-                }else if defaults.string(forKey:UserDefaultsKeys.rcalDepDate) == "+ Add Departure Date" || defaults.string(forKey:UserDefaultsKeys.rcalDepDate) == nil{
+                }else if defaults.string(forKey:UserDefaultsKeys.calDepDate) == "+ Add Departure Date" || defaults.string(forKey:UserDefaultsKeys.calDepDate) == nil{
                     showToast(message: "Please Select Departure Date")
-                }else if defaults.string(forKey:UserDefaultsKeys.rcalRetDate) == "+ Add Departure Date" || defaults.string(forKey:UserDefaultsKeys.rcalRetDate) == nil{
+                }else if defaults.string(forKey:UserDefaultsKeys.calRetDate) == "+ Add Departure Date" || defaults.string(forKey:UserDefaultsKeys.calRetDate) == nil{
                     showToast(message: "Please Select Return Date")
-                }else if defaults.string(forKey:UserDefaultsKeys.rcalDepDate) == defaults.string(forKey:UserDefaultsKeys.rcalRetDate) {
+                }else if defaults.string(forKey:UserDefaultsKeys.calDepDate) == defaults.string(forKey:UserDefaultsKeys.calRetDate) {
                     showToast(message: "Please Select Different Dates")
                 }
-                else if defaults.string(forKey:UserDefaultsKeys.rtravellerDetails) == nil {
+                else if defaults.string(forKey:UserDefaultsKeys.travellerDetails) == nil {
                     showToast(message: "Add Traveller")
-                }else if defaults.string(forKey:UserDefaultsKeys.rselectClass) == nil {
+                }else if defaults.string(forKey:UserDefaultsKeys.selectClass) == nil {
                     showToast(message: "Add Class")
                 }else if defaults.string(forKey:UserDefaultsKeys.fromCity) == defaults.string(forKey:UserDefaultsKeys.toCity) {
                     showToast(message: "Please Select Different Citys")
@@ -578,15 +578,15 @@ class ModifySearchFlightVC: BaseTableVC {
         
         
         payload["trip_type"] = "multicity"
-        payload["adult"] = defaults.string(forKey: UserDefaultsKeys.madultCount) ?? "1"
-        payload["child"] = defaults.string(forKey: UserDefaultsKeys.mchildCount) ?? "0"
-        payload["infant"] = defaults.string(forKey: UserDefaultsKeys.minfantsCount) ?? "0"
+        payload["adult"] = defaults.string(forKey: UserDefaultsKeys.adultCount) ?? "1"
+        payload["child"] = defaults.string(forKey: UserDefaultsKeys.childCount) ?? "0"
+        payload["infant"] = defaults.string(forKey: UserDefaultsKeys.infantsCount) ?? "0"
         payload["checkbox-group"] = "on"
         payload["search_flight"] = "Search"
         payload["direct_flight"] = "1"
         payload["psscarrier"] = "ALL"
-        payload["remngwd"] = defaults.string(forKey: UserDefaultsKeys.mselectClass)
-        payload["v_class"] = defaults.string(forKey: UserDefaultsKeys.mselectClass)
+        payload["remngwd"] = defaults.string(forKey: UserDefaultsKeys.selectClass)
+        payload["v_class"] = defaults.string(forKey: UserDefaultsKeys.selectClass)
         payload["user_id"] = defaults.string(forKey: UserDefaultsKeys.userid) ?? "0"
         payload["currency"] = defaults.string(forKey:UserDefaultsKeys.selectedCurrency) ?? "KWD"
         payload["search_source"] = "Postman"

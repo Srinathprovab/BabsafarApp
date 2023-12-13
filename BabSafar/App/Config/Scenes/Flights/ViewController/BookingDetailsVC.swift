@@ -107,14 +107,14 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
                 infantsCount = Int(defaults.string(forKey: UserDefaultsKeys.infantsCount) ?? "0") ?? 0
                 
             }else if journeyType == "circle"{
-                adultsCount = Int(defaults.string(forKey: UserDefaultsKeys.radultCount) ?? "1") ?? 0
-                childCount = Int(defaults.string(forKey: UserDefaultsKeys.rchildCount) ?? "0") ?? 0
-                infantsCount = Int(defaults.string(forKey: UserDefaultsKeys.rinfantsCount) ?? "0") ?? 0
+                adultsCount = Int(defaults.string(forKey: UserDefaultsKeys.adultCount) ?? "1") ?? 0
+                childCount = Int(defaults.string(forKey: UserDefaultsKeys.childCount) ?? "0") ?? 0
+                infantsCount = Int(defaults.string(forKey: UserDefaultsKeys.infantsCount) ?? "0") ?? 0
             }else {
                 
-                adultsCount = Int(defaults.string(forKey: UserDefaultsKeys.madultCount) ?? "1") ?? 0
-                childCount = Int(defaults.string(forKey: UserDefaultsKeys.mchildCount) ?? "0") ?? 0
-                infantsCount = Int(defaults.string(forKey: UserDefaultsKeys.minfantsCount) ?? "0") ?? 0
+                adultsCount = Int(defaults.string(forKey: UserDefaultsKeys.adultCount) ?? "1") ?? 0
+                childCount = Int(defaults.string(forKey: UserDefaultsKeys.childCount) ?? "0") ?? 0
+                infantsCount = Int(defaults.string(forKey: UserDefaultsKeys.infantsCount) ?? "0") ?? 0
             }
         }
         
@@ -993,7 +993,7 @@ extension BookingDetailsVC {
         payload["selectedResult"] = defaults.string(forKey: UserDefaultsKeys.selectedResult)
         payload["booking_source"] = defaults.string(forKey: UserDefaultsKeys.bookingsourcekey)
         payload["user_id"] = defaults.string(forKey: UserDefaultsKeys.userid) ?? 0
-        // payload["traceId"] = defaults.string(forKey: UserDefaultsKeys.traceId) ?? 0
+        //payload["traceId"] = defaults.string(forKey: UserDefaultsKeys.traceId) ?? 0
         mbviewmodel?.CALLPREPROCESSINGBOOKINGAPI(dictParam: payload)
     }
     
@@ -1201,10 +1201,10 @@ extension BookingDetailsVC {
                 
                 
                 payload["trip_type"] = defaults.string(forKey:UserDefaultsKeys.journeyType)
-                payload["adult"] = defaults.string(forKey:UserDefaultsKeys.radultCount)
-                payload["child"] = defaults.string(forKey:UserDefaultsKeys.rchildCount)
-                payload["infant"] = defaults.string(forKey:UserDefaultsKeys.rinfantsCount)
-                payload["v_class"] = defaults.string(forKey:UserDefaultsKeys.rselectClass)
+                payload["adult"] = defaults.string(forKey:UserDefaultsKeys.adultCount)
+                payload["child"] = defaults.string(forKey:UserDefaultsKeys.childCount)
+                payload["infant"] = defaults.string(forKey:UserDefaultsKeys.infantsCount)
+                payload["v_class"] = defaults.string(forKey:UserDefaultsKeys.selectClass)
                 payload["sector_type"] = "international"
                 
                 payload["from"] = defaults.string(forKey:UserDefaultsKeys.fromCity)
@@ -1212,8 +1212,8 @@ extension BookingDetailsVC {
                 payload["to"] = defaults.string(forKey:UserDefaultsKeys.toCity)
                 payload["to_loc_id"] = defaults.string(forKey:UserDefaultsKeys.tolocid)
                 
-                payload["depature"] = defaults.string(forKey:UserDefaultsKeys.rcalDepDate)
-                payload["return"] = defaults.string(forKey:UserDefaultsKeys.rcalRetDate)
+                payload["depature"] = defaults.string(forKey:UserDefaultsKeys.calDepDate)
+                payload["return"] = defaults.string(forKey:UserDefaultsKeys.calRetDate)
                 payload["out_jrn"] = "All Times"
                 payload["ret_jrn"] = "All Times"
                 payload["carrier"] = ""
@@ -1232,16 +1232,16 @@ extension BookingDetailsVC {
                     showToast(message: "Please Select To City")
                 }else if defaults.string(forKey:UserDefaultsKeys.toCity) == defaults.string(forKey:UserDefaultsKeys.fromCity) {
                     showToast(message: "Please Select Different Citys")
-                }else if defaults.string(forKey:UserDefaultsKeys.rcalDepDate) == "+ Add Departure Date" || defaults.string(forKey:UserDefaultsKeys.rcalDepDate) == nil{
+                }else if defaults.string(forKey:UserDefaultsKeys.calDepDate) == "+ Add Departure Date" || defaults.string(forKey:UserDefaultsKeys.calDepDate) == nil{
                     showToast(message: "Please Select Departure Date")
-                }else if defaults.string(forKey:UserDefaultsKeys.rcalRetDate) == "+ Add Departure Date" || defaults.string(forKey:UserDefaultsKeys.rcalRetDate) == nil{
+                }else if defaults.string(forKey:UserDefaultsKeys.calRetDate) == "+ Add Departure Date" || defaults.string(forKey:UserDefaultsKeys.calRetDate) == nil{
                     showToast(message: "Please Select Return Date")
-                }else if defaults.string(forKey:UserDefaultsKeys.rcalDepDate) == defaults.string(forKey:UserDefaultsKeys.rcalRetDate) {
+                }else if defaults.string(forKey:UserDefaultsKeys.calDepDate) == defaults.string(forKey:UserDefaultsKeys.calRetDate) {
                     showToast(message: "Please Select Different Dates")
                 }
-                else if defaults.string(forKey:UserDefaultsKeys.rtravellerDetails) == nil {
+                else if defaults.string(forKey:UserDefaultsKeys.travellerDetails) == nil {
                     showToast(message: "Add Traveller")
-                }else if defaults.string(forKey:UserDefaultsKeys.rselectClass) == nil {
+                }else if defaults.string(forKey:UserDefaultsKeys.selectClass) == nil {
                     showToast(message: "Add Class")
                 }else if defaults.string(forKey:UserDefaultsKeys.fromCity) == defaults.string(forKey:UserDefaultsKeys.toCity) {
                     showToast(message: "Please Select Different Citys")

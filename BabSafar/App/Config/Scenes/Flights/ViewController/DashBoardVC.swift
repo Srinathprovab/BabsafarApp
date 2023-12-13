@@ -592,22 +592,8 @@ extension DashBoardVC {
             let totaltraverlers = "\(defaults.string(forKey: UserDefaultsKeys.adultCount) ?? "1") Adult | \(defaults.string(forKey: UserDefaultsKeys.childCount) ?? "0") Child | \(defaults.string(forKey: UserDefaultsKeys.infantsCount) ?? "") Infant | \(defaults.string(forKey: UserDefaultsKeys.selectClass) ?? "")"
             defaults.set(totaltraverlers, forKey: UserDefaultsKeys.travellerDetails)
             
-            defaults.set("Economy", forKey: UserDefaultsKeys.rselectClass)
-            defaults.set("1", forKey: UserDefaultsKeys.radultCount)
-            defaults.set("0", forKey: UserDefaultsKeys.rchildCount)
-            defaults.set("0", forKey: UserDefaultsKeys.rinfantsCount)
-            let totaltraverlers1 = "\(defaults.string(forKey: UserDefaultsKeys.radultCount) ?? "1") Adult | \(defaults.string(forKey: UserDefaultsKeys.rchildCount) ?? "") Child | \(defaults.string(forKey: UserDefaultsKeys.rinfantsCount) ?? "") Infant |\(defaults.string(forKey: UserDefaultsKeys.rselectClass) ?? "")"
-            defaults.set(totaltraverlers1, forKey: UserDefaultsKeys.rtravellerDetails)
             
-            
-            defaults.set("Economy", forKey: UserDefaultsKeys.mselectClass)
-            defaults.set("1", forKey: UserDefaultsKeys.madultCount)
-            defaults.set("0", forKey: UserDefaultsKeys.mchildCount)
-            defaults.set("0", forKey: UserDefaultsKeys.minfantsCount)
-            let totaltraverlers3 = "\(defaults.string(forKey: UserDefaultsKeys.madultCount) ?? "1") Adult | \(defaults.string(forKey: UserDefaultsKeys.mchildCount) ?? "") Child | \(defaults.string(forKey: UserDefaultsKeys.minfantsCount) ?? "") Infants |\(defaults.string(forKey: UserDefaultsKeys.rselectClass) ?? "")"
-            defaults.set(totaltraverlers3, forKey: UserDefaultsKeys.mtravellerDetails)
-            
-            
+         
             
             //Hotel default Values
             defaults.set("1", forKey: UserDefaultsKeys.roomcount)
@@ -751,8 +737,8 @@ extension DashBoardVC {
                 defaults.set((userinfo["travel_date"] as? String) ?? "" , forKey: UserDefaultsKeys.calDepDate)
                 defaults.set((userinfo["return_date"] as? String) ?? "" , forKey: UserDefaultsKeys.calRetDate)
             }else {
-                defaults.set((userinfo["travel_date"] as? String) ?? "" , forKey: UserDefaultsKeys.rcalDepDate)
-                defaults.set((userinfo["return_date"] as? String) ?? "" , forKey: UserDefaultsKeys.rcalRetDate)
+                defaults.set((userinfo["travel_date"] as? String) ?? "" , forKey: UserDefaultsKeys.calDepDate)
+                defaults.set((userinfo["return_date"] as? String) ?? "" , forKey: UserDefaultsKeys.calRetDate)
             }
             
             

@@ -77,7 +77,7 @@ class MultiCityTVCell: TableViewCell,ButtonCVCellDelegate,MultiCityCVCellDelegat
     
     override func updateUI() {
         addTraverllersValuelbl.text = defaults.string(forKey: UserDefaultsKeys.mtravellerDetails) ?? "Add Details"
-        addClassValuelbl.text = defaults.string(forKey: UserDefaultsKeys.mselectClass) ?? "Add Details"
+        addClassValuelbl.text = defaults.string(forKey: UserDefaultsKeys.selectClass) ?? "Add Details"
         updateheight()
         
         

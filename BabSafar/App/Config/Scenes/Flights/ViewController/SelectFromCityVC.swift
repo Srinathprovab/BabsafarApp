@@ -355,16 +355,16 @@ extension SelectFromCityVC {
                             }
                         }else if journeyType == "circle"{
                             if titleStr == "From" {
-                                defaults.set(cell.titlelbl.text ?? "", forKey: UserDefaultsKeys.rfromCity)
-                                defaults.set(cell.id , forKey: UserDefaultsKeys.rfromlocid)
-                                defaults.set(cell.cityShortNamelbl.text , forKey: UserDefaultsKeys.rfromairport)
-                                defaults.set(cell.cityname , forKey: UserDefaultsKeys.rfromcityname)
+                                defaults.set(cell.titlelbl.text ?? "", forKey: UserDefaultsKeys.fromCity)
+                                defaults.set(cell.id , forKey: UserDefaultsKeys.fromlocid)
+                                defaults.set(cell.cityShortNamelbl.text , forKey: UserDefaultsKeys.fromairport)
+                                defaults.set(cell.cityname , forKey: UserDefaultsKeys.fromcityname)
                                 
                             }else {
-                                defaults.set(cell.titlelbl.text ?? "", forKey: UserDefaultsKeys.rtoCity)
-                                defaults.set(cell.id , forKey: UserDefaultsKeys.rtolocid)
-                                defaults.set(cell.cityShortNamelbl.text , forKey: UserDefaultsKeys.rtoairport)
-                                defaults.set(cell.cityname , forKey: UserDefaultsKeys.rtocityname)
+                                defaults.set(cell.titlelbl.text ?? "", forKey: UserDefaultsKeys.toCity)
+                                defaults.set(cell.id , forKey: UserDefaultsKeys.tolocid)
+                                defaults.set(cell.cityShortNamelbl.text , forKey: UserDefaultsKeys.toairport)
+                                defaults.set(cell.cityname , forKey: UserDefaultsKeys.tocityname)
                                 
                             }
                         }else {

@@ -284,7 +284,7 @@ class SearchFlightResultVC: BaseTableVC, UITextFieldDelegate {
                 // Convert the date string to a Date object
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "dd-MM-yyyy"
-                let dateString = defaults.string(forKey: UserDefaultsKeys.rcalDepDate) ?? ""
+                let dateString = defaults.string(forKey: UserDefaultsKeys.calDepDate) ?? ""
                 guard let date = dateFormatter.date(from: dateString) else { return }
                 
                 // Get the next day's date
@@ -299,8 +299,8 @@ class SearchFlightResultVC: BaseTableVC, UITextFieldDelegate {
                     
                     
                     print("nextDayString ==== > \(nextDayString)")
-                    defaults.set(nextDayString, forKey: UserDefaultsKeys.rcalDepDate)
-                    payload["depature"] = defaults.string(forKey:UserDefaultsKeys.rcalDepDate)
+                    defaults.set(nextDayString, forKey: UserDefaultsKeys.calDepDate)
+                    payload["depature"] = defaults.string(forKey:UserDefaultsKeys.calDepDate)
                     self.datelbl.text = nextDayString
                     
                     callAPI()
@@ -345,7 +345,7 @@ class SearchFlightResultVC: BaseTableVC, UITextFieldDelegate {
                 // Convert the date string to a Date object
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "dd-MM-yyyy"
-                let dateString = defaults.string(forKey: UserDefaultsKeys.rcalDepDate) ?? ""
+                let dateString = defaults.string(forKey: UserDefaultsKeys.calDepDate) ?? ""
                 guard let date = dateFormatter.date(from: dateString) else { return }
                 
                 // Get the next day's date
@@ -360,8 +360,8 @@ class SearchFlightResultVC: BaseTableVC, UITextFieldDelegate {
                 }else {
                     
                     
-                    defaults.set(nextDayString, forKey: UserDefaultsKeys.rcalDepDate)
-                    payload["depature"] = defaults.string(forKey:UserDefaultsKeys.rcalDepDate)
+                    defaults.set(nextDayString, forKey: UserDefaultsKeys.calDepDate)
+                    payload["depature"] = defaults.string(forKey:UserDefaultsKeys.calDepDate)
                     self.datelbl.text = nextDayString
                     
                     callAPI()

@@ -172,15 +172,15 @@ class SearchFlightsTVCell: TableViewCell, SelectCityViewModelProtocal {
                 returnView.alpha = 0.5
                 
                 returnDatelbl.text = "+ Add Return Date"
-                defaults.set("+ Add Return Date", forKey: UserDefaultsKeys.rcalRetDate)
+                defaults.set("+ Add Return Date", forKey: UserDefaultsKeys.calRetDate)
             }else {
                 fromCitylbl.text = defaults.string(forKey: UserDefaultsKeys.fromCity) ?? "Origin"
                 toCitylbl.text = defaults.string(forKey: UserDefaultsKeys.toCity) ?? "Destination"
-                self.departureDatelbl.text = defaults.string(forKey: UserDefaultsKeys.rcalDepDate) ?? "+ Add Departure Date"
-                self.returnDatelbl.text = defaults.string(forKey: UserDefaultsKeys.rcalRetDate) ?? "+ Add Return Date"
-                economyValuelbl.text = defaults.string(forKey: UserDefaultsKeys.rtravellerDetails) ?? "Add Traveller Details"
-                addTraverllersValuelbl.text = defaults.string(forKey: UserDefaultsKeys.rtravellerDetails) ?? "Add Details"
-                addClassValuelbl.text = defaults.string(forKey: UserDefaultsKeys.rselectClass) ?? "Add Details"
+                self.departureDatelbl.text = defaults.string(forKey: UserDefaultsKeys.calDepDate) ?? "+ Add Departure Date"
+                self.returnDatelbl.text = defaults.string(forKey: UserDefaultsKeys.calRetDate) ?? "+ Add Return Date"
+                economyValuelbl.text = defaults.string(forKey: UserDefaultsKeys.travellerDetails) ?? "Add Traveller Details"
+                addTraverllersValuelbl.text = defaults.string(forKey: UserDefaultsKeys.travellerDetails) ?? "Add Details"
+                addClassValuelbl.text = defaults.string(forKey: UserDefaultsKeys.selectClass) ?? "Add Details"
                 returnView.alpha = 1
             }
         }
@@ -378,7 +378,7 @@ class SearchFlightsTVCell: TableViewCell, SelectCityViewModelProtocal {
     @objc func didTapOnCloseReturnView(_ sender:UIButton) {
         
         returnDatelbl.text = "+ Add Return Date"
-        defaults.set("+ Add Return Date", forKey: UserDefaultsKeys.rcalRetDate)
+        defaults.set("+ Add Return Date", forKey: UserDefaultsKeys.calRetDate)
         delegate?.didTapOnCloseReturnView(cell: self)
     }
     
@@ -408,7 +408,7 @@ class SearchFlightsTVCell: TableViewCell, SelectCityViewModelProtocal {
         if let journeyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
             if journeyType == "oneway" {
                 
-                defaults.set("+ Add Return Date", forKey: UserDefaultsKeys.rcalRetDate)
+                defaults.set("+ Add Return Date", forKey: UserDefaultsKeys.calRetDate)
                 delegate?.didTapOnReturnToOnewayBtnAction(cell: self)
             }else {
                 delegate?.didTapOnReturnBtnAction(cell: self)

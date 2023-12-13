@@ -89,8 +89,8 @@ class CalenderVC: BaseTableVC {
                         
                     }else if journeyType == "circle"{
                         calendarView.allowsMultipleSelection = true
-                        departureDatelbl.text = defaults.string(forKey: UserDefaultsKeys.rcalDepDate) ?? "Select Date"
-                        returnDatelbl.text = defaults.string(forKey: UserDefaultsKeys.rcalRetDate) ?? "Select Date"
+                        departureDatelbl.text = defaults.string(forKey: UserDefaultsKeys.calDepDate) ?? "Select Date"
+                        returnDatelbl.text = defaults.string(forKey: UserDefaultsKeys.calRetDate) ?? "Select Date"
                         
                         depDay = convertDateFormat(inputDate: departureDatelbl.text ?? "", f1: "dd-MM-yyyy", f2: "dd")
                         retDay = convertDateFormat(inputDate: returnDatelbl.text ?? "", f1: "dd-MM-yyyy", f2: "dd")
@@ -364,8 +364,8 @@ class CalenderVC: BaseTableVC {
                         }else if calstartDate == calendDate{
                             showToast(message: "Please Select Multiple Dates")
                         }else{
-                            defaults.set(calstartDate, forKey: UserDefaultsKeys.rcalDepDate)
-                            defaults.set(calendDate, forKey: UserDefaultsKeys.rcalRetDate)
+                            defaults.set(calstartDate, forKey: UserDefaultsKeys.calDepDate)
+                            defaults.set(calendDate, forKey: UserDefaultsKeys.calRetDate)
                             keyStr = "select1"
                             NotificationCenter.default.post(name: Notification.Name("reload"), object: nil)
                             dismiss(animated: false)

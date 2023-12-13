@@ -36,9 +36,9 @@ class CommonTVCell: TableViewCell {
             if journeyType == "oneway" {
                 index = defaults.integer(forKey: UserDefaultsKeys.select_classIndex)
             }else if journeyType == "circle"{
-                index = defaults.integer(forKey: UserDefaultsKeys.rselect_classIndex)
+                index = defaults.integer(forKey: UserDefaultsKeys.select_classIndex)
             }else {
-                index = defaults.integer(forKey: UserDefaultsKeys.mselect_classIndex)
+                index = defaults.integer(forKey: UserDefaultsKeys.select_classIndex)
             }
         }
         
@@ -81,9 +81,9 @@ extension CommonTVCell:UITableViewDataSource,UITableViewDelegate {
                     if journeyType == "oneway" {
                         defaults.set("Economy", forKey: UserDefaultsKeys.selectClass)
                     }else if journeyType == "circle"{
-                        defaults.set("Economy", forKey: UserDefaultsKeys.rselectClass)
+                        defaults.set("Economy", forKey: UserDefaultsKeys.selectClass)
                     }else {
-                        defaults.set("Economy", forKey: UserDefaultsKeys.mselectClass)
+                        defaults.set("Economy", forKey: UserDefaultsKeys.selectClass)
                     }
                 }
                 cell.show()
@@ -106,11 +106,11 @@ extension CommonTVCell:UITableViewDataSource,UITableViewDelegate {
                     defaults.set(cell.titlelbl.text ?? "Economy", forKey: UserDefaultsKeys.selectClass)
                     defaults.set(indexPath.row, forKey: UserDefaultsKeys.select_classIndex)
                 }else if journeyType == "circle"{
-                    defaults.set(cell.titlelbl.text ?? "Economy", forKey: UserDefaultsKeys.rselectClass)
-                    defaults.set(indexPath.row, forKey: UserDefaultsKeys.rselect_classIndex)
+                    defaults.set(cell.titlelbl.text ?? "Economy", forKey: UserDefaultsKeys.selectClass)
+                    defaults.set(indexPath.row, forKey: UserDefaultsKeys.select_classIndex)
                 }else {
-                    defaults.set(cell.titlelbl.text ?? "Economy", forKey: UserDefaultsKeys.mselectClass)
-                    defaults.set(indexPath.row, forKey: UserDefaultsKeys.mselect_classIndex)
+                    defaults.set(cell.titlelbl.text ?? "Economy", forKey: UserDefaultsKeys.selectClass)
+                    defaults.set(indexPath.row, forKey: UserDefaultsKeys.select_classIndex)
                 }
             }
         }
