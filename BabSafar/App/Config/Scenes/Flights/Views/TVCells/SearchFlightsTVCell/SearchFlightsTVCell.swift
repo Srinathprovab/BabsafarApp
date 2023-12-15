@@ -27,6 +27,9 @@ protocol SearchFlightsTVCellDelegate {
     func addClassBtnAction(cell: SearchFlightsTVCell)
     func didTapOnCloseReturnView(cell: SearchFlightsTVCell)
     func editingTextField(tf:UITextField)
+    
+    func donedatePicker(cell:SearchFlightsTVCell)
+    func cancelDatePicker(cell:SearchFlightsTVCell)
 }
 
 
@@ -103,6 +106,15 @@ class SearchFlightsTVCell: TableViewCell, SelectCityViewModelProtocal {
     @IBOutlet weak var airlineTF: UITextField!
     
     
+    @IBOutlet weak var depTF: UITextField!
+    @IBOutlet weak var retTF: UITextField!
+    
+    
+    
+    let depDatePicker = UIDatePicker()
+    let retdepDatePicker = UIDatePicker()
+    let retDatePicker = UIDatePicker()
+    
     var maxLength = 8
     var isSearchBool = Bool()
     var searchText = String()
@@ -173,6 +185,9 @@ class SearchFlightsTVCell: TableViewCell, SelectCityViewModelProtocal {
                 
                 returnDatelbl.text = "+ Add Return Date"
                 defaults.set("+ Add Return Date", forKey: UserDefaultsKeys.calRetDate)
+                
+                self.depTF.isHidden = false
+                showdepDatePicker()
             }else {
                 fromCitylbl.text = defaults.string(forKey: UserDefaultsKeys.fromCity) ?? "Origin"
                 toCitylbl.text = defaults.string(forKey: UserDefaultsKeys.toCity) ?? "Destination"
@@ -182,6 +197,11 @@ class SearchFlightsTVCell: TableViewCell, SelectCityViewModelProtocal {
                 addTraverllersValuelbl.text = defaults.string(forKey: UserDefaultsKeys.travellerDetails) ?? "Add Details"
                 addClassValuelbl.text = defaults.string(forKey: UserDefaultsKeys.selectClass) ?? "Add Details"
                 returnView.alpha = 1
+                
+                self.depTF.isHidden = false
+                self.retTF.isHidden = false
+                showreturndepDatePicker()
+                showretDatePicker()
             }
         }
         
@@ -202,7 +222,11 @@ class SearchFlightsTVCell: TableViewCell, SelectCityViewModelProtocal {
         }else {
             toTF.placeholder = ""
         }
+        
+        
+        
     }
+    
     
     
     
@@ -299,6 +323,9 @@ class SearchFlightsTVCell: TableViewCell, SelectCityViewModelProtocal {
         toBtn.isUserInteractionEnabled = true
         fromTF.isHidden = false
         toTF.isHidden = false
+        
+        fromBtn.isHidden = true
+        toBtn.isHidden = true
         //********************
         
         setupViews(v: addTraverllersView, radius: 4, color: .WhiteColor)
@@ -321,7 +348,34 @@ class SearchFlightsTVCell: TableViewCell, SelectCityViewModelProtocal {
         setupDropDown()
         airlineTF.addTarget(self, action: #selector(searchTextChanged(textField:)), for: .editingChanged)
         airlineTF.addTarget(self, action: #selector(searchTextBegin(textField:)), for: .editingDidBegin)
+        
+        
+        retTF.addTarget(self, action: #selector(returnTFEditingChanged), for: .editingDidBegin)
+
     }
+    
+    
+    
+    //MARK: - returnTFEditingChanged
+    @objc func returnTFEditingChanged() {
+        
+        
+        if let journeyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
+            if journeyType == "oneway" {
+                
+                defaults.set("+ Add Return Date", forKey: UserDefaultsKeys.calRetDate)
+                showretDatePicker()
+                delegate?.didTapOnReturnToOnewayBtnAction(cell: self)
+                
+            }else {
+               
+               // delegate?.didTapOnReturnBtnAction(cell: self)
+            }
+        }
+        
+       
+    }
+    
     
     func setupTF(txtField:UITextField) {
         txtField.delegate = self
@@ -411,7 +465,9 @@ class SearchFlightsTVCell: TableViewCell, SelectCityViewModelProtocal {
                 defaults.set("+ Add Return Date", forKey: UserDefaultsKeys.calRetDate)
                 delegate?.didTapOnReturnToOnewayBtnAction(cell: self)
             }else {
-                delegate?.didTapOnReturnBtnAction(cell: self)
+                
+                
+                //delegate?.didTapOnReturnBtnAction(cell: self)
             }
         }
         
@@ -708,7 +764,7 @@ extension SearchFlightsTVCell {
             self?.nationalityCode = self?.originArray[index] ?? ""
             self?.airlinelbl.textColor = .AppLabelColor
             
-          //  self?.delegate?.didTapOnCountryCodeBtnAction(cell: self!)
+            //  self?.delegate?.didTapOnCountryCodeBtnAction(cell: self!)
             
         }
     }
@@ -766,4 +822,133 @@ extension SearchFlightsTVCell {
             dropDown.dataSource = countryNames
         }
     }
+}
+
+
+
+
+extension SearchFlightsTVCell {
+    
+    
+    //MARK: - showdepDatePicker
+    func showdepDatePicker(){
+        //Formate Date
+        depDatePicker.datePickerMode = .date
+        depDatePicker.minimumDate = Date()
+        depDatePicker.preferredDatePickerStyle = .wheels
+        
+        let formter = DateFormatter()
+        formter.dateFormat = "dd-MM-yyyy"
+        
+        
+        if let calDepDate = formter.date(from: defaults.string(forKey: UserDefaultsKeys.calDepDate) ?? "") {
+            depDatePicker.date = calDepDate
+        }
+        
+        
+        
+        //ToolBar
+        let toolbar = UIToolbar();
+        toolbar.sizeToFit()
+        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(donedatePicker));
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelDatePicker));
+        
+        toolbar.setItems([doneButton,spaceButton,cancelButton], animated: false)
+        
+        self.depTF.inputAccessoryView = toolbar
+        self.depTF.inputView = depDatePicker
+        
+    }
+    
+    
+    
+    //MARK: - showreturndepDatePicker
+    func showreturndepDatePicker(){
+        //Formate Date
+        retdepDatePicker.datePickerMode = .date
+        retdepDatePicker.minimumDate = Date()
+        retdepDatePicker.preferredDatePickerStyle = .wheels
+        
+        let formter = DateFormatter()
+        formter.dateFormat = "dd-MM-yyyy"
+        
+        
+        
+        if let rcalDepDate = formter.date(from: defaults.string(forKey: UserDefaultsKeys.calDepDate) ?? "")  {
+            retdepDatePicker.date = rcalDepDate
+            
+            
+            if defaults.string(forKey: UserDefaultsKeys.calDepDate) == nil {
+                retDatePicker.date = rcalDepDate
+            }
+        }
+        
+        
+        //ToolBar
+        let toolbar = UIToolbar();
+        toolbar.sizeToFit()
+        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(donedatePicker));
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelDatePicker));
+        
+        toolbar.setItems([doneButton,spaceButton,cancelButton], animated: false)
+        
+        self.depTF.inputAccessoryView = toolbar
+        self.depTF.inputView = retdepDatePicker
+        
+    }
+    
+    
+    
+    //MARK: - showretDatePicker
+    func showretDatePicker(){
+        //Formate Date
+        retDatePicker.datePickerMode = .date
+        retDatePicker.minimumDate = Date()
+        retDatePicker.preferredDatePickerStyle = .wheels
+        
+        
+        let formter = DateFormatter()
+        formter.dateFormat = "dd-MM-yyyy"
+        
+        
+        if let retlblvalue = returnlbl.text {
+            if retlblvalue == "Add Return" {
+                if let rcalRetDate = formter.date(from: defaults.string(forKey: UserDefaultsKeys.calDepDate) ?? "") {
+                    retDatePicker.date = rcalRetDate
+                }
+            }
+        }
+        
+        
+        if let rcalRetDate = formter.date(from: defaults.string(forKey: UserDefaultsKeys.calRetDate) ?? "") {
+            retDatePicker.date = rcalRetDate
+        }
+        
+        //ToolBar
+        let toolbar = UIToolbar();
+        toolbar.sizeToFit()
+        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(donedatePicker));
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelDatePicker));
+        
+        toolbar.setItems([doneButton,spaceButton,cancelButton], animated: false)
+        
+        self.retTF.inputAccessoryView = toolbar
+        self.retTF.inputView = retDatePicker
+        
+        
+    }
+    
+    
+    @objc func donedatePicker(){
+        delegate?.donedatePicker(cell:self)
+    }
+    
+    
+    @objc func cancelDatePicker(){
+        delegate?.cancelDatePicker(cell:self)
+    }
+    
 }

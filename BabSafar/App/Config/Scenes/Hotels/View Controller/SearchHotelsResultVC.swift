@@ -442,6 +442,8 @@ extension SearchHotelsResultVC {
         
         
         
+        
+        
         //        response.filter_sumry?.loc?.forEach({ i in
         //            nearBylocationsArray.append(i.v ?? "")
         //        })
@@ -588,7 +590,7 @@ extension SearchHotelsResultVC {
     
     func callHotelSearchPaginationAPI() {
         print("You've reached the last cell, trigger the API call.")
-        
+        loderBool = false
         payload.removeAll()
         payload["booking_source"] = hbookingsource
         payload["search_id"] = hsearchid
@@ -602,7 +604,7 @@ extension SearchHotelsResultVC {
     
     func hoteSearchPagenationResult(response: HotelSearchModel) {
         
-        
+        loderBool = true
         response.data?.hotelSearchResult?.forEach { i in
             prices.append(i.price ?? "")
             let mapModel = MapModel(
@@ -626,10 +628,10 @@ extension SearchHotelsResultVC {
             // You can show a message or hide a loading indicator here
         }
         
-        
-        
-        
+    
     }
+    
+    
     
 }
 
@@ -641,9 +643,7 @@ extension SearchHotelsResultVC:AppliedFilters{
     
     
     func filtersByApplied(minpricerange: Double, maxpricerange: Double, noofStopsArray: [String], refundableTypeArray: [String], departureTime: [String], arrivalTime: [String], noOvernightFlight: [String], airlinesFilterArray: [String], luggageFilterArray: [String], connectingFlightsFilterArray: [String], ConnectingAirportsFilterArray: [String]) {
-        
-        
-        
+    
         
     }
     

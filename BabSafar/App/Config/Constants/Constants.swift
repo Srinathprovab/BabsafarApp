@@ -115,6 +115,7 @@ var hotelfiltermodel = HotelFilterModel()
 var mapModelArray: [MapModel] = []
 var faretypeArray = [String]()
 var directFlightBool = true
+var facilityArray = [String]()
 
 //MARK: - Profile details 
 var pdetails:ProfileDetails?

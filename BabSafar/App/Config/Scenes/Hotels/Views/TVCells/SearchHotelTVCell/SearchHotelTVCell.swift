@@ -18,7 +18,8 @@ protocol SearchHotelTVCellDelegate {
     func didTapOnSelectCountryCodeList(cell:SearchHotelTVCell)
     func editingTextField(tf:UITextField)
     
-    
+    func donedatePicker(cell:SearchHotelTVCell)
+    func cancelDatePicker(cell:SearchHotelTVCell)
 }
 
 class SearchHotelTVCell: TableViewCell, HotelCitySearchViewModelDelegate {
@@ -54,7 +55,15 @@ class SearchHotelTVCell: TableViewCell, HotelCitySearchViewModelDelegate {
     @IBOutlet weak var hotelSearchTVHeight: NSLayoutConstraint!
     @IBOutlet weak var nationalityTf: UITextField!
     
+    @IBOutlet weak var checkinTF: UITextField!
+    @IBOutlet weak var checkoutTF: UITextField!
     
+    
+    
+    
+    let depDatePicker = UIDatePicker()
+    let retdepDatePicker = UIDatePicker()
+    let retDatePicker = UIDatePicker()
     
     var isSearchBool = Bool()
     var searchText = String()
@@ -98,9 +107,9 @@ class SearchHotelTVCell: TableViewCell, HotelCitySearchViewModelDelegate {
         loadCountryNamesAndCode()
         
         setuplabels(lbl: checkinlbl, text: defaults.string(forKey: UserDefaultsKeys.checkin) ?? "Add Check In Date", textcolor: .AppLabelColor, font: .LatoSemibold(size: 18), align: .left)
-
+        
         setuplabels(lbl: checkoutlbl, text: defaults.string(forKey: UserDefaultsKeys.checkout) ?? "Add Check Out Date", textcolor: .AppLabelColor, font: .LatoSemibold(size: 18), align: .left)
-
+        
         
         NotificationCenter.default.addObserver(self, selector: #selector(hotelrooms), name: Notification.Name("hotelrooms"), object: nil)
     }
@@ -114,9 +123,9 @@ class SearchHotelTVCell: TableViewCell, HotelCitySearchViewModelDelegate {
     func setupUI() {
         
         
-       // holderView.backgroundColor = .WhiteColor
-       // holderView.addCornerRadiusWithShadow(color: .clear, borderColor: .AppBorderColor, cornerRadius: 10)
-
+        // holderView.backgroundColor = .WhiteColor
+        // holderView.addCornerRadiusWithShadow(color: .clear, borderColor: .AppBorderColor, cornerRadius: 10)
+        
         locationCityView.backgroundColor = HexColor("#FCFCFC")
         locationCityView.addCornerRadiusWithShadow(color: .clear, borderColor: .AppBorderColor, cornerRadius: 4)
         checkoutView.backgroundColor = HexColor("#FCFCFC")
@@ -174,6 +183,12 @@ class SearchHotelTVCell: TableViewCell, HotelCitySearchViewModelDelegate {
         nationalityTf.addTarget(self, action: #selector(searchTextBegin(textField:)), for: .editingDidBegin)
         
         setupTV()
+        
+        
+        self.checkinTF.isHidden = false
+        self.checkoutTF.isHidden = false
+        showreturndepDatePicker()
+        showretDatePicker()
     }
     
     func setuptf(tf:UITextField,tag1:Int,leftpadding:Int,font:UIFont,placeholder:String){
@@ -387,7 +402,7 @@ extension SearchHotelTVCell:UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath) as? FromCityTVCell {
             
-          
+            
             locationCitylbl.text = hotelList[indexPath.row].value ?? ""
             locationCitylbl.textColor = .AppLabelColor
             
@@ -395,12 +410,97 @@ extension SearchHotelTVCell:UITableViewDelegate,UITableViewDataSource {
             defaults.set(hotelList[indexPath.row].id ?? "", forKey: UserDefaultsKeys.locationcityid)
             defaults.set(hotelList[indexPath.row].label ?? "", forKey: UserDefaultsKeys.locationcityname)
             
-          //   cityTF.resignFirstResponder()
-             cityTF.text = ""
+            //   cityTF.resignFirstResponder()
+            cityTF.text = ""
             
             updateHeight(height: 0)
         }
     }
     
+    
+}
+
+
+
+extension SearchHotelTVCell {
+    
+    
+    //MARK: - showreturndepDatePicker
+    func showreturndepDatePicker(){
+        //Formate Date
+        retdepDatePicker.datePickerMode = .date
+        retdepDatePicker.minimumDate = Date()
+        retdepDatePicker.preferredDatePickerStyle = .wheels
+        
+        let formter = DateFormatter()
+        formter.dateFormat = "dd-MM-yyyy"
+        
+        
+        
+        if let checkinDate = formter.date(from: defaults.string(forKey: UserDefaultsKeys.checkin) ?? "")  {
+            retdepDatePicker.date = checkinDate
+            
+            
+            if defaults.string(forKey: UserDefaultsKeys.checkin) == nil {
+                retdepDatePicker.date = checkinDate
+            }
+        }
+        
+        
+        //ToolBar
+        let toolbar = UIToolbar();
+        toolbar.sizeToFit()
+        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(donedatePicker));
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelDatePicker));
+        
+        toolbar.setItems([doneButton,spaceButton,cancelButton], animated: false)
+        
+        self.checkinTF.inputAccessoryView = toolbar
+        self.checkinTF.inputView = retdepDatePicker
+        
+    }
+    
+    
+    
+    //MARK: - showretDatePicker
+    func showretDatePicker(){
+        //Formate Date
+        retDatePicker.datePickerMode = .date
+        retDatePicker.minimumDate = Date()
+        retDatePicker.preferredDatePickerStyle = .wheels
+        
+        
+        let formter = DateFormatter()
+        formter.dateFormat = "dd-MM-yyyy"
+        
+        if let checkoutDate = formter.date(from: defaults.string(forKey: UserDefaultsKeys.checkout) ?? "") {
+            retDatePicker.date = checkoutDate
+        }
+        
+        //ToolBar
+        let toolbar = UIToolbar();
+        toolbar.sizeToFit()
+        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(donedatePicker));
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelDatePicker));
+        
+        toolbar.setItems([doneButton,spaceButton,cancelButton], animated: false)
+        
+        self.checkoutTF.inputAccessoryView = toolbar
+        self.checkoutTF.inputView = retDatePicker
+        
+        
+    }
+    
+    
+    @objc func donedatePicker(){
+        delegate?.donedatePicker(cell:self)
+    }
+    
+    
+    @objc func cancelDatePicker(){
+        delegate?.cancelDatePicker(cell:self)
+    }
     
 }

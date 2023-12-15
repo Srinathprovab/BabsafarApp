@@ -65,10 +65,15 @@ class SelectGenderTVCell: TableViewCell {
                 femaleRadioImg.image = UIImage(named: "radioSelected")?.withRenderingMode(.alwaysOriginal)
                 otherRadioImg.image = UIImage(named: "radioUnselected")?.withRenderingMode(.alwaysOriginal)
                 
-            }else {
+            }else if cellInfo?.title == "Other"{
                 maleRadioImg.image = UIImage(named: "radioUnselected")?.withRenderingMode(.alwaysOriginal)
                 femaleRadioImg.image = UIImage(named: "radioUnselected")?.withRenderingMode(.alwaysOriginal)
                 otherRadioImg.image = UIImage(named: "radioSelected")?.withRenderingMode(.alwaysOriginal)
+            }else {
+                gender = ""
+                maleRadioImg.image = UIImage(named: "radioUnselected")?.withRenderingMode(.alwaysOriginal)
+                femaleRadioImg.image = UIImage(named: "radioUnselected")?.withRenderingMode(.alwaysOriginal)
+                otherRadioImg.image = UIImage(named: "radioUnselected")?.withRenderingMode(.alwaysOriginal)
             }
             
         }else {

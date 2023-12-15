@@ -31,7 +31,7 @@ struct Hotel_details : Codable {
     let token : String?
     let format_ame : [Format_ame]?
     let minRate : Double?
-    let hotel_code : Int?
+    let hotel_code : String?
     let country_code : String?
     let city_name : String?
     let fax : String?
@@ -114,7 +114,7 @@ struct Hotel_details : Codable {
         token = try values.decodeIfPresent(String.self, forKey: .token)
         format_ame = try values.decodeIfPresent([Format_ame].self, forKey: .format_ame)
         minRate = try values.decodeIfPresent(Double.self, forKey: .minRate)
-        hotel_code = try values.decodeIfPresent(Int.self, forKey: .hotel_code)
+        hotel_code = try values.decodeIfPresent(String.self, forKey: .hotel_code)
         country_code = try values.decodeIfPresent(String.self, forKey: .country_code)
         city_name = try values.decodeIfPresent(String.self, forKey: .city_name)
         fax = try values.decodeIfPresent(String.self, forKey: .fax)

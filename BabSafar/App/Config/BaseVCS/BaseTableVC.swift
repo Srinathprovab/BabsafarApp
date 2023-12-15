@@ -357,9 +357,11 @@ class BaseTableVC: UIViewController, SearchFlightsTVCellDelegate, TravellerEcono
     
     func didSelectDepartureTime(cell: DepartureTimeCVCell) {}
     func didDeSelectDepartureTime(cell: DepartureTimeCVCell) {}
+    func donedatePicker(cell:SearchFlightsTVCell){}
+    func cancelDatePicker(cell:SearchFlightsTVCell){}
     
-    
-    
+    func donedatePicker(cell:SearchHotelTVCell){}
+    func cancelDatePicker(cell:SearchHotelTVCell){}
     
     
     

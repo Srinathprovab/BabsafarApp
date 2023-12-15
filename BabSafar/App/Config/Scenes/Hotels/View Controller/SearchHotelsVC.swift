@@ -250,6 +250,19 @@ class SearchHotelsVC: BaseTableVC, TopFlightDetailsViewModelDelegate {
     }
     
     
+    //MARK: - donedatePicker cancelDatePicker
+    override func donedatePicker(cell:SearchHotelTVCell){
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd-MM-yyyy"
+        defaults.set(formatter.string(from: cell.retdepDatePicker.date), forKey: UserDefaultsKeys.checkin)
+        defaults.set(formatter.string(from: cell.retDatePicker.date), forKey: UserDefaultsKeys.checkout)
+        
+        commonTableView.reloadData()
+        self.view.endEditing(true)
+    }
+    override func cancelDatePicker(cell:SearchHotelTVCell){
+        self.view.endEditing(true)
+    }
 }
 
 extension SearchHotelsVC {

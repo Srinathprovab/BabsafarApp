@@ -16,7 +16,7 @@ struct Rooms : Codable {
     let children : Int?
     let childrenAges : String?
     let promotions : String?
-    let refund : Bool?
+    let refund : Int?
     let name : String?
     let xml_net : String?
 
@@ -57,7 +57,7 @@ struct Rooms : Codable {
         children = try values.decodeIfPresent(Int.self, forKey: .children)
         childrenAges = try values.decodeIfPresent(String.self, forKey: .childrenAges)
         promotions = try values.decodeIfPresent(String.self, forKey: .promotions)
-        refund = try values.decodeIfPresent(Bool.self, forKey: .refund)
+        refund = try values.decodeIfPresent(Int.self, forKey: .refund)
         name = try values.decodeIfPresent(String.self, forKey: .name)
         xml_net = try values.decodeIfPresent(String.self, forKey: .xml_net)
     }

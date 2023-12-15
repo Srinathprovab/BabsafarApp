@@ -135,7 +135,7 @@ extension NewRoomTVCell: UITableViewDataSource ,UITableViewDelegate {
             cell.currency = data.currency ?? ""
             cell.indexpathvalue = newRoomindexPath
             
-            if data.refund == true {
+            if data.refund == 1 {
                 cell.fareTypelbl.text = "Refundable"
                 cell.fareTypeString = "Refundable"
             }else {
