@@ -88,6 +88,7 @@ class TopCityTVCell: TableViewCell {
         citysCV.clipsToBounds = true
         citysCV.showsHorizontalScrollIndicator = false
         citysCV.backgroundColor = .AppHolderViewColor
+        citysCV.bounces = false
     }
     
     

@@ -45,7 +45,7 @@ class AmenitiesTVCell: UITableViewCell {
         amenitiesCV.layer.cornerRadius = 4
         amenitiesCV.clipsToBounds = true
         amenitiesCV.showsHorizontalScrollIndicator = false
-        
+        amenitiesCV.bounces = false
         
     }
     

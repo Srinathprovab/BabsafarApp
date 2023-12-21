@@ -53,6 +53,7 @@ class TopAirlinesTVCell: TableViewCell {
         topAirlinesCV.layer.cornerRadius = 4
         topAirlinesCV.clipsToBounds = true
         topAirlinesCV.showsHorizontalScrollIndicator = false
+        topAirlinesCV.bounces = false
     }
     
 }

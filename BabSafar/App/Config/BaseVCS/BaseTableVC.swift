@@ -24,6 +24,9 @@ class BaseTableVC: UIViewController, SearchFlightsTVCellDelegate, TravellerEcono
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        commonTableView.bounces = false
+        
         self.modalPresentationCapturesStatusBarAppearance = true
         self.navigationController?.navigationBar.isHidden = true
         configureTableView()

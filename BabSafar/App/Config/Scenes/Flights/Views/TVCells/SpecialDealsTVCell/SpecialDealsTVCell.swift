@@ -62,6 +62,7 @@ class SpecialDealsTVCell: TableViewCell {
         specialDealsCV.collectionViewLayout = layout
         specialDealsCV.backgroundColor = .AppHolderViewColor
         specialDealsCV.showsHorizontalScrollIndicator = false
+        specialDealsCV.bounces = false
     }
     
 }

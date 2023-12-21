@@ -165,7 +165,7 @@ class BaggageInfoVC: BaseTableVC, FlightDetailsViewModelProtocal, FDViewModelDel
         itineraryCV.layer.cornerRadius = 4
         itineraryCV.clipsToBounds = true
         itineraryCV.showsHorizontalScrollIndicator = false
-        
+        itineraryCV.bounces = false
     }
     
     

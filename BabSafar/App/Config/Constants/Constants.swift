@@ -308,20 +308,20 @@ struct ApiEndpoints {
     static let hmobilebooking = "mobile_booking"
     static let mobilehotelprebooking = "mobile_hotel_pre_booking"
     static let flightupdatePayment = "payment_gateway/updatePayment"
-
+    
     
     //Insurence
     static let mobile_pre_insurance_search = "general/mobile_pre_insurance_search"
     static let insurance_pre_process_booking = "insurance/pre_process_booking"
     static let insurance_get_airline_list = "insurance/get_airline_list"
     static let process_passenger_detail = "insurance/process_passenger_detail"
-
+    
     
     //fasttrack
     static let get_fasttrack_airport_code_list = "ajax/get_fasttrack_airport_code_list"
     static let general_pre_fastrack_search = "general/pre_fastrack_search"
     static let efastrack_booking = "fastrack/booking"
-
+    
 }
 
 /*App messages*/
@@ -397,23 +397,23 @@ struct UserDefaultsKeys {
     
     
     //CIRCLE
-//    static var rlocationcity = "rlocation_city"
-//    static var rfromCity = "rfromCity"
-//    static var rtoCity = "rtoCity"
-//    static var rcalDepDate = "rcalDepDate"
-//    static var rcalRetDate = "rcalRetDate"
-//    static var radultCount = "rAdult_Count"
-//    static var rchildCount = "rChild_Count"
-//    static var rinfantsCount = "rInfants_Count"
-//    static var rselectClass = "rselect_class"
-//    static var rselect_classIndex = "rselect_classIndex"
-//    static var rfromlocid = "rfrom_loc_id"
-//    static var rtolocid = "rto_loc_id"
-//    static var rtravellerDetails = "rtravellerDetails"
-//    static var rfromairport = "rfromairport"
-//    static var rtoairport = "rtoairport"
-//    static var rfromcityname = "rfromcityname"
-//    static var rtocityname = "rtocityname"
+    //    static var rlocationcity = "rlocation_city"
+    //    static var rfromCity = "rfromCity"
+    //    static var rtoCity = "rtoCity"
+    //    static var rcalDepDate = "rcalDepDate"
+    //    static var rcalRetDate = "rcalRetDate"
+    //    static var radultCount = "rAdult_Count"
+    //    static var rchildCount = "rChild_Count"
+    //    static var rinfantsCount = "rInfants_Count"
+    //    static var rselectClass = "rselect_class"
+    //    static var rselect_classIndex = "rselect_classIndex"
+    //    static var rfromlocid = "rfrom_loc_id"
+    //    static var rtolocid = "rto_loc_id"
+    //    static var rtravellerDetails = "rtravellerDetails"
+    //    static var rfromairport = "rfromairport"
+    //    static var rtoairport = "rtoairport"
+    //    static var rfromcityname = "rfromcityname"
+    //    static var rtocityname = "rtocityname"
     
     
     static var select = "select"
@@ -428,11 +428,11 @@ struct UserDefaultsKeys {
     static var mfromCity1 = "mfromCity1"
     static var mtoCity1 = "mtoCity1"
     static var mcalDepDate = "mcalDepDate"
-//    static var madultCount = "mAdult_Count"
-//    static var mchildCount = "mChild_Count"
-//    static var minfantsCount = "mInfants_Count"
- //   static var mselectClass = "mselect_class"
- //   static var mselect_classIndex = "mselect_classIndex"
+    //    static var madultCount = "mAdult_Count"
+    //    static var mchildCount = "mChild_Count"
+    //    static var minfantsCount = "mInfants_Count"
+    //   static var mselectClass = "mselect_class"
+    //   static var mselect_classIndex = "mselect_classIndex"
     static var mfromlocid = "mfrom_loc_id"
     static var mtolocid = "mto_loc_id"
     static var mselectAirline = "mselectAirline"

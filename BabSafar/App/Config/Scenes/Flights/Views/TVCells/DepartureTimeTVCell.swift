@@ -74,7 +74,7 @@ extension DepartureTimeTVCell:UICollectionViewDelegate,UICollectionViewDataSourc
         departureTimeCV.collectionViewLayout = layout
         departureTimeCV.allowsMultipleSelection = true
         departureTimeCV.isScrollEnabled = false
-        
+        departureTimeCV.bounces = false
     }
     
     

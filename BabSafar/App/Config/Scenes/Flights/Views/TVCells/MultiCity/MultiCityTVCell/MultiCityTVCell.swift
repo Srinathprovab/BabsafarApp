@@ -145,7 +145,7 @@ class MultiCityTVCell: TableViewCell,ButtonCVCellDelegate,MultiCityCVCellDelegat
         multiCityTripCV.layer.cornerRadius = 4
         multiCityTripCV.clipsToBounds = true
         multiCityTripCV.showsHorizontalScrollIndicator = false
-        
+        multiCityTripCV.bounces = false
     }
     
     //    func setupTV() {
