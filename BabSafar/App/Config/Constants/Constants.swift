@@ -174,6 +174,7 @@ var InfantTotalPrice = String()
 var sub_total_adult : String?
 var sub_total_child : String?
 var sub_total_infant : String?
+var isfilterApplied = false
 
 var checkTermsAndCondationStatus = false
 

@@ -13,8 +13,6 @@ class SearchFlightResultVC: BaseTableVC, UITextFieldDelegate {
     
     
     @IBOutlet weak var holderView: UIView!
-    @IBOutlet weak var navHeight: NSLayoutConstraint!
-    @IBOutlet weak var navView: NavBar!
     @IBOutlet weak var cvHolderView: UIView!
     @IBOutlet weak var sortView: UIView!
     @IBOutlet weak var sortimg: UIImageView!
@@ -39,6 +37,8 @@ class SearchFlightResultVC: BaseTableVC, UITextFieldDelegate {
     @IBOutlet weak var chatBtnView: UIView!
     @IBOutlet weak var returnDatalbl: UILabel!
     
+    @IBOutlet weak var journycityslbl: UILabel!
+    @IBOutlet weak var datesandeconomylbl: UILabel!
     
     var lastContentOffset: CGFloat = 0
     static var newInstance: SearchFlightResultVC? {
@@ -109,7 +109,6 @@ class SearchFlightResultVC: BaseTableVC, UITextFieldDelegate {
         
         // setupRefreshControl()
         
-        navView.isHidden = true
         cvHolderView.isHidden = true
     }
     
@@ -135,26 +134,7 @@ class SearchFlightResultVC: BaseTableVC, UITextFieldDelegate {
     
     //MARK: - setUpNav
     func setUpNav(){
-        navView.isHidden = false
         cvHolderView.isHidden = false
-        navView.titlelbl.text = ""
-        
-        
-        if screenHeight > 835 {
-            navHeight.constant = 170
-        }else {
-            navHeight.constant = 140
-        }
-        
-        
-        navView.editBtnView.isHidden = true
-        navView.filterBtnView.isHidden = false
-        navView.filterImg.image = UIImage(named: "edit1")?.withRenderingMode(.alwaysOriginal)
-        navView.lbl1.isHidden = false
-        navView.lbl2.isHidden = false
-        navView.backBtn.addTarget(self, action: #selector(didTapOnBackBtn(_:)), for: .touchUpInside)
-        navView.filterBtn.addTarget(self, action: #selector(didTapOnEditBtn(_:)), for: .touchUpInside)
-        navView.editBtn.addTarget(self, action: #selector(didTapOnEditBtn(_:)), for: .touchUpInside)
         
         sortimg.image = UIImage(named: "sort")?.withRenderingMode(.alwaysOriginal).withTintColor(.WhiteColor)
         sortBtn.setTitle("", for: .normal)
@@ -240,7 +220,9 @@ class SearchFlightResultVC: BaseTableVC, UITextFieldDelegate {
     // MARK: - didTapOnFilterBtn
     @IBAction func didTapOnFilterBtn(_ sender: Any) {
         gotoFilterVC(strkey: "filter")
+        
     }
+    
     
     
     //MARK: - gotoFilterVC
@@ -498,6 +480,17 @@ class SearchFlightResultVC: BaseTableVC, UITextFieldDelegate {
     }
     
     
+    
+    @IBAction func didTapOnBackBtnAction(_ sender: Any) {
+        callapibool = false
+        guard let vc = SearchFlightsVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: false)
+    }
+    
+    @IBAction func didTapOnEditBtnAction(_ sender: Any) {
+        gotoModifySearchFlightVC(key: "edit")
+    }
 }
 
 
@@ -1239,7 +1232,7 @@ extension SearchFlightResultVC:FlightListModelProtocal{
             defaults.set(response.data?.traceId, forKey: UserDefaultsKeys.traceId)
             
             
-            setuplabels(lbl: navView.lbl1, text: "\(defaults.string(forKey: UserDefaultsKeys.fromcityname) ?? "")(\(response.data?.search_params?.from_loc ?? "")) - \(defaults.string(forKey: UserDefaultsKeys.tocityname) ?? "")(\(response.data?.search_params?.to_loc ?? ""))", textcolor: .WhiteColor, font: .LatoSemibold(size: 18), align: .center)
+            setuplabels(lbl: self.journycityslbl, text: "\(defaults.string(forKey: UserDefaultsKeys.fromcityname) ?? "")(\(response.data?.search_params?.from_loc ?? "")) - \(defaults.string(forKey: UserDefaultsKeys.tocityname) ?? "")(\(response.data?.search_params?.to_loc ?? ""))", textcolor: .WhiteColor, font: .LatoSemibold(size: 18), align: .center)
             
             
             setuplabels(lbl: datelbl, text: response.data?.search_params?.depature ?? "", textcolor: .AppLabelColor, font: .LatoRegular(size: 12), align: .center)
@@ -1247,13 +1240,13 @@ extension SearchFlightResultVC:FlightListModelProtocal{
             
             setuplabels(lbl: cityCodelbl, text: "\(response.data?.search_params?.from_loc ?? "")-\(response.data?.search_params?.to_loc ?? "")", textcolor: .AppLabelColor, font: .LatoRegular(size: 12), align: .center)
             
-            setuplabels(lbl: navView.lbl2, text: "On \(convertDateFormat(inputDate: "\(response.data?.search_params?.depature ?? "")", f1: "dd-MM-yyyy", f2: "dd MMM")) \n \(defaults.string(forKey: UserDefaultsKeys.travellerDetails) ?? "")", textcolor: .WhiteColor, font: .LatoRegular(size: 14), align: .center)
+            setuplabels(lbl: self.datesandeconomylbl, text: "On \(convertDateFormat(inputDate: "\(response.data?.search_params?.depature ?? "")", f1: "dd-MM-yyyy", f2: "dd MMM")) \n \(defaults.string(forKey: UserDefaultsKeys.travellerDetails) ?? "")", textcolor: .WhiteColor, font: .LatoRegular(size: 14), align: .center)
             
             if let journeyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
                 if journeyType == "circle" {
                     returnDatalbl.isHidden = false
                     
-                    setuplabels(lbl: navView.lbl1, text: "\(defaults.string(forKey: UserDefaultsKeys.fromcityname) ?? "") - \(defaults.string(forKey: UserDefaultsKeys.tocityname) ?? "")", textcolor: .WhiteColor, font: .LatoSemibold(size: 18), align: .center)
+                    setuplabels(lbl: self.journycityslbl, text: "\(defaults.string(forKey: UserDefaultsKeys.fromcityname) ?? "") - \(defaults.string(forKey: UserDefaultsKeys.tocityname) ?? "")", textcolor: .WhiteColor, font: .LatoSemibold(size: 18), align: .center)
                     
                     
                     setuplabels(lbl: datelbl, text: response.data?.search_params?.depature ?? "", textcolor: .AppLabelColor, font: .LatoRegular(size: 12), align: .center)
@@ -1263,7 +1256,7 @@ extension SearchFlightResultVC:FlightListModelProtocal{
                     
                     setuplabels(lbl: cityCodelbl, text: "\(response.data?.search_params?.from_loc ?? "")-\(response.data?.search_params?.to_loc ?? "")", textcolor: .AppLabelColor, font: .LatoRegular(size: 12), align: .center)
                     
-                    setuplabels(lbl: navView.lbl2, text: "On \(convertDateFormat(inputDate: "\(response.data?.search_params?.depature ?? "")", f1: "dd-MM-yyyy", f2: "dd MMM")) & Return \(convertDateFormat(inputDate: "\(response.data?.search_params?.freturn ?? "")", f1: "dd-MM-yyyy", f2: "dd MMM")) \n \(defaults.string(forKey: UserDefaultsKeys.travellerDetails) ?? "")", textcolor: .WhiteColor, font: .LatoRegular(size: 14), align: .center)
+                    setuplabels(lbl: self.datesandeconomylbl, text: "On \(convertDateFormat(inputDate: "\(response.data?.search_params?.depature ?? "")", f1: "dd-MM-yyyy", f2: "dd MMM")) & Return \(convertDateFormat(inputDate: "\(response.data?.search_params?.freturn ?? "")", f1: "dd-MM-yyyy", f2: "dd MMM")) \n \(defaults.string(forKey: UserDefaultsKeys.travellerDetails) ?? "")", textcolor: .WhiteColor, font: .LatoRegular(size: 14), align: .center)
                     
                 }
             }
@@ -1302,8 +1295,8 @@ extension SearchFlightResultVC:FlightListModelProtocal{
             
             
             
-            setuplabels(lbl: navView.lbl1, text: response.data?.search_params?.from_loc?.joined(separator: "-") ?? "", textcolor: .WhiteColor, font: .LatoSemibold(size: 18), align: .center)
-            setuplabels(lbl: navView.lbl2, text: response.data?.search_params?.depature?.joined(separator: ",") ?? "", textcolor: .WhiteColor, font: .LatoRegular(size: 14), align: .center)
+            setuplabels(lbl: self.journycityslbl, text: response.data?.search_params?.from_loc?.joined(separator: "-") ?? "", textcolor: .WhiteColor, font: .LatoSemibold(size: 18), align: .center)
+            setuplabels(lbl: self.datesandeconomylbl, text: response.data?.search_params?.depature?.joined(separator: ",") ?? "", textcolor: .WhiteColor, font: .LatoRegular(size: 14), align: .center)
             setuplabels(lbl: datelbl, text: response.data?.search_params?.depature?[0] ?? "", textcolor: .AppLabelColor, font: .LatoRegular(size: 14), align: .center)
             setuplabels(lbl: cityCodelbl, text: "\(response.data?.search_params?.from_loc?[0] ?? "") - \(response.data?.search_params?.from_loc?[1] ?? "")", textcolor: .AppLabelColor, font: .LatoRegular(size: 14), align: .center)
             

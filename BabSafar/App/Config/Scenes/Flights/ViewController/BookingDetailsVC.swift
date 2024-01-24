@@ -18,8 +18,6 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
     
     
     @IBOutlet weak var holderView: UIView!
-    @IBOutlet weak var navBar: NavBar!
-    @IBOutlet weak var navheight: NSLayoutConstraint!
     @IBOutlet weak var BookNowBtnView: UIView!
     @IBOutlet weak var kwdlbl: UILabel!
     @IBOutlet weak var bookNowlbl: UILabel!
@@ -119,10 +117,6 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
         }
         
         
-        if screenHeight < 835 {
-            navheight.constant = 90
-        }
-        //  bookNowlbl.text = totalPrice1
         tablerow.removeAll()
         checkOptionCountArray.removeAll()
         
@@ -163,12 +157,6 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
     
     
     func setupUI() {
-        
-        navBar.titlelbl.text = "Booking Details"
-        navBar.backBtn.addTarget(self, action: #selector(didTapOnBackButton(_:)), for: .touchUpInside)
-        if screenHeight < 835 {
-            navheight.constant = 100
-        }
         
         BookNowBtnView.backgroundColor = .AppBtnColor
         setuplabels(lbl: bookNowlbl, text: "\(defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? ""):", textcolor: .WhiteColor, font: .LatoBold(size: 18), align: .left)
@@ -263,12 +251,6 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
     
     
     
-    @objc func didTapOnBackButton(_ sender:UIButton) {
-        //        callapibool = false
-        //        dismiss(animated: true)
-        
-        searchWithsameInputs()
-    }
     
     func gotoPopupScreen() {
         guard let vc = PopupVC.newInstance.self else {return}
@@ -937,6 +919,11 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
         
     }
     
+    @IBAction func didTapOnBackBtnAction(_ sender: Any) {
+        searchWithsameInputs()
+    }
+    
+    
     
 }
 
@@ -993,7 +980,7 @@ extension BookingDetailsVC {
         payload["selectedResult"] = defaults.string(forKey: UserDefaultsKeys.selectedResult)
         payload["booking_source"] = defaults.string(forKey: UserDefaultsKeys.bookingsourcekey)
         payload["user_id"] = defaults.string(forKey: UserDefaultsKeys.userid) ?? 0
-        //payload["traceId"] = defaults.string(forKey: UserDefaultsKeys.traceId) ?? 0
+        payload["traceId"] = defaults.string(forKey: UserDefaultsKeys.traceId) ?? 0
         mbviewmodel?.CALLPREPROCESSINGBOOKINGAPI(dictParam: payload)
     }
     
@@ -1019,7 +1006,6 @@ extension BookingDetailsVC {
         
         
         mbRefundable = defaults.string(forKey: UserDefaultsKeys.selectedFareType) ?? "Non Refundable"
-        
         
         
         let i = response.pre_booking_params?.priceDetails

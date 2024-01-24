@@ -32,7 +32,7 @@ struct MBModel : Codable {
     let access_key_tp : String?
     //  let safe_search_data : Safe_search_data?
     let reducing_amount : Int?
-    let pax_details : [String]?
+  //  let pax_details : [String]?
     let reward_earned : Int?
     let reward_usable : Int?
     
@@ -62,7 +62,7 @@ struct MBModel : Codable {
         case access_key_tp = "access_key_tp"
         //   case safe_search_data = "safe_search_data"
         case reducing_amount = "reducing_amount"
-        case pax_details = "pax_details"
+    //    case pax_details = "pax_details"
         case reward_earned = "reward_earned"
         case reward_usable = "reward_usable"
     }
@@ -93,7 +93,7 @@ struct MBModel : Codable {
         access_key_tp = try values.decodeIfPresent(String.self, forKey: .access_key_tp)
         //   safe_search_data = try values.decodeIfPresent(Safe_search_data.self, forKey: .safe_search_data)
         reducing_amount = try values.decodeIfPresent(Int.self, forKey: .reducing_amount)
-        pax_details = try values.decodeIfPresent([String].self, forKey: .pax_details)
+    //    pax_details = try values.decodeIfPresent([String].self, forKey: .pax_details)
         reward_earned = try values.decodeIfPresent(Int.self, forKey: .reward_earned)
         reward_usable = try values.decodeIfPresent(Int.self, forKey: .reward_usable)
     }

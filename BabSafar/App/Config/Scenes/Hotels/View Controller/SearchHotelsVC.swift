@@ -54,8 +54,6 @@ class SearchHotelsVC: BaseTableVC, TopFlightDetailsViewModelDelegate {
     }
     
     
-  
-    
     //MARK: CALL TOP FLIGHT HOTEL DETAILS API FUNCTION
     func callTopFlightsHotelsDetailsAPI() {
         viewmodel1?.callTopFlightsHotelsDetailsAPI(dictParam: [:])

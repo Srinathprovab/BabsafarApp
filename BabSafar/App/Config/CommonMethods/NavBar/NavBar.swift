@@ -74,7 +74,7 @@ class NavBar: UIView {
     func setupuiview(){
         
         btnsHolderView.addCornerRadiusWithShadow(color: .clear, borderColor: .clear, cornerRadius: 6)
-        contentView.backgroundColor = .AppHeadderBackColor
+        contentView.backgroundColor = .clear
         image = UIImageView(frame: CGRect(x: 0, y: 0, width: self.contentView.frame.width + 15, height: self.contentView.frame.height))
         image.image = UIImage(named: "baner")
         image.contentMode = .scaleToFill

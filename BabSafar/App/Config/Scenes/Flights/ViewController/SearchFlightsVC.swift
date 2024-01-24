@@ -662,11 +662,7 @@ class SearchFlightsVC: BaseTableVC {
                 print(error.description)
             }
             
-            
         }
-        
-        
-        
     }
     
     
@@ -694,9 +690,6 @@ class SearchFlightsVC: BaseTableVC {
     override func cancelDatePicker(cell:SearchFlightsTVCell){
         self.view.endEditing(true)
     }
-    
-
-    
 }
 
 

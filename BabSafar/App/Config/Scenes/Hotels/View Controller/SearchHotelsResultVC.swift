@@ -12,8 +12,6 @@ class SearchHotelsResultVC: BaseTableVC, UITextFieldDelegate, HotelSearchViewMod
     
     
     @IBOutlet weak var holderView: UIView!
-    @IBOutlet weak var navView: NavBar!
-    @IBOutlet weak var navHeight: NSLayoutConstraint!
     @IBOutlet weak var cvHolderView: UIView!
     @IBOutlet weak var recommandedView: UIView!
     @IBOutlet weak var recommandedlbl: UILabel!
@@ -22,7 +20,13 @@ class SearchHotelsResultVC: BaseTableVC, UITextFieldDelegate, HotelSearchViewMod
     @IBOutlet weak var filterImg: UIImageView!
     @IBOutlet weak var filterlbl: UILabel!
     @IBOutlet weak var filterBtn: UIButton!
-   
+    
+    @IBOutlet weak var cittlbl: UILabel!
+    @IBOutlet weak var dateslbl: UILabel!
+    
+    
+    
+    var bookingSourceDataArrayCount = Int()
     let dropDown = DropDown()
     var lastContentOffset: CGFloat = 0
     var tablerow = [TableRow]()
@@ -60,11 +64,7 @@ class SearchHotelsResultVC: BaseTableVC, UITextFieldDelegate, HotelSearchViewMod
         setupUI()
         commonTableView.register(UINib(nibName: "HotelsTVCell", bundle: nil), forCellReuseIdentifier: "cell44")
         
-        if screenHeight < 835 {
-            navHeight.constant = 130
-        }
         filtered = hotelSearchResult
-        
         NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("nointernet"), object: nil)
     }
     
@@ -80,25 +80,13 @@ class SearchHotelsResultVC: BaseTableVC, UITextFieldDelegate, HotelSearchViewMod
     }
     
     //MARK: - setupRefreshControl
-   
+    
     func setupUI() {
         
-     //   self.holderView.backgroundColor = .appb
-        navView.titlelbl.text = ""
-        navView.filterBtnView.isHidden = false
-        navView.backBtn.addTarget(self, action: #selector(didTapOnBackBtn(_:)), for: .touchUpInside)
-        navView.titlelbl.text = ""
         
-        setuplabels(lbl: navView.lbl1, text: defaults.string(forKey: UserDefaultsKeys.locationcity) ?? "", textcolor: .WhiteColor, font: .LatoMedium(size: 18), align: .center)
-        setuplabels(lbl: navView.lbl2, text: "Checkin:\(defaults.string(forKey: UserDefaultsKeys.checkin) ?? "") | Checkout:\(defaults.string(forKey: UserDefaultsKeys.checkout) ?? "")", textcolor: .WhiteColor, font: .LatoBold(size: 14), align: .center)
+        self.cittlbl.text = defaults.string(forKey: UserDefaultsKeys.locationcity) ?? ""
+        self.dateslbl.text = "Checkin:\(defaults.string(forKey: UserDefaultsKeys.checkin) ?? "") | Checkout:\(defaults.string(forKey: UserDefaultsKeys.checkout) ?? "")"
         
-        
-        navView.editBtnView.isHidden = true
-        navView.filterBtnView.isHidden = false
-        navView.filterBtn.addTarget(self, action: #selector(didTapOnEditBtn(_:)), for: .touchUpInside)
-        navView.filterImg.image = UIImage(named: "edit1")?.withRenderingMode(.alwaysOriginal)
-        navView.lbl1.isHidden = false
-        navView.lbl2.isHidden = false
         cvHolderView.isHidden = true
         
         holderView.layer.borderWidth = 1
@@ -111,11 +99,6 @@ class SearchHotelsResultVC: BaseTableVC, UITextFieldDelegate, HotelSearchViewMod
         setuplabels(lbl: filterlbl, text: "FILTER", textcolor: .AppLabelColor, font: .LatoRegular(size: 16), align: .left)
         
         commonTableView.backgroundColor = .WhiteColor
-        //        hiddenView.isHidden = true
-        //        hiddenView.backgroundColor = .AppBtnColor
-        //        hiddenView.addCornerRadiusWithShadow(color: .lightGray, borderColor: .clear, cornerRadius: 4)
-        
-        
         
         filterBtn.addTarget(self, action: #selector(didTapOnFilterBtnAction(_:)), for: .touchUpInside)
         recommandedbtn.addTarget(self, action: #selector(didTapOnSortBtnAction(_:)), for: .touchUpInside)
@@ -157,40 +140,8 @@ class SearchHotelsResultVC: BaseTableVC, UITextFieldDelegate, HotelSearchViewMod
     }
     
     
-    @objc func didTapOnBackBtn(_ sender:UIButton) {
-        // dismiss(animated: true)
-        
-        callapibool = false
-        if isvcfrom == "dashboard" {
-            guard let vc = DashBoaardTabbarVC.newInstance.self else {return}
-            vc.modalPresentationStyle = .fullScreen
-            vc.selectedIndex = 0
-            self.present(vc, animated: false)
-        }else {
-            guard let vc = SearchHotelsVC.newInstance.self else {return}
-            vc.modalPresentationStyle = .fullScreen
-            vc.isFromvc = "hotelvc"
-            self.present(vc, animated: false)
-        }
-    }
     
     
-    @objc func didTapOnEditBtn(_ sender:UIButton){
-        
-        if let tabSelected = defaults.string(forKey: UserDefaultsKeys.dashboardTapSelected) {
-            if tabSelected == "Flights" {
-                guard let vc = SearchFlightsVC.newInstance.self else {return}
-                vc.modalPresentationStyle = .overCurrentContext
-                present(vc, animated: true)
-            }else {
-                guard let vc = ModifySearchHotelVC.newInstance.self else {return}
-                vc.modalPresentationStyle = .overCurrentContext
-                present(vc, animated: true)
-            }
-        }
-        
-        
-    }
     
     override func viewBtnAction(cell: CommonFromCityTVCell) {
         print(cell.subtitlelbl.text as Any)
@@ -340,12 +291,47 @@ class SearchHotelsResultVC: BaseTableVC, UITextFieldDelegate, HotelSearchViewMod
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }
+    
+    
+    
+    @IBAction func didTapOnBackBtnAction(_ sender: Any) {
+        callapibool = false
+        if isvcfrom == "dashboard" {
+            guard let vc = DashBoaardTabbarVC.newInstance.self else {return}
+            vc.modalPresentationStyle = .fullScreen
+            vc.selectedIndex = 0
+            self.present(vc, animated: false)
+        }else {
+            guard let vc = SearchHotelsVC.newInstance.self else {return}
+            vc.modalPresentationStyle = .fullScreen
+            vc.isFromvc = "hotelvc"
+            self.present(vc, animated: false)
+        }
+    }
+    
+    
+    @IBAction func didTaponEditBtnAction(_ sender: Any) {
+        if let tabSelected = defaults.string(forKey: UserDefaultsKeys.dashboardTapSelected) {
+            if tabSelected == "Flights" {
+                guard let vc = SearchFlightsVC.newInstance.self else {return}
+                vc.modalPresentationStyle = .overCurrentContext
+                present(vc, animated: true)
+            }else {
+                guard let vc = ModifySearchHotelVC.newInstance.self else {return}
+                vc.modalPresentationStyle = .overCurrentContext
+                present(vc, animated: true)
+            }
+        }
+        
+    }
+    
+    
 }
 
 
 extension SearchHotelsResultVC {
     
-   
+    
     func callActiveBookingSourceAPI() {
         viewModel?.CALL_GET_ACTIVE_BOOKING_SOURCE_API(dictParam: [:])
     }
@@ -353,6 +339,9 @@ extension SearchHotelsResultVC {
     func activebookingSourceResult(response: ActiveBookingSourceModel) {
         
         bsDataArray = response.data ?? []
+        bookingSourceDataArrayCount = response.data?.count ?? 0
+        
+        
         let seconds = 1.0
         DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {[self] in
             callHotelPreSearchAPI()
@@ -371,7 +360,7 @@ extension SearchHotelsResultVC {
             let theJSONText = NSString(data: arrJson, encoding: String.Encoding.utf8.rawValue)
             print(theJSONText ?? "")
             payload1["search_params"] = theJSONText
-           
+            
             
             viewModel?.CallHotelPreSearchAPI(dictParam: payload1)
             
@@ -388,11 +377,11 @@ extension SearchHotelsResultVC {
             let seconds = 1.0
             DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {[self] in
                 callHotelSearchAPI(bookingsource: i.source_id ?? "",
-                                      searchid: "\(response.search_id ?? 0)")
+                                   searchid: "\(response.search_id ?? 0)")
             }
             
         }
-       
+        
     }
     
     
@@ -409,29 +398,129 @@ extension SearchHotelsResultVC {
     
     
     func hoteSearchResult(response: HotelSearchModel) {
-        latArray.removeAll()
-        longArray.removeAll()
-        prices.removeAll()
-        mapModelArray.removeAll()
-        hotelSearchResult.removeAll()
         
-        navView.isHidden = false
+        bookingSourceDataArrayCount -= 1
+        isfilterApplied = false
         filterBtnView.isHidden = false
         commonTableView.isHidden = false
         cvHolderView.isHidden = false
         loderBool = false
         holderView.isHidden = false
         
-        hotelSearchId = (response.search_id ?? "0")
-        hsearchid = (response.search_id ?? "0")
-        hbookingsource = response.data?.hotelSearchResult?[0].booking_source ?? ""
-        hotelSearchResult = response.data?.hotelSearchResult ?? []
-        //   hotel_filtersumry = response.filter_sumry
-       // hotelSearchResult.append(response.data?.hotelSearchResult ?? [])
+        
+        // Stop the timer if it's running
+        TimerManager.shared.stopTimer()
+        TimerManager.shared.startTimer(time: 900) // Set your desired total time
+        
+        if let newResults = response.data?.hotelSearchResult, !newResults.isEmpty {
+            // Append the new data to the existing data
+            hotelSearchResult.append(contentsOf: newResults)
+            
+        } else {
+            // No more items to load, update UI accordingly
+            print("No more items to load.")
+            // You can show a message or hide a loading indicator here
+        }
         
         
-        response.data?.hotelSearchResult?.forEach { i in
-            prices.append(i.price ?? "")
+        if bookingSourceDataArrayCount == 0 {
+            
+            holderView.isHidden = true
+            if hotelSearchResult.count <= 0 {
+                gotoNoInternetScreen(keystr: "noresult")
+                // holderView.isHidden = true
+            }else {
+                DispatchQueue.main.async {
+                    self.appendValues(list: hotelSearchResult)
+                }
+            }
+        }
+        
+      
+
+      
+//
+//        hotelSearchId = (response.search_id ?? "0")
+//        hsearchid = (response.search_id ?? "0")
+//        hbookingsource = response.data?.hotelSearchResult?[0].booking_source ?? ""
+//        hotelSearchResult = response.data?.hotelSearchResult ?? []
+//        //   hotel_filtersumry = response.filter_sumry
+//        // hotelSearchResult.append(response.data?.hotelSearchResult ?? [])
+//
+//
+//        response.data?.hotelSearchResult?.forEach { i in
+//            prices.append(i.price ?? "")
+//            let mapModel = MapModel(
+//                longitude: i.longitude ?? "",
+//                latitude: i.latitude ?? "",
+//                hotelname: i.name ?? ""
+//            )
+//            mapModelArray.append(mapModel)
+//        }
+//
+//
+//
+//
+//
+//        //        response.filter_sumry?.loc?.forEach({ i in
+//        //            nearBylocationsArray.append(i.v ?? "")
+//        //        })
+//        //
+//        //        response.filter_sumry?.near_by?.forEach({ i in
+//        //            neighbourwoodArray.append(i.v ?? "")
+//        //        })
+//        //
+//        //        response.filter_sumry?.facility?.forEach({ i in
+//        //            amenitiesArray.append(i.v ?? "")
+//        //        })
+//        //
+//
+//
+//        DispatchQueue.main.async {[self] in
+//            commonTableView.reloadData()
+//        }
+//
+
+    }
+    
+    
+    func appendValues(list:[HotelSearchResult]) {
+        
+        holderView.isHidden = false
+        prices.removeAll()
+        nearBylocationsArray.removeAll()
+        faretypeArray .removeAll()
+        facilityArray.removeAll()
+        mapModelArray.removeAll()
+        
+        
+//        list.forEach { i in
+//            if let price = i.price, (Int(price) ?? 0) > 0 {
+//                prices.append("\(price)")
+//            }
+//
+//            if let hotelLocation = i.hotelLocation, !hotelLocation.isEmpty {
+//                nearBylocationsArray.append(hotelLocation)
+//            }
+//
+//            if let refund = i.refund, !refund.isEmpty {
+//                faretypeArray.append(refund)
+//            }
+//
+//            i.facility?.forEach { j in
+//                if let facilityName = j.name, !facilityName.isEmpty {
+//                    facilityArray.append(facilityName)
+//                }
+//            }
+//        }
+        
+        prices = Array(Set(prices))
+        nearBylocationsArray = Array(Set(nearBylocationsArray))
+        faretypeArray = Array(Set(faretypeArray))
+        facilityArray = Array(Set(facilityArray))
+        
+        
+        list.forEach { i in
             let mapModel = MapModel(
                 longitude: i.longitude ?? "",
                 latitude: i.latitude ?? "",
@@ -439,23 +528,6 @@ extension SearchHotelsResultVC {
             )
             mapModelArray.append(mapModel)
         }
-        
-        
-        
-        
-        
-        //        response.filter_sumry?.loc?.forEach({ i in
-        //            nearBylocationsArray.append(i.v ?? "")
-        //        })
-        //
-        //        response.filter_sumry?.near_by?.forEach({ i in
-        //            neighbourwoodArray.append(i.v ?? "")
-        //        })
-        //
-        //        response.filter_sumry?.facility?.forEach({ i in
-        //            amenitiesArray.append(i.v ?? "")
-        //        })
-        //
         
         
         DispatchQueue.main.async {[self] in
@@ -628,7 +700,7 @@ extension SearchHotelsResultVC {
             // You can show a message or hide a loading indicator here
         }
         
-    
+        
     }
     
     
@@ -643,7 +715,7 @@ extension SearchHotelsResultVC:AppliedFilters{
     
     
     func filtersByApplied(minpricerange: Double, maxpricerange: Double, noofStopsArray: [String], refundableTypeArray: [String], departureTime: [String], arrivalTime: [String], noOvernightFlight: [String], airlinesFilterArray: [String], luggageFilterArray: [String], connectingFlightsFilterArray: [String], ConnectingAirportsFilterArray: [String]) {
-    
+        
         
     }
     
@@ -799,6 +871,14 @@ extension SearchHotelsResultVC {
         self.present(vc, animated: true)
     }
     
+    
+    func gotoNoInternetScreen(keystr:String) {
+        callapibool = true
+        guard let vc = NoInternetConnectionVC.newInstance.self else {return}
+        vc.modalPresentationStyle = .fullScreen
+        vc.key = keystr
+        self.present(vc, animated: false)
+    }
     
 }
 

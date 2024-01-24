@@ -28,7 +28,7 @@ enum TVCellType {
     case TopAirlinesTVCell
     case TravellerEconomyTVCell
     case RadioButtonTVCell
-    case LabelTVCell
+   
     case FromCityTVCell
     case UnderLineTVCell
     case SignUpWithTVCell
@@ -49,7 +49,7 @@ enum TVCellType {
     case PriceSummaryTVCell
     case AddTravellerTVCell
     case SelectGenderTVCell
-    case CheckBoxTVCell
+   
     case SortbyTVCell
     case BookingConfirmedTVCell
     case BookedTravelDetailsTVCell
@@ -59,7 +59,7 @@ enum TVCellType {
     case CommonFromCityTVCell
     case SearchLocationTFTVCell
     case HotelsTVCell
-    case PopularFiltersTVCell
+   
     case HotelImagesTVCell
     case TitleLabelTVCell
     case RoomsTVcell
@@ -68,7 +68,7 @@ enum TVCellType {
     case HotelDetailsTVCell
     case AddAdultsOrGuestTVCell
     case FlightDetailsTVCell
-    case FilterDepartureTVCell
+    
     case ContactTVCell
     case AboutusTVCell
     case RoundTripFlightResultTVCell
@@ -103,13 +103,19 @@ enum TVCellType {
     case AddInfantaTravellerTVCell
     case AddChildTravellerTVCell
     case AddAdultTravellerTVCell
-    case SliderTVCell
     case AddDeatilsOfTravellerTVCell
     case TotalNoofTravellerTVCell
     case TotalPremiumPayableTVCell
     case BCFlightDetailsTVCell
     case NewFlightSearchResultTVCell
     case RegisterUserTVCell
+   
+    
+    case SliderTVCell
+    case CheckBoxTVCell
+    case FilterDepartureTVCell
+    case LabelTVCell
+    case PopularFiltersTVCell
     case DepartureTimeTVCell
     
     //Hotels

@@ -1115,6 +1115,8 @@ extension BaseTableVC: UITableViewDataSource {
                 commonCell = cell
                 
                 
+       
+                
                 
             default:
                 print("handle this case in getCurrentCellAt")

@@ -351,7 +351,7 @@ class SearchFlightsTVCell: TableViewCell, SelectCityViewModelProtocal {
         
         
         retTF.addTarget(self, action: #selector(returnTFEditingChanged), for: .editingDidBegin)
-
+        
     }
     
     
@@ -368,12 +368,12 @@ class SearchFlightsTVCell: TableViewCell, SelectCityViewModelProtocal {
                 delegate?.didTapOnReturnToOnewayBtnAction(cell: self)
                 
             }else {
-               
-               // delegate?.didTapOnReturnBtnAction(cell: self)
+                
+                // delegate?.didTapOnReturnBtnAction(cell: self)
             }
         }
         
-       
+        
     }
     
     
@@ -843,6 +843,10 @@ extension SearchFlightsTVCell {
         
         if let calDepDate = formter.date(from: defaults.string(forKey: UserDefaultsKeys.calDepDate) ?? "") {
             depDatePicker.date = calDepDate
+            
+            if self.returnlbl.text == "Select Date" {
+                retdepDatePicker.date = calDepDate
+            }
         }
         
         
@@ -875,12 +879,25 @@ extension SearchFlightsTVCell {
         
         
         
-        if let rcalDepDate = formter.date(from: defaults.string(forKey: UserDefaultsKeys.calDepDate) ?? "")  {
-            retdepDatePicker.date = rcalDepDate
+        if key == "hotel" {
             
+            if let checkinDate = formter.date(from: defaults.string(forKey: UserDefaultsKeys.checkin) ?? "")  {
+                retdepDatePicker.date = checkinDate
+                
+                
+                if defaults.string(forKey: UserDefaultsKeys.checkin) == nil {
+                    retdepDatePicker.date = checkinDate
+                }
+            }
             
-            if defaults.string(forKey: UserDefaultsKeys.calDepDate) == nil {
-                retDatePicker.date = rcalDepDate
+        }else {
+            if let rcalDepDate = formter.date(from: defaults.string(forKey: UserDefaultsKeys.calDepDate) ?? "")  {
+                retdepDatePicker.date = rcalDepDate
+                
+                
+                if defaults.string(forKey: UserDefaultsKeys.calRetDate) == nil || self.returnlbl.text == "Select Date" {
+                    retdepDatePicker.date = rcalDepDate
+                }
             }
         }
         
@@ -905,7 +922,11 @@ extension SearchFlightsTVCell {
     func showretDatePicker(){
         //Formate Date
         retDatePicker.datePickerMode = .date
-        retDatePicker.minimumDate = Date()
+        //        retDatePicker.minimumDate = Date()
+        // Set minimumDate for retDatePicker based on depDatePicker or retdepDatePicker
+        let selectedDate = self.depTF.isFirstResponder ? depDatePicker.date : retdepDatePicker.date
+        retDatePicker.minimumDate = selectedDate
+        
         retDatePicker.preferredDatePickerStyle = .wheels
         
         
@@ -913,17 +934,24 @@ extension SearchFlightsTVCell {
         formter.dateFormat = "dd-MM-yyyy"
         
         
-        if let retlblvalue = returnlbl.text {
-            if retlblvalue == "Add Return" {
-                if let rcalRetDate = formter.date(from: defaults.string(forKey: UserDefaultsKeys.calDepDate) ?? "") {
-                    retDatePicker.date = rcalRetDate
+        if key == "hotel" {
+            if let checkoutDate = formter.date(from: defaults.string(forKey: UserDefaultsKeys.checkout) ?? "") {
+                retDatePicker.date = checkoutDate
+            }
+        }else {
+            
+            
+            if let calDepDate = formter.date(from: defaults.string(forKey: UserDefaultsKeys.calDepDate) ?? "") {
+                
+                if self.returnlbl.text == "Select Date" {
+                    retDatePicker.date = calDepDate
+                    
+                }else {
+                    if let rcalRetDate = formter.date(from: defaults.string(forKey: UserDefaultsKeys.calRetDate) ?? "") {
+                        retDatePicker.date = rcalRetDate
+                    }
                 }
             }
-        }
-        
-        
-        if let rcalRetDate = formter.date(from: defaults.string(forKey: UserDefaultsKeys.calRetDate) ?? "") {
-            retDatePicker.date = rcalRetDate
         }
         
         //ToolBar

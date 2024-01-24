@@ -445,6 +445,9 @@ class DashBoardVC: BaseTableVC, TopFlightDetailsViewModelDelegate, AllCountryCod
 }
 
 extension DashBoardVC: UIGestureRecognizerDelegate {
+    
+    
+    
     @objc func TapGestureRecognizer(sender: UITapGestureRecognizer) {
         if sender.state == .ended {
             if self.isExpanded {
