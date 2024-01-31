@@ -8,10 +8,6 @@
 import Foundation
 
 
-
-
-
-
 protocol HotelCitySearchViewModelDelegate : BaseViewModelProtocol {
     func hotelCitySearchResult(response : [HotelCityListModel])
 }
