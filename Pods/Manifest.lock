@@ -1,101 +1,101 @@
 PODS:
-  - Alamofire (5.6.2)
+  - Alamofire (5.8.1)
   - DropDown (2.3.13)
-  - Firebase/Core (10.8.0):
+  - Firebase/Core (10.21.0):
     - Firebase/CoreOnly
-    - FirebaseAnalytics (~> 10.8.0)
-  - Firebase/CoreOnly (10.8.0):
-    - FirebaseCore (= 10.8.0)
-  - FirebaseAnalytics (10.8.0):
-    - FirebaseAnalytics/AdIdSupport (= 10.8.0)
+    - FirebaseAnalytics (~> 10.21.0)
+  - Firebase/CoreOnly (10.21.0):
+    - FirebaseCore (= 10.21.0)
+  - FirebaseAnalytics (10.21.0):
+    - FirebaseAnalytics/AdIdSupport (= 10.21.0)
     - FirebaseCore (~> 10.0)
     - FirebaseInstallations (~> 10.0)
-    - GoogleUtilities/AppDelegateSwizzler (~> 7.8)
-    - GoogleUtilities/MethodSwizzler (~> 7.8)
-    - GoogleUtilities/Network (~> 7.8)
-    - "GoogleUtilities/NSData+zlib (~> 7.8)"
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.11)
+    - GoogleUtilities/MethodSwizzler (~> 7.11)
+    - GoogleUtilities/Network (~> 7.11)
+    - "GoogleUtilities/NSData+zlib (~> 7.11)"
     - nanopb (< 2.30910.0, >= 2.30908.0)
-  - FirebaseAnalytics/AdIdSupport (10.8.0):
+  - FirebaseAnalytics/AdIdSupport (10.21.0):
     - FirebaseCore (~> 10.0)
     - FirebaseInstallations (~> 10.0)
-    - GoogleAppMeasurement (= 10.8.0)
-    - GoogleUtilities/AppDelegateSwizzler (~> 7.8)
-    - GoogleUtilities/MethodSwizzler (~> 7.8)
-    - GoogleUtilities/Network (~> 7.8)
-    - "GoogleUtilities/NSData+zlib (~> 7.8)"
+    - GoogleAppMeasurement (= 10.21.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.11)
+    - GoogleUtilities/MethodSwizzler (~> 7.11)
+    - GoogleUtilities/Network (~> 7.11)
+    - "GoogleUtilities/NSData+zlib (~> 7.11)"
     - nanopb (< 2.30910.0, >= 2.30908.0)
-  - FirebaseCore (10.8.0):
+  - FirebaseCore (10.21.0):
     - FirebaseCoreInternal (~> 10.0)
-    - GoogleUtilities/Environment (~> 7.8)
-    - GoogleUtilities/Logger (~> 7.8)
-  - FirebaseCoreInternal (10.8.0):
+    - GoogleUtilities/Environment (~> 7.12)
+    - GoogleUtilities/Logger (~> 7.12)
+  - FirebaseCoreInternal (10.21.0):
     - "GoogleUtilities/NSData+zlib (~> 7.8)"
-  - FirebaseInstallations (10.8.0):
+  - FirebaseInstallations (10.21.0):
     - FirebaseCore (~> 10.0)
     - GoogleUtilities/Environment (~> 7.8)
     - GoogleUtilities/UserDefaults (~> 7.8)
     - PromisesObjC (~> 2.1)
-  - FreshchatSDK (5.5.1)
-  - GoogleAppMeasurement (10.8.0):
-    - GoogleAppMeasurement/AdIdSupport (= 10.8.0)
-    - GoogleUtilities/AppDelegateSwizzler (~> 7.8)
-    - GoogleUtilities/MethodSwizzler (~> 7.8)
-    - GoogleUtilities/Network (~> 7.8)
-    - "GoogleUtilities/NSData+zlib (~> 7.8)"
+  - FreshchatSDK (5.9.3)
+  - GoogleAppMeasurement (10.21.0):
+    - GoogleAppMeasurement/AdIdSupport (= 10.21.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.11)
+    - GoogleUtilities/MethodSwizzler (~> 7.11)
+    - GoogleUtilities/Network (~> 7.11)
+    - "GoogleUtilities/NSData+zlib (~> 7.11)"
     - nanopb (< 2.30910.0, >= 2.30908.0)
-  - GoogleAppMeasurement/AdIdSupport (10.8.0):
-    - GoogleAppMeasurement/WithoutAdIdSupport (= 10.8.0)
-    - GoogleUtilities/AppDelegateSwizzler (~> 7.8)
-    - GoogleUtilities/MethodSwizzler (~> 7.8)
-    - GoogleUtilities/Network (~> 7.8)
-    - "GoogleUtilities/NSData+zlib (~> 7.8)"
+  - GoogleAppMeasurement/AdIdSupport (10.21.0):
+    - GoogleAppMeasurement/WithoutAdIdSupport (= 10.21.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.11)
+    - GoogleUtilities/MethodSwizzler (~> 7.11)
+    - GoogleUtilities/Network (~> 7.11)
+    - "GoogleUtilities/NSData+zlib (~> 7.11)"
     - nanopb (< 2.30910.0, >= 2.30908.0)
-  - GoogleAppMeasurement/WithoutAdIdSupport (10.8.0):
-    - GoogleUtilities/AppDelegateSwizzler (~> 7.8)
-    - GoogleUtilities/MethodSwizzler (~> 7.8)
-    - GoogleUtilities/Network (~> 7.8)
-    - "GoogleUtilities/NSData+zlib (~> 7.8)"
+  - GoogleAppMeasurement/WithoutAdIdSupport (10.21.0):
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.11)
+    - GoogleUtilities/MethodSwizzler (~> 7.11)
+    - GoogleUtilities/Network (~> 7.11)
+    - "GoogleUtilities/NSData+zlib (~> 7.11)"
     - nanopb (< 2.30910.0, >= 2.30908.0)
-  - GoogleMaps (8.1.0):
-    - GoogleMaps/Maps (= 8.1.0)
-  - GoogleMaps/Base (8.1.0)
-  - GoogleMaps/Maps (8.1.0):
+  - GoogleMaps (8.4.0):
+    - GoogleMaps/Maps (= 8.4.0)
+  - GoogleMaps/Base (8.4.0)
+  - GoogleMaps/Maps (8.4.0):
     - GoogleMaps/Base
-  - GoogleUtilities/AppDelegateSwizzler (7.11.1):
+  - GoogleUtilities/AppDelegateSwizzler (7.12.0):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
     - GoogleUtilities/Network
-  - GoogleUtilities/Environment (7.11.1):
+  - GoogleUtilities/Environment (7.12.0):
     - PromisesObjC (< 3.0, >= 1.2)
-  - GoogleUtilities/Logger (7.11.1):
+  - GoogleUtilities/Logger (7.12.0):
     - GoogleUtilities/Environment
-  - GoogleUtilities/MethodSwizzler (7.11.1):
+  - GoogleUtilities/MethodSwizzler (7.12.0):
     - GoogleUtilities/Logger
-  - GoogleUtilities/Network (7.11.1):
+  - GoogleUtilities/Network (7.12.0):
     - GoogleUtilities/Logger
     - "GoogleUtilities/NSData+zlib"
     - GoogleUtilities/Reachability
-  - "GoogleUtilities/NSData+zlib (7.11.1)"
-  - GoogleUtilities/Reachability (7.11.1):
+  - "GoogleUtilities/NSData+zlib (7.12.0)"
+  - GoogleUtilities/Reachability (7.12.0):
     - GoogleUtilities/Logger
-  - GoogleUtilities/UserDefaults (7.11.1):
+  - GoogleUtilities/UserDefaults (7.12.0):
     - GoogleUtilities/Logger
-  - IQKeyboardManager (6.5.10)
+  - IQKeyboardManager (6.5.17)
   - JTAppleCalendar (7.1.8)
   - MARKRangeSlider (1.1.1)
   - MBProgressHUD (1.2.0)
-  - MyFatoorah (2.0.132)
-  - nanopb (2.30909.0):
-    - nanopb/decode (= 2.30909.0)
-    - nanopb/encode (= 2.30909.0)
-  - nanopb/decode (2.30909.0)
-  - nanopb/encode (2.30909.0)
-  - PromisesObjC (2.2.0)
+  - MyFatoorah (2.0.143)
+  - nanopb (2.30909.1):
+    - nanopb/decode (= 2.30909.1)
+    - nanopb/encode (= 2.30909.1)
+  - nanopb/decode (2.30909.1)
+  - nanopb/encode (2.30909.1)
+  - PromisesObjC (2.3.1)
   - ReachabilitySwift (4.3.1)
-  - SDWebImage (5.13.2):
-    - SDWebImage/Core (= 5.13.2)
-  - SDWebImage/Core (5.13.2)
-  - SideMenuSwift (2.0.9)
+  - SDWebImage (5.18.10):
+    - SDWebImage/Core (= 5.18.10)
+  - SDWebImage/Core (5.18.10)
+  - SideMenuSwift (2.1.0)
   - SwiftRangeSlider (2.0.0)
   - SwiftyJSON (5.0.1)
   - Toast-Swift (5.0.1)
@@ -152,27 +152,27 @@ SPEC REPOS:
     - UIView-Shimmer
 
 SPEC CHECKSUMS:
-  Alamofire: d368e1ff8a298e6dde360e35a3e68e6c610e7204
+  Alamofire: 3ca42e259043ee0dc5c0cdd76c4bc568b8e42af7
   DropDown: 8a2116376c1981888557f72ec2ffc9a5e0e456ec
-  Firebase: b49ef44e5ec9a3d0c1f6450f410337e97872279c
-  FirebaseAnalytics: e1fc758bd5d71823bba970c076abee4b2450a5f4
-  FirebaseCore: e78636a990b54be427ce300aa09a0e359f4e0e87
-  FirebaseCoreInternal: fa2899eb1f340054858d289e5a0fb935a0a74e52
-  FirebaseInstallations: b2a05a3fe707df764345d68685534d07d0664af3
-  FreshchatSDK: 7fc71b38fc537db8e6e338bc5206c45f7a646f98
-  GoogleAppMeasurement: 0ba93018e916f7badf915c2337d43cc1fa96b3f9
-  GoogleMaps: 97300a4b89a3641563782c52228c4530f5fe0d89
-  GoogleUtilities: 9aa0ad5a7bc171f8bae016300bfcfa3fb8425749
-  IQKeyboardManager: 45a1fa55c1a5b02c61ac0fd7fd5b62bb4ad20d97
+  Firebase: 4453b799f72f625384dc23f412d3be92b0e3b2a0
+  FirebaseAnalytics: d275f288881d4417f780115dd52c05fa9752d530
+  FirebaseCore: 74f647ad9739ea75112ce6c3b3b91f5488ce1122
+  FirebaseCoreInternal: 43c1788eaeee9d1b97caaa751af567ce11010d00
+  FirebaseInstallations: 390ea1d10a4d02b20c965cbfd527ee9b3b412acb
+  FreshchatSDK: 938850105c0ae4284b52d961d66897e742c97ea6
+  GoogleAppMeasurement: a65314d316443969ed3d3709b3a187448ed6418f
+  GoogleMaps: 8939898920281c649150e0af74aa291c60f2e77d
+  GoogleUtilities: 0759d1a57ebb953965c2dfe0ba4c82e95ccc2e34
+  IQKeyboardManager: 904d013844bbae0abe073f015487bfebe5476335
   JTAppleCalendar: b7fb40852f5f319fe55c8ec3861f1de0edc99cc8
   MARKRangeSlider: ef7e1fe84d22996f47fd72dcb8de50b9410aac47
   MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
-  MyFatoorah: 93ae8b413f0e32e2519e90fee4acba6a16f3f5ba
-  nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
-  PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
+  MyFatoorah: 9a568e19fde7fe59c9d581bc14c1f9596e2c3204
+  nanopb: d4d75c12cd1316f4a64e3c6963f879ecd4b5e0d5
+  PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
   ReachabilitySwift: 4032e2f59586e11e3b0ebe15b167abdd587a388b
-  SDWebImage: 72f86271a6f3139cc7e4a89220946489d4b9a866
-  SideMenuSwift: 39f1922e225da4aaa8b16591037a929defe960c9
+  SDWebImage: fc8f2d48bbfd72ef39d70e981bd24a3f3be53fec
+  SideMenuSwift: edf340d11fc6200f7c857a014ed60b1a995d8d0b
   SwiftRangeSlider: f86e3b637c961120158fa1a89277c8343845cbe4
   SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
   Toast-Swift: 9b6a70f28b3bf0b96c40d46c0c4b9d6639846711
@@ -181,4 +181,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: a4707f6900e324f8caefd64c9f9e5caa652fa4f9
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.13.0

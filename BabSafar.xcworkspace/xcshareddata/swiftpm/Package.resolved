@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "mf-sdk-ios-demo",
+      "kind" : "remoteSourceControl",
+      "location" : "https://dev.azure.com/myfatoorahsc/_git/MF-SDK-iOS-Demo",
+      "state" : {
+        "branch" : "sdk_source",
+        "revision" : "ba4e2fd18720d19b7f877bf21e28357653942475"
+      }
+    }
+  ],
+  "version" : 2
+}
