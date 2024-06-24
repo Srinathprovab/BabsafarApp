@@ -61,9 +61,9 @@ class SearchHotelTVCell: TableViewCell, HotelCitySearchViewModelDelegate {
     
     
     
-    let depDatePicker = UIDatePicker()
-    let retdepDatePicker = UIDatePicker()
-    let retDatePicker = UIDatePicker()
+    
+    let checkinDatePicker = UIDatePicker()
+    let checkoutDatePicker = UIDatePicker()
     
     var isSearchBool = Bool()
     var searchText = String()
@@ -111,7 +111,14 @@ class SearchHotelTVCell: TableViewCell, HotelCitySearchViewModelDelegate {
         setuplabels(lbl: checkoutlbl, text: defaults.string(forKey: UserDefaultsKeys.checkout) ?? "Add Check Out Date", textcolor: .AppLabelColor, font: .LatoSemibold(size: 18), align: .left)
         
         
+        nationalityValuelbl.text = defaults.string(forKey: UserDefaultsKeys.hnationalityname) ?? "Select Nationality"
+        
         NotificationCenter.default.addObserver(self, selector: #selector(hotelrooms), name: Notification.Name("hotelrooms"), object: nil)
+        
+        
+        showCheckInDatePicker()
+        showCheckoutDatePicker()
+        setupnationalityDropDown()
     }
     
     @objc func hotelrooms() {
@@ -176,7 +183,7 @@ class SearchHotelTVCell: TableViewCell, HotelCitySearchViewModelDelegate {
         nationalityBtn.addTarget(self, action: #selector(didTapOnNatinalityButtonAction(_:)), for: .touchUpInside)
         
         
-        setupnationalityDropDown()
+       
         setuptf(tf: nationalityTf, tag1: 3, leftpadding: 20, font: .LatoRegular(size: 16), placeholder: "")
         nationalityBtn.isHidden = true
         nationalityTf.addTarget(self, action: #selector(searchTextChanged(textField:)), for: .editingChanged)
@@ -187,8 +194,9 @@ class SearchHotelTVCell: TableViewCell, HotelCitySearchViewModelDelegate {
         
         self.checkinTF.isHidden = false
         self.checkoutTF.isHidden = false
-        showreturndepDatePicker()
-        showretDatePicker()
+        
+        
+        
     }
     
     func setuptf(tf:UITextField,tag1:Int,leftpadding:Int,font:UIFont,placeholder:String){
@@ -358,11 +366,16 @@ class SearchHotelTVCell: TableViewCell, HotelCitySearchViewModelDelegate {
         ndropDown.selectionAction = { [weak self] (index: Int, item: String) in
             
             print(item)
+            print(self?.isocountrycodeArray[index] ?? "")
             self?.nationalityValuelbl.text = self?.countryNames[index] ?? ""
             self?.countryCode = self?.isocountrycodeArray[index] ?? ""
             self?.nationalityTf.text = ""
             self?.nationalityTf.resignFirstResponder()
-            self?.delegate?.didTapOnSelectCountryCodeList(cell: self!)
+            
+            defaults.set(self?.isocountrycodeArray[index] ?? "", forKey: UserDefaultsKeys.hnationalitycode)
+            defaults.set(item, forKey: UserDefaultsKeys.hnationalityname)
+            
+          //  self?.delegate?.didTapOnSelectCountryCodeList(cell: self!)
         }
     }
     
@@ -422,29 +435,39 @@ extension SearchHotelTVCell:UITableViewDelegate,UITableViewDataSource {
 
 
 
+
+
 extension SearchHotelTVCell {
     
     
-    //MARK: - showreturndepDatePicker
-    func showreturndepDatePicker(){
+    //MARK: - showdepDatePicker
+    func showCheckInDatePicker(){
         //Formate Date
-        retdepDatePicker.datePickerMode = .date
-        retdepDatePicker.minimumDate = Date()
-        retdepDatePicker.preferredDatePickerStyle = .wheels
+        checkinDatePicker.datePickerMode = .date
+        checkinDatePicker.minimumDate = Date()
+        checkinDatePicker.preferredDatePickerStyle = .wheels
         
         let formter = DateFormatter()
         formter.dateFormat = "dd-MM-yyyy"
         
         
-        
-        if let checkinDate = formter.date(from: defaults.string(forKey: UserDefaultsKeys.checkin) ?? "")  {
-            retdepDatePicker.date = checkinDate
+        if let checkindate = formter.date(from: defaults.string(forKey: UserDefaultsKeys.checkin) ?? "") {
+            checkinDatePicker.date = checkindate
             
+            if self.checkoutlbl.text == "Add Date" {
+                checkoutDatePicker.date = checkindate
+            }
             
-            if defaults.string(forKey: UserDefaultsKeys.checkin) == nil {
-                retdepDatePicker.date = checkinDate
+            // Check if checkout date is smaller than checkin date
+            if let checkoutDate = formter.date(from: self.checkoutlbl.text ?? ""),
+               checkoutDate < checkindate {
+                checkoutDatePicker.date = checkindate
+                
+                // Also update the label to reflect the change
+                self.checkoutlbl.text = formter.string(from: checkindate)
             }
         }
+        
         
         
         //ToolBar
@@ -457,26 +480,51 @@ extension SearchHotelTVCell {
         toolbar.setItems([doneButton,spaceButton,cancelButton], animated: false)
         
         self.checkinTF.inputAccessoryView = toolbar
-        self.checkinTF.inputView = retdepDatePicker
+        self.checkinTF.inputView = checkinDatePicker
         
     }
     
     
     
+    
+    
+    
     //MARK: - showretDatePicker
-    func showretDatePicker(){
+    func showCheckoutDatePicker(){
         //Formate Date
-        retDatePicker.datePickerMode = .date
-        retDatePicker.minimumDate = Date()
-        retDatePicker.preferredDatePickerStyle = .wheels
+        checkoutDatePicker.datePickerMode = .date
+        //        retDatePicker.minimumDate = Date()
+        // Set minimumDate for retDatePicker based on depDatePicker or retdepDatePicker
+        let selectedDate = self.checkinTF.isFirstResponder ? checkinDatePicker.date : checkoutDatePicker.date
+        checkoutDatePicker.minimumDate = selectedDate
+        
+        checkoutDatePicker.preferredDatePickerStyle = .wheels
         
         
         let formter = DateFormatter()
         formter.dateFormat = "dd-MM-yyyy"
         
-        if let checkoutDate = formter.date(from: defaults.string(forKey: UserDefaultsKeys.checkout) ?? "") {
-            retDatePicker.date = checkoutDate
+        
+        //        if let checkoutDate = formter.date(from: defaults.string(forKey: UserDefaultsKeys.checkout) ?? "") {
+        //            checkoutDatePicker.date = checkoutDate
+        //
+        //
+        //        }
+        
+        
+        if let checkindate = formter.date(from: defaults.string(forKey: UserDefaultsKeys.checkin) ?? "") {
+            
+            if self.checkoutlbl.text == "Add Date" {
+                checkoutDatePicker.date = checkindate
+                
+            }else {
+                if let checkoutdate = formter.date(from: defaults.string(forKey: UserDefaultsKeys.checkout) ?? "") {
+                    checkoutDatePicker.date = checkoutdate
+                }
+            }
         }
+        
+        
         
         //ToolBar
         let toolbar = UIToolbar();
@@ -488,7 +536,7 @@ extension SearchHotelTVCell {
         toolbar.setItems([doneButton,spaceButton,cancelButton], animated: false)
         
         self.checkoutTF.inputAccessoryView = toolbar
-        self.checkoutTF.inputView = retDatePicker
+        self.checkoutTF.inputView = checkoutDatePicker
         
         
     }

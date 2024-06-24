@@ -43,7 +43,8 @@ class TermsPopupVC: BaseTableVC {
     func setupTV() {
         tablerow.removeAll()
         
-        tablerow.append(TableRow(moreData: disc,
+        tablerow.append(TableRow(title:hotel_desc,
+                                 moreData: disc,
                                  cellType:.HotelDesclblTVCell))
         
         

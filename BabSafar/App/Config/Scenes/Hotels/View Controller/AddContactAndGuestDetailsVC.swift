@@ -100,9 +100,9 @@ class AddContactAndGuestDetailsVC: BaseTableVC, HotelMBViewModelDelegate, Aboutu
         payload.removeAll()
         TimerManager.shared.sessionStop()
         
-        let selectedrRateKeyArrayString = "[\"" + selectedrRateKeyArray.joined(separator: "\",\"") + "\"]"
+    //    let selectedrRateKeyArrayString = "[\"" + selectedrRateKeyArray.joined(separator: "\",\"") + "\"]"
         
-        payload["rateKey"] = selectedrRateKeyArrayString
+        payload["rateKey"] = selectedrRateKeyArray
         payload["search_id"] = hsearchid
         payload["booking_source"] = hbookingsource
         payload["token"] = htoken

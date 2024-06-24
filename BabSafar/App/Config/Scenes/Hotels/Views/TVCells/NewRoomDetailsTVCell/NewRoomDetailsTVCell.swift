@@ -21,7 +21,7 @@ class NewRoomDetailsTVCell: UITableViewCell {
     @IBOutlet weak var bablbl: UILabel!
     @IBOutlet weak var selectRoomBtnView: BorderedView!
     
-    
+    var ratekey = String()
     var currency = ""
     var exactprice = ""
     var isSelectedCell: Bool = false {
@@ -31,11 +31,14 @@ class NewRoomDetailsTVCell: UITableViewCell {
     }
     private var unselectedBackgroundColor: UIColor = .AppBtnColor
 
+    
+    var CancellationPolicyArray = [CancellationPolicies]()
+    var selectedRoom = String()
     var indexpathvalue : IndexPath?
     var fareTypeString = String()
     var CancellationPolicyAmount = String()
     var CancellationPolicyFromDate = String()
-    var ratekey = String()
+   
     var ratekeyNewArray = [String]()
     var delegate:NewRoomDetailsTVCellDelegate?
     override func awakeFromNib() {

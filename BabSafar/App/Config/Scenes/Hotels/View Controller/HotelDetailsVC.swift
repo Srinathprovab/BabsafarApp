@@ -10,13 +10,12 @@ import UIKit
 class HotelDetailsVC: BaseTableVC, HotelDetailsViewModelDelegate {
     
     @IBOutlet weak var holderView: UIView!
-    @IBOutlet weak var navView: NavBar!
     @IBOutlet weak var kwdlbl: UILabel!
     @IBOutlet weak var bookNowView: UIView!
     @IBOutlet weak var bookNowlbl: UILabel!
     @IBOutlet weak var bookNowBtn: UIButton!
-    @IBOutlet weak var navHeight: NSLayoutConstraint!
-    
+    @IBOutlet weak var citynamelbl: UILabel!
+    @IBOutlet weak var dateslbl: UILabel!
     
     var selectedCell: NewRoomDetailsTVCell?
     var imgArray = ["img1","img2","img3","img4","img2","img1","img4","img3","img1","img2","img3","img4","img2","img1","img4","img3"]
@@ -42,11 +41,7 @@ class HotelDetailsVC: BaseTableVC, HotelDetailsViewModelDelegate {
     override func viewWillAppear(_ animated: Bool) {
         selectedCellStates = [:]
         addObserver()
-        
-        if screenHeight < 835 {
-            navHeight.constant = 130
-        }
-        
+       
         if callapibool == true{
             
 //            bookNowView.isUserInteractionEnabled = false
@@ -81,16 +76,11 @@ class HotelDetailsVC: BaseTableVC, HotelDetailsViewModelDelegate {
     //MARK: - setupUI
     func setupUI() {
         holderView.backgroundColor = .AppBorderColor
-        navView.titlelbl.text = ""
-        navView.backBtn.addTarget(self, action: #selector(didTapOnBackBtn(_:)), for: .touchUpInside)
-        navView.titlelbl.text = ""
-        setuplabels(lbl: navView.lbl1, text: defaults.string(forKey: UserDefaultsKeys.locationcity) ?? "", textcolor: .WhiteColor, font: .LatoMedium(size: 18), align: .center)
-        setuplabels(lbl: navView.lbl2, text: "Checkin:\(defaults.string(forKey: UserDefaultsKeys.checkin) ?? "") | Checkout:\(defaults.string(forKey: UserDefaultsKeys.checkout) ?? "")", textcolor: .WhiteColor, font: .LatoBold(size: 14), align: .center)
+       
+        setuplabels(lbl: citynamelbl, text: defaults.string(forKey: UserDefaultsKeys.locationcity) ?? "", textcolor: .WhiteColor, font: .LatoMedium(size: 18), align: .center)
+        setuplabels(lbl: dateslbl, text: "Checkin:\(defaults.string(forKey: UserDefaultsKeys.checkin) ?? "") | Checkout:\(defaults.string(forKey: UserDefaultsKeys.checkout) ?? "")", textcolor: .WhiteColor, font: .LatoBold(size: 14), align: .center)
         
-        navView.lbl1.isHidden = false
-        navView.lbl2.isHidden = false
-        navView.filterBtnView.isHidden = true
-        navView.editBtnView.isHidden = true
+     
         
         bookNowView.backgroundColor = .AppBtnColor
         setuplabels(lbl: kwdlbl, text: "Book Now", textcolor: .WhiteColor, font: .LatoMedium(size: 18), align: .right)
@@ -188,6 +178,7 @@ class HotelDetailsVC: BaseTableVC, HotelDetailsViewModelDelegate {
         vc.amount = cell.CancellationPolicyAmount
         vc.datetime = cell.CancellationPolicyFromDate
         vc.fartType = cell.fareTypeString
+        vc.CancellationPolicyArray = cell.CancellationPolicyArray
         self.present(vc, animated: false)
         
     }
@@ -196,7 +187,9 @@ class HotelDetailsVC: BaseTableVC, HotelDetailsViewModelDelegate {
     //MARK: - didTapOnSelectRoomBtnAction
     
     override func didTapOnSelectRoomBtnAction(cell:NewRoomDetailsTVCell){
-        selectedrRateKeyArray.removeAll()
+        
+      //  CancellationPolicyArray = cell.CancellationPolicyArray
+        
         bookNowlbl.isHidden = false
         
         // Toggle the selected state
@@ -223,19 +216,30 @@ class HotelDetailsVC: BaseTableVC, HotelDetailsViewModelDelegate {
         bookNowView.alpha = 1
         grandTotal = cell.pricelbl.text ?? ""
         setuplabels(lbl: bookNowlbl, text: cell.pricelbl.text ?? "" , textcolor: .WhiteColor, font: .LatoMedium(size: 18), align: .left)
-        selectedrRateKeyArray.append(cell.ratekey)
-        setAttributedTextnew(str1: "\(cell.currency )",
-                             str2: "\(cell.exactprice )",
-                             lbl: bookNowlbl,
-                             str1font: .LatoBold(size: 12),
-                             str2font: .LatoBold(size: 18),
-                             str1Color: .WhiteColor,
-                             str2Color: .WhiteColor)
         
+        selectedrRateKeyArray = cell.ratekey
+        
+       setAttributedTextnew(str1: "\(cell.currency )",
+                                                str2: "\(cell.exactprice )",
+                                                lbl: bookNowlbl,
+                                                str1font: .LatoBold(size: 12),
+                                                str2font: .LatoBold(size: 18),
+                                                str1Color: .WhiteColor,
+                                                str2Color: .WhiteColor)
+        
+        
+        roomselected = cell.selectedRoom
+       
         
         
     }
     
+    
+    
+    @IBAction func didTaponbackBtnAction(_ sender: Any) {
+        callapibool = false
+        dismiss(animated: true)
+    }
     
 }
 

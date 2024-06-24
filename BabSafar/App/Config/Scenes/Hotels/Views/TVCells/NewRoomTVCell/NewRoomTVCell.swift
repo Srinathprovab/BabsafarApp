@@ -135,7 +135,7 @@ extension NewRoomTVCell: UITableViewDataSource ,UITableViewDelegate {
             cell.currency = data.currency ?? ""
             cell.indexpathvalue = newRoomindexPath
             
-            if data.refund == 1 {
+            if data.refund == "1" {
                 cell.fareTypelbl.text = "Refundable"
                 cell.fareTypeString = "Refundable"
             }else {
@@ -143,6 +143,8 @@ extension NewRoomTVCell: UITableViewDataSource ,UITableViewDelegate {
                 cell.fareTypeString = "Non Refundable"
             }
             
+            
+            cell.CancellationPolicyArray = data.cancellationPolicies ?? []
             // Access the cancellationPolicies array
             if let cancellationPolicies1 = data.cancellationPolicies {
                 // Iterate over the cancellationPolicies array

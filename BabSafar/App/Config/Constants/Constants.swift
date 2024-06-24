@@ -84,12 +84,13 @@ var images = [Images]()
 var formatAmeArray = [Format_ame]()
 var formatDesc = [Format_desc]()
 var hotel_filtersumry : Filter_sumry?
+var roomselected = String()
 
 var hsearchid = String()
 var hbookingsource = String()
 var htoken = String()
 var htokenkey = String()
-var selectedrRateKeyArray = [String]()
+var selectedrRateKeyArray = String()
 
 var adtArray = [String]()
 var chArray = [String]()
@@ -367,6 +368,8 @@ struct UserDefaultsKeys {
     static var roomcount = "room_count"
     static var hoteladultscount = "hotel_adults_count"
     static var hotelchildcount = "hotel_child_count"
+    static var hnationalitycode = "hnationalitycode"
+    static var hnationalityname = "hnationalityname"
     static var itinerarySelectedIndex = "ItinerarySelectedIndex"
     static var selectPersons = "selectPersons"
     

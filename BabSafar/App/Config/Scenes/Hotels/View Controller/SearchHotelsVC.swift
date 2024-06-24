@@ -29,7 +29,11 @@ class SearchHotelsVC: BaseTableVC, TopFlightDetailsViewModelDelegate {
     var countrycode = String()
     
     
+    let formatter = DateFormatter()
+    
+    
     override func viewWillAppear(_ animated: Bool) {
+        formatter.dateFormat = "dd-MM-yyyy"
         addObserver()
         setInitalValues()
         
@@ -167,7 +171,7 @@ class SearchHotelsVC: BaseTableVC, TopFlightDetailsViewModelDelegate {
         }
         
         
-        payload["nationality"] = countrycode
+        payload["nationality"] = defaults.string(forKey: UserDefaultsKeys.hnationalitycode) ?? ""
         payload["language"] = "english"
         payload["search_source"] = "postman"
         payload["currency"] = defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? "KWD"
@@ -183,7 +187,7 @@ class SearchHotelsVC: BaseTableVC, TopFlightDetailsViewModelDelegate {
             showToast(message: "Enter Different Dates")
         }else if defaults.string(forKey: UserDefaultsKeys.roomcount) == "" {
             showToast(message: "Add Rooms For Booking")
-        }else if self.countrycode.isEmpty == true {
+        }else if defaults.string(forKey: UserDefaultsKeys.hnationalitycode) == nil || defaults.string(forKey: UserDefaultsKeys.hnationalitycode) == "" {
             showToast(message: "Please Select Nationality.")
         }else if checkDepartureAndReturnDates(payload, p1: "hotel_checkin", p2: "hotel_checkout") == false {
             showToast(message: "Invalid Date")
@@ -240,6 +244,7 @@ class SearchHotelsVC: BaseTableVC, TopFlightDetailsViewModelDelegate {
     
     override func didTapOnSelectCountryCodeList(cell:SearchHotelTVCell){
         self.countrycode = cell.countryCode
+        defaults.set(cell.countryCode, forKey: UserDefaultsKeys.hnationalitycode)
     }
     
     
@@ -250,10 +255,18 @@ class SearchHotelsVC: BaseTableVC, TopFlightDetailsViewModelDelegate {
     
     //MARK: - donedatePicker cancelDatePicker
     override func donedatePicker(cell:SearchHotelTVCell){
-        let formatter = DateFormatter()
-        formatter.dateFormat = "dd-MM-yyyy"
-        defaults.set(formatter.string(from: cell.retdepDatePicker.date), forKey: UserDefaultsKeys.checkin)
-        defaults.set(formatter.string(from: cell.retDatePicker.date), forKey: UserDefaultsKeys.checkout)
+        
+        
+        
+        
+        if cell.checkinTF.isFirstResponder == true {
+            defaults.set(formatter.string(from: cell.checkinDatePicker.date), forKey: UserDefaultsKeys.checkin)
+            defaults.set(formatter.string(from: cell.checkinDatePicker.date), forKey: UserDefaultsKeys.checkout)
+            cell.checkoutDatePicker.date = cell.checkinDatePicker.date
+        }else {
+            defaults.set(formatter.string(from: cell.checkinDatePicker.date), forKey: UserDefaultsKeys.checkin)
+            defaults.set(formatter.string(from: cell.checkoutDatePicker.date), forKey: UserDefaultsKeys.checkout)
+        }
         
         commonTableView.reloadData()
         self.view.endEditing(true)

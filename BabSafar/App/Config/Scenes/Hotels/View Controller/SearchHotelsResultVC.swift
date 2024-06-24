@@ -407,6 +407,11 @@ extension SearchHotelsResultVC {
         loderBool = false
         holderView.isHidden = false
         
+        hotelSearchId = (response.search_id ?? "0")
+        hsearchid = (response.search_id ?? "0")
+        hbookingsource = response.data?.hotelSearchResult?[0].booking_source ?? ""
+        hotelSearchResult = response.data?.hotelSearchResult ?? []
+        
         
         // Stop the timer if it's running
         TimerManager.shared.stopTimer()
@@ -436,51 +441,9 @@ extension SearchHotelsResultVC {
             }
         }
         
-      
-
-      
-//
-//        hotelSearchId = (response.search_id ?? "0")
-//        hsearchid = (response.search_id ?? "0")
-//        hbookingsource = response.data?.hotelSearchResult?[0].booking_source ?? ""
-//        hotelSearchResult = response.data?.hotelSearchResult ?? []
-//        //   hotel_filtersumry = response.filter_sumry
-//        // hotelSearchResult.append(response.data?.hotelSearchResult ?? [])
-//
-//
-//        response.data?.hotelSearchResult?.forEach { i in
-//            prices.append(i.price ?? "")
-//            let mapModel = MapModel(
-//                longitude: i.longitude ?? "",
-//                latitude: i.latitude ?? "",
-//                hotelname: i.name ?? ""
-//            )
-//            mapModelArray.append(mapModel)
-//        }
-//
-//
-//
-//
-//
-//        //        response.filter_sumry?.loc?.forEach({ i in
-//        //            nearBylocationsArray.append(i.v ?? "")
-//        //        })
-//        //
-//        //        response.filter_sumry?.near_by?.forEach({ i in
-//        //            neighbourwoodArray.append(i.v ?? "")
-//        //        })
-//        //
-//        //        response.filter_sumry?.facility?.forEach({ i in
-//        //            amenitiesArray.append(i.v ?? "")
-//        //        })
-//        //
-//
-//
-//        DispatchQueue.main.async {[self] in
-//            commonTableView.reloadData()
-//        }
-//
-
+        
+        
+        
     }
     
     
@@ -494,25 +457,26 @@ extension SearchHotelsResultVC {
         mapModelArray.removeAll()
         
         
-//        list.forEach { i in
-//            if let price = i.price, (Int(price) ?? 0) > 0 {
-//                prices.append("\(price)")
-//            }
-//
-//            if let hotelLocation = i.hotelLocation, !hotelLocation.isEmpty {
-//                nearBylocationsArray.append(hotelLocation)
-//            }
-//
-//            if let refund = i.refund, !refund.isEmpty {
-//                faretypeArray.append(refund)
-//            }
-//
-//            i.facility?.forEach { j in
-//                if let facilityName = j.name, !facilityName.isEmpty {
-//                    facilityArray.append(facilityName)
-//                }
-//            }
-//        }
+        list.forEach { i in
+            
+            
+            
+            prices.append(i.price ?? "0")
+            
+            //            if let hotelLocation = i.hotelLocation, !hotelLocation.isEmpty {
+            //                nearBylocationsArray.append(hotelLocation)
+            //            }
+            
+            if let refund = i.refund, !refund.isEmpty {
+                faretypeArray.append(refund)
+            }
+            
+            i.facility?.forEach { j in
+                if let facilityName = j.name, !facilityName.isEmpty {
+                    facilityArray.append(facilityName)
+                }
+            }
+        }
         
         prices = Array(Set(prices))
         nearBylocationsArray = Array(Set(nearBylocationsArray))
@@ -528,6 +492,10 @@ extension SearchHotelsResultVC {
             )
             mapModelArray.append(mapModel)
         }
+        
+        prices.forEach({ i in
+            print(i)
+        })
         
         
         DispatchQueue.main.async {[self] in
@@ -558,7 +526,7 @@ extension SearchHotelsResultVC {
                 let dict = filtered[indexPath.row]
                 
                 cell.hotelNamelbl.text = dict.name
-                cell.hotelImg.sd_setImage(with: URL(string: dict.image ?? ""), placeholderImage:UIImage(contentsOfFile:"placeholder.png"))
+                
                 cell.ratingslbl.text = String(dict.star_rating ?? 0)
                 cell.locationlbl.text = dict.address
                 setAttributedText1(str1: dict.currency ?? "", str2: dict.price ?? "", lbl: cell.kwdlbl)
@@ -569,15 +537,28 @@ extension SearchHotelsResultVC {
                 
                 cell.perNightlbl.text = "Total Price For 2 Night"
                 cell.setAttributedString1(str1:dict.currency ?? "", str2: dict.price ?? "")
+                cell.hotelImg.sd_setImage(with: URL(string: dict.image ?? ""), placeholderImage:UIImage(contentsOfFile:"placeholder.png"), options: [.retryFailed], completed: { (image, error, cacheType, imageURL) in
+                    if let error = error {
+                        // Handle error loading image
+                        print("Error loading image: \(error.localizedDescription)")
+                        // Check if the error is due to a 404 Not Found response
+                        if (error as NSError).code == NSURLErrorBadServerResponse {
+                            // Set placeholder image for 404 error
+                            cell.hotelImg.image = UIImage(named: "noimage")
+                        } else {
+                            // Set placeholder image for other errors
+                            cell.hotelImg.image = UIImage(named: "noimage")
+                        }
+                    }
+                })
                 
-                
-                cell.hotel_DescLabel = dict.hotel_desc ?? "bbbbb"
-                //                if let hotel_desc = dict.hotel_desc{
-                //                    cell.hotelDescLabel = hotel_desc
-                //                } else {
-                //                    // Handle the case when facility is empty or nil
-                //                    print("hotel_desc array is empty or nil")
-                //                }
+                cell.hotel_DescLabel = dict.hotel_desc ?? ""
+//                if let hotel_desc = dict.hotel_desc{
+//                    cell.hotelDescLabel = hotel_desc
+//                } else {
+//                    // Handle the case when facility is empty or nil
+//                    print("hotel_desc array is empty or nil")
+//                }
                 
                 if let facilities = dict.facility, !facilities.isEmpty {
                     cell.facilityArray = facilities
@@ -591,6 +572,8 @@ extension SearchHotelsResultVC {
                 if cell.faretypelbl.text == "Non Refundable" {
                     cell.faretypelbl.textColor = .AppBtnColor
                 }
+                
+                cell.markupPricelbl.isHidden = true
                 
                 ccell = cell
             }else{
@@ -610,12 +593,12 @@ extension SearchHotelsResultVC {
                 
                 
                 cell.hotel_DescLabel = dict.hotel_desc ?? "bbbbb"
-                //                if let hotel_desc = dict.hotel_desc{
-                //                    cell.hotelDescLabel = hotel_desc
-                //                } else {
-                //                    // Handle the case when facility is empty or nil
-                //                    print("hotel_desc array is empty or nil")
-                //                }
+//                if let hotel_desc = dict.hotel_desc{
+//                    cell.hotelDescLabel = hotel_desc
+//                } else {
+//                    // Handle the case when facility is empty or nil
+//                    print("hotel_desc array is empty or nil")
+//                }
                 
                 if let facilities = dict.facility, !facilities.isEmpty {
                     cell.facilityArray = facilities
@@ -630,6 +613,8 @@ extension SearchHotelsResultVC {
                 if cell.faretypelbl.text == "Non Refundable" {
                     cell.faretypelbl.textColor = .AppBtnColor
                 }
+                
+                cell.markupPricelbl.isHidden = true
                 
                 ccell = cell
             }

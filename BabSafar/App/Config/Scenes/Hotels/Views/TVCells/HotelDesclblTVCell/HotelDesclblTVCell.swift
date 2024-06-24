@@ -46,8 +46,7 @@ class HotelDesclblTVCell: TableViewCell {
         
         
         titlelbl.attributedText = cellInfo?.title?.htmlToAttributedString
-        print(titlelbl.text)
-        
+       
         // Assuming `hoteldisc` is an optional Hotel_desc object
 //        if let hotelDesc = cellInfo?.moreData as? Hotel_desc {
 //            // Create a mutable attributed string

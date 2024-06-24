@@ -457,6 +457,8 @@
 		65FFFBB129B213D100E66B0D /* JourneySummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FFFBB029B213D100E66B0D /* JourneySummary.swift */; };
 		7944177E3E8A36FB61671829 /* Pods_BabSafarTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCEA8D8A0E14D737316B3E3 /* Pods_BabSafarTests.framework */; };
 		799C027E82C5387A6400ADD3 /* Pods_BabSafar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08F89F6A274BBCB309B2C7A5 /* Pods_BabSafar.framework */; };
+		845BB4D82C295C9100571339 /* CancellationPolicyTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845BB4D72C295C9100571339 /* CancellationPolicyTVCell.xib */; };
+		845BB4D92C295C9100571339 /* CancellationPolicyTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845BB4D62C295C9100571339 /* CancellationPolicyTVCell.swift */; };
 		BF45B3652889067400DAB201 /* TextfieldTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF45B3632889067400DAB201 /* TextfieldTVCell.swift */; };
 		BF45B3662889067400DAB201 /* TextfieldTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF45B3642889067400DAB201 /* TextfieldTVCell.xib */; };
 		BF45B36A2889069300DAB201 /* ButtonTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF45B3682889069300DAB201 /* ButtonTVCell.swift */; };
@@ -1175,6 +1177,8 @@
 		65FF34812AA6039D00E6BB13 /* ExploreResultTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreResultTVCell.swift; sourceTree = "<group>"; };
 		65FF34822AA6039D00E6BB13 /* ExploreResultTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExploreResultTVCell.xib; sourceTree = "<group>"; };
 		65FFFBB029B213D100E66B0D /* JourneySummary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JourneySummary.swift; sourceTree = "<group>"; };
+		845BB4D62C295C9100571339 /* CancellationPolicyTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancellationPolicyTVCell.swift; sourceTree = "<group>"; };
+		845BB4D72C295C9100571339 /* CancellationPolicyTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CancellationPolicyTVCell.xib; sourceTree = "<group>"; };
 		9B46CF1FA9D99FC0839942DF /* Pods-BabSafar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BabSafar.release.xcconfig"; path = "Target Support Files/Pods-BabSafar/Pods-BabSafar.release.xcconfig"; sourceTree = "<group>"; };
 		A876EF9E3D1A1D3B4496D8CE /* Pods_BabSafar_BabSafarUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BabSafar_BabSafarUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2CEE844C2069EED8A7FE644 /* Pods-BabSafarTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BabSafarTests.release.xcconfig"; path = "Target Support Files/Pods-BabSafarTests/Pods-BabSafarTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -1226,7 +1230,7 @@
 		BF56D04F2893E4570092387D /* CommonFromCityTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommonFromCityTVCell.xib; sourceTree = "<group>"; };
 		BF56D0532893E7080092387D /* Insurance.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Insurance.storyboard; sourceTree = "<group>"; };
 		BF56D0592893E7580092387D /* InsuranceVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsuranceVC.swift; sourceTree = "<group>"; };
-		BF56D0602893F6530092387D /* Hotels.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Hotels.storyboard; sourceTree = "<group>"; };
+		BF56D0602893F6530092387D /* Hotels.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Hotels.storyboard; path = "../New Group/Hotels.storyboard"; sourceTree = "<group>"; };
 		BF56D0622893F6970092387D /* SearchHotelsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHotelsVC.swift; sourceTree = "<group>"; };
 		BF56D064289407290092387D /* SearchHotelsResultVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHotelsResultVC.swift; sourceTree = "<group>"; };
 		BF56D06728940B0F0092387D /* SearchLocationTFTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLocationTFTVCell.swift; sourceTree = "<group>"; };
@@ -3028,6 +3032,23 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		845BB4D42C29499800571339 /* SB */ = {
+			isa = PBXGroup;
+			children = (
+				BF56D0602893F6530092387D /* Hotels.storyboard */,
+			);
+			path = SB;
+			sourceTree = "<group>";
+		};
+		845BB4D52C295C7900571339 /* CancellationPolicyTVCell */ = {
+			isa = PBXGroup;
+			children = (
+				845BB4D62C295C9100571339 /* CancellationPolicyTVCell.swift */,
+				845BB4D72C295C9100571339 /* CancellationPolicyTVCell.xib */,
+			);
+			path = CancellationPolicyTVCell;
+			sourceTree = "<group>";
+		};
 		8F5565DDD84A8E6F74FD07CB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -3171,6 +3192,7 @@
 		BF566DD22897D77D0046FB95 /* TVCells */ = {
 			isa = PBXGroup;
 			children = (
+				845BB4D52C295C7900571339 /* CancellationPolicyTVCell */,
 				6538B1D32AA1F3B400CE6F3D /* UserSpecificationOptionsTVCell */,
 				6538B1CE2AA1EEEC00CE6F3D /* UserSpecificationTVCell */,
 				6538B1C72AA1C05A00CE6F3D /* NewHotelPriceSummeryTVCell */,
@@ -3314,11 +3336,11 @@
 		BF56D05B2893F5FF0092387D /* Hotels */ = {
 			isa = PBXGroup;
 			children = (
+				845BB4D42C29499800571339 /* SB */,
 				BF56D05C2893F6170092387D /* Models */,
 				BF56D05E2893F6280092387D /* ViewModel */,
 				BF56D05D2893F61F0092387D /* Views */,
 				BF56D05F2893F6310092387D /* View Controller */,
-				BF56D0602893F6530092387D /* Hotels.storyboard */,
 			);
 			path = Hotels;
 			sourceTree = "<group>";
@@ -4582,6 +4604,7 @@
 				BF93D86D28880F2200D5C5F3 /* RadioButtonTVCell.xib in Resources */,
 				BF94FD0B2886B81D00778946 /* Lato-Hairline.ttf in Resources */,
 				BF566DD12897D4D80046FB95 /* HotelImagesTVCell.xib in Resources */,
+				845BB4D82C295C9100571339 /* CancellationPolicyTVCell.xib in Resources */,
 				65A3D9742A9DECA100E26687 /* InsurenceExploreResultTVCell.xib in Resources */,
 				6501A6BC2B1894B60079A4EA /* DepartureTimeCVCell.xib in Resources */,
 				65597F2B29782D06007056B3 /* FareBreakdownTVCell.xib in Resources */,
@@ -5216,6 +5239,7 @@
 				65A3D9582A9DAC7A00E26687 /* processPassengerDetailViewModel.swift in Sources */,
 				65C3CE612A97714100904C99 /* SelectedServicesTVCell.swift in Sources */,
 				65597F222977D25C007056B3 /* UsePromoCodesTVCell.swift in Sources */,
+				845BB4D92C295C9100571339 /* CancellationPolicyTVCell.swift in Sources */,
 				65597F3129782E1E007056B3 /* TitleLblTVCell.swift in Sources */,
 				6525490029A1104B0019521B /* ContactUsLabelTVCell.swift in Sources */,
 				6538B1C52AA1C05500CE6F3D /* SpecialRequestTVCell.swift in Sources */,

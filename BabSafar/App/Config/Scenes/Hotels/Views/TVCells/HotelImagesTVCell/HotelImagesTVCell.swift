@@ -14,7 +14,7 @@ class HotelImagesTVCell: TableViewCell {
     @IBOutlet weak var imagesCV: UICollectionView!
     @IBOutlet weak var hotelNamelbl: UILabel!
     @IBOutlet weak var locNamelbl: UILabel!
-    @IBOutlet weak var autoScrollImagesCV: UICollectionView!
+    //  @IBOutlet weak var autoScrollImagesCV: UICollectionView!
     
     
     var itemCount = Int()
@@ -34,20 +34,36 @@ class HotelImagesTVCell: TableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        stopAutoScroll()
+        // stopAutoScroll()
     }
     
     
     override func updateUI() {
         
-        hotelImg.sd_setImage(with: URL(string: cellInfo?.image ?? ""), placeholderImage:UIImage(contentsOfFile:"placeholder.png"))
+      
+        hotelImg.sd_setImage(with: URL(string: cellInfo?.image ?? ""), placeholderImage:UIImage(contentsOfFile:"placeholder.png"), options: [.retryFailed], completed: { (image, error, cacheType, imageURL) in
+            if let error = error {
+                // Handle error loading image
+                print("Error loading image: \(error.localizedDescription)")
+                // Check if the error is due to a 404 Not Found response
+                if (error as NSError).code == NSURLErrorBadServerResponse {
+                    // Set placeholder image for 404 error
+                    self.hotelImg.image = UIImage(named: "noimage")
+                } else {
+                    // Set placeholder image for other errors
+                    self.hotelImg.image = UIImage(named: "noimage")
+                }
+            }
+        })
+        
+        
         hotelNamelbl.text = cellInfo?.title ?? ""
         locNamelbl.text = cellInfo?.subTitle ?? ""
         
         itemCount = images.count
-        startAutoScroll()
+        //  startAutoScroll()
         
-        autoScrollImagesCV.reloadData()
+        //  autoScrollImagesCV.reloadData()
         imagesCV.reloadData()
     }
     
@@ -55,35 +71,35 @@ class HotelImagesTVCell: TableViewCell {
         contentView.backgroundColor = HexColor("#E6E8E7")
         holderView.addCornerRadiusWithShadow(color: .clear, borderColor: UIColor.lightGray.withAlphaComponent(0.4), cornerRadius: 10)
         
-        hotelImg.isHidden = true
+      
         hotelImg.layer.cornerRadius = 8
         hotelImg.clipsToBounds = true
         hotelImg.contentMode = .scaleToFill
         
         setupCV()
-        setupSCrollImagesCV()
+        // setupSCrollImagesCV()
     }
     
     
     
-    func setupSCrollImagesCV() {
-        let nib = UINib(nibName: "HotelImagesCVCell", bundle: nil)
-        autoScrollImagesCV.register(nib, forCellWithReuseIdentifier: "cell1")
-        autoScrollImagesCV.delegate = self
-        autoScrollImagesCV.dataSource = self
-        let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 200, height: 180)
-        layout.scrollDirection = .horizontal
-        layout.minimumInteritemSpacing = 6
-        layout.minimumLineSpacing = 6
-        // layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        autoScrollImagesCV.collectionViewLayout = layout
-        autoScrollImagesCV.backgroundColor = .clear
-        autoScrollImagesCV.layer.cornerRadius = 4
-        autoScrollImagesCV.clipsToBounds = true
-        autoScrollImagesCV.showsHorizontalScrollIndicator = false
-        
-    }
+    //    func setupSCrollImagesCV() {
+    //        let nib = UINib(nibName: "HotelImagesCVCell", bundle: nil)
+    //        autoScrollImagesCV.register(nib, forCellWithReuseIdentifier: "cell1")
+    //        autoScrollImagesCV.delegate = self
+    //        autoScrollImagesCV.dataSource = self
+    //        let layout = UICollectionViewFlowLayout()
+    //        layout.itemSize = CGSize(width: 200, height: 180)
+    //        layout.scrollDirection = .horizontal
+    //        layout.minimumInteritemSpacing = 6
+    //        layout.minimumLineSpacing = 6
+    //        // layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+    //        autoScrollImagesCV.collectionViewLayout = layout
+    //        autoScrollImagesCV.backgroundColor = .clear
+    //        autoScrollImagesCV.layer.cornerRadius = 4
+    //        autoScrollImagesCV.clipsToBounds = true
+    //        autoScrollImagesCV.showsHorizontalScrollIndicator = false
+    //
+    //    }
     
     
     
@@ -114,30 +130,31 @@ class HotelImagesTVCell: TableViewCell {
 extension HotelImagesTVCell:UICollectionViewDelegate,UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        if collectionView == autoScrollImagesCV {
-            return images.count
-        }else {
-            return images.count
-        }
+        return images.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         var commonCell = UICollectionViewCell()
         
         
-        if collectionView == autoScrollImagesCV {
-            if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell1", for: indexPath) as? HotelImagesCVCell {
-                
-                cell.hotelImg.sd_setImage(with: URL(string: images[indexPath.row].img ?? ""), placeholderImage:UIImage(contentsOfFile:"placeholder.png"))
-                
-                commonCell = cell
-            }
-        }else {
-            if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? HotelImagesCVCell {
-                cell.hotelImg.sd_setImage(with: URL(string: images[indexPath.row].img ?? ""), placeholderImage:UIImage(contentsOfFile:"placeholder.png"))
-                
-                commonCell = cell
-            }
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? HotelImagesCVCell {
+            
+            cell.hotelImg.sd_setImage(with: URL(string: images[indexPath.row].img ?? ""), placeholderImage:UIImage(contentsOfFile:"placeholder.png"), options: [.retryFailed], completed: { (image, error, cacheType, imageURL) in
+                if let error = error {
+                    // Handle error loading image
+                    print("Error loading image: \(error.localizedDescription)")
+                    // Check if the error is due to a 404 Not Found response
+                    if (error as NSError).code == NSURLErrorBadServerResponse {
+                        // Set placeholder image for 404 error
+                        self.hotelImg.image = UIImage(named: "noimage")
+                    } else {
+                        // Set placeholder image for other errors
+                        self.hotelImg.image = UIImage(named: "noimage")
+                    }
+                }
+            })
+            
+            commonCell = cell
         }
         
         return commonCell
@@ -146,7 +163,8 @@ extension HotelImagesTVCell:UICollectionViewDelegate,UICollectionViewDataSource 
     
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        //  self.hotelImg.sd_setImage(with: URL(string: images[indexPath.row].img ?? ""), placeholderImage:UIImage(contentsOfFile:"placeholder.png"))
+        
+        self.hotelImg.sd_setImage(with: URL(string: images[indexPath.row].img ?? ""), placeholderImage:UIImage(contentsOfFile:"placeholder.png"))
         
     }
     
@@ -154,44 +172,44 @@ extension HotelImagesTVCell:UICollectionViewDelegate,UICollectionViewDataSource 
 
 
 
-extension HotelImagesTVCell {
-    
-    
-    // MARK: - Auto Scrolling
-    
-    func startAutoScroll() {
-        autoScrollTimer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(scrollToNextItem), userInfo: nil, repeats: true)
-    }
-    
-    func stopAutoScroll() {
-        autoScrollTimer?.invalidate()
-        autoScrollTimer = nil
-    }
-    
-    @objc func scrollToNextItem() {
-        
-        
-        guard itemCount > 0 else {
-            return // No items in the collection view
-        }
-        
-        let currentIndexPaths = autoScrollImagesCV.indexPathsForVisibleItems.sorted()
-        let lastIndexPath = currentIndexPaths.last ?? IndexPath(item: 0, section: 0)
-        
-        var nextIndexPath: IndexPath
-        
-        if lastIndexPath.item == itemCount - 1 {
-            nextIndexPath = IndexPath(item: 0, section: lastIndexPath.section)
-        } else {
-            nextIndexPath = IndexPath(item: lastIndexPath.item + 1, section: lastIndexPath.section)
-        }
-        
-        if nextIndexPath.item >= itemCount {
-            nextIndexPath = IndexPath(item: 0, section: nextIndexPath.section) // Adjust the index path if it exceeds the bounds
-        }
-        
-        autoScrollImagesCV.scrollToItem(at: nextIndexPath, at: .centeredHorizontally, animated: true)
-    }
-    
-    
-}
+//extension HotelImagesTVCell {
+//
+//
+//    // MARK: - Auto Scrolling
+//
+//    func startAutoScroll() {
+//        autoScrollTimer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(scrollToNextItem), userInfo: nil, repeats: true)
+//    }
+//
+//    func stopAutoScroll() {
+//        autoScrollTimer?.invalidate()
+//        autoScrollTimer = nil
+//    }
+//
+//    @objc func scrollToNextItem() {
+//
+//
+//        guard itemCount > 0 else {
+//            return // No items in the collection view
+//        }
+//
+//        let currentIndexPaths = autoScrollImagesCV.indexPathsForVisibleItems.sorted()
+//        let lastIndexPath = currentIndexPaths.last ?? IndexPath(item: 0, section: 0)
+//
+//        var nextIndexPath: IndexPath
+//
+//        if lastIndexPath.item == itemCount - 1 {
+//            nextIndexPath = IndexPath(item: 0, section: lastIndexPath.section)
+//        } else {
+//            nextIndexPath = IndexPath(item: lastIndexPath.item + 1, section: lastIndexPath.section)
+//        }
+//        
+//        if nextIndexPath.item >= itemCount {
+//            nextIndexPath = IndexPath(item: 0, section: nextIndexPath.section) // Adjust the index path if it exceeds the bounds
+//        }
+//
+//        autoScrollImagesCV.scrollToItem(at: nextIndexPath, at: .centeredHorizontally, animated: true)
+//    }
+//
+//
+//}

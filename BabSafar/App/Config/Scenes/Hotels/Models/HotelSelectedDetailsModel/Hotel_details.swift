@@ -23,7 +23,7 @@ struct Hotel_details : Codable {
     let longitude : String?
     let accomodation_cstr : String?
     //  let facility_search : [String]?
-    let star_rating : Int?
+    let star_rating : String?
     let images : [Images]?
     let extra_details : String?
     let price : Double?
@@ -106,7 +106,7 @@ struct Hotel_details : Codable {
         longitude = try values.decodeIfPresent(String.self, forKey: .longitude)
         accomodation_cstr = try values.decodeIfPresent(String.self, forKey: .accomodation_cstr)
         //     facility_search = try values.decodeIfPresent([String].self, forKey: .facility_search)
-        star_rating = try values.decodeIfPresent(Int.self, forKey: .star_rating)
+        star_rating = try values.decodeIfPresent(String.self, forKey: .star_rating)
         images = try values.decodeIfPresent([Images].self, forKey: .images)
         extra_details = try values.decodeIfPresent(String.self, forKey: .extra_details)
         price = try values.decodeIfPresent(Double.self, forKey: .price)

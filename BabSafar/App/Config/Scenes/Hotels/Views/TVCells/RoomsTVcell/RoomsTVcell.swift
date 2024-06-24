@@ -44,6 +44,9 @@ class RoomsTVcell: TableViewCell, NewRoomTVCellDelegate {
     @IBOutlet weak var amenitiesBtn: UIButton!
     @IBOutlet weak var roomDetailsTV: UITableView!
     
+    @IBOutlet weak var tvheight: NSLayoutConstraint!
+    
+    
     var latString = ""
     var longString = ""
     var locname = ""
@@ -72,7 +75,9 @@ class RoomsTVcell: TableViewCell, NewRoomTVCellDelegate {
         latString = cellInfo?.title ?? ""
         longString = cellInfo?.subTitle ?? ""
         locname = cellInfo?.buttonTitle ?? ""
-        roomDetailsTV.reloadData()
+        
+        
+        updateHeight(height: 200)
     }
     
     @objc func gotoroom(){
@@ -115,6 +120,24 @@ class RoomsTVcell: TableViewCell, NewRoomTVCellDelegate {
         googleMapView.isHidden = true
         
         setuTV()
+        
+        tvheight.constant = CGFloat(roomsDetails.count * 188)
+        roomDetailsTV.reloadData()
+        
+        
+        
+        updateHeight(height: 200)
+        
+        
+    }
+    
+    func updateHeight(height:Int) {
+        
+        if self.key == "rooms" {
+            tvheight.constant = CGFloat(height * roomsDetails.count)
+            roomDetailsTV.reloadData()
+        }
+        
     }
     
     func setupViews(v:UIView,radius:CGFloat,color:UIColor) {
@@ -127,17 +150,19 @@ class RoomsTVcell: TableViewCell, NewRoomTVCellDelegate {
     
     
     func setuTV() {
+        
         roomDetailsTV.register(UINib(nibName: "NewRoomTVCell", bundle: nil), forCellReuseIdentifier: "rooms")
         roomDetailsTV.register(UINib(nibName: "TitleLabelTVCell", bundle: nil), forCellReuseIdentifier: "hdetails")
         roomDetailsTV.register(UINib(nibName: "AmenitiesTVCell", bundle: nil), forCellReuseIdentifier: "amenities")
-        
-        
         
         roomDetailsTV.delegate = self
         roomDetailsTV.dataSource = self
         roomDetailsTV.tableFooterView = UIView()
         roomDetailsTV.separatorStyle = .none
         roomDetailsTV.showsHorizontalScrollIndicator = false
+        roomDetailsTV.isScrollEnabled = false
+        
+        
     }
     
     
@@ -224,6 +249,27 @@ class RoomsTVcell: TableViewCell, NewRoomTVCellDelegate {
     }
     
     func didTapOnSelectRoomBtnAction(cell: NewRoomDetailsTVCell) {
+        
+        if let indexPath = roomDetailsTV.indexPath(for: cell) {
+            // Toggle the selected state
+            selectedCellStates[indexPath] = !selectedCellStates[indexPath, default: false]
+            
+            // Update the button color
+            cell.updateButtonColor()
+            
+            // Deselect the previously selected cell, if any
+            for (index, isSelected) in selectedCellStates {
+                if index != indexPath && isSelected {
+                    selectedCellStates[index] = false
+                    if let previouslySelectedCell = roomDetailsTV.cellForRow(at: index) as? NewRoomDetailsTVCell {
+                        previouslySelectedCell.updateButtonColor()
+                    }
+                }
+            }
+            
+            
+        }
+        
         delegate?.didTapOnSelectRoomBtnAction(cell: cell)
     }
     

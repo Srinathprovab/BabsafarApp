@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -40,26 +40,35 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gHI-Ar-zNd">
-                                <rect key="frame" x="10" y="196" width="298" height="19.5"/>
+                                <rect key="frame" x="10" y="196" width="277" height="19.5"/>
                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="16"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XVV-Jc-xdJ" customClass="BorderedView" customModule="BabSafar" customModuleProvider="target">
-                                <rect key="frame" x="318" y="196" width="24" height="24"/>
+                                <rect key="frame" x="297" y="196" width="45" height="24"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4.5" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JTn-SR-thU">
-                                        <rect key="frame" x="3.5" y="5" width="17" height="14"/>
+                                        <rect key="frame" x="5" y="5" width="17" height="14"/>
                                         <fontDescription key="fontDescription" name="Lato-Medium" family="Lato" pointSize="12"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star" translatesAutoresizingMaskIntoConstraints="NO" id="iXN-D5-CbH">
+                                        <rect key="frame" x="25" y="4.5" width="15" height="15"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="15" id="bbt-Oe-YCf"/>
+                                            <constraint firstAttribute="width" constant="15" id="iKQ-vV-Hfj"/>
+                                        </constraints>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemGreenColor"/>
                                 <constraints>
-                                    <constraint firstItem="JTn-SR-thU" firstAttribute="centerX" secondItem="XVV-Jc-xdJ" secondAttribute="centerX" id="3uX-44-eWs"/>
+                                    <constraint firstItem="iXN-D5-CbH" firstAttribute="centerY" secondItem="JTn-SR-thU" secondAttribute="centerY" id="0Xm-34-gnf"/>
                                     <constraint firstItem="JTn-SR-thU" firstAttribute="centerY" secondItem="XVV-Jc-xdJ" secondAttribute="centerY" id="ZZH-Lu-yuo"/>
-                                    <constraint firstAttribute="width" constant="24" id="f36-wc-cVA"/>
+                                    <constraint firstAttribute="width" constant="45" id="f36-wc-cVA"/>
+                                    <constraint firstAttribute="trailing" secondItem="iXN-D5-CbH" secondAttribute="trailing" constant="5" id="ieV-la-W8h"/>
+                                    <constraint firstItem="JTn-SR-thU" firstAttribute="leading" secondItem="XVV-Jc-xdJ" secondAttribute="leading" constant="5" id="pM3-Bo-Mer"/>
                                     <constraint firstAttribute="height" constant="24" id="vIy-Ao-OQi"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
@@ -84,7 +93,7 @@ Fahidi Metro </string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="KWD150.00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0zn-zS-eGV">
-                                <rect key="frame" x="256.5" y="262.5" width="90.5" height="19.5"/>
+                                <rect key="frame" x="256.5" y="260" width="90.5" height="19.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="90.5" id="nfy-Ow-m2F"/>
                                 </constraints>
@@ -93,8 +102,8 @@ Fahidi Metro </string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total Price For 2 Night" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tjj-nZ-Ba6">
-                                <rect key="frame" x="249" y="287" width="98" height="12"/>
-                                <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="10"/>
+                                <rect key="frame" x="229.5" y="284.5" width="117.5" height="14.5"/>
+                                <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
                                 <color key="textColor" name="SubTitleColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -196,7 +205,7 @@ Fahidi Metro </string>
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="KWD150.00" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rBY-ho-WHD">
-                                <rect key="frame" x="251.5" y="243" width="90.5" height="14.5"/>
+                                <rect key="frame" x="251.5" y="240.5" width="90.5" height="14.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="90.5" id="0xb-qr-QDy"/>
                                 </constraints>
@@ -279,6 +288,7 @@ Fahidi Metro </string>
     </objects>
     <resources>
         <image name="city" width="340" height="185"/>
+        <image name="star" width="16" height="16"/>
         <namedColor name="AppBorderColor">
             <color red="0.90200001001358032" green="0.9100000262260437" blue="0.90600001811981201" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
@@ -289,7 +299,7 @@ Fahidi Metro </string>
             <color red="0.94499999284744263" green="0.95300000905990601" blue="0.94900000095367432" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="CommonButtonColor">
-            <color red="0.90980392156862744" green="0.16470588235294117" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.9100000262260437" green="0.16500000655651093" blue="0.36899998784065247" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="SubTitleColor">
             <color red="0.60000002384185791" green="0.59600001573562622" blue="0.59600001573562622" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
