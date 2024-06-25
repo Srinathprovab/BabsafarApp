@@ -18,6 +18,9 @@ class similarFlightsVC: BaseTableVC {
         let vc = storyboard.instantiateViewController(withIdentifier: self.className()) as? similarFlightsVC
         return vc
     }
+    
+    
+    var isFirstCell = true // Flag to check if it's the first cell
     var similarflightList = [[J_flight_list]]()
     var similarflightListMulticity = [[MCJ_flight_list]]()
     var tablerow = [TableRow]()
@@ -51,28 +54,46 @@ class similarFlightsVC: BaseTableVC {
     
     
     func setupTVCells() {
-        flightsFoundlbl.text = "\(similarflightList.count ) Flights Found"
+        flightsFoundlbl.text = "\(similarflightList.count - 1) Flights Found"
         tablerow.removeAll()
         
         
-        var updatedUniqueList: [[J_flight_list]] = []
-        updatedUniqueList = getUniqueElements_oneway(inputArray: similarflightList)
+        //        var updatedUniqueList: [[J_flight_list]] = []
+        //        updatedUniqueList = getUniqueElements_oneway(inputArray: similarflightList)
         
-        similarflightList.forEach({ i in
+//                similarflightList.forEach({ i in
+//                    i.forEach { j in
+//        
+//                        tablerow.append(TableRow(title:"\(j.price?.api_total_display_fare_withoutmarkup ?? 0.0)",
+//                                                 subTitle: j.fareType ?? "",
+//                                                 price: "\(j.price?.api_total_display_fare ?? 0.0)",
+//                                                 key: "similar",
+//                                                 text: j.selectedResult ?? "",
+//                                                 buttonTitle: j.aPICurrencyType ?? "",
+//                                                 moreData: j.flight_details?.summary ?? [],
+//                                                 cellType:.NewFlightSearchResultTVCell))
+//        
+//        
+//                    }
+//                })
+        
+        
+        similarflightList.forEach{ i in
             i.forEach { j in
-                
-                tablerow.append(TableRow(title:"\(j.price?.api_total_display_fare_withoutmarkup ?? 0.0)",
-                                         subTitle: j.fareType ?? "",
-                                         price: "\(j.price?.api_total_display_fare ?? 0.0)",
-                                         key: "similar",
-                                         text: j.selectedResult ?? "",
-                                         buttonTitle: j.aPICurrencyType ?? "",
-                                         moreData: j.flight_details?.summary ?? [],
-                                         cellType:.NewFlightSearchResultTVCell))
-                
-                
+                if isFirstCell {
+                    isFirstCell = false // Set to false after first iteration
+                } else {
+                    tablerow.append(TableRow(title:"\(j.price?.api_total_display_fare_withoutmarkup ?? 0.0)",
+                                             subTitle: j.fareType ?? "",
+                                             price: "\(j.price?.api_total_display_fare ?? 0.0)",
+                                             key: "similar",
+                                             text: j.selectedResult ?? "",
+                                             buttonTitle: j.aPICurrencyType ?? "",
+                                             moreData: j.flight_details?.summary ?? [],
+                                             cellType:.NewFlightSearchResultTVCell))
+                }
             }
-        })
+        }
         
         
         commonTVData = tablerow
@@ -82,25 +103,46 @@ class similarFlightsVC: BaseTableVC {
     
     
     func setupMulticityTVCells() {
-        flightsFoundlbl.text = "\(similarflightListMulticity.count ) Flights Found"
+        
+        
+        flightsFoundlbl.text = "\(similarflightListMulticity.count - 1) Flights Found"
         tablerow.removeAll()
         
-    
-        similarflightListMulticity.forEach({ i in
+        
+        //        similarflightListMulticity.forEach({ i in
+        //            i.forEach { j in
+        //
+        //                tablerow.append(TableRow(title:"\(j.price?.api_total_display_fare_withoutmarkup ?? 0.0)",
+        //                                         subTitle: j.fareType ?? "",
+        //                                         price: "\(j.price?.api_total_display_fare ?? 0.0)",
+        //                                         key: "similar",
+        //                                         text: j.selectedResult ?? "",
+        //                                         buttonTitle: j.aPICurrencyType ?? "",
+        //                                         moreData: j.flight_details?.summary ?? [],
+        //                                         cellType:.NewFlightSearchResultTVCell))
+        //
+        //
+        //            }
+        //        })
+        
+        
+        
+        similarflightListMulticity.forEach{ i in
             i.forEach { j in
-                
-                tablerow.append(TableRow(title:"\(j.price?.api_total_display_fare_withoutmarkup ?? 0.0)",
-                                         subTitle: j.fareType ?? "",
-                                         price: "\(j.price?.api_total_display_fare ?? 0.0)",
-                                         key: "similar",
-                                         text: j.selectedResult ?? "",
-                                         buttonTitle: j.aPICurrencyType ?? "",
-                                         moreData: j.flight_details?.summary ?? [],
-                                         cellType:.NewFlightSearchResultTVCell))
-                
-                
+                if isFirstCell {
+                    isFirstCell = false // Set to false after first iteration
+                } else {
+                    tablerow.append(TableRow(title:"\(j.price?.api_total_display_fare_withoutmarkup ?? 0.0)",
+                                             subTitle: j.fareType ?? "",
+                                             price: "\(j.price?.api_total_display_fare ?? 0.0)",
+                                             key: "similar",
+                                             text: j.selectedResult ?? "",
+                                             buttonTitle: j.aPICurrencyType ?? "",
+                                             moreData: j.flight_details?.summary ?? [],
+                                             cellType:.NewFlightSearchResultTVCell))
+                }
             }
-        })
+        }
         
         
         commonTVData = tablerow

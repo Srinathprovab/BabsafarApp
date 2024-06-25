@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -195,7 +195,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rZ6-81-85J">
-                                <rect key="frame" x="474" y="70" width="40" height="40"/>
+                                <rect key="frame" x="244.5" y="70" width="40" height="40"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="OFv-jY-bCH">
                                         <rect key="frame" x="10" y="10" width="20" height="20"/>
@@ -869,6 +869,7 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBrownColor"/>
                         <constraints>
+                            <constraint firstItem="rZ6-81-85J" firstAttribute="centerX" secondItem="Of6-l3-gef" secondAttribute="centerX" id="0mg-jj-0NF"/>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="521" id="93n-0p-5zC"/>
                             <constraint firstItem="Ds7-c5-nlZ" firstAttribute="top" secondItem="IJS-4k-w52" secondAttribute="bottom" constant="10" id="BGz-3v-jWb"/>
                             <constraint firstItem="mzo-ZU-OVj" firstAttribute="top" secondItem="gi7-DL-sM5" secondAttribute="bottom" constant="10" id="EsF-4H-tIz"/>
@@ -885,7 +886,6 @@
                             <constraint firstAttribute="trailing" secondItem="NOk-NR-tHw" secondAttribute="trailing" constant="12" id="ZhC-FU-QBS"/>
                             <constraint firstAttribute="trailing" secondItem="Fcw-nt-NRX" secondAttribute="trailing" constant="12" id="bHs-oG-ogE"/>
                             <constraint firstItem="Fcw-nt-NRX" firstAttribute="leading" secondItem="Of6-l3-gef" secondAttribute="leading" constant="12" id="ccO-Lm-F6Q"/>
-                            <constraint firstAttribute="trailing" secondItem="rZ6-81-85J" secondAttribute="trailing" constant="15" id="chy-wh-tNZ"/>
                             <constraint firstItem="9ie-D1-Okt" firstAttribute="top" secondItem="Ds7-c5-nlZ" secondAttribute="bottom" constant="10" id="dep-Bw-vcY"/>
                             <constraint firstAttribute="trailing" secondItem="SFt-Mf-Z3p" secondAttribute="trailing" constant="12" id="f9W-cr-OpH"/>
                             <constraint firstAttribute="trailing" secondItem="9ie-D1-Okt" secondAttribute="trailing" constant="12" id="fiL-ru-t4s"/>

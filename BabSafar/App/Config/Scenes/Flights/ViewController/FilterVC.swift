@@ -1432,7 +1432,7 @@ extension FilterVC {
         }
         
         if !filterModel.luggage.isEmpty {
-            luggageArray = filterModel.luggage
+            selectedLuggageArray = filterModel.luggage
         }
         
         

@@ -54,9 +54,9 @@ class NewFlightSearchResultTVCell: TableViewCell {
     }
     
     override func updateUI() {
-        setAttributedString1(str1: "\(cellInfo?.buttonTitle ?? ""):", str2: String(format: "%.2f", Double(cellInfo?.title ?? "") ?? 0.0))
+        setAttributedString1(str1: "\(cellInfo?.buttonTitle ?? ""):", str2: String(format: "%.2f", Double(cellInfo?.price ?? "") ?? 0.0))
         setAttributedTextnew(str1: cellInfo?.buttonTitle ?? "",
-                             str2: String(format: "%.2f", Double(cellInfo?.price ?? "") ?? 0.0),
+                             str2: String(format: "%.2f", Double(cellInfo?.title ?? "") ?? 0.0),
                              lbl: pricelbl,
                              str1font: .LatoBold(size: 12),
                              str2font: .LatoBold(size: 18),
@@ -92,38 +92,38 @@ class NewFlightSearchResultTVCell: TableViewCell {
         
         
         
+        checkSimelarFlights()
         
         
-        
-        if let similarList1 = cellInfo?.data as? [[J_flight_list]] {
-            newsimilarList = similarList1
-            let similarListCount = similarList1.count
-            
-            // Debugging: Print the count of similarList1
-            print("Similar List Count: \(similarListCount)")
-            
-            if similarListCount > 1 {
-                setuplabels(lbl: moreSimlarOptionlbl, text: "More similar options(\(similarListCount))", textcolor: .WhiteColor, font: .LatoRegular(size: 14), align: .right)
-                showSimilarlbl()
-            } else {
-                hideSimilarlbl()
-            }
-        } else if let similarList1 = cellInfo?.data as? [[MCJ_flight_list]] {
-            newsimilarListMulticity = similarList1
-            let similarListCount = similarList1.count
-            
-            // Debugging: Print the count of similarList1
-            print("Similar List Count: \(similarListCount)")
-            
-            if similarListCount > 1 {
-                setuplabels(lbl: moreSimlarOptionlbl, text: "More similar options(\(similarListCount))", textcolor: .WhiteColor, font: .LatoRegular(size: 14), align: .right)
-                showSimilarlbl()
-            } else {
-                hideSimilarlbl()
-            }
-        } else {
-            hideSimilarlbl() // Handle the case when cellInfo?.data is not a valid [[J_flight_list]]
-        }
+//        if let similarList1 = cellInfo?.data as? [[J_flight_list]] {
+//            newsimilarList = similarList1
+//            let similarListCount = similarList1.count
+//            
+//            // Debugging: Print the count of similarList1
+//            print("Similar List Count: \(similarListCount)")
+//            
+//            if similarListCount > 1 {
+//                setuplabels(lbl: moreSimlarOptionlbl, text: "More similar options(\(similarListCount))", textcolor: .WhiteColor, font: .LatoRegular(size: 14), align: .right)
+//                showSimilarlbl()
+//            } else {
+//                hideSimilarlbl()
+//            }
+//        } else if let similarList1 = cellInfo?.data as? [[MCJ_flight_list]] {
+//            newsimilarListMulticity = similarList1
+//            let similarListCount = similarList1.count
+//            
+//            // Debugging: Print the count of similarList1
+//            print("Similar List Count: \(similarListCount)")
+//            
+//            if similarListCount > 1 {
+//                setuplabels(lbl: moreSimlarOptionlbl, text: "More similar options(\(similarListCount))", textcolor: .WhiteColor, font: .LatoRegular(size: 14), align: .right)
+//                showSimilarlbl()
+//            } else {
+//                hideSimilarlbl()
+//            }
+//        } else {
+//            hideSimilarlbl() // Handle the case when cellInfo?.data is not a valid [[J_flight_list]]
+//        }
         
         
         updateHeight()
@@ -226,6 +226,8 @@ extension NewFlightSearchResultTVCell: UITableViewDelegate,UITableViewDataSource
                 }
             }
             
+            cell.checkinBaggagelbl.text = "7 Kg"
+            
             
             ccell = cell
         }
@@ -277,5 +279,59 @@ extension NewFlightSearchResultTVCell {
         markuppricelbl.attributedText = combination
         
     }
+    
+}
+
+
+
+
+//MARK: - hideSimilarlbl showSimilarlbl
+extension NewFlightSearchResultTVCell {
+    
+    
+    
+    func checkSimelarFlights() {
+        
+        if let similarList1 = cellInfo?.data as? [[J_flight_list]] {
+            newsimilarList = similarList1
+            let similarListCount = similarList1.count
+            
+            // Debugging: Print the count of similarList1
+            print("Similar List Count: \(similarListCount)")
+            
+            if similarListCount > 1 {
+                
+                if similarListCount == 1 {
+                    hideSimilarlbl()
+                }else {
+                 //   similarBtn.setTitle("More similar options(\(similarListCount - 1))", for: .normal)
+                    
+                    moreSimlarOptionlbl.text = "More similar options(\(similarListCount - 1))"
+                    showSimilarlbl()
+                }
+               
+                //showSimilarlbl()
+            } else {
+                hideSimilarlbl()
+            }
+        }else {
+            hideSimilarlbl() // Handle the case when cellInfo?.data is not a valid [[J_flight_list]]
+        }
+        
+        
+    }
+    
+    
+    
+//    func hideSimilarlbl(){
+//        bottomView.isHidden = true
+//    }
+//    
+//    func showSimilarlbl(){
+//        bottomView.isHidden = false
+//    }
+    
+    
+
     
 }

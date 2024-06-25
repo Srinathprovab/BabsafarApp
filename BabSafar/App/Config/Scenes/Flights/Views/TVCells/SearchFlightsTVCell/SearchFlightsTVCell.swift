@@ -27,13 +27,14 @@ protocol SearchFlightsTVCellDelegate {
     func addClassBtnAction(cell: SearchFlightsTVCell)
     func didTapOnCloseReturnView(cell: SearchFlightsTVCell)
     func editingTextField(tf:UITextField)
-    
+    func didTapOnAirlneSelectBtnAction(cell:SearchFlightsTVCell)
     func donedatePicker(cell:SearchFlightsTVCell)
     func cancelDatePicker(cell:SearchFlightsTVCell)
 }
 
 
-class SearchFlightsTVCell: TableViewCell, SelectCityViewModelProtocal {
+class SearchFlightsTVCell: TableViewCell, SelectCityViewModelProtocal, GetAirlineListViewModelDelegate {
+    
     func ShowCityListMulticity(response: [SelectCityModel]) {
         
     }
@@ -111,6 +112,7 @@ class SearchFlightsTVCell: TableViewCell, SelectCityViewModelProtocal {
     
     
     
+    private var currentRotationAngle: CGFloat = 0
     let depDatePicker = UIDatePicker()
     let retdepDatePicker = UIDatePicker()
     let retDatePicker = UIDatePicker()
@@ -119,6 +121,9 @@ class SearchFlightsTVCell: TableViewCell, SelectCityViewModelProtocal {
     var isSearchBool = Bool()
     var searchText = String()
     var filterdcountrylist = [All_country_code_list]()
+    var airlinelist = [AirlinelistData]()
+    var filterdairlinelist = [AirlinelistData]()
+    var airlinelistvm : GetAirlineListViewModel?
     var countryNames = [String]()
     var countrycodesArray = [String]()
     var originArray = [String]()
@@ -148,6 +153,7 @@ class SearchFlightsTVCell: TableViewCell, SelectCityViewModelProtocal {
         setupTimeOfOutwardJourneyDropdown()
         setupTimeOfReturnJourneyDropdown()
         cityViewModel = SelectCityViewModel(self)
+        airlinelistvm = GetAirlineListViewModel(self)
         
         contentView.backgroundColor = .AppHolderViewColor
         holderView.backgroundColor = .WhiteColor
@@ -170,6 +176,9 @@ class SearchFlightsTVCell: TableViewCell, SelectCityViewModelProtocal {
         fromcityTVHeight.constant = 0
         tocityTVHeight.constant = 0
         CallShowCityListAPI(str: "")
+        
+        //   callGetAirlineListAPI(str: "")
+        
         timeOfOutwardJourneyDropdown.dataSource = timeArray
         timeOfReturnJourneyDropdown.dataSource = timeArray
         
@@ -178,9 +187,7 @@ class SearchFlightsTVCell: TableViewCell, SelectCityViewModelProtocal {
                 fromCitylbl.text = defaults.string(forKey: UserDefaultsKeys.fromCity) ?? "Origin"
                 toCitylbl.text = defaults.string(forKey: UserDefaultsKeys.toCity) ?? "Destination"
                 self.departureDatelbl.text = defaults.string(forKey: UserDefaultsKeys.calDepDate) ?? "+ Add Departure Date"
-                economyValuelbl.text = defaults.string(forKey: UserDefaultsKeys.travellerDetails) ?? "Add Traveller Details"
-                addTraverllersValuelbl.text = defaults.string(forKey: UserDefaultsKeys.travellerDetails) ?? "Add Details"
-                addClassValuelbl.text = defaults.string(forKey: UserDefaultsKeys.selectClass) ?? "Add Details"
+                
                 returnView.alpha = 0.5
                 
                 returnDatelbl.text = "+ Add Return Date"
@@ -193,17 +200,23 @@ class SearchFlightsTVCell: TableViewCell, SelectCityViewModelProtocal {
                 toCitylbl.text = defaults.string(forKey: UserDefaultsKeys.toCity) ?? "Destination"
                 self.departureDatelbl.text = defaults.string(forKey: UserDefaultsKeys.calDepDate) ?? "+ Add Departure Date"
                 self.returnDatelbl.text = defaults.string(forKey: UserDefaultsKeys.calRetDate) ?? "+ Add Return Date"
-                economyValuelbl.text = defaults.string(forKey: UserDefaultsKeys.travellerDetails) ?? "Add Traveller Details"
-                addTraverllersValuelbl.text = defaults.string(forKey: UserDefaultsKeys.travellerDetails) ?? "Add Details"
-                addClassValuelbl.text = defaults.string(forKey: UserDefaultsKeys.selectClass) ?? "Add Details"
+                
                 returnView.alpha = 1
                 
                 self.depTF.isHidden = false
                 self.retTF.isHidden = false
                 showreturndepDatePicker()
                 showretDatePicker()
+                
+                self.retTF.becomeFirstResponder()
             }
         }
+        
+        
+        
+        
+        
+        airlineValuelbl.text = defaults.string(forKey: UserDefaultsKeys.airlineselect) ?? "ALL AIRLINES"
         
         setuupLoadLabels(lbl: fromCitylbl, str: "Origin")
         setuupLoadLabels(lbl: toCitylbl, str: "Destination")
@@ -224,8 +237,33 @@ class SearchFlightsTVCell: TableViewCell, SelectCityViewModelProtocal {
         }
         
         
+        // economyValuelbl.text = defaults.string(forKey: UserDefaultsKeys.travellerDetails) ?? "Econimy"
         
+        let travellercount = defaults.integer(forKey: UserDefaultsKeys.totalTravellerCount)
+        if travellercount > 1 {
+            addTraverllersValuelbl.text = "\(defaults.string(forKey: UserDefaultsKeys.totalTravellerCount) ?? "1") Passengers"
+        }else {
+            addTraverllersValuelbl.text = "\(defaults.string(forKey: UserDefaultsKeys.totalTravellerCount) ?? "1") Passenger"
+        }
+        
+        addClassValuelbl.text = defaults.string(forKey: UserDefaultsKeys.selectClass) ?? "Econimy"
+        
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(returndate), name: Notification.Name("returndate"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(roundtripTap), name: Notification.Name("roundtripTap"), object: nil)
     }
+    
+    
+    @objc func returndate() {
+        showretDatePicker()
+    }
+    
+    @objc func roundtripTap() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.10) { [unowned self] in
+            retTF.becomeFirstResponder()
+        }
+    }
+    
     
     
     
@@ -277,7 +315,7 @@ class SearchFlightsTVCell: TableViewCell, SelectCityViewModelProtocal {
         setupLabels(lbl: timeReturnJourneylbl, text: "Time Of Return Journey", textcolor: .AppLabelColor, font: .LatoLight(size: 14))
         setupLabels(lbl: timeReturnJourneyValuelbl, text: "All Times", textcolor: .AppLabelColor, font: .LatoSemibold(size: 18))
         setupLabels(lbl: airlinelbl, text: "Airline", textcolor: .AppLabelColor, font: .LatoLight(size: 14))
-        setupLabels(lbl: airlineValuelbl, text: "Airline", textcolor: .AppLabelColor, font: .LatoSemibold(size: 18))
+        setupLabels(lbl: airlineValuelbl, text: "ALL AIRLINE", textcolor: .AppLabelColor, font: .LatoSemibold(size: 18))
         setupLabels(lbl: moreOptionlbl, text: "More search options", textcolor: .AppTabSelectColor, font: .LatoMedium(size: 16))
         moreBtnHolderView.backgroundColor = .clear
         //  moreBtnHolderView.addBottomBorderWithColor(color: .AppTabSelectColor, width: 1)
@@ -339,7 +377,7 @@ class SearchFlightsTVCell: TableViewCell, SelectCityViewModelProtocal {
         
         fromlbl.isHidden = true
         tolbl.isHidden = true
-        swipeView.isHidden = true
+        swipeView.isHidden = false
         fromCloseBtn.addTarget(self, action: #selector(didTapOnClearFromTextField(_:)), for: .touchUpInside)
         toCloseBtn.addTarget(self, action: #selector(didTapOnClearToTextField(_:)), for: .touchUpInside)
         returnDateCloseBtn.addTarget(self, action: #selector(didTapOnCloseReturnView(_:)), for: .touchUpInside)
@@ -449,7 +487,47 @@ class SearchFlightsTVCell: TableViewCell, SelectCityViewModelProtocal {
     
     
     @IBAction func didTapOnSwipeCityBtnAction(_ sender: Any) {
-        delegate?.didTapOnSwipeCityBtnAction(cell: self)
+        
+        
+        let cityloc1 = defaults.string(forKey: UserDefaultsKeys.fromCity)
+        let cityloc2 = defaults.string(forKey: UserDefaultsKeys.toCity)
+        
+        defaults.setValue(cityloc2, forKey: UserDefaultsKeys.fromCity)
+        defaults.setValue(cityloc1, forKey: UserDefaultsKeys.toCity)
+        
+        let citylocid1 = defaults.string(forKey: UserDefaultsKeys.fromlocid)
+        let citylocid2 = defaults.string(forKey: UserDefaultsKeys.tolocid)
+        
+        defaults.setValue(citylocid2, forKey: UserDefaultsKeys.fromlocid)
+        defaults.setValue(citylocid1, forKey: UserDefaultsKeys.tolocid)
+        
+        
+        
+        let fromcityname1 = defaults.string(forKey: UserDefaultsKeys.fromcityname)
+        let fromcityname2 = defaults.string(forKey: UserDefaultsKeys.tocityname)
+        
+        defaults.setValue(fromcityname2, forKey: UserDefaultsKeys.fromcityname)
+        defaults.setValue(fromcityname1, forKey: UserDefaultsKeys.tocityname)
+        
+        
+        
+        fromCitylbl.text = defaults.string(forKey: UserDefaultsKeys.fromCity) ?? "Origin"
+        toCitylbl.text = defaults.string(forKey: UserDefaultsKeys.toCity) ?? "Destination"
+        
+        
+        rotateImageView()
+        // delegate?.didTapOnSwipeCityBtnAction(cell: self)
+    }
+    
+    
+    // Function to rotate the image view
+    func rotateImageView() {
+        // Increment the rotation angle by 90 degrees (π/2 radians)
+        currentRotationAngle += .pi
+        
+        UIView.animate(withDuration: 0.5) {
+            self.swipeImage?.transform = CGAffineTransform(rotationAngle: self.currentRotationAngle)
+        }
     }
     
     @IBAction func didTapOnDepartureBtnAction(_ sender: Any) {
@@ -567,6 +645,8 @@ class SearchFlightsTVCell: TableViewCell, SelectCityViewModelProtocal {
             CallShowCityListAPI(str: textField.text ?? "")
             dropDown.show()
             
+        }else if textField == airlineTF {
+            callGetAirlineListAPI(str: "")
         }else {
             toTF.placeholder = "Destination"
             self.toCitylbl.text = ""
@@ -739,13 +819,82 @@ extension SearchFlightsTVCell:UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    
-    
-    
 }
 
 
 extension SearchFlightsTVCell {
+    
+    
+    
+    
+    @objc func searchTextBegin(textField: UITextField) {
+        
+        airlineTF.text = ""
+        airlineValuelbl.text = ""
+        
+        filterdcountrylist.removeAll()
+        filterdairlinelist = airlinelist
+        
+        callGetAirlineListAPI(str: textField.text ?? "")
+        
+    }
+    
+    
+    
+    
+    @objc func searchTextChanged(textField: UITextField) {
+        searchText = textField.text ?? ""
+        if searchText == "" {
+            isSearchBool = false
+            //  filterContentForSearchText(searchText)
+            callGetAirlineListAPI(str: searchText)
+        }else {
+            isSearchBool = true
+            // filterContentForSearchText(searchText)
+            callGetAirlineListAPI(str: searchText)
+        }
+        
+        
+    }
+    
+    
+    func callGetAirlineListAPI(str:String) {
+        payload.removeAll()
+        payload["term"] = str
+        airlinelistvm?.CALL_GET_AIRLINE_LIST_API(dictParam: payload)
+    }
+    
+    func getAirlineList(response: AirlinelistModel) {
+        airlinelist = response.data ?? []
+        filterdairlinelist.removeAll()
+        filterdairlinelist = airlinelist
+        
+        DispatchQueue.main.async {[self] in
+            loadCountryNamesAndCode()
+            dropDown.show()
+        }
+    }
+    
+    
+    func loadCountryNamesAndCode(){
+        countryNames.removeAll()
+        isocountrycodeArray.removeAll()
+        
+        countryNames.append("ALL AIRLINES")
+        isocountrycodeArray.append("ALL")
+        
+        filterdairlinelist.forEach { i in
+            countryNames.append(i.name ?? "")
+            isocountrycodeArray.append(i.code ?? "")
+        }
+        
+        DispatchQueue.main.async {[self] in
+            dropDown.dataSource = countryNames
+        }
+    }
+    
+    
+    
     
     func setupDropDown() {
         
@@ -760,68 +909,18 @@ extension SearchFlightsTVCell {
             self?.airlineTF.text = ""
             self?.airlineTF.resignFirstResponder()
             self?.isoCountryCode = self?.isocountrycodeArray[index] ?? ""
-            self?.billingCountryName = self?.countryNames[index] ?? ""
-            self?.nationalityCode = self?.originArray[index] ?? ""
-            self?.airlinelbl.textColor = .AppLabelColor
+            self?.airlineValuelbl.textColor = .AppLabelColor
+            defaults.set(self?.countryNames[index], forKey: UserDefaultsKeys.airlineselect)
+            defaults.set(self?.isocountrycodeArray[index], forKey: UserDefaultsKeys.airlinecode)
+            self?.delegate?.didTapOnAirlneSelectBtnAction(cell: self!)
             
-            //  self?.delegate?.didTapOnCountryCodeBtnAction(cell: self!)
-            
         }
     }
     
-    @objc func searchTextBegin(textField: UITextField) {
-        airlineTF.text = ""
-        airlineValuelbl.text = ""
-        filterdcountrylist.removeAll()
-        filterdcountrylist = countrylist
-        loadCountryNamesAndCode()
-        dropDown.show()
-    }
     
     
-    @objc func searchTextChanged(textField: UITextField) {
-        searchText = textField.text ?? ""
-        if searchText == "" {
-            isSearchBool = false
-            filterContentForSearchText(searchText)
-        }else {
-            isSearchBool = true
-            filterContentForSearchText(searchText)
-        }
-        
-        
-    }
     
-    func filterContentForSearchText(_ searchText: String) {
-        print("Filterin with:", searchText)
-        
-        filterdcountrylist.removeAll()
-        filterdcountrylist = countrylist.filter { thing in
-            return "\(thing.name?.lowercased() ?? "")".contains(searchText.lowercased())
-        }
-        
-        loadCountryNamesAndCode()
-        dropDown.show()
-        
-    }
     
-    func loadCountryNamesAndCode(){
-        countryNames.removeAll()
-        countrycodesArray.removeAll()
-        isocountrycodeArray.removeAll()
-        originArray.removeAll()
-        
-        filterdcountrylist.forEach { i in
-            countryNames.append(i.name ?? "")
-            countrycodesArray.append(i.country_code ?? "")
-            isocountrycodeArray.append(i.iso_country_code ?? "")
-            originArray.append(i.origin ?? "")
-        }
-        
-        DispatchQueue.main.async {[self] in
-            dropDown.dataSource = countryNames
-        }
-    }
 }
 
 
@@ -978,5 +1077,22 @@ extension SearchFlightsTVCell {
     @objc func cancelDatePicker(){
         delegate?.cancelDatePicker(cell:self)
     }
+    
+}
+
+
+
+extension SearchFlightsTVCell {
+    
+    //MARK - UITextField Delegates
+    override func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        //For mobile numer validation
+        maxLength = 100
+        let currentString: NSString = textField.text! as NSString
+        let newString: NSString =  currentString.replacingCharacters(in: range, with: string) as NSString
+        return newString.length <= maxLength
+        //  return true
+    }
+    
     
 }

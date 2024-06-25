@@ -1154,7 +1154,7 @@ extension BookingDetailsVC {
                 payload["out_jrn"] = "All Times"
                 payload["ret_jrn"] = "All Times"
                 payload["carrier"] = ""
-                payload["psscarrier"] = "ALL"
+                payload["psscarrier"] = defaults.string(forKey: UserDefaultsKeys.airlinecode)
                 payload["search_flight"] = "Search"
                 payload["user_id"] = defaults.string(forKey:UserDefaultsKeys.userid) ?? "0"
                 payload["currency"] = defaults.string(forKey:UserDefaultsKeys.selectedCurrency) ?? "KWD"
@@ -1203,7 +1203,7 @@ extension BookingDetailsVC {
                 payload["out_jrn"] = "All Times"
                 payload["ret_jrn"] = "All Times"
                 payload["carrier"] = ""
-                payload["psscarrier"] = "ALL"
+                payload["psscarrier"] = defaults.string(forKey: UserDefaultsKeys.airlinecode)
                 payload["search_flight"] = "Search"
                 payload["user_id"] = defaults.string(forKey:UserDefaultsKeys.userid) ?? "0"
                 payload["currency"] = defaults.string(forKey:UserDefaultsKeys.selectedCurrency) ?? "KWD"

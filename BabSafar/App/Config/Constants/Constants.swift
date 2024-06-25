@@ -284,6 +284,7 @@ struct ApiEndpoints {
     static let getTopFlightHotelDestination = "getTopFlightHotelDestination"
     static let getBaggageFlightDetails = "getFlightDetails"
     static let getCountryList = "getCountryList"
+    static let get_airlines_list = "get_airlines_list"
     static let mobilepreprocessbooking = "mobile_pre_process_booking"
     static let mobileprocesspassengerdetail = "mobile_process_passenger_detail"
     static let mobileprebooking = "mobile_pre_booking"
@@ -398,7 +399,8 @@ struct UserDefaultsKeys {
     static var travellerDetails = "travellerDetails"
     static var hadultCount = "HAdult_Count"
     static var hchildCount = "HChild_Count"
-    
+    static var airlineselect = "airlineselect"
+    static var airlinecode = "airlinecode"
     
     //CIRCLE
     //    static var rlocationcity = "rlocation_city"

@@ -150,7 +150,6 @@ class RoomsTVcell: TableViewCell, NewRoomTVCellDelegate {
     
     
     func setuTV() {
-        
         roomDetailsTV.register(UINib(nibName: "NewRoomTVCell", bundle: nil), forCellReuseIdentifier: "rooms")
         roomDetailsTV.register(UINib(nibName: "TitleLabelTVCell", bundle: nil), forCellReuseIdentifier: "hdetails")
         roomDetailsTV.register(UINib(nibName: "AmenitiesTVCell", bundle: nil), forCellReuseIdentifier: "amenities")

@@ -29,6 +29,10 @@ class ModifySearchFlightVC: BaseTableVC {
         let vc = storyboard.instantiateViewController(withIdentifier: self.className()) as? ModifySearchFlightVC
         return vc
     }
+    
+    
+    
+    var airlineCode = String()
     var cellIndex = Int()
     var payload = [String:Any]()
     var payload1 = [String:Any]()
@@ -67,7 +71,7 @@ class ModifySearchFlightVC: BaseTableVC {
         }else {
             setupRoundTrip()
             DispatchQueue.main.async {
-                self.gotoCalenderVC(key: "ret", titleStr: "Ruturn Date", isvc: "modify")
+                //self.gotoCalenderVC(key: "ret", titleStr: "Ruturn Date", isvc: "modify")
             }
         }
         
@@ -218,6 +222,7 @@ class ModifySearchFlightVC: BaseTableVC {
     
     @IBAction func roundTripBtnAction(_ sender: Any) {
         setupRoundTrip()
+        NotificationCenter.default.post(name: NSNotification.Name("roundtripTap"), object: nil)
     }
     
     @IBAction func multiCityBtnAction(_ sender: Any) {
@@ -225,37 +230,35 @@ class ModifySearchFlightVC: BaseTableVC {
     }
     
     
+    
     func setupOneWay(){
-        
         defaults.set("oneway", forKey: UserDefaultsKeys.journeyType)
-        
         oneWayView.backgroundColor = .AppTabSelectColor
         oneWaylbl.textColor = .WhiteColor
-        roundTripView.backgroundColor = .AppHolderViewColor
+        roundTripView.backgroundColor = .WhiteColor
         roundTriplbl.textColor = .AppLabelColor
-        multiCityView.backgroundColor = .AppHolderViewColor
+        multiCityView.backgroundColor = .WhiteColor
         multiCitylbl.textColor = .AppLabelColor
         setupTV()
     }
     
     func setupRoundTrip(){
-        
         defaults.set("circle", forKey: UserDefaultsKeys.journeyType)
-        oneWayView.backgroundColor = .AppHolderViewColor
+        oneWayView.backgroundColor = .WhiteColor
         oneWaylbl.textColor = .AppLabelColor
         roundTripView.backgroundColor = .AppTabSelectColor
         roundTriplbl.textColor = .WhiteColor
-        multiCityView.backgroundColor = .AppHolderViewColor
+        multiCityView.backgroundColor = .WhiteColor
         multiCitylbl.textColor = .AppLabelColor
+        
         setupTV()
     }
     
     func setupMulticity(){
-        
         defaults.set("multicity", forKey: UserDefaultsKeys.journeyType)
-        oneWayView.backgroundColor = .AppHolderViewColor
+        oneWayView.backgroundColor = .WhiteColor
         oneWaylbl.textColor = .AppLabelColor
-        roundTripView.backgroundColor = .AppHolderViewColor
+        roundTripView.backgroundColor = .WhiteColor
         roundTriplbl.textColor = .AppLabelColor
         multiCityView.backgroundColor = .AppTabSelectColor
         multiCitylbl.textColor = .WhiteColor
@@ -265,21 +268,20 @@ class ModifySearchFlightVC: BaseTableVC {
     
     override func didTapOnReturnToOnewayBtnAction(cell: SearchFlightsTVCell){
         setupRoundTrip()
-        
-        gotoCalenderVC(key: "ret", titleStr: "Ruturn Date", isvc: "modify")
+        NotificationCenter.default.post(name: NSNotification.Name("roundtripTap"), object: nil)
     }
     
     override func didTapOnCloseReturnView(cell: SearchFlightsTVCell){
         setupOneWay()
     }
     
-    override func didTapOnDepartureBtnAction(cell: SearchFlightsTVCell) {
-        gotoCalenderVC(key: "dep", titleStr: "Departure Date", isvc: "modify")
-    }
-    
-    override func didTapOnReturnBtnAction(cell: SearchFlightsTVCell) {
-        gotoCalenderVC(key: "ret", titleStr: "Ruturn Date", isvc: "modify")
-    }
+    //    override func didTapOnDepartureBtnAction(cell: SearchFlightsTVCell) {
+    //        gotoCalenderVC(key: "dep", titleStr: "Departure Date")
+    //    }
+    //
+    //    override func didTapOnReturnBtnAction(cell: SearchFlightsTVCell) {
+    //        // gotoCalenderVC(key: "ret", titleStr: "Ruturn Date")
+    //    }
     
     override func didTapOnFromCityBtnAction(cell: SearchFlightsTVCell) {
         gotoSelectCityVC(str: "From", tokey: "Tooo")
@@ -317,15 +319,14 @@ class ModifySearchFlightVC: BaseTableVC {
     }
     
     
-    func gotoCalenderVC(key:String,titleStr:String,isvc:String) {
-        dateSelectKey = key
-        guard let vc = Calvc.newInstance.self else {return}
-        vc.modalPresentationStyle = .overCurrentContext
-        vc.titleStr = titleStr
-        vc.isvcfrom = isvc
-        callapibool = true
-        self.present(vc, animated: false)
-    }
+//    func gotoCalenderVC(key:String,titleStr:String) {
+//        dateSelectKey = key
+//        guard let vc = Calvc.newInstance.self else {return}
+//        vc.modalPresentationStyle = .overCurrentContext
+//        vc.titleStr = titleStr
+//        callapibool = true
+//        self.present(vc, animated: false)
+//    }
     
     override func moreOptionBtnAction(cell: SearchFlightsTVCell){
         if moreoptionBool == true {
@@ -378,11 +379,11 @@ class ModifySearchFlightVC: BaseTableVC {
     }
     
     override func didTapOnToCityBtn(cell: MultiCityTVCell) {
-        gotoSelectCityVC(str: "To", tokey: "frommm")
+      //  gotoSelectCityVC(str: "To", tokey: "frommm")
     }
     
     override func didTapOnDateBtn(cell: MultiCityTVCell) {
-        gotoCalenderVC(key: "dep", titleStr: "Departure Date", isvc: "modify")
+      //  gotoCalenderVC(key: "dep", titleStr: "Departure Date")
     }
     
     override func addTraverllersBtnAction(cell: SearchFlightsTVCell){
@@ -431,9 +432,17 @@ class ModifySearchFlightVC: BaseTableVC {
     }
     
     
+    
+    override func didTapOnAirlneSelectBtnAction(cell:SearchFlightsTVCell) {
+        airlineCode = cell.isoCountryCode
+        print(airlineCode)
+    }
+    
+    
     override func didTapOnSearchFlightBtnAction(cell: SearchFlightsTVCell) {
         payload.removeAll()
         loderBool = true
+        
         
         if let journeyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
             if journeyType == "oneway" {
@@ -453,7 +462,7 @@ class ModifySearchFlightVC: BaseTableVC {
                 payload["out_jrn"] = "All Times"
                 payload["ret_jrn"] = "All Times"
                 payload["carrier"] = ""
-                payload["psscarrier"] = "ALL"
+                payload["psscarrier"] = defaults.string(forKey: UserDefaultsKeys.airlinecode)
                 payload["search_flight"] = "Search"
                 payload["user_id"] = defaults.string(forKey:UserDefaultsKeys.userid) ?? "0"
                 payload["currency"] = defaults.string(forKey:UserDefaultsKeys.selectedCurrency) ?? "KWD"
@@ -492,7 +501,6 @@ class ModifySearchFlightVC: BaseTableVC {
                 payload["v_class"] = defaults.string(forKey:UserDefaultsKeys.selectClass)
                 payload["sector_type"] = "international"
                 
-                
                 payload["from"] = defaults.string(forKey:UserDefaultsKeys.fromCity)
                 payload["from_loc_id"] = defaults.string(forKey:UserDefaultsKeys.fromlocid)
                 payload["to"] = defaults.string(forKey:UserDefaultsKeys.toCity)
@@ -503,7 +511,7 @@ class ModifySearchFlightVC: BaseTableVC {
                 payload["out_jrn"] = "All Times"
                 payload["ret_jrn"] = "All Times"
                 payload["carrier"] = ""
-                payload["psscarrier"] = "ALL"
+                payload["psscarrier"] = defaults.string(forKey: UserDefaultsKeys.airlinecode)
                 payload["search_flight"] = "Search"
                 payload["user_id"] = defaults.string(forKey:UserDefaultsKeys.userid) ?? "0"
                 payload["currency"] = defaults.string(forKey:UserDefaultsKeys.selectedCurrency) ?? "KWD"
@@ -584,7 +592,7 @@ class ModifySearchFlightVC: BaseTableVC {
         payload["checkbox-group"] = "on"
         payload["search_flight"] = "Search"
         payload["direct_flight"] = "1"
-        payload["psscarrier"] = "ALL"
+        payload["psscarrier"] = defaults.string(forKey: UserDefaultsKeys.airlinecode)
         payload["remngwd"] = defaults.string(forKey: UserDefaultsKeys.selectClass)
         payload["v_class"] = defaults.string(forKey: UserDefaultsKeys.selectClass)
         payload["user_id"] = defaults.string(forKey: UserDefaultsKeys.userid) ?? "0"
@@ -651,11 +659,8 @@ class ModifySearchFlightVC: BaseTableVC {
                 print(error.description)
             }
             
-            
         }
-        
     }
-    
     
     
     //MARK: - donedatePicker cancelDatePicker
@@ -684,6 +689,8 @@ class ModifySearchFlightVC: BaseTableVC {
     }
     
     
+    override func didTapOnSwipeCityBtnAction(cell: SearchFlightsTVCell) {
+        commonTableView.reloadData()
+    }
+    
 }
-
-

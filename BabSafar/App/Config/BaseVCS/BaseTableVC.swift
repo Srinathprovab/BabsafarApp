@@ -99,7 +99,7 @@ class BaseTableVC: UIViewController, SearchFlightsTVCellDelegate, TravellerEcono
     
     //Delegate Methods
     
-    
+    func didTapOnAirlneSelectBtnAction(cell:SearchFlightsTVCell) {}
     func didTapOnFromCityBtnAction(cell: SearchFlightsTVCell) {}
     func didTapOnToCityBtnAction(cell: SearchFlightsTVCell){}
     func didTapOnSwipeCityBtnAction(cell: SearchFlightsTVCell) {}

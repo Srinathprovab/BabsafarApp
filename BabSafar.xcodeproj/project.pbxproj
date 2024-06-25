@@ -457,6 +457,8 @@
 		65FFFBB129B213D100E66B0D /* JourneySummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FFFBB029B213D100E66B0D /* JourneySummary.swift */; };
 		7944177E3E8A36FB61671829 /* Pods_BabSafarTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCEA8D8A0E14D737316B3E3 /* Pods_BabSafarTests.framework */; };
 		799C027E82C5387A6400ADD3 /* Pods_BabSafar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08F89F6A274BBCB309B2C7A5 /* Pods_BabSafar.framework */; };
+		8459E3A22C2A7ACF007CED6C /* AirlinelistModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8459E3A12C2A7ACF007CED6C /* AirlinelistModel.swift */; };
+		8459E3A62C2A830B007CED6C /* GetAirlineListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8459E3A52C2A830B007CED6C /* GetAirlineListViewModel.swift */; };
 		845BB4D82C295C9100571339 /* CancellationPolicyTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845BB4D72C295C9100571339 /* CancellationPolicyTVCell.xib */; };
 		845BB4D92C295C9100571339 /* CancellationPolicyTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845BB4D62C295C9100571339 /* CancellationPolicyTVCell.swift */; };
 		BF45B3652889067400DAB201 /* TextfieldTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF45B3632889067400DAB201 /* TextfieldTVCell.swift */; };
@@ -1177,6 +1179,8 @@
 		65FF34812AA6039D00E6BB13 /* ExploreResultTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreResultTVCell.swift; sourceTree = "<group>"; };
 		65FF34822AA6039D00E6BB13 /* ExploreResultTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExploreResultTVCell.xib; sourceTree = "<group>"; };
 		65FFFBB029B213D100E66B0D /* JourneySummary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JourneySummary.swift; sourceTree = "<group>"; };
+		8459E3A12C2A7ACF007CED6C /* AirlinelistModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirlinelistModel.swift; sourceTree = "<group>"; };
+		8459E3A52C2A830B007CED6C /* GetAirlineListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAirlineListViewModel.swift; sourceTree = "<group>"; };
 		845BB4D62C295C9100571339 /* CancellationPolicyTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancellationPolicyTVCell.swift; sourceTree = "<group>"; };
 		845BB4D72C295C9100571339 /* CancellationPolicyTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CancellationPolicyTVCell.xib; sourceTree = "<group>"; };
 		9B46CF1FA9D99FC0839942DF /* Pods-BabSafar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BabSafar.release.xcconfig"; path = "Target Support Files/Pods-BabSafar/Pods-BabSafar.release.xcconfig"; sourceTree = "<group>"; };
@@ -2525,6 +2529,7 @@
 			isa = PBXGroup;
 			children = (
 				65C8CA832926151B00091D2B /* TopFlightDetailsViewModel.swift */,
+				8459E3A52C2A830B007CED6C /* GetAirlineListViewModel.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -2534,6 +2539,7 @@
 			children = (
 				65C8CA81292614EB00091D2B /* TopFlightsModel.swift */,
 				6561FF7A297FA27C0015864F /* Deail_code_list.swift */,
+				8459E3A12C2A7ACF007CED6C /* AirlinelistModel.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -4882,6 +4888,7 @@
 				653CF2E22A59A3BC00AF736B /* Baggage_details.swift in Sources */,
 				6576875B292793AD00543727 /* FDDestination.swift in Sources */,
 				65B91833299B892D004B0180 /* UPComingFlightsModel.swift in Sources */,
+				8459E3A22C2A7ACF007CED6C /* AirlinelistModel.swift in Sources */,
 				65204AF22939C608007964EA /* basefareTVCell.swift in Sources */,
 				65DB8C6929A793D5003BDEE5 /* VocherRoundTripFlightDetailsTVCell.swift in Sources */,
 				6538B1DB2AA221BB00CE6F3D /* Booking_itinerary_summary.swift in Sources */,
@@ -5204,6 +5211,7 @@
 				65D76D132A989CDA0064149B /* updatePaymentFlightViewModel.swift in Sources */,
 				650C299E29D15DA20051934F /* HMBHotel_Details.swift in Sources */,
 				65A3D9562A9DABE000E26687 /* iprocessForm_params.swift in Sources */,
+				8459E3A62C2A830B007CED6C /* GetAirlineListViewModel.swift in Sources */,
 				BF5B4A26288A58FA000DF4BF /* ItineraryTVCell.swift in Sources */,
 				65CD8C1D2A94C903005BEB33 /* InsurenceViewModel.swift in Sources */,
 				65A3D9692A9DB61400E26687 /* HotelVoucherViewModel.swift in Sources */,

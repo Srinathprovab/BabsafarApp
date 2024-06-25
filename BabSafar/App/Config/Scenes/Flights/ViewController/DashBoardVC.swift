@@ -13,8 +13,6 @@ import FreshchatSDK
 class DashBoardVC: BaseTableVC, TopFlightDetailsViewModelDelegate, AllCountryCodeListViewModelDelegate, ProfileDetailsViewModelDelegate {
     
     
-    
-    
     @IBOutlet weak var banerImage: UIImageView!
     @IBOutlet weak var holderView: UIView!
     @IBOutlet weak var banerView: UIView!
@@ -113,6 +111,9 @@ class DashBoardVC: BaseTableVC, TopFlightDetailsViewModelDelegate, AllCountryCod
     }
     
     
+   
+    
+    
     
     //MARK: - VIEW SETUP
     func setupUI() {
@@ -180,10 +181,10 @@ class DashBoardVC: BaseTableVC, TopFlightDetailsViewModelDelegate, AllCountryCod
     func setupTV() {
         tableRow.removeAll()
         tableRow.append(TableRow(cellType:.SelectModuleTabTVCell))
-        tableRow.append(TableRow(title:"Top International Destinations",key: "flights",cellType:.TopCityTVCell))
-        tableRow.append(TableRow(title:"Top International Hotels",key: "hotels",cellType:.TopCityTVCell))
         tableRow.append(TableRow(height:10,bgColor: .AppHolderViewColor,cellType:.EmptyTVCell))
         tableRow.append(TableRow(cellType:.SpecialDealsTVCell))
+        tableRow.append(TableRow(title:"Top International City",key: "flights",cellType:.TopCityTVCell))
+        tableRow.append(TableRow(title:"Top International Hotels",key: "hotels",cellType:.TopCityTVCell))
         tableRow.append(TableRow(height:30,bgColor: .AppHolderViewColor,cellType:.EmptyTVCell))
         self.commonTVData = tableRow
         self.commonTableView.reloadData()
@@ -722,7 +723,7 @@ extension DashBoardVC {
             payload["out_jrn"] = "All Times"
             payload["ret_jrn"] = "All Times"
             payload["carrier"] = ""
-            payload["psscarrier"] = "ALL"
+            payload["psscarrier"] = defaults.string(forKey: UserDefaultsKeys.airlinecode)
             payload["search_flight"] = "Search"
             payload["user_id"] = defaults.string(forKey:UserDefaultsKeys.userid) ?? "0"
             payload["currency"] = defaults.string(forKey:UserDefaultsKeys.selectedCurrency) ?? "KWD"

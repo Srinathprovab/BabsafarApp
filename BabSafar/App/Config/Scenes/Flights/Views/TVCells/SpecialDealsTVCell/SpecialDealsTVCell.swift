@@ -54,10 +54,10 @@ class SpecialDealsTVCell: TableViewCell {
         specialDealsCV.delegate = self
         specialDealsCV.dataSource = self
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 180, height: 200)
+        layout.itemSize = CGSize(width: 200, height: 200)
         layout.scrollDirection = .horizontal
-        layout.minimumInteritemSpacing = 16
-        layout.minimumLineSpacing = 16
+        layout.minimumInteritemSpacing = 10
+        layout.minimumLineSpacing = 10
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         specialDealsCV.collectionViewLayout = layout
         specialDealsCV.backgroundColor = .AppHolderViewColor
