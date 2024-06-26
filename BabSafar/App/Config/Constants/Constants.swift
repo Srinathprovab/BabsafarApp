@@ -110,6 +110,7 @@ var selectedCellStates: [IndexPath: Bool] = [:]
 var filterTap = String()
 var filterPrice = String()
 var prices = [String]()
+var noofstopsArray = [String]()
 var filterModel = FlightFilterModel()
 var sortBy: SortParameter = .nothing
 var hotelfiltermodel = HotelFilterModel()

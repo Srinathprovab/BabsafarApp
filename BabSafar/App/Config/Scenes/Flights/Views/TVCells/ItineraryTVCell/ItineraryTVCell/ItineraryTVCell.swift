@@ -32,6 +32,7 @@ class ItineraryTVCell: TableViewCell {
     
     @IBOutlet weak var deplbl: UILabel!
     @IBOutlet weak var flightImg: UIImageView!
+    @IBOutlet weak var economylbl: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -75,6 +76,7 @@ class ItineraryTVCell: TableViewCell {
         setuplabels(lbl: destlbl, text: "kuwait ( kWI)", textcolor: .AppLabelColor, font: .LatoRegular(size: 12), align: .right)
         setuplabels(lbl: destTerminal1lbl, text: "Terminal: 6", textcolor: .AppLabelColor, font: .LatoRegular(size: 12), align: .right)
         setuplabels(lbl: hourlbl1, text: "1h 20m", textcolor: .AppLabelColor, font: .LatoRegular(size: 14), align: .center)
+        setuplabels(lbl: economylbl, text: "1h 20m", textcolor: .AppLabelColor, font: .LatoRegular(size: 14), align: .center)
         
         setuplabels(lbl: deplbl, text: "", textcolor: .AppLabelColor, font: .LatoRegular(size: 14), align: .left)
 

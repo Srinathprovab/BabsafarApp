@@ -20,9 +20,10 @@ class SearchHotelsResultVC: BaseTableVC, UITextFieldDelegate, HotelSearchViewMod
     @IBOutlet weak var filterImg: UIImageView!
     @IBOutlet weak var filterlbl: UILabel!
     @IBOutlet weak var filterBtn: UIButton!
-    
     @IBOutlet weak var cittlbl: UILabel!
     @IBOutlet weak var dateslbl: UILabel!
+    @IBOutlet weak var searchTFView: UIView!
+    @IBOutlet weak var searchTF: UITextField!
     
     
     
@@ -92,7 +93,7 @@ class SearchHotelsResultVC: BaseTableVC, UITextFieldDelegate, HotelSearchViewMod
         holderView.layer.borderWidth = 1
         holderView.layer.borderColor = UIColor.AppBorderColor.cgColor
         cvHolderView.backgroundColor = .WhiteColor
-        cvHolderView.addBottomBorderWithColor(color: .AppBorderColor, width: 1)
+        //cvHolderView.addBottomBorderWithColor(color: .AppBorderColor, width: 1)
         recommandedbtn.setTitle("", for: .normal)
         
         setuplabels(lbl: recommandedlbl, text: "SORT", textcolor: .AppLabelColor, font: .LatoBold(size: 16), align: .right)
@@ -103,6 +104,14 @@ class SearchHotelsResultVC: BaseTableVC, UITextFieldDelegate, HotelSearchViewMod
         filterBtn.addTarget(self, action: #selector(didTapOnFilterBtnAction(_:)), for: .touchUpInside)
         recommandedbtn.addTarget(self, action: #selector(didTapOnSortBtnAction(_:)), for: .touchUpInside)
         setupDropDown()
+        
+        
+        searchTF.textColor = .titleLabelColor
+        searchTF.font = .poppinsRegular(size: 14)
+        searchTF.setLeftPaddingPoints(35)
+        searchTF.addTarget(self, action: #selector(editingTextField1(_:)), for: .editingChanged)
+        
+        
     }
     
     
@@ -553,12 +562,12 @@ extension SearchHotelsResultVC {
                 })
                 
                 cell.hotel_DescLabel = dict.hotel_desc ?? ""
-//                if let hotel_desc = dict.hotel_desc{
-//                    cell.hotelDescLabel = hotel_desc
-//                } else {
-//                    // Handle the case when facility is empty or nil
-//                    print("hotel_desc array is empty or nil")
-//                }
+                //                if let hotel_desc = dict.hotel_desc{
+                //                    cell.hotelDescLabel = hotel_desc
+                //                } else {
+                //                    // Handle the case when facility is empty or nil
+                //                    print("hotel_desc array is empty or nil")
+                //                }
                 
                 if let facilities = dict.facility, !facilities.isEmpty {
                     cell.facilityArray = facilities
@@ -593,12 +602,12 @@ extension SearchHotelsResultVC {
                 
                 
                 cell.hotel_DescLabel = dict.hotel_desc ?? "bbbbb"
-//                if let hotel_desc = dict.hotel_desc{
-//                    cell.hotelDescLabel = hotel_desc
-//                } else {
-//                    // Handle the case when facility is empty or nil
-//                    print("hotel_desc array is empty or nil")
-//                }
+                //                if let hotel_desc = dict.hotel_desc{
+                //                    cell.hotelDescLabel = hotel_desc
+                //                } else {
+                //                    // Handle the case when facility is empty or nil
+                //                    print("hotel_desc array is empty or nil")
+                //                }
                 
                 if let facilities = dict.facility, !facilities.isEmpty {
                     cell.facilityArray = facilities
@@ -641,7 +650,10 @@ extension SearchHotelsResultVC {
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let lastRowIndex = tableView.numberOfRows(inSection: 0) - 1
         if indexPath.row == lastRowIndex && !isLoadingData {
-            callHotelSearchPaginationAPI()
+            
+            if  isSearchBool == false {
+                callHotelSearchPaginationAPI()
+            }
         }
     }
     
@@ -730,13 +742,31 @@ extension SearchHotelsResultVC:AppliedFilters{
             // Check if the hotel's star rating matches the selected star rating or is empty
             let ratingMatches = starRating.isEmpty || String(hotel.star_rating ?? 0) == starRating
             
+            
+            // Check if the hotel's amenities contain any of the selected amenities
+                    let aminitiesMatch: Bool
+                    if aminitiesA.isEmpty {
+                        aminitiesMatch = true
+                    } else if let facilities = hotel.facility {
+                        // Convert hotel facilities to a set for efficient matching
+                        let hotelAmenitiesSet = Set(facilities.compactMap { $0.name })
+                        let selectedAmenitiesSet = Set(aminitiesA)
+                        
+                        // Check if there's any intersection between the selected amenities and hotel amenities
+                        aminitiesMatch = !hotelAmenitiesSet.intersection(selectedAmenitiesSet).isEmpty
+                    } else {
+                        aminitiesMatch = false
+                    }
+            
+            
+            
             // Check if the hotel's refund type matches any selected refundable types or the array is empty
             let refundableMatch = refundableTypeArray.isEmpty || refundableTypeArray.contains(hotel.refund ?? "")
             
             // Check if the hotel's price falls within the specified range
             let priceInRange = netPrice >= minpricerange && netPrice <= maxpricerange
             
-            return ratingMatches && refundableMatch && priceInRange
+            return ratingMatches && refundableMatch && priceInRange && aminitiesMatch
         }
         
         // Update the filtered results
@@ -758,6 +788,10 @@ extension SearchHotelsResultVC:AppliedFilters{
     //MARK: - SORT BY FILTER
     func filtersSortByApplied(sortBy: SortParameter) {
         commonTableView.scrollToRow(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
+        
+        isSearchBool = true
+        
+        
         switch sortBy {
             
         case .PriceLow:
@@ -863,6 +897,17 @@ extension SearchHotelsResultVC {
         vc.modalPresentationStyle = .fullScreen
         vc.key = keystr
         self.present(vc, animated: false)
+    }
+    
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.y <= 0 {
+            // Show topView when scrolling to the top
+            self.searchTFView.isHidden = false
+        } else {
+            // Hide topView when scrolling away from the top
+            self.searchTFView.isHidden = true
+        }
     }
     
 }

@@ -568,11 +568,11 @@ extension CheckBoxTVCell {
             
             
         case "Amenities":
-            if !hotelfiltermodel.nearByLocA.isEmpty {
+            if !hotelfiltermodel.aminitiesA.isEmpty {
                 // Check if the cell's title matches any value in the luggage array
                 
                 
-                if hotelfiltermodel.nearByLocA.contains(cell.titlelbl.text ?? "") {
+                if hotelfiltermodel.aminitiesA.contains(cell.titlelbl.text ?? "") {
                     
                     DispatchQueue.main.async {
                         cell.sele()

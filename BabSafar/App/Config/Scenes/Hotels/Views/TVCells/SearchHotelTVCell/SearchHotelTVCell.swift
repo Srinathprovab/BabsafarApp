@@ -106,11 +106,9 @@ class SearchHotelTVCell: TableViewCell, HotelCitySearchViewModelDelegate {
         filterdcountrylist = countrylist
         loadCountryNamesAndCode()
         
-        setuplabels(lbl: checkinlbl, text: defaults.string(forKey: UserDefaultsKeys.checkin) ?? "Add Check In Date", textcolor: .AppLabelColor, font: .LatoSemibold(size: 18), align: .left)
-        
-        setuplabels(lbl: checkoutlbl, text: defaults.string(forKey: UserDefaultsKeys.checkout) ?? "Add Check Out Date", textcolor: .AppLabelColor, font: .LatoSemibold(size: 18), align: .left)
-        
-        
+        locationCitylbl.text = defaults.string(forKey: UserDefaultsKeys.locationcity) ?? "Add City"
+        checkinlbl.text = defaults.string(forKey: UserDefaultsKeys.checkin) ?? "Add Date"
+        checkoutlbl.text = defaults.string(forKey: UserDefaultsKeys.checkout) ?? "Add Date"
         nationalityValuelbl.text = defaults.string(forKey: UserDefaultsKeys.hnationalityname) ?? "Select Nationality"
         
         NotificationCenter.default.addObserver(self, selector: #selector(hotelrooms), name: Notification.Name("hotelrooms"), object: nil)
@@ -119,6 +117,12 @@ class SearchHotelTVCell: TableViewCell, HotelCitySearchViewModelDelegate {
         showCheckInDatePicker()
         showCheckoutDatePicker()
         setupnationalityDropDown()
+        
+        
+        setupInitialsInput(lbl: locationCitylbl, str: "Add City")
+        setupInitialsInput(lbl: checkinlbl, str: "Add Date")
+        setupInitialsInput(lbl: checkoutlbl, str: "Add Date")
+        setupInitialsInput(lbl: nationalityValuelbl, str: "Select Nationality")
     }
     
     @objc func hotelrooms() {
@@ -128,6 +132,11 @@ class SearchHotelTVCell: TableViewCell, HotelCitySearchViewModelDelegate {
     
     
     func setupUI() {
+        
+        
+        setuplabels(lbl: checkinlbl, text: "", textcolor: .AppLabelColor, font: .LatoSemibold(size: 18), align: .left)
+        setuplabels(lbl: checkoutlbl, text: "", textcolor: .AppLabelColor, font: .LatoSemibold(size: 18), align: .left)
+        
         
         
         // holderView.backgroundColor = .WhiteColor
@@ -144,7 +153,7 @@ class SearchHotelTVCell: TableViewCell, HotelCitySearchViewModelDelegate {
         searchHotelsBtnView.backgroundColor = .AppBtnColor
         searchHotelsBtnView.addCornerRadiusWithShadow(color: .clear, borderColor: .clear, cornerRadius: 4)
         setuplabels(lbl: locationCityTitlelbl, text: "Location/City", textcolor: .AppLabelColor, font: .LatoLight(size: 12), align: .left)
-        setuplabels(lbl: locationCitylbl, text: defaults.string(forKey: UserDefaultsKeys.locationcity) ?? "Add City", textcolor: .AppLabelColor, font: .LatoSemibold(size: 18), align: .left)
+        setuplabels(lbl: locationCitylbl, text: "", textcolor: .AppLabelColor, font: .LatoSemibold(size: 18), align: .left)
         setuplabels(lbl: checkinTitlelbl, text: "Check-In", textcolor: .AppLabelColor, font: .LatoLight(size: 12), align: .left)
         setuplabels(lbl: checkoutTitlelbl, text: "Check - Out", textcolor: .AppLabelColor, font: .LatoLight(size: 12), align: .left)
         setuplabels(lbl: addRoomsTitlelbl, text: "Rooms & Guests", textcolor: .AppLabelColor, font: .LatoLight(size: 12), align: .left)
@@ -171,9 +180,7 @@ class SearchHotelTVCell: TableViewCell, HotelCitySearchViewModelDelegate {
         searchHotelCityBtn.addTarget(self, action: #selector(didTapOnSearchHotelCityBtn(_:)), for: .touchUpInside)
         searchHotelCityBtn.isHidden = true
         
-        setupInitialsInput(lbl: locationCitylbl, str: "Add City")
-        setupInitialsInput(lbl: checkinlbl, str: "Add Check In Date")
-        setupInitialsInput(lbl: checkoutlbl, str: "Add Check Out Date")
+       
         
         nationalityView.addCornerRadiusWithShadow(color: .clear, borderColor: .AppBorderColor, cornerRadius: 4)
         nationalityView.backgroundColor = HexColor("#FCFCFC")
@@ -365,9 +372,9 @@ class SearchHotelTVCell: TableViewCell, HotelCitySearchViewModelDelegate {
         ndropDown.bottomOffset = CGPoint(x: 0, y: nationalityTf.frame.size.height + 10)
         ndropDown.selectionAction = { [weak self] (index: Int, item: String) in
             
-            print(item)
-            print(self?.isocountrycodeArray[index] ?? "")
+           
             self?.nationalityValuelbl.text = self?.countryNames[index] ?? ""
+            self?.nationalityValuelbl.textColor = .titleLabelColor
             self?.countryCode = self?.isocountrycodeArray[index] ?? ""
             self?.nationalityTf.text = ""
             self?.nationalityTf.resignFirstResponder()

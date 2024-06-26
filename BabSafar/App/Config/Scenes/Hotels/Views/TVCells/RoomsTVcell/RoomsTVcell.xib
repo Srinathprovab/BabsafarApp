@@ -199,7 +199,7 @@
                                 <rect key="frame" x="0.0" y="80" width="449" height="356"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="356" id="Oxi-VG-dq8"/>
+                                    <constraint firstAttribute="height" constant="356" id="Oxi-VG-dq8"/>
                                 </constraints>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kil-ef-X9C">
@@ -216,7 +216,6 @@
                             <constraint firstItem="pcf-yY-aso" firstAttribute="top" secondItem="alq-Tr-o7E" secondAttribute="bottom" id="7fW-LI-Vg8"/>
                             <constraint firstAttribute="bottom" secondItem="pcf-yY-aso" secondAttribute="bottom" id="Hms-FC-Chy"/>
                             <constraint firstItem="kil-ef-X9C" firstAttribute="top" secondItem="alq-Tr-o7E" secondAttribute="bottom" id="NUl-pI-7vs"/>
-                            <constraint firstAttribute="height" constant="436" id="Xl2-hf-hUX"/>
                             <constraint firstAttribute="trailing" secondItem="kil-ef-X9C" secondAttribute="trailing" id="ilJ-s5-p9R"/>
                             <constraint firstItem="alq-Tr-o7E" firstAttribute="top" secondItem="Urn-A6-I7b" secondAttribute="top" id="rSw-oA-2nb"/>
                             <constraint firstAttribute="bottom" secondItem="kil-ef-X9C" secondAttribute="bottom" id="ri7-qg-Rx8"/>

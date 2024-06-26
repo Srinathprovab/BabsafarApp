@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -33,17 +33,17 @@
                 <rect key="frame" x="0.0" y="0.0" width="443" height="101"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TVh-ie-KGE">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TVh-ie-KGE" customClass="BorderedView" customModule="BabSafar" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="443" height="101"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="VQT-c7-SUv">
                                 <rect key="frame" x="0.0" y="0.0" width="443" height="101"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8o1-he-4oD" customClass="BorderedView" customModule="BabSafar" customModuleProvider="target">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8o1-he-4oD">
                                         <rect key="frame" x="0.0" y="0.0" width="221.66666666666666" height="101"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Room Only" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vYF-7E-ZYV">
-                                                <rect key="frame" x="81" y="7.333333333333333" width="59.666666666666657" height="14.666666666666668"/>
+                                                <rect key="frame" x="81" y="7.333333333333333" width="59.666666666666657" height="14.666666666666671"/>
                                                 <fontDescription key="fontDescription" name="Lato-Semibold" family="Lato" pointSize="12"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -114,9 +114,19 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="51M-xm-IgE">
+                                                <rect key="frame" x="220.66666666666666" y="0.0" width="1" height="101"/>
+                                                <color key="backgroundColor" name="BorderColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="1" id="1bg-GK-yy4"/>
+                                                </constraints>
+                                            </view>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
+                                            <constraint firstItem="51M-xm-IgE" firstAttribute="top" secondItem="8o1-he-4oD" secondAttribute="top" id="0eh-kb-OYi"/>
+                                            <constraint firstAttribute="trailing" secondItem="51M-xm-IgE" secondAttribute="trailing" id="26P-sX-K7W"/>
+                                            <constraint firstAttribute="bottom" secondItem="51M-xm-IgE" secondAttribute="bottom" id="5JP-pA-vpx"/>
                                             <constraint firstItem="hiS-sS-Cjb" firstAttribute="top" secondItem="pzK-Jr-18o" secondAttribute="bottom" constant="8" id="64u-4q-p00"/>
                                             <constraint firstItem="vYF-7E-ZYV" firstAttribute="centerX" secondItem="8o1-he-4oD" secondAttribute="centerX" id="EBb-Ui-hgn"/>
                                             <constraint firstItem="3yf-90-ySC" firstAttribute="centerX" secondItem="vYF-7E-ZYV" secondAttribute="centerX" id="Ffv-Xc-mGX"/>
@@ -138,7 +148,7 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HL9-Fj-Q2d" customClass="BorderedView" customModule="BabSafar" customModuleProvider="target">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HL9-Fj-Q2d">
                                         <rect key="frame" x="221.66666666666663" y="0.0" width="221.33333333333337" height="101"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="KWD150.00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ogs-AV-3Ay">
@@ -229,6 +239,14 @@
                             <constraint firstAttribute="trailing" secondItem="VQT-c7-SUv" secondAttribute="trailing" id="edG-K9-LhS"/>
                             <constraint firstItem="VQT-c7-SUv" firstAttribute="leading" secondItem="TVh-ie-KGE" secondAttribute="leading" id="ima-2F-9Vl"/>
                         </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                <real key="value" value="1"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                <color key="value" name="BorderColor"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </view>
                 </subviews>
                 <constraints>

@@ -121,13 +121,7 @@ class RoomsTVcell: TableViewCell, NewRoomTVCellDelegate {
         
         setuTV()
         
-        tvheight.constant = CGFloat(roomsDetails.count * 188)
-        roomDetailsTV.reloadData()
-        
-        
-        
-        updateHeight(height: 200)
-        
+    
         
     }
     
@@ -186,7 +180,10 @@ class RoomsTVcell: TableViewCell, NewRoomTVCellDelegate {
         
         NotificationCenter.default.post(name: NSNotification.Name("roomtapbool"), object: true)
         
+        
+        updateHeight(height: 200)
         delegate?.didTapOnRoomsBtn(cell:self)
+        
     }
     
     
@@ -221,6 +218,8 @@ class RoomsTVcell: TableViewCell, NewRoomTVCellDelegate {
         mapUL.backgroundColor = .WhiteColor
         NotificationCenter.default.post(name: NSNotification.Name("roomtapbool"), object: false)
         
+        tvheight.constant = 356
+        roomDetailsTV.reloadData()
         delegate?.didTapOnAmenitiesBtn(cell:self)
     }
     
@@ -238,7 +237,9 @@ class RoomsTVcell: TableViewCell, NewRoomTVCellDelegate {
         hotelDetailsTapBool = false
         NotificationCenter.default.post(name: NSNotification.Name("roomtapbool"), object: false)
         
-        //  delegate?.didTapOnAmenitiesBtn(cell:self)
+        tvheight.constant = 356
+        roomDetailsTV.reloadData()
+        delegate?.didTapOnAmenitiesBtn(cell:self)
     }
     
     
@@ -282,11 +283,7 @@ extension RoomsTVcell: UITableViewDataSource ,UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
         if self.key == "rooms" {
             return roomsDetails.count
-        }
-        //        else if self.key == "hotels details"{
-        //            return formatDesc.count
-        //        }
-        else {
+        }else {
             return 1
         }
         

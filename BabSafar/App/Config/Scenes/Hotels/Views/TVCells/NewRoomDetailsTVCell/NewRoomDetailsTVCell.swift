@@ -21,6 +21,7 @@ class NewRoomDetailsTVCell: UITableViewCell {
     @IBOutlet weak var bablbl: UILabel!
     @IBOutlet weak var selectRoomBtnView: BorderedView!
     
+    
     var ratekey = String()
     var currency = ""
     var exactprice = ""
@@ -46,6 +47,11 @@ class NewRoomDetailsTVCell: UITableViewCell {
         // Initialization code
         
         selectRoomBtnView.backgroundColor = .AppBtnColor
+        
+//        selectRoomView.layer.borderColor = UIColor.green.cgColor
+//       // selectRoomView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner] // Bottom left corner, Bottom right corner respectively
+//        selectRoomView.layer.cornerRadius = 10
+//        selectRoomView.clipsToBounds = true
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {

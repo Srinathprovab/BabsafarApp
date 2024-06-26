@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -17,44 +17,44 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="190" id="KGk-i7-Jjw" customClass="NewRoomTVCell" customModule="BabSafar" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="451" height="188"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="203" id="KGk-i7-Jjw" customClass="NewRoomTVCell" customModule="BabSafar" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="452" height="201"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="451" height="188"/>
+                <rect key="frame" x="0.0" y="0.0" width="452" height="201"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="ulM-1L-6j5">
-                        <rect key="frame" x="12" y="87" width="427" height="95"/>
+                        <rect key="frame" x="12" y="85" width="428" height="110"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="95" id="L6E-vl-nyY"/>
+                            <constraint firstAttribute="height" constant="110" id="L6E-vl-nyY"/>
                         </constraints>
                     </tableView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VWK-pt-Eg2" customClass="BorderedView" customModule="BabSafar" customModuleProvider="target">
-                        <rect key="frame" x="12" y="5" width="427" height="82"/>
+                        <rect key="frame" x="12" y="5" width="428" height="80"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Room Type:  Double or twin rooom" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LyR-fh-MbS">
-                                <rect key="frame" x="10" y="14" width="215" height="17"/>
+                                <rect key="frame" x="10" y="14" width="215" height="15"/>
                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hhE-vA-RLY">
-                                <rect key="frame" x="0.0" y="41" width="427" height="1"/>
+                                <rect key="frame" x="0.0" y="39" width="428" height="1"/>
                                 <color key="backgroundColor" name="BorderColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="1b7-Jv-JKG"/>
                                 </constraints>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="EmB-cp-Yr8">
-                                <rect key="frame" x="0.0" y="42" width="427" height="40"/>
+                                <rect key="frame" x="0.0" y="40" width="428" height="40"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5cB-jf-fdR">
-                                        <rect key="frame" x="0.0" y="0.0" width="213.66666666666666" height="40"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="214" height="40"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Board" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2e2-2k-LJr">
-                                                <rect key="frame" x="88.333333333333329" y="11.666666666666664" width="36.666666666666671" height="17"/>
+                                                <rect key="frame" x="88.666666666666671" y="11.666666666666664" width="36.666666666666671" height="17"/>
                                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -68,10 +68,10 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Egl-68-Tad">
-                                        <rect key="frame" x="213.66666666666663" y="0.0" width="213.33333333333337" height="40"/>
+                                        <rect key="frame" x="214" y="0.0" width="214" height="40"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total Price" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F7x-QN-acv">
-                                                <rect key="frame" x="74.666666666666657" y="11.666666666666664" width="64" height="17"/>
+                                                <rect key="frame" x="75" y="11.666666666666664" width="64" height="17"/>
                                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -95,7 +95,7 @@
                                 </subviews>
                             </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Le-fo-3YU">
-                                <rect key="frame" x="213" y="42" width="1" height="40"/>
+                                <rect key="frame" x="213.66666666666666" y="40" width="1" height="40"/>
                                 <color key="backgroundColor" name="BorderColor"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="1" id="0VZ-Yt-uJs"/>
@@ -148,7 +148,7 @@
                 <outlet property="topView" destination="VWK-pt-Eg2" id="Urd-fL-5uT"/>
                 <outlet property="tvheight" destination="L6E-vl-nyY" id="BFp-3u-ZLu"/>
             </connections>
-            <point key="canvasLocation" x="96.946564885496173" y="309.85915492957747"/>
+            <point key="canvasLocation" x="97.70992366412213" y="314.43661971830988"/>
         </tableViewCell>
     </objects>
     <resources>

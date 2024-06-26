@@ -51,10 +51,10 @@ class NewRoomTVCell: TableViewCell, NewRoomDetailsTVCellDelegate {
         roomInfoTV.separatorStyle = .none
         roomInfoTV.showsHorizontalScrollIndicator = false
         
-        roomInfoTV.layer.borderColor = UIColor.AppBorderColor.cgColor
-        roomInfoTV.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner] // Bottom left corner, Bottom right corner respectively
-        roomInfoTV.layer.cornerRadius = 10
-        roomInfoTV.clipsToBounds = true
+//        roomInfoTV.layer.borderColor = UIColor.AppBorderColor.cgColor
+//        roomInfoTV.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner] // Bottom left corner, Bottom right corner respectively
+//        roomInfoTV.layer.cornerRadius = 10
+//       // roomInfoTV.clipsToBounds = true
         roomInfoTV.isScrollEnabled = false
         
         topView.layer.borderColor = UIColor.AppBorderColor.cgColor

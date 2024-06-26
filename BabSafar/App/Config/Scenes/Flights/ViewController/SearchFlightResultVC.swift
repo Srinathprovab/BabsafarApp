@@ -1461,6 +1461,7 @@ extension SearchFlightResultVC {
         ConnectingAirportsArray.removeAll()
         prices.removeAll()
         luggageArray.removeAll()
+        noofstopsArray.removeAll()
         
         
         if let journeyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
@@ -1476,6 +1477,7 @@ extension SearchFlightResultVC {
                                 prices.append("\(k.price?.api_total_display_fare ?? 0.0)")
                                 
                                 l.map { m in
+                                     
                                     
                                     let dateFormatter = DateFormatter()
                                     dateFormatter.dateFormat = "dd MMM yyyy"
@@ -1502,6 +1504,11 @@ extension SearchFlightResultVC {
                             k.flight_details?.summary.map({ l in
                                 
                                 l.map { m in
+                                    
+                                    
+                                    noofstopsArray.append("\(m.no_of_stops ?? 0)")
+                                    
+                                   
                                     
                                     let dateFormatter = DateFormatter()
                                     dateFormatter.dateFormat = "dd MMM yyyy"
@@ -1550,7 +1557,7 @@ extension SearchFlightResultVC {
         
         
         
-        
+        noofstopsArray = noofstopsArray.unique()
         faretypeArray = faretypeArray.unique()
         dateArray = dateArray.unique()
         AirlinesArray = AirlinesArray.unique()
@@ -1559,9 +1566,29 @@ extension SearchFlightResultVC {
         prices = prices.unique()
         luggageArray = luggageArray.unique()
         
+        noofstopsArray = generateStopsArray(from: noofstopsArray)
+        
     }
     
-    
+  
+    func generateStopsArray(from stopCounts: [String]) -> [String] {
+        return stopCounts.map { count in
+            switch count {
+            case "2":
+                return "2 Stops"
+                
+            case "1":
+                return "1 Stop"
+                
+            case "0":
+                return "0 Stop"
+            
+           
+            default:
+                return "\(count) Stops"
+            }
+        }
+    }
     
 }
 

@@ -98,7 +98,7 @@ class FilterVC: BaseTableVC{
     var minpricerangefilter = Double()
     var maxpricerangefilter = Double()
     var starRatingFilter = String()
-    var stopsArray = ["0 Stop","1 Stop","2 Stop"]
+    var stopsArray = [String]()
    
     var departurnTimeArray = ["12 am - 6 am","06 am - 12 pm","12 pm - 06 pm","06 pm - 12 am"]
     var tablerow = [TableRow]()
@@ -121,7 +121,7 @@ class FilterVC: BaseTableVC{
     var selectednearBylocationsArray = [String]()
     var selectedamenitiesArray = [String]()
     var selectedLuggageArray = [String]()
-    var hotelRefundablerTypeFilteArray = [String]()
+    var selectedRefundableArray = [String]()
     
     static var newInstance: FilterVC? {
         let storyboard = UIStoryboard(name: Storyboard.Main.name,
@@ -135,10 +135,17 @@ class FilterVC: BaseTableVC{
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        
+        
+     
+        
         addObserver()
         NotificationCenter.default.addObserver(self, selector: #selector(nointernet), name: Notification.Name("nointernet"), object: nil)
-        
+
     }
+    
+    
+   
     
     //MARK: - nointernet
     @objc func nointernet() {
@@ -236,7 +243,7 @@ class FilterVC: BaseTableVC{
         tablerow.removeAll()
         
         tablerow.append(TableRow(title:"Price",cellType:.SliderTVCell))
-        tablerow.append(TableRow(title:"Stops",data: stopsArray,cellType:.CheckBoxTVCell))
+        tablerow.append(TableRow(title:"Stops",data: noofstopsArray,cellType:.CheckBoxTVCell))
         tablerow.append(TableRow(title:"Refundable Type",data: faretypeArray,cellType:.CheckBoxTVCell))
         
         tablerow.append(TableRow(title:"Luggage",data: luggageArray,cellType:.CheckBoxTVCell))
@@ -301,7 +308,7 @@ class FilterVC: BaseTableVC{
         tablerow.append(TableRow(title:"Booking Type",data: paymentTypeArray,cellType:.CheckBoxTVCell))
         tablerow.append(TableRow(title:"Neighbourhood",data: neighbourwoodArray,cellType:.CheckBoxTVCell))
         tablerow.append(TableRow(title:"Near By Location's",data: nearBylocationsArray,cellType:.CheckBoxTVCell))
-        tablerow.append(TableRow(title:"Amenities",data: amenitiesArray,cellType:.CheckBoxTVCell))
+        tablerow.append(TableRow(title:"Amenities",data: facilityArray,cellType:.CheckBoxTVCell))
         
         
         
@@ -715,7 +722,7 @@ class FilterVC: BaseTableVC{
                     
                 case "Booking Type":
                    
-                    hotelRefundablerTypeFilteArray.append(cell.titlelbl.text ?? "")
+                    selectedRefundableArray.append(cell.titlelbl.text ?? "")
                     
                     break
                     
@@ -856,8 +863,8 @@ class FilterVC: BaseTableVC{
                     
                 case "Booking Type":
                     
-                    if let index = hotelRefundablerTypeFilteArray.firstIndex(of: cell.titlelbl.text ?? "") {
-                        hotelRefundablerTypeFilteArray.remove(at: index)
+                    if let index = selectedRefundableArray.firstIndex(of: cell.titlelbl.text ?? "") {
+                        selectedRefundableArray.remove(at: index)
                     }
                     break
                     
@@ -1190,8 +1197,8 @@ class FilterVC: BaseTableVC{
                     }
                     
                     
-                    if !hotelRefundablerTypeFilteArray.isEmpty {
-                        hotelfiltermodel.refundableTypes = hotelRefundablerTypeFilteArray
+                    if !selectedRefundableArray.isEmpty {
+                        hotelfiltermodel.refundableTypes = selectedRefundableArray
                     }else {
                         hotelfiltermodel.refundableTypes.removeAll()
                     }
@@ -1462,7 +1469,7 @@ extension FilterVC {
      
         
         if !hotelfiltermodel.refundableTypes.isEmpty {
-            hotelRefundablerTypeFilteArray = hotelfiltermodel.refundableTypes
+            selectedRefundableArray = hotelfiltermodel.refundableTypes
         }
         
         if !hotelfiltermodel.aminitiesA.isEmpty {
@@ -1498,7 +1505,7 @@ extension FilterVC {
         hotelfiltermodel.starRating = ""
         
         starRatingFilter = ""
-        hotelRefundablerTypeFilteArray.removeAll()
+        selectedRefundableArray.removeAll()
         selectednearBylocationsArray.removeAll()
         selectedNeighbourwoodArray.removeAll()
         selectedamenitiesArray.removeAll()
