@@ -62,7 +62,7 @@
                                         </constraints>
                                     </imageView>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemGreenColor"/>
+                                <color key="backgroundColor" red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="iXN-D5-CbH" firstAttribute="centerY" secondItem="JTn-SR-thU" secondAttribute="centerY" id="0Xm-34-gnf"/>
                                     <constraint firstItem="JTn-SR-thU" firstAttribute="centerY" secondItem="XVV-Jc-xdJ" secondAttribute="centerY" id="ZZH-Lu-yuo"/>
@@ -306,9 +306,6 @@ Fahidi Metro </string>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemGreenColor">
-            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

@@ -549,7 +549,7 @@ class TravellerEconomyVC: BaseTableVC {
                     let totaltraverlers = "\(adultsCount + childCount + infantsCount) Passengers"
                     defaults.set(totaltraverlers, forKey: UserDefaultsKeys.visatravellerDetails)
                     
-                    NotificationCenter.default.post(name: Notification.Name("reloadTV"), object: nil)
+                    NotificationCenter.default.post(name: Notification.Name("reloadvisavc"), object: nil)
                     dismiss(animated: false)
                     
                 }else {

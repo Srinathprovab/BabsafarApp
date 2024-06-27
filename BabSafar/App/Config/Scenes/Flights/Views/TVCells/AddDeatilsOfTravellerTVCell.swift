@@ -692,9 +692,6 @@ class AddDeatilsOfTravellerTVCell: TableViewCell {
             case fnameTF:
                 fnameView.layer.borderColor = UIColor.AppBorderColor.cgColor
                 travelerArray[indexposition].firstName = text
-                
-                
-                
                 break
                 
             case lnameTF:
@@ -713,8 +710,6 @@ class AddDeatilsOfTravellerTVCell: TableViewCell {
             default:
                 break
             }
-            
-            
             
         }
         
@@ -736,6 +731,8 @@ class AddDeatilsOfTravellerTVCell: TableViewCell {
     @IBAction func didTapOnExpandAdultViewbtnAction(_ sender: Any) {
         delegate?.didTapOnExpandAdultViewbtnAction(cell: self)
     }
+    
+    
     
     
     @objc func searchTextChanged(textField: UITextField) {

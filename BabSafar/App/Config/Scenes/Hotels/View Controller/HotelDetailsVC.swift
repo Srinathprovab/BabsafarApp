@@ -27,6 +27,9 @@ class HotelDetailsVC: BaseTableVC, HotelDetailsViewModelDelegate {
         return vc
     }
     
+    var colorTexture: MTLTexture?
+    var depthTexture: MTLTexture?
+
     var viewmodel:HotelDetailsViewModel?
     var payload = [String:Any]()
     var bookingsource = String()
@@ -41,7 +44,7 @@ class HotelDetailsVC: BaseTableVC, HotelDetailsViewModelDelegate {
     override func viewWillAppear(_ animated: Bool) {
         selectedCellStates = [:]
         addObserver()
-       
+        gooo()
         if callapibool == true{
             
 //            bookNowView.isUserInteractionEnabled = false
@@ -261,7 +264,7 @@ extension HotelDetailsVC {
         hsearchid = response.params?.search_id ?? ""
         htoken = response.hotel_details?.token ?? ""
         htokenkey = response.hotel_details?.tokenKey ?? ""
-        hbookingsource = response.hotel_details?.booking_source ?? ""
+        hbookingsource = bookingsource
         
         
         hotelDetails = response.hotel_details
@@ -322,6 +325,28 @@ extension HotelDetailsVC {
         vc.modalPresentationStyle = .overCurrentContext
         vc.key = "nointernet"
         self.present(vc, animated: true)
+    }
+    
+    
+    
+    func gooo(){
+        // Create a render pass descriptor
+        let renderPassDescriptor = MTLRenderPassDescriptor()
+
+        // Set the color attachment
+        let colorAttachment = renderPassDescriptor.colorAttachments[0]
+        colorAttachment?.texture = colorTexture
+        colorAttachment?.loadAction = .clear
+        colorAttachment?.clearColor = MTLClearColor(red: 0, green: 0, blue: 0, alpha: 1)
+        colorAttachment?.storeAction = .store
+
+        // Set the depth attachment
+        let depthAttachment = renderPassDescriptor.depthAttachment
+        depthAttachment?.texture = depthTexture
+        depthAttachment?.loadAction = .clear
+        depthAttachment?.clearDepth = 1.0
+        depthAttachment?.storeAction = .dontCare
+
     }
     
 }

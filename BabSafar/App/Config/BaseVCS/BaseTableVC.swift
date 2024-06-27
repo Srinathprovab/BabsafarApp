@@ -365,7 +365,7 @@ class BaseTableVC: UIViewController, SearchFlightsTVCellDelegate, TravellerEcono
     
     func donedatePicker(cell:SearchHotelTVCell){}
     func cancelDatePicker(cell:SearchHotelTVCell){}
-    
+    func didTapOnStarRatingCell(cell: StarRatingCVCell) {}
     
     
     

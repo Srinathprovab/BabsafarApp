@@ -461,6 +461,8 @@
 		8459E3A62C2A830B007CED6C /* GetAirlineListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8459E3A52C2A830B007CED6C /* GetAirlineListViewModel.swift */; };
 		845BB4D82C295C9100571339 /* CancellationPolicyTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845BB4D72C295C9100571339 /* CancellationPolicyTVCell.xib */; };
 		845BB4D92C295C9100571339 /* CancellationPolicyTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845BB4D62C295C9100571339 /* CancellationPolicyTVCell.swift */; };
+		846E8AD82C2D289500A70E2E /* StarRatingCVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 846E8AD72C2D289500A70E2E /* StarRatingCVCell.xib */; };
+		846E8AD92C2D289500A70E2E /* StarRatingCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846E8AD62C2D289500A70E2E /* StarRatingCVCell.swift */; };
 		BF45B3652889067400DAB201 /* TextfieldTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF45B3632889067400DAB201 /* TextfieldTVCell.swift */; };
 		BF45B3662889067400DAB201 /* TextfieldTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF45B3642889067400DAB201 /* TextfieldTVCell.xib */; };
 		BF45B36A2889069300DAB201 /* ButtonTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF45B3682889069300DAB201 /* ButtonTVCell.swift */; };
@@ -1183,6 +1185,8 @@
 		8459E3A52C2A830B007CED6C /* GetAirlineListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAirlineListViewModel.swift; sourceTree = "<group>"; };
 		845BB4D62C295C9100571339 /* CancellationPolicyTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancellationPolicyTVCell.swift; sourceTree = "<group>"; };
 		845BB4D72C295C9100571339 /* CancellationPolicyTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CancellationPolicyTVCell.xib; sourceTree = "<group>"; };
+		846E8AD62C2D289500A70E2E /* StarRatingCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarRatingCVCell.swift; sourceTree = "<group>"; };
+		846E8AD72C2D289500A70E2E /* StarRatingCVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StarRatingCVCell.xib; sourceTree = "<group>"; };
 		9B46CF1FA9D99FC0839942DF /* Pods-BabSafar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BabSafar.release.xcconfig"; path = "Target Support Files/Pods-BabSafar/Pods-BabSafar.release.xcconfig"; sourceTree = "<group>"; };
 		A876EF9E3D1A1D3B4496D8CE /* Pods_BabSafar_BabSafarUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BabSafar_BabSafarUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2CEE844C2069EED8A7FE644 /* Pods-BabSafarTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BabSafarTests.release.xcconfig"; path = "Target Support Files/Pods-BabSafarTests/Pods-BabSafarTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -3055,6 +3059,15 @@
 			path = CancellationPolicyTVCell;
 			sourceTree = "<group>";
 		};
+		846E8AD12C2D284D00A70E2E /* StarRatingCVCell */ = {
+			isa = PBXGroup;
+			children = (
+				846E8AD62C2D289500A70E2E /* StarRatingCVCell.swift */,
+				846E8AD72C2D289500A70E2E /* StarRatingCVCell.xib */,
+			);
+			path = StarRatingCVCell;
+			sourceTree = "<group>";
+		};
 		8F5565DDD84A8E6F74FD07CB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -3229,6 +3242,7 @@
 		BF566DD32897D7890046FB95 /* CVCells */ = {
 			isa = PBXGroup;
 			children = (
+				846E8AD12C2D284D00A70E2E /* StarRatingCVCell */,
 				65EB1FDD2A0B9C2900CA06E7 /* FacilityCVCells */,
 				BF8AA93E2899050700D9DC80 /* AmenitiesCVCell */,
 				BF566DD42897D7A00046FB95 /* HotelImagesCVCell */,
@@ -4650,6 +4664,7 @@
 				BF94FD132886B81D00778946 /* Lato-Light.ttf in Resources */,
 				BF45B3812889139A00DAB201 /* manrope-semibold.otf in Resources */,
 				653A6AF22A99C69B001877D2 /* NewRoomDetailsTVCell.xib in Resources */,
+				846E8AD82C2D289500A70E2E /* StarRatingCVCell.xib in Resources */,
 				65FE752F29B07B7500D2BC48 /* ViewFlightFromToDetailsTVCell.xib in Resources */,
 				BF56D0612893F6530092387D /* Hotels.storyboard in Resources */,
 				65CCD31E2AAB5C5800C5E9E7 /* loderimg1.gif in Resources */,
@@ -5094,6 +5109,7 @@
 				65265964299D21E700D71009 /* FareRulesData.swift in Sources */,
 				65260F972901263E006AD0C6 /* CommonTVCell.swift in Sources */,
 				BF87CD1B2891542B000B6A1A /* Reward_total_report.swift in Sources */,
+				846E8AD92C2D289500A70E2E /* StarRatingCVCell.swift in Sources */,
 				65F3641F293761D200F861D9 /* All_country_code_list.swift in Sources */,
 				65A3D9652A9DB52600E26687 /* HHotel_cancelation_policy.swift in Sources */,
 				6576874529273DA700543727 /* RoundTripModel.swift in Sources */,

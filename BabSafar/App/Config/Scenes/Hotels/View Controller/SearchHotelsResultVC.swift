@@ -464,6 +464,8 @@ extension SearchHotelsResultVC {
         faretypeArray .removeAll()
         facilityArray.removeAll()
         mapModelArray.removeAll()
+        hotelstarratingArray.removeAll()
+        hotelfiltermodel.starRatingNew = starRatingInputArray
         
         
         list.forEach { i in
@@ -471,6 +473,7 @@ extension SearchHotelsResultVC {
             
             
             prices.append(i.price ?? "0")
+            hotelstarratingArray.append("\(i.star_rating ?? 0)")
             
             //            if let hotelLocation = i.hotelLocation, !hotelLocation.isEmpty {
             //                nearBylocationsArray.append(hotelLocation)
@@ -491,7 +494,7 @@ extension SearchHotelsResultVC {
         nearBylocationsArray = Array(Set(nearBylocationsArray))
         faretypeArray = Array(Set(faretypeArray))
         facilityArray = Array(Set(facilityArray))
-        
+        hotelstarratingArray = Array(Set(hotelstarratingArray))
         
         list.forEach { i in
             let mapModel = MapModel(
@@ -711,6 +714,8 @@ extension SearchHotelsResultVC:AppliedFilters{
     
     
     
+    
+    
     func filtersByApplied(minpricerange: Double, maxpricerange: Double, noofStopsArray: [String], refundableTypeArray: [String], departureTime: [String], arrivalTime: [String], noOvernightFlight: [String], airlinesFilterArray: [String], luggageFilterArray: [String], connectingFlightsFilterArray: [String], ConnectingAirportsFilterArray: [String]) {
         
         
@@ -720,7 +725,7 @@ extension SearchHotelsResultVC:AppliedFilters{
     
     //MARK: - hotelFilterByApplied
     
-    func hotelFilterByApplied(minpricerange: Double, maxpricerange: Double, starRating: String, refundableTypeArray: [String], nearByLocA: [String], niberhoodA: [String], aminitiesA: [String]) {
+func hotelFilterByApplied(minpricerange: Double, maxpricerange: Double, starRating: String, starRatingNew: [String], refundableTypeArray: [String], nearByLocA: [String], niberhoodA: [String], aminitiesA: [String]) {
         
         // Set the filter flag to true
         isSearchBool = true
@@ -739,8 +744,7 @@ extension SearchHotelsResultVC:AppliedFilters{
         let filteredArray = hotelSearchResult.filter { hotel in
             guard let netPrice = Double(hotel.price ?? "0.0") else { return false }
             
-            // Check if the hotel's star rating matches the selected star rating or is empty
-            let ratingMatches = starRating.isEmpty || String(hotel.star_rating ?? 0) == starRating
+           
             
             
             // Check if the hotel's amenities contain any of the selected amenities
@@ -758,6 +762,8 @@ extension SearchHotelsResultVC:AppliedFilters{
                         aminitiesMatch = false
                     }
             
+            
+            let ratingMatches = starRatingNew.isEmpty || starRatingNew.contains("\(hotel.star_rating ?? 0)")
             
             
             // Check if the hotel's refund type matches any selected refundable types or the array is empty

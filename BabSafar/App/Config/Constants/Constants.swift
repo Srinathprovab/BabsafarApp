@@ -110,6 +110,7 @@ var selectedCellStates: [IndexPath: Bool] = [:]
 var filterTap = String()
 var filterPrice = String()
 var prices = [String]()
+var hotelstarratingArray = [String]()
 var noofstopsArray = [String]()
 var filterModel = FlightFilterModel()
 var sortBy: SortParameter = .nothing
@@ -118,6 +119,8 @@ var mapModelArray: [MapModel] = []
 var faretypeArray = [String]()
 var directFlightBool = true
 var facilityArray = [String]()
+var startRatingArray = [String]()
+var starRatingInputArray = [String]()
 
 //MARK: - Profile details 
 var pdetails:ProfileDetails?

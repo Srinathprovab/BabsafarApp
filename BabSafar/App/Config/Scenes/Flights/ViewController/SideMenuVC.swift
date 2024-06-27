@@ -114,7 +114,7 @@ class SideMenuVC: BaseTableVC, ProfileDetailsViewModelDelegate, LogoutViewModelD
         tablerow.append(TableRow(title:"Hotels",key: "menu", image: "hotelmenu",cellType:.SideMenuTitleTVCell))
         tablerow.append(TableRow(title:"Insurence",key: "menu", image: "insure",cellType:.SideMenuTitleTVCell))
         tablerow.append(TableRow(title:"Visa",key: "menu", image: "visatab",cellType:.SideMenuTitleTVCell))
-        tablerow.append(TableRow(title:"Fastrack",key: "menu", image: "fasttrack",cellType:.SideMenuTitleTVCell))
+      //  tablerow.append(TableRow(title:"Fastrack",key: "menu", image: "fasttrack",cellType:.SideMenuTitleTVCell))
         
         tablerow.append(TableRow(height:60,cellType:.EmptyTVCell))
         
@@ -201,13 +201,14 @@ extension SideMenuVC {
                 
                 
             case "Insurence":
-                gotoInsuranceVC()
+               // gotoInsuranceVC()
+                showToast(message: "Still Under Development")
                 break
                 
                 
-            case "Fastrack":
-                gotoSearchFastTrackVC()
-                break
+//            case "Fastrack":
+//                gotoSearchFastTrackVC()
+//                break
                 
                 
             case "Logout":

@@ -148,10 +148,6 @@ class DashBoardVC: BaseTableVC, TopFlightDetailsViewModelDelegate, AllCountryCod
         }
         
     }
-    
-  
-    
-    
   
     
     //MARK: CALL TOP FLIGHT HOTEL DETAILS API FUNCTION
@@ -211,7 +207,6 @@ class DashBoardVC: BaseTableVC, TopFlightDetailsViewModelDelegate, AllCountryCod
     }
     
     
-    
     //MARK: GO TO VISA ENQUIREY SCREEN
     func gotoVisaEnduiryVC() {
         guard let vc = VisaEnduiryVC.newInstance.self else {return}
@@ -219,8 +214,6 @@ class DashBoardVC: BaseTableVC, TopFlightDetailsViewModelDelegate, AllCountryCod
         callapibool = true
         self.present(vc, animated: true)
     }
-    
-    
     
     //MARK: GOTO SEARCH HOTEL SCREEN
     func gotoSearchHotelsVC() {
@@ -242,8 +235,6 @@ class DashBoardVC: BaseTableVC, TopFlightDetailsViewModelDelegate, AllCountryCod
         callapibool = true
         self.present(vc, animated: true)
     }
-    
-    
     
     //MARK: TAP ON FLIGHT TAB
     override func didTapOnFlightBtnAction(cell: SelectModuleTabTVCell) {
@@ -270,9 +261,7 @@ class DashBoardVC: BaseTableVC, TopFlightDetailsViewModelDelegate, AllCountryCod
         self.tabBarController?.tabBar.isHidden = true
         self.sideMenuState(expanded: self.isExpanded ? false : true)
     }
-    
-    
-    
+
     
     //MARK: - scrollViewDidScroll
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -308,8 +297,6 @@ class DashBoardVC: BaseTableVC, TopFlightDetailsViewModelDelegate, AllCountryCod
     @IBAction func didTapOnFreshChatOpenBtnAction(_ sender: Any) {
         Freshchat.sharedInstance().showConversations(self)
     }
-    
-    
     
     
     //MARK: SETUP SIDE MENU
@@ -416,7 +403,8 @@ class DashBoardVC: BaseTableVC, TopFlightDetailsViewModelDelegate, AllCountryCod
     //MARK: - didTapOnInsurentTabBtnAction SelectModuleTabTVCell
     override func didTapOnInsurentTabBtnAction(cell:SelectModuleTabTVCell){
         defaults.set("Insurence", forKey: UserDefaultsKeys.dashboardTapSelected)
-        gotoInsuranceVC()
+        showToast(message: "Still Under Development")
+       // gotoInsuranceVC()
     }
     
     

@@ -496,12 +496,12 @@ class SearchFlightResultVC: BaseTableVC, UITextFieldDelegate {
 
 
 extension SearchFlightResultVC: AppliedFilters{
-    
-    
-    
-    func hotelFilterByApplied(minpricerange: Double, maxpricerange: Double, starRating: String, refundableTypeArray: [String], nearByLocA: [String], niberhoodA: [String], aminitiesA: [String]) {
+    func hotelFilterByApplied(minpricerange: Double, maxpricerange: Double, starRating: String, starRatingNew: [String], refundableTypeArray: [String], nearByLocA: [String], niberhoodA: [String], aminitiesA: [String]) {
         
     }
+    
+    
+    
     
     
     // Create a function to check if a given time string is within a time range

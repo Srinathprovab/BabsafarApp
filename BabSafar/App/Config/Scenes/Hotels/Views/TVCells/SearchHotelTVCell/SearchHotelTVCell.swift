@@ -203,6 +203,12 @@ class SearchHotelTVCell: TableViewCell, HotelCitySearchViewModelDelegate {
         self.checkoutTF.isHidden = false
         
         
+//        if startRatingArray.count == 0 {
+//            hotelfiltermodel.starRatingNew = starRatingInputArray
+//            startRatingArray = starRatingInputArray
+//        }else {
+//            hotelfiltermodel.starRatingNew = startRatingArray
+//        }
         
     }
     

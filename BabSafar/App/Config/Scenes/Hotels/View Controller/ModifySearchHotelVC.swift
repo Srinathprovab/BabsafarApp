@@ -24,8 +24,12 @@ class ModifySearchHotelVC: BaseTableVC {
     }
     
     
+    let formatter = DateFormatter()
+    
+    
     override func viewWillAppear(_ animated: Bool) {
-       addObserver()
+        formatter.dateFormat = "dd-MM-yyyy"
+        addObserver()
     }
     
     
@@ -98,8 +102,6 @@ class ModifySearchHotelVC: BaseTableVC {
     }
     
     override func didTapOnSearchHotelBtn(cell: SearchHotelTVCell) {
-        
-        
         NotificationCenter.default.post(name: NSNotification.Name("resetallFilters"), object: nil)
         payload.removeAll()
         payload["city"] = defaults.string(forKey: UserDefaultsKeys.locationcity)
@@ -124,7 +126,7 @@ class ModifySearchHotelVC: BaseTableVC {
         }
         
         
-        payload["nationality"] = countrycode
+        payload["nationality"] = defaults.string(forKey: UserDefaultsKeys.hnationalitycode) ?? ""
         payload["language"] = "english"
         payload["search_source"] = "postman"
         payload["currency"] = defaults.string(forKey: UserDefaultsKeys.selectedCurrency) ?? "KWD"
@@ -140,7 +142,7 @@ class ModifySearchHotelVC: BaseTableVC {
             showToast(message: "Enter Different Dates")
         }else if defaults.string(forKey: UserDefaultsKeys.roomcount) == "" {
             showToast(message: "Add Rooms For Booking")
-        }else if self.countrycode.isEmpty == true {
+        }else if defaults.string(forKey: UserDefaultsKeys.hnationalitycode) == nil || defaults.string(forKey: UserDefaultsKeys.hnationalitycode) == "" {
             showToast(message: "Please Select Nationality.")
         }else if checkDepartureAndReturnDates(payload, p1: "hotel_checkin", p2: "hotel_checkout") == false {
             showToast(message: "Invalid Date")
@@ -204,7 +206,27 @@ class ModifySearchHotelVC: BaseTableVC {
         // gotoSearchHotelsResultVC()
     }
     
-    
+    //MARK: - donedatePicker cancelDatePicker
+    override func donedatePicker(cell:SearchHotelTVCell){
+        
+        
+        
+        
+        if cell.checkinTF.isFirstResponder == true {
+            defaults.set(formatter.string(from: cell.checkinDatePicker.date), forKey: UserDefaultsKeys.checkin)
+            defaults.set(formatter.string(from: cell.checkinDatePicker.date), forKey: UserDefaultsKeys.checkout)
+            cell.checkoutDatePicker.date = cell.checkinDatePicker.date
+        }else {
+            defaults.set(formatter.string(from: cell.checkinDatePicker.date), forKey: UserDefaultsKeys.checkin)
+            defaults.set(formatter.string(from: cell.checkoutDatePicker.date), forKey: UserDefaultsKeys.checkout)
+        }
+        
+        commonTableView.reloadData()
+        self.view.endEditing(true)
+    }
+    override func cancelDatePicker(cell:SearchHotelTVCell){
+        self.view.endEditing(true)
+    }
 }
 
 extension ModifySearchHotelVC {

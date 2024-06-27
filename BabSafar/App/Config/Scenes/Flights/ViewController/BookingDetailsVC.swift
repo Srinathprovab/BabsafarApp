@@ -740,6 +740,7 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
     
     
     func mobilesecurebookingDetails(response: MobilePrePaymentModel) {
+        BASE_URL = BASE_URL1
         loderBool = false
         if response.status == false {
             showToast(message: response.message ?? "")
