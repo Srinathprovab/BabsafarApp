@@ -731,8 +731,15 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
         
         DispatchQueue.main.async {
             BASE_URL = ""
-            self.viewmodel1?.Call_mobile_secure_booking_API(dictParam: [:], url: "https://provabdevelopment.com/pro_new/mobile/index.php/flight/mobile_secure_booking/\(self.tmpFlightPreBookingId)/\(defaults.string(forKey: UserDefaultsKeys.searchid) ?? "")")
+//            self.viewmodel1?.Call_mobile_secure_booking_API(dictParam: [:], url: "https://provabdevelopment.com/pro_new/mobile/index.php/flight/mobile_secure_booking/\(self.tmpFlightPreBookingId)/\(defaults.string(forKey: UserDefaultsKeys.searchid) ?? "")")
+            
+            
+            self.viewmodel1?.Call_mobile_secure_booking_API(dictParam: [:], url: response.url ?? "")
+            
         }
+        
+        
+        
         
         
     }
@@ -752,6 +759,7 @@ class BookingDetailsVC: BaseTableVC, AllCountryCodeListViewModelDelegate, MBView
             vc.grandTotalamount = self.totalPrice1
             vc.grand_total_Price = self.grand_total_Price
             vc.tmpFlightPreBookingId = self.tmpFlightPreBookingId
+            vc.updatepymenturl = response.url ?? ""
             present(vc, animated: true)
         }
         

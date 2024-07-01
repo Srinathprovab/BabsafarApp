@@ -11,8 +11,8 @@ import FreshchatSDK
 class BookingConfirmedVC: BaseTableVC, VocherDetailsViewModelDelegate, HotelVoucherViewModelDelegate, InsurenceVoucherViewModelDelegate {
     
     
-    @IBOutlet weak var navBar: NavBar!
-    @IBOutlet weak var navHeight: NSLayoutConstraint!
+    @IBOutlet weak var backbtn: UIButton!
+   
     
     
     var lastContentOffset: CGFloat = 0
@@ -59,11 +59,6 @@ class BookingConfirmedVC: BaseTableVC, VocherDetailsViewModelDelegate, HotelVouc
         addObserver()
         
         
-        if screenHeight < 835 {
-            navHeight.constant = 90
-        }
-        
-        
         if callapibool == true {
             callAPI()
         }
@@ -100,8 +95,8 @@ class BookingConfirmedVC: BaseTableVC, VocherDetailsViewModelDelegate, HotelVouc
     }
     
     func setupUI() {
-        navBar.titlelbl.text = "Booking Confirmed"
-        navBar.backBtn.addTarget(self, action: #selector(didTapOnBackButton(_:)), for: .touchUpInside)
+      
+        backbtn.addTarget(self, action: #selector(didTapOnBackButton(_:)), for: .touchUpInside)
         setupTV()
         commonTableView.registerTVCells(["BookingConfirmedTVCell",
                                          "EmptyTVCell",

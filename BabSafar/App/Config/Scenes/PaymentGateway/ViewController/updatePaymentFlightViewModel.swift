@@ -22,20 +22,23 @@ class updatePaymentFlightViewModel {
     }
 
 
-    func CALL_UPDATE_PAYMENT_API(dictParam: [String: Any],endpoint:String){
+    func CALL_UPDATE_PAYMENT_API(dictParam: [String: Any],endpointurl:String){
         let parms = NSDictionary(dictionary:dictParam)
         print("Parameters = \(parms)")
 
+        BASE_URL = ""
         self.view?.showLoader()
 
-        ServiceManager.postOrPutApiCall(endPoint: "payment_gateway/\(endpoint)" ,parameters: parms, resultType: updatePaymentFlightModel.self, p:dictParam) { sucess, result, errorMessage in
+        ServiceManager.postOrPutApiCall(endPoint: endpointurl ,parameters: parms, resultType: updatePaymentFlightModel.self, p:dictParam) { sucess, result, errorMessage in
 
             DispatchQueue.main.async {
                 self.view?.hideLoader()
                 if sucess {
+                    BASE_URL = BASE_URL1
                     guard let response = result else {return}
                     self.view.updatePaymentSucess(response: response)
                 } else {
+                    BASE_URL = BASE_URL1
                     // Show alert
                     //  print("error === \(errorMessage ?? "")")
                     self.view.showToast(message: errorMessage ?? "")

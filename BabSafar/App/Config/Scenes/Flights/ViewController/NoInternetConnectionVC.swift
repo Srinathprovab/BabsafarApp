@@ -76,6 +76,9 @@ class NoInternetConnectionVC: UIViewController {
     }
     
     @IBAction func didTapOnTryAgainBtn(_ sender: Any) {
+        
+        BASE_URL = BASE_URL1
+        
         if key == "noresult" {
             let tabselect = defaults.string(forKey: UserDefaultsKeys.dashboardTapSelected)
             if tabselect == "Flights" {

@@ -35,8 +35,15 @@ extension PaymentGatewayVC {
             self?.stopLoading()
             
             
+           
+            
             switch response {
             case .success(let executePaymentResponse):
+                
+                
+                print(executePaymentResponse)
+                
+                
                 
                 // Print the entire response object
                 do {
@@ -69,13 +76,7 @@ extension PaymentGatewayVC {
     func callUpdatePaymentAPI(status:String) {
         
         self.payload.removeAll()
-        if let selectedTap = defaults.object(forKey: UserDefaultsKeys.dashboardTapSelected) as? String ,selectedTap == "Flights"{
-            
-        }else {
-            
-            
-            
-        }
+        
         
         
         if let selectedTap = defaults.object(forKey: UserDefaultsKeys.dashboardTapSelected) as? String {
@@ -85,7 +86,8 @@ extension PaymentGatewayVC {
                 payload["pg_req"] = self.paymentResponse
                 payload["InvoiceStatus"] = status
                 
-                self.vm?.CALL_UPDATE_PAYMENT_API(dictParam: payload, endpoint: "updatePayment")
+                self.vm?.CALL_UPDATE_PAYMENT_API(dictParam: payload, endpointurl: self.updatepymenturl)
+                
             } else if selectedTap == "Hotels" {
                 payload["pg_status"] = "Succss"
                 payload["product"] = "VHCID1420613748"
@@ -93,7 +95,7 @@ extension PaymentGatewayVC {
                 payload["book_id"] = tmpFlightPreBookingId
                 payload["pg_req"] = paymentResponse
                
-                self.vm?.CALL_UPDATE_PAYMENT_API(dictParam: payload, endpoint: "success")
+                self.vm?.CALL_UPDATE_PAYMENT_API(dictParam: payload, endpointurl: "success")
             } else {
                 payload["InvoiceStatus"] = "Paid"
                 payload["search_id"] = searchid
@@ -194,6 +196,7 @@ extension PaymentGatewayVC {
             }
         }
     }
+    
     func executeApplePayPayment(paymentMethodId: Int) {
         let request = getExecutePaymentRequest(paymentMethodId: paymentMethodId)
         startLoading()

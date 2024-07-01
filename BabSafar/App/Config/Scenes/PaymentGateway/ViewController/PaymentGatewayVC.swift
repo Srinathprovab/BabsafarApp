@@ -25,6 +25,7 @@ class PaymentGatewayVC: UIViewController, updatePaymentFlightViewModelDelegate {
     var vm:updatePaymentFlightViewModel?
     var paymentResponse = String()
     var form_url_paymentSucess = ""
+    var updatepymenturl = String()
     var searchid = ""
     //MARK: Outlet
     //    @IBOutlet weak var errorCodeLabel : UILabel!
