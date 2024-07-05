@@ -458,6 +458,8 @@ class SearchFlightsVC: BaseTableVC {
         payload.removeAll()
         loderBool = true
         
+  
+        
         
         if let journeyType = defaults.string(forKey: UserDefaultsKeys.journeyType) {
             if journeyType == "oneway" {
@@ -481,7 +483,7 @@ class SearchFlightsVC: BaseTableVC {
                 payload["search_flight"] = "Search"
                 payload["user_id"] = defaults.string(forKey:UserDefaultsKeys.userid) ?? "0"
                 payload["currency"] = defaults.string(forKey:UserDefaultsKeys.selectedCurrency) ?? "KWD"
-                
+                payload["search_source"] = "Postman"
                 if directFlightBool == false {
                     payload["direct_flight"] = "on"
                 }

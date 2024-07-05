@@ -158,17 +158,40 @@ class SearchHotelsVC: BaseTableVC, TopFlightDetailsViewModelDelegate {
         payload["adult"] = adtArray
         payload["child"] = chArray
         
-        for roomIndex in 0..<totalRooms {
-            if let numChildren = Int(chArray[roomIndex]), numChildren > 0 {
-                var childAges: [String] = Array(repeating: "0", count: numChildren)
-                
-                if numChildren > 2 {
-                    childAges.append("0")
+        
+        if defaults.string(forKey: UserDefaultsKeys.hotelchildcount) == "0" {
+            
+            payload["childAge_1"] = [""]
+            
+        }else {
+            
+            for roomIndex in 0..<totalRooms {
+                if let numChildren = Int(chArray[roomIndex]), numChildren > 0 {
+                    var childAges: [String] = Array(repeating: "0", count: numChildren)
+                    
+                    if numChildren > 2 {
+                        childAges.append("0")
+                    }
+                    
+                    payload["childAge_\(roomIndex + 1)"] = childAges
                 }
-                
-                payload["childAge_\(roomIndex + 1)"] = childAges
             }
+            
         }
+        
+        
+        
+//        for roomIndex in 0..<totalRooms {
+//            if let numChildren = Int(chArray[roomIndex]), numChildren > 0 {
+//                var childAges: [String] = Array(repeating: "0", count: numChildren)
+//                
+//                if numChildren > 2 {
+//                    childAges.append("0")
+//                }
+//                
+//                payload["childAge_\(roomIndex + 1)"] = childAges
+//            }
+//        }
         
         
         payload["nationality"] = defaults.string(forKey: UserDefaultsKeys.hnationalitycode) ?? ""
