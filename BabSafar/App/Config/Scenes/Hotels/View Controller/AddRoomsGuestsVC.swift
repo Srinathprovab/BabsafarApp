@@ -94,9 +94,6 @@ class AddRoomsGuestsVC: BaseTableVC {
     
     
     
-    
-    
-    
     override func closeBtnAction(cell: AddRoomsGuestsTVCell) {
         roomCountArray.remove(at: (cell.indexPath?.row ?? 0) - 1)
         tableRow.remove(at: cell.indexPath?.row ?? 0)
@@ -157,7 +154,6 @@ class AddRoomsGuestsVC: BaseTableVC {
         }
         print(childCountArray.count)
     }
-    
     
     
     override func btnAction(cell: ButtonTVCell) {

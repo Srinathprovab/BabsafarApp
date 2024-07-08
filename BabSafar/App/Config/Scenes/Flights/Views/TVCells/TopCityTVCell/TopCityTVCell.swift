@@ -187,14 +187,14 @@ extension TopCityTVCell:UICollectionViewDelegate,UICollectionViewDataSource {
                 userinfo["from_city_loc"] = topFlightDetails[indexPath.row].from_city_loc ?? ""
                 userinfo["to_city_loc"] = topFlightDetails[indexPath.row].to_city_loc ?? ""
                 
-                NotificationCenter.default.post(name: NSNotification.Name("topcity"), object: nil,userInfo: userinfo)
+              //  NotificationCenter.default.post(name: NSNotification.Name("topcity"), object: nil,userInfo: userinfo)
             }else {
                 userinfo.removeAll()
                 userinfo["city"] = topHotelDetails[indexPath.row].country ?? ""
                 userinfo["hotel_code"] = topHotelDetails[indexPath.row].city ?? ""
                 userinfo["check_in"] = topHotelDetails[indexPath.row].check_in ?? ""
                 userinfo["check_out"] = topHotelDetails[indexPath.row].check_out ?? ""
-                NotificationCenter.default.post(name: NSNotification.Name("tophotel"), object: nil,userInfo: userinfo)
+             //   NotificationCenter.default.post(name: NSNotification.Name("tophotel"), object: nil,userInfo: userinfo)
                 print("Hotel")
             }
         }
